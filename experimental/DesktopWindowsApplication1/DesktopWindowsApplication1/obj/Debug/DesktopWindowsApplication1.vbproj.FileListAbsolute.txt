@@ -1,0 +1,3 @@
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\bronze\DesktopWindowsApplication1\DesktopWindowsApplication1\obj\Debug\DesktopWindowsApplication1.exe
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\bronze\DesktopWindowsApplication1\DesktopWindowsApplication1\obj\Debug\DesktopWindowsApplication1.xml
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\bronze\DesktopWindowsApplication1\DesktopWindowsApplication1\obj\Debug\DesktopWindowsApplication1.pdb

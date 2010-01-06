@@ -1,0 +1,12 @@
+C:\Documents and Settings\Andy\Desktop\MyFirstMap\DesktopWindowsApplication1\DesktopWindowsApplication1\bin\Debug\DesktopWindowsApplication1.exe
+C:\Documents and Settings\Andy\Desktop\MyFirstMap\DesktopWindowsApplication1\DesktopWindowsApplication1\bin\Debug\DesktopWindowsApplication1.pdb
+C:\Documents and Settings\Andy\Desktop\MyFirstMap\DesktopWindowsApplication1\DesktopWindowsApplication1\bin\Debug\DesktopWindowsApplication1.xml
+C:\Documents and Settings\Andy\Desktop\MyFirstMap\DesktopWindowsApplication1\DesktopWindowsApplication1\bin\Debug\MySql.Data.dll
+C:\Documents and Settings\Andy\Desktop\MyFirstMap\DesktopWindowsApplication1\DesktopWindowsApplication1\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Andy\Desktop\MyFirstMap\DesktopWindowsApplication1\DesktopWindowsApplication1\obj\Debug\DesktopWindowsApplication1.Form2.resources
+C:\Documents and Settings\Andy\Desktop\MyFirstMap\DesktopWindowsApplication1\DesktopWindowsApplication1\obj\Debug\DesktopWindowsApplication1.Form1.resources
+C:\Documents and Settings\Andy\Desktop\MyFirstMap\DesktopWindowsApplication1\DesktopWindowsApplication1\obj\Debug\DesktopWindowsApplication1.Resources.resources
+C:\Documents and Settings\Andy\Desktop\MyFirstMap\DesktopWindowsApplication1\DesktopWindowsApplication1\obj\Debug\DesktopWindowsApplication1.vbproj.GenerateResource.Cache
+C:\Documents and Settings\Andy\Desktop\MyFirstMap\DesktopWindowsApplication1\DesktopWindowsApplication1\obj\Debug\DesktopWindowsApplication1.exe
+C:\Documents and Settings\Andy\Desktop\MyFirstMap\DesktopWindowsApplication1\DesktopWindowsApplication1\obj\Debug\DesktopWindowsApplication1.xml
+C:\Documents and Settings\Andy\Desktop\MyFirstMap\DesktopWindowsApplication1\DesktopWindowsApplication1\obj\Debug\DesktopWindowsApplication1.pdb
