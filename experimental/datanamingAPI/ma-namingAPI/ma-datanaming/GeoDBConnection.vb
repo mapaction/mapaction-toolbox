@@ -48,43 +48,134 @@ Public Class GeoDBConnection
     Public Overrides Function GetdataSetList() As List(Of String)
         Dim pDSName As IDatasetName
         Dim pEnumDSName As IEnumDatasetName
-        Dim namesArry As New List(Of String)
+        Dim namesList As New List(Of String)
 
         pEnumDSName = dataNameLookupWorkspace.DatasetNames(esriDatasetType.esriDTAny)
         pDSName = pEnumDSName.Next
 
         While Not pDSName Is Nothing
             'namesArry.SetValue(pEnumDSName.Name, namesArry.GetLength(1) + 1)
-            namesArry.Add(pDSName.Name)
+            namesList.Add(pDSName.Name)
             pDSName = pEnumDSName.Next
         End While
 
-        GetdataSetList = namesArry
+        GetdataSetList = namesList
     End Function
 
     Public Overrides Function GetTable(ByVal tableName As String)
 
         Dim pEnumDSName As IEnumDataset
         Dim myIDataSet As IDataset
-        Dim table As Object
+        Dim myObject As Object
+        Dim myTable As ITable
 
         pEnumDSName = dataNameLookupWorkspace.Datasets(esriDatasetType.esriDTTable)
 
-        table = Nothing
+        myObject = Nothing
+        myTable = Nothing
 
         myIDataSet = pEnumDSName.Next
 
-
         While Not myIDataSet Is Nothing
             If myIDataSet.BrowseName = tableName Then
-                table = myIDataSet.FullName.Open()
+                myObject = myIDataSet.FullName.Open()
             End If
             myIDataSet = pEnumDSName.Next
         End While
 
-        System.Console.WriteLine(table.GetType())
+        If TypeOf myObject Is ITable Then
+            myTable = DirectCast(myObject, ITable)
+        End If
 
-        GetTable = table
+        myTable.
+
+
+        While Not pDSName Is Nothing
+            'namesArry.SetValue(pEnumDSName.Name, namesArry.GetLength(1) + 1)
+            namesList.Add(pDSName.Name)
+            pDSName = pEnumDSName.Next
+        End While
+
+
+
+        '        [Visual Basic 6.0]
+        '        Dim pWorkspace As IWorkspace
+        '        Dim pFact As IWorkspaceFactory
+
+        '        ' This example uses an SDE connection. This code works the
+        '        ' same for any open IWorkspace.
+
+        '        Dim pPropset As IPropertySet
+        '        pPropset = New PropertySet
+        '        With pPropset
+        '            .SetProperty("Server", "fred")
+        '            .SetProperty("Instance", "5203")
+        '            .SetProperty("Database", "sdedata")
+        '            .SetProperty("user", "test")
+        '            .SetProperty("password", "test")
+        '            .SetProperty("version", "sde.DEFAULT")
+        '        End With
+        '        pFact = New SdeWorkspaceFactory
+        '        pWorkspace = pFact.Open(pPropset, Me.hWnd)
+        '        Dim pFeatureWorkspace As IFeatureWorkspace
+        '        pFeatureWorkspace = pWorkspace
+
+        '        Dim pTable As ITable
+        '        pTable = pFeatureWorkspace.OpenTable("Pavement")
+
+        '        Dim iOIDList() As Long
+        '        Dim iOIDListCount As Long
+
+        '        iOIDListCount = 5
+
+        '        ReDim iOIDList(iOIDListCount)
+        '        iOIDList(0) = 1
+        '        iOIDList(1) = 2
+        '        iOIDList(2) = 3
+        '        iOIDList(3) = 4
+        '        iOIDList(4) = 50
+
+        '        Dim pCursor As ICursor
+        '        pCursor = pTable.GetRows(iOIDList, True)
+        '        Dim pRow As IRow
+        '        pRow = pCursor.NextRow
+        '        While Not pRow Is Nothing
+        '            Debug.Print(pRow.Value(2))
+        '            pRow = pCursor.NextRow
+        '        End While
+
+
+        '[C#]
+
+        '    //ITable GetRows Example
+
+        '    //e.g., nameOfTable = "Owners"
+        '    //on ArcSDE use ISqlSyntax::QualifyTableName for fully qualified table names.
+        '    public void ITable_GetRows_Example(IWorkspace workspace, string nameOfTable)
+        '    {
+        '        IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
+        '        ITable table = featureWorkspace.OpenTable(nameOfTable);
+
+        '        System.Collections.Generic.List<int> constructOIDList = new System.Collections.Generic.List<int>();
+        '        constructOIDList.Add(1);
+        '        constructOIDList.Add(2);
+        '        constructOIDList.Add(3);
+        '        constructOIDList.Add(5);
+        '        constructOIDList.Add(8);
+        '        int[] oidList = constructOIDList.ToArray();
+
+        '        ICursor cursor = table.GetRows(oidList,false);
+        '        IRow row = cursor.NextRow();
+        '        while (row != null)
+        '        {
+        '            Console.WriteLine(row.get_Value(row.Fields.FindField("Name")));
+        '            row = cursor.NextRow();
+        '        }
+        '    }
+
+
+
+        GetTable = myTable
 
     End Function
 

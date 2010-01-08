@@ -1,5 +1,5 @@
 ﻿
-Public Class DataNameCodeLookup
+Public Class DataNameClauseLookup
 
     Public geoExtentTableName = "datanaming_geoextent"
     Public dataCategoryTableName = "datanaming_data_categories"
@@ -10,6 +10,34 @@ Public Class DataNameCodeLookup
     Public permissionsTableName = "datanaming_permission"
 
     Private gdbcon As GeoDataSourceConnection
+
+    Function isvalidGeoextentClause(ByVal testGeoExtentClause As String) As Boolean
+
+    End Function
+
+    Function isvalidDataCategoryClause(ByVal testDataCatClause As String) As Boolean
+
+    End Function
+
+    Function isvalidDataThemeClause(ByVal testDataThemeClause As String, ByVal testDataCatClause As String) As Boolean
+
+    End Function
+
+    Function isvalidDataTypeClause(ByVal testDataTypeClause As String) As Boolean
+
+    End Function
+
+    Function isvalidScaleClause(ByVal testScaleClause As String) As Boolean
+
+    End Function
+
+    Function isvalidSourceClause(ByVal testSourceClause As String) As Boolean
+
+    End Function
+
+    Function isvalidPermissionsClause(ByVal testPermissionsClause As String) As Boolean
+
+    End Function
 
 
     Sub GetGeoExtentList()
