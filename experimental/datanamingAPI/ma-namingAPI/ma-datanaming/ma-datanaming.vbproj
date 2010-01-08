@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataNaming.vb" />
-    <Compile Include="DataNameCodeLookup.vb" />
+    <Compile Include="DataNameClauseLookup.vb" />
     <Compile Include="GeoDataSourceConnection.vb" />
     <Compile Include="GeoDBConnection.vb" />
     <Compile Include="testingCommandline.vb" />
