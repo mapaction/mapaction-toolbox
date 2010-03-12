@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{3DAEB5CF-D291-4C2C-9751-3FFF9FF17962}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -60,10 +60,10 @@
     <Import Include="System.Diagnostics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataNaming.vb" />
-    <Compile Include="DataNameClauseLookup.vb" />
-    <Compile Include="GeoDataSourceConnection.vb" />
-    <Compile Include="GeoDBConnection.vb" />
+    <Compile Include="AbstractDataNaming.vb" />
+    <Compile Include="IDataNameClauseLookup.vb" />
+    <Compile Include="IGeoDataListConnection.vb" />
+    <Compile Include="DataListGeoDBConnection.vb" />
     <Compile Include="testingCommandline.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -80,7 +80,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="WriteableDataNameCodeLookup.vb" />
+    <Compile Include="IWriteableDataNameCodeLookup.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

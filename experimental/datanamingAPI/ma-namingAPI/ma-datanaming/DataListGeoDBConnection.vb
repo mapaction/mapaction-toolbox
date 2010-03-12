@@ -1,8 +1,9 @@
 ﻿Imports ESRI.ArcGIS.Geodatabase
 Imports ESRI.ArcGIS.DataSourcesGDB
 
-Public Class GeoDBConnection
-    Inherits GeoDataSourceConnection
+Public Class DataListGeoDBConnection
+    Implements IGeoDataListConnection
+    ' IGeoDataListConnection
 
     Private dataNameLookupWorkspace As ESRI.ArcGIS.Geodatabase.IWorkspace
 
@@ -11,7 +12,7 @@ Public Class GeoDBConnection
     End Sub
 
 
-    Public Overrides Sub Connect()
+    Public Sub Connect() Implements IGeoDataListConnection.Connect
         MsgBox("GeoDBConnection.Connect() not properly implenmented yet!")
 
         'Dim propertySet As New ESRI.ArcGIS.esriSystem.PropertySetClass
@@ -37,15 +38,31 @@ Public Class GeoDBConnection
 
     End Sub
 
-    Public Overrides Sub Disconnect()
+    Public Sub Disconnect() Implements IGeoDataListConnection.Disconnect
         dataNameLookupWorkspace = Nothing
     End Sub
 
-    Public Overrides Function GetDetails() As String
-        GetDetails = "GeoDBConnection.GetDetails() not yet implenmented"
+    Public Function getGeoDataListConnectionType() As Integer Implements IGeoDataListConnection.getGeoDataListConnectionType
+        getGeoDataListConnectionType = Nothing
     End Function
 
-    Public Overrides Function GetdataSetList() As List(Of String)
+    Public Function getGeoDataListConnectionTypeDesc() As String Implements IGeoDataListConnection.getGeoDataListConnectionTypeDesc
+        getGeoDataListConnectionTypeDesc = Nothing
+    End Function
+
+    Public Function doesLayerExist(ByVal layerName As String) As Boolean Implements IGeoDataListConnection.doesLayerExist
+        doesLayerExist = Nothing
+    End Function
+
+    Public Function getLayerNamesList() As List(Of String) Implements IGeoDataListConnection.getLayerNamesList
+        getLayerNamesList = Nothing
+    End Function
+
+    Public Function getDetails() As String Implements IGeoDataListConnection.getDetails
+        getDetails = "GeoDBConnection.GetDetails() not yet implenmented"
+    End Function
+
+    Public Function GetdataSetList() As List(Of String)
         Dim pDSName As IDatasetName
         Dim pEnumDSName As IEnumDatasetName
         Dim namesList As New List(Of String)
@@ -62,7 +79,11 @@ Public Class GeoDBConnection
         GetdataSetList = namesList
     End Function
 
-    Public Overrides Function GetTable(ByVal tableName As String)
+    Public Function getDefaultDataNameClauseLookup() As IDataNameClauseLookup Implements IGeoDataListConnection.getDefaultDataNameClauseLookup
+        getDefaultDataNameClauseLookup = Nothing
+    End Function
+
+    Public Function GetTable(ByVal tableName As String)
 
         Dim pEnumDSName As IEnumDataset
         Dim myIDataSet As IDataset
@@ -87,14 +108,14 @@ Public Class GeoDBConnection
             myTable = DirectCast(myObject, ITable)
         End If
 
-        myTable.
+        'myTable.
 
 
-        While Not pDSName Is Nothing
-            'namesArry.SetValue(pEnumDSName.Name, namesArry.GetLength(1) + 1)
-            namesList.Add(pDSName.Name)
-            pDSName = pEnumDSName.Next
-        End While
+        'While Not pDSName Is Nothing
+        '    namesArry.SetValue(pEnumDSName.Name, namesArry.GetLength(1) + 1)
+        '    namesList.Add(pDSName.Name)
+        '    pDSName = pEnumDSName.Next
+        'End While
 
 
 
