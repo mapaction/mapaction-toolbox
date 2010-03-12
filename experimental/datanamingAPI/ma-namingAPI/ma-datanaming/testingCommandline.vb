@@ -90,18 +90,17 @@ Module testingCommandline
     Sub Main()
         getESRIlicence()
 
-        Dim namelookup As New DataNameCodeLookup
+        'Dim namelookup As New DataNameCodeLookup()
 
-        Dim gdbcon As GeoDataSourceConnection
-        gdbcon = New GeoDBConnection
+        Dim gdbcon As IGeoDataListConnection
+        gdbcon = New DataListGeoDBConnection()
 
-
-        Dim myOutput As Object
-        myOutput = gdbcon.GetTable(namelookup.dataCategoryTableName)
+        'Dim myOutput As Object
+        'myOutput = gdbcon.GetTable(namelookup.dataCategoryTableName)
         'mylist = gdbcon.GetDatasetList().ToArray
 
         'For Each mylistitem In mylist
-        System.Console.WriteLine(myOutput)
+        'System.Console.WriteLine(myOutput)
         'Next
 
         dropESRILicence()
