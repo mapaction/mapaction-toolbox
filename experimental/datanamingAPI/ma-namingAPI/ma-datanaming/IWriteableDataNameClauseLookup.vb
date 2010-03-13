@@ -1,5 +1,5 @@
 ﻿
-Public Interface IWriteableDataNamingCodeLookup
+Public Interface IWriteableDataNameClauseLookup
     Inherits IDataNameClauseLookup
 
     Sub DeleteDataCategory()

@@ -60,7 +60,16 @@
     <Import Include="System.Diagnostics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractDataNameClauseLookup.vb" />
     <Compile Include="AbstractDataNaming.vb" />
+    <Compile Include="AbstractGeoDataListConnection.vb" />
+    <Compile Include="AbstractWriteableDataNameClauseLookup.vb" />
+    <Compile Include="AbstractWriteableDataNaming.vb" />
+    <Compile Include="DataListMXDConnection.vb" />
+    <Compile Include="DataNameFeatureClass.vb" />
+    <Compile Include="DataNameRaster.vb" />
+    <Compile Include="DataNameShapeFile.vb" />
+    <Compile Include="IDataName.vb" />
     <Compile Include="IDataNameClauseLookup.vb" />
     <Compile Include="IGeoDataListConnection.vb" />
     <Compile Include="DataListGeoDBConnection.vb" />
@@ -80,7 +89,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="IWriteableDataNameCodeLookup.vb" />
+    <Compile Include="IWriteableDataNameClauseLookup.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

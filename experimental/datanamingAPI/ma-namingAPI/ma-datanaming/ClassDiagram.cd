@@ -1,39 +1,110 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="ma_datanaming.DataListGeoDBConnection" Collapsed="true">
-    <Position X="7" Y="0.75" Width="2.5" />
+    <Position X="1" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEQAAQAAAAAAAQABEAAAAIBAAQAAAAAAAAAACABAAAA=</HashCode>
       <FileName>DataListGeoDBConnection.vb</FileName>
     </TypeIdentifier>
-    <Lollipop Orientation="Bottom" Position="0.933" />
   </Class>
   <Class Name="ma_datanaming.AbstractDataName" Collapsed="true">
-    <Position X="4.25" Y="3.75" Width="2.75" />
+    <Position X="8" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQFQAAAAgAQAAAAABAwAGAAIAAAIDQYQAgAAAAAAABA=</HashCode>
+      <HashCode>AQFQAAAAgAQAAAAABAQAGAAIAAAIDQYQAgAAAAAAABA=</HashCode>
       <FileName>AbstractDataNaming.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ma_datanaming.AbstractDataNameClauseLookup" Collapsed="true">
+    <Position X="3" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAgAUAAgAEMAQAACCQAQAAAABAAAQABEIAAQAA=</HashCode>
+      <FileName>AbstractDataNameClauseLookup.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ma_datanaming.AbstractWriteableDataNameClauseLookup" Collapsed="true">
+    <Position X="5.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQAAAAgAAACQAggAAAAAADAQAAAAAEACAAIAAACAAA=</HashCode>
+      <FileName>AbstractWriteableDataNameClauseLookup.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ma_datanaming.AbstractGeoDataListConnection" Collapsed="true">
+    <Position X="0.5" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQAAAAAAAQABEAAAAIAAAQAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>AbstractGeoDataListConnection.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ma_datanaming.DataNameShapeFile" Collapsed="true">
+    <Position X="8.25" Y="3.25" Width="1.5" />
+    <InheritanceLine Type="ma_datanaming.AbstractDataName" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.75" Y="2.759" />
+        <Point X="8.75" Y="2.98" />
+        <Point X="7.927" Y="2.98" />
+        <Point X="7.927" Y="3.427" />
+        <Point X="8.25" Y="3.427" />
+        <Point X="8.25" Y="3.562" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataNameShapeFile.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ma_datanaming.DataNameFeatureClass" Collapsed="true">
+    <Position X="8.25" Y="4" Width="1.5" />
+    <InheritanceLine Type="ma_datanaming.AbstractDataName" ManuallyRouted="true">
+      <Path>
+        <Point X="8.75" Y="2.759" />
+        <Point X="8.75" Y="2.98" />
+        <Point X="7.979" Y="2.98" />
+        <Point X="7.979" Y="4.315" />
+        <Point X="8.25" Y="4.315" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataNameFeatureClass.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ma_datanaming.DataListMXDConnection">
+    <Position X="1" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataListMXDConnection.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="ma_datanaming.IDataNameClauseLookup" Collapsed="true">
-    <Position X="1.5" Y="1.75" Width="1.5" />
+    <Position X="3" Y="0.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AgAAAAAgAUAAgAEMAQAACCQAQAAAABAAAQABEIAAQAA=</HashCode>
       <FileName>IDataNameClauseLookup.vb</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="ma_datanaming.IWriteableDataNamingCodeLookup" Collapsed="true">
-    <Position X="1.5" Y="3.25" Width="1.5" />
+  <Interface Name="ma_datanaming.IWriteableDataNameClauseLookup" Collapsed="true">
+    <Position X="5.5" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>QAQAAAAgAAACQAggAAAAAADAQAAAAAEACAAIAAACAAA=</HashCode>
-      <FileName>IWriteableDataNameCodeLookup.vb</FileName>
+      <FileName>IWriteableDataNameClauseLookup.vb</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="ma_datanaming.IGeoDataListConnection" Collapsed="true">
-    <Position X="1.75" Y="0.5" Width="2.25" />
+    <Position X="0.5" Y="0.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAQAAQAAAAAAAQABEAAAAIAAAQAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>IGeoDataListConnection.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ma_datanaming.IDataName" Collapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAmQAAAAAAAAAAAADAAAAQQAAKAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>IDataName.vb</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Tahoma" Size="8.25" />
