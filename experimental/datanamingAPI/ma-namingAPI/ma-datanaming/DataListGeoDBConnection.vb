@@ -2,7 +2,7 @@
 Imports ESRI.ArcGIS.DataSourcesGDB
 
 Public Class DataListGeoDBConnection
-    Implements IGeoDataListConnection
+    Inherits AbstractGeoDataListConnection
     ' IGeoDataListConnection
 
     Private dataNameLookupWorkspace As ESRI.ArcGIS.Geodatabase.IWorkspace
