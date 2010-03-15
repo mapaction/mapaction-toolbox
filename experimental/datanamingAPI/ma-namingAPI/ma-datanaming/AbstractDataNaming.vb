@@ -26,31 +26,70 @@
     ' The general pattern of the naming convention is:
     '
     '  geoextent_datacategory_theme_datatype[_scale]_source[_permission][_FreeText]
+    '  #1        #2           #3    #4        #5     #6      #7           #8
     '
-    '  geoextent
-
-    '   datacategory    = clause #1
-    '   theme           = clause #2
-    '   datatype        = clause #3
-    '   [scale]         = clause #4             
+    '  no Scale clause
+    '  geoextent_datacategory_theme_datatype_source[_permission][_FreeText]
+    '  #1        #2           #3    #4       #5      #6           #7
+    '
+    '  no Permission clause
+    '  geoextent_datacategory_theme_datatype[_scale]_source[_FreeText]
+    '  #1        #2           #3    #4        #5     #6      #7
+    '
+    '  no Scale or permissions clause
+    '  geoextent_datacategory_theme_datatype_source[_FreeText]
+    '  #1        #2           #3    #4       #5      #6
+    '
+    '
+    '   geoextent       ==> clause #1
+    '   datacategory    ==> clause #2
+    '   theme           ==> clause #3
+    '   datatype        ==> clause #4
+    '   [scale]         ==> clause #5             
     '       scale can be
-    '           'correct'       = therefore source is clause #5
-    '           'missing'       = only assume this if clause #4 is valid scale clause
-    '           'erroroneous'   = ???
+    '           'correct'       = set scale_status_known = TRUE, therefore source is clause #6
+    '           'missing'       = set scale_status_known = FALSE, only assume this if clause #7 is valid scale clause
+    '           'erroroneous'   = set scale_status_known = FALSE
     '
-    '   source          = 4 or 5
-    '       If scale is correct then search clause #5
-    '           'correct'       = ok
-    '           'erroroneous'   = 
-    '       if scale is not correct then search clause #4
-    '           'correct'       = warn that scale clause is missing
-    '           'erroroneous'   = ???
+    '   source          ==> #5 or #6
+    '       if scale_status_known=TRUE then
+    '           source clause should be #6
+    '               'correct'       = ok
+    '               'erroroneous'   = SCALE_CLAUSE_ERROR
+    '       elseif scale_status_known=FALSE then
+    '           check if clause #5 is a correct source clause
+    '               'correct'       = ok, and therefore SCALE_CLAUSE_MISSING and  set scale_status_known = TRUE,
+    '           check if clause #6 is a correct source clause
+    '               'correct'       = ok, and therefore SCALE_CLAUSE_ERROR and  set scale_status_known = TRUE,
+    '           if neither #5 nor #6 are valid sources and scale_status_known=FALSE then ??????
+    '                SOURCE_CLAUSE_ERROR (still don't know whether scale is missing or erroroneous)
     '       
-    '       
-    '       
-    '   [permission]    = 5 or 6
-    '   [FreeText]      = starting from 5 or 6 or 7 onwards
-
+    '   [permission]    ==> #6 or #7
+    '           Either there is a valid Source clause, or there is a valid explict Scale clause with or without a valid source clause
+    '               Therefore we can determine what possition to expect the permission clause (either #6 or #7)
+    '                   permission clause does not exist = MISSING_PERMISSION_CLAUSE_WARNING and permission_status_known = TRUE
+    '                   permission clause exists and is valid and permission_status_known = TRUE
+    '                       if #8 onwards exists then INFO_FREE_TEXT_INCLUDED
+    '                   permission clause exists and is invalid - is it really a permission clause or is it the begining of free text?
+    '                       if #6 or #7 (as appropriate) is two characters long then WARNING_FREE_TEXT_COULD_BE_MISFORMED_PERMISSIONS_CLAUSE + MISSING_PERMISSIONS_WARNING + INFO_FREE_TEXT_INCLUDED
+    '                       if #6 or #7 (as appropriate) is longer than two characters then MISSING_PERMISSIONS_WARNING + INFO_FREE_TEXT_INCLUDED
+    '
+    '           if #5 is nieher a valid scale or source clause AND #6 is not a valid source clause, then we don't know whether to expect 
+    '           the permission clause to be #6 or #7
+    '               if #6 is valid permissions clause then SCALE_CLAUSE_MISSING (assume that #7 onwards are free text if they exist)
+    '                   if #7 onwards exists then INFO_FREE_TEXT_INCLUDED
+    '               if #6 is invalid and #7 is valid permissions clause then SCALE_CLAUSE_ERROR
+    '                   if #8 onwards exists then INFO_FREE_TEXT_INCLUDED
+    '               if #6 is invalid and #7 does not exist or is invalid then is it really a permission clause or is it the begining of free text?
+    '                   if #6 is two characters long then WARNING_FREE_TEXT_COULD_BE_MISFORMED_PERMISSIONS_CLAUSE + MISSING_PERMISSIONS_WARNING + INFO_FREE_TEXT_INCLUDED
+    '                   if #6 is longer than two characters then MISSING_PERMISSIONS_WARNING + INFO_FREE_TEXT_INCLUDED
+    
+    '
+    '   [FreeText]      ==> starting from #6, #7 or #8 onwards
+    '       Already determined previous check
+    '
+    '
+    '
     ''' <summary>
     ''' 
     ''' </summary>
@@ -67,7 +106,7 @@
 
     End Function
 
-    Protected Function IsNameValid(ByVal nameParts As String(), ByVal dnLookup As IDataNameClauseLookup) As Integer
+    Protected Function IsNameValid(ByVal nameParts As String(), ByVal dnLookup As IDataNameClauseLookup) As Integer Implements IDataName.IsNameValid
 
         Dim returnResult As Integer
         Dim partsCnt As Integer
@@ -78,7 +117,7 @@
         'Check Zero
         'does it contain hyphens "-" which probably should be underscorces "_"
         For Each namePart In nameParts
-            If InStr(namePart, "-") =  Then
+            If InStr(namePart, "-") <> 0 Then
                 returnResult = returnResult + DATANAME_WARN_CONTAINS_HYPHENS
             End If
         Next
@@ -137,7 +176,7 @@
             End If
             '  geoextent_datacategory_theme_datatype[_scale]_source[_permission][_FreeText]
 
-            
+
         End If
 
 
@@ -148,29 +187,52 @@
         AsArray = Strings.Split(nameStr, "_")
     End Function
 
-    Private Function hasScaleClause(ByVal nameStr As String) As Boolean
+    Public MustOverride Function isEditable() As Boolean Implements IDataName.isEditable
+
+    Public Function hasOptionalScaleClause() As Boolean Implements IDataName.hasOptionalScaleClause
     End Function
 
-    Private Function hasPermissionClause(ByVal nameStr As String) As Boolean
+    Public Function hasOptionalPermissionClause() As Boolean Implements IDataName.hasOptionalPermissionClause
     End Function
 
-    Private Function hasFreeText(ByVal nameStr As String) As Boolean
+    Public Function hasOptionalFreeText() As Boolean Implements IDataName.hasOptionalFreeText
     End Function
 
 
     '
     '
     '
-    Public Function changeGeoExtent(ByVal dataname As String, ByVal newGeoExtent As String) As String
-        changeGeoExtent = Nothing
+    Public Function changeGeoExtentClause(ByVal newGeoExtent As String) As Integer Implements IDataName.changeGeoExtentClause
+        changeGeoExtentClause = Nothing
     End Function
 
-    Public Function changeDataCategory(ByVal dataname As String, ByVal newDataCategory As String) As String
-        changeDataCategory = Nothing
+    Public Function changeDataCategoryClause(ByVal newDataCategory As String) As Integer Implements IDataName.changeDataCategoryClause
+        changeDataCategoryClause = Nothing
     End Function
 
-    Public Function changeDataTheme(ByVal dataname As String, ByVal newDataTheme As String) As String
-        changeDataTheme = Nothing
+    Public Function changeDataThemeClause(ByVal newDataTheme As String) As Integer Implements IDataName.changeDataThemeClause
+        changeDataThemeClause = Nothing
+    End Function
+
+    Public Function changeDataTypeClause(ByVal newDataType As String) As Integer Implements IDataName.changeDataTypeClause
+        changeDataTypeClause = Nothing
+    End Function
+
+
+    Function changeScaleCodesClause(ByVal newDataTheme As String) As Integer Implements IDataName.changeScaleCodesClause
+        changeScaleCodesClause = Nothing
+    End Function
+
+    Function changeSourceCodesClause(ByVal newDataTheme As String) As Integer Implements IDataName.changeSourceCodesClause
+        changeSourceCodesClause = Nothing
+    End Function
+
+    Function changePermissionsClause(ByVal newDataTheme As String) As Integer Implements IDataName.changePermissionsClause
+        changePermissionsClause = Nothing
+    End Function
+
+    Function changeFreeTextClause(ByVal newDataTheme As String) As Integer Implements IDataName.changeFreeTextClause
+        changeFreeTextClause = Nothing
     End Function
 
 

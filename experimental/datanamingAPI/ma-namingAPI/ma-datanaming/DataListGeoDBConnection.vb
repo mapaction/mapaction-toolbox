@@ -12,7 +12,7 @@ Public Class DataListGeoDBConnection
     End Sub
 
 
-    Public Sub Connect() Implements IGeoDataListConnection.Connect
+    Public Overloads Sub Connect() 'Implements IGeoDataListConnection.Connect
         MsgBox("GeoDBConnection.Connect() not properly implenmented yet!")
 
         'Dim propertySet As New ESRI.ArcGIS.esriSystem.PropertySetClass
@@ -38,27 +38,27 @@ Public Class DataListGeoDBConnection
 
     End Sub
 
-    Public Sub Disconnect() Implements IGeoDataListConnection.Disconnect
+    Public Sub Disconnect()
         dataNameLookupWorkspace = Nothing
     End Sub
 
-    Public Function getGeoDataListConnectionType() As Integer Implements IGeoDataListConnection.getGeoDataListConnectionType
+    Public Function getGeoDataListConnectionType() As Integer
         getGeoDataListConnectionType = Nothing
     End Function
 
-    Public Function getGeoDataListConnectionTypeDesc() As String Implements IGeoDataListConnection.getGeoDataListConnectionTypeDesc
+    Public Function getGeoDataListConnectionTypeDesc() As String
         getGeoDataListConnectionTypeDesc = Nothing
     End Function
 
-    Public Function doesLayerExist(ByVal layerName As String) As Boolean Implements IGeoDataListConnection.doesLayerExist
+    Public Function doesLayerExist(ByVal layerName As String) As Boolean
         doesLayerExist = Nothing
     End Function
 
-    Public Function getLayerNamesList() As List(Of String) Implements IGeoDataListConnection.getLayerNamesList
+    Public Function getLayerNamesList() As List(Of String)
         getLayerNamesList = Nothing
     End Function
 
-    Public Function getDetails() As String Implements IGeoDataListConnection.getDetails
+    Public Function getDetails() As String
         getDetails = "GeoDBConnection.GetDetails() not yet implenmented"
     End Function
 
@@ -79,7 +79,7 @@ Public Class DataListGeoDBConnection
         GetdataSetList = namesList
     End Function
 
-    Public Function getDefaultDataNameClauseLookup() As IDataNameClauseLookup Implements IGeoDataListConnection.getDefaultDataNameClauseLookup
+    Public Function getDefaultDataNameClauseLookup() As IDataNameClauseLookup
         getDefaultDataNameClauseLookup = Nothing
     End Function
 

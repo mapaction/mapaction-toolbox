@@ -3,61 +3,33 @@ Public MustInherit Class AbstractDataNameClauseLookup
     Implements IDataNameClauseLookup
 
 
-    Public Sub GetDataCategoryList() Implements IDataNameClauseLookup.GetDataCategoryList
+    Public MustOverride Function getDataCategoryList() As List(Of String) Implements IDataNameClauseLookup.getDataCategoryList
 
-    End Sub
+    Public MustOverride Sub getDataCategoryTable() Implements IDataNameClauseLookup.getDataCategoryTable
 
-    Public Sub GetDataCategoryTable() Implements IDataNameClauseLookup.GetDataCategoryTable
+    Public MustOverride Function getDataThemeList() As List(Of String) Implements IDataNameClauseLookup.getDataThemeList
 
-    End Sub
+    Public MustOverride Sub getDataThemeTable() Implements IDataNameClauseLookup.getDataThemeTable
 
-    Public Sub GetDataThemeList() Implements IDataNameClauseLookup.GetDataThemeList
+    Public MustOverride Function getDataTypeList() As List(Of String) Implements IDataNameClauseLookup.getDataTypeList
 
-    End Sub
+    Public MustOverride Sub getDataTypeTable() Implements IDataNameClauseLookup.getDataTypeTable
 
-    Public Sub GetDataThemeTable() Implements IDataNameClauseLookup.GetDataThemeTable
+    Public MustOverride Function getGeoExtentList() As List(Of String) Implements IDataNameClauseLookup.getGeoExtentList
 
-    End Sub
+    Public MustOverride Sub getGeoExtentTable() Implements IDataNameClauseLookup.getGeoExtentTable
 
-    Public Sub GetDataTypeList() Implements IDataNameClauseLookup.GetDataTypeList
+    Public MustOverride Function getPermissionsList() As List(Of String) Implements IDataNameClauseLookup.getPermissionsList
 
-    End Sub
+    Public MustOverride Sub getPermissionsTable() Implements IDataNameClauseLookup.getPermissionsTable
 
-    Public Sub GetDataTypeTable() Implements IDataNameClauseLookup.GetDataTypeTable
+    Public MustOverride Function getScaleCodesList() As List(Of String) Implements IDataNameClauseLookup.getScaleCodesList
 
-    End Sub
+    Public MustOverride Sub getScaleCodesTable() Implements IDataNameClauseLookup.getScaleCodesTable
 
-    Public Sub GetGeoExtentList() Implements IDataNameClauseLookup.GetGeoExtentList
+    Public MustOverride Function getSourceCodesList() As List(Of String) Implements IDataNameClauseLookup.getSourceCodesList
 
-    End Sub
-
-    Public Sub GetGeoExtentTable() Implements IDataNameClauseLookup.GetGeoExtentTable
-
-    End Sub
-
-    Public Sub GetPermissionsList() Implements IDataNameClauseLookup.GetPermissionsList
-
-    End Sub
-
-    Public Sub GetPermissionsTable() Implements IDataNameClauseLookup.GetPermissionsTable
-
-    End Sub
-
-    Public Sub GetScaleCodesList() Implements IDataNameClauseLookup.GetScaleCodesList
-
-    End Sub
-
-    Public Sub GetScaleCodesTable() Implements IDataNameClauseLookup.GetScaleCodesTable
-
-    End Sub
-
-    Public Sub GetSourceCodesList() Implements IDataNameClauseLookup.GetSourceCodesList
-
-    End Sub
-
-    Public Sub GetSourceCodesTable() Implements IDataNameClauseLookup.GetSourceCodesTable
-
-    End Sub
+    Public MustOverride Sub getSourceCodesTable() Implements IDataNameClauseLookup.getSourceCodesTable
 
     Public Function isvalidDataCategoryClause(ByVal testDataCatClause As String) As Boolean Implements IDataNameClauseLookup.isvalidDataCategoryClause
 
