@@ -31,7 +31,7 @@ Public MustInherit Class AbstractGeoDataListConnection
 
     End Function
 
-    Public Function getLayerNamesList() As System.Collections.Generic.List(Of String) Implements IGeoDataListConnection.getLayerNamesList
+    Public Function getLayerNamesStrings() As List(Of String) Implements IGeoDataListConnection.getLayerNamesStrings
 
     End Function
 End Class

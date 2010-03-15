@@ -27,34 +27,34 @@ Public Interface IDataNameClauseLookup
     Function isvalidPermissionsClause(ByVal testPermissionsClause As String) As Boolean
 
     'Get just the list of clauses, without any extra information
-    Sub GetGeoExtentList()
+    Function getGeoExtentList() As List(Of String)
 
-    Sub GetDataCategoryList()
+    Function getDataCategoryList() As List(Of String)
 
-    Sub GetDataThemeList()
+    Function getDataThemeList() As List(Of String)
 
-    Sub GetDataTypeList()
+    Function getDataTypeList() As List(Of String)
 
-    Sub GetScaleCodesList()
+    Function getScaleCodesList() As List(Of String)
 
-    Sub GetSourceCodesList()
+    Function getSourceCodesList() As List(Of String)
 
-    Sub GetPermissionsList()
+    Function getPermissionsList() As List(Of String)
 
     'Get the full tables including dscriptions etc
-    Sub GetGeoExtentTable()
+    Sub getGeoExtentTable()
 
-    Sub GetDataCategoryTable()
+    Sub getDataCategoryTable()
 
-    Sub GetDataThemeTable()
+    Sub getDataThemeTable()
 
-    Sub GetDataTypeTable()
+    Sub getDataTypeTable()
 
-    Sub GetScaleCodesTable()
+    Sub getScaleCodesTable()
 
-    Sub GetSourceCodesTable()
+    Sub getSourceCodesTable()
 
-    Sub GetPermissionsTable()
+    Sub getPermissionsTable()
 
 
 End Interface

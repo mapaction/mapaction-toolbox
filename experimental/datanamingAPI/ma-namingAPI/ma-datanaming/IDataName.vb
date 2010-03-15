@@ -78,7 +78,7 @@ Public Interface IDataName
     ''' FALSE = The optional Free Text clause is not present
     ''' </returns>
     ''' <remarks>Does this name include the optional "Data Permissions" clause in it?</remarks>
-    Function hasOptionalFreeText(ByVal nameStr As String) As Boolean
+    Function hasOptionalFreeText() As Boolean
 
     ''' <summary>
     ''' Is it possible for the Name of this data layer to be changed? For example this made be no 
@@ -92,19 +92,20 @@ Public Interface IDataName
     ''' <remarks></remarks>
     Function isEditable() As Boolean
 
-    Function changeGeoExtent(ByVal newGeoExtent As String) As Boolean
+    Function changeGeoExtentClause(ByVal newGeoExtent As String) As Integer
 
-    Function changeDataCategory(ByVal newDataCategory As String) As Boolean
+    Function changeDataCategoryClause(ByVal newDataCategory As String) As Integer
 
-    Function changeDataTheme(ByVal newDataTheme As String) As Boolean
+    Function changeDataThemeClause(ByVal newDataTheme As String) As Integer
 
-    Function changeDataType(ByVal newDataTheme As String) As Boolean
+    Function changeDataTypeClause(ByVal newDataTheme As String) As Integer
 
-    Function changePermissionsTable(ByVal newDataTheme As String) As Boolean
+    Function changePermissionsClause(ByVal newDataTheme As String) As Integer
 
-    Function changeScaleCodesTable(ByVal newDataTheme As String) As Boolean
+    Function changeScaleCodesClause(ByVal newDataTheme As String) As Integer
 
-    Function changeSourceCodesTable(ByVal newDataTheme As String) As Boolean
+    Function changeSourceCodesClause(ByVal newDataTheme As String) As Integer
 
+    Function changeFreeTextClause(ByVal newDataTheme As String) As Integer
 
 End Interface
