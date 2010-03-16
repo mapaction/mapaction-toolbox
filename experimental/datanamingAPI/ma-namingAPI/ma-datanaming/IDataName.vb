@@ -23,21 +23,38 @@ Public Interface IDataName
 
 
     ''' <summary>
-    ''' This method might not really be necessary....
+    ''' Returns the current Data Name as a String. No path is included
     ''' </summary>
-    ''' <param name="nameStr"></param>
-    ''' <param name="myCon"></param>
+    ''' <returns>a string of the current Data Name</returns>
+    ''' <remarks>
+    ''' Returns the current Data Name as a String
+    ''' </remarks>
+    Function getNameStr() As String
+
+    ''' <summary>
+    ''' Returns the path of the current Data Name as a String, if a suitable meaning of path is applicable. If
+    ''' there is no easy or meaningful sense of a path (eg for a RDBMS) then a null or zero length string is 
+    ''' returned
+    ''' </summary>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Function IsNameValid(ByVal nameStr As String, ByVal myCon As IGeoDataListConnection) As Boolean
+    Function getPathStr() As String
 
+
+    ''' <summary>
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' Returns getPathStr() + "\" + getNameStr()
+    ''' </remarks>
+    Function getNameAndFullPathStr() As String
+
+    
     ''' <summary>
     ''' This method does the core processing to determine whether or not the particular name represented by 
     ''' this class is valid or not. 
     ''' 
     ''' </summary>
-    ''' <param name="nameParts">A arrany of Strings, each of which should represent one clause of the data name.</param>
-    ''' <param name="myDNCL">The relevant data name clause lookup object</param>
     ''' <returns>An integer based on the various contants defined in AbstractDataName class</returns>
     ''' <remarks>
     ''' This method does the core processing to determine whether or not the particular name represented by 
@@ -48,7 +65,7 @@ Public Interface IDataName
     ''' Error = The name cannot be understood
     ''' Warning = The name can be understood, but there is a risk that it will be misinterprited
     ''' </remarks>
-    Function IsNameValid(ByVal nameParts As String(), ByVal myDNCL As IDataNameClauseLookup) As Integer
+    Function IsNameValid() As Integer
 
     ''' <summary>
     ''' Does this name include the optional "Scale" clause in it?

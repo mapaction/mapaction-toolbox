@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractDataNameClauseLookup.vb" />
-    <Compile Include="AbstractDataNaming.vb" />
+    <Compile Include="AbstractDataName.vb" />
     <Compile Include="AbstractGeoDataListConnection.vb" />
     <Compile Include="AbstractWriteableDataNameClauseLookup.vb" />
     <Compile Include="AbstractWriteableDataNaming.vb" />
@@ -69,6 +69,7 @@
     <Compile Include="DataNameFeatureClass.vb" />
     <Compile Include="DataNameRaster.vb" />
     <Compile Include="DataNameShapeFile.vb" />
+    <Compile Include="DataNamingConstants.vb" />
     <Compile Include="IDataName.vb" />
     <Compile Include="IDataNameClauseLookup.vb" />
     <Compile Include="IGeoDataListConnection.vb" />

@@ -34,4 +34,13 @@ Public MustInherit Class AbstractGeoDataListConnection
     Public Function getLayerNamesStrings() As List(Of String) Implements IGeoDataListConnection.getLayerNamesStrings
 
     End Function
+
+    Public Function getLayerDataNamesList() As List(Of IDataName) Implements IGeoDataListConnection.getLayerDataNamesList
+
+    End Function
+
+    Public Function getLayerDataNamesList(ByRef myDNCL As IDataNameClauseLookup) As List(Of IDataName) Implements IGeoDataListConnection.getLayerDataNamesList
+
+    End Function
+
 End Class
