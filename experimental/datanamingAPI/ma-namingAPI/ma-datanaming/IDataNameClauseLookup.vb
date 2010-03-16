@@ -1,13 +1,13 @@
 ﻿
 Public Interface IDataNameClauseLookup
 
-    'Public const geoExtentTableName = "datanaming_geoextent"
-    'Public const dataCategoryTableName = "datanaming_data_categories"
-    'Public const dataThemeTableName = "datanaming_data_theme"
-    'Public const dataTypeTableName = "datanaming_data_type_codes"
-    'Public const scaleTableName = "datanaming_scale_codes"
-    'Public const sourceTableName = "datanaming_scale_codes"
-    'Public const permissionsTableName = "datanaming_permission"
+    'Public const geoExtentTableName = "datanaming_clause_geoextent"
+    'Public const dataCategoryTableName = "datanaming_clause_data_categories"
+    'Public const dataThemeTableName = "datanaming_clause_data_theme"
+    'Public const dataTypeTableName = "datanaming_clause_data_type"
+    'Public const scaleTableName = "datanaming_clause_scale"
+    'Public const sourceTableName = "datanaming_clause_source"
+    'Public const permissionsTableName = "datanaming_clause_permission"
 
     'Test whether the Data Name Clause tables can be written to or not
     Function isWriteable() As Boolean
