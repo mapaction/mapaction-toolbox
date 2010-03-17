@@ -42,19 +42,19 @@ Public Interface IDataNameClauseLookup
     Function getPermissionsList() As List(Of String)
 
     'Get the full tables including dscriptions etc
-    Sub getGeoExtentTable()
+    Function getGeoExtentTable() As DataTable
 
-    Sub getDataCategoryTable()
+    Function getDataCategoryTable() As DataTable
 
-    Sub getDataThemeTable()
+    Function getDataThemeTable() As DataTable
 
-    Sub getDataTypeTable()
+    Function getDataTypeTable() As DataTable
 
-    Sub getScaleCodesTable()
+    Function getScaleCodesTable() As DataTable
 
-    Sub getSourceCodesTable()
+    Function getSourceCodesTable() As DataTable
 
-    Sub getPermissionsTable()
+    Function getPermissionsTable() As DataTable
 
 
 End Interface
