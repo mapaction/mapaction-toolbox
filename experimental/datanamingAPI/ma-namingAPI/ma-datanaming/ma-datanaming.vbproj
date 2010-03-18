@@ -65,10 +65,12 @@
     <Compile Include="AbstractGeoDataListConnection.vb" />
     <Compile Include="AbstractWriteableDataNameClauseLookup.vb" />
     <Compile Include="DataListMXDConnection.vb" />
+    <Compile Include="DataNameClauseLookupFactory.vb" />
     <Compile Include="DataNameFeatureClass.vb" />
     <Compile Include="DataNameRaster.vb" />
     <Compile Include="DataNameShapeFile.vb" />
     <Compile Include="DataNamingConstants.vb" />
+    <Compile Include="GeoDataListConnectionFactory.vb" />
     <Compile Include="GeoDBDataNameClauseLookup.vb" />
     <Compile Include="IDataName.vb" />
     <Compile Include="IDataNameClauseLookup.vb" />
