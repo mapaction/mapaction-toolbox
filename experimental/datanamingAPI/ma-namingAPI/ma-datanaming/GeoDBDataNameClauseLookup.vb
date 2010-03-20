@@ -1,11 +1,7 @@
 ﻿
 Public Class GeoDBDataNameClauseLookup
-    Inherits AbstractDataNameClauseLookup
-
+    'Inherits AbstractDataNameClauseLookup
 
     'ESRI.ArcGIS.Utility.Converter.ToDataSet
-
-
-    
 
 End Class

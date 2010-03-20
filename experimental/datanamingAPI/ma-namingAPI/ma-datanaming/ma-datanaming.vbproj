@@ -76,6 +76,7 @@
     <Compile Include="IDataNameClauseLookup.vb" />
     <Compile Include="IGeoDataListConnection.vb" />
     <Compile Include="DataListGeoDBConnection.vb" />
+    <Compile Include="MDBDataNameClauseLookup.vb" />
     <Compile Include="testingCommandline.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -93,6 +94,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="IWriteableDataNameClauseLookup.vb" />
+    <Compile Include="LookupTableException.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

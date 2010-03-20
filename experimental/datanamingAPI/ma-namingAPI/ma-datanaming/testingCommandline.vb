@@ -30,23 +30,23 @@ Module testingCommandline
         'Take a look at the licenseStatus to see if it failed
         'Not licensed
         If (licenseStatus = esriLicenseNotLicensed) Then
-            MsgBox("You are not licensed to run this product")
+            ' MsgBox("You are not licensed to run this product")
             dropESRILicence()
             'The licenses needed are currently in use
         ElseIf (licenseStatus = esriLicenseUnavailable) Then
-            MsgBox("There are insufient licenses to run")
+            ' MsgBox("There are insufient licenses to run")
             dropESRILicence()
             'The licenses unexpected license failure
         ElseIf (licenseStatus = esriLicenseFailure) Then
-            MsgBox("Unexpected license failure please contact you administrator'")
+            ' MsgBox("Unexpected license failure please contact you administrator'")
             dropESRILicence()
             'Already initialized (Initialization can only occur once)
         ElseIf (licenseStatus = esriLicenseAlreadyInitialized) Then
-            MsgBox("You license has already been initialized please check you implementation")
+            'MsgBox("You license has already been initialized please check you implementation")
             dropESRILicence()
             'Everything was checkedout successfully
         ElseIf (licenseStatus = esriLicenseCheckedOut) Then
-            MsgBox("Licenses checked out successfully")
+            'MsgBox("Licenses checked out successfully")
         End If
 
     End Sub
@@ -90,21 +90,60 @@ Module testingCommandline
     Sub Main()
         getESRIlicence()
 
-        'Dim namelookup As New DataNameCodeLookup()
+        Try
 
-        Dim gdbcon As IGeoDataListConnection
-        gdbcon = New DataListGeoDBConnection()
 
-        'Dim myOutput As Object
-        'myOutput = gdbcon.GetTable(namelookup.dataCategoryTableName)
-        'mylist = gdbcon.GetDatasetList().ToArray
+            'Dim namelookup As New DataNameCodeLookup()
 
-        'For Each mylistitem In mylist
-        'System.Console.WriteLine(myOutput)
-        'Next
+            Dim dncl As IDataNameClauseLookup
+            Dim dnclFactory As DataNameClauseLookupFactory = DataNameClauseLookupFactory.getFactory()
+
+            'Dim mdbPathStr As String() = {"D:\\MapAction\\bronze\\data_model\\ProposedNamingConvention\\data-naming-conventions-beta_v0.8.mdb"}
+            Dim mdbPathStr As String() = {"D:\MapAction\bronze\data_model\ProposedNamingConvention\data-naming-conventions-beta_v0.8.mdb"}
+
+            dncl = dnclFactory.createDataNameClauseLookup(DATACLAUSE_LOOKUP_MDB, mdbPathStr)
+
+            'System.Console.WriteLine("Get GeoExtent clauses:")
+            'For Each myRow As DataRow In dncl.getGeoExtentTable().Rows
+            '    System.Console.WriteLine(myRow.Item(0) & " , " & myRow.Item(1))
+            'Next
+
+            'geoextent_datacategory_theme_datatype[_scale]_source[_permission][_FreeText]
+            Dim testOptionalClauses() As String = { _
+                "alb-popu-cas-py-s3_osm_hp", _
+                "bgd_popu_cas_py_s3_osm_hp", _
+                "bgd_popu_cas_py_osm_hp", _
+                "bgd_popu_cas_py_osm", _
+                "bgd_popu_cas_py_s2_osm", _
+                "bgd_popu_cas_py_s3_osm_hp_Fe_txt", _
+                "bgd_popu_cas_py_osm_hp_Fe_txt", _
+                "bgd_popu_cas_py_osm_Fe_txt", _
+                "bgd_popu_cas_py_s2_osm_Fe_txt", _
+                "bgd_popu_cas_py_s3_osm_hp_Free_txt", _
+                "bgd_popu_cas_py_osm_hp_Free_txt", _
+                "bgd_popu_cas_py_osm_Free_txt", _
+                "bgd_popu_cas_py_s2_osm_Free_txt"}
+
+            Dim status As Integer
+
+            System.Console.WriteLine("allDataNameStrMessages.Count = ", allDataNameStrMessages.Count)
+
+            For Each testStr In testOptionalClauses
+                status = dncl.getNameStatus(testStr)
+                System.Console.WriteLine()
+                System.Console.WriteLine(testStr & " = " & status)
+                For Each statusStr In AbstractDataNameClauseLookup.getDataNamingStatusStrings(status)
+                    System.Console.WriteLine(statusStr)
+                Next
+            Next
+
+        Catch ex As Exception
+            System.Console.WriteLine(ex.ToString())
+            System.Console.WriteLine("Test commandline ended with error")
+        End Try
 
         dropESRILicence()
-        MsgBox("done")
+        'MsgBox("done")
     End Sub
 
 End Module
