@@ -2,30 +2,32 @@
 Public Module DataNamingConstants
 
     'Constansts relating to the status of a particular Data Name
-    Public Const DATANAME_UNKNOWN_STATUS = 0
-    Public Const DATANAME_VALID = -1
+    Public Const DATANAME_UNKNOWN_STATUS As Long = 0
+    Public Const DATANAME_VALID As Long = 1
 
-    Public Const DATANAME_ERROR = 2
-    Public Const DATANAME_WARN = 4
-    Public Const DATANAME_INFO = 8
+    Public Const DATANAME_ERROR As Long = 2
+    Public Const DATANAME_WARN As Long = 4
+    Public Const DATANAME_INFO As Long = 8
 
-    Public Const DATANAME_ERROR_INVALID_GEOEXTENT = DATANAME_ERROR Or (2 ^ 4)
-    Public Const DATANAME_ERROR_INVALID_DATACATEGORY = DATANAME_ERROR Or (2 ^ 5)
-    Public Const DATANAME_ERROR_INVALID_DATATHEME = DATANAME_ERROR Or (2 ^ 6)
-    Public Const DATANAME_ERROR_INVALID_DATATYPE = DATANAME_ERROR Or (2 ^ 7)
-    Public Const DATANAME_ERROR_INCORRECT_DATATYPE = DATANAME_ERROR Or (2 ^ 8)
-    Public Const DATANAME_ERROR_INCORRECT_SCALE = DATANAME_ERROR Or (2 ^ 8)
-    Public Const DATANAME_ERROR_INCORRECT_SOURCE = DATANAME_ERROR Or (2 ^ 8)
-    Public Const DATANAME_ERROR_INCORRECT_PERMISSIONS = DATANAME_ERROR Or (2 ^ 8)
-    Public Const DATANAME_ERROR_OTHER_ERROR = DATANAME_ERROR Or (2 ^ 9)
-    Public Const DATANAME_ERROR_CONTAINS_HYPHENS = DATANAME_ERROR Or (2 ^ 12)
-    Public Const DATANAME_ERROR_TOO_FEW_CLAUSES = DATANAME_ERROR Or (2 ^ 13)
+    Public Const DATANAME_ERROR_INVALID_GEOEXTENT As Long = DATANAME_ERROR Or (2 ^ 4)
+    Public Const DATANAME_ERROR_INVALID_DATACATEGORY As Long = DATANAME_ERROR Or (2 ^ 5)
+    Public Const DATANAME_ERROR_INVALID_DATATHEME As Long = DATANAME_ERROR Or (2 ^ 6)
+    Public Const DATANAME_ERROR_INVALID_DATATYPE As Long = DATANAME_ERROR Or (2 ^ 7)
+    Public Const DATANAME_ERROR_INCORRECT_DATATYPE As Long = DATANAME_ERROR Or (2 ^ 8)
+    Public Const DATANAME_ERROR_INCORRECT_SCALE As Long = DATANAME_ERROR Or (2 ^ 9)
+    Public Const DATANAME_ERROR_INCORRECT_SOURCE As Long = DATANAME_ERROR Or (2 ^ 10)
+    Public Const DATANAME_ERROR_INCORRECT_PERMISSIONS As Long = DATANAME_ERROR Or (2 ^ 11)
+    Public Const DATANAME_ERROR_OTHER_ERROR As Long = DATANAME_ERROR Or (2 ^ 12)
+    Public Const DATANAME_ERROR_CONTAINS_HYPHENS As Long = DATANAME_ERROR Or (2 ^ 13)
+    Public Const DATANAME_ERROR_TOO_FEW_CLAUSES As Long = DATANAME_ERROR Or (2 ^ 14)
 
-    Public Const DATANAME_WARN_MISSING_SCALE_CLAUSE = DATANAME_WARN Or (2 ^ 14)
-    Public Const DATANAME_WARN_MISSING_PERMISSIONS_CLAUSE = DATANAME_WARN Or (2 ^ 15)
-    Public Const DATANAME_WARN_TWO_CHAR_FREE_TEXT = DATANAME_WARN Or (2 ^ 16)  '_MAYBE_ERRONEOUS_PERMISSION_CLAUSE
+    Public Const DATANAME_WARN_MISSING_SCALE_CLAUSE As Long = DATANAME_WARN Or (2 ^ 15)
+    Public Const DATANAME_WARN_MISSING_PERMISSIONS_CLAUSE As Long = DATANAME_WARN Or (2 ^ 16)
+    Public Const DATANAME_WARN_TWO_CHAR_FREE_TEXT As Long = DATANAME_WARN Or (2 ^ 17)  '_MAYBE_ERRONEOUS_PERMISSION_CLAUSE
 
-    Public Const DATANAME_INFO_FREE_TEXT_PRESENT = DATANAME_INFO Or (2 ^ 17)
+    Public Const DATANAME_INFO_FREE_TEXT_PRESENT As Long = DATANAME_INFO Or (2 ^ 18)
+
+    Private dataNameStrMessages As Hashtable
 
     'Constants relating to the status of an IDataListConnection object
     Public Const DATALIST_TYPE_UNKNOWN = (2 ^ 1)
@@ -34,33 +36,72 @@ Public Module DataNamingConstants
     Public Const DATALIST_TYPE_MXD = (2 ^ 4)
     Public Const DATALIST_TYPE_MIXED_FILES = (2 ^ 5)
 
+    'Constants relating to the type of DataNameClauseLookup used
+    Public Const DATACLAUSE_LOOKUP_MDB = (2 ^ 1)
+    Public Const DATACLAUSE_LOOKUP_ESRI_GDB = (2 ^ 2)
+
 
     'Constants relating to the names of table which store all of the data name clauses
-    Public Const TABLENAME_GEOEXTENT = "datanaming_clause_geoextent"
-    Public Const TABLENAME_DATA_CAT = "datanaming_clause_data_categories"
-    Public Const TABLENAME_DATA_THEME = "datanaming_clause_data_theme"
-    Public Const TABLENAME_DATA_TYPE = "datanaming_clause_data_type"
-    Public Const TABLENAME_SCALE = "datanaming_clause_scale"
-    Public Const TABLENAME_SOURCE = "datanaming_clause_source"
-    Public Const TABLENAME_PERMISSION = "datanaming_clause_permission"
+    Public Const TABLENAME_GEOEXTENT As String = "datanaming_clause_geoextent"
+    Public Const TABLENAME_DATA_CAT As String = "datanaming_clause_data_categories"
+    Public Const TABLENAME_DATA_THEME As String = "datanaming_clause_data_theme"
+    Public Const TABLENAME_DATA_TYPE As String = "datanaming_clause_data_type"
+    Public Const TABLENAME_SCALE As String = "datanaming_clause_scale"
+    Public Const TABLENAME_SOURCE As String = "datanaming_clause_source"
+    Public Const TABLENAME_PERMISSION As String = "datanaming_clause_permission"
 
     Public Const PRI_KEY_COL_NAME = "clause"
 
-    Private allTableNames() = {TABLENAME_GEOEXTENT, _
-                               TABLENAME_DATA_CAT, _
-                               TABLENAME_DATA_THEME, _
-                               TABLENAME_DATA_TYPE, _
-                               TABLENAME_SCALE, _
-                               TABLENAME_SOURCE, _
-                               TABLENAME_PERMISSION}
+    Private allTableNames = New String() {CType(TABLENAME_GEOEXTENT, String), _
+                           CType(TABLENAME_DATA_CAT, String), _
+                           CType(TABLENAME_DATA_THEME, String), _
+                           CType(TABLENAME_DATA_TYPE, String), _
+                           CType(TABLENAME_SCALE, String), _
+                           CType(TABLENAME_SOURCE, String), _
+                           CType(TABLENAME_PERMISSION, String)}
 
     Public ReadOnly Property allDataNameTables() As String()
         Get
+            'Dim allTableNames() As String
+
+            'Dim Test() As Integer
+            ''declaring a Test array
+            'Test=New Integer(){1,3,5,7,9,} 
+
             allDataNameTables = allTableNames
         End Get
     End Property
 
+    Public ReadOnly Property allDataNameStrMessages() As Hashtable
+        Get
+            allDataNameStrMessages = dataNameStrMessages
+        End Get
+    End Property
+
     Private allDataColumnGroups As New Hashtable
+
+    Public Sub initialiseDataNameStrMessages()
+        dataNameStrMessages = New Hashtable(20)
+        'dataNameStrMessages
+        dataNameStrMessages.Add(DATANAME_ERROR_INVALID_GEOEXTENT, "ERROR: GeoExtent Clause not in list of recognised clauses")
+        dataNameStrMessages.Add(DATANAME_ERROR_INVALID_DATACATEGORY, "ERROR: Data Category Clause not in list of recognised clauses")
+        dataNameStrMessages.Add(DATANAME_ERROR_INVALID_DATATHEME, "ERROR: Data Theme not regonised, or not valid for Data Category")
+        dataNameStrMessages.Add(DATANAME_ERROR_INVALID_DATATYPE, "ERROR: Data Type Clause not in list of recognised clauses")
+        dataNameStrMessages.Add(DATANAME_ERROR_INCORRECT_DATATYPE, "ERROR: Data Type Clause does not match underlying data type")
+        dataNameStrMessages.Add(DATANAME_ERROR_INCORRECT_SCALE, "ERROR: Data Scale Clause Clause not in list of recognised clauses")
+        dataNameStrMessages.Add(DATANAME_ERROR_INCORRECT_SOURCE, "ERROR: Source Clause not in list of recognised clauses")
+        dataNameStrMessages.Add(DATANAME_ERROR_INCORRECT_PERMISSIONS, "ERROR: Permissions Clause not in list of recognised clauses")
+        dataNameStrMessages.Add(DATANAME_ERROR_OTHER_ERROR, "ERROR: General Error phasing data name")
+        dataNameStrMessages.Add(DATANAME_ERROR_CONTAINS_HYPHENS, "ERROR: Data Name contains hyphens")
+        dataNameStrMessages.Add(DATANAME_ERROR_TOO_FEW_CLAUSES, "ERROR: Too few clauses in Data Name")
+
+        dataNameStrMessages.Add(DATANAME_WARN_MISSING_SCALE_CLAUSE, "WARNING: Optional Scale Clause not present")
+        dataNameStrMessages.Add(DATANAME_WARN_MISSING_PERMISSIONS_CLAUSE, "WARNING: Optional Permissions Clause not present")
+        dataNameStrMessages.Add(DATANAME_WARN_TWO_CHAR_FREE_TEXT, "WARNING: Two charater long free text, could be misformed permissions clause")
+
+        dataNameStrMessages.Add(DATANAME_INFO_FREE_TEXT_PRESENT, "INFO: Free text clause is present")
+
+    End Sub
 
     Private Sub initialiseDataColumnCollections()
         Dim myDataCols As ArrayList
@@ -289,9 +330,9 @@ Public Module DataNamingConstants
         End Get
     End Property
 
-
     Sub New()
         initialiseDataColumnCollections()
+        initialiseDataNameStrMessages()
     End Sub
 
 End Module

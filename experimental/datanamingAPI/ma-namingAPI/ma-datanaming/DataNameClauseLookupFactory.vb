@@ -14,7 +14,16 @@ Public Class DataNameClauseLookupFactory
     End Function
 
     Public Function createDataNameClauseLookup(ByVal dnclType As Integer, Optional ByRef args As String() = Nothing) As IDataNameClauseLookup
+        Dim theDataNameClauseLookup As IDataNameClauseLookup
 
+        Select Case dnclType
+            Case DATACLAUSE_LOOKUP_MDB
+                theDataNameClauseLookup = New MDBDataNameClauseLookup(args)
+            Case Else
+                Throw New ArgumentException("DataNameClauseLookup of type " & dnclType & " not recgonised.")
+        End Select
+
+        Return theDataNameClauseLookup
     End Function
 
 End Class

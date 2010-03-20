@@ -56,5 +56,5 @@ Public Interface IDataNameClauseLookup
 
     Function getPermissionsTable() As DataTable
 
-
+    Function getNameStatus(ByVal myStr As String) As Long
 End Interface

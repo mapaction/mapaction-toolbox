@@ -2,7 +2,7 @@
 Public Class DataNameFeatureClass
     Inherits AbstractDataName
 
-    Public Overrides Function isEditable() As Boolean
+    Public Overrides Function isRenameable() As Boolean
 
     End Function
 

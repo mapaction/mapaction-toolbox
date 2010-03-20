@@ -1,7 +1,7 @@
 ﻿Module Module1
 
     Sub Main()
-        Dim gbdcon As geodatasourceconnection
+        ' Dim gbdcon As geodatasourceconnection
 
     End Sub
 

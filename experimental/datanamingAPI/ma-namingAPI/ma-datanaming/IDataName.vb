@@ -107,7 +107,7 @@ Public Interface IDataName
     ''' FALSE = the name of the data layer cannot be changed.
     ''' </returns>
     ''' <remarks></remarks>
-    Function isEditable() As Boolean
+    Function isRenameable() As Boolean
 
     Function changeGeoExtentClause(ByVal newGeoExtent As String) As Integer
 
