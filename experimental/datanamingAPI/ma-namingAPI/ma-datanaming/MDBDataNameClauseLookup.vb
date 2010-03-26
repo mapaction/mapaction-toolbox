@@ -15,7 +15,7 @@ Public Class MDBDataNameClauseLookup
         If args Is Nothing OrElse args.Length < 1 Then
             Throw New ArgumentException("Invalid path passed to New MDBDataNameClauseLookup(args)")
         Else
-            System.Console.WriteLine("args(0)= " & args(0))
+            'System.Console.WriteLine("args(0)= " & args(0))
             initialiseConnectionObject(args(0))
         End If
 
@@ -29,7 +29,7 @@ Public Class MDBDataNameClauseLookup
 
         constr = prefixConStr & pathToMDB
 
-        System.Console.WriteLine("constr= " & constr)
+        'System.Console.WriteLine("constr= " & constr)
 
         myDBConnection = New System.Data.OleDb.OleDbConnection(constr)
         myDBConnection.Open()

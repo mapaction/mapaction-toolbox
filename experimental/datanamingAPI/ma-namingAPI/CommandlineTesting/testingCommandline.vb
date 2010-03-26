@@ -4,6 +4,7 @@ Imports ESRI.ArcGIS.esriSystem
 Imports ESRI.ArcGIS.esriSystem.esriLicenseProductCode
 Imports ESRI.ArcGIS.esriSystem.esriLicenseStatus
 Imports ESRI.ArcGIS.esriSystem.esriLicenseExtensionCode
+Imports mapaction.datanaming
 
 Module testingCommandline
 

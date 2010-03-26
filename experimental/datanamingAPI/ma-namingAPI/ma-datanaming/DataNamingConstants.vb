@@ -3,7 +3,7 @@ Public Module DataNamingConstants
 
     'Constansts relating to the status of a particular Data Name
     Public Const DATANAME_UNKNOWN_STATUS As Long = 0
-    Public Const DATANAME_VALID As Long = 1
+    Public Const DATANAME_VALID As Long = (2 ^ 20)
 
     Public Const DATANAME_ERROR As Long = 2
     Public Const DATANAME_WARN As Long = 4
@@ -100,6 +100,8 @@ Public Module DataNamingConstants
         dataNameStrMessages.Add(DATANAME_WARN_TWO_CHAR_FREE_TEXT, "WARNING: Two charater long free text, could be misformed permissions clause")
 
         dataNameStrMessages.Add(DATANAME_INFO_FREE_TEXT_PRESENT, "INFO: Free text clause is present")
+
+        dataNameStrMessages.Add(DATANAME_VALID, "Data Name parsed correctly")
 
     End Sub
 

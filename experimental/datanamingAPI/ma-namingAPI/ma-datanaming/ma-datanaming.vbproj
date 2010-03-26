@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{3DAEB5CF-D291-4C2C-9751-3FFF9FF17962}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ma_datanaming</RootNamespace>
+    <RootNamespace>mapaction.datanaming</RootNamespace>
     <AssemblyName>ma-datanaming</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
