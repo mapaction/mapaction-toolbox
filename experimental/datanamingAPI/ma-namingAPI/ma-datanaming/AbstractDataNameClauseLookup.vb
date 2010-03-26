@@ -397,12 +397,13 @@ Public MustInherit Class AbstractDataNameClauseLookup
         Else
 
             nameParts = Strings.Split(myStr, "_")
-            partsCnt = nameParts.Length
-            ReDim innerNameParts(nameParts.Length - 4)
+            'partsCnt = nameParts.Length
+            
+            'System.Console.WriteLine("partCnt = " & partsCnt)
 
             'Check one
             'does at least five components?  5 <= nameParts
-            If partsCnt < 5 Then
+            If nameParts.Length < 5 Then
                 returnResult = returnResult Or DATANAME_ERROR_TOO_FEW_CLAUSES
             Else
                 'Check Two
@@ -428,7 +429,10 @@ Public MustInherit Class AbstractDataNameClauseLookup
                     returnResult = returnResult Or DATANAME_ERROR_INVALID_DATATYPE
                 End If
 
+                'geoextent_datacategory_theme_datatype[_scale]_source[_permission][_FreeText]
+
                 'do the remainer of the checks in a seperate recursive function
+                ReDim innerNameParts(nameParts.Length - 4)
                 Array.Copy(nameParts, 4, innerNameParts, 0, (nameParts.Length - 4))
                 returnResult = returnResult Or innerNameStatus(innerNameParts, "scale")
 
@@ -648,7 +652,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
     Public Shared Function getDataNamingStatusStrings(ByVal status As Long) As List(Of String)
         Dim outputList As New List(Of String)
 
-        Dim errorCodes() As Long = {DATANAME_ERROR_INVALID_GEOEXTENT, _
+        Dim statusCodes() As Long = {DATANAME_ERROR_INVALID_GEOEXTENT, _
                                     DATANAME_ERROR_INVALID_DATACATEGORY, _
                                     DATANAME_ERROR_INVALID_DATATHEME, _
                                     DATANAME_ERROR_INVALID_DATATYPE, _
@@ -664,9 +668,9 @@ Public MustInherit Class AbstractDataNameClauseLookup
                                     DATANAME_WARN_TWO_CHAR_FREE_TEXT, _
                                     DATANAME_INFO_FREE_TEXT_PRESENT}
 
-        For Each errCode In errorCodes
-            If ((status And errCode) = errCode) Then
-                outputList.Add(CType(allDataNameStrMessages.Item(errCode), String))
+        For Each staCode In statusCodes
+            If ((status And staCode) = staCode) Then
+                outputList.Add(CType(allDataNameStrMessages.Item(staCode), String))
                 'outputList.Add(errCode)
             End If
         Next
