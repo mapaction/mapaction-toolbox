@@ -7,7 +7,7 @@ Public Class DataNameShapeFile
     End Function
 
     Public Overrides Function getPathStr() As String
-
+        Return Nothing
     End Function
 
 
