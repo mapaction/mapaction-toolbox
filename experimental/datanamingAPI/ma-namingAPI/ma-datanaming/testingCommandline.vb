@@ -131,12 +131,14 @@ Module testingCommandline
 
             'Dim mdbPathStr As String() = {"D:\\MapAction\\bronze\\data_model\\ProposedNamingConvention\\data-naming-conventions-beta_v0.8.mdb"}
             If lookupTablesPath Is Nothing Then
-                mdbPathStr(0) = "D:\MapAction\bronze\data_model\ProposedNamingConvention\data-naming-conventions-beta_v0.8.mdb"
+                mdbPathStr(0) = My.Application.Info.DirectoryPath & "\data-naming-conventions-beta_v0.8.mdb"
+                '"D:\MapAction\bronze\data_model\ProposedNamingConvention\data-naming-conventions-beta_v0.8.mdb"
             Else
                 mdbPathStr(0) = lookupTablesPath
             End If
 
-            'System.Console.WriteLine("mdbPathStr = " & mdbPathStr(0))
+            System.Console.WriteLine("mdbPathStr = " & mdbPathStr(0))
+            System.Console.WriteLine(My.Application.Info.DirectoryPath)
 
             dncl = dnclFactory.createDataNameClauseLookup(DATACLAUSE_LOOKUP_MDB, mdbPathStr)
 

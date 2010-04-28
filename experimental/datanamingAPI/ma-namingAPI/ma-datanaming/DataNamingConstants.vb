@@ -1,4 +1,6 @@
 ﻿
+' TODO: Substainial parts of this module should be converted to read values from an .ini file or simular
+
 Public Module DataNamingConstants
 
     'Constansts relating to the status of a particular Data Name
