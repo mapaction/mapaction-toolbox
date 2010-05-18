@@ -99,6 +99,20 @@ Public Enum dnClauseLookupType As Integer
     ESRI_GDB = CInt(2 ^ 2)
 End Enum
 
+''' <summary>
+''' Describes possible causes of the Lookup Table Exceptions
+''' </summary>
+''' <remarks>
+''' Describes possible causes of the Lookup Table Exceptions
+''' </remarks>
+Public Enum dnLookupTableError As Short
+    general
+    wrong_no_of_cols
+    wrong_col_spec
+    default_tbls_not_found
+End Enum
+
+
 
 Public Module DataNamingConstants
 
@@ -158,6 +172,12 @@ Public Module DataNamingConstants
     Public Const DATATYPE_CLAUSE_WFS As String = "wfs"
     'todo LOW: datatype unknown
     Public Const DATATYPE_CLAUSE_UNKNOWN As String = "unkwn"
+
+    Public Const STR_LOOKUP_TABLE_ERROR_GENERAL As String = "Error whist reading data clause lookup table"
+    Public Const STR_LOOKUP_TABLE_ERROR_WRONG_NO_OF_COLS As String = "Incorrect number of columns in table"
+    Public Const STR_LOOKUP_TABLE_ERROR_WRONG_COL_SPEC As String = "Incorrect specification for column"
+    Public Const STR_LOOKUP_TABLE_ERROR_DEFAULT_TBLS_NOT_FOUND As String = "Cannot find a valid default Data Name Clause Lookup Table"
+    '"Unable to find valid DataName Clause Lookup Tables in directory: "
 
     ''' <summary>
     ''' An array of all of the data name clause tables names.

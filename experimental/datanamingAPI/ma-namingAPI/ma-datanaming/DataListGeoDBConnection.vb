@@ -115,7 +115,7 @@ Public Class DataListGeoDBConnection
 
             Catch ex2 As Exception
                 System.Console.WriteLine(ex2.ToString)
-                Throw New LookupTableException("Cannot find a valid default Data Name Clause Lookup Table " & dataNameLookupWorkspace.PathName)
+                Throw New LookupTableException(dnLookupTableError.default_tbls_not_found, dataNameLookupWorkspace.PathName)
             End Try
         End Try
 

@@ -1,19 +1,6 @@
-﻿Public Enum dnLookupTableError As Short
-    general
-    wrong_no_of_cols
-    wrong_col_spec
-    default_tbls_not_found
-End Enum
-
-
+﻿
 Public Class LookupTableException
     Inherits Exception
-
-    Private Const STR_LOOKUP_TABLE_ERROR_GENERAL = "Error whist reading data clause lookup table"
-    Private Const STR_LOOKUP_TABLE_ERROR_WRONG_NO_OF_COLS = "Incorrect number of columns in table"
-    Private Const STR_LOOKUP_TABLE_ERROR_WRONG_COL_SPEC = "Incorrect specification for column"
-    Private Const STR_LOOKUP_TABLE_ERROR_DEFAULT_TBLS_NOT_FOUND = "Cannot find a valid default Data Name Clause Lookup Table"
-    '"Unable to find valid DataName Clause Lookup Tables in directory: "
 
     Private m_enmErrorType As dnLookupTableError
     Private m_strSearchParam As String
@@ -30,7 +17,7 @@ Public Class LookupTableException
         m_strSearchParam = strSearchParam
     End Sub
 
-    Private Shared Function createMessage(ByVal dnLTE As dnLookupTableError, ByVal strSearchParam As String)
+    Private Shared Function createMessage(ByVal dnLTE As dnLookupTableError, ByVal strSearchParam As String) As String
         Dim strReturnVal As String = ""
 
         Select Case dnLTE
@@ -51,11 +38,11 @@ Public Class LookupTableException
         Return strReturnVal
     End Function
 
-    Private Function getSearchParam()
+    Private Function getSearchParam() As String
         Return m_strSearchParam
     End Function
 
-    Private Function getEnmErrorType()
+    Private Function getEnmErrorType() As dnLookupTableError
         Return m_enmErrorType
     End Function
 End Class

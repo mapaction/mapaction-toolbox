@@ -55,7 +55,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
                     End Select
                 End If
             Catch ex As Exception
-                Throw New LookupTableException("Error whist reading data clause lookup table " & tableName, ex)
+                Throw New LookupTableException(dnLookupTableError.general, tableName, ex)
             End Try
 
         Next
@@ -89,7 +89,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
 
         If dcal1.Count <> dcal2.Count Then
             'returnRes = False
-            Throw New LookupTableException("Incorrect number of columns in table. " & dcal1.Count & " vs " & dcal2.Count)
+            Throw New LookupTableException(dnLookupTableError.wrong_no_of_cols, CStr(dcal1.Count & " vs " & dcal2.Count))
         Else
             For curIndx = 0 To (dcal1.Count - 1)
                 dc1 = CType(dcal1.Item(curIndx), DataColumn)
@@ -118,13 +118,13 @@ Public MustInherit Class AbstractDataNameClauseLookup
                     Case dc1.Caption <> dc2.Caption
                         excepReason = "column Caption requirement doesn't match"
                     Case dc1.ReadOnly <> dc2.ReadOnly
-                        excepReason = "column CaReadOnlyption requirement doesn't match"
+                        excepReason = "column ReadOnly requirement doesn't match"
                     Case Else
                         excepReason = Nothing
                 End Select
 
                 If excepReason Is Nothing Then
-                    Throw New LookupTableException("Incorrect column specification for column: " & excepReason)
+                    Throw New LookupTableException(dnLookupTableError.wrong_col_spec, excepReason)
                 End If
             Next
         End If
