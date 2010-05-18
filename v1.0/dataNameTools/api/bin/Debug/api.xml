@@ -1,0 +1,737 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+api
+</name>
+</assembly>
+<members>
+<member name="M:mapaction.datanames.api.IDataListConnection.getDataListConnectionType">
+	<summary>
+ Returns an Integer which represents the type of connection
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:mapaction.datanames.api.IDataListConnection.getDataListConnectionTypeDesc">
+	<summary>
+ Returns a String which represents the type of connection
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:mapaction.datanames.api.IDataListConnection.getDetails">
+	<summary>
+ Returns a string describing the type of DataListConnection.
+ </summary>
+	<returns>A string describing the type of DataListConnection.</returns>
+	<remarks>
+ Returns a string describing the type of DataListConnection.
+ 
+ This may take on of a number of forms:
+ * An operating system directory path, for a directory containing shapefiles
+ * An operating system file path for a Personal GDB, MXD or connection file.
+ * A RDMS connection string, 
+ * A URL
+ * etc.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataListConnection.getPath">
+	<summary>
+ Returns the operating system file path to the DataListConnection.
+ </summary>
+	<returns>A FileInfo object representing the operating system file path
+ to the DataListConnection.</returns>
+	<remarks>
+ Returns the operating system file path to the DataListConnection.
+ 
+ If the location of the DataListConnection cannot represented as an 
+ operating system file (eg if they are located in a RDBMS) then the 
+ Nothing object is returned.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataListConnection.getLayerNamesStrings">
+	<summary>
+ Returns a List of strings representing the names of all of the layers defined
+ by this DataListConnection. 
+ </summary>
+	<returns>
+ List of strings representing the names of all of the layers defined
+ by this DataListConnection.
+ </returns>
+	<remarks>
+ Returns a List of strings representing the names of all of the layers defined
+ by this DataListConnection. 
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataListConnection.getLayerDataNamesList">
+	<summary>
+ Returns a List of IDataName objects representing the names of all of the layers defined
+ by this DataListConnection. 
+ </summary>
+	<returns>Returns a List of IDataName objects representing the names of all of the layers defined
+ by this GeoDataListConnection.</returns>
+	<remarks>
+ Returns a List of IDataName objects representing the names of all of the layers defined
+ by this GeoDataListConnection.
+ 
+ This function is a shorthand for getLayerDataNamesList(getDefaultDataNameClauseLookup()) 
+ The result of the getDefaultDataNameClauseLookup() function is passed to the constructor of
+ the IDataName objects. If a different DataNameClauseLookup object should be used then use the
+ overloaded alternative form of this function.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataListConnection.getLayerDataNamesList(mapaction.datanames.api.IDataNameClauseLookup@)">
+	<summary>
+ Returns a List of IDataName objects representing the names of all of the layers defined
+ by this DataListConnection. 
+ </summary>
+	<param name="dnclUserSelected">
+ IDataNameClauseLookup object. This is passed to the constructor of
+ the IDataName objects
+ </param>
+	<returns>A List of IDataName objects representing the names of all of the layers defined
+ by this DataListConnection.</returns>
+	<remarks>
+ Returns a List of IDataName objects representing the names of all of the layers defined
+ by this DataListConnection.
+ 
+ The IDataNameClauseLookup object is explictly assigned and this is passed to the constructor of
+ the IDataName objects. If the default DataNameClauseLookup object is sufficent then the alternative
+ shorthand function can be used.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataListConnection.doesLayerExist(System.String)">
+	<summary>
+ A convenience function to test whether or not the named layer is present in this DataListConnection.
+ </summary>
+	<param name="strLayerName">The name of the layer, whose presense is being tested for.</param>
+	<returns>TRUE if strLayerName is present in this DataListConnection, FALSE otherwise</returns>
+	<remarks>
+ A convenience function to test whether or not the named layer is present in this DataListConnection.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataListConnection.getDefaultDataNameClauseLookup">
+	<summary>
+ The IDataListConnection should attempt to physically locate the DataNames Clause Tables either
+ on the filesystem or in the GDB as apropriate. It should then return an IDataNameClauseLookup object
+ as appropriate. The search method to find the DataNames Clause Tables is relevative to the location of the 
+ IDataListConnection
+ 
+ If the Data Names Clause Tables cannot be physically located becuase either they do not exist or there
+ is not a uquine location (eg in the case of a MXD), then a exception is raised.
+ </summary>
+	<returns>An IDataNameClauseLooup object representing automatically located DataNames Clause Tables</returns>
+	<remarks>
+ The IDataListConnection should attempt to physically locate the DataNames Clause Tables either
+ on the filesystem or in the GDB as apropriate. It should then return an IDataNameClauseLookup object
+ as appropriate. The search method to find the DataNames Clause Tables is relevative to the location of the 
+ IDataListConnection.
+ 
+ If the Data Names Clause Tables cannot be physically located becuase either they do not exist or there
+ is not a uquine location (eg in the case of a MXD), then a exception is raised.
+ 
+ For more details on how this should be implenmented please see:
+ http://code.google.com/p/mapaction-toolbox/wiki/SearchForDefaultDataNameClauseLookupTables
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataListConnection.isHeirachical">
+	<summary>
+ Does the IDataListConnection represents some from of heirachical list of data?
+ </summary>
+	<returns>
+ TRUE = the IDataListConnection has a heirachical structure.
+ FALSE = the IDataListConnection does not have a heirachical structure.
+ </returns>
+	<remarks>
+ Does the IDataListConnection represents some from of heirachical list of data?
+ 
+ Some implenmentation of the IDataListConnection, will represents some from of heirachical list of data
+ (eg a directory full of subdirectories and shapefiles). The value returned by this method represents
+ whether or not the underlying list of data is heirachical.
+ 
+ The implenmentor is free to interperate the meaning of heirachicalin the manner deemed most appropriate 
+ for the particular type of IDataListConnection.
+ 
+ For example. Most end users will have a clear expectation that this would be TRUE for a 
+ filesystem directory. 
+ 
+ Strictly an MXD is a heirachical list of layer, with the top level of the heirachy declared as DataFrames 
+ and lower levels declared as potenially nested Group Layers. However MXDs are typically such shallow heirachies
+ that enforcing a heirachical search of an MXD may confuse more users than it helps. In such curcumstances 
+ the implenmentor may choose to return FALSE here and flatten the MXD automatically.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataListConnection.setRecuse(System.Boolean)">
+	<summary>
+ If the IDataListConnection, represents some from of heirachical list of data (eg a directory
+ full of subdirectories and shapefiles), this method sets whether or not the IDataListConnection should recuse
+ the subdirectories.
+ </summary>
+	<param name="blnRecuse">TRUE = the heirachy should be recused. FALSE = the heirachy should not be recused.</param>
+	<remarks>
+ If the IDataListConnection, represents some from of heirachical list of data (eg a directory
+ full of subdirectories and shapefiles), this method sets whether or not the IDataListConnection should recuse
+ the subdirectories when either of the methods getLayerNamesStrings() or getLayerDataNamesList() are called.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataListConnection.getRecuse">
+	<summary>
+ Gets the current setting of whether or not heirachical lists should be recused.
+ </summary>
+	<returns>TRUE = the heirachy should be recused. FALSE = the heirachy should not be recused.</returns>
+	<remarks>Gets the current setting of whether or not heirachical lists should be recused.</remarks>
+</member><member name="T:mapaction.datanames.api.IDataListConnection">
+	<summary>
+ Classes implementing this interface represent a logical group of layers. They may be stored
+ in one location (eg. GDB or directory of shapefiles) or they may be used together in some
+ other logical manner (eg. in a map MXD).
+ </summary>
+	<remarks>
+ Classes implementing this interface represent a logical group of layers. They may be stored
+ in one location (eg. GDB or directory of shapefiles) or they may be used together in some
+ other logical manner (eg. in a map MXD).
+ 
+ This interface is generally used along with two others, IDataNameClauseLookup and IDataName
+ </remarks>
+</member><member name="P:mapaction.datanames.api.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:mapaction.datanames.api.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:mapaction.datanames.api.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isvalidGeoextentClause(System.String)">
+	<summary>
+ Tests whether the testGeoExtentClause is listed in the datanaming_clause_geoextent table.
+ </summary>
+	<param name="testGeoExtentClause">The test clause</param>
+	<returns>TRUE if the testGeoExtentClause is found in the relevant table, FALSE otherwise.</returns>
+	<remarks>
+ Tests whether the testGeoExtentClause is listed in the datanaming_clause_geoextent table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isvalidDataCategoryClause(System.String)">
+	<summary>
+ Tests whether the testDataCatClause is listed in the datanaming_clause_data_categories table.
+ </summary>
+	<param name="testDataCatClause">The test clause</param>
+	<returns>TRUE if the testDataCatClause is found in the relevant table, FALSE otherwise.</returns>
+	<remarks>
+ Tests whether the testDataCatClause is listed in the datanaming_clause_data_categories table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isvalidDataThemeClause(System.String,System.String)">
+	<summary>
+ Tests whether the testDataThemeClause is listed in the datanaming_clause_data_theme table.
+ </summary>
+	<param name="testDataThemeClause">The test clause</param>
+	<returns>TRUE if the testDataThemeClause is found in the relevant table, FALSE otherwise.</returns>
+	<remarks>
+ Tests whether the testDataThemeClause is listed in the datanaming_clause_data_theme table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isvalidDataTypeClause(System.String)">
+	<summary>
+ Tests whether the testDataTypeClause is listed in the datanaming_clause_data_type table.
+ </summary>
+	<param name="testDataTypeClause">The test clause</param>
+	<returns>TRUE if the testDataTypeClause is found in the relevant table, FALSE otherwise.</returns>
+	<remarks>
+ Tests whether the testDataTypeClause is listed in the datanaming_clause_data_type table.
+ 
+ Note that this does NOT test whether or not the testDataTypeClause matches the data type 
+ of a particular layer. For that see .....
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isvalidScaleClause(System.String)">
+	<summary>
+ Tests whether the testScaleClause is listed in the datanaming_clause_scale table.
+ </summary>
+	<param name="testScaleClause">The test clause</param>
+	<returns>TRUE if the testScaleClause is found in the relevant table, FALSE otherwise.</returns>
+	<remarks>
+ Tests whether the testScaleClause is listed in the datanaming_clause_scale table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isvalidSourceClause(System.String)">
+	<summary>
+ Tests whether the testSourceClause is listed in the datanaming_clause_source table.
+ </summary>
+	<param name="testSourceClause">The test clause</param>
+	<returns>TRUE if the testSourceClause is found in the relevant table, FALSE otherwise.</returns>
+	<remarks>
+ Tests whether the testSourceClause is listed in the datanaming_clause_source table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isvalidPermissionsClause(System.String)">
+	<summary>
+ Tests whether the testPermissionsClause is listed in the datanaming_clause_permission table.
+ </summary>
+	<param name="testPermissionsClause">The test clause</param>
+	<returns>TRUE if the testPermissionsClause is found in the relevant table, FALSE otherwise.</returns>
+	<remarks>
+ Tests whether the testPermissionsClause is listed in the datanaming_clause_permission table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.getGeoExtentList">
+	<summary>
+ This method returns a simple list of all of the valid GeoExtent clauses, as Strings, from the
+ datanaming_clause_geoextent table.
+ </summary>
+	<returns>A list of clauses as Strings, without any extra information.</returns>
+	<remarks>
+ This method returns a simple list of all of the valid GeoExtent clauses, as Strings, from the
+ datanaming_clause_geoextent table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.getDataCategoryList">
+	<summary>
+ This method returns a simple list of all of the valid GeoExtent clauses, as Strings, from the
+ datanaming_clause_data_categories table.
+ </summary>
+	<returns>A list of clauses as Strings, without any extra information.</returns>
+	<remarks>
+ This method returns a simple list of all of the valid GeoExtent clauses, as Strings, from the
+ datanaming_clause_data_categories table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.getDataThemeList">
+	<summary>
+ This method returns a simple list of all of the valid GeoExtent clauses, as Strings, from the
+ datanaming_clause_data_theme table.
+ </summary>
+	<returns>A list of clauses as Strings, without any extra information.</returns>
+	<remarks>
+ This method returns a simple list of all of the valid GeoExtent clauses, as Strings, from the
+ datanaming_clause_data_theme table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.getDataTypeList">
+	<summary>
+ This method returns a simple list of all of the valid GeoExtent clauses, as Strings, from the
+ datanaming_clause_data_type table.
+ </summary>
+	<returns>A list of clauses as Strings, without any extra information.</returns>
+	<remarks>
+ This method returns a simple list of all of the valid GeoExtent clauses, as Strings, from the
+ datanaming_clause_data_type table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.getScaleCodesList">
+	<summary>
+ This method returns a simple list of all of the valid GeoExtent clauses, as Strings, from the
+ datanaming_clause_scale table.
+ </summary>
+	<returns>A list of clauses as Strings, without any extra information.</returns>
+	<remarks>
+ This method returns a simple list of all of the valid GeoExtent clauses, as Strings, from the
+ datanaming_clause_scale table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.getSourceCodesList">
+	<summary>
+ This method returns a simple list of all of the valid GeoExtent clauses, as Strings, from the
+ datanaming_clause_source table.
+ </summary>
+	<returns>A list of clauses as Strings, without any extra information.</returns>
+	<remarks>
+ This method returns a simple list of all of the valid GeoExtent clauses, as Strings, from the
+ datanaming_clause_source table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.getPermissionsList">
+	<summary>
+ This method returns a simple list of all of the valid GeoExtent clauses, as Strings, from the
+ datanaming_clause_permission table.
+ </summary>
+	<returns>A list of clauses as Strings, without any extra information.</returns>
+	<remarks>
+ This method returns a simple list of all of the valid GeoExtent clauses, as Strings, from the
+ datanaming_clause_permission table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.getGeoExtentTable">
+	<summary>
+ This method returns a full bindable version of the datanaming_clause_geoextent table.
+ </summary>
+	<returns>A full bindable version of the datanaming_clause_geoextent table.</returns>
+	<remarks>
+ This method returns a full bindable version of the datanaming_clause_geoextent table.
+ 
+ This includes the clause and description columns plus any other columns included in the 
+ datanaming_clause_geoextent table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.getDataCategoryTable">
+	<summary>
+ This method returns a full bindable version of the datanaming_clause_data_categories table.
+ </summary>
+	<returns>A full bindable version of the datanaming_clause_data_categories table.</returns>
+	<remarks>
+ This method returns a full bindable version of the datanaming_clause_data_categories table.
+ 
+ This includes the clause and description columns plus any other columns included in the 
+ datanaming_clause_data_categories table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.getDataThemeTable">
+	<summary>
+ This method returns a full bindable version of the datanaming_clause_data_theme table.
+ </summary>
+	<returns>A full bindable version of the datanaming_clause_data_theme table.</returns>
+	<remarks>
+ This method returns a full bindable version of the datanaming_clause_data_theme table.
+ 
+ This includes the clause and description columns plus any other columns included in the 
+ datanaming_clause_data_theme table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.getDataTypeTable">
+	<summary>
+ This method returns a full bindable version of the datanaming_clause_data_type table.
+ </summary>
+	<returns>A full bindable version of the datanaming_clause_data_type table.</returns>
+	<remarks>
+ This method returns a full bindable version of the datanaming_clause_data_type table.
+ 
+ This includes the clause and description columns plus any other columns included in the 
+ datanaming_clause_data_type table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.getScaleCodesTable">
+	<summary>
+ This method returns a full bindable version of the datanaming_clause_scale table.
+ </summary>
+	<returns>A full bindable version of the datanaming_clause_scale table.</returns>
+	<remarks>
+ This method returns a full bindable version of the datanaming_clause_scale table.
+ 
+ This includes the clause and description columns plus any other columns included in the 
+ datanaming_clause_scale table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.getSourceCodesTable">
+	<summary>
+ This method returns a full bindable version of the datanaming_clause_source table.
+ </summary>
+	<returns>A full bindable version of the datanaming_clause_source table.</returns>
+	<remarks>
+ This method returns a full bindable version of the datanaming_clause_source table.
+ 
+ This includes the clause and description columns plus any other columns included in the 
+ datanaming_clause_source table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.getPermissionsTable">
+	<summary>
+ This method returns a full bindable version of the datanaming_clause_permission table.
+ </summary>
+	<returns>A full bindable version of the datanaming_clause_permission table.</returns>
+	<remarks>
+ This method returns a full bindable version of the datanaming_clause_permission table.
+ 
+ This includes the clause and description columns plus any other columns included in the 
+ datanaming_clause_permission table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.getDetails">
+	<summary>
+ Returns a string describing the storage location of the dataname clause tables.
+ </summary>
+	<returns>A string describing the storage location of the dataname clause tables.</returns>
+	<remarks>
+ Returns a string describing the storage location of the dataname clause tables.
+ 
+ This may be the operating system file path if appropriate or a RDMS connection
+ string, or a URL etc.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.getPath">
+	<summary>
+ Returns the operating system file path to the container of the dataname clause tables.
+ </summary>
+	<returns>A FileInfo object representing the operating system file path to the container 
+ of the dataname clause tables.</returns>
+	<remarks>
+ Returns the operating system file path to the container of the dataname clause tables.
+ 
+ If the location of these tables cannot represented as an operating system file (eg if they 
+ are located in a RDBMS) then the Nothing object is returned.
+ </remarks>
+</member><member name="T:mapaction.datanames.api.IDataNameClauseLookup">
+	<summary>
+ Classes implementing this interface provide a means to interact with a collection of flat database
+ tables, which collectively, list valid values for each individual clause in a data name.
+ </summary>
+	<remarks>
+ Classes implementing this interface provide a means to interact with a collection of flat database
+ tables, which collectively, list valid values for each individual clause in a data name.
+ 
+ The names of the relevant tables are:
+     "datanaming_clause_geoextent"
+     "datanaming_clause_data_categories"
+     "datanaming_clause_data_theme"
+     "datanaming_clause_data_type"
+     "datanaming_clause_scale"
+     "datanaming_clause_source"
+     "datanaming_clause_permission"
+ (these are defined in the YYYY enumeration)
+ 
+ It is not expected that that will be any public constructors for classes implenementing IDataNameClauseLookup.
+ In general, instances of IDataNameClauseLookup should be obtained either by use of the 
+ IDataList.getDefaultDataNameClauseLookup() method or by using a correponding XXXX Factory class.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.getNameStr">
+	<summary>
+ Returns the current IDataName as a String.
+ </summary>
+	<returns>a string of the current Data Name</returns>
+	<remarks>
+ Returns the current IDataName as a String. The returned name should not include
+ (i) the path (ii) the filename extension (eg ".shp") (iii) the RDBMS database or
+ RDBMS user name prefixes (eg "mapaction.sde.")
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.getPathStr">
+	<summary>
+ Returns the path of the current IDataName as a String if possible.
+ </summary>
+	<returns>
+ a string of the current Data Name's path. Or is a path is not available a null 
+ or zero length string is returned.
+ </returns>
+	<remarks>
+ Returns the path of the current Data Name as a String, if a suitable meaning of
+ path is applicable. If there is no easy or meaningful sense of a path (eg for a 
+ RDBMS) then a null or zero length string is returned.
+</remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.getNameAndFullPathStr">
+	<summary>
+ Returns the fully qualified IDataName as a String if possible.
+ </summary>
+	<returns>
+ a string of the current IDataName's the fully qualified name. Or is a path is not
+ available then just the fully qualified name is returned (ie including the filename
+ extension [eg ".shp"] the RDBMS database or RDBMS user name prefixes
+ [eg "mapaction.sde."]
+ </returns>
+	<remarks>
+ Returns getPathStr() + "\" + getNameStr()
+ Returns the fully qualified IDataName as a String, if a suitable meaning of
+ path is applicable. If there is no easy or meaningful sense of a path (eg for a 
+ RDBMS) then the fully qualified name is returned (ie including the filename
+ extension [eg ".shp"] the RDBMS database or RDBMS user name prefixes
+ [eg "mapaction.sde."].
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.checkNameStatus">
+	<summary>
+ This method does the core processing to determine whether or not the particular name represented by 
+ this object is syntatically correct and valid or not.
+ </summary>
+	<returns>A Long which is the sum of the relevant XXXXX emnumeration members</returns>
+	<remarks>
+ This method does the core processing to determine whether or not the particular name represented by 
+ this object is syntatically correct and valid or not. 
+ 
+ XXXXX If the name is not valid, it will attempt to estimate what the mistake is. These are classified as either
+ XXXXX "Errors" or "Warnings"
+ XXXXX Error = The name cannot be understood
+ XXXXX Warning = The name can be understood, but there is a risk that it will be misinterprited
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.isNameParseable">
+	<summary>
+ Tests whether or not the IDataName is syntatically correct.
+ </summary>
+	<returns>Boolean. TRUE is the name is syntatically correct, FALSE otherwise</returns>
+	<remarks>
+ Tests whether or not the IDataName is syntatically correct.
+ 
+ XXXXX Shorthand for:
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.isNameValid">
+	<summary>
+ Tests whether or not the Data Name is both syntatically correct and all of the clauses are found in the
+ relevant IDataNameClauseLookupTables.
+ </summary>
+	<returns>
+ Boolean. TRUE is the name is syntatically correct AND all of the clauses are found in the
+ relevant IDataNameClauseLookupTables, FALSE otherwise
+ </returns>
+	<remarks>
+ Tests whether or not the Data Name is both syntatically correct and all of the clauses are found in the
+ relevant IDataNameClauseLookupTables. If optional clauses are present then their values must be found in
+ the relevant  IDataNameClauseLookupTables.
+ 
+ XXXXX Shorthand for:
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.hasOptionalScaleClause">
+	<summary>
+ Does this name include the optional "Scale" clause in it?
+ </summary>
+	<returns>
+ TRUE = The optional scale clause is present AND the name is syntatically correct.
+ FALSE = The optional scale clause is not present OR the name is not syntatically correct.
+ </returns>
+	<remarks>Does this name include the optional "Scale" clause in it?</remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.hasOptionalPermissionClause">
+	<summary>
+ Does this name include the optional "Data Permissions" clause in it?
+ </summary>
+	<returns>
+ TRUE = The optional Data Permissions clause is present AND the name is syntatically correct.
+ FALSE = The optional Data Permissions clause is not present OR the name is not syntatically correct.
+ </returns>
+	<remarks>Does this name include the optional "Data Permissions" clause in it?</remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.hasOptionalFreeText">
+	<summary>
+ Does this IDataName include the optional "Free Text" clause?
+ </summary>
+	<returns>
+ TRUE = The optional Free Text clause is present AND the name is syntatically correct.
+ FALSE = The optional Free Text clause is not present OR the name is not syntatically correct.
+ </returns>
+	<remarks>Does this IDataName include the optional "Data Permissions" clause in it?</remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.isRenameable">
+	<summary>
+ Returns a runtime value for whether or not it is possible for the IDataName of this data layer 
+ to be changed? For example this made be no if the underlying file system is readony, or 
+ the data resides on a webservice such as WMS/WFS.
+ </summary>
+	<returns>
+ TRUE = the name of the data layer can be changed.
+ FALSE = the name of the data layer cannot be changed.
+ </returns>
+	<remarks>
+ Returns a runtime value for whether or not it is possible for the IDataName of this data layer 
+ to be changed? For example this may be FALSE if the underlying file system is readony, or 
+ the data resides on a webservice such as WMS/WFS.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.rename(System.String)">
+	<summary>
+ Attempts to rename the IDataName, to the newNameStr. The newNameStr does not need to be valid
+ in the sense of the data naming convention, but must be valid in terms of the underlying storage.
+ </summary>
+	<param name="newNameStr">The new Name for the IDataName.</param>
+	<remarks>
+ Attempts to rename the DataName, to the newNameStr. The newNameStr does not need to be valid
+ in the sense of the data naming convention, but must be valid in terms of the underlying storage.
+ 
+ If the renaming fails for any reason a RenamingDataException is thrown.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.changeGeoExtentClause(System.String)">
+	<summary>
+ A convenance function, to subsutute the GeoExtent clause of the current name with a new value.
+ </summary>
+	<param name="newGeoExtent">The new, subsutute GeoExtent clause</param>
+	<returns></returns>
+	<remarks>
+ A convenance function, to subsutute the GeoExtent clause of the current name with a new value.
+ The new value does not need to be valid in the sense of the data naming convention, but must
+ be valid in terms of the underlying storage.
+ 
+ Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+ .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.changeDataCategoryClause(System.String)">
+	<summary>
+ A convenance function, to subsutute the DataCategory clause of the current name with a new value.
+ </summary>
+	<param name="newDataCategory">The new, subsutute DataCategory clause</param>
+	<returns></returns>
+	<remarks>
+ A convenance function, to subsutute the DataCategory clause of the current name with a new value.
+ The new value does not need to be valid in the sense of the data naming convention, but must
+ be valid in terms of the underlying storage.
+ 
+ Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+ .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.changeDataThemeClause(System.String)">
+	<summary>
+ A convenance function, to subsutute the DataTheme clause of the current name with a new value.
+ </summary>
+	<param name="newDataTheme">The new, subsutute DataTheme clause</param>
+	<returns></returns>
+	<remarks>
+ A convenance function, to subsutute the DataTheme clause of the current name with a new value.
+ The new value does not need to be valid in the sense of the data naming convention, but must
+ be valid in terms of the underlying storage.
+ 
+ Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+ .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.changeDataTypeClause(System.String)">
+	<summary>
+ A convenance function, to subsutute the DataType clause of the current name with a new value.
+ </summary>
+	<param name="newDataType">The new, subsutute DataType clause</param>
+	<returns></returns>
+	<remarks>
+ A convenance function, to subsutute the DataType clause of the current name with a new value.
+ The new value does not need to be valid in the sense of the data naming convention, but must
+ be valid in terms of the underlying storage.
+ 
+ Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+ .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.changePermissionsClause(System.String)">
+	<summary>
+ A convenance function, to subsutute the Permissions clause of the current name with a new value.
+ </summary>
+	<param name="newPermissionsClause">The new, subsutute Permissions clause</param>
+	<returns></returns>
+	<remarks>
+ A convenance function, to subsutute the Permissions clause of the current name with a new value.
+ The new value does not need to be valid in the sense of the data naming convention, but must
+ be valid in terms of the underlying storage.
+ 
+ If the Permissions clause is not already present it will be inserted and the relevant undersources
+ will be inserted. To completely remove an existing Permissions clause set newPermissionsClause=""
+ and the relevant undersorces will be removed.
+ 
+ Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+ .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.changeScaleClause(System.String)">
+	<summary>
+ A convenance function, to subsutute the Scale clause of the current name with a new value.
+ </summary>
+	<param name="newScaleClause">The new, subsutute Scale clause</param>
+	<returns></returns>
+	<remarks>
+ A convenance function, to subsutute the Scale clause of the current name with a new value.
+ The new value does not need to be valid in the sense of the data naming convention, but must
+ be valid in terms of the underlying storage.
+ 
+ If the Scale clause is not already present it will be inserted and the relevant undersources
+ will be inserted. To completely remove an existing Scale clause set newScaleClause="" and
+ the relevant undersorces will be removed.
+ 
+ Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+ .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.changeSourceClause(System.String)">
+	<summary>
+ A convenance function, to subsutute the Source clause of the current name with a new value.
+ </summary>
+	<param name="newSourceClause">The new, subsutute Source clause</param>
+	<returns></returns>
+	<remarks>
+ A convenance function, to subsutute the Source clause of the current name with a new value.
+ The new value does not need to be valid in the sense of the data naming convention, but must
+ be valid in terms of the underlying storage.
+ 
+ Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+ .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataName.changeFreeTextClause(System.String)">
+	<summary>
+ A convenance function, to subsutute the FreeText clause of the current name with a new value.
+ </summary>
+	<param name="newFreeTextClause">The new, subsutute FreeText clause</param>
+	<returns></returns>
+	<remarks>
+ A convenance function, to subsutute the FreeText clause of the current name with a new value.
+ The new value does not need to be valid in the sense of the data naming convention, but must
+ be valid in terms of the underlying storage.
+ 
+ If the FreeText clause is not already present it will be inserted and the relevant undersources
+ will be inserted. To completely remove an existing FreeText clause set newFreeTextClause="" and
+ the relevant undersorces will be removed.
+ 
+ Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+ .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
+ </remarks>
+</member><member name="T:mapaction.datanames.api.IDataName">
+	<summary>
+ Classes implementing this interface represent the status of the name of an individual layer, table
+ dataset or other file which is a part of a MapAction GIS data directory.
+ </summary>
+	<remarks>
+ Classes implementing this interface represent the status of the name of an individual layer, table
+ dataset or other file which is a part of a MapAction GIS data directory.
+ 
+ Instances of these classes may or may not represent a name which is valid, or even syntatically
+ correct. The intention is that these classes will assist the user in determining whether or not
+ individual names are valid or not.
+ 
+ It is not expected that that will be any public constructors for classes implenementing IDataName.
+ In general, instances of IDataName would be created within the implenmentation of the
+ IGeoDataListConnection.getLayerDataNamesList() method.
+ </remarks>
+</member>
+</members>
+</doc>

@@ -1,0 +1,357 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+ma-datanaming
+</name>
+</assembly>
+<members>
+<member name="M:mapaction.dataname.AbstractDataName.getPathStr">
+	<summary>
+ Does not include trailing slash or backslash
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:mapaction.dataname.AbstractDataName.getUnderlyingDataType">
+	<summary>
+ This is used to check that the data type clause matches actually physical data type.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:mapaction.dataname.AbstractDataName.checkNameStatus">
+	<summary>
+ Rewrite this!!!!
+  
+ If this is true then any methods which requires a valid name should succed. If this
+ returns false then any methods which requires a valid name will throw an InvalidDataNameException.
+ </summary>
+	<returns>Returns a runtime value that that the current DataName is or isn't valid according to both syntax 
+ and the current values in the associated DataClauseLookupTable.
+ current values</returns>
+	<remarks></remarks>
+</member><member name="M:mapaction.dataname.AbstractDataName.isRenameable">
+	<summary>
+ 
+ If true then attempting to calling one of the methods to rename the
+ DataName should not throw an expeption. If false then attempting to call one of the method
+ will raise a RenamingDataException.
+ </summary>
+	<returns>Boolean. Returns a runtime value signifying whether or not the underlying dataname
+ is both renaming (physically) and that the relevant permissions are held.
+ </returns>
+	<remarks></remarks>
+</member><member name="M:mapaction.dataname.AbstractDataName.generateNameWithReplacedClause(System.String,System.String)">
+	<summary>
+ Does NOT alter the underlying DataName - for that use the rename function. This function is a helper function to help prepare
+ the arguments for the rename function.
+ If the clauseName is for a optional clause that is currently not included it will be inserted into the string.
+ If the clauseName is for a clause that is already present then the old clause will be replaced.
+ </summary>
+	<param name="newClauseValue"></param>
+	<param name="clauseName"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:mapaction.dataname.AbstractDataName.getClauseIndex(System.String)">
+	<summary>
+ Reutrn as ZERO based index of the named clause. Will throw an InvalidDataNameException if 
+ the bitSum refers to an invalid name.
+ </summary>
+	<param name="clauseName"></param>
+	<returns>If optional cluase is no present, the value "-1" will be returned.</returns>
+	<remarks></remarks>
+</member><member name="P:mapaction.dataname.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:mapaction.dataname.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:mapaction.dataname.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="M:mapaction.dataname.AbstractDataNameClauseLookup.doDataColumnsMatch(System.Collections.ArrayList@,System.Collections.ArrayList@)">
+	<summary>
+ Is this really the best way to check the schema of the DB? probably could be done better using the XML schema definition stuff in ADO.NET
+ Columns *must* be in the same order.
+ </summary>
+	<param name="dcal1"></param>
+	<param name="dcal2"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:mapaction.dataname.DataListFileSystemDirectory.filterFilesForSpecialGISData">
+	<summary>
+ Equivilant to filterFilesForSpecialGISData(true)
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:mapaction.dataname.DataListFileSystemDirectory.filterFilesForSpecialGISData(System.Boolean)">
+	<summary>
+ Returns a list of FileInfo Objects, representing the files (not subdirectories) in the Directory, filtering out
+ all of the OS files which are part of logical GIS files. 
+ 
+ If an DBF or XML file is included which is not part of a logical GIS file, then these are included in the 
+ returned List.
+ </summary>
+	<param name="includeSpecialBaseFiles">If this is true then the basefiles of special GIS file eg. "example.shp" are 
+ included in the returned list. If False, all special GIS files including the basefiles are excluded</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:mapaction.dataname.DataListFileSystemDirectory.allBaseFileNameOptions(System.String)">
+	<summary>
+ Helper function for filterFilesForSpecialGISData()
+ </summary>
+	<param name="fileName"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:mapaction.dataname.DataNameNormalFile.getUnderlyingDataType">
+	<summary>
+ Generally assumed to be a table for the non-GIS files
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:mapaction.dataname.IGeoDataListConnection.getGeoDataListConnectionType">
+	<summary>
+ Returns an Integer which represents the type of connection
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:mapaction.dataname.IGeoDataListConnection.getGeoDataListConnectionTypeDesc">
+	<summary>
+ Returns a String which represents the type of connection
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:mapaction.dataname.IGeoDataListConnection.getDetails">
+	<summary>
+ Returns a string describing the type of DataListConnection.
+ </summary>
+	<returns>A string describing the type of DataListConnection.</returns>
+	<remarks>
+ Returns a string describing the type of DataListConnection.
+ 
+ This may take on of a number of forms:
+ * An operating system directory path, for a directory containing shapefiles
+ * An operating system file path for a Personal GDB, MXD or connection file.
+ * A RDMS connection string, 
+ * A URL
+ * etc.
+ </remarks>
+</member><member name="M:mapaction.dataname.IGeoDataListConnection.getLayerNamesStrings">
+	<summary>
+ Returns a List of strings representing the names of all of the layers defined
+ by this DataListConnection. 
+ </summary>
+	<returns>
+ List of strings representing the names of all of the layers defined
+ by this DataListConnection.
+ </returns>
+	<remarks>
+ Returns a List of strings representing the names of all of the layers defined
+ by this DataListConnection. 
+ </remarks>
+</member><member name="M:mapaction.dataname.IGeoDataListConnection.getLayerDataNamesList">
+	<summary>
+ Returns a List of IDataName objects representing the names of all of the layers defined
+ by this DataListConnection. 
+ </summary>
+	<returns>Returns a List of IDataName objects representing the names of all of the layers defined
+ by this GeoDataListConnection.</returns>
+	<remarks>
+ Returns a List of IDataName objects representing the names of all of the layers defined
+ by this GeoDataListConnection.
+ 
+ This function is a shorthand for getLayerDataNamesList(getDefaultDataNameClauseLookup()) 
+ The result of the getDefaultDataNameClauseLookup() function is passed to the constructor of
+ the IDataName objects. If a different DataNameClauseLookup object should be used then use the
+ overloaded alternative form of this function.
+ </remarks>
+</member><member name="M:mapaction.dataname.IGeoDataListConnection.getLayerDataNamesList(mapaction.dataname.IDataNameClauseLookup@)">
+	<summary>
+ Returns a List of IDataName objects representing the names of all of the layers defined
+ by this DataListConnection. 
+ </summary>
+	<param name="dnclUserSelected">
+ IDataNameClauseLookup object. This is passed to the constructor of
+ the IDataName objects
+ </param>
+	<returns>A List of IDataName objects representing the names of all of the layers defined
+ by this DataListConnection.</returns>
+	<remarks>
+ Returns a List of IDataName objects representing the names of all of the layers defined
+ by this DataListConnection.
+ 
+ The IDataNameClauseLookup object is explictly assigned and this is passed to the constructor of
+ the IDataName objects. If the default DataNameClauseLookup object is sufficent then the alternative
+ shorthand function can be used.
+ </remarks>
+</member><member name="M:mapaction.dataname.IGeoDataListConnection.doesLayerExist(System.String)">
+	<summary>
+ A convenience function to test whether or not the named layer is present in this DataListConnection.
+ </summary>
+	<param name="strLayerName">The name of the layer, whose presense is being tested for.</param>
+	<returns>TRUE if strLayerName is present in this DataListConnection, FALSE otherwise</returns>
+	<remarks>
+ A convenience function to test whether or not the named layer is present in this DataListConnection.
+ </remarks>
+</member><member name="M:mapaction.dataname.IGeoDataListConnection.getDefaultDataNameClauseLookup">
+	<summary>
+ The IDataListConnection should attempt to physically locate the DataNames Clause Tables either
+ on the filesystem or in the GDB as apropriate. It should then return an IDataNameClauseLookup object
+ as appropriate. The search method to find the DataNames Clause Tables is relevative to the location of the 
+ IDataListConnection
+ 
+ If the Data Names Clause Tables cannot be physically located becuase either they do not exist or there
+ is not a uquine location (eg in the case of a MXD), then a exception is raised.
+ </summary>
+	<returns>An IDataNameClauseLooup object representing automatically located DataNames Clause Tables</returns>
+	<remarks>
+ The IDataListConnection should attempt to physically locate the DataNames Clause Tables either
+ on the filesystem or in the GDB as apropriate. It should then return an IDataNameClauseLookup object
+ as appropriate. The search method to find the DataNames Clause Tables is relevative to the location of the 
+ IDataListConnection.
+ 
+ If the Data Names Clause Tables cannot be physically located becuase either they do not exist or there
+ is not a uquine location (eg in the case of a MXD), then a exception is raised.
+ 
+ For more details on how this should be implenmented please see:
+ http://code.google.com/p/mapaction-toolbox/wiki/SearchForDefaultDataNameClauseLookupTables
+ </remarks>
+</member><member name="M:mapaction.dataname.IGeoDataListConnection.setRecuse(System.Boolean)">
+	<summary>
+ If the IDataListConnection, represents some from of heirachical list of data (eg a directory
+ full of subdirectories and shapefiles), this method sets whether or not the IDataListConnection should recuse
+ the subdirectories.
+ </summary>
+	<param name="blnRecuse">TRUE = the heirachy should be recused. FALSE = the heirachy should not be recused.</param>
+	<remarks>
+ If the IDataListConnection, represents some from of heirachical list of data (eg a directory
+ full of subdirectories and shapefiles), this method sets whether or not the IDataListConnection should recuse
+ the subdirectories when either of the methods getLayerNamesStrings() or getLayerDataNamesList() are called.
+ </remarks>
+</member><member name="M:mapaction.dataname.IGeoDataListConnection.getRecuse">
+	<summary>
+ Gets the current setting of whether or not heirachical lists should be recused.
+ </summary>
+	<returns>TRUE = the heirachy should be recused. FALSE = the heirachy should not be recused.</returns>
+	<remarks>Gets the current setting of whether or not heirachical lists should be recused.</remarks>
+</member><member name="T:mapaction.dataname.IGeoDataListConnection">
+	<summary>
+ Classes implementing this interface represent a logical group of layers. They may be stored
+ in one location (eg. GDB or directory of shapefiles) or they may be used together in some
+ other logical manner (eg. in a map MXD).
+ </summary>
+	<remarks>
+ Classes implementing this interface represent a logical group of layers. They may be stored
+ in one location (eg. GDB or directory of shapefiles) or they may be used together in some
+ other logical manner (eg. in a map MXD).
+ 
+ This interface is generally used along with two others, IDataNameClauseLookup and IDataName
+ </remarks>
+</member><member name="M:mapaction.dataname.MDBDataNameClauseLookup.#ctor(System.String[])">
+	<summary>
+ Expects the first argument to be the full path to the Access MDB file. Ignores other argument.
+ </summary>
+	<param name="args"></param>
+	<remarks></remarks>
+</member><member name="M:mapaction.dataname.IDataNameClauseLookup.isWriteable">
+	<summary>
+ Test whether the Data Name Clause tables can be written to or not
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:mapaction.dataname.MADirectorySearcher.getGDBsInDir(System.IO.DirectoryInfo@)">
+	<summary>
+ Searchs a directory and returns are list for all possible GDBs or GDB connection files with the directory
+ </summary>
+	<param name="dirArg"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:mapaction.dataname.MADirectorySearcher">
+	<summary>
+ A private convenience class to help search directories for the DataName Clause Lookup table 
+ in whatever form they may take.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:mapaction.dataname.IDataName.getNameStr">
+	<summary>
+ Returns the current Data Name as a String. No path is included
+ </summary>
+	<returns>a string of the current Data Name</returns>
+	<remarks>
+ Returns the current Data Name as a String
+ </remarks>
+</member><member name="M:mapaction.dataname.IDataName.getPathStr">
+	<summary>
+ Returns the path of the current Data Name as a String, if a suitable meaning of path is applicable. If
+ there is no easy or meaningful sense of a path (eg for a RDBMS) then a null or zero length string is 
+ returned
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:mapaction.dataname.IDataName.getNameAndFullPathStr">
+	<summary>
+	</summary>
+	<returns></returns>
+	<remarks>
+ Returns getPathStr() + "\" + getNameStr()
+ </remarks>
+</member><member name="M:mapaction.dataname.IDataName.checkNameStatus">
+	<summary>
+ This method does the core processing to determine whether or not the particular name represented by 
+ this class is valid or not. 
+ 
+ </summary>
+	<returns>An integer based on the various contants defined in AbstractDataName class</returns>
+	<remarks>
+ This method does the core processing to determine whether or not the particular name represented by 
+ this class is valid or not. 
+ 
+ If the name is not valid, it will attempt to estimate what the mistake is. These are classified as either
+ "Errors" or "Warnings"
+ Error = The name cannot be understood
+ Warning = The name can be understood, but there is a risk that it will be misinterprited
+ </remarks>
+</member><member name="M:mapaction.dataname.IDataName.hasOptionalScaleClause">
+	<summary>
+ Does this name include the optional "Scale" clause in it?
+ </summary>
+	<returns>
+ TRUE = The optional scale clause is present
+ FALSE = The optional scale clause is not present
+ </returns>
+	<remarks>Does this name include the optional "Scale" clause in it?</remarks>
+</member><member name="M:mapaction.dataname.IDataName.hasOptionalPermissionClause">
+	<summary>
+ Does this name include the optional "Data Permissions" clause in it?
+ </summary>
+	<returns>
+ TRUE = The optional Data Permissions clause is present
+ FALSE = The optional Data Permissions clause is not present
+ </returns>
+	<remarks>Does this name include the optional "Data Permissions" clause in it?</remarks>
+</member><member name="M:mapaction.dataname.IDataName.hasOptionalFreeText">
+	<summary>
+ Does this name include the optional "Free Text" clause?
+ </summary>
+	<returns>
+ TRUE = The optional Free Text clause is present
+ FALSE = The optional Free Text clause is not present
+ </returns>
+	<remarks>Does this name include the optional "Data Permissions" clause in it?</remarks>
+</member><member name="M:mapaction.dataname.IDataName.isRenameable">
+	<summary>
+ Is it possible for the Name of this data layer to be changed? For example this made be no 
+ if the underlying file system is readony, or the data resides on a webservice such as
+ WMS/WFS 
+ </summary>
+	<returns>
+ TRUE = the name of the data layer can be changed.
+ FALSE = the name of the data layer cannot be changed.
+ </returns>
+	<remarks></remarks>
+</member>
+</members>
+</doc>
