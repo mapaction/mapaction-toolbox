@@ -65,7 +65,10 @@ Public Interface IDataName
     ''' Error = The name cannot be understood
     ''' Warning = The name can be understood, but there is a risk that it will be misinterprited
     ''' </remarks>
-    Function IsNameValid() As Integer
+    Function checkNameStatus() As Long
+
+    Function isNameParseable() As Boolean
+    Function isNameValid() As Boolean
 
     ''' <summary>
     ''' Does this name include the optional "Scale" clause in it?

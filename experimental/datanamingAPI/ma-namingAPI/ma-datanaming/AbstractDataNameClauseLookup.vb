@@ -1,4 +1,5 @@
-﻿
+﻿Imports System.Data
+
 Public MustInherit Class AbstractDataNameClauseLookup
     Implements IDataNameClauseLookup
 
@@ -9,6 +10,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
     Private myScaleTable As DataTable
     Private mySourceTable As DataTable
     Private myPermissionTable As DataTable
+    Private doRecusion As Boolean
 
     Protected Sub New()
         'initialiseAllTables()
@@ -19,14 +21,14 @@ Public MustInherit Class AbstractDataNameClauseLookup
         Dim myColArrayList As ArrayList
 
         For Each tableName In allDataNameTables
-            myTable = openTable(tableName)
-            myColArrayList = New ArrayList
-
-            For Each col In myTable.Columns
-                myColArrayList.Add(col)
-            Next
-
             Try
+                myTable = openTable(tableName)
+                myColArrayList = New ArrayList
+
+                For Each col In myTable.Columns
+                    myColArrayList.Add(col)
+                Next
+
                 If doDataColumnsMatch(CType(allDataNameColumns.Item(tableName), ArrayList), myColArrayList) Then
                     Select Case tableName
                         Case TABLENAME_GEOEXTENT
@@ -63,6 +65,8 @@ Public MustInherit Class AbstractDataNameClauseLookup
 
     Public MustOverride Function isWriteable() As Boolean Implements IDataNameClauseLookup.isWriteable
 
+    Public MustOverride Function getDetails() As String Implements IDataNameClauseLookup.getDetails
+
     ''' <summary>
     ''' Is this really the best way to check the schema of the DB? probably could be done better using the XML schema definition stuff in ADO.NET
     ''' Columns *must* be in the same order.
@@ -76,6 +80,8 @@ Public MustInherit Class AbstractDataNameClauseLookup
         Dim excepReason As String
         Dim curIndx As Integer
         Dim dc1 As DataColumn, dc2 As DataColumn
+
+        'todo MEDIUM: Adjust doDataColumnsMatch to allow for optional ObjectID column
 
         'assume true until proved otherwise
         returnRes = True
@@ -132,7 +138,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
         Dim pkIdx As Integer
         Dim myList As New List(Of String)
 
-        dtr = theDataTable.CreateDataReader(PRI_KEY_COL_NAME)
+        dtr = CType(theDataTable.CreateDataReader(PRI_KEY_COL_NAME), DataTableReader)
         pkIdx = theDataTable.Columns.IndexOf(PRI_KEY_COL_NAME)
 
         While dtr.HasRows
@@ -157,8 +163,10 @@ Public MustInherit Class AbstractDataNameClauseLookup
         'dtr.NextResult()
         'dtr.GetValue()
 
-        For Each row In theDataTable.Rows
-            If Strings.LCase(row.item(pkIdx)) = Strings.LCase(theStr) Then
+        'For Each row In theDataTable.Rows.
+        For i = 0 To (theDataTable.Rows.Count - 1)
+            'If Strings.LCase(row.item(pkIdx)) = Strings.LCase(theStr) Then
+            If Strings.LCase(CStr(theDataTable.Rows.Item(i).Item(pkIdx))) = Strings.LCase(theStr) Then
                 'System.Console.WriteLine(theStr & "    " & PRI_KEY_COL_NAME & "    " & row.item(pkIdx))
                 strPresent = True
             End If
@@ -247,9 +255,15 @@ Public MustInherit Class AbstractDataNameClauseLookup
         clauseColIdx = myDataThemeTable.Columns.IndexOf(PRI_KEY_COL_NAME)
         dataCatColIdx = myDataThemeTable.Columns.IndexOf("Data_Category")
 
-        For Each row In myDataThemeTable.Rows
-            If Strings.LCase(row.item(dataCatColIdx)) = Strings.LCase(testDataCatClause) _
-            AndAlso Strings.LCase(row.item(clauseColIdx)) = Strings.LCase(testDataThemeClause) Then
+
+        'For i = 0 To (theDataTable.Rows.Count - 1)
+        '    'If Strings.LCase(row.item(pkIdx)) = Strings.LCase(theStr) Then
+        '    If Strings.LCase(CStr(theDataTable.Rows.Item(i).Item(pkIdx))) = Strings.LCase(theStr) Then
+
+        For i = 0 To (myDataThemeTable.Rows.Count - 1)
+            'For Each row In myDataThemeTable.Rows
+            If Strings.LCase(CStr(myDataThemeTable.Rows.Item(i).Item(dataCatColIdx))) = Strings.LCase(testDataCatClause) _
+            AndAlso Strings.LCase(CStr(myDataThemeTable.Rows.Item(i).Item(clauseColIdx))) = Strings.LCase(testDataThemeClause) Then
                 strPresent = True
             End If
         Next
@@ -289,259 +303,9 @@ Public MustInherit Class AbstractDataNameClauseLookup
     End Function
 
 
-    Private Function getNameStatus(ByVal myStr As String) As Long Implements IDataNameClauseLookup.getNameStatus
-        ' The general pattern of the naming convention is:
-        '
-        '  geoextent_datacategory_theme_datatype[_scale]_source[_permission][_FreeText]
-        '  #1        #2           #3    #4        #5     #6      #7           #8
-        '
-        '  no Scale clause
-        '  geoextent_datacategory_theme_datatype_source[_permission][_FreeText]
-        '  #1        #2           #3    #4       #5      #6           #7
-        '
-        '  no Permission clause
-        '  geoextent_datacategory_theme_datatype[_scale]_source[_FreeText]
-        '  #1        #2           #3    #4        #5     #6      #7
-        '
-        '  no Scale or permissions clause
-        '  geoextent_datacategory_theme_datatype_source[_FreeText]
-        '  #1        #2           #3    #4       #5      #6
-        '
-        '
-        '   geoextent       ==> clause #1
-        '   datacategory    ==> clause #2
-        '   theme           ==> clause #3
-        '   datatype        ==> clause #4
-        '   [scale]         ==> clause #5             
-        '       scale can be
-        '           'correct'       = set scale_status_known = TRUE, therefore source is clause #6
-        '           'missing'       = set scale_status_known = FALSE, only assume this if clause #7 is valid scale clause
-        '           'erroroneous'   = set scale_status_known = FALSE
-        '
-        '   source          ==> #5 or #6
-        '       if scale_status_known=TRUE then
-        '           source clause should be #6
-        '               'correct'       = ok
-        '               'erroroneous'   = SCALE_CLAUSE_ERROR
-        '       elseif scale_status_known=FALSE then
-        '           check if clause #5 is a correct source clause
-        '               'correct'       = ok, and therefore SCALE_CLAUSE_MISSING and  set scale_status_known = TRUE,
-        '           check if clause #6 is a correct source clause
-        '               'correct'       = ok, and therefore SCALE_CLAUSE_ERROR and  set scale_status_known = TRUE,
-        '           if neither #5 nor #6 are valid sources and scale_status_known=FALSE then ??????
-        '                SOURCE_CLAUSE_ERROR (still don't know whether scale is missing or erroroneous)
-        '       
-        '   [permission]    ==> #6 or #7
-        '           Either there is a valid Source clause, or there is a valid explict Scale clause with or without a valid source clause
-        '               Therefore we can determine what possition to expect the permission clause (either #6 or #7)
-        '                   permission clause does not exist = MISSING_PERMISSION_CLAUSE_WARNING and permission_status_known = TRUE
-        '                   permission clause exists and is valid and permission_status_known = TRUE
-        '                       if #8 onwards exists then INFO_FREE_TEXT_INCLUDED
-        '                   permission clause exists and is invalid - is it really a permission clause or is it the begining of free text?
-        '                       if #6 or #7 (as appropriate) is two characters long then WARNING_FREE_TEXT_COULD_BE_MISFORMED_PERMISSIONS_CLAUSE + MISSING_PERMISSIONS_WARNING + INFO_FREE_TEXT_INCLUDED
-        '                       if #6 or #7 (as appropriate) is longer than two characters then MISSING_PERMISSIONS_WARNING + INFO_FREE_TEXT_INCLUDED
-        '
-        '           if #5 is nieher a valid scale or source clause AND #6 is not a valid source clause, then we don't know whether to expect 
-        '           the permission clause to be #6 or #7
-        '               if #6 is valid permissions clause then SCALE_CLAUSE_MISSING (assume that #7 onwards are free text if they exist)
-        '                   if #7 onwards exists then INFO_FREE_TEXT_INCLUDED
-        '               if #6 is invalid and #7 is valid permissions clause then SCALE_CLAUSE_ERROR
-        '                   if #8 onwards exists then INFO_FREE_TEXT_INCLUDED
-        '               if #6 is invalid and #7 does not exist or is invalid then is it really a permission clause or is it the begining of free text?
-        '                   if #6 is two characters long then WARNING_FREE_TEXT_COULD_BE_MISFORMED_PERMISSIONS_CLAUSE + MISSING_PERMISSIONS_WARNING + INFO_FREE_TEXT_INCLUDED
-        '                   if #6 is longer than two characters then MISSING_PERMISSIONS_WARNING + INFO_FREE_TEXT_INCLUDED
-        '
-        '
-        '   [FreeText]      ==> starting from #6, #7 or #8 onwards
-        '       Already determined previous checks
-        '
-        Dim returnResult As Long
-        Dim partsCnt As Integer
-        Dim nameParts As String()
-        Dim innerNameParts As String()
-
-        Dim geoextentIdx As Integer
-        Dim dataCategoryIdx As Integer
-        Dim dataThemeIdx As Integer
-        Dim dataTypeIdx As Integer
-        Dim scaleIdx As Integer
-        Dim sourceIdx As Integer
-        Dim permissionIdx As Integer
-        'Dim freeTextIdx As Integer
-
-        '  +ve number is the index in the array
-        '  Zero mean the position is unknown
-        '  -ve number means that the option clause is missing
-        '  Those that are not fixed index (due to the persence or absence of optional clauses are not 
-        '  initialised as late as possible in the code. This is so that the compiler will catch any
-        '  routes by which they can't initialised.
-        geoextentIdx = 0
-        dataCategoryIdx = 1
-        dataThemeIdx = 2
-        dataTypeIdx = 3
-        scaleIdx = 4
-        'sourceIdx
-        'permissionIdx
-        'freeTextIdx
-
-        Dim scale_status_known = False
-        Dim permissions_status_known = False
-
-        returnResult = DATANAME_UNKNOWN_STATUS
-
-        'Check Zero
-        'does it contain hyphens "-" which probably should be underscorces "_"
-        If InStr(myStr, "-") <> 0 Then
-            returnResult = returnResult Or DATANAME_ERROR_CONTAINS_HYPHENS
-            returnResult = returnResult Or getNameStatus(myStr.Replace("-", "_"))
-        Else
-
-            nameParts = Strings.Split(myStr, "_")
-            'partsCnt = nameParts.Length
-            
-            'System.Console.WriteLine("partCnt = " & partsCnt)
-
-            'Check one
-            'does at least five components?  5 <= nameParts
-            If nameParts.Length < 5 Then
-                returnResult = returnResult Or DATANAME_ERROR_TOO_FEW_CLAUSES
-            Else
-                'Check Two
-                'Is the first clause a valid GeoExtent?
-                If Not isvalidGeoextentClause(nameParts(geoextentIdx)) Then
-                    returnResult = returnResult Or DATANAME_ERROR_INVALID_GEOEXTENT
-                End If
-
-                'Check Three
-                'Are the secound and thrid clauses valid DataCategory and DataTheme?
-                If Not isvalidDataThemeClause(nameParts(dataThemeIdx), nameParts(dataCategoryIdx)) Then
-                    returnResult = returnResult Or DATANAME_ERROR_INVALID_DATATHEME
-                    'Check Three.one
-                    If Not isvalidDataCategoryClause(nameParts(dataCategoryIdx)) Then
-                        returnResult = returnResult Or DATANAME_ERROR_INVALID_DATACATEGORY
-                    End If
-                End If
-
-                'Check Four
-                'is the four clause a valid Data Type Clause?
-                'NOTE THAT THIS DOES NOT TEST WHETHER THE DATA TYPE ACURATELY REFLECTS THE UNDERLYING DATA!
-                If Not isvalidDataTypeClause(nameParts(dataTypeIdx)) Then
-                    returnResult = returnResult Or DATANAME_ERROR_INVALID_DATATYPE
-                End If
-
-                'geoextent_datacategory_theme_datatype[_scale]_source[_permission][_FreeText]
-
-                'do the remainer of the checks in a seperate recursive function
-                ReDim innerNameParts(nameParts.Length - 4)
-                Array.Copy(nameParts, 4, innerNameParts, 0, (nameParts.Length - 4))
-                returnResult = returnResult Or innerNameStatus(innerNameParts, "scale")
-
-            End If
-        End If
-
-        'if we've got this far without an error or a warning then we assume that we are OK
-        If ((returnResult And DATANAME_ERROR) <> DATANAME_ERROR) And _
-            ((returnResult And DATANAME_INFO) <> DATANAME_INFO) Then
-            returnResult = returnResult Or DATANAME_VALID
-        End If
-
-        getNameStatus = returnResult
-    End Function
-
-    Private Function innerNameStatus(ByVal curNameParts() As String, ByRef clauseName As String) As Long
-        Dim returnResult As Long, tempResult As Long
-        Dim nextNameParts(curNameParts.Length - 1) As String
-
-        'System.Console.WriteLine("clauseName.ToString " & clauseName)
-        'For Each myStr In curNameParts
-        '    System.Console.Write(" -  " & myStr)
-        'Next
 
 
-        Select Case clauseName
-            Case "scale"
-                If curNameParts(0) Is Nothing OrElse curNameParts.Length < 1 Then
-                    'we've got to the end without finding a scale clause which means we have problems!
-                    returnResult = returnResult Or DATANAME_ERROR_INCORRECT_SOURCE Or DATANAME_WARN_MISSING_SCALE_CLAUSE
-                Else
-                    'go ahead a check out results from the rest of the string array
-                    Array.Copy(curNameParts, 1, nextNameParts, 0, (curNameParts.Length - 1))
-                    tempResult = innerNameStatus(nextNameParts, "source")
-
-                    If isvalidScaleClause(curNameParts(0)) Then
-                        'Scale is present which is good, move on to the next thing - source
-                        returnResult = returnResult Or tempResult
-                    Else
-                        If (tempResult And DATANAME_ERROR_INCORRECT_SOURCE) = DATANAME_ERROR_INCORRECT_SOURCE Then
-                            'the next clause isn't a source clause so assume that this one is the
-                            'source clase and that there is no scale clause
-                            returnResult = returnResult Or DATANAME_WARN_MISSING_SCALE_CLAUSE
-                            returnResult = returnResult Or innerNameStatus(curNameParts, "source")
-                        Else
-                            'assume that the next clause is the source clause so join that into the result
-                            returnResult = returnResult Or tempResult
-                        End If
-                    End If
-                End If
-
-
-            Case "source"
-                If curNameParts(0) Is Nothing OrElse curNameParts.Length < 1 Then
-                    'we've got to the end without finding a source clause which means we have problems!
-                    returnResult = returnResult Or DATANAME_ERROR_INCORRECT_SOURCE
-                Else
-                    If Not isvalidSourceClause(curNameParts(0)) Then
-                        'Either the source clause is incorrect OR the scale clause has been
-                        'incorrectly assigned as missing/present. Either way return an incorrect source error.
-                        returnResult = returnResult Or DATANAME_ERROR_INCORRECT_SOURCE
-                    End If
-                    'Whether or not the source clause is correct, since it is not optional, at this point
-                    'assume that the next cluase will the the permissions.
-                    Array.Copy(curNameParts, 1, nextNameParts, 0, (curNameParts.Length - 1))
-                    returnResult = returnResult Or innerNameStatus(nextNameParts, "permissions")
-                End If
-
-            Case "permissions"
-                If curNameParts(0) Is Nothing OrElse curNameParts.Length < 1 Then
-                    'we've got to the end without finding an optional permissions clause.
-                    returnResult = returnResult Or DATANAME_WARN_MISSING_PERMISSIONS_CLAUSE
-                Else
-
-                    If isvalidPermissionsClause(curNameParts(0)) Then
-                        'Permissions is present which is good, move on to the next thing but we don't care about
-                        'short free text now, so we only need to know if there is more text
-                        If Not curNameParts(1) Is Nothing Then
-                            returnResult = returnResult Or DATANAME_INFO_FREE_TEXT_PRESENT
-                            'System.Console.WriteLine("free-text A ")
-                        End If
-                    Else
-                        'go ahead a check out results from the rest of the string array
-                        returnResult = returnResult Or DATANAME_WARN_MISSING_PERMISSIONS_CLAUSE
-                        Array.Copy(curNameParts, 1, nextNameParts, 0, (curNameParts.Length - 1))
-                        returnResult = returnResult Or innerNameStatus(nextNameParts, "free-text")
-                    End If
-                End If
-
-            Case "free-text"
-                'System.Console.WriteLine("free-text  " & curNameParts(0))
-
-                If curNameParts(0) Is Nothing OrElse curNameParts.Length < 1 Then
-                    'we've got to the end without finding any free text
-                Else
-                    If curNameParts(0).Length = 2 Then
-                        'two character long free text is present
-                        returnResult = returnResult Or DATANAME_WARN_TWO_CHAR_FREE_TEXT Or DATANAME_INFO_FREE_TEXT_PRESENT
-                        'System.Console.WriteLine("free-text B ")
-                    Else
-                        returnResult = returnResult Or DATANAME_INFO_FREE_TEXT_PRESENT
-                        'System.Console.WriteLine("free-text C " & curNameParts(0) & "  " & curNameParts(0).Length)
-                    End If
-                End If
-
-        End Select
-
-        innerNameStatus = returnResult
-    End Function
+ 
 
     '    'Check Five
     '    'Is the fifth clause a scale clause or a source clause?
@@ -652,21 +416,25 @@ Public MustInherit Class AbstractDataNameClauseLookup
     Public Shared Function getDataNamingStatusStrings(ByVal status As Long) As List(Of String)
         Dim outputList As New List(Of String)
 
-        Dim statusCodes() As Long = {DATANAME_ERROR_INVALID_GEOEXTENT, _
-                                    DATANAME_ERROR_INVALID_DATACATEGORY, _
-                                    DATANAME_ERROR_INVALID_DATATHEME, _
-                                    DATANAME_ERROR_INVALID_DATATYPE, _
-                                    DATANAME_ERROR_INCORRECT_DATATYPE, _
-                                    DATANAME_ERROR_INCORRECT_SCALE, _
-                                    DATANAME_ERROR_INCORRECT_SOURCE, _
-                                    DATANAME_ERROR_INCORRECT_PERMISSIONS, _
-                                    DATANAME_ERROR_OTHER_ERROR, _
-                                    DATANAME_ERROR_CONTAINS_HYPHENS, _
-                                    DATANAME_ERROR_TOO_FEW_CLAUSES, _
-                                    DATANAME_WARN_MISSING_SCALE_CLAUSE, _
-                                    DATANAME_WARN_MISSING_PERMISSIONS_CLAUSE, _
-                                    DATANAME_WARN_TWO_CHAR_FREE_TEXT, _
-                                    DATANAME_INFO_FREE_TEXT_PRESENT}
+        Dim statusCodes As List(Of Long) = New List(Of Long)
+
+        statusCodes.Add(dnNameStatus.SYNTAX_ERROR_CONTAINS_HYPHENS)
+        statusCodes.Add(dnNameStatus.SYNTAX_ERROR_DOUBLE_UNDERSCORE)
+        statusCodes.Add(dnNameStatus.SYNTAX_ERROR_OTHER)
+        statusCodes.Add(dnNameStatus.SYNTAX_ERROR_TOO_FEW_CLAUSES)
+        statusCodes.Add(dnNameStatus.INVALID_DATACATEGORY)
+        statusCodes.Add(dnNameStatus.INVALID_DATATHEME)
+        statusCodes.Add(dnNameStatus.INVALID_DATATYPE)
+        statusCodes.Add(dnNameStatus.INCORRECT_DATATYPE)
+        statusCodes.Add(dnNameStatus.INVALID_GEOEXTENT)
+        statusCodes.Add(dnNameStatus.INVALID_PERMISSIONS)
+        statusCodes.Add(dnNameStatus.INVALID_SCALE)
+        statusCodes.Add(dnNameStatus.INVALID_SOURCE)
+        statusCodes.Add(dnNameStatus.INCORRECT_DATATYPE)
+        statusCodes.Add(dnNameStatus.WARN_MISSING_SCALE_CLAUSE)
+        statusCodes.Add(dnNameStatus.WARN_MISSING_PERMISSIONS_CLAUSE)
+        statusCodes.Add(dnNameStatus.WARN_TWO_CHAR_FREE_TEXT)
+        statusCodes.Add(dnNameStatus.INFO_FREE_TEXT_PRESENT)
 
         For Each staCode In statusCodes
             If ((status And staCode) = staCode) Then

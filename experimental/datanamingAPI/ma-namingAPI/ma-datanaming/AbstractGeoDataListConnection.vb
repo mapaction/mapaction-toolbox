@@ -1,46 +1,38 @@
-﻿
+﻿Imports System.IO
+
 Public MustInherit Class AbstractGeoDataListConnection
     Implements IGeoDataListConnection
 
+    Private doRecusion As Boolean = True
 
-    Public Sub Connect() Implements IGeoDataListConnection.Connect
-
-    End Sub
-
-    Public Sub Disconnect() Implements IGeoDataListConnection.Disconnect
+    Protected Sub New()
 
     End Sub
 
-    Public Function doesLayerExist(ByVal layerName As String) As Boolean Implements IGeoDataListConnection.doesLayerExist
+    Public MustOverride Function doesLayerExist(ByVal layerName As String) As Boolean Implements IGeoDataListConnection.doesLayerExist
 
-    End Function
+    Public MustOverride Function getDefaultDataNameClauseLookup() As IDataNameClauseLookup Implements IGeoDataListConnection.getDefaultDataNameClauseLookup
 
-    Public Function getDefaultDataNameClauseLookup() As IDataNameClauseLookup Implements IGeoDataListConnection.getDefaultDataNameClauseLookup
+    Public MustOverride Function getDetails() As String Implements IGeoDataListConnection.getDetails
 
-    End Function
+    Public MustOverride Function getGeoDataListConnectionType() As Integer Implements IGeoDataListConnection.getGeoDataListConnectionType
 
-    Public Function getDetails() As String Implements IGeoDataListConnection.getDetails
+    Public MustOverride Function getGeoDataListConnectionTypeDesc() As String Implements IGeoDataListConnection.getGeoDataListConnectionTypeDesc
 
-    End Function
-
-    Public Function getGeoDataListConnectionType() As Integer Implements IGeoDataListConnection.getGeoDataListConnectionType
-
-    End Function
-
-    Public Function getGeoDataListConnectionTypeDesc() As String Implements IGeoDataListConnection.getGeoDataListConnectionTypeDesc
-
-    End Function
-
-    Public Function getLayerNamesStrings() As List(Of String) Implements IGeoDataListConnection.getLayerNamesStrings
-
-    End Function
+    Public MustOverride Function getLayerNamesStrings() As List(Of String) Implements IGeoDataListConnection.getLayerNamesStrings
 
     Public Function getLayerDataNamesList() As List(Of IDataName) Implements IGeoDataListConnection.getLayerDataNamesList
-
+        Return getLayerDataNamesList(getDefaultDataNameClauseLookup())
     End Function
 
-    Public Function getLayerDataNamesList(ByRef myDNCL As IDataNameClauseLookup) As List(Of IDataName) Implements IGeoDataListConnection.getLayerDataNamesList
+    Public Sub setRecuse(ByVal recuse As Boolean) Implements IGeoDataListConnection.setRecuse
+        doRecusion = recuse
+    End Sub
 
+    Public Function getRecuse() As Boolean Implements IGeoDataListConnection.getRecuse
+        Return doRecusion
     End Function
+
+    Public MustOverride Function getLayerDataNamesList(ByRef myDNCL As IDataNameClauseLookup) As List(Of IDataName) Implements IGeoDataListConnection.getLayerDataNamesList
 
 End Class

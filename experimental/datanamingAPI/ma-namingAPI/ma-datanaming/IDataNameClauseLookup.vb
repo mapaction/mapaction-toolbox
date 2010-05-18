@@ -1,16 +1,14 @@
 ﻿
 Public Interface IDataNameClauseLookup
 
-    'Public const geoExtentTableName = "datanaming_clause_geoextent"
-    'Public const dataCategoryTableName = "datanaming_clause_data_categories"
-    'Public const dataThemeTableName = "datanaming_clause_data_theme"
-    'Public const dataTypeTableName = "datanaming_clause_data_type"
-    'Public const scaleTableName = "datanaming_clause_scale"
-    'Public const sourceTableName = "datanaming_clause_source"
-    'Public const permissionsTableName = "datanaming_clause_permission"
-
-    'Test whether the Data Name Clause tables can be written to or not
+    ''' <summary>
+    ''' Test whether the Data Name Clause tables can be written to or not
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Function isWriteable() As Boolean
+
+
 
     Function isvalidGeoextentClause(ByVal testGeoExtentClause As String) As Boolean
 
@@ -56,5 +54,6 @@ Public Interface IDataNameClauseLookup
 
     Function getPermissionsTable() As DataTable
 
-    Function getNameStatus(ByVal myStr As String) As Long
+    Function getDetails() As String
+
 End Interface

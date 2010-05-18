@@ -1,203 +1,138 @@
-﻿Imports ESRI.ArcGIS.Geodatabase
+﻿Option Strict On
+
+Imports ESRI.ArcGIS.Geodatabase
 Imports ESRI.ArcGIS.DataSourcesGDB
+Imports System.IO
 
 Public Class DataListGeoDBConnection
     Inherits AbstractGeoDataListConnection
     ' IGeoDataListConnection
 
-    Private dataNameLookupWorkspace As ESRI.ArcGIS.Geodatabase.IWorkspace
+    Private Const GDB_TYPE_MDB As Integer = CInt(2 ^ 1)
+    Private Const GDB_TYPE_FILEGDB As Integer = CInt(2 ^ 2)
+    Private Const GDB_TYPE_SDE_BY_PROPS As Integer = CInt(2 ^ 3)
+    Private Const GDB_TYPE_SDE_BY_CONFILE As Integer = CInt(2 ^ 4)
+    Private Const GDB_TYPE_SQL_EXPRESS As Integer = CInt(2 ^ 5)
 
-    Sub New()
-        Connect()
+    Private dataNameLookupWorkspace As ESRI.ArcGIS.Geodatabase.IWorkspace = Nothing
+    Private myGDBtype As Integer
+
+    Sub New(ByVal args() As String)
+        dataNameLookupWorkspace = openList(args)
+
+        If dataNameLookupWorkspace Is Nothing Then
+            Throw New ArgumentException("Unable to open DataListGeoDBConnection")
+        End If
     End Sub
 
+    Sub New(ByRef fInfo As FileInfo)
+        dataNameLookupWorkspace = openList(fInfo)
 
-    Public Overloads Sub Connect() 'Implements IGeoDataListConnection.Connect
-        MsgBox("GeoDBConnection.Connect() not properly implenmented yet!")
-
-        'Dim propertySet As New ESRI.ArcGIS.esriSystem.PropertySetClass
-
-        'propertySet.SetProperty("SERVER", "cuillin")
-        'propertySet.SetProperty("INSTANCE", "esri_sde")
-        'propertySet.SetProperty("USER", "scott")
-        'propertySet.SetProperty("PASSWORD", "tiger")
-        'propertySet.SetProperty("VERSION", "SDE.DEFAULT")
-        'propertySet.SetProperty("AUTHENTICATION_MODE", "DBMS")
-
-        Dim workspaceFactory As IWorkspaceFactory
-        workspaceFactory = New AccessWorkspaceFactoryClass
-
-        '// Cast for IName.
-        'ESRI.ArcGIS.esriSystem.IName name = (IName)workspaceName;
-
-        '//Open a reference to the file geodatabase workspace through the Name object.
-        'Dim fGDB_Wor As ESRI.ArcGIS.Geodatabase.IWorkspace
-
-        '//Open another file geodatabase workspace.
-        dataNameLookupWorkspace = workspaceFactory.OpenFromFile("D:\\MapAction\\bronze\\data_model\\ProposedNamingConvention\\Propossed-data-naming-conventions_v0.8.mdb", 0)
-
+        If dataNameLookupWorkspace Is Nothing Then
+            Throw New ArgumentException("Unable to open DataListGeoDBConnection")
+        End If
     End Sub
 
-    Public Sub Disconnect()
-        dataNameLookupWorkspace = Nothing
-    End Sub
+    Private Function openList(ByVal myProps() As String) As ESRI.ArcGIS.Geodatabase.IWorkspace
+        Dim returnRef As ESRI.ArcGIS.Geodatabase.IWorkspace = Nothing
 
-    Public Function getGeoDataListConnectionType() As Integer
-        getGeoDataListConnectionType = Nothing
-    End Function
-
-    Public Function getGeoDataListConnectionTypeDesc() As String
-        getGeoDataListConnectionTypeDesc = Nothing
-    End Function
-
-    Public Function doesLayerExist(ByVal layerName As String) As Boolean
-        doesLayerExist = Nothing
-    End Function
-
-    Public Function getLayerNamesList() As List(Of String)
-        getLayerNamesList = Nothing
-    End Function
-
-    Public Function getDetails() As String
-        getDetails = "GeoDBConnection.GetDetails() not yet implenmented"
-    End Function
-
-    Public Function GetdataSetList() As List(Of String)
-        Dim pDSName As IDatasetName
-        Dim pEnumDSName As IEnumDatasetName
-        Dim namesList As New List(Of String)
-
-        pEnumDSName = dataNameLookupWorkspace.DatasetNames(esriDatasetType.esriDTAny)
-        pDSName = pEnumDSName.Next
-
-        While Not pDSName Is Nothing
-            'namesArry.SetValue(pEnumDSName.Name, namesArry.GetLength(1) + 1)
-            namesList.Add(pDSName.Name)
-            pDSName = pEnumDSName.Next
-        End While
-
-        GetdataSetList = namesList
-    End Function
-
-    Public Function getDefaultDataNameClauseLookup() As IDataNameClauseLookup
-        getDefaultDataNameClauseLookup = Nothing
-    End Function
-
-    Public Function GetTable(ByVal tableName As String)
-
-        Dim pEnumDSName As IEnumDataset
-        Dim myIDataSet As IDataset
-        Dim myObject As Object
-        Dim myTable As ITable
-
-        pEnumDSName = dataNameLookupWorkspace.Datasets(esriDatasetType.esriDTTable)
-
-        myObject = Nothing
-        myTable = Nothing
-
-        myIDataSet = pEnumDSName.Next
-
-        While Not myIDataSet Is Nothing
-            If myIDataSet.BrowseName = tableName Then
-                myObject = myIDataSet.FullName.Open()
+        If myProps Is Nothing OrElse myProps.Length < 1 Then
+            Throw New ArgumentNullException()
+        ElseIf myProps.Length = 1 Or myProps(1) Is Nothing Then
+            returnRef = getESRIWorkspaceFromFile(myProps(0))
+        ElseIf myProps.Length = 2 Then
+            'In this case we assume that myProps refer to a filesystem base GDB (Personal, File or SDE Connectionfile)
+            If myProps(0).EndsWith(Path.DirectorySeparatorChar) Then
+                returnRef = getESRIWorkspaceFromFile(myProps(0) & myProps(1))
+            Else
+                returnRef = getESRIWorkspaceFromFile(myProps(0) & Path.DirectorySeparatorChar & myProps(1))
             End If
-            myIDataSet = pEnumDSName.Next
-        End While
-
-        If TypeOf myObject Is ITable Then
-            myTable = DirectCast(myObject, ITable)
+        Else
+            'todo: In this case we assume that myProps refer to connection parameters for opening a SDE or SDE Personal connection
+            returnRef = Nothing
         End If
 
-        'myTable.
+        Return returnRef
+    End Function
 
+    Private Function openList(ByRef fInfo As FileInfo) As ESRI.ArcGIS.Geodatabase.IWorkspace
+        openList = getESRIWorkspaceFromFile(fInfo)
+    End Function
 
-        'While Not pDSName Is Nothing
-        '    namesArry.SetValue(pEnumDSName.Name, namesArry.GetLength(1) + 1)
-        '    namesList.Add(pDSName.Name)
-        '    pDSName = pEnumDSName.Next
-        'End While
+    Public Overrides Function getGeoDataListConnectionType() As Integer
+        getGeoDataListConnectionType = dnListType.GDB
+    End Function
 
+    Public Overrides Function getGeoDataListConnectionTypeDesc() As String
+        'todo LOW: move this to DataNamingConstants
+        getGeoDataListConnectionTypeDesc = "DATALIST TYPE is an ESRI GDB"
+    End Function
 
+    Public Overrides Function doesLayerExist(ByVal layerName As String) As Boolean
+        Dim dSets As IEnumDatasetName
+        Dim curDatasetName As IDatasetName
+        Dim returnVal As Boolean = False
 
-        '        [Visual Basic 6.0]
-        '        Dim pWorkspace As IWorkspace
-        '        Dim pFact As IWorkspaceFactory
+        dSets = dataNameLookupWorkspace.DatasetNames(esriDatasetType.esriDTAny)
 
-        '        ' This example uses an SDE connection. This code works the
-        '        ' same for any open IWorkspace.
+        curDatasetName = dSets.Next()
 
-        '        Dim pPropset As IPropertySet
-        '        pPropset = New PropertySet
-        '        With pPropset
-        '            .SetProperty("Server", "fred")
-        '            .SetProperty("Instance", "5203")
-        '            .SetProperty("Database", "sdedata")
-        '            .SetProperty("user", "test")
-        '            .SetProperty("password", "test")
-        '            .SetProperty("version", "sde.DEFAULT")
-        '        End With
-        '        pFact = New SdeWorkspaceFactory
-        '        pWorkspace = pFact.Open(pPropset, Me.hWnd)
-        '        Dim pFeatureWorkspace As IFeatureWorkspace
-        '        pFeatureWorkspace = pWorkspace
+        Do While (Not curDatasetName Is Nothing) And (Not returnVal)
+            If curDatasetName.ToString() = layerName Then
+                returnVal = True
+            End If
+        Loop
 
-        '        Dim pTable As ITable
-        '        pTable = pFeatureWorkspace.OpenTable("Pavement")
+        doesLayerExist = returnVal
+    End Function
 
-        '        Dim iOIDList() As Long
-        '        Dim iOIDListCount As Long
+    Public Overrides Function getLayerNamesStrings() As List(Of String)
+        Return getNamesStrFromESRIDataSetName(getESRIDataSetNamesFromWorkspace(dataNameLookupWorkspace, getRecuse()))
+    End Function
 
-        '        iOIDListCount = 5
+    Public Overrides Function getDetails() As String
+        getDetails = dataNameLookupWorkspace.ConnectionProperties.ToString()
+    End Function
 
-        '        ReDim iOIDList(iOIDListCount)
-        '        iOIDList(0) = 1
-        '        iOIDList(1) = 2
-        '        iOIDList(2) = 3
-        '        iOIDList(3) = 4
-        '        iOIDList(4) = 50
+    Public Overrides Function getDefaultDataNameClauseLookup() As IDataNameClauseLookup
+        Dim defaultDNCL As IDataNameClauseLookup
 
-        '        Dim pCursor As ICursor
-        '        pCursor = pTable.GetRows(iOIDList, True)
-        '        Dim pRow As IRow
-        '        pRow = pCursor.NextRow
-        '        While Not pRow Is Nothing
-        '            Debug.Print(pRow.Value(2))
-        '            pRow = pCursor.NextRow
-        '        End While
+        'System.Console.WriteLine("starting DataListGeoDBConnection.getDefaultDataNameClauseLookup()")
+        Try
+            'System.Console.WriteLine("Try 1")
+            defaultDNCL = New GeoDBDataNameClauseLookup(dataNameLookupWorkspace)
+        Catch ex1 As Exception
+            'System.Console.WriteLine(ex1.ToString)
+            Try
+                'System.Console.WriteLine("Try 2")
 
+                If dataNameLookupWorkspace.IsDirectory Then
+                    defaultDNCL = New DataListFileSystemDirectory(dataNameLookupWorkspace.PathName).getDefaultDataNameClauseLookup()
+                Else
+                    defaultDNCL = New DataListFileSystemDirectory(New FileInfo(dataNameLookupWorkspace.PathName).DirectoryName) _
+                                            .getDefaultDataNameClauseLookup()
+                End If
 
-        '[C#]
+            Catch ex2 As Exception
+                System.Console.WriteLine(ex2.ToString)
+                Throw New LookupTableException("Cannot find a valid default Data Name Clause Lookup Table " & dataNameLookupWorkspace.PathName)
+            End Try
+        End Try
 
-        '    //ITable GetRows Example
+        Return defaultDNCL
+    End Function
 
-        '    //e.g., nameOfTable = "Owners"
-        '    //on ArcSDE use ISqlSyntax::QualifyTableName for fully qualified table names.
-        '    public void ITable_GetRows_Example(IWorkspace workspace, string nameOfTable)
-        '    {
-        '        IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
-        '        ITable table = featureWorkspace.OpenTable(nameOfTable);
+    Public Overrides Function getLayerDataNamesList(ByRef myDNCL As IDataNameClauseLookup) As List(Of IDataName)
+        Dim dSetList As List(Of IDataset)
+        Dim dNamesList As New List(Of IDataName)
 
-        '        System.Collections.Generic.List<int> constructOIDList = new System.Collections.Generic.List<int>();
-        '        constructOIDList.Add(1);
-        '        constructOIDList.Add(2);
-        '        constructOIDList.Add(3);
-        '        constructOIDList.Add(5);
-        '        constructOIDList.Add(8);
-        '        int[] oidList = constructOIDList.ToArray();
+        dSetList = getESRIDataSetsFromWorkspace(dataNameLookupWorkspace, getRecuse())
 
-        '        ICursor cursor = table.GetRows(oidList,false);
-        '        IRow row = cursor.NextRow();
-        '        while (row != null)
-        '        {
-        '            Console.WriteLine(row.get_Value(row.Fields.FindField("Name")));
-        '            row = cursor.NextRow();
-        '        }
-        '    }
+        For Each ds In dSetList
+            dNamesList.Add(New DataNameESRIFeatureClass(ds, myDNCL, True))
+        Next
 
-
-
-        GetTable = myTable
-
+        Return dNamesList
     End Function
 
 End Class

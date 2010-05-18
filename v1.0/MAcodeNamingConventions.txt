@@ -1,0 +1,7 @@
+
+
+Interfaces: prefix with capital "I"
+FactoryClasses: <name of class produced> suffix with "Factory"
+
+
+

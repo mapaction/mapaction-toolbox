@@ -1,5 +1,6 @@
 ﻿Imports System.Data
 Imports System.Data.OleDb
+Imports System.IO
 
 Public Class MDBDataNameClauseLookup
     Inherits AbstractDataNameClauseLookup
@@ -11,7 +12,7 @@ Public Class MDBDataNameClauseLookup
     ''' </summary>
     ''' <param name="args"></param>
     ''' <remarks></remarks>
-    Protected Friend Sub New(ByVal args As String())
+    Protected Friend Sub New(ByVal args() As String)
         If args Is Nothing OrElse args.Length < 1 Then
             Throw New ArgumentException("Invalid path passed to New MDBDataNameClauseLookup(args)")
         Else
@@ -19,6 +20,11 @@ Public Class MDBDataNameClauseLookup
             initialiseConnectionObject(args(0))
         End If
 
+        initialiseAllTables()
+    End Sub
+
+    Protected Friend Sub New(ByRef fileInfoArg As FileInfo)
+        initialiseConnectionObject(fileInfoArg.FullName)
         initialiseAllTables()
     End Sub
 
@@ -35,7 +41,6 @@ Public Class MDBDataNameClauseLookup
         myDBConnection.Open()
 
     End Sub
-
 
     Public Overrides Function isWriteable() As Boolean
         isWriteable = False
@@ -61,6 +66,10 @@ Public Class MDBDataNameClauseLookup
 
     End Function
 
+    Public Overrides Function getDetails() As String
+        Return myDBConnection.ConnectionString
+    End Function
+
     Private Function getTableFromReader(ByVal sqldr As IDataReader) As DataTable
 
         Dim i As Int32
@@ -72,7 +81,7 @@ Public Class MDBDataNameClauseLookup
         For i = 0 To _table.Rows.Count - 1
             _dc = New DataColumn
             _dc.ColumnName = _table.Rows(i)("ColumnName").ToString()
-            _dc.DataType = _table.Rows(i)("DataType")
+            _dc.DataType = CType(_table.Rows(i)("DataType"), System.Type)
             _dc.Unique = Convert.ToBoolean(_table.Rows(i)("IsUnique"))
             _dc.AllowDBNull = Convert.ToBoolean(_table.Rows(i)("AllowDBNull"))
             _dc.ReadOnly = Convert.ToBoolean(_table.Rows(i)("IsReadOnly"))
