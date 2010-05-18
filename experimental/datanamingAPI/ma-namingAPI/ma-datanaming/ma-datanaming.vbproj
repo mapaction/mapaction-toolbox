@@ -99,7 +99,7 @@
     <Compile Include="IDataNameClauseLookup.vb" />
     <Compile Include="IGeoDataListConnection.vb" />
     <Compile Include="DataListGeoDBConnection.vb" />
-    <Compile Include="InvalidDataNameException.vb" />
+    <Compile Include="ErroreousDataNameException.vb" />
     <Compile Include="MDBDataNameClauseLookup.vb" />
     <Compile Include="RenamingDataException.vb" />
     <Compile Include="testingCommandline.vb" />
