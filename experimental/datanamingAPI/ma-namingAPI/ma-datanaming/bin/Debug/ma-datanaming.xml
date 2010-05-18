@@ -256,6 +256,49 @@ ma-datanaming
  </summary>
 	<param name="args"></param>
 	<remarks></remarks>
+</member><member name="T:mapaction.dataname.dnNameStatus">
+	<summary>
+ BitFlags relating to the status of a particular Data Name. The status of a name
+ is retrived by using IDataName.checkNameStatus() or one of the convenence wrapper
+ methods.
+ </summary>
+	<remarks>
+ BitFlags relating to the status of a particular Data Name. The status of a name
+ is retrived by using IDataName.checkNameStatus() or one of the convenence wrapper
+ methods.
+ 
+ The status flags are arranged in four categories:
+     INVALID
+     SYNTAX_ERROR 
+     WARN 
+     INFO
+ 
+ All of the flags are prefixed with one of these four names. It is possible to test
+ for all flags within a particular category by just testing agains the root. eg:
+ 
+ ((myNameStatus And dnNameStatus.SYNTAX_ERROR) = dnNameStatus.SYNTAX_ERROR)
+ 
+ will return true for SYNTAX_ERROR_CONTAINS_HYPHENS, SYNTAX_ERROR_TOO_FEW_CLAUSES,
+ SYNTAX_ERROR_DOUBLE_UNDERSCORE and SYNTAX_ERROR_OTHER
+ 
+ There is no "is valid" flag since depending on context this is any 
+ combination of "not DATANAME_INVALID", "not DATANAME_SYNTAX_ERROR" 
+ and maybe "not DATANAME_WARN"
+ </remarks>
+</member><member name="T:mapaction.dataname.dnListType">
+	<summary>
+ Describes the physical type of an IDataListConnection object.
+ </summary>
+	<remarks>
+ Describes the physical type of an IDataListConnection object.
+ </remarks>
+</member><member name="T:mapaction.dataname.dnClauseLookupType">
+	<summary>
+ Describes the physical type of an IDataNameClauseLookup object.
+ </summary>
+	<remarks>
+ Describes the physical type of an IDataNameClauseLookup object.
+ </remarks>
 </member><member name="M:mapaction.dataname.IDataNameClauseLookup.isWriteable">
 	<summary>
  Test whether the Data Name Clause tables can be written to or not

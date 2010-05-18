@@ -4,4 +4,9 @@ Interfaces: prefix with capital "I"
 FactoryClasses: <name of class produced> suffix with "Factory"
 
 
+DataName = dn or DN
 
+srtAry = String Arrays
+htb = HashTable
+dcl = DataColunm
+aryl = Array List

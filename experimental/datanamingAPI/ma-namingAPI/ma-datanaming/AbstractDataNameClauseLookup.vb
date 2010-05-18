@@ -20,7 +20,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
         Dim myTable As DataTable
         Dim myColArrayList As ArrayList
 
-        For Each tableName In allDataNameTables
+        For Each tableName In g_strAryClauseTableNames
             Try
                 myTable = openTable(tableName)
                 myColArrayList = New ArrayList
@@ -29,7 +29,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
                     myColArrayList.Add(col)
                 Next
 
-                If doDataColumnsMatch(CType(allDataNameColumns.Item(tableName), ArrayList), myColArrayList) Then
+                If doDataColumnsMatch(CType(g_htbAllDataNameColumns.Item(tableName), ArrayList), myColArrayList) Then
                     Select Case tableName
                         Case TABLENAME_GEOEXTENT
                             myGeoExtentTable = myTable
@@ -438,7 +438,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
 
         For Each staCode In statusCodes
             If ((status And staCode) = staCode) Then
-                outputList.Add(CType(allDataNameStrMessages.Item(staCode), String))
+                outputList.Add(CStr(g_htbDNStatusStrMessages.Item(staCode)))
                 'outputList.Add(errCode)
             End If
         Next
