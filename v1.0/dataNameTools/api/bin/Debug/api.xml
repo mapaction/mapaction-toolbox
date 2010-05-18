@@ -6,31 +6,7 @@ api
 </name>
 </assembly>
 <members>
-<member name="M:mapaction.datanames.api.ErroreousDataNameException.getNameStatus">
-	<summary>
- Returns the status of the IDataName which caused the problem.
- </summary>
-	<returns>Long. The status of the IDataName which caused the problem.</returns>
-	<remarks>Returns the status of the IDataName which caused the problem.</remarks>
-</member><member name="M:mapaction.datanames.api.ErroreousDataNameException.getDescriptionFromStatus(System.Int64)">
-	<summary>
-	</summary>
-	<param name="lngBitsum"></param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="T:mapaction.datanames.api.ErroreousDataNameException">
-	<summary>
- An exception which is thrown when certain operations are performed on IDataName
- which requires the IDataName to be either at a minimum, parsable or even valid.
- </summary>
-	<remarks>
- An exception which is thrown when certain operations are performed on IDataName
- which requires the IDataName to be either at a minimum, parsable or even valid.
- 
- It should be noted that IDataName.checkNameStatus() should never throw an
- ErroreousDataNameException.
- </remarks>
-</member><member name="M:mapaction.datanames.api.IDataListConnection.getDataListConnectionType">
+<member name="M:mapaction.datanames.api.IDataListConnection.getDataListConnectionType">
 	<summary>
  Returns an Integer which represents the type of connection
  </summary>
@@ -776,6 +752,30 @@ api
  Provides a convenence function to get hold of a reference to the offending 
  IDataname object.
  </remarks>
+</member><member name="M:mapaction.datanames.api.ErroreousDataNameException.getNameStatus">
+	<summary>
+ Returns the status of the IDataName which caused the problem.
+ </summary>
+	<returns>Long. The status of the IDataName which caused the problem.</returns>
+	<remarks>Returns the status of the IDataName which caused the problem.</remarks>
+</member><member name="M:mapaction.datanames.api.ErroreousDataNameException.getDescriptionFromStatus(System.Int64)">
+	<summary>
+	</summary>
+	<param name="lngBitsum"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:mapaction.datanames.api.ErroreousDataNameException">
+	<summary>
+ An exception which is thrown when certain operations are performed on IDataName
+ which requires the IDataName to be either at a minimum, parsable or even valid.
+ </summary>
+	<remarks>
+ An exception which is thrown when certain operations are performed on IDataName
+ which requires the IDataName to be either at a minimum, parsable or even valid.
+ 
+ It should be noted that IDataName.checkNameStatus() should never throw an
+ ErroreousDataNameException.
+ </remarks>
 </member><member name="T:mapaction.datanames.api.dnNameStatus">
 	<summary>
  BitFlags relating to the status of a particular Data Name. The status of a name
@@ -818,6 +818,13 @@ api
  </summary>
 	<remarks>
  Describes the physical type of an IDataNameClauseLookup object.
+ </remarks>
+</member><member name="T:mapaction.datanames.api.dnLookupTableError">
+	<summary>
+ Describes possible causes of the Lookup Table Exceptions
+ </summary>
+	<remarks>
+ Describes possible causes of the Lookup Table Exceptions
  </remarks>
 </member><member name="P:mapaction.datanames.api.DataNamingConstants.g_strAryClauseTableNames">
 	<summary>
