@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="dnConstants.vb" />
+    <Compile Include="ErroreousDataNameException.vb" />
     <Compile Include="IDataListConnection.vb" />
     <Compile Include="IDataName.vb" />
     <Compile Include="IDataNameClauseLookup.vb" />
@@ -72,6 +73,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="RenamingDataException.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

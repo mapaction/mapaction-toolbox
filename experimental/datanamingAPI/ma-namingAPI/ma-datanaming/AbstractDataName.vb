@@ -203,7 +203,7 @@
         Dim clauseIdx As Short
 
         If Not isNameParseable() Then
-            Throw New InvalidDataNameException(checkNameStatus())
+            Throw New ErroreousDataNameException(checkNameStatus())
         Else
             nameParts = Strings.Split(myNameStr, "_")
 
@@ -265,7 +265,7 @@
         Dim returnIdx As Short
 
         If Not isNameParseable() Then
-            Throw New InvalidDataNameException(checkNameStatus())
+            Throw New ErroreousDataNameException(checkNameStatus())
         Else
 
             Select Case clauseName

@@ -6,7 +6,31 @@ api
 </name>
 </assembly>
 <members>
-<member name="M:mapaction.datanames.api.IDataListConnection.getDataListConnectionType">
+<member name="M:mapaction.datanames.api.ErroreousDataNameException.getNameStatus">
+	<summary>
+ Returns the status of the IDataName which caused the problem.
+ </summary>
+	<returns>Long. The status of the IDataName which caused the problem.</returns>
+	<remarks>Returns the status of the IDataName which caused the problem.</remarks>
+</member><member name="M:mapaction.datanames.api.ErroreousDataNameException.getDescriptionFromStatus(System.Int64)">
+	<summary>
+	</summary>
+	<param name="lngBitsum"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:mapaction.datanames.api.ErroreousDataNameException">
+	<summary>
+ An exception which is thrown when certain operations are performed on IDataName
+ which requires the IDataName to be either at a minimum, parsable or even valid.
+ </summary>
+	<remarks>
+ An exception which is thrown when certain operations are performed on IDataName
+ which requires the IDataName to be either at a minimum, parsable or even valid.
+ 
+ It should be noted that IDataName.checkNameStatus() should never throw an
+ ErroreousDataNameException.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataListConnection.getDataListConnectionType">
 	<summary>
  Returns an Integer which represents the type of connection
  </summary>
@@ -732,6 +756,112 @@ api
  In general, instances of IDataName would be created within the implenmentation of the
  IGeoDataListConnection.getLayerDataNamesList() method.
  </remarks>
+</member><member name="M:mapaction.datanames.api.RenamingDataException.getDataName">
+	<summary>
+ Returns the IDataName which could not be renamed.
+ </summary>
+	<returns>The IDataName which could not be renamed.</returns>
+	<remarks>
+ Returns the IDataName which could not be renamed
+ </remarks>
+</member><member name="T:mapaction.datanames.api.RenamingDataException">
+	<summary>
+ An Exception indicating at an error occured whilst attempting to rename
+ the underlying data store.
+ </summary>
+	<remarks>
+ An Exception indicating at an error occured whilst attempting to rename
+ the underlying data store.
+ 
+ Provides a convenence function to get hold of a reference to the offending 
+ IDataname object.
+ </remarks>
+</member><member name="T:mapaction.datanames.api.dnNameStatus">
+	<summary>
+ BitFlags relating to the status of a particular Data Name. The status of a name
+ is retrived by using IDataName.checkNameStatus() or one of the convenence wrapper
+ methods.
+ </summary>
+	<remarks>
+ BitFlags relating to the status of a particular Data Name. The status of a name
+ is retrived by using IDataName.checkNameStatus() or one of the convenence wrapper
+ methods.
+ 
+ The status flags are arranged in four categories:
+     INVALID
+     SYNTAX_ERROR 
+     WARN 
+     INFO
+ 
+ All of the flags are prefixed with one of these four names. It is possible to test
+ for all flags within a particular category by just testing agains the root. eg:
+ 
+ ((myNameStatus And dnNameStatus.SYNTAX_ERROR) = dnNameStatus.SYNTAX_ERROR)
+ 
+ will return true for SYNTAX_ERROR_CONTAINS_HYPHENS, SYNTAX_ERROR_TOO_FEW_CLAUSES,
+ SYNTAX_ERROR_DOUBLE_UNDERSCORE and SYNTAX_ERROR_OTHER
+ 
+ There is no "is valid" flag since depending on context this is any 
+ combination of "not DATANAME_INVALID", "not DATANAME_SYNTAX_ERROR" 
+ and maybe "not DATANAME_WARN"
+ </remarks>
+</member><member name="T:mapaction.datanames.api.dnListType">
+	<summary>
+ Describes the physical type of an IDataListConnection object.
+ </summary>
+	<remarks>
+ Describes the physical type of an IDataListConnection object.
+ </remarks>
+</member><member name="T:mapaction.datanames.api.dnClauseLookupType">
+	<summary>
+ Describes the physical type of an IDataNameClauseLookup object.
+ </summary>
+	<remarks>
+ Describes the physical type of an IDataNameClauseLookup object.
+ </remarks>
+</member><member name="P:mapaction.datanames.api.DataNamingConstants.g_strAryClauseTableNames">
+	<summary>
+ An array of all of the data name clause tables names.
+ </summary>
+	<value></value>
+	<returns>An array of all of the data name clause tables names.
+ </returns>
+	<remarks>An array of all of the data name clause tables names.
+ </remarks>
+</member><member name="P:mapaction.datanames.api.DataNamingConstants.g_htbDNStatusStrMessages">
+	<summary>
+ A collection of "user readable" messages describing the dataname status.
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks>
+ A collection of "user readable" messages describing the dataname status.
+ 
+ The Hashtable uses the dnNameStatus enumeration as the keys.
+ </remarks>
+</member><member name="P:mapaction.datanames.api.DataNamingConstants.g_htbAllDataNameColumns">
+	<summary>
+ A structured collection of the DataColumns which describe all of the dataname 
+ clause tables
+ </summary>
+	<value>A Hashtable. The Hashtable has entry for each dataname clause table, with
+ the table name as the key. In each case the value is an ArrayList, of DataColumn 
+ objects describing that table.
+ </value>
+	<returns></returns>
+	<remarks>
+ A structured collection of the DataColumns which describe all of the dataname 
+ clause tables.
+ 
+ The returned values is a Hashtable. The Hashtable has entry for each dataname 
+ clause table, with the table name as the key. In each case the value is an 
+ ArrayList, of DataColumn objects describing that table.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.DataNamingConstants.initialiseDataColumnCollections">
+	<summary>
+ Creates a reference set of DataColumn objects for comparing any "live" tables against.
+ </summary>
+	<remarks></remarks>
 </member>
 </members>
 </doc>
