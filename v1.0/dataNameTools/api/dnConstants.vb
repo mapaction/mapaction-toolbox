@@ -102,7 +102,8 @@ End Enum
 
 Public Module DataNamingConstants
 
-    'Clauses in a data name
+
+    'Names of the different clauses in a data name
     Public Const CLAUSE_GEOEXTENT As String = "geoextent"
     Public Const CLAUSE_DATACATEGORY As String = "datacategory"
     Public Const CLAUSE_DATATHEME As String = "datatheme"
@@ -121,8 +122,10 @@ Public Module DataNamingConstants
     Public Const TABLENAME_SOURCE As String = "datanaming_clause_source"
     Public Const TABLENAME_PERMISSION As String = "datanaming_clause_permission"
 
+    'Common name for Primary Key for all data name clause tables
     Public Const PRI_KEY_COL_NAME As String = "clause"
 
+    'An array of all of the data name clause tables names
     Private m_strAryTableNames() As String = _
                 New String() {CStr(TABLENAME_GEOEXTENT), _
                               CStr(TABLENAME_DATA_CAT), _
@@ -132,8 +135,8 @@ Public Module DataNamingConstants
                               CStr(TABLENAME_SOURCE), _
                               CStr(TABLENAME_PERMISSION)}
 
+    'A collection of "user readable" messages describing the dataname status
     Private m_htbDNStatusStrMessages As Hashtable
-
 
     'todo LOW: move these three values to an ini file or the registary etc..
     Public Const MA_DIR_STRUCT_DATA_DIR As String = "2_Active_Data"
@@ -156,17 +159,30 @@ Public Module DataNamingConstants
     'todo LOW: datatype unknown
     Public Const DATATYPE_CLAUSE_UNKNOWN As String = "unkwn"
 
+    ''' <summary>
+    ''' An array of all of the data name clause tables names.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns>An array of all of the data name clause tables names.
+    ''' </returns>
+    ''' <remarks>An array of all of the data name clause tables names.
+    ''' </remarks>
     Public ReadOnly Property g_strAryClauseTableNames() As String()
         Get
-            'Dim allTableNames() As String
-
-            'Dim Test() As Integer
-            ''declaring a Test array
-            'Test=New Integer(){1,3,5,7,9,} 
             Return m_strAryTableNames
         End Get
     End Property
 
+    ''' <summary>
+    ''' A collection of "user readable" messages describing the dataname status.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' A collection of "user readable" messages describing the dataname status.
+    ''' 
+    ''' The Hashtable uses the dnNameStatus enumeration as the keys.
+    ''' </remarks>
     Public ReadOnly Property g_htbDNStatusStrMessages() As Hashtable
         Get
             Return m_htbDNStatusStrMessages
@@ -175,7 +191,35 @@ Public Module DataNamingConstants
 
     Private m_htbAllDataColumnGroups As New Hashtable
 
-    Public Sub initialiseDNStatusStrMessages()
+    ''' <summary>
+    ''' A structured collection of the DataColumns which describe all of the dataname 
+    ''' clause tables
+    ''' </summary>
+    ''' <value>A Hashtable. The Hashtable has entry for each dataname clause table, with
+    ''' the table name as the key. In each case the value is an ArrayList, of DataColumn 
+    ''' objects describing that table.
+    ''' </value>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' A structured collection of the DataColumns which describe all of the dataname 
+    ''' clause tables.
+    ''' 
+    ''' The returned values is a Hashtable. The Hashtable has entry for each dataname 
+    ''' clause table, with the table name as the key. In each case the value is an 
+    ''' ArrayList, of DataColumn objects describing that table.
+    ''' </remarks>
+    Public ReadOnly Property g_htbAllDataNameColumns() As Hashtable
+        Get
+            Return m_htbAllDataColumnGroups
+        End Get
+    End Property
+
+    Sub New()
+        initialiseDataColumnCollections()
+        initialiseDNStatusStrMessages()
+    End Sub
+
+    Private Sub initialiseDNStatusStrMessages()
         m_htbDNStatusStrMessages = New Hashtable(20)
         m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_GEOEXTENT, "INVALID NAME: GeoExtent Clause not in list of recognised clauses")
         m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_DATACATEGORY, "INVALID NAME: Data Category Clause not in list of recognised clauses")
@@ -195,8 +239,14 @@ Public Module DataNamingConstants
         m_htbDNStatusStrMessages.Add(dnNameStatus.INFO_FREE_TEXT_PRESENT, "INFO: Free text clause is present")
     End Sub
 
+    ''' <summary>
+    ''' Creates a reference set of DataColumn objects for comparing any "live" tables against.
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub initialiseDataColumnCollections()
         'todo LOW: This would problably be better implenmented as reading in an xml file for  something.
+        'todo LOW: Addtionally a (strongly typed) List(Of DataColumns) would problably be better than 
+        'an ArrayList for this purpose.
         Dim arylDataCols As ArrayList
         Dim dclCurrent As DataColumn
 
@@ -373,17 +423,6 @@ Public Module DataNamingConstants
 
             m_htbAllDataColumnGroups.Add(strTableName, arylDataCols)
         Next
-    End Sub
-
-    Public ReadOnly Property g_htbAllDataNameColumns() As Hashtable
-        Get
-            Return m_htbAllDataColumnGroups
-        End Get
-    End Property
-
-    Sub New()
-        initialiseDataColumnCollections()
-        initialiseDNStatusStrMessages()
     End Sub
 
 End Module
