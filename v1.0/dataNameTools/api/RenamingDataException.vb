@@ -12,7 +12,7 @@
 Public Class RenamingDataException
     Inherits Exception
 
-    Private m_dnOffendingName
+    Private m_dnOffendingName As IDataName
 
     Protected Friend Sub New(ByVal strMessage As String, ByRef dnOffendingName As IDataName)
         MyBase.New(strMessage)

@@ -82,7 +82,7 @@ Public Class DataNameESRIFeatureClass
 
     Public Overrides Sub performRename(ByVal newNameStr As String)
         If Not isRenameable() Then
-            Throw New RenamingDataException("Unable to rename Feature Class: " & myNameStr)
+            Throw New RenamingDataException(Me)
         Else
             myDataSet.Rename(newNameStr)
         End If
