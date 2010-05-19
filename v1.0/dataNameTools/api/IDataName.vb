@@ -1,5 +1,4 @@
-﻿'todo check name of IGeoDataListConnection here.
-''' <summary>
+﻿''' <summary>
 ''' Classes implementing this interface represent the status of the name of an individual layer, table
 ''' dataset or other file which is a part of a MapAction GIS data directory.
 ''' </summary>
@@ -13,7 +12,7 @@
 ''' 
 ''' It is not expected that that will be any public constructors for classes implenementing IDataName.
 ''' In general, instances of IDataName would be created within the implenmentation of the
-''' IGeoDataListConnection.getLayerDataNamesList() method.
+''' IDataListConnection.getLayerDataNamesList() method.
 ''' </remarks>
 Public Interface IDataName
 
@@ -62,12 +61,11 @@ Public Interface IDataName
     ''' </remarks>
     Function getNameAndFullPathStr() As String
 
-    ' todo: document the emnumeration name here.
     ''' <summary>
     ''' This method does the core processing to determine whether or not the particular name represented by 
     ''' this object is syntatically correct and valid or not.
     ''' </summary>
-    ''' <returns>A Long which is the sum of the relevant XXXXX emnumeration members</returns>
+    ''' <returns>A Long which is the sum of the dnNameStatus emnumeration members</returns>
     ''' <remarks>
     ''' This method does the core processing to determine whether or not the particular name represented by 
     ''' this object is syntatically correct and valid or not. 
@@ -79,7 +77,6 @@ Public Interface IDataName
     ''' </remarks>
     Function checkNameStatus() As Long
 
-    ' todo: document the emnumeration name here.
     ''' <summary>
     ''' Tests whether or not the IDataName is syntatically correct.
     ''' </summary>
@@ -87,7 +84,8 @@ Public Interface IDataName
     ''' <remarks>
     ''' Tests whether or not the IDataName is syntatically correct.
     ''' 
-    ''' XXXXX Shorthand for:
+    ''' This method is shorthand for:
+    ''' (Not (checkNameStatus() And dnNameStatus.SYNTAX_ERROR) = dnNameStatus.SYNTAX_ERROR))
     ''' </remarks>
     Function isNameParseable() As Boolean
 
@@ -104,7 +102,9 @@ Public Interface IDataName
     ''' relevant IDataNameClauseLookupTables. If optional clauses are present then their values must be found in
     ''' the relevant  IDataNameClauseLookupTables.
     ''' 
-    ''' XXXXX Shorthand for:
+    ''' This method is shorthand for:
+    ''' (Not (checkNameStatus() And dnNameStatus.SYNTAX_ERROR) = dnNameStatus.SYNTAX_ERROR)) _
+    ''' and (Not (checkNameStatus() And dnNameStatus.INVALID) = dnNameStatus.INVALID))
     ''' </remarks>
     Function isNameValid() As Boolean
 
@@ -168,7 +168,6 @@ Public Interface IDataName
     Sub rename(ByVal newNameStr As String)
 
 
-    ' todo check name of RenamingDataException in documentation
     ''' <summary>
     ''' A convenance function, to subsutute the GeoExtent clause of the current name with a new value.
     ''' </summary>
@@ -179,13 +178,12 @@ Public Interface IDataName
     ''' The new value does not need to be valid in the sense of the data naming convention, but must
     ''' be valid in terms of the underlying storage.
     ''' 
-    ''' Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+    ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
     Function changeGeoExtentClause(ByVal newGeoExtent As String) As Long
 
 
-    ' todo check name of RenamingDataException in documentation
     ''' <summary>
     ''' A convenance function, to subsutute the DataCategory clause of the current name with a new value.
     ''' </summary>
@@ -196,13 +194,12 @@ Public Interface IDataName
     ''' The new value does not need to be valid in the sense of the data naming convention, but must
     ''' be valid in terms of the underlying storage.
     ''' 
-    ''' Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+    ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
     Function changeDataCategoryClause(ByVal newDataCategory As String) As Long
 
 
-    ' todo check name of RenamingDataException in documentation
     ''' <summary>
     ''' A convenance function, to subsutute the DataTheme clause of the current name with a new value.
     ''' </summary>
@@ -213,13 +210,12 @@ Public Interface IDataName
     ''' The new value does not need to be valid in the sense of the data naming convention, but must
     ''' be valid in terms of the underlying storage.
     ''' 
-    ''' Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+    ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
     Function changeDataThemeClause(ByVal newDataTheme As String) As Long
 
 
-    ' todo check name of RenamingDataException in documentation
     ''' <summary>
     ''' A convenance function, to subsutute the DataType clause of the current name with a new value.
     ''' </summary>
@@ -230,13 +226,12 @@ Public Interface IDataName
     ''' The new value does not need to be valid in the sense of the data naming convention, but must
     ''' be valid in terms of the underlying storage.
     ''' 
-    ''' Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+    ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
     Function changeDataTypeClause(ByVal newDataType As String) As Long
 
 
-    ' todo check name of RenamingDataException in documentation
     ''' <summary>
     ''' A convenance function, to subsutute the Permissions clause of the current name with a new value.
     ''' </summary>
@@ -251,13 +246,12 @@ Public Interface IDataName
     ''' will be inserted. To completely remove an existing Permissions clause set newPermissionsClause=""
     ''' and the relevant undersorces will be removed.
     ''' 
-    ''' Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+    ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
     Function changePermissionsClause(ByVal newPermissionsClause As String) As Long
 
 
-    ' todo check name of RenamingDataException in documentation
     ''' <summary>
     ''' A convenance function, to subsutute the Scale clause of the current name with a new value.
     ''' </summary>
@@ -272,13 +266,12 @@ Public Interface IDataName
     ''' will be inserted. To completely remove an existing Scale clause set newScaleClause="" and
     ''' the relevant undersorces will be removed.
     ''' 
-    ''' Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+    ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
     Function changeScaleClause(ByVal newScaleClause As String) As Long
 
 
-    ' todo check name of RenamingDataException in documentation
     ''' <summary>
     ''' A convenance function, to subsutute the Source clause of the current name with a new value.
     ''' </summary>
@@ -289,12 +282,11 @@ Public Interface IDataName
     ''' The new value does not need to be valid in the sense of the data naming convention, but must
     ''' be valid in terms of the underlying storage.
     ''' 
-    ''' Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+    ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
     Function changeSourceClause(ByVal newSourceClause As String) As Long
 
-    ' todo check name of RenamingDataException in documentation
     ''' <summary>
     ''' A convenance function, to subsutute the FreeText clause of the current name with a new value.
     ''' </summary>
@@ -309,7 +301,7 @@ Public Interface IDataName
     ''' will be inserted. To completely remove an existing FreeText clause set newFreeTextClause="" and
     ''' the relevant undersorces will be removed.
     ''' 
-    ''' Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+    ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
     Function changeFreeTextClause(ByVal newFreeTextClause As String) As Long

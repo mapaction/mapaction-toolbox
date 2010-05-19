@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractDataListConnection.vb" />
+    <Compile Include="AbstractDataNameClauseLookup.vb" />
     <Compile Include="dnConstants.vb" />
     <Compile Include="ErroreousDataNameException.vb" />
     <Compile Include="IDataListConnection.vb" />

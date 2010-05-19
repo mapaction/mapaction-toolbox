@@ -1,4 +1,6 @@
-﻿' This file contains serveral Enumerations and a Module which collectively define
+﻿Imports System.Collections.Generic
+
+' This file contains serveral Enumerations and a Module which collectively define
 ' all of the constant values used in teh datanaming API.
 
 'todo LOW: Substainial parts of this module should be converted to read values from an .ini file or simular
@@ -107,9 +109,15 @@ End Enum
 ''' </remarks>
 Public Enum dnLookupTableError As Short
     general
-    wrong_no_of_cols
-    wrong_col_spec
-    default_tbls_not_found
+    wrongNoOfCols
+    colNamesMismatch
+    colTypeMismatch
+    colLenthMismatch
+    colUniqueReqMismatch
+    colAutoIncrementMismatch
+    colCaptionMismatch
+    colReadOnlyMismatch
+    DefaultTablesNotFound
 End Enum
 
 
@@ -150,12 +158,13 @@ Public Module DataNamingConstants
                               CStr(TABLENAME_PERMISSION)}
 
     'A collection of "user readable" messages describing the dataname status
-    Private m_htbDNStatusStrMessages As Hashtable
+    Private m_htbDNStatusStrMessages As Dictionary(Of dnNameStatus, String)
 
     'todo LOW: move these three values to an ini file or the registary etc..
     Public Const MA_DIR_STRUCT_DATA_DIR As String = "2_Active_Data"
     Public Const MA_DIR_STRUCT_MXD_DIR As String = "33_MXD_Maps"
-    Public Const MA_DIR_STRUCT_PATH_FROM_MXD_TO_DATA_DIR As String = "..\..\" & MA_DIR_STRUCT_DATA_DIR
+    'Not sure that this is actually used
+    'Public Const MA_DIR_STRUCT_PATH_FROM_MXD_TO_DATA_DIR As String = "..\..\" & MA_DIR_STRUCT_DATA_DIR
 
     'todo LOW: move these three values to an ini file or the registary etc..
     Public Const MDB_DATACLAUSE_FILE_PREFIX As String = "data_naming_conventions_v"
@@ -173,10 +182,19 @@ Public Module DataNamingConstants
     'todo LOW: datatype unknown
     Public Const DATATYPE_CLAUSE_UNKNOWN As String = "unkwn"
 
-    Public Const STR_LOOKUP_TABLE_ERROR_GENERAL As String = "Error whist reading data clause lookup table"
-    Public Const STR_LOOKUP_TABLE_ERROR_WRONG_NO_OF_COLS As String = "Incorrect number of columns in table"
-    Public Const STR_LOOKUP_TABLE_ERROR_WRONG_COL_SPEC As String = "Incorrect specification for column"
-    Public Const STR_LOOKUP_TABLE_ERROR_DEFAULT_TBLS_NOT_FOUND As String = "Cannot find a valid default Data Name Clause Lookup Table"
+    Public Const LOOKUP_TABLE_ERROR_GENERAL As String = "Error whist reading data clause lookup table"
+    Public Const LOOKUP_TABLE_ERROR_WRONG_NO_OF_COLS As String = "Incorrect number of columns in table"
+    Public Const LOOKUP_TABLE_ERROR_DEFAULT_TBLS_NOT_FOUND As String = "Cannot find a valid default Data Name Clause Lookup Table"
+    Public Const LOOKUP_TABLE_ERROR_COL_NAMES_MISMATCH As String = "column names doesn't match"
+    Public Const LOOKUP_TABLE_ERROR_COL_TYPE_MISMATCH As String = "column data type doesn't match"
+    Public Const LOOKUP_TABLE_ERROR_COL_LENTH_MISMATCH As String = "column length doesn't match"
+    Public Const LOOKUP_TABLE_ERROR_COL_UNIQUEREQ_MISMATCH As String = "column unique requirement doesn't match"
+    Public Const LOOKUP_TABLE_ERROR_COL_AUTOINCREMENT_MISMATCH As String = "column AutoIncrement requirement doesn't match"
+    Public Const LOOKUP_TABLE_ERROR_COL_CAPTION_MISMATCH As String = "column Caption requirement doesn't match"
+    Public Const LOOKUP_TABLE_ERROR_COL_READONLY_MISMATCH As String = "column ReadOnly requirement doesn't match"
+
+
+
     '"Unable to find valid DataName Clause Lookup Tables in directory: "
 
     ''' <summary>
@@ -193,6 +211,7 @@ Public Module DataNamingConstants
         End Get
     End Property
 
+
     ''' <summary>
     ''' A collection of "user readable" messages describing the dataname status.
     ''' </summary>
@@ -201,13 +220,28 @@ Public Module DataNamingConstants
     ''' <remarks>
     ''' A collection of "user readable" messages describing the dataname status.
     ''' 
-    ''' The Hashtable uses the dnNameStatus enumeration as the keys.
+    ''' The Dictionary(Of dnNameStatus, String) uses the dnNameStatus enumeration as the keys.
     ''' </remarks>
-    Public ReadOnly Property g_htbDNStatusStrMessages() As Hashtable
+    Public ReadOnly Property g_htbDNStatusStrMessages() As Dictionary(Of dnNameStatus, String)
         Get
             Return m_htbDNStatusStrMessages
         End Get
     End Property
+
+    Private m_lstDNNameStatusValues As List(Of dnNameStatus)
+
+    ''' <summary>
+    ''' A list of possible dnNameStatus values
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks>A list of possible dnNameStatus values</remarks>
+    Public ReadOnly Property g_lstDNNameStatusValues() As List(Of dnNameStatus)
+        Get
+            Return m_lstDNNameStatusValues
+        End Get
+    End Property
+
 
     Private m_htbAllDataColumnGroups As New Hashtable
 
@@ -239,8 +273,31 @@ Public Module DataNamingConstants
         initialiseDNStatusStrMessages()
     End Sub
 
+    Private Sub initialiseDNNameStatusValues()
+        m_lstDNNameStatusValues = New List(Of dnNameStatus)
+
+        m_lstDNNameStatusValues.Add(dnNameStatus.SYNTAX_ERROR_CONTAINS_HYPHENS)
+        m_lstDNNameStatusValues.Add(dnNameStatus.SYNTAX_ERROR_DOUBLE_UNDERSCORE)
+        m_lstDNNameStatusValues.Add(dnNameStatus.SYNTAX_ERROR_OTHER)
+        m_lstDNNameStatusValues.Add(dnNameStatus.SYNTAX_ERROR_TOO_FEW_CLAUSES)
+        m_lstDNNameStatusValues.Add(dnNameStatus.INVALID_DATACATEGORY)
+        m_lstDNNameStatusValues.Add(dnNameStatus.INVALID_DATATHEME)
+        m_lstDNNameStatusValues.Add(dnNameStatus.INVALID_DATATYPE)
+        m_lstDNNameStatusValues.Add(dnNameStatus.INCORRECT_DATATYPE)
+        m_lstDNNameStatusValues.Add(dnNameStatus.INVALID_GEOEXTENT)
+        m_lstDNNameStatusValues.Add(dnNameStatus.INVALID_PERMISSIONS)
+        m_lstDNNameStatusValues.Add(dnNameStatus.INVALID_SCALE)
+        m_lstDNNameStatusValues.Add(dnNameStatus.INVALID_SOURCE)
+        m_lstDNNameStatusValues.Add(dnNameStatus.INCORRECT_DATATYPE)
+        m_lstDNNameStatusValues.Add(dnNameStatus.WARN_MISSING_SCALE_CLAUSE)
+        m_lstDNNameStatusValues.Add(dnNameStatus.WARN_MISSING_PERMISSIONS_CLAUSE)
+        m_lstDNNameStatusValues.Add(dnNameStatus.WARN_TWO_CHAR_FREE_TEXT)
+        m_lstDNNameStatusValues.Add(dnNameStatus.INFO_FREE_TEXT_PRESENT)
+
+    End Sub
+
     Private Sub initialiseDNStatusStrMessages()
-        m_htbDNStatusStrMessages = New Hashtable(20)
+        m_htbDNStatusStrMessages = New Dictionary(Of dnNameStatus, String)
         m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_GEOEXTENT, "INVALID NAME: GeoExtent Clause not in list of recognised clauses")
         m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_DATACATEGORY, "INVALID NAME: Data Category Clause not in list of recognised clauses")
         m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_DATATHEME, "INVALID NAME: Data Theme not regonised, or not valid for Data Category")

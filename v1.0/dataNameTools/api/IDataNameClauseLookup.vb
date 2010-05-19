@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 
 ' todo double check the name of the XXXX factory class
-' todo double check the name of the YYYY enumeration
 ''' <summary>
 ''' Classes implementing this interface provide a means to interact with a collection of flat database
 ''' tables, which collectively, list valid values for each individual clause in a data name.
@@ -18,7 +17,7 @@
 '''     "datanaming_clause_scale"
 '''     "datanaming_clause_source"
 '''     "datanaming_clause_permission"
-''' (these are defined in the YYYY enumeration)
+''' (these are defined by the constants with the prefix "TABLENAME_")
 ''' 
 ''' It is not expected that that will be any public constructors for classes implenementing IDataNameClauseLookup.
 ''' In general, instances of IDataNameClauseLookup should be obtained either by use of the 
@@ -34,7 +33,7 @@ Public Interface IDataNameClauseLookup
     ''' <remarks>
     ''' Tests whether the testGeoExtentClause is listed in the datanaming_clause_geoextent table.
     ''' </remarks>
-    Function isvalidGeoextentClause(ByVal testGeoExtentClause As String) As Boolean
+    Function isValidGeoextentClause(ByVal testGeoExtentClause As String) As Boolean
 
     ''' <summary>
     ''' Tests whether the testDataCatClause is listed in the datanaming_clause_data_categories table.
@@ -44,7 +43,7 @@ Public Interface IDataNameClauseLookup
     ''' <remarks>
     ''' Tests whether the testDataCatClause is listed in the datanaming_clause_data_categories table.
     ''' </remarks>
-    Function isvalidDataCategoryClause(ByVal testDataCatClause As String) As Boolean
+    Function isValidDataCategoryClause(ByVal testDataCatClause As String) As Boolean
 
     ''' <summary>
     ''' Tests whether the testDataThemeClause is listed in the datanaming_clause_data_theme table.
@@ -54,7 +53,7 @@ Public Interface IDataNameClauseLookup
     ''' <remarks>
     ''' Tests whether the testDataThemeClause is listed in the datanaming_clause_data_theme table.
     ''' </remarks>
-    Function isvalidDataThemeClause(ByVal testDataThemeClause As String, ByVal testDataCatClause As String) As Boolean
+    Function isValidDataThemeClause(ByVal testDataThemeClause As String, ByVal testDataCatClause As String) As Boolean
 
     'todo. Add ref to the For that see .....
     ''' <summary>
@@ -68,7 +67,7 @@ Public Interface IDataNameClauseLookup
     ''' Note that this does NOT test whether or not the testDataTypeClause matches the data type 
     ''' of a particular layer. For that see .....
     ''' </remarks>
-    Function isvalidDataTypeClause(ByVal testDataTypeClause As String) As Boolean
+    Function isValidDataTypeClause(ByVal testDataTypeClause As String) As Boolean
 
     ''' <summary>
     ''' Tests whether the testScaleClause is listed in the datanaming_clause_scale table.
@@ -78,7 +77,7 @@ Public Interface IDataNameClauseLookup
     ''' <remarks>
     ''' Tests whether the testScaleClause is listed in the datanaming_clause_scale table.
     ''' </remarks>
-    Function isvalidScaleClause(ByVal testScaleClause As String) As Boolean
+    Function isValidScaleClause(ByVal testScaleClause As String) As Boolean
 
     ''' <summary>
     ''' Tests whether the testSourceClause is listed in the datanaming_clause_source table.
@@ -88,7 +87,7 @@ Public Interface IDataNameClauseLookup
     ''' <remarks>
     ''' Tests whether the testSourceClause is listed in the datanaming_clause_source table.
     ''' </remarks>
-    Function isvalidSourceClause(ByVal testSourceClause As String) As Boolean
+    Function isValidSourceClause(ByVal testSourceClause As String) As Boolean
 
     ''' <summary>
     ''' Tests whether the testPermissionsClause is listed in the datanaming_clause_permission table.
@@ -98,7 +97,7 @@ Public Interface IDataNameClauseLookup
     ''' <remarks>
     ''' Tests whether the testPermissionsClause is listed in the datanaming_clause_permission table.
     ''' </remarks>
-    Function isvalidPermissionsClause(ByVal testPermissionsClause As String) As Boolean
+    Function isValidPermissionsClause(ByVal testPermissionsClause As String) As Boolean
 
     ''' <summary>
     ''' This method returns a simple list of all of the valid GeoExtent clauses, as Strings, from the

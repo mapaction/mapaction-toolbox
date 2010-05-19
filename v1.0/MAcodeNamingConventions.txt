@@ -10,3 +10,20 @@ srtAry = String Arrays
 htb = HashTable
 dcl = DataColunm
 aryl = Array List
+dtb = DataTable
+
+
+    'todo SORT THIS OUT NAD MOVE PART OF IT CONSTANTS FILES
+    Public Shared Function getDataNamingStatusMessage(ByVal lngStatus As Long) As String
+        Dim stb As New System.Text.StringBuilder
+
+        For Each enuStaCode In g_lstDNNameStatusValues
+            If ((lngStatus And enuStaCode) = enuStaCode) Then
+                stb.AppendLine(g_htbDNStatusStrMessages.Item(enuStaCode))
+            End If
+        Next
+
+        Return stb.ToString()
+    End Function
+
+
