@@ -5,6 +5,6 @@ D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\data
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\ma-datanaming\obj\Debug\ma-datanaming.xml
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\ma-datanaming\obj\Debug\ma-datanaming.pdb
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\ma-datanaming\obj\Debug\mapaction.dataname.Resources.resources
-D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\ma-datanaming\bin\Debug\ma-datanaming.dll.config
-D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\ma-datanaming\bin\Debug\ma-datanaming.dll
-D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\ma-datanaming\obj\Debug\ma-datanaming.dll
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\ma-datanaming\bin\Debug\ma-datanaming.exe.config
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\ma-datanaming\bin\Debug\ma-datanaming.exe
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\ma-datanaming\obj\Debug\ma-datanaming.exe

@@ -6,7 +6,38 @@ api
 </name>
 </assembly>
 <members>
-<member name="M:mapaction.datanames.api.IDataListConnection.getDataListConnectionType">
+<member name="M:mapaction.datanames.api.AbstractDataListConnection.#ctor(System.Boolean)">
+	<summary>
+ The Constructor.
+ </summary>
+	<param name="blnRecuse">The default Recusive behaviour, if there is a heirachircal 
+ structure to the underlying DataList. TRUE = the heirachy should be recused.
+ FALSE = the heirachy should not be recused.
+ </param>
+	<remarks>
+ The Constructor. 
+ 
+ The constructor is declared Protected to discourage implenmenters from
+ making their constructors public. Use the related Factory class instead.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataListConnection.#ctor">
+	<summary>
+ The Constructor. Sets default Recusive behaviour to TRUE.
+ </summary>
+	<remarks>
+ The Constructor. Sets default Recusive behaviour to TRUE.
+ 
+ The constructor is declared Protected to discourage implenmenters from
+ making their constructors public. Use the related Factory class instead.
+ </remarks>
+</member><member name="T:mapaction.datanames.api.AbstractDataListConnection">
+	<summary>
+ Provides a framework for the implenmentation of the IDataListConnection interface.
+ </summary>
+	<remarks>
+ Provides a framework for the implenmentation of the IDataListConnection interface.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.IDataListConnection.getDataListConnectionType">
 	<summary>
  Returns an Integer which represents the type of connection
  </summary>
