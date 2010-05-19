@@ -53,6 +53,7 @@
     <Import Include="System.Diagnostics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractDataListConnection.vb" />
     <Compile Include="dnConstants.vb" />
     <Compile Include="ErroreousDataNameException.vb" />
     <Compile Include="IDataListConnection.vb" />

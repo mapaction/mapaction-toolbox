@@ -299,6 +299,30 @@ ma-datanaming
 	<remarks>
  Describes the physical type of an IDataNameClauseLookup object.
  </remarks>
+</member><member name="M:mapaction.dataname.ErroreousDataNameException.getNameStatus">
+	<summary>
+ Returns the status of the IDataName which caused the problem.
+ </summary>
+	<returns>Long. The status of the IDataName which caused the problem.</returns>
+	<remarks>Returns the status of the IDataName which caused the problem.</remarks>
+</member><member name="M:mapaction.dataname.ErroreousDataNameException.getDescriptionFromStatus(System.Int64)">
+	<summary>
+	</summary>
+	<param name="lngBitsum"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:mapaction.dataname.ErroreousDataNameException">
+	<summary>
+ An exception which is thrown when certain operations are performed on IDataName
+ which requires the IDataName to be either at a minimum, parsable or even valid.
+ </summary>
+	<remarks>
+ An exception which is thrown when certain operations are performed on IDataName
+ which requires the IDataName to be either at a minimum, parsable or even valid.
+ 
+ It should be noted that IDataName.checkNameStatus() should never throw an
+ ErroreousDataNameException.
+ </remarks>
 </member><member name="M:mapaction.dataname.IDataNameClauseLookup.isWriteable">
 	<summary>
  Test whether the Data Name Clause tables can be written to or not
@@ -395,6 +419,26 @@ ma-datanaming
  FALSE = the name of the data layer cannot be changed.
  </returns>
 	<remarks></remarks>
+</member><member name="M:mapaction.dataname.RenamingDataException.getDataName">
+	<summary>
+ Returns the IDataName which could not be renamed.
+ </summary>
+	<returns>The IDataName which could not be renamed.</returns>
+	<remarks>
+ Returns the IDataName which could not be renamed
+ </remarks>
+</member><member name="T:mapaction.dataname.RenamingDataException">
+	<summary>
+ An Exception indicating at an error occured whilst attempting to rename
+ the underlying data store.
+ </summary>
+	<remarks>
+ An Exception indicating at an error occured whilst attempting to rename
+ the underlying data store.
+ 
+ Provides a convenence function to get hold of a reference to the offending 
+ IDataname object.
+ </remarks>
 </member>
 </members>
 </doc>

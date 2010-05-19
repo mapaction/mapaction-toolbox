@@ -20,7 +20,7 @@ Public Interface IDataListConnection
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Function getDataListConnectionType() As Integer
+    Function getDataListConnectionType() As dnListType
 
     'todo possible convert to an enumeration and re-write summary
     ''' <summary>

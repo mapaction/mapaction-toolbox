@@ -29,7 +29,7 @@
   <Class Name="mapaction.dataname.AbstractGeoDataListConnection">
     <Position X="3" Y="1.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAIAAAAAAQAFkAAIgAAAAQAAAAAAAAAAAABAAAA=</HashCode>
+      <HashCode>AAAAAAIAAAAAAQAFEAAIgAAQAQAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>AbstractGeoDataListConnection.vb</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
