@@ -6,36 +6,321 @@ api
 </name>
 </assembly>
 <members>
-<member name="M:mapaction.datanames.api.AbstractDataListConnection.#ctor(System.Boolean)">
+<member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.initialiseAllTables">
 	<summary>
- The Constructor.
+ Opens each of the dataname clause lookup tables. Must be called from the constructor
  </summary>
-	<param name="blnRecuse">The default Recusive behaviour, if there is a heirachircal 
- structure to the underlying DataList. TRUE = the heirachy should be recused.
- FALSE = the heirachy should not be recused.
- </param>
 	<remarks>
- The Constructor. 
+ Opens each of the dataname clause lookup tables. Must be called from the constructor
  
- The constructor is declared Protected to discourage implenmenters from
- making their constructors public. Use the related Factory class instead.
+ Uses the subclasses implenmentation of the openTable() method.
  </remarks>
-</member><member name="M:mapaction.datanames.api.AbstractDataListConnection.#ctor">
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.openTable(System.String)">
 	<summary>
- The Constructor. Sets default Recusive behaviour to TRUE.
+ This method provides an implenmention specific means to open an individual flat table
+ from a data source (eg, Access DB, ESRI GDB, XML files etc).
  </summary>
+	<param name="strTableName">The name of the table to open. This should normally be passed
+ using one of the API constants with the prefix "TABLENAME_"</param>
+	<returns>A DataTable object representing the </returns>
 	<remarks>
- The Constructor. Sets default Recusive behaviour to TRUE.
+ This method provides an implenmention specific means to open an individual flat table
+ from a data source (eg, Access DB, ESRI GDB, XML files etc).
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getDetails">
+	<summary>
+ Returns a string describing the storage location of the dataname clause tables.
+ </summary>
+	<returns>A string describing the storage location of the dataname clause tables.</returns>
+	<remarks>
+ Returns a string describing the storage location of the dataname clause tables.
  
- The constructor is declared Protected to discourage implenmenters from
- making their constructors public. Use the related Factory class instead.
+ This may be the operating system file path if appropriate or a RDMS connection
+ string, or a URL etc.
  </remarks>
-</member><member name="T:mapaction.datanames.api.AbstractDataListConnection">
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getPath">
 	<summary>
- Provides a framework for the implenmentation of the IDataListConnection interface.
+ Returns the operating system file path to the container of the dataname clause tables.
+ </summary>
+	<returns>A FileInfo object representing the operating system file path to the container 
+ of the dataname clause tables.</returns>
+	<remarks>
+ Returns the operating system file path to the container of the dataname clause tables.
+ 
+ If the location of these tables cannot represented as an operating system file (eg if they 
+ are located in a RDBMS) then the Nothing object is returned.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.doDataColumnsMatch(System.Collections.ArrayList@,System.Collections.ArrayList@)">
+	<summary>
+ Compared two ArrayLists of DataColumn objects, to confirm whether or not the specfication
+ of the columns (ie the schema) is identical for both.
+ </summary>
+	<param name="dcal1">An ArrayList of DataColumn objects</param>
+	<param name="dcal2">An ArrayList of DataColumn objects</param>
+	<returns>TRUE = the DataColumn specfications match, FALSE otherwise.</returns>
+	<remarks>
+ Compared two ArrayLists of DataColumn objects, to confirm whether or not the specfication
+ of the columns (ie the schema) is identical for both. This is used to verify the schema of
+ any Data Name Clause Lookup Tables that have been opened.
+ 
+ Is this really the best way to check the schema of the DB? probably could be done better using the XML schema definition stuff in ADO.NET
+ Columns *must* be in the same order.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getListFromTable(System.Data.DataTable@)">
+	<summary>
+ A convenience function to extact all of the clauses (ie the Primary Keys) from a
+ Data Name Clause Lookup Table.
+ </summary>
+	<param name="dt">A DataTable representing the a Data Name Clause Lookup
+ Table. An Exception will occur if the table does not have a primary column with a
+ name which matches the PRI_KEY_COL_NAME constant.</param>
+	<returns>A List(Of String) of each of the clauses in the DataTable</returns>
+	<remarks>
+ A convenience function to extact all of the clauses (ie the Primary Keys) from a
+ Data Name Clause Lookup Table.
+ 
+ An Exception will occur if the table does not have a primary column with a
+ name which matches the PRI_KEY_COL_NAME constant.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.isStrInPriKeyCol(System.String@,System.Data.DataTable@)">
+	<summary>
+ Checks whether a particular test String is listed in the primary key column of the 
+ DataTable. All strings are converted to lower case before comparision.
+ </summary>
+	<param name="strTestparam">The test String</param>
+	<param name="dt">A DataTable representing a Data Name Lookup Table</param>
+	<returns>TRUE = The test string is present in the primary key column of the 
+ DataTable, FALSE otherwise.</returns>
+	<remarks>
+ Checks whether a particular test String is listed in the primary key column of the 
+ DataTable. All strings are converted to lower case before comparision.
+ 
+ This method is at the core of checking that the Data Name is valid.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getDataCategoryList">
+	<summary>
+ A convenience function to extact all of the Data Category clauses as a List(Of Strings).
+ </summary>
+	<returns>A List(Of Strings) of all the valid Data Category clauses.
+ </returns>
+	<remarks>
+ A convenience function to extact all of the Data Category clauses as a List(Of Strings).
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getDataCategoryTable">
+	<summary>
+ A convenience function to return the Data Category clauses lookup table, including all columns
+ </summary>
+	<returns>A DataTable representing the Data Category clauses lookup table.
+ </returns>
+	<remarks>
+ A convenience function to return the Data Category clauses lookup table, including all columns
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getDataThemeList">
+	<summary>
+ A convenience function to extact all of the Data Theme clauses as a List(Of Strings).
+ </summary>
+	<returns>A List(Of Strings) of all the valid Data Theme clauses.
+ </returns>
+	<remarks>
+ A convenience function to extact all of the Data Theme clauses as a List(Of Strings).
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getDataThemeTable">
+	<summary>
+ A convenience function to return the Data Theme clauses lookup table, including all columns
+ </summary>
+	<returns>A DataTable representing the Data Theme clauses lookup table.
+ </returns>
+	<remarks>
+ A convenience function to return the Data Theme clauses lookup table, including all columns
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getDataTypeList">
+	<summary>
+ A convenience function to extact all of the Data Type clauses as a List(Of Strings).
+ </summary>
+	<returns>A List(Of Strings) of all the valid Data Type clauses.
+ </returns>
+	<remarks>
+ A convenience function to extact all of the Data Type clauses as a List(Of Strings).
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getDataTypeTable">
+	<summary>
+ A convenience function to return the Data Type clauses lookup table, including all columns
+ </summary>
+	<returns>A DataTable representing the Data Type clauses lookup table.
+ </returns>
+	<remarks>
+ A convenience function to return the Data Type clauses lookup table, including all columns
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getGeoExtentList">
+	<summary>
+ A convenience function to extact all of the GeoExtent clauses as a List(Of Strings).
+ </summary>
+	<returns>A List(Of Strings) of all the valid GeoExtent clauses.
+ </returns>
+	<remarks>
+ A convenience function to extact all of the GeoExtent clauses as a List(Of Strings).
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getGeoExtentTable">
+	<summary>
+ A convenience function to return the GeoExtent clauses lookup table, including all columns
+ </summary>
+	<returns>A DataTable representing the GeoExtent clauses lookup table.
+ </returns>
+	<remarks>
+ A convenience function to return the GeoExtent clauses lookup table, including all columns
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getPermissionsList">
+	<summary>
+ A convenience function to extact all of the Permissions clauses as a List(Of Strings).
+ </summary>
+	<returns>A List(Of Strings) of all the valid Permissions clauses.
+ </returns>
+	<remarks>
+ A convenience function to extact all of the Permissions clauses as a List(Of Strings).
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getPermissionsTable">
+	<summary>
+ A convenience function to return the Permissions clauses lookup table, including all columns
+ </summary>
+	<returns>A DataTable representing the Permissions clauses lookup table.
+ </returns>
+	<remarks>
+ A convenience function to return the Permissions clauses lookup table, including all columns
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getScaleCodesList">
+	<summary>
+ A convenience function to extact all of the Scale clauses as a List(Of Strings).
+ </summary>
+	<returns>A List(Of Strings) of all the valid Scale clauses.
+ </returns>
+	<remarks>
+ A convenience function to extact all of the Scale clauses as a List(Of Strings).
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getScaleCodesTable">
+	<summary>
+ A convenience function to return the Scale clauses lookup table, including all columns
+ </summary>
+	<returns>A DataTable representing the Scale clauses lookup table.
+ </returns>
+	<remarks>
+ A convenience function to return the Scale clauses lookup table, including all columns
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getSourceCodesList">
+	<summary>
+ A convenience function to extact all of the Source clauses as a List(Of Strings).
+ </summary>
+	<returns>A List(Of Strings) of all the valid Source clauses.
+ </returns>
+	<remarks>
+ A convenience function to extact all of the Source clauses as a List(Of Strings).
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getSourceCodesTable">
+	<summary>
+ A convenience function to return the Source clauses lookup table, including all columns
+ </summary>
+	<returns>A DataTable representing the Source clauses lookup table.
+ </returns>
+	<remarks>
+ A convenience function to return the Source clauses lookup table, including all columns
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.isValidDataCategoryClause(System.String)">
+	<summary>
+ Checks whether a particular test String is a valid Data Category Clause.
+ The strings are converted to lower case before comparision.
+ </summary>
+	<param name="strTestDataCatClause">The test String</param>
+	<returns>TRUE = The test string if the test string is a valid Data Category Clause,
+ FALSE otherwise.</returns>
+	<remarks>
+ Checks whether a particular test String is a valid Data Category Clause.
+ The strings are converted to lower case before comparision.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.isValidDataThemeClause(System.String,System.String)">
+	<summary>
+ Checks whether a particular test String is a valid Data Theme Clause. Because
+ Data Themes are nested within Data Categories, it is also necessary to pass the 
+ Data Category to this method. The strings are converted to lower case before
+ comparision.
+ </summary>
+	<param name="strTestDataThemeClause">The Data Theme Clause test String</param>
+	<param name="strTestDataCatClause">The Data Category Clause test String</param>
+	<returns>TRUE = The test string if the test string is a valid Data Theme Clause,
+ FALSE otherwise.</returns>
+	<remarks>
+ Checks whether a particular test String is a valid Data Theme Clause. Because
+ Data Themes are nested within Data Categories, it is also necessary to pass the 
+ Data Category to this method. The strings are converted to lower case before
+ comparision.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.isValidDataTypeClause(System.String)">
+	<summary>
+ Checks whether a particular test String is a valid Data Type Clause.
+ The strings are converted to lower case before comparision.
+ </summary>
+	<param name="strTestDataTypeClause">The test String</param>
+	<returns>TRUE = The test string if the test string is a valid Data Type Clause,
+ FALSE otherwise.</returns>
+	<remarks>
+ Checks whether a particular test String is a valid Data Type Clause.
+ The strings are converted to lower case before comparision.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.isValidGeoextentClause(System.String)">
+	<summary>
+ Checks whether a particular test String is a valid Geoextent Clause.
+ The strings are converted to lower case before comparision.
+ </summary>
+	<param name="strTestGeoExtentClause">The test String</param>
+	<returns>TRUE = The test string if the test string is a valid Geoextent Clause,
+ FALSE otherwise.</returns>
+	<remarks>
+ Checks whether a particular test String is a valid Geoextent Clause.
+ The strings are converted to lower case before comparision.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.isValidPermissionsClause(System.String)">
+	<summary>
+ Checks whether a particular test String is a valid Permissions Clause.
+ The strings are converted to lower case before comparision.
+ </summary>
+	<param name="strTestPermissionsClause">The test String</param>
+	<returns>TRUE = The test string if the test string is a valid Permissions Clause,
+ FALSE otherwise.</returns>
+	<remarks>
+ Checks whether a particular test String is a valid Permissions Clause.
+ The strings are converted to lower case before comparision.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.isValidScaleClause(System.String)">
+	<summary>
+ Checks whether a particular test String is a valid Scale Clause.
+ The strings are converted to lower case before comparision.
+ </summary>
+	<param name="strTestScaleClause">The test String</param>
+	<returns>TRUE = The test string if the test string is a valid Scale Clause,
+ FALSE otherwise.</returns>
+	<remarks>
+ Checks whether a particular test String is a valid Scale Clause.
+ The strings are converted to lower case before comparision.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.isValidSourceClause(System.String)">
+	<summary>
+ Checks whether a particular test String is a valid Source Clause.
+ The strings are converted to lower case before comparision.
+ </summary>
+	<param name="strTestSourceClause">The test String</param>
+	<returns>TRUE = The test string if the test string is a valid Source Clause,
+ FALSE otherwise.</returns>
+	<remarks>
+ Checks whether a particular test String is a valid Source Clause.
+ The strings are converted to lower case before comparision.
+ </remarks>
+</member><member name="T:mapaction.datanames.api.AbstractDataNameClauseLookup">
+	<summary>
+ Provides a framework for the implenmentation of the IDataNameClauseLookup interface.
  </summary>
 	<remarks>
- Provides a framework for the implenmentation of the IDataListConnection interface.
+ Provides a framework for the implenmentation of the IDataNameClauseLookup interface.
+ 
+ Subclasses must call initialiseAllTables() from within their constructor.
+ To implement subclasses two methods, openTable() and getDetails() must be implenmented.
  </remarks>
 </member><member name="M:mapaction.datanames.api.IDataListConnection.getDataListConnectionType">
 	<summary>
@@ -227,7 +512,7 @@ api
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.
 </summary>
-</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isvalidGeoextentClause(System.String)">
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isValidGeoextentClause(System.String)">
 	<summary>
  Tests whether the testGeoExtentClause is listed in the datanaming_clause_geoextent table.
  </summary>
@@ -236,7 +521,7 @@ api
 	<remarks>
  Tests whether the testGeoExtentClause is listed in the datanaming_clause_geoextent table.
  </remarks>
-</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isvalidDataCategoryClause(System.String)">
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isValidDataCategoryClause(System.String)">
 	<summary>
  Tests whether the testDataCatClause is listed in the datanaming_clause_data_categories table.
  </summary>
@@ -245,7 +530,7 @@ api
 	<remarks>
  Tests whether the testDataCatClause is listed in the datanaming_clause_data_categories table.
  </remarks>
-</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isvalidDataThemeClause(System.String,System.String)">
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isValidDataThemeClause(System.String,System.String)">
 	<summary>
  Tests whether the testDataThemeClause is listed in the datanaming_clause_data_theme table.
  </summary>
@@ -254,7 +539,7 @@ api
 	<remarks>
  Tests whether the testDataThemeClause is listed in the datanaming_clause_data_theme table.
  </remarks>
-</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isvalidDataTypeClause(System.String)">
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isValidDataTypeClause(System.String)">
 	<summary>
  Tests whether the testDataTypeClause is listed in the datanaming_clause_data_type table.
  </summary>
@@ -266,7 +551,7 @@ api
  Note that this does NOT test whether or not the testDataTypeClause matches the data type 
  of a particular layer. For that see .....
  </remarks>
-</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isvalidScaleClause(System.String)">
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isValidScaleClause(System.String)">
 	<summary>
  Tests whether the testScaleClause is listed in the datanaming_clause_scale table.
  </summary>
@@ -275,7 +560,7 @@ api
 	<remarks>
  Tests whether the testScaleClause is listed in the datanaming_clause_scale table.
  </remarks>
-</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isvalidSourceClause(System.String)">
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isValidSourceClause(System.String)">
 	<summary>
  Tests whether the testSourceClause is listed in the datanaming_clause_source table.
  </summary>
@@ -284,7 +569,7 @@ api
 	<remarks>
  Tests whether the testSourceClause is listed in the datanaming_clause_source table.
  </remarks>
-</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isvalidPermissionsClause(System.String)">
+</member><member name="M:mapaction.datanames.api.IDataNameClauseLookup.isValidPermissionsClause(System.String)">
 	<summary>
  Tests whether the testPermissionsClause is listed in the datanaming_clause_permission table.
  </summary>
@@ -485,6 +770,37 @@ api
  It is not expected that that will be any public constructors for classes implenementing IDataNameClauseLookup.
  In general, instances of IDataNameClauseLookup should be obtained either by use of the 
  IDataList.getDefaultDataNameClauseLookup() method or by using a correponding XXXX Factory class.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataListConnection.#ctor(System.Boolean)">
+	<summary>
+ The Constructor.
+ </summary>
+	<param name="blnRecuse">The default Recusive behaviour, if there is a heirachircal 
+ structure to the underlying DataList. TRUE = the heirachy should be recused.
+ FALSE = the heirachy should not be recused.
+ </param>
+	<remarks>
+ The Constructor. 
+ 
+ The constructor is declared Protected to discourage implenmenters from
+ making their constructors public. Use the related Factory class instead.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataListConnection.#ctor">
+	<summary>
+ The Constructor. Sets default Recusive behaviour to TRUE.
+ </summary>
+	<remarks>
+ The Constructor. Sets default Recusive behaviour to TRUE.
+ 
+ The constructor is declared Protected to discourage implenmenters from
+ making their constructors public. Use the related Factory class instead.
+ </remarks>
+</member><member name="T:mapaction.datanames.api.AbstractDataListConnection">
+	<summary>
+ Provides a framework for the implenmentation of the IDataListConnection interface.
+ </summary>
+	<remarks>
+ Provides a framework for the implenmentation of the IDataListConnection interface.
  </remarks>
 </member><member name="M:mapaction.datanames.api.IDataName.getNameStr">
 	<summary>

@@ -22,13 +22,26 @@ Public Class LookupTableException
 
         Select Case dnLTE
             Case dnLookupTableError.general
-                strReturnVal = STR_LOOKUP_TABLE_ERROR_GENERAL
-            Case dnLookupTableError.wrong_no_of_cols
-                strReturnVal = STR_LOOKUP_TABLE_ERROR_WRONG_NO_OF_COLS
-            Case dnLookupTableError.wrong_col_spec
-                strReturnVal = STR_LOOKUP_TABLE_ERROR_WRONG_COL_SPEC
-            Case dnLookupTableError.default_tbls_not_found
-                strReturnVal = STR_LOOKUP_TABLE_ERROR_DEFAULT_TBLS_NOT_FOUND
+                strReturnVal = LOOKUP_TABLE_ERROR_GENERAL
+            Case dnLookupTableError.wrongNoOfCols
+                strReturnVal = LOOKUP_TABLE_ERROR_WRONG_NO_OF_COLS
+            Case dnLookupTableError.DefaultTablesNotFound
+                strReturnVal = LOOKUP_TABLE_ERROR_DEFAULT_TBLS_NOT_FOUND
+            Case dnLookupTableError.colNamesMismatch
+                strReturnVal = LOOKUP_TABLE_ERROR_COL_NAMES_MISMATCH
+            Case dnLookupTableError.colTypeMismatch
+                strReturnVal = LOOKUP_TABLE_ERROR_COL_TYPE_MISMATCH
+            Case dnLookupTableError.colLenthMismatch
+                strReturnVal = LOOKUP_TABLE_ERROR_COL_LENTH_MISMATCH
+            Case dnLookupTableError.colUniqueReqMismatch
+                strReturnVal = LOOKUP_TABLE_ERROR_COL_UNIQUEREQ_MISMATCH
+            Case dnLookupTableError.colAutoIncrementMismatch
+                strReturnVal = LOOKUP_TABLE_ERROR_COL_AUTOINCREMENT_MISMATCH
+            Case dnLookupTableError.colCaptionMismatch
+                strReturnVal = LOOKUP_TABLE_ERROR_COL_CAPTION_MISMATCH
+            Case dnLookupTableError.colReadOnlyMismatch
+                strReturnVal = LOOKUP_TABLE_ERROR_COL_READONLY_MISMATCH
+
         End Select
 
         If strSearchParam IsNot Nothing AndAlso strSearchParam <> "" Then

@@ -1,4 +1,5 @@
 ﻿Imports System.Data
+Imports System.IO
 
 ''' <summary>
 ''' Provides a framework for the implenmentation of the IDataNameClauseLookup interface.
@@ -91,19 +92,39 @@ Public MustInherit Class AbstractDataNameClauseLookup
     ''' </remarks>
     Protected MustOverride Function openTable(ByVal strTableName As String) As DataTable
 
-    'todo should this be deleted?
-    Public MustOverride Function isWriteable() As Boolean Implements IDataNameClauseLookup.isWriteable
-
-    'todo add summary
+    ''' <summary>
+    ''' Returns a string describing the storage location of the dataname clause tables.
+    ''' </summary>
+    ''' <returns>A string describing the storage location of the dataname clause tables.</returns>
+    ''' <remarks>
+    ''' Returns a string describing the storage location of the dataname clause tables.
+    ''' 
+    ''' This may be the operating system file path if appropriate or a RDMS connection
+    ''' string, or a URL etc.
+    ''' </remarks>
     Public MustOverride Function getDetails() As String Implements IDataNameClauseLookup.getDetails
+
+    ''' <summary>
+    ''' Returns the operating system file path to the container of the dataname clause tables.
+    ''' </summary>
+    ''' <returns>A FileInfo object representing the operating system file path to the container 
+    ''' of the dataname clause tables.</returns>
+    ''' <remarks>
+    ''' Returns the operating system file path to the container of the dataname clause tables.
+    ''' 
+    ''' If the location of these tables cannot represented as an operating system file (eg if they 
+    ''' are located in a RDBMS) then the Nothing object is returned.
+    ''' </remarks>
+    Public MustOverride Function getPath() As fileinfo Implements IDataNameClauseLookup.getPath
 
     ''' <summary>
     ''' Compared two ArrayLists of DataColumn objects, to confirm whether or not the specfication
     ''' of the columns (ie the schema) is identical for both.
     ''' </summary>
-    ''' <param name="dcal1">An ArrayList of DataColumn objects</param>
-    ''' <param name="dcal2">An ArrayList of DataColumn objects</param>
-    ''' <returns>TRUE = the DataColumn specfications match, FALSE otherwise.</returns>
+    ''' <param name="aryl1">An ArrayList of DataColumn objects</param>
+    ''' <param name="aryl2">An ArrayList of DataColumn objects</param>
+    ''' <returns>TRUE = the DataColumn specfications match. If the DataColumn specfications
+    ''' do not match then a LookupTableException is thrown.</returns>
     ''' <remarks>
     ''' Compared two ArrayLists of DataColumn objects, to confirm whether or not the specfication
     ''' of the columns (ie the schema) is identical for both. This is used to verify the schema of
@@ -112,53 +133,60 @@ Public MustInherit Class AbstractDataNameClauseLookup
     ''' Is this really the best way to check the schema of the DB? probably could be done better using the XML schema definition stuff in ADO.NET
     ''' Columns *must* be in the same order.
     ''' </remarks>
-    Private Function doDataColumnsMatch(ByRef dcal1 As ArrayList, ByRef dcal2 As ArrayList) As Boolean
-        Dim blnResult As Boolean
-        Dim strExcepReason As String
+    Private Function doDataColumnsMatch(ByRef aryl1 As ArrayList, ByRef aryl2 As ArrayList) As Boolean
+        Dim blnOverallResult As Boolean
+        Dim blnCurColMatch As Boolean 'The result of the current column comparision
+        Dim enuExcepReason As dnLookupTableError
+        Dim strMismatchColDesc As String 'description of the name and table of a failed column
         Dim dc1 As DataColumn, dc2 As DataColumn
 
         'todo MEDIUM: Adjust doDataColumnsMatch to allow for optional ObjectID column
 
         'assume true until proved otherwise
-        blnResult = True
-        strExcepReason = Nothing
+        blnOverallResult = True
 
-        If dcal1.Count <> dcal2.Count Then
+        If aryl1.Count <> aryl2.Count Then
             'returnRes = False
-            Throw New LookupTableException(dnLookupTableError.wrong_no_of_cols, _
-                                           CStr(dcal1.Count & " vs " & dcal2.Count))
+            Throw New LookupTableException(dnLookupTableError.wrongNoOfCols, _
+                                           CStr(aryl1.Count & " vs " & aryl2.Count))
         Else
-            For intCurIndx = 0 To (dcal1.Count - 1)
-                dc1 = CType(dcal1.Item(intCurIndx), DataColumn)
-                dc2 = CType(dcal2.Item(intCurIndx), DataColumn)
+            For intCurIndx = 0 To (aryl1.Count - 1)
+                dc1 = CType(aryl1.Item(intCurIndx), DataColumn)
+                dc2 = CType(aryl2.Item(intCurIndx), DataColumn)
+                blnCurColMatch = False
 
-                'todo MOVE THESE STRING TO CONSTATS AND ENUMERATIONS
                 Select Case True
                     Case dc1.ColumnName <> dc2.ColumnName
-                        strExcepReason = "column names doesn't match"
+                        enuExcepReason = dnLookupTableError.colNamesMismatch
                     Case dc1.DataType.FullName <> dc2.DataType.FullName
-                        strExcepReason = "column data type doesn't match"
+                        enuExcepReason = dnLookupTableError.colTypeMismatch
                     Case dc1.MaxLength <> dc2.MaxLength
-                        strExcepReason = "column length doesn't match"
+                        enuExcepReason = dnLookupTableError.colLenthMismatch
                     Case dc1.Unique <> dc2.Unique
-                        strExcepReason = "column unique requirement doesn't match"
+                        enuExcepReason = dnLookupTableError.colUniqueReqMismatch
                     Case dc1.AutoIncrement <> dc2.AutoIncrement
-                        strExcepReason = "column AutoIncrement requirement doesn't match"
+                        enuExcepReason = dnLookupTableError.colAutoIncrementMismatch
                     Case dc1.Caption <> dc2.Caption
-                        strExcepReason = "column Caption requirement doesn't match"
+                        enuExcepReason = dnLookupTableError.colCaptionMismatch
                     Case dc1.ReadOnly <> dc2.ReadOnly
-                        strExcepReason = "column ReadOnly requirement doesn't match"
+                        enuExcepReason = dnLookupTableError.colReadOnlyMismatch
                     Case Else
-                        strExcepReason = Nothing
+                        blnCurColMatch = True
                 End Select
 
-                If strExcepReason IsNot Nothing Then
-                    Throw New LookupTableException(dnLookupTableError.wrong_col_spec, strExcepReason)
+
+                If Not blnCurColMatch Then
+                    strMismatchColDesc = "Table1: " & dc1.Table.TableName & _
+                                         "Column1: " & dc1.ColumnName & _
+                                         "Table2: " & dc2.Table.TableName & _
+                                         "Column2: " & dc2.ColumnName
+
+                    Throw New LookupTableException(enuExcepReason, strMismatchColDesc)
                 End If
             Next
         End If
 
-        Return blnResult
+        Return blnOverallResult
     End Function
 
   
@@ -551,43 +579,6 @@ Public MustInherit Class AbstractDataNameClauseLookup
     ''' </remarks>
     Public Function isValidSourceClause(ByVal strTestSourceClause As String) As Boolean Implements IDataNameClauseLookup.isvalidSourceClause
         isValidSourceClause = isStrInPriKeyCol(strTestSourceClause, m_dtbSourceClauses)
-    End Function
-
-    ''''''''''''''''''''''''''''''
-    ' Checked to here
-    ''''''''''''''''''''''''''''''
-    'todo SORT THIS OUT NAD MOVE PART OF IT CONSTANTS FILES
-    Public Shared Function getDataNamingStatusStrings(ByVal status As Long) As List(Of String)
-        Dim outputList As New List(Of String)
-
-        Dim statusCodes As List(Of Long) = New List(Of Long)
-
-        statusCodes.Add(dnNameStatus.SYNTAX_ERROR_CONTAINS_HYPHENS)
-        statusCodes.Add(dnNameStatus.SYNTAX_ERROR_DOUBLE_UNDERSCORE)
-        statusCodes.Add(dnNameStatus.SYNTAX_ERROR_OTHER)
-        statusCodes.Add(dnNameStatus.SYNTAX_ERROR_TOO_FEW_CLAUSES)
-        statusCodes.Add(dnNameStatus.INVALID_DATACATEGORY)
-        statusCodes.Add(dnNameStatus.INVALID_DATATHEME)
-        statusCodes.Add(dnNameStatus.INVALID_DATATYPE)
-        statusCodes.Add(dnNameStatus.INCORRECT_DATATYPE)
-        statusCodes.Add(dnNameStatus.INVALID_GEOEXTENT)
-        statusCodes.Add(dnNameStatus.INVALID_PERMISSIONS)
-        statusCodes.Add(dnNameStatus.INVALID_SCALE)
-        statusCodes.Add(dnNameStatus.INVALID_SOURCE)
-        statusCodes.Add(dnNameStatus.INCORRECT_DATATYPE)
-        statusCodes.Add(dnNameStatus.WARN_MISSING_SCALE_CLAUSE)
-        statusCodes.Add(dnNameStatus.WARN_MISSING_PERMISSIONS_CLAUSE)
-        statusCodes.Add(dnNameStatus.WARN_TWO_CHAR_FREE_TEXT)
-        statusCodes.Add(dnNameStatus.INFO_FREE_TEXT_PRESENT)
-
-        For Each staCode In statusCodes
-            If ((status And staCode) = staCode) Then
-                outputList.Add(CStr(g_htbDNStatusStrMessages.Item(staCode)))
-                'outputList.Add(errCode)
-            End If
-        Next
-
-        getDataNamingStatusStrings = outputList
     End Function
 
 End Class

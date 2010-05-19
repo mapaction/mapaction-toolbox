@@ -72,15 +72,100 @@ ma-datanaming
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.
 </summary>
+</member><member name="M:mapaction.dataname.AbstractDataNameClauseLookup.initialiseAllTables">
+	<summary>
+ Opens each of the dataname clause lookup tables. Must be called from the constructor
+ </summary>
+	<remarks>
+ Opens each of the dataname clause lookup tables. Must be called from the constructor
+ 
+ Uses the subclasses implenmentation of the openTable() method.
+ </remarks>
+</member><member name="M:mapaction.dataname.AbstractDataNameClauseLookup.openTable(System.String)">
+	<summary>
+ This method provides an implenmention specific means to open an individual flat table
+ from a data source (eg, Access DB, ESRI GDB, XML files etc).
+ </summary>
+	<param name="strTableName">The name of the table to open. This should normally be passed
+ using one of the API constants with the prefix "TABLENAME_"</param>
+	<returns>A DataTable object representing the </returns>
+	<remarks>
+ This method provides an implenmention specific means to open an individual flat table
+ from a data source (eg, Access DB, ESRI GDB, XML files etc).
+ </remarks>
 </member><member name="M:mapaction.dataname.AbstractDataNameClauseLookup.doDataColumnsMatch(System.Collections.ArrayList@,System.Collections.ArrayList@)">
 	<summary>
+ Compared two ArrayLists of DataColumn objects, to confirm whether or not the specfication
+ of the columns (ie the schema) is identical for both.
+ </summary>
+	<param name="dcal1">An ArrayList of DataColumn objects</param>
+	<param name="dcal2">An ArrayList of DataColumn objects</param>
+	<returns>TRUE = the DataColumn specfications match, FALSE otherwise.</returns>
+	<remarks>
+ Compared two ArrayLists of DataColumn objects, to confirm whether or not the specfication
+ of the columns (ie the schema) is identical for both. This is used to verify the schema of
+ any Data Name Clause Lookup Tables that have been opened.
+ 
  Is this really the best way to check the schema of the DB? probably could be done better using the XML schema definition stuff in ADO.NET
  Columns *must* be in the same order.
+ </remarks>
+</member><member name="M:mapaction.dataname.AbstractDataNameClauseLookup.getListFromTable(System.Data.DataTable@)">
+	<summary>
+ A convenience function to extact all of the clauses (ie the Primary Keys) from a
+ Data Name Clause Lookup Table.
  </summary>
-	<param name="dcal1"></param>
-	<param name="dcal2"></param>
-	<returns></returns>
-	<remarks></remarks>
+	<param name="dt">A DataTable representing the a Data Name Clause Lookup
+ Table. An Exception will occur if the table does not have a primary column with a
+ name which matches the PRI_KEY_COL_NAME constant.</param>
+	<returns>A List(Of String) of each of the clauses in the DataTable</returns>
+	<remarks>
+ A convenience function to extact all of the clauses (ie the Primary Keys) from a
+ Data Name Clause Lookup Table.
+ 
+ An Exception will occur if the table does not have a primary column with a
+ name which matches the PRI_KEY_COL_NAME constant.
+ </remarks>
+</member><member name="T:mapaction.dataname.AbstractDataNameClauseLookup">
+	<summary>
+ Provides a framework for the implenmentation of the IDataNameClauseLookup interface.
+ </summary>
+	<remarks>
+ Provides a framework for the implenmentation of the IDataNameClauseLookup interface.
+ 
+ Subclasses must call initialiseAllTables() from within their constructor.
+ To implement subclasses two methods, openTable() and getDetails() must be implenmented.
+ </remarks>
+</member><member name="M:mapaction.dataname.AbstractGeoDataListConnection.#ctor(System.Boolean)">
+	<summary>
+ The Constructor.
+ </summary>
+	<param name="blnRecuse">The default Recusive behaviour, if there is a heirachircal 
+ structure to the underlying DataList. TRUE = the heirachy should be recused.
+ FALSE = the heirachy should not be recused.
+ </param>
+	<remarks>
+ The Constructor. 
+ 
+ The constructor is declared Protected to discourage implenmenters from
+ making their constructors public. Use the related Factory class instead.
+ </remarks>
+</member><member name="M:mapaction.dataname.AbstractGeoDataListConnection.#ctor">
+	<summary>
+ The Constructor. Sets default Recusive behaviour to TRUE.
+ </summary>
+	<remarks>
+ The Constructor. Sets default Recusive behaviour to TRUE.
+ 
+ The constructor is declared Protected to discourage implenmenters from
+ making their constructors public. Use the related Factory class instead.
+ </remarks>
+</member><member name="T:mapaction.dataname.AbstractGeoDataListConnection">
+	<summary>
+ Provides a framework for the implenmentation of the IDataListConnection interface.
+ </summary>
+	<remarks>
+ Provides a framework for the implenmentation of the IDataListConnection interface.
+ </remarks>
 </member><member name="M:mapaction.dataname.DataListFileSystemDirectory.filterFilesForSpecialGISData">
 	<summary>
  Equivilant to filterFilesForSpecialGISData(true)

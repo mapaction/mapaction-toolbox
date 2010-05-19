@@ -14,20 +14,25 @@
 ''' </remarks>
 Public Interface IDataListConnection
 
-    'todo convert to an enumeration and re-write summary
     ''' <summary>
-    ''' Returns an Integer which represents the type of connection
+    ''' Returns an dnListType enumeration which represents the underlying
+    ''' physical type of the connection.
     ''' </summary>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <returns>an dnListType enumeration which represents the underlying
+    ''' physical type of the connection</returns>
+    ''' <remarks>
+    ''' Returns an dnListType enumeration which represents the underlying
+    ''' physical type of the connection.
+    ''' </remarks>
     Function getDataListConnectionType() As dnListType
 
-    'todo possible convert to an enumeration and re-write summary
     ''' <summary>
-    ''' Returns a String which represents the type of connection
+    ''' Returns a String which describes the type of connection.
     ''' </summary>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <returns>A String which describes the type of connection.</returns>
+    ''' <remarks>
+    ''' Returns a String which describes the type of connection.
+    ''' </remarks>
     Function getDataListConnectionTypeDesc() As String
 
     ''' <summary>
