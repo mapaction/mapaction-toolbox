@@ -11,6 +11,8 @@ htb = HashTable
 dcl = DataColunm
 aryl = Array List
 dtb = DataTable
+lst = List(Of String)
+stb = StringBuilder
 
 
     'todo SORT THIS OUT NAD MOVE PART OF IT CONSTANTS FILES

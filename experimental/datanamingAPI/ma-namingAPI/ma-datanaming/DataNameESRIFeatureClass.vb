@@ -28,6 +28,29 @@ Public Class DataNameESRIFeatureClass
         Return myDataSet.Workspace.PathName
     End Function
 
+    'todo Implenment this!
+    ''' <summary>
+    ''' Returns the fully qualified IDataName as a String if possible.
+    ''' </summary>
+    ''' <returns>
+    ''' a string of the current IDataName's the fully qualified name. Or is a path is not
+    ''' available then just the fully qualified name is returned (ie including the filename
+    ''' extension [eg ".shp"] the RDBMS database or RDBMS user name prefixes
+    ''' [eg "mapaction.sde."]
+    ''' </returns>
+    ''' <remarks>
+    ''' Returns getPathStr() + "\" + getNameStr()
+    ''' Returns the fully qualified IDataName as a String, if a suitable meaning of
+    ''' path is applicable. If there is no easy or meaningful sense of a path (eg for a 
+    ''' RDBMS) then the fully qualified name is returned (ie including the filename
+    ''' extension [eg ".shp"] the RDBMS database or RDBMS user name prefixes
+    ''' [eg "mapaction.sde."].
+    ''' </remarks>
+    Public Overrides Function getNameAndFullPathStr() As String
+
+    End Function
+
+
     Protected Friend Overrides Function getUnderlyingDataType() As String
         Dim typeStr As String
         Dim fc As IFeatureClass
