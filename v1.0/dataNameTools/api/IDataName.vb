@@ -28,7 +28,8 @@ Public Interface IDataName
     Function getNameStr() As String
 
     ''' <summary>
-    ''' Returns the path of the current IDataName as a String if possible.
+    ''' Returns the path of the current IDataName as a String if possible. Should not
+	''' include trailing slash or backslash.
     ''' </summary>
     ''' <returns>
     ''' a string of the current Data Name's path. Or is a path is not available a null 
@@ -38,6 +39,8 @@ Public Interface IDataName
     ''' Returns the path of the current Data Name as a String, if a suitable meaning of
     ''' path is applicable. If there is no easy or meaningful sense of a path (eg for a 
     ''' RDBMS) then a null or zero length string is returned.
+	'''
+    ''' Should not include trailing slash or backslash.
     '''</remarks>
     Function getPathStr() As String
 
@@ -70,10 +73,23 @@ Public Interface IDataName
     ''' This method does the core processing to determine whether or not the particular name represented by 
     ''' this object is syntatically correct and valid or not. 
     ''' 
-    ''' XXXXX If the name is not valid, it will attempt to estimate what the mistake is. These are classified as either
-    ''' XXXXX "Errors" or "Warnings"
-    ''' XXXXX Error = The name cannot be understood
-    ''' XXXXX Warning = The name can be understood, but there is a risk that it will be misinterprited
+	''' The status flags are a sum of the dnNameStatus emnumeration members and are arranged in four categories:
+	'''     INVALID = "One or more of the clauses (excluding Free Text) cannot be found in the Data Name Clause Lookup Tables
+	'''     SYNTAX_ERROR = "The format of the name cannot be understood. Individual clauses cannot be identified."
+	'''     WARN = "The name can be understood and the clauses are valid, but for some reason there is a risk that it will be misinterprited"
+	'''     INFO = "Other information about the name"
+	''' 
+	''' All of the flags are prefixed with one of these four names. It is possible to test
+	''' for all flags within a particular category by just testing agains the root. eg:
+	''' 
+	''' ((myNameStatus And dnNameStatus.SYNTAX_ERROR) = dnNameStatus.SYNTAX_ERROR)
+	''' 
+	''' will return true for SYNTAX_ERROR_CONTAINS_HYPHENS, SYNTAX_ERROR_TOO_FEW_CLAUSES,
+	''' SYNTAX_ERROR_DOUBLE_UNDERSCORE and SYNTAX_ERROR_OTHER
+	''' 
+	''' There is no "is valid" flag since depending on context this is any 
+	''' combination of "not DATANAME_INVALID", "not DATANAME_SYNTAX_ERROR" 
+	''' and maybe "not DATANAME_WARN"
     ''' </remarks>
     Function checkNameStatus() As Long
 
@@ -172,7 +188,6 @@ Public Interface IDataName
     ''' A convenance function, to subsutute the GeoExtent clause of the current name with a new value.
     ''' </summary>
     ''' <param name="newGeoExtent">The new, subsutute GeoExtent clause</param>
-    ''' <returns></returns>
     ''' <remarks>
     ''' A convenance function, to subsutute the GeoExtent clause of the current name with a new value.
     ''' The new value does not need to be valid in the sense of the data naming convention, but must
@@ -181,14 +196,13 @@ Public Interface IDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Function changeGeoExtentClause(ByVal newGeoExtent As String) As Long
+    Sub changeGeoExtentClause(ByVal newGeoExtent As String)
 
 
     ''' <summary>
     ''' A convenance function, to subsutute the DataCategory clause of the current name with a new value.
     ''' </summary>
     ''' <param name="newDataCategory">The new, subsutute DataCategory clause</param>
-    ''' <returns></returns>
     ''' <remarks>
     ''' A convenance function, to subsutute the DataCategory clause of the current name with a new value.
     ''' The new value does not need to be valid in the sense of the data naming convention, but must
@@ -197,14 +211,13 @@ Public Interface IDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Function changeDataCategoryClause(ByVal newDataCategory As String) As Long
+    Sub changeDataCategoryClause(ByVal newDataCategory As String)
 
 
     ''' <summary>
     ''' A convenance function, to subsutute the DataTheme clause of the current name with a new value.
     ''' </summary>
     ''' <param name="newDataTheme">The new, subsutute DataTheme clause</param>
-    ''' <returns></returns>
     ''' <remarks>
     ''' A convenance function, to subsutute the DataTheme clause of the current name with a new value.
     ''' The new value does not need to be valid in the sense of the data naming convention, but must
@@ -213,14 +226,13 @@ Public Interface IDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Function changeDataThemeClause(ByVal newDataTheme As String) As Long
+    Sub changeDataThemeClause(ByVal newDataTheme As String)
 
 
     ''' <summary>
     ''' A convenance function, to subsutute the DataType clause of the current name with a new value.
     ''' </summary>
     ''' <param name="newDataType">The new, subsutute DataType clause</param>
-    ''' <returns></returns>
     ''' <remarks>
     ''' A convenance function, to subsutute the DataType clause of the current name with a new value.
     ''' The new value does not need to be valid in the sense of the data naming convention, but must
@@ -229,14 +241,13 @@ Public Interface IDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Function changeDataTypeClause(ByVal newDataType As String) As Long
+    Sub changeDataTypeClause(ByVal newDataType As String)
 
 
     ''' <summary>
     ''' A convenance function, to subsutute the Permissions clause of the current name with a new value.
     ''' </summary>
     ''' <param name="newPermissionsClause">The new, subsutute Permissions clause</param>
-    ''' <returns></returns>
     ''' <remarks>
     ''' A convenance function, to subsutute the Permissions clause of the current name with a new value.
     ''' The new value does not need to be valid in the sense of the data naming convention, but must
@@ -249,14 +260,13 @@ Public Interface IDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Function changePermissionsClause(ByVal newPermissionsClause As String) As Long
+    Sub changePermissionsClause(ByVal newPermissionsClause As String)
 
 
     ''' <summary>
     ''' A convenance function, to subsutute the Scale clause of the current name with a new value.
     ''' </summary>
     ''' <param name="newScaleClause">The new, subsutute Scale clause</param>
-    ''' <returns></returns>
     ''' <remarks>
     ''' A convenance function, to subsutute the Scale clause of the current name with a new value.
     ''' The new value does not need to be valid in the sense of the data naming convention, but must
@@ -269,14 +279,13 @@ Public Interface IDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Function changeScaleClause(ByVal newScaleClause As String) As Long
+    Sub changeScaleClause(ByVal newScaleClause As String)
 
 
     ''' <summary>
     ''' A convenance function, to subsutute the Source clause of the current name with a new value.
     ''' </summary>
     ''' <param name="newSourceClause">The new, subsutute Source clause</param>
-    ''' <returns></returns>
     ''' <remarks>
     ''' A convenance function, to subsutute the Source clause of the current name with a new value.
     ''' The new value does not need to be valid in the sense of the data naming convention, but must
@@ -285,13 +294,12 @@ Public Interface IDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Function changeSourceClause(ByVal newSourceClause As String) As Long
+    Sub changeSourceClause(ByVal newSourceClause As String)
 
     ''' <summary>
     ''' A convenance function, to subsutute the FreeText clause of the current name with a new value.
     ''' </summary>
     ''' <param name="newFreeTextClause">The new, subsutute FreeText clause</param>
-    ''' <returns></returns>
     ''' <remarks>
     ''' A convenance function, to subsutute the FreeText clause of the current name with a new value.
     ''' The new value does not need to be valid in the sense of the data naming convention, but must
@@ -304,6 +312,6 @@ Public Interface IDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Function changeFreeTextClause(ByVal newFreeTextClause As String) As Long
+    Sub changeFreeTextClause(ByVal newFreeTextClause As String)
 
 End Interface

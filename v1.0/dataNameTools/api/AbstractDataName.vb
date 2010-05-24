@@ -320,7 +320,7 @@ Public MustInherit Class AbstractDataName
     ''' 
     ''' If the renaming fails for any reason a RenamingDataException is thrown.
     ''' </remarks>
-    Public Sub rename(ByVal strNewName As String)
+    Public Sub rename(ByVal strNewName As String) Implements IDataName.rename
         If m_blnAllowReNaming Then
             resetCacheFlags()
             performRename(strNewName)
@@ -387,7 +387,6 @@ Public MustInherit Class AbstractDataName
     ''' A convenance function, to subsutute the DataTheme clause of the current name with a new value.
     ''' </summary>
     ''' <param name="strNewDataTheme">The new, subsutute DataTheme clause</param>
-    ''' <returns></returns>
     ''' <remarks>
     ''' A convenance function, to subsutute the DataTheme clause of the current name with a new value.
     ''' The new value does not need to be valid in the sense of the data naming convention, but must
@@ -434,7 +433,7 @@ Public MustInherit Class AbstractDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Public Sub changeScaleCodesClause(ByVal strNewScale As String) Implements IDataName.changeScaleCodesClause
+    Public Sub changeScaleClause(ByVal strNewScale As String) Implements IDataName.changeScaleClause
         'changeScaleCodesClause = Nothing
         rename(generateNameWithReplacedClause(strNewScale, CLAUSE_SCALE))
     End Sub
@@ -453,7 +452,7 @@ Public MustInherit Class AbstractDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Public Sub changeSourceCodesClause(ByVal strNewSource As String) Implements IDataName.changeSourceCodesClause
+    Public Sub changeSourceClause(ByVal strNewSource As String) Implements IDataName.changeSourceClause
         'changeSourceCodesClause = Nothing
         rename(generateNameWithReplacedClause(strNewSource, CLAUSE_SOURCE))
     End Sub

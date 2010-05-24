@@ -6,7 +6,437 @@ api
 </name>
 </assembly>
 <members>
-<member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.initialiseAllTables">
+<member name="M:mapaction.datanames.api.AbstractDataName.#ctor(System.String,mapaction.datanames.api.IDataNameClauseLookup@,System.Boolean)">
+	<summary>
+ Creates a new IDataName.
+ </summary>
+	<param name="strNewName">The Name. The caller is reasonible for ensuring that
+ any prefixes or suffixes specific to a particular storage type are removed before
+ being passed to this constructor.
+ </param>
+	<param name="dncl">The IDataNameClauseLookup object against which the validity of 
+ this IDataName will be checked</param>
+	<param name="blnAllowRenames">Allows the caller to create the object in readonly 
+ mode. Useful if the IDataListConnection would need to be modified to accomidate
+ renamed IDataName objects</param>
+	<remarks>
+ Creates a new IDataName.
+ 
+ The caller is reasonible for ensuring that any prefixes or suffixes specific 
+ to a particular storage type are removed before being passed to this constructor.
+ The object can be created in readonly mode if required. This is useful if the 
+ IDataListConnection would need to be modified to accomidate renamed IDataName 
+ objects (eg an MXD).
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.getPathStr">
+	<summary>
+ Returns the path of the current DataName as a String if possible. Should not 
+ include trailing slash or backslash.
+ </summary>
+	<returns>
+ a string of the current Data Name's path. Or is a path is not available a null 
+ or zero length string is returned.
+ </returns>
+	<remarks>
+ Returns the path of the current Data Name as a String, if a suitable meaning of
+ path is applicable. If there is no easy or meaningful sense of a path (eg for a 
+ RDBMS) then a null or zero length string is returned.
+ 
+ Should not include trailing slash or backslash.
+</remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.getUnderlyingDataType">
+	<summary>
+ This method is used to check that the data type clause matches actually physical data type.
+ </summary>
+	<returns>One of the constants with the prefix "DATATYPE_CLAUSE_"</returns>
+	<remarks>
+ This method is used to check that the data type clause matches actually physical data type.
+ 
+ The implenmentor should check the underlying geographical data type and return an 
+ appropriate string. This method is called within the checkNameStatus() method to ensure
+ that the type specified in the data name matches the underlying geographical type.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.getNameAndFullPathStr">
+	<summary>
+ Returns the fully qualified IDataName as a String if possible.
+ </summary>
+	<returns>
+ a string of the current IDataName's the fully qualified name. Or is a path is not
+ available then just the fully qualified name is returned (ie including the filename
+ extension [eg ".shp"] the RDBMS database or RDBMS user name prefixes
+ [eg "mapaction.sde."]
+ </returns>
+	<remarks>
+ Returns getPathStr() + "\" + getNameStr()
+ Returns the fully qualified IDataName as a String, if a suitable meaning of
+ path is applicable. If there is no easy or meaningful sense of a path (eg for a 
+ RDBMS) then the fully qualified name is returned (ie including the filename
+ extension [eg ".shp"] the RDBMS database or RDBMS user name prefixes
+ [eg "mapaction.sde."].
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.checkNameStatus">
+	<summary>
+ This method does the core processing to determine whether or not the particular name represented by 
+ this object is syntatically correct and valid or not.
+ </summary>
+	<returns>A Long which is the sum of the dnNameStatus emnumeration members.</returns>
+	<remarks>
+ This method does the core processing to determine whether or not the particular name represented by 
+ this object is syntatically correct and valid or not. 
+ 
+ The status flags are a sum of the dnNameStatus emnumeration members and are arranged in four categories:
+     INVALID = "One or more of the clauses (excluding Free Text) cannot be found in the Data Name Clause Lookup Tables
+     SYNTAX_ERROR = "The format of the name cannot be understood. Individual clauses cannot be identified."
+     WARN = "The name can be understood and the clauses are valid, but for some reason there is a risk that it will be misinterprited"
+     INFO = "Other information about the name"
+ 
+ All of the flags are prefixed with one of these four names. It is possible to test
+ for all flags within a particular category by just testing agains the root. eg:
+ 
+ ((myNameStatus And dnNameStatus.SYNTAX_ERROR) = dnNameStatus.SYNTAX_ERROR)
+ 
+ will return true for SYNTAX_ERROR_CONTAINS_HYPHENS, SYNTAX_ERROR_TOO_FEW_CLAUSES,
+ SYNTAX_ERROR_DOUBLE_UNDERSCORE and SYNTAX_ERROR_OTHER
+ 
+ There is no "is valid" flag since depending on context this is any 
+ combination of "not DATANAME_INVALID", "not DATANAME_SYNTAX_ERROR" 
+ and maybe "not DATANAME_WARN"
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.isNameParseable">
+	<summary>
+ Tests whether or not the IDataName is syntatically correct.
+ </summary>
+	<returns>Boolean. TRUE is the name is syntatically correct, FALSE otherwise</returns>
+	<remarks>
+ Tests whether or not the IDataName is syntatically correct.
+ 
+ This method is shorthand for:
+ (Not (checkNameStatus() And dnNameStatus.SYNTAX_ERROR) = dnNameStatus.SYNTAX_ERROR))
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.isNameValid">
+	<summary>
+ Tests whether or not the Data Name is both syntatically correct and all of the clauses are found in the
+ relevant IDataNameClauseLookupTables.
+ </summary>
+	<returns>
+ Boolean. TRUE is the name is syntatically correct AND all of the clauses are found in the
+ relevant IDataNameClauseLookupTables, FALSE otherwise
+ </returns>
+	<remarks>
+ Tests whether or not the Data Name is both syntatically correct and all of the clauses are found in the
+ relevant IDataNameClauseLookupTables. If optional clauses are present then their values must be found in
+ the relevant  IDataNameClauseLookupTables.
+ 
+ This method is shorthand for:
+ (Not (checkNameStatus() And dnNameStatus.SYNTAX_ERROR) = dnNameStatus.SYNTAX_ERROR)) _
+ and (Not (checkNameStatus() And dnNameStatus.INVALID) = dnNameStatus.INVALID))
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.isRenameable">
+	<summary>
+ Test whether the IDataName can be renamed without an exception being thrown
+ </summary>
+	<returns>Boolean. Returns a runtime value signifying whether or not the underlying dataname
+ is both renaming (physically) and that the relevant permissions are held.
+ </returns>
+	<remarks>
+ Test whether the IDataName can be renamed without an exception being thrown
+ 
+ If true then attempting to calling one of the methods to rename the
+ DataName should not throw an expeption. If false then attempting to call one of the method
+ will raise a RenamingDataException.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.renamePossible">
+	<summary>
+ Subclasses should overwrite this. It should return a runtime value indicating
+ whether or not the data *could* be renamed. (It is distict from whether or not 
+ renaming is *allowed* with the context of the api)
+ </summary>
+	<returns></returns>
+	<remarks>
+ Subclasses should overwrite this. It should return a runtime value indicating
+ whether or not the data *could* be renamed. (It is distict from whether or not 
+ renaming is *allowed* with the context of the api)
+ 
+ The runtime conbination of being both *allowed* and *possible* are combined by 
+ the isRenameable() method. End users should call this method.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.resetCacheFlags">
+	<summary>
+ Used by this class and subclasses to indicate that the internally cached NameStatus
+ value is not longer valid. The next call to .checkNameStatus() will result in a full
+ check against all of the underlying Data Name Tables.
+ </summary>
+	<remarks>
+ Used by this class and subclasses to indicate that the internally cached NameStatus
+ value is not longer valid. The next call to .checkNameStatus() will result in a full
+ check against all of the underlying Data Name Tables.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.hasOptionalScaleClause">
+	<summary>
+ Indicates whether or not the DataName includes an optional scale clause.
+ </summary>
+	<returns>
+ TRUE if the name is parseable and the optional scale clause is present. False otherwise.
+ </returns>
+	<remarks>
+ Indicates whether or not the DataName includes an optional scale clause.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.hasOptionalPermissionClause">
+	<summary>
+ Indicates whether or not the DataName includes an optional permissions clause.
+ </summary>
+	<returns>
+ TRUE if the name is parseable and the optional permissions clause is present. False otherwise.
+ </returns>
+	<remarks>
+ Indicates whether or not the DataName includes an permissions scale clause.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.hasOptionalFreeText">
+	<summary>
+ Indicates whether or not the DataName includes an optional free text clause.
+ </summary>
+	<returns>
+ TRUE if the name is parseable and the optional free text clause is present. False otherwise.
+ </returns>
+	<remarks>
+ Indicates whether or not the DataName includes an free text scale clause.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.rename(System.String)">
+	<summary>
+ Attempts to rename the IDataName, to the newNameStr. The newNameStr does not need to be valid
+ in the sense of the data naming convention, but must be valid in terms of the underlying storage.
+ </summary>
+	<param name="strNewName">The new Name for the IDataName.</param>
+	<remarks>
+ Attempts to rename the DataName, to the newNameStr. The newNameStr does not need to be valid
+ in the sense of the data naming convention, but must be valid in terms of the underlying storage.
+ 
+ If the renaming fails for any reason a RenamingDataException is thrown.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.performRename(System.String)">
+	<summary>
+ Subclasses should overwrite this. It should implenment a method for
+ renaming the underlying data object, specific to teh storage method.
+ </summary>
+	<param name="newNameStr">The new Name for the IDataName.</param>
+	<remarks>
+ Subclasses should overwrite this. It should implenment a method for
+ renaming the underlying data object, specific to teh storage method.
+ 
+ If the underlying storage is readonly then the implenmenting method
+ should throw a RenamingDataException exception.
+ 
+ End users should not call this method, but use the rename() method 
+ instead.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.changeGeoExtentClause(System.String)">
+	<summary>
+ A convenance function, to subsutute the GeoExtent clause of the current name with a new value.
+ </summary>
+	<param name="strNewGeoExtent">The new, subsutute GeoExtent clause</param>
+	<remarks>
+ A convenance function, to subsutute the GeoExtent clause of the current name with a new value.
+ The new value does not need to be valid in the sense of the data naming convention, but must
+ be valid in terms of the underlying storage.
+ 
+ Throws an RenamingDataException if the IDataName is either un-renamable [test with 
+ .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.changeDataCategoryClause(System.String)">
+	<summary>
+ A convenance function, to subsutute the DataCategory clause of the current name with a new value.
+ </summary>
+	<param name="strNewDataCategory">The new, subsutute DataCategory clause</param>
+	<remarks>
+ A convenance function, to subsutute the DataCategory clause of the current name with a new value.
+ The new value does not need to be valid in the sense of the data naming convention, but must
+ be valid in terms of the underlying storage.
+ 
+ Throws an RenamingDataException if the IDataName is either un-renamable [test with 
+ .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.changeDataThemeClause(System.String)">
+	<summary>
+ A convenance function, to subsutute the DataTheme clause of the current name with a new value.
+ </summary>
+	<param name="strNewDataTheme">The new, subsutute DataTheme clause</param>
+	<remarks>
+ A convenance function, to subsutute the DataTheme clause of the current name with a new value.
+ The new value does not need to be valid in the sense of the data naming convention, but must
+ be valid in terms of the underlying storage.
+ 
+ Throws an RenamingDataException if the IDataName is either un-renamable [test with 
+ .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.changeDataTypeClause(System.String)">
+	<summary>
+ A convenance function, to subsutute the DataType clause of the current name with a new value.
+ </summary>
+	<param name="strNewDataType">The new, subsutute DataType clause</param>
+	<remarks>
+ A convenance function, to subsutute the DataType clause of the current name with a new value.
+ The new value does not need to be valid in the sense of the data naming convention, but must
+ be valid in terms of the underlying storage.
+ 
+ Throws an RenamingDataException if the IDataName is either un-renamable [test with 
+ .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.changeScaleClause(System.String)">
+	<summary>
+ A convenance function, to subsutute the Scale clause of the current name with a new value.
+ </summary>
+	<param name="strNewScale">The new, subsutute Scale clause</param>
+	<remarks>
+ A convenance function, to subsutute the Scale clause of the current name with a new value.
+ The new value does not need to be valid in the sense of the data naming convention, but must
+ be valid in terms of the underlying storage.
+ 
+ If the Scale clause is not already present it will be inserted and the relevant undersources
+ will be inserted. To completely remove an existing Scale clause set newScaleClause="" and
+ the relevant undersorces will be removed.
+ 
+ Throws an RenamingDataException if the IDataName is either un-renamable [test with 
+ .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.changeSourceClause(System.String)">
+	<summary>
+ A convenance function, to subsutute the Source clause of the current name with a new value.
+ </summary>
+	<param name="strNewSource">The new, subsutute Source clause</param>
+	<remarks>
+ A convenance function, to subsutute the Source clause of the current name with a new value.
+ The new value does not need to be valid in the sense of the data naming convention, but must
+ be valid in terms of the underlying storage.
+ 
+ Throws an RenamingDataException if the IDataName is either un-renamable [test with 
+ .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.changePermissionsClause(System.String)">
+	<summary>
+ A convenance function, to subsutute the Permissions clause of the current name with a new value.
+ </summary>
+	<param name="strNewPermissions">The new, subsutute Permissions clause</param>
+	<remarks>
+ A convenance function, to subsutute the Permissions clause of the current name with a new value.
+ The new value does not need to be valid in the sense of the data naming convention, but must
+ be valid in terms of the underlying storage.
+ 
+ If the Permissions clause is not already present it will be inserted and the relevant undersources
+ will be inserted. To completely remove an existing Permissions clause set newPermissionsClause=""
+ and the relevant undersorces will be removed.
+ 
+ Throws an RenamingDataException if the IDataName is either un-renamable [test with 
+ .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.changeFreeTextClause(System.String)">
+	<summary>
+ A convenance function, to subsutute the FreeText clause of the current name with a new value.
+ </summary>
+	<param name="strNewFreeText">The new, subsutute FreeText clause</param>
+	<remarks>
+ A convenance function, to subsutute the FreeText clause of the current name with a new value.
+ The new value does not need to be valid in the sense of the data naming convention, but must
+ be valid in terms of the underlying storage.
+ 
+ If the FreeText clause is not already present it will be inserted and the relevant undersources
+ will be inserted. To completely remove an existing FreeText clause set newFreeTextClause="" and
+ the relevant undersorces will be removed.
+ 
+ Throws an RenamingDataException if the IDataName is either un-renamable [test with 
+ .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.generateNameWithReplacedClause(System.String,System.String)">
+	<summary>
+ The method does NOT alter the underlying DataName - for that use the rename function. This function is 
+ a helper function to help generate new strings, preparing the arguments for the rename function.
+ </summary>
+	<param name="strNewClauseValue"></param>
+	<param name="strClauseName"></param>
+	<returns>A String with the strNewClauseValue substituded in the appropriate places</returns>
+	<remarks>
+ The method does NOT alter the underlying DataName - for that use the rename function. This function is 
+ a helper function to help generate new strings, preparing the arguments for the rename function.
+ 
+ If the strClauseName is for a optional clause that is currently not included it will be inserted into the string.
+ If the strClauseName is for a clause that is already present then the old clause will be replaced.
+ If the strClauseName is for a optional clause and the strNewClauseValue is equal to Nothing or String.Empty
+ then the optional clause will be removed.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.getClauseIndex(System.String)">
+	<summary>
+ Returns a ZERO based index of the named clause for the current IDataName, accounting for 
+ the presents or not of the various optional clauses. Will throw an InvalidDataNameException
+ if the bitSum indicates that the name is not parseable.
+ </summary>
+	<param name="strClauseName">The name of the name cluase, normally passed using one of the
+ constants with the "CLAUSE_" prefix.
+ </param>
+	<returns>A ZERO based index of the named clause for the current IDataName, accounting for 
+ the presents or not of the various optional clauses. The return value of this method is
+ designed to be a suitable argument for an array of strings generated by 
+ Strings.Split(m_strName, "_"). If optional clause is not present, the value "-1" will
+ be returned.
+ </returns>
+	<remarks>
+ Returns a ZERO based index of the named clause for the current IDataName, accounting for 
+ the presents or not of the various optional clauses. Will throw an InvalidDataNameException
+ if the bitSum indicates that the name is not parseable.
+ 
+ The return value of this method is designed to be a suitable argument for an array of
+ strings generated by Strings.Split(m_strName, "_")
+ 
+ If optional clause is not present, the value "-1" will be returned. The caller is responsible
+ for checking of a "-1" value prior to passing it to an array.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.getNameSyntaxStatus(System.String)">
+	<summary>
+ This method checks the syntax of the name in the string. If the name is parsable then the
+ getNameValidityStatus() is also called and its results incorporated to give full information
+ about the status of the name.
+ </summary>
+	<param name="strTestName">A string representing the string to be tested.</param>
+	<returns>A Long which is the sum of the dnNameStatus emnumeration members.</returns>
+	<remarks>
+ This method checks the syntax of the name in the string. If the name is parsable then the
+ getNameValidityStatus() is also called and its results incorporated to give full information
+ about the status of the name.
+ 
+ Implenemtnation note: This method requires that the name for testing is passed as a string 
+ even though it is testing it self. This is to allow the method to be called recurvisly with
+ variations on the name (eg substitutin underscourse for hyphens).
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataName.getNameValidityStatus(System.Collections.Generic.List{System.String}@,System.String)">
+	<summary>
+ This method tests whether or not each of the individual clauses in a parsable data name are
+ contained in the relevant Data Name Clause Lookup tables.
+ </summary>
+	<param name="lstCurNameParts">An ordered list of some of the clauses of a data name.</param>
+	<param name="strClauseName">The name of the next clause to test (ie the clause postition zero).
+ Defaults to "Geoextent" ie the first clause of the data name.</param>
+	<returns>A Long which is the sum of the dnNameStatus emnumeration members. Only those emumerations
+ with the prefix INVALID, WARN, or INFO will be included.</returns>
+	<remarks>
+ This method tests whether or not each of the individual clauses in a parsable data name are
+ contained in the relevant Data Name Clause Lookup tables.
+ 
+ Implenmentation note: The lstCurNameParts parameter is passed ByRef. The implenmentation
+ will consume the List object, removing elements from it as the metod recuses. Therefore the
+ caller should not expect to be able to use the object passed to this parameter after this
+ method has been called. If for any reason the caller still requires this object they should
+ copy it before calling this method.
+ 
+ Implenemtnation note: This method requires that the name for testing is passed as a string 
+ even though it is testing it self. This is to allow the method to be called recurvisly with
+ variations on the name.
+ </remarks>
+</member><member name="T:mapaction.datanames.api.AbstractDataName">
+	<summary>
+ Provides a framework for the implenmentation of the IDataName interface.
+ </summary>
+	<remarks>
+ Provides a framework for the implenmentation of the IDataName interface.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.initialiseAllTables">
 	<summary>
  Opens each of the dataname clause lookup tables. Must be called from the constructor
  </summary>
@@ -55,9 +485,10 @@ api
  Compared two ArrayLists of DataColumn objects, to confirm whether or not the specfication
  of the columns (ie the schema) is identical for both.
  </summary>
-	<param name="dcal1">An ArrayList of DataColumn objects</param>
-	<param name="dcal2">An ArrayList of DataColumn objects</param>
-	<returns>TRUE = the DataColumn specfications match, FALSE otherwise.</returns>
+	<param name="aryl1">An ArrayList of DataColumn objects</param>
+	<param name="aryl2">An ArrayList of DataColumn objects</param>
+	<returns>TRUE = the DataColumn specfications match. If the DataColumn specfications
+ do not match then a LookupTableException is thrown.</returns>
 	<remarks>
  Compared two ArrayLists of DataColumn objects, to confirm whether or not the specfication
  of the columns (ie the schema) is identical for both. This is used to verify the schema of
@@ -324,16 +755,23 @@ api
  </remarks>
 </member><member name="M:mapaction.datanames.api.IDataListConnection.getDataListConnectionType">
 	<summary>
- Returns an Integer which represents the type of connection
+ Returns an dnListType enumeration which represents the underlying
+ physical type of the connection.
  </summary>
-	<returns></returns>
-	<remarks></remarks>
+	<returns>an dnListType enumeration which represents the underlying
+ physical type of the connection</returns>
+	<remarks>
+ Returns an dnListType enumeration which represents the underlying
+ physical type of the connection.
+ </remarks>
 </member><member name="M:mapaction.datanames.api.IDataListConnection.getDataListConnectionTypeDesc">
 	<summary>
- Returns a String which represents the type of connection
+ Returns a String which describes the type of connection.
  </summary>
-	<returns></returns>
-	<remarks></remarks>
+	<returns>A String which describes the type of connection.</returns>
+	<remarks>
+ Returns a String which describes the type of connection.
+ </remarks>
 </member><member name="M:mapaction.datanames.api.IDataListConnection.getDetails">
 	<summary>
  Returns a string describing the type of DataListConnection.
@@ -765,7 +1203,7 @@ api
      "datanaming_clause_scale"
      "datanaming_clause_source"
      "datanaming_clause_permission"
- (these are defined in the YYYY enumeration)
+ (these are defined by the constants with the prefix "TABLENAME_")
  
  It is not expected that that will be any public constructors for classes implenementing IDataNameClauseLookup.
  In general, instances of IDataNameClauseLookup should be obtained either by use of the 
@@ -814,7 +1252,8 @@ api
  </remarks>
 </member><member name="M:mapaction.datanames.api.IDataName.getPathStr">
 	<summary>
- Returns the path of the current IDataName as a String if possible.
+ Returns the path of the current IDataName as a String if possible. Should not
+ include trailing slash or backslash.
  </summary>
 	<returns>
  a string of the current Data Name's path. Or is a path is not available a null 
@@ -824,6 +1263,8 @@ api
  Returns the path of the current Data Name as a String, if a suitable meaning of
  path is applicable. If there is no easy or meaningful sense of a path (eg for a 
  RDBMS) then a null or zero length string is returned.
+
+ Should not include trailing slash or backslash.
 </remarks>
 </member><member name="M:mapaction.datanames.api.IDataName.getNameAndFullPathStr">
 	<summary>
@@ -848,15 +1289,28 @@ api
  This method does the core processing to determine whether or not the particular name represented by 
  this object is syntatically correct and valid or not.
  </summary>
-	<returns>A Long which is the sum of the relevant XXXXX emnumeration members</returns>
+	<returns>A Long which is the sum of the dnNameStatus emnumeration members</returns>
 	<remarks>
  This method does the core processing to determine whether or not the particular name represented by 
  this object is syntatically correct and valid or not. 
  
- XXXXX If the name is not valid, it will attempt to estimate what the mistake is. These are classified as either
- XXXXX "Errors" or "Warnings"
- XXXXX Error = The name cannot be understood
- XXXXX Warning = The name can be understood, but there is a risk that it will be misinterprited
+ The status flags are a sum of the dnNameStatus emnumeration members and are arranged in four categories:
+     INVALID = "One or more of the clauses (excluding Free Text) cannot be found in the Data Name Clause Lookup Tables
+     SYNTAX_ERROR = "The format of the name cannot be understood. Individual clauses cannot be identified."
+     WARN = "The name can be understood and the clauses are valid, but for some reason there is a risk that it will be misinterprited"
+     INFO = "Other information about the name"
+ 
+ All of the flags are prefixed with one of these four names. It is possible to test
+ for all flags within a particular category by just testing agains the root. eg:
+ 
+ ((myNameStatus And dnNameStatus.SYNTAX_ERROR) = dnNameStatus.SYNTAX_ERROR)
+ 
+ will return true for SYNTAX_ERROR_CONTAINS_HYPHENS, SYNTAX_ERROR_TOO_FEW_CLAUSES,
+ SYNTAX_ERROR_DOUBLE_UNDERSCORE and SYNTAX_ERROR_OTHER
+ 
+ There is no "is valid" flag since depending on context this is any 
+ combination of "not DATANAME_INVALID", "not DATANAME_SYNTAX_ERROR" 
+ and maybe "not DATANAME_WARN"
  </remarks>
 </member><member name="M:mapaction.datanames.api.IDataName.isNameParseable">
 	<summary>
@@ -866,7 +1320,8 @@ api
 	<remarks>
  Tests whether or not the IDataName is syntatically correct.
  
- XXXXX Shorthand for:
+ This method is shorthand for:
+ (Not (checkNameStatus() And dnNameStatus.SYNTAX_ERROR) = dnNameStatus.SYNTAX_ERROR))
  </remarks>
 </member><member name="M:mapaction.datanames.api.IDataName.isNameValid">
 	<summary>
@@ -882,7 +1337,9 @@ api
  relevant IDataNameClauseLookupTables. If optional clauses are present then their values must be found in
  the relevant  IDataNameClauseLookupTables.
  
- XXXXX Shorthand for:
+ This method is shorthand for:
+ (Not (checkNameStatus() And dnNameStatus.SYNTAX_ERROR) = dnNameStatus.SYNTAX_ERROR)) _
+ and (Not (checkNameStatus() And dnNameStatus.INVALID) = dnNameStatus.INVALID))
  </remarks>
 </member><member name="M:mapaction.datanames.api.IDataName.hasOptionalScaleClause">
 	<summary>
@@ -943,13 +1400,12 @@ api
  A convenance function, to subsutute the GeoExtent clause of the current name with a new value.
  </summary>
 	<param name="newGeoExtent">The new, subsutute GeoExtent clause</param>
-	<returns></returns>
 	<remarks>
  A convenance function, to subsutute the GeoExtent clause of the current name with a new value.
  The new value does not need to be valid in the sense of the data naming convention, but must
  be valid in terms of the underlying storage.
  
- Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+ Throws an RenamingDataException if the IDataName is either un-renamable [test with 
  .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
  </remarks>
 </member><member name="M:mapaction.datanames.api.IDataName.changeDataCategoryClause(System.String)">
@@ -957,13 +1413,12 @@ api
  A convenance function, to subsutute the DataCategory clause of the current name with a new value.
  </summary>
 	<param name="newDataCategory">The new, subsutute DataCategory clause</param>
-	<returns></returns>
 	<remarks>
  A convenance function, to subsutute the DataCategory clause of the current name with a new value.
  The new value does not need to be valid in the sense of the data naming convention, but must
  be valid in terms of the underlying storage.
  
- Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+ Throws an RenamingDataException if the IDataName is either un-renamable [test with 
  .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
  </remarks>
 </member><member name="M:mapaction.datanames.api.IDataName.changeDataThemeClause(System.String)">
@@ -971,13 +1426,12 @@ api
  A convenance function, to subsutute the DataTheme clause of the current name with a new value.
  </summary>
 	<param name="newDataTheme">The new, subsutute DataTheme clause</param>
-	<returns></returns>
 	<remarks>
  A convenance function, to subsutute the DataTheme clause of the current name with a new value.
  The new value does not need to be valid in the sense of the data naming convention, but must
  be valid in terms of the underlying storage.
  
- Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+ Throws an RenamingDataException if the IDataName is either un-renamable [test with 
  .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
  </remarks>
 </member><member name="M:mapaction.datanames.api.IDataName.changeDataTypeClause(System.String)">
@@ -985,13 +1439,12 @@ api
  A convenance function, to subsutute the DataType clause of the current name with a new value.
  </summary>
 	<param name="newDataType">The new, subsutute DataType clause</param>
-	<returns></returns>
 	<remarks>
  A convenance function, to subsutute the DataType clause of the current name with a new value.
  The new value does not need to be valid in the sense of the data naming convention, but must
  be valid in terms of the underlying storage.
  
- Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+ Throws an RenamingDataException if the IDataName is either un-renamable [test with 
  .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
  </remarks>
 </member><member name="M:mapaction.datanames.api.IDataName.changePermissionsClause(System.String)">
@@ -999,7 +1452,6 @@ api
  A convenance function, to subsutute the Permissions clause of the current name with a new value.
  </summary>
 	<param name="newPermissionsClause">The new, subsutute Permissions clause</param>
-	<returns></returns>
 	<remarks>
  A convenance function, to subsutute the Permissions clause of the current name with a new value.
  The new value does not need to be valid in the sense of the data naming convention, but must
@@ -1009,7 +1461,7 @@ api
  will be inserted. To completely remove an existing Permissions clause set newPermissionsClause=""
  and the relevant undersorces will be removed.
  
- Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+ Throws an RenamingDataException if the IDataName is either un-renamable [test with 
  .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
  </remarks>
 </member><member name="M:mapaction.datanames.api.IDataName.changeScaleClause(System.String)">
@@ -1017,7 +1469,6 @@ api
  A convenance function, to subsutute the Scale clause of the current name with a new value.
  </summary>
 	<param name="newScaleClause">The new, subsutute Scale clause</param>
-	<returns></returns>
 	<remarks>
  A convenance function, to subsutute the Scale clause of the current name with a new value.
  The new value does not need to be valid in the sense of the data naming convention, but must
@@ -1027,7 +1478,7 @@ api
  will be inserted. To completely remove an existing Scale clause set newScaleClause="" and
  the relevant undersorces will be removed.
  
- Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+ Throws an RenamingDataException if the IDataName is either un-renamable [test with 
  .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
  </remarks>
 </member><member name="M:mapaction.datanames.api.IDataName.changeSourceClause(System.String)">
@@ -1035,13 +1486,12 @@ api
  A convenance function, to subsutute the Source clause of the current name with a new value.
  </summary>
 	<param name="newSourceClause">The new, subsutute Source clause</param>
-	<returns></returns>
 	<remarks>
  A convenance function, to subsutute the Source clause of the current name with a new value.
  The new value does not need to be valid in the sense of the data naming convention, but must
  be valid in terms of the underlying storage.
  
- Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+ Throws an RenamingDataException if the IDataName is either un-renamable [test with 
  .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
  </remarks>
 </member><member name="M:mapaction.datanames.api.IDataName.changeFreeTextClause(System.String)">
@@ -1049,7 +1499,6 @@ api
  A convenance function, to subsutute the FreeText clause of the current name with a new value.
  </summary>
 	<param name="newFreeTextClause">The new, subsutute FreeText clause</param>
-	<returns></returns>
 	<remarks>
  A convenance function, to subsutute the FreeText clause of the current name with a new value.
  The new value does not need to be valid in the sense of the data naming convention, but must
@@ -1059,7 +1508,7 @@ api
  will be inserted. To completely remove an existing FreeText clause set newFreeTextClause="" and
  the relevant undersorces will be removed.
  
- Throws an XXXXX RenamingDataException XXXXX if the IDataName is either un-renamable [test with 
+ Throws an RenamingDataException if the IDataName is either un-renamable [test with 
  .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
  </remarks>
 </member><member name="T:mapaction.datanames.api.IDataName">
@@ -1077,7 +1526,7 @@ api
  
  It is not expected that that will be any public constructors for classes implenementing IDataName.
  In general, instances of IDataName would be created within the implenmentation of the
- IGeoDataListConnection.getLayerDataNamesList() method.
+ IDataListConnection.getLayerDataNamesList() method.
  </remarks>
 </member><member name="M:mapaction.datanames.api.RenamingDataException.getDataName">
 	<summary>
@@ -1135,10 +1584,10 @@ api
  methods.
  
  The status flags are arranged in four categories:
-     INVALID
-     SYNTAX_ERROR 
-     WARN 
-     INFO
+     INVALID = "One or more of the clauses (excluding Free Text) cannot be found in the Data Name Clause Lookup Tables
+     SYNTAX_ERROR = "The format of the name cannot be understood. Individual clauses cannot be identified."
+     WARN = "The name can be understood and the clauses are valid, but for some reason there is a risk that it will be misinterprited"
+     INFO = "Other information about the name"
  
  All of the flags are prefixed with one of these four names. It is possible to test
  for all flags within a particular category by just testing agains the root. eg:
@@ -1191,8 +1640,15 @@ api
 	<remarks>
  A collection of "user readable" messages describing the dataname status.
  
- The Hashtable uses the dnNameStatus enumeration as the keys.
+ The Dictionary(Of dnNameStatus, String) uses the dnNameStatus enumeration as the keys.
  </remarks>
+</member><member name="P:mapaction.datanames.api.DataNamingConstants.g_lstDNNameStatusValues">
+	<summary>
+ A list of possible dnNameStatus values
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks>A list of possible dnNameStatus values</remarks>
 </member><member name="P:mapaction.datanames.api.DataNamingConstants.g_htbAllDataNameColumns">
 	<summary>
  A structured collection of the DataColumns which describe all of the dataname 

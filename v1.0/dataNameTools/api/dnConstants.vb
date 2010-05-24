@@ -16,10 +16,10 @@
 ''' methods.
 ''' 
 ''' The status flags are arranged in four categories:
-'''     INVALID
-'''     SYNTAX_ERROR 
-'''     WARN 
-'''     INFO
+'''     INVALID = "One or more of the clauses (excluding Free Text) cannot be found in the Data Name Clause Lookup Tables
+'''     SYNTAX_ERROR = "The format of the name cannot be understood. Individual clauses cannot be identified."
+'''     WARN = "The name can be understood and the clauses are valid, but for some reason there is a risk that it will be misinterprited"
+'''     INFO = "Other information about the name"
 ''' 
 ''' All of the flags are prefixed with one of these four names. It is possible to test
 ''' for all flags within a particular category by just testing agains the root. eg:
