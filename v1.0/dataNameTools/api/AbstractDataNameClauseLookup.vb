@@ -85,7 +85,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
     ''' </summary>
     ''' <param name="strTableName">The name of the table to open. This should normally be passed
     ''' using one of the API constants with the prefix "TABLENAME_"</param>
-    ''' <returns>A DataTable object representing the </returns>
+    ''' <returns>A DataTable object representing the named table</returns>
     ''' <remarks>
     ''' This method provides an implenmention specific means to open an individual flat table
     ''' from a data source (eg, Access DB, ESRI GDB, XML files etc).

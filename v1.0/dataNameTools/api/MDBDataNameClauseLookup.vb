@@ -18,23 +18,26 @@ Public Class MDBDataNameClauseLookup
     Inherits AbstractDataNameClauseLookup
 
     Private m_DBConnection As IDbConnection = Nothing
-
+    Private m_fInfoPath As FileInfo
 
     ''' <summary>
     ''' The constuctor. This should only be call from within the relevant 
     ''' factory class.
     ''' </summary>
-    ''' <param name="strArgs">A string of the full path to the Access MDB file</param>
+    ''' <param name="strFullName">A string of the full path to the Access MDB file</param>
     ''' <remarks>
     ''' The constuctor. This should only be call from within the relevant 
     ''' factory class.
     ''' </remarks>
-    Protected Friend Sub New(ByVal strArgs As String)
-        If strArgs Is Nothing Then
+    Protected Friend Sub New(ByVal strFullName As String)
+        Dim fInfoArg As FileInfo
+
+        If strFullName Is Nothing Then
             Throw New ArgumentException("Invalid path passed to New MDBDataNameClauseLookup(args)")
         Else
+            fInfoArg = New FileInfo(strFullName)
             'System.Console.WriteLine("args(0)= " & args(0))
-            initialiseConnectionObject(strArgs)
+            initialiseConnectionObject(fInfoArg)
             initialiseAllTables()
         End If
     End Sub
@@ -51,39 +54,31 @@ Public Class MDBDataNameClauseLookup
     ''' factory class.
     ''' </remarks>
     Protected Friend Sub New(ByRef fileInfoArg As FileInfo)
-        If Not fileInfoArg.Exists Then
-            Throw New ArgumentException("Invalid path passed to New MDBDataNameClauseLookup(fileInfoArg)")
-        Else
-            initialiseConnectionObject(fileInfoArg.FullName)
-            initialiseAllTables()
-        End If
+        initialiseConnectionObject(fileInfoArg)
+        initialiseAllTables()
     End Sub
 
 
     ''' <summary>
     ''' Sets up the m_DBConnection object. Only called from within the constructor
     ''' </summary>
-    ''' <param name="strPathToMDB">A string of the full path to the Access MDB file</param>
+    ''' <param name="fInfoPathToMDB">A string of the full path to the Access MDB file</param>
     ''' <remarks>
     ''' Sets up the m_DBConnection object. Only called from within the constructor
     ''' </remarks>
-    Private Sub initialiseConnectionObject(ByRef strPathToMDB As String)
+    Private Sub initialiseConnectionObject(ByRef fInfoPathToMDB As FileInfo)
 
         Dim strPrefixCon As String = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source="
-        Dim strConnect As String
 
-        strConnect = strPrefixCon & strPathToMDB
+        If Not fInfoPathToMDB.Exists Then
+            Throw New ArgumentException("Invalid path passed to New MDBDataNameClauseLookup(fileInfoArg)")
 
-        m_DBConnection = New OleDbConnection(strConnect)
-        m_DBConnection.Open()
+            m_DBConnection = New OleDbConnection(strPrefixCon & fInfoPathToMDB.FullName)
+            m_DBConnection.Open()
 
+            m_fInfoPath = fInfoPathToMDB
+        End If
     End Sub
-
-
-    'todo is this needed?
-    Public Overrides Function isWriteable() As Boolean
-        isWriteable = False
-    End Function
 
 
     ''' <summary>
@@ -115,14 +110,28 @@ Public Class MDBDataNameClauseLookup
     End Function
 
 
-    'todo is this required?
     ''' <summary>
-    ''' 
+    ''' Returns the ConnectionString used to connect to the Acess DB.
     ''' </summary>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <returns>the ConnectionString used to connect to the Acess DB.</returns>
+    ''' <remarks>
+    ''' Returns the ConnectionString used to connect to the Acess DB.
+    ''' </remarks>
     Public Overrides Function getDetails() As String
         Return m_DBConnection.ConnectionString
+    End Function
+
+
+    ''' <summary>
+    ''' Returns the operating system file path to the Access DataBase.
+    ''' </summary>
+    ''' <returns>A FileInfo object representing the operating system file path to the  
+    ''' Access DataBase.</returns>
+    ''' <remarks>
+    ''' Returns the operating system file path to the Access DataBase.
+    ''' </remarks>
+    Public Overrides Function getPath() As System.IO.FileInfo
+        Return m_fInfoPath
     End Function
 
 
