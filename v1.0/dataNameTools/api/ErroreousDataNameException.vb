@@ -42,12 +42,13 @@ Public Class ErroreousDataNameException
     ''' <returns></returns>
     ''' <remarks></remarks>
     Private Shared Function getDescriptionFromStatus(ByVal lngBitsum As Long) As String
-        Dim strReturnVal As String = ""
+        Dim strReturnVal As String = String.Empty
 
-        'todo FIX ME
+        'todo HIGH FIX ME
         'For Each strStatus In AbstractDataNameClauseLookup.getDataNamingStatusStrings(lngBitsum)
         '    strReturnVal = strReturnVal & strStatus & vbNewLine
         'Next
+        'g_htbDNStatusStrMessages.Item(emuBitsum
 
         Return strReturnVal
     End Function

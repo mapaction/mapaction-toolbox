@@ -62,6 +62,7 @@
     <Compile Include="IDataName.vb" />
     <Compile Include="IDataNameClauseLookup.vb" />
     <Compile Include="LookupTableException.vb" />
+    <Compile Include="MDBDataNameClauseLookup.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
