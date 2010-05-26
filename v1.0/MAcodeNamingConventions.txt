@@ -6,7 +6,7 @@ FactoryClasses: <name of class produced> suffix with "Factory"
 
 DataName = dn or DN
 
-srtAry = String Arrays
+strAry = String Arrays
 htb = HashTable
 dcl = DataColunm
 aryl = Array List
@@ -16,7 +16,9 @@ stb = StringBuilder
 wksp = ESRI.ArcGIS.Geodatabase.IWorkspace
 fInfo = FileInfo
 dInfo = DirectoryInfo
-
+edn = IEnumDatasetName
+eds = IEnumDataset
+dsn =  ESRI.ArcGIS.Geodatabase.IDatasetName
 
 
     'todo SORT THIS OUT NAD MOVE PART OF IT CONSTANTS FILES

@@ -264,7 +264,7 @@ Friend Module MADirectorySearcher
     ''' If strFullFilePath is a directory with extention = ".gdb", returns a FileGDBWorkspaceFactoryClass
     ''' If strFullFilePath is a directory with no extention, returns a ShapefileWorkspaceFactory
     ''' </remarks>
-    Private Function getESRIWorkspaceFromFile(ByVal strFullFilePath As String) As IWorkspace
+    Friend Function getESRIWorkspaceFromFile(ByVal strFullFilePath As String) As IWorkspace
         Dim fInfo As FileInfo
 
         fInfo = New FileInfo(strFullFilePath)
@@ -288,7 +288,7 @@ Friend Module MADirectorySearcher
     ''' If fInfo is a directory with extention = ".gdb", returns a FileGDBWorkspaceFactoryClass
     ''' If fInfo is a directory with no extention, returns a ShapefileWorkspaceFactory
     ''' </remarks>
-    Private Function getESRIWorkspaceFromFile(ByVal fInfo As FileInfo) As IWorkspace
+    Friend Function getESRIWorkspaceFromFile(ByVal fInfo As FileInfo) As IWorkspace
         Dim wkspReturnRef As ESRI.ArcGIS.Geodatabase.IWorkspace = Nothing
 
         If Not fInfo.Exists() Then
@@ -347,7 +347,7 @@ Friend Module MADirectorySearcher
     ''' 
     ''' To access the IDataset themselves use the method getESRIDataSetsFromWorkspace()
     ''' </remarks>
-    Private Function getESRIDataSetNamesFromWorkspace(ByRef wrksp As IWorkspace, ByVal blnRecuse As Boolean) As List(Of IDatasetName)
+    Friend Function getESRIDataSetNamesFromWorkspace(ByRef wrksp As IWorkspace, ByVal blnRecuse As Boolean) As List(Of IDatasetName)
         Return getESRIDataSetNamesFromWorkspace(wrksp.DatasetNames(esriDatasetType.esriDTAny), blnRecuse)
     End Function
 
@@ -366,7 +366,7 @@ Friend Module MADirectorySearcher
     ''' 
     ''' To access the IDataset themselves use the method getESRIDataSetsFromWorkspace()
     ''' </remarks>
-    Private Function getESRIDataSetNamesFromWorkspace(ByRef edn As IEnumDatasetName, _
+    Friend Function getESRIDataSetNamesFromWorkspace(ByRef edn As IEnumDatasetName, _
                                                       ByVal blnRecuse As Boolean) As List(Of IDatasetName)
         Dim lstDSNames As New List(Of IDatasetName)
         Dim dsName As IDatasetName
@@ -394,7 +394,7 @@ Friend Module MADirectorySearcher
     ''' <remarks>
     ''' A convinence function for exacting a list of names as strings froma list of IDatasetName objects.
     ''' </remarks>
-    Private Function getNamesStrFromESRIDataSetName(ByRef dsList As List(Of IDatasetName)) As List(Of String)
+    Friend Function getNamesStrFromESRIDataSetName(ByRef dsList As List(Of IDatasetName)) As List(Of String)
         Dim strList As New List(Of String)
 
         For Each ds In dsList
@@ -421,7 +421,7 @@ Friend Module MADirectorySearcher
     ''' To access the just the IDatasetNames use the method 
     ''' getESRIDataSetNamesFromWorkspace()
     ''' </remarks>
-    Private Function getESRIDataSetsFromWorkspace(ByRef wrksp As IWorkspace, _
+    Friend Function getESRIDataSetsFromWorkspace(ByRef wrksp As IWorkspace, _
                                                   ByVal blnRecuse As Boolean) As List(Of IDataset)
         Return getESRIDataSetsFromWorkspace(wrksp.Datasets(esriDatasetType.esriDTAny), blnRecuse)
     End Function
@@ -443,7 +443,7 @@ Friend Module MADirectorySearcher
     ''' To access the just the IDatasetNames use the method 
     ''' getESRIDataSetNamesFromWorkspace()
     ''' </remarks>
-    Private Function getESRIDataSetsFromWorkspace(ByRef eds As IEnumDataset, _
+    Friend Function getESRIDataSetsFromWorkspace(ByRef eds As IEnumDataset, _
                                                   ByVal blnRecuse As Boolean) As List(Of IDataset)
         Dim lstDSet As New List(Of IDataset)
         Dim ds As IDataset
