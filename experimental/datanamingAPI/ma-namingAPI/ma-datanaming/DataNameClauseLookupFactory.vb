@@ -19,9 +19,9 @@ Public Class DataNameClauseLookupFactory
 
         Select Case dnclType
             Case dnClauseLookupType.MDB
-                theDataNameClauseLookup = New MDBDataNameClauseLookup(args)
+                theDataNameClauseLookup = New MDBDataNameClauseLookup(args(0))
             Case dnClauseLookupType.ESRI_GDB
-                theDataNameClauseLookup = New GeoDBDataNameClauseLookup(args(0))
+                theDataNameClauseLookup = New GDBDataNameClauseLookup(args(0))
             Case Else
                 Throw New ArgumentException("DataNameClauseLookup of type " & dnclType & " not recgonised.")
         End Select
@@ -73,7 +73,7 @@ Public Class DataNameClauseLookupFactory
                     'System.Console.WriteLine("found file: " & curFileInfo.FullName)
                     If returnNDCL Is Nothing Then
                         Try
-                            returnNDCL = New GeoDBDataNameClauseLookup(curFileInfo.FullName)
+                            returnNDCL = New GDBDataNameClauseLookup(curFileInfo.FullName)
                         Catch ex As Exception
                             'System.Console.WriteLine("GeoDBDataNameClauseLookup threw an exception")
                             'System.Console.WriteLine(ex.ToString())

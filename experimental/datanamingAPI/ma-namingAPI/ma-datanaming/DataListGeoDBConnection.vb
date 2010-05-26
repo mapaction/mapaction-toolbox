@@ -4,6 +4,10 @@ Imports ESRI.ArcGIS.Geodatabase
 Imports ESRI.ArcGIS.DataSourcesGDB
 Imports System.IO
 
+''' <summary>
+''' 
+''' </summary>
+''' <remarks></remarks>
 Public Class DataListGeoDBConnection
     Inherits AbstractGeoDataListConnection
     ' IGeoDataListConnection
@@ -100,7 +104,7 @@ Public Class DataListGeoDBConnection
         'System.Console.WriteLine("starting DataListGeoDBConnection.getDefaultDataNameClauseLookup()")
         Try
             'System.Console.WriteLine("Try 1")
-            defaultDNCL = New GeoDBDataNameClauseLookup(dataNameLookupWorkspace)
+            defaultDNCL = New GDBDataNameClauseLookup(dataNameLookupWorkspace)
         Catch ex1 As Exception
             'System.Console.WriteLine(ex1.ToString)
             Try

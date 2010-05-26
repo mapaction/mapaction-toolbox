@@ -361,7 +361,7 @@ Public MustInherit Class AbstractDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Public Sub changeGeoExtentClause(ByVal strNewGeoExtent As String) Implements IDataName.changeGeoExtentClause
+    Public Sub changeGeoExtentClause(ByVal strNewGeoExtent As String)
         rename(generateNameWithReplacedClause(strNewGeoExtent, CLAUSE_GEOEXTENT))
     End Sub
 
@@ -377,7 +377,7 @@ Public MustInherit Class AbstractDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Public Sub changeDataCategoryClause(ByVal strNewDataCategory As String) Implements IDataName.changeDataCategoryClause
+    Public Sub changeDataCategoryClause(ByVal strNewDataCategory As String)
         'changeDataCategoryClause = Nothing
         rename(generateNameWithReplacedClause(strNewDataCategory, CLAUSE_DATACATEGORY))
     End Sub
@@ -396,7 +396,7 @@ Public MustInherit Class AbstractDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Public Sub changeDataThemeClause(ByVal strNewDataTheme As String) Implements IDataName.changeDataThemeClause
+    Public Sub changeDataThemeClause(ByVal strNewDataTheme As String)
         'changeDataThemeClause = Nothing
         rename(generateNameWithReplacedClause(strNewDataTheme, CLAUSE_DATATHEME))
     End Sub
@@ -413,7 +413,7 @@ Public MustInherit Class AbstractDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Public Sub changeDataTypeClause(ByVal strNewDataType As String) Implements IDataName.changeDataTypeClause
+    Public Sub changeDataTypeClause(ByVal strNewDataType As String)
         'changeDataTypeClause = Nothing
         rename(generateNameWithReplacedClause(strNewDataType, CLAUSE_DATATYPE))
     End Sub
@@ -434,7 +434,7 @@ Public MustInherit Class AbstractDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Public Sub changeScaleCodesClause(ByVal strNewScale As String) Implements IDataName.changeScaleCodesClause
+    Public Sub changeScaleCodesClause(ByVal strNewScale As String)
         'changeScaleCodesClause = Nothing
         rename(generateNameWithReplacedClause(strNewScale, CLAUSE_SCALE))
     End Sub
@@ -453,7 +453,7 @@ Public MustInherit Class AbstractDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Public Sub changeSourceCodesClause(ByVal strNewSource As String) Implements IDataName.changeSourceCodesClause
+    Public Sub changeSourceCodesClause(ByVal strNewSource As String)
         'changeSourceCodesClause = Nothing
         rename(generateNameWithReplacedClause(strNewSource, CLAUSE_SOURCE))
     End Sub
@@ -476,7 +476,7 @@ Public MustInherit Class AbstractDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Public Sub changePermissionsClause(ByVal strNewPermissions As String) Implements IDataName.changePermissionsClause
+    Public Sub changePermissionsClause(ByVal strNewPermissions As String)
         'changePermissionsClause = Nothing
         rename(generateNameWithReplacedClause(strNewPermissions, CLAUSE_PERMISSIONS))
     End Sub
@@ -498,7 +498,7 @@ Public MustInherit Class AbstractDataName
     ''' Throws an RenamingDataException if the IDataName is either un-renamable [test with 
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
-    Public Sub changeFreeTextClause(ByVal strNewFreeText As String) Implements IDataName.changeFreeTextClause
+    Public Sub changeFreeTextClause(ByVal strNewFreeText As String)
         'changeFreeTextClause = Nothing
         rename(generateNameWithReplacedClause(strNewFreeText, CLAUSE_FREETEXT))
     End Sub
