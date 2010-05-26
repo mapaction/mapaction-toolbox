@@ -19,17 +19,8 @@ Imports System.IO
 Public Class DataListGeoDBConnection
     Inherits AbstractDataListConnection
 
-    'Private Const m_GDB_TYPE_MDB As Integer = CInt(2 ^ 1)
-    'Private Const m_GDB_TYPE_FILEGDB As Integer = CInt(2 ^ 2)
-    'Private Const m_GDB_TYPE_SDE_BY_PROPS As Integer = CInt(2 ^ 3)
-    'Private Const m_GDB_TYPE_SDE_BY_CONFILE As Integer = CInt(2 ^ 4)
-    'Private Const m_GDB_TYPE_SQL_EXPRESS As Integer = CInt(2 ^ 5)
-
     Private m_wkspDNLT As ESRI.ArcGIS.Geodatabase.IWorkspace = Nothing
     Private m_fInfoPath As FileInfo
-
-    'Private m_intGDBtype As Integer
-
 
     'todo LOW: implenment this.
     '''' <summary>
@@ -170,9 +161,6 @@ Public Class DataListGeoDBConnection
         Return DATALIST_TYPE_GDB
     End Function
 
-    ''''''''''''''''''''
-    ' CHECKED TO HERE
-    ''''''''''''''''''''
 
     'todo MEDIUM check if this method need to explictly take recursion into account
     ''' <summary>
@@ -320,14 +308,14 @@ Public Class DataListGeoDBConnection
     ''' same map/data frame or within different maps/data frames) are filtered out and only 
     ''' occur once in the returned list.
     ''' </remarks>
-    Public Overrides Function getLayerDataNamesList(ByRef dncl As IDataNameClauseLookup) As List(Of IDataName)
+    Public Overrides Function getLayerDataNamesList(ByRef dnclUserSelected As IDataNameClauseLookup) As List(Of IDataName)
         Dim lstDSet As List(Of IDataset)
         Dim lstDName As New List(Of IDataName)
 
         lstDSet = getESRIDataSetsFromWorkspace(m_wkspDNLT, getRecuse())
 
         For Each ds In lstDSet
-            lstDName.Add(New DataNameESRIFeatureClass(ds, dncl, True))
+            lstDName.Add(New DataNameESRIFeatureClass(ds, dnclUserSelected, True))
         Next
 
         Return lstDName

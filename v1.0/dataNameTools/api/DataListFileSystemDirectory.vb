@@ -22,7 +22,7 @@ Imports ESRI.ArcGIS.Geodatabase
 ''' using ESRI.ArcGIS.Geodatabase.IWorkspace.
 '''  </remarks>
 Public Class DataListFileSystemDirectory
-    Inherits AbstractGeoDataListConnection
+    Inherits AbstractDataListConnection
 
     Private m_DirInfo As DirectoryInfo
     Private m_ESRIWorkspace As IWorkspace
@@ -126,6 +126,31 @@ Public Class DataListFileSystemDirectory
         Return m_DirInfo.FullName
     End Function
 
+    ''' <summary>
+    ''' Returns the operating system file path to the directory.
+    ''' </summary>
+    ''' <returns>A FileInfo object representing the operating system file path
+    ''' to the directory.</returns>
+    ''' <remarks>
+    ''' Returns the operating system file path to the directory.
+    ''' </remarks>
+    Public Overrides Function getpath() As System.IO.FileInfo
+        Return New FileInfo(m_DirInfo.FullName)
+    End Function
+
+
+    ''' <summary>
+    ''' Returns TRUE to indicate that an directory does have a heirachical structure.
+    ''' </summary>
+    ''' <returns>
+    ''' TRUE to indicate that an directory does have a heirachical structure.
+    ''' </returns>
+    ''' <remarks>
+    ''' Returns TRUE to indicate that an directory does have a heirachical structure.
+    ''' </remarks>
+    Public Overrides Function isheirachical() As Boolean
+        Return True
+    End Function
 
     ''' <summary>
     ''' Returns an dnListType enumeration which represents the underlying
@@ -136,7 +161,7 @@ Public Class DataListFileSystemDirectory
     ''' Returns an dnListType enumeration which represents the underlying
     ''' physical type of the connection (dnListType.DIR).
     ''' </remarks>
-    Public Overrides Function getGeoDataListConnectionType() As dnListType
+    Public Overrides Function getDataListConnectionType() As dnListType
         Return dnListType.DIR
     End Function
 
@@ -150,7 +175,7 @@ Public Class DataListFileSystemDirectory
     ''' <remarks>
     ''' Returns a String which describes the type of connection.
     ''' </remarks>
-    Public Overrides Function getGeoDataListConnectionTypeDesc() As String
+    Public Overrides Function getDataListConnectionTypeDesc() As String
         'todo LOW: move this to DataNameConstants module
         Return DATALIST_TYPE_DIR
     End Function
@@ -195,7 +220,7 @@ Public Class DataListFileSystemDirectory
 
         'Now recurse if necessary
         If getRecuse() Then
-            Dim dataList As IGeoDataListConnection
+            Dim dataList As IDataListConnection
 
             For Each dInfo In filterDirsForSpecialGISData()
                 dataList = New DataListFileSystemDirectory(dInfo)
@@ -231,7 +256,7 @@ Public Class DataListFileSystemDirectory
 
         'Now recurse if necessary
         If getRecuse() Then
-            Dim dataList As IGeoDataListConnection
+            Dim dataList As IDataListConnection
 
             For Each dInfo In filterDirsForSpecialGISData()
                 dataList = New DataListFileSystemDirectory(dInfo)

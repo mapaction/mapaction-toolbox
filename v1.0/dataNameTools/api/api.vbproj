@@ -63,6 +63,7 @@
     <Compile Include="AbstractDataListConnection.vb" />
     <Compile Include="AbstractDataName.vb" />
     <Compile Include="AbstractDataNameClauseLookup.vb" />
+    <Compile Include="DataListFileSystemDirectory.vb" />
     <Compile Include="DataListGeoDBConnection.vb" />
     <Compile Include="DataListMXDConnection.vb" />
     <Compile Include="dnConstants.vb" />

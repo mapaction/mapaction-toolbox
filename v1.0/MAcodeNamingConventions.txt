@@ -19,6 +19,9 @@ dInfo = DirectoryInfo
 edn = IEnumDatasetName
 eds = IEnumDataset
 dsn =  ESRI.ArcGIS.Geodatabase.IDatasetName
+dncFact = DataNameClauseLookupFactory
+dncl = IDataNameClauseLookup
+
 
 
     'todo SORT THIS OUT NAD MOVE PART OF IT CONSTANTS FILES

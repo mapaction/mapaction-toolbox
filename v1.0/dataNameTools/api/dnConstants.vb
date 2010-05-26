@@ -162,8 +162,8 @@ Public Module DataNamingConstants
 
     'todo LOW: move these three values to an ini file or the registary etc..
     Public Const MA_DIR_STRUCT_DATA_DIR As String = "2_Active_Data"
-    Public Const MA_DIR_STRUCT_MXD_DIR As String = "33_MXD_Maps"
-    'Not sure that this is actually used
+    'Not sure that these are actually used
+    'Public Const MA_DIR_STRUCT_MXD_DIR As String = "33_MXD_Maps"
     'Public Const MA_DIR_STRUCT_PATH_FROM_MXD_TO_DATA_DIR As String = "..\..\" & MA_DIR_STRUCT_DATA_DIR
 
     'todo LOW: move these three values to an ini file or the registary etc..
@@ -195,7 +195,7 @@ Public Module DataNamingConstants
 
 	public const DATALIST_TYPE_MXD as string = "MXD file"
 	public const DATALIST_TYPE_GDB as string = "ESRI Geodatabase"
-	
+	public const DATALIST_TYPE_DIR as string = "Directory"
 
     '"Unable to find valid DataName Clause Lookup Tables in directory: "
 

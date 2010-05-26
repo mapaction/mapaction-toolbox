@@ -179,7 +179,7 @@ Public Class DataListMXDConnection
     ''' <summary>
     ''' A convenience function to test whether or not the named layer is present in this MXD.
     ''' </summary>
-    ''' <param name="strLayerName">The name of the layer, whose presense is being tested for.</param>
+    ''' <param name="strLayerName">The name of the layer, whose presence is being tested for.</param>
     ''' <returns>TRUE if strLayerName is present in this MXD, FALSE otherwise</returns>
     ''' <remarks>
     ''' A convenience function to test whether or not the named layer is present in this MXD.
