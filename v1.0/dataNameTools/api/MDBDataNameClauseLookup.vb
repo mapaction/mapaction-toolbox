@@ -96,16 +96,16 @@ Public Class MDBDataNameClauseLookup
         Dim strQuery As String
         Dim dbCommand As IDbCommand = New OleDbCommand
         'Dim da As IDbDataAdapter = New OleDbDataAdapter
-        Dim dt As DataTable
+        Dim dtb As DataTable
 
         strQuery = "SELECT * FROM " & strTableName
 
         dbCommand.CommandText = strQuery
         dbCommand.Connection = m_DBConnection
 
-        dt = getTableFromReader(dbCommand.ExecuteReader())
+        dtb = getTableFromReader(dbCommand.ExecuteReader())
 
-        Return dt
+        Return dtb
 
     End Function
 

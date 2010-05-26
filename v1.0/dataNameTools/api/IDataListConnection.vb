@@ -29,7 +29,8 @@ Public Interface IDataListConnection
     ''' <summary>
     ''' Returns a String which describes the type of connection.
     ''' </summary>
-    ''' <returns>A String which describes the type of connection.</returns>
+    ''' <returns>A String which describes the type of connection, normally one of the
+	''' constants with the prefix "DATALIST_TYPE_" </returns>
     ''' <remarks>
     ''' Returns a String which describes the type of connection.
     ''' </remarks>
