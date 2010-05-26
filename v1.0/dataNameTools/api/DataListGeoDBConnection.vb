@@ -17,7 +17,7 @@ Imports System.IO
 ''' the XXXX factory class.
 '''  </remarks>
 Public Class DataListGeoDBConnection
-    Inherits AbstractGeoDataListConnection
+    Inherits AbstractDataListConnection
 
     'Private Const m_GDB_TYPE_MDB As Integer = CInt(2 ^ 1)
     'Private Const m_GDB_TYPE_FILEGDB As Integer = CInt(2 ^ 2)
@@ -26,6 +26,7 @@ Public Class DataListGeoDBConnection
     'Private Const m_GDB_TYPE_SQL_EXPRESS As Integer = CInt(2 ^ 5)
 
     Private m_wkspDNLT As ESRI.ArcGIS.Geodatabase.IWorkspace = Nothing
+    Private m_fInfoPath As FileInfo
 
     'Private m_intGDBtype As Integer
 
@@ -74,6 +75,8 @@ Public Class DataListGeoDBConnection
             If m_wkspDNLT Is Nothing Then
                 Throw New ArgumentException("Unable to open DataListGeoDBConnection")
             End If
+
+            m_fInfoPath = New FileInfo(strFullFilePath)
         End Try
 
     End Sub
@@ -95,16 +98,26 @@ Public Class DataListGeoDBConnection
     ''' This constuctor should only be call from within the relevant factory class.
     ''' </remarks>
     Sub New(ByVal strFileName As String, ByVal strDirectory As String)
-        
-        If strDirectory.EndsWith(Path.DirectorySeparatorChar) Then
-            m_wkspDNLT = getESRIWorkspaceFromFile(strDirectory & strFileName)
-        Else
-            m_wkspDNLT = getESRIWorkspaceFromFile(strDirectory & Path.DirectorySeparatorChar & strFileName)
-        End If
+        Dim strFullFilePath As String = Nothing
 
-        If m_wkspDNLT Is Nothing Then
-            Throw New ArgumentException("Unable to open DataListGeoDBConnection")
-        End If
+        Try
+            If strDirectory.EndsWith(Path.DirectorySeparatorChar) Then
+                strFullFilePath = strDirectory & strFileName
+            Else
+                strFullFilePath = strDirectory & Path.DirectorySeparatorChar & strFileName
+            End If
+
+            m_wkspDNLT = getESRIWorkspaceFromFile(strFullFilePath)
+
+        Finally
+            If m_wkspDNLT Is Nothing Then
+                Throw New ArgumentException("Unable to open DataListGeoDBConnection")
+            End If
+
+            m_fInfoPath = New FileInfo(strFullFilePath)
+
+        End Try
+
     End Sub
 
     ''' <summary>
@@ -138,7 +151,7 @@ Public Class DataListGeoDBConnection
     ''' Returns an dnListType enumeration which represents the underlying
     ''' physical type of the connection.
     ''' </remarks>
-    Public Overrides Function getGeoDataListConnectionType() As Integer
+    Public Overrides Function getDataListConnectionType() As dnListType
         Return dnListType.GDB
     End Function
 
@@ -152,7 +165,7 @@ Public Class DataListGeoDBConnection
     ''' <remarks>
     ''' Returns a String which describes the type of connection.
     ''' </remarks>
-    Public Overrides Function getGeoDataListConnectionTypeDesc() As String
+    Public Overrides Function getDataListConnectionTypeDesc() As String
         'todo LOW: move this to DataNamingConstants
         Return DATALIST_TYPE_GDB
     End Function
@@ -219,6 +232,24 @@ Public Class DataListGeoDBConnection
     End Function
 
 
+    ''' <summary>
+    ''' Returns the operating system file path to the GDB or the relevant 
+    ''' connection file.
+    ''' </summary>
+    ''' <returns>A FileInfo object representing the operating system file path
+    ''' to the GDB or the relevant connection file..</returns>
+    ''' <remarks>
+    ''' Returns the operating system file path to the GDB or the relevant 
+    ''' connection file.
+    ''' </remarks>
+    Public Overrides Function getpath() As System.IO.FileInfo
+        Return m_fInfoPath
+    End Function
+
+    Public Overrides Function isheirachical() As Boolean
+        Return True
+    End Function
+
     'todo MEDIUM check teh use fo connection file paths in this method.
     ''' <summary>
     ''' This method will attempt to physically locate a suitable set of DataNames Clause Lookup Tables, initially
@@ -265,7 +296,7 @@ Public Class DataListGeoDBConnection
 
             Catch ex2 As Exception
                 System.Console.WriteLine(ex2.ToString)
-                Throw New LookupTableException(dnLookupTableError.default_tbls_not_found, m_wkspDNLT.PathName)
+                Throw New LookupTableException(dnLookupTableError.DefaultTablesNotFound, m_wkspDNLT.PathName)
             End Try
         End Try
 

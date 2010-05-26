@@ -227,30 +227,6 @@ Public Class DataListMXDConnection
     End Function
 
 
-    'Now set in the constructor
-    'Public Function getFullPath() As String
-    '    Dim appParent As IApplication
-    '    Dim strPath As String
-
-    '    If m_blnMxDocument Then
-    '        'I cannot believe that this is the best way to find 
-    '        'out the name of the current MXD in ArcMap!!!!
-    '        Dim t As Type = Type.GetTypeFromProgID("esriFramework.AppRef")
-    '        Dim obj As System.Object = Activator.CreateInstance(t)
-    '        Dim app As IApplication = CType(obj, IApplication)
-    '        appParent = app
-
-    '        ' get current MXD name
-    '        strPath = appParent.Templates.Item(appParent.Templates.Count - 1)
-    '    Else
-    '        'That's more like it!
-    '        strPath = m_MapDocument.DocumentFilename()
-    '    End If
-
-    '    Return strPath
-    'End Function
-
-
     ''' <summary>
     ''' Returns the operating system file path to the MXD.
     ''' </summary>
@@ -259,7 +235,7 @@ Public Class DataListMXDConnection
     ''' <remarks>
     ''' Returns the operating system file path to the MXD.
     ''' </remarks>
-    Public Overrides Function getpath() As System.IO.FileInfo
+    Public Overrides Function getPath() As System.IO.FileInfo
         Return m_fInfoFullPath
     End Function
 
@@ -285,6 +261,20 @@ Public Class DataListMXDConnection
     End Function
 
     'todo HIGH Check if this is the best way to check the file paths.
+	''' <summary>
+    ''' Returns a string describing the type of DataListConnection.
+    ''' </summary>
+    ''' <returns>A string describing the type of DataListConnection.</returns>
+    ''' <remarks>
+    ''' Returns a string describing the type of DataListConnection.
+    ''' 
+    ''' This may take on of a number of forms:
+    ''' * An operating system directory path, for a directory containing shapefiles
+    ''' * An operating system file path for a Personal GDB, MXD or connection file.
+    ''' * A RDMS connection string, 
+    ''' * A URL
+    ''' * etc.
+    ''' </remarks>
     Public Overrides Function getDetails() As String
         Dim appParent As IApplication
         Dim strPath As String
@@ -333,27 +323,28 @@ Public Class DataListMXDConnection
     End Function
 
 
+	'todo HIGH SHOULD THIS REALY BE BOTH Overloads and Overrides ?!?!?!?!
     ''' <summary>
-    ''' Returns a List of Strings representing the Data names of all of the unique layers 
+    ''' Returns a List of IDataName objects representing the Data names of all of the unique layers 
     ''' defined by this MXD. Layers which occur multiple time in the MXD (either within the 
     ''' same map/data frame or within different maps/data frames) are filtered out and only 
     ''' occur once in the returned list.
     ''' </summary>
     ''' <returns>
-    ''' List of strings representing the names of all of the layers defined
+    ''' List of IDataName objects representing the names of all of the layers defined
     ''' by this MXD.
     ''' </returns>
     ''' <remarks>
-    ''' Returns a List of Strings representing the Data names of all of the unique layers 
+    ''' Returns a List of IDataName objects representing the Data names of all of the unique layers 
     ''' defined by this MXD. Layers which occur multiple time in the MXD (either within the 
     ''' same map/data frame or within different maps/data frames) are filtered out and only 
     ''' occur once in the returned list.
     ''' </remarks>
-    Public Overloads Overrides Function getLayerDataNamesList(ByRef myDNCL As IDataNameClauseLookup) As List(Of IDataName)
+    Public Overloads Overrides Function getLayerDataNamesList(ByRef dncl As IDataNameClauseLookup) As List(Of IDataName)
         Dim lstNames As New List(Of IDataName)
 
         For Each ds In getUniqueESRIDataSets()
-            lstNames.Add(New DataNameESRIFeatureClass(ds, myDNCL, False))
+            lstNames.Add(New DataNameESRIFeatureClass(ds, dncl, False))
         Next
 
         Return lstNames
