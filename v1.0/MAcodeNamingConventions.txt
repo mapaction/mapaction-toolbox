@@ -11,8 +11,11 @@ htb = HashTable
 dcl = DataColunm
 aryl = Array List
 dtb = DataTable
-lst = List(Of String)
+lst<T> = List(Of T)
 stb = StringBuilder
+wksp = ESRI.ArcGIS.Geodatabase.IWorkspace
+fInfo = FileInfo
+
 
 
     'todo SORT THIS OUT NAD MOVE PART OF IT CONSTANTS FILES

@@ -193,7 +193,8 @@ Public Module DataNamingConstants
     Public Const LOOKUP_TABLE_ERROR_COL_CAPTION_MISMATCH As String = "column Caption requirement doesn't match"
     Public Const LOOKUP_TABLE_ERROR_COL_READONLY_MISMATCH As String = "column ReadOnly requirement doesn't match"
 
-
+	public const DATALIST_TYPE_MXD as string = "MXD file"
+	
 
     '"Unable to find valid DataName Clause Lookup Tables in directory: "
 
