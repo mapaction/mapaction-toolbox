@@ -131,7 +131,7 @@ Friend Module MADirectorySearcher
     ''' If the root of the MapAction Active Data directory structure cannot be 
     ''' found then an ArgumentException is thrown.
     ''' </remarks>
-    Private Function getMAActiveDataDir(ByVal strPathName As String) As DirectoryInfo
+    Friend Function getMAActiveDataDir(ByVal strPathName As String) As DirectoryInfo
         Return appendMAActiveDataDir(getMARootDir(strPathName))
     End Function
 
@@ -154,7 +154,7 @@ Friend Module MADirectorySearcher
     ''' If the root of the MapAction Active Data directory structure cannot be 
     ''' found then an ArgumentException is thrown.
     ''' </remarks>
-    Private Function getMAActiveDataDir(ByRef dInfoArg As DirectoryInfo) As DirectoryInfo
+    Friend Function getMAActiveDataDir(ByRef dInfoArg As DirectoryInfo) As DirectoryInfo
         Return appendMAActiveDataDir(getMARootDir(dInfoArg))
     End Function
 
@@ -177,7 +177,7 @@ Friend Module MADirectorySearcher
     ''' If the root of the MapAction Active Data directory structure cannot be 
     ''' found then an ArgumentException is thrown.
     ''' </remarks>
-    Private Function getMAActiveDataDir(ByRef fInfoArg As FileInfo) As DirectoryInfo
+    Friend Function getMAActiveDataDir(ByRef fInfoArg As FileInfo) As DirectoryInfo
         Return appendMAActiveDataDir(getMARootDir(fInfoArg))
     End Function
 

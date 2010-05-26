@@ -1,20 +1,50 @@
 ﻿Imports ESRI.ArcGIS.Geodatabase
 Imports ESRI.ArcGIS.DataSourcesGDB
 
-Public Class GeoDBDataNameClauseLookup
+''' <summary>
+''' Provides a specfic implenmentation of the IDataNameClauseLookup, based on storing the
+''' Data Name Clause Lookup Tables in any form of ESRI GDB (file, personal, SDE etc)
+''' </summary>
+''' <remarks>
+''' Provides a specfic implenmentation of the IDataNameClauseLookup, based on storing the
+''' Data Name Clause Lookup Tables in any form of ESRI GDB (file, personal, SDE etc)
+'''
+''' There is no public constructor for this class. New instances should be generated using 
+''' the XXXX factory class.
+''' </remarks>
+Public Class GDBDataNameClauseLookup
     Inherits AbstractDataNameClauseLookup
 
     'ESRI.ArcGIS.Utility.Converter.ToDataSet
-    Private dataNameLookupWorkspace As ESRI.ArcGIS.Geodatabase.IWorkspace = Nothing
+    Private m_wkspDataNameLookup As ESRI.ArcGIS.Geodatabase.IWorkspace = Nothing
 
+    ''' <summary>
+    ''' The constuctor. This should only be call from within the relevant 
+    ''' factory class.
+    ''' </summary>
+    ''' <param name="dnlw"></param>
+    ''' <remarks>
+    ''' The constuctor. This should only be call from within the relevant 
+    ''' factory class.
+    ''' </remarks>
     Protected Friend Sub New(ByRef dnlw As ESRI.ArcGIS.Geodatabase.IWorkspace)
-        dataNameLookupWorkspace = dnlw
+        m_wkspDataNameLookup = dnlw
         initialiseAllTables()
     End Sub
 
-    Protected Friend Sub New(ByVal pathName As String)
+
+    ''' <summary>
+    ''' The constuctor. This should only be call from within the relevant 
+    ''' factory class.
+    ''' </summary>
+    ''' <param name="strPathName">A string presenting the path </param>
+    ''' <remarks>
+    ''' The constuctor. This should only be call from within the relevant 
+    ''' factory class.
+    ''' </remarks>
+    Protected Friend Sub New(ByVal strPathName As String)
         'ESRI.ArcGIS.Geodatabase.IWorkspace()
-        dataNameLookupWorkspace = getESRIWorkspaceFromFile(pathName)
+        m_wkspDataNameLookup = getESRIWorkspaceFromFile(strPathName)
         initialiseAllTables()
     End Sub
 
@@ -27,7 +57,7 @@ Public Class GeoDBDataNameClauseLookup
         Dim myRecordSet As IRecordSet
         Dim myDotNETTable As DataTable
 
-        pEnumDSName = dataNameLookupWorkspace.Datasets(esriDatasetType.esriDTTable)
+        pEnumDSName = m_wkspDataNameLookup.Datasets(esriDatasetType.esriDTTable)
 
         myObject = Nothing
         myESRITable = Nothing
@@ -85,11 +115,11 @@ Public Class GeoDBDataNameClauseLookup
     End Function
 
     Public Overrides Function isWriteable() As Boolean
-        isWriteable = False
+        Return False
     End Function
 
     Public Overrides Function getDetails() As String
-        Return dataNameLookupWorkspace.PathName
+        Return m_wkspDataNameLookup.PathName
     End Function
 
 End Class

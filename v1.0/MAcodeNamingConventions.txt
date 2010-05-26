@@ -15,6 +15,7 @@ lst<T> = List(Of T)
 stb = StringBuilder
 wksp = ESRI.ArcGIS.Geodatabase.IWorkspace
 fInfo = FileInfo
+dInfo = DirectoryInfo
 
 
 

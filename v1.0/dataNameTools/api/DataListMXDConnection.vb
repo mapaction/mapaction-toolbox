@@ -33,7 +33,7 @@ Public Class DataListMXDConnection
     ''' of the constructor assumes that we are operating in the a non-ArcMap environment
     ''' (possibly ArcCatalog or entirely standalone).
     ''' </summary>
-    ''' <param name="mxdFileInfo">A FileInfo object pointing to the MXD file.</param>
+    ''' <param name="fInfoMXD">A FileInfo object pointing to the MXD file.</param>
     ''' <remarks>
     ''' Constructs a new MXD list based on the the MXD file in the argument. This version
     ''' of the constructor assumes that we are operating in the a non-ArcMap environment
@@ -261,6 +261,27 @@ Public Class DataListMXDConnection
     ''' </remarks>
     Public Overrides Function getpath() As System.IO.FileInfo
         Return m_fInfoFullPath
+    End Function
+
+
+    ''' <summary>
+    ''' Returns FALSE to indicate that an MXD does not have a heirachical structure.
+    ''' </summary>
+    ''' <returns>
+    ''' FALSE to indicate that an MXD does not have a heirachical structure.
+    ''' </returns>
+    ''' <remarks>
+    ''' Returns FALSE to indicate that an MXD does not have a heirachical structure.
+    ''' 
+    ''' Implenmentation note: strictly an MXD is a heirachical list of layer, with the
+    ''' top level of the heirachy declared as DataFrames and lower levels declared as
+    ''' potenially nested Group Layers. However MXDs are typically such shallow heirachies
+    ''' that it is jugded that enforcing a heirachical search of an MXD may confuse more 
+    ''' users than it helps. Hence it has been decided that a DataListMXDConnection will
+    ''' behave as a non-heirachical data list flattening out what heirachy does exist.
+    ''' </remarks>
+    Public Overrides Function isheirachical() As Boolean
+        Return False
     End Function
 
     'todo HIGH Check if this is the best way to check the file paths.
