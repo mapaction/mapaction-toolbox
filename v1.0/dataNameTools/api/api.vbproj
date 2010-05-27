@@ -70,6 +70,7 @@
     <Compile Include="dnConstants.vb" />
     <Compile Include="ErroreousDataNameException.vb" />
     <Compile Include="DataListConnectionFactory.vb" />
+    <Compile Include="FileInfoComparer.vb" />
     <Compile Include="IDataListConnection.vb" />
     <Compile Include="IDataName.vb" />
     <Compile Include="IDataNameClauseLookup.vb" />
