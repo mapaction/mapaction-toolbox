@@ -211,7 +211,7 @@ Friend Module MADirectorySearcher
     ''' <param name="dirArg"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Private Function getGDBsInDir(ByRef dirArg As DirectoryInfo) As List(Of FileInfo)
+    Friend Function getGDBsInDir(ByRef dirArg As DirectoryInfo) As List(Of FileInfo)
         Dim containedFiles() As FileInfo
         Dim containedDirs() As DirectoryInfo
         Dim returnList As New List(Of FileInfo)

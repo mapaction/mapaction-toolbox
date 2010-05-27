@@ -147,7 +147,7 @@ Public Class DataNameClauseLookupFactory
             'finally if no joy then throw exception
             If dnclResult Is Nothing Then
                 'Throw New LookupTableException("Unable to find valid DataName Clause Lookup Tables in directory: " & dirInfo.FullName)
-                Throw New LookupTableException(dnLookupTableError.default_tbls_not_found, dInfo.FullName)
+                Throw New LookupTableException(dnLookupTableError.DefaultTablesNotFound, dInfo.FullName)
             End If
 
         End If

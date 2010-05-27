@@ -21,7 +21,7 @@ eds = IEnumDataset
 dsn =  ESRI.ArcGIS.Geodatabase.IDatasetName
 dncFact = DataNameClauseLookupFactory
 dncl = IDataNameClauseLookup
-
+dlc = IDataListConnection
 
 
     'todo SORT THIS OUT NAD MOVE PART OF IT CONSTANTS FILES

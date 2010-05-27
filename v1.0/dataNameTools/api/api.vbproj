@@ -66,6 +66,7 @@
     <Compile Include="DataListFileSystemDirectory.vb" />
     <Compile Include="DataListGeoDBConnection.vb" />
     <Compile Include="DataListMXDConnection.vb" />
+    <Compile Include="DataNameClauseLookupFactory.vb" />
     <Compile Include="dnConstants.vb" />
     <Compile Include="ErroreousDataNameException.vb" />
     <Compile Include="DataListConnectionFactory.vb" />
