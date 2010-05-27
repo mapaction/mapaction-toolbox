@@ -33,7 +33,7 @@ Public Class ErroreousDataNameException
         Return m_lngNameStatus
     End Function
 
-    'todo Look at where the getDataNamingStatusStrings code should be and if it need
+    'todo HIGH: Look at where the getDataNamingStatusStrings code should be and if it need
     'wrapping up before tidying this up and adding to the summary. 
     ''' <summary>
     ''' 
@@ -44,7 +44,7 @@ Public Class ErroreousDataNameException
     Private Shared Function getDescriptionFromStatus(ByVal lngBitsum As Long) As String
         Dim strReturnVal As String = String.Empty
 
-        'todo HIGH FIX ME
+        'todo HIGH: FIX ME
         'For Each strStatus In AbstractDataNameClauseLookup.getDataNamingStatusStrings(lngBitsum)
         '    strReturnVal = strReturnVal & strStatus & vbNewLine
         'Next

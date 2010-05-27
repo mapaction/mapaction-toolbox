@@ -2,9 +2,9 @@
 Imports ESRI.ArcGIS.DataSourcesGDB
 Imports System.IO
 
-'todo should getESRIWorkspaceFromFile be moved to this class?
-'todo should getNamesStrFromESRIDataSetName be moved to this class?
-'todo should getESRIDataSetNamesFromWorkspace be moved to this class?
+'todo HIGH: should getESRIWorkspaceFromFile be moved to this class?
+'todo HIGH: should getNamesStrFromESRIDataSetName be moved to this class?
+'todo HIGH: should getESRIDataSetNamesFromWorkspace be moved to this class?
 ''' <summary>
 ''' Provides a specfic implenmentation of the IDataListConnection, based on reading 
 ''' the list from an ESRI Geodatabase.
@@ -22,7 +22,7 @@ Public Class DataListGeoDBConnection
     Private m_wkspDNLT As ESRI.ArcGIS.Geodatabase.IWorkspace = Nothing
     Private m_fInfoPath As FileInfo
 
-    'todo LOW: implenment this.
+    'todo LOW: implenment constructor for DataListGeoDBConnection based on connection parameters for SDE.
     '''' <summary>
     '''' Constructs a new list based on a GDB described in the argument.
     '''' </summary>

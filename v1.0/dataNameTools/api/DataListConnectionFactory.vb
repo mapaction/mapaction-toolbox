@@ -68,7 +68,7 @@ Public Class DataListConnectionFactory
 
         Select Case enuListType
             Case dnListType.GDB
-                dlcResult = New DataListDBConnection(strAryArgs)
+                dlcResult = New DataListGeoDBConnection(strAryArgs(0))
             Case dnListType.DIR
                 dlcResult = New DataListFileSystemDirectory(New DirectoryInfo(strAryArgs(0)))
                 'Case DATALIST_TYPE_MIXED_FILES
@@ -106,7 +106,7 @@ Public Class DataListConnectionFactory
     ''' If none of the conditions above are meet, then the method assumes that the strAryArgs
     ''' is a list of parameters for connection to a SDE GDB.
     ''' </remarks>
-    Public Function createDataListConnection(ByRef strAryArgs() As String) As IGeoDataListConnection
+    Public Function createDataListConnection(ByRef strAryArgs() As String) As IDataListConnection
 
         Dim dlcResult As IDataListConnection
         Dim fInfoArgs As FileInfo
@@ -164,9 +164,9 @@ Public Class DataListConnectionFactory
     '''  strPath is a directory with extention = ".gdb", a DataListDBConnection is returned.
     ''' If strPath is a directory with no extention, a DataListFileSystemDirectory is returned.
     ''' </remarks>
-    Public Function createGeoDataListConnection(ByRef strPath As String) As IGeoDataListConnection
+    Public Function createDataListConnection(ByRef strPath As String) As IDataListConnection
         Dim srtAryArgs() As String = {strPath}
-        Return createGeoDataListConnection(srtAryArgs)
+        Return createDataListConnection(srtAryArgs)
     End Function
 
 
@@ -182,7 +182,7 @@ Public Class DataListConnectionFactory
     ''' Creates a new IDataListConnection (specifically a DataListMXDConnection) 
     ''' based on the reference to the IMxDocument object from within ArcMap.
     ''' </remarks>
-    Public Function createGeoDataListConnection(ByRef mxMap As IMxDocument) As IGeoDataListConnection
+    Public Function createGeoDataListConnection(ByRef mxMap As IMxDocument) As IDataListConnection
         Return New DataListMXDConnection(mxMap)
     End Function
 

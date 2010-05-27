@@ -3,7 +3,7 @@ Imports ESRI.ArcGIS.Geodatabase
 Imports ESRI.ArcGIS.DataSourcesGDB
 Imports ESRI.ArcGIS.DataSourcesFile
 
-'todo HIGH check the required access (public, friend, private) requirements for each method in this module.
+'todo HIGH: check the required access (public, friend, private) requirements for each method in this module.
 ''' <summary>
 ''' A private convenience module to help search directories for the DataName
 ''' Clause Lookup table in whatever form they may take.
@@ -232,7 +232,7 @@ Friend Module MADirectorySearcher
             'Search for File GDBs amogst imediate subdirectories
             'Seach for other GDBs or connections files based on known file extension types
 
-            'todo Investigate soft coding the list of possible GDB file extensions
+            'todo LOW: Investigate soft coding the list of possible GDB file extensions
             For Each curFile In containedFiles
                 'System.Console.WriteLine("getGDBsInDir, found GDB: " & curFile.Extension & "  " & curFile.Name)
                 Select Case curFile.Extension

@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 
-' todo double check the name of the XXXX factory class
+' todo HIGH: double check the name of the XXXX factory class
 ''' <summary>
 ''' Classes implementing this interface provide a means to interact with a collection of flat database
 ''' tables, which collectively, list valid values for each individual clause in a data name.
