@@ -58,7 +58,7 @@ Public Class DataNameESRIFeatureClass
     ''' The runtime conbination of being both *allowed* and *possible* are combined by 
     ''' the isRenameable() method. End users should call this method.
     ''' </remarks>
-    Protected Friend Overrides Function renamePossible() As Boolean
+    Protected Friend Overrides Function isRenamePossible() As Boolean
         Return m_DataSet.CanRename()
     End Function
 
@@ -100,7 +100,7 @@ Public Class DataNameESRIFeatureClass
         strPath = m_DataSet.Workspace.PathName
 
         If strPath IsNot Nothing AndAlso strPath.EndsWith(System.IO.Path.DirectorySeparatorChar) Then
-            strPath.Remove(strPath.LastIndexOf(System.IO.Path.DirectorySeparatorChar)
+            strPath.Remove(strPath.LastIndexOf(System.IO.Path.DirectorySeparatorChar))
         End If
 
         Return strPath

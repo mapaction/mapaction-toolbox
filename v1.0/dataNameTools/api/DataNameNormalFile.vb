@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 
-
+'todo HIGH: check the name of the XXXX factory class
 ''' <summary>
 ''' Provides a specfic implenmentation of the IDataName, based on files which
 ''' are "normal" operating system files and are not a component of a logical
