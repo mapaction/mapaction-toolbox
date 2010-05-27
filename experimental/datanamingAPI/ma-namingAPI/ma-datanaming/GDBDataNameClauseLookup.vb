@@ -48,55 +48,57 @@ Public Class GDBDataNameClauseLookup
         initialiseAllTables()
     End Sub
 
-    Protected Overrides Function openTable(ByVal tableName As String) As DataTable
-        Dim pEnumDSName As IEnumDataset
-        Dim myIDataSet As IDataset
-        Dim myObject As Object
-        Dim myESRITable As ITable
-        Dim myQueryFilter As IQueryFilter2
-        Dim myRecordSet As IRecordSet
-        Dim myDotNETTable As DataTable
 
-        pEnumDSName = m_wkspDataNameLookup.Datasets(esriDatasetType.esriDTTable)
+    'todo HIGH: rewrite this using the ESRI OLEDB Datasource driver.
+    Protected Overrides Function openTable(ByVal strTableName As String) As DataTable
+        Dim enumDS As IEnumDataset
+        Dim ds As IDataset
+        Dim obj As Object
+        Dim esriTbl As ITable
+        Dim qryFtr As IQueryFilter2
+        Dim rs As IRecordSet
+        Dim dtb As DataTable
 
-        myObject = Nothing
-        myESRITable = Nothing
+        enumDS = m_wkspDataNameLookup.Datasets(esriDatasetType.esriDTTable)
 
-        myIDataSet = pEnumDSName.Next
+        obj = Nothing
+        esriTbl = Nothing
 
-        While Not myIDataSet Is Nothing
+        ds = enumDS.Next
+
+        While Not ds Is Nothing
             'System.Console.WriteLine("Name:" & myIDataSet.Name & "    searchName: " & tableName)
-            If myIDataSet.Name = tableName Then
+            If ds.Name = strTableName Then
                 'System.Console.WriteLine("Found searchName: " & tableName)
-                myObject = myIDataSet
+                obj = ds
             End If
-            myIDataSet = pEnumDSName.Next()
+            ds = enumDS.Next()
         End While
 
-        If myObject Is Nothing Then
+        If obj Is Nothing Then
             'The table was not found
-            Throw New ArgumentException("tablename: " & tableName & " not found in DB: " & getDetails())
+            Throw New ArgumentException("tablename: " & strTableName & " not found in DB: " & getDetails())
         Else
             'System.Console.WriteLine("Found myObject: ")
-            If TypeOf myObject Is ITable Then
-                myESRITable = DirectCast(myObject, ITable)
+            If TypeOf obj Is ITable Then
+                esriTbl = DirectCast(obj, ITable)
                 'System.Console.WriteLine("Found myESRITable: ")
             End If
 
-            myRecordSet = New RecordSet
+            rs = New RecordSet
             Dim rsi As IRecordSetInit
             rsi = New RecordSet
 
-            myQueryFilter = New QueryFilter()
-            myQueryFilter.WhereClause = ""
+            qryFtr = New QueryFilter()
+            qryFtr.WhereClause = String.Empty
 
             'todo LOW: check whether or not passing a Null to IRecordSetInit.SetSourceTable
             'rsi.SetSourceTable(myESRITable, DBNull.Value)
-            rsi.SetSourceTable(myESRITable, myQueryFilter)
+            rsi.SetSourceTable(esriTbl, qryFtr)
 
-            myRecordSet = DirectCast(rsi, IRecordSet)
+            rs = DirectCast(rsi, IRecordSet)
             Dim myDTC As DataTableCollection
-            myDTC = ESRI.ArcGIS.Utility.Converter.ToDataSet(myRecordSet).Tables()
+            myDTC = ESRI.ArcGIS.Utility.Converter.ToDataSet(rs).Tables()
             'For i As Short = 0 To (myDotNETDataTableCol.Count - 1) Step 1
             '    System.Console.WriteLine("table Name " & myDotNETDataTableCol.Item(i).ToString())
 
@@ -104,20 +106,28 @@ Public Class GDBDataNameClauseLookup
 
             'Next
             If myDTC.Count > 0 Then
-                myDotNETTable = myDTC.Item(0)
+                dtb = myDTC.Item(0)
             Else
                 'The table was not found
                 Throw New ArgumentException("tablename: " & tableName & " not found in DB: " & getDetails())
             End If
         End If
 
-        Return myDotNETTable
+        Return dtb
     End Function
 
     Public Overrides Function isWriteable() As Boolean
         Return False
     End Function
 
+
+    ''' <summary>
+    ''' Returns the Path name used to connect to the GDB.
+    ''' </summary>
+    ''' <returns>The Path name used to connect to the GDB.</returns>
+    ''' <remarks>
+    ''' Returns the Path name used to connect to the GDB.
+    ''' </remarks>
     Public Overrides Function getDetails() As String
         Return m_wkspDataNameLookup.PathName
     End Function

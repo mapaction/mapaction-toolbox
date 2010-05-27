@@ -94,7 +94,7 @@
     <Compile Include="MADirectorySearcher.vb" />
     <Compile Include="FileInfoComparer.vb" />
     <Compile Include="GeoDataListConnectionFactory.vb" />
-    <Compile Include="GeoDBDataNameClauseLookup.vb" />
+    <Compile Include="GDBDataNameClauseLookup.vb" />
     <Compile Include="IDataName.vb" />
     <Compile Include="IDataNameClauseLookup.vb" />
     <Compile Include="IGeoDataListConnection.vb" />
