@@ -64,7 +64,7 @@ Public Class DataNameClauseLookupFactory
             Case dnClauseLookupType.MDB
                 dnclResult = New MDBDataNameClauseLookup(strAryArgs(0))
             Case dnClauseLookupType.ESRI_GDB
-                dnclResult = New GDBDataNameClauseLookup(strAryArgs)
+                dnclResult = New GDBDataNameClauseLookup(strAryArgs(0))
             Case Else
                 Throw New ArgumentException("DataNameClauseLookup of type " & enuDNCLType & " not recgonised.")
         End Select
