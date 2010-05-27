@@ -204,7 +204,7 @@ Public MustInherit Class AbstractDataName
     ''' will raise a RenamingDataException.
     ''' </remarks>
     Public Function isRenameable() As Boolean Implements IDataName.isRenameable
-        Return (m_blnAllowReNaming And renamePossible())
+        Return (m_blnAllowReNaming And isRenamePossible())
     End Function
 
 
@@ -222,7 +222,7 @@ Public MustInherit Class AbstractDataName
     ''' The runtime conbination of being both *allowed* and *possible* are combined by 
     ''' the isRenameable() method. End users should call this method.
     ''' </remarks>
-    Protected Friend MustOverride Function renamePossible() As Boolean
+    Protected Friend MustOverride Function isRenamePossible() As Boolean
 
 
     ''' <summary>

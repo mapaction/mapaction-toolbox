@@ -1,5 +1,4 @@
-﻿Imports ESRI.ArcGIS.Geodatabase
-Imports System.IO
+﻿Imports System.IO
 
 
 ''' <summary>
