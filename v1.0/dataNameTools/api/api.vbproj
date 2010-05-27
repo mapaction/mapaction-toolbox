@@ -68,6 +68,7 @@
     <Compile Include="DataListMXDConnection.vb" />
     <Compile Include="dnConstants.vb" />
     <Compile Include="ErroreousDataNameException.vb" />
+    <Compile Include="DataListConnectionFactory.vb" />
     <Compile Include="IDataListConnection.vb" />
     <Compile Include="IDataName.vb" />
     <Compile Include="IDataNameClauseLookup.vb" />

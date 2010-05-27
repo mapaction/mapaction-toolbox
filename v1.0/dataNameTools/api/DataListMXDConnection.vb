@@ -185,7 +185,7 @@ Public Class DataListMXDConnection
     ''' A convenience function to test whether or not the named layer is present in this MXD.
     ''' </remarks>
     Public Overrides Function doesLayerExist(ByVal strLayerName As String) As Boolean
-        'todo HIGH implenment doesLayerExist
+        'todo HIGH: implenment doesLayerExist
     End Function
 
 
@@ -260,38 +260,17 @@ Public Class DataListMXDConnection
         Return False
     End Function
 
-    'todo HIGH Check if this is the best way to check the file paths.
-	''' <summary>
-    ''' Returns a string describing the type of DataListConnection.
+
+    ''' <summary>
+    ''' Returns the file path to the MXD.
     ''' </summary>
-    ''' <returns>A string describing the type of DataListConnection.</returns>
+    ''' <returns>A String representing the full file path
+    ''' to the MXD.</returns>
     ''' <remarks>
-    ''' Returns a string describing the type of DataListConnection.
-    ''' 
-    ''' This may take on of a number of forms:
-    ''' * An operating system directory path, for a directory containing shapefiles
-    ''' * An operating system file path for a Personal GDB, MXD or connection file.
-    ''' * A RDMS connection string, 
-    ''' * A URL
-    ''' * etc.
+    ''' Returns the file path to the MXD.
     ''' </remarks>
     Public Overrides Function getDetails() As String
-        Dim appParent As IApplication
-        Dim strPath As String
-
-        If m_blnMxDocument Then
-            Dim t As Type = Type.GetTypeFromProgID("esriFramework.AppRef")
-            Dim obj As System.Object = Activator.CreateInstance(t)
-            Dim app As IApplication = CType(obj, IApplication)
-            appParent = app
-
-            ' get current MXD name
-            strPath = appParent.Templates.Item(appParent.Templates.Count - 1)
-        Else
-            strPath = m_MapDocument.DocumentFilename()
-        End If
-
-        Return strPath
+        Return m_fInfoFullPath.FullName
     End Function
 
 
@@ -323,8 +302,7 @@ Public Class DataListMXDConnection
     End Function
 
 
-	'todo HIGH SHOULD THIS REALY BE BOTH Overloads and Overrides ?!?!?!?!
-    ''' <summary>
+	''' <summary>
     ''' Returns a List of IDataName objects representing the Data names of all of the unique layers 
     ''' defined by this MXD. Layers which occur multiple time in the MXD (either within the 
     ''' same map/data frame or within different maps/data frames) are filtered out and only 
@@ -340,7 +318,7 @@ Public Class DataListMXDConnection
     ''' same map/data frame or within different maps/data frames) are filtered out and only 
     ''' occur once in the returned list.
     ''' </remarks>
-    Public Overloads Overrides Function getLayerDataNamesList(ByRef dncl As IDataNameClauseLookup) As List(Of IDataName)
+    Public Overrides Function getLayerDataNamesList(ByRef dncl As IDataNameClauseLookup) As List(Of IDataName)
         Dim lstNames As New List(Of IDataName)
 
         For Each ds In getUniqueESRIDataSets()

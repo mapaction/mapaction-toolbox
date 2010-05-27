@@ -20,7 +20,7 @@ Public Class RenamingDataException
     End Sub
 
     Protected Friend Sub New(ByRef dnOffendingName As IDataName)
-        'todo add a constant with a meaningful default string here
+        'todo LOW: add a constant with a meaningful default string here
         'eg. "Unable to rename Feature Class: " & myNameStr
         'MyBase.New(strMessage)
         m_dnOffendingName = dnOffendingName

@@ -2,7 +2,7 @@
 Imports System.Data.OleDb
 Imports System.IO
 
-'todo check the name of the XXXX factory class.
+'todo HIGH: check the name of the XXXX factory class.
 ''' <summary>
 ''' Provides a specfic implenmentation of the IDataNameClauseLookup, based on storing the
 ''' Data Name Clause Lookup Tables in an Access Database file.
