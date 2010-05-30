@@ -5,20 +5,25 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "api", "api\api.vbproj", "{A
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "cli", "cli\cli.vbproj", "{7E7BE5CC-74CE-41E4-A8EB-1E753F99072B}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "setup", "setup\setup.vdproj", "{58B69D4E-A501-48F2-8C0A-D015018C7979}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{ABFF163D-FE7C-4C02-A235-427795B3B1D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ABFF163D-FE7C-4C02-A235-427795B3B1D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABFF163D-FE7C-4C02-A235-427795B3B1D8}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{ABFF163D-FE7C-4C02-A235-427795B3B1D8}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{ABFF163D-FE7C-4C02-A235-427795B3B1D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABFF163D-FE7C-4C02-A235-427795B3B1D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7E7BE5CC-74CE-41E4-A8EB-1E753F99072B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E7BE5CC-74CE-41E4-A8EB-1E753F99072B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E7BE5CC-74CE-41E4-A8EB-1E753F99072B}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{7E7BE5CC-74CE-41E4-A8EB-1E753F99072B}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{7E7BE5CC-74CE-41E4-A8EB-1E753F99072B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E7BE5CC-74CE-41E4-A8EB-1E753F99072B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58B69D4E-A501-48F2-8C0A-D015018C7979}.Debug|Any CPU.ActiveCfg = Release
+		{58B69D4E-A501-48F2-8C0A-D015018C7979}.Debug|Any CPU.Build.0 = Release
+		{58B69D4E-A501-48F2-8C0A-D015018C7979}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
