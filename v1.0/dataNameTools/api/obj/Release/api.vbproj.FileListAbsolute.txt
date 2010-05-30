@@ -1,0 +1,10 @@
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\api\bin\Release\api.dll.config
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\api\bin\Release\api.dll
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\api\bin\Release\api.pdb
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\api\bin\Release\api.xml
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\api\obj\Release\ResolveAssemblyReference.cache
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\api\obj\Release\mapaction.datanames.api.Resources.resources
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\api\obj\Release\api.vbproj.GenerateResource.Cache
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\api\obj\Release\api.dll
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\api\obj\Release\api.xml
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\api\obj\Release\api.pdb
