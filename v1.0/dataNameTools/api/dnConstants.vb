@@ -157,6 +157,22 @@ Public Module DataNamingConstants
                               CStr(TABLENAME_SOURCE), _
                               CStr(TABLENAME_PERMISSION)}
 
+    ''These where keys for pulling things out of the app.config file, but that doesn't seem to work for a library
+    'Public Const APP_CONF_SCHEMA_FILENAME As String = "SCHEMA_FILENAME"
+    'Public Const APP_CONF_DNCL_DATASET_NAME As String = "DNCL_DATASET_NAME"
+
+    'Public Const APP_CONF_MDB_OLE_CONNECT_STRING As String = "MDB_OLE_CONNECT_STRING"
+    'Public Const APP_CONF_GDB_PERSONAL_OLE_CONNECT_STRING As String = "GDB_PERSONAL_OLE_CONNECT_STRING"
+    'Public Const APP_CONF_GDB_FILE_OLE_CONNECT_STRING As String = "GDB_FILE_OLE_CONNECT_STRING"
+    'Public Const APP_CONF_GDB_SDE_OLE_CONNECT_STRING As String = "GDB_SDE_OLE_CONNECT_STRING"
+
+    Public Const SCHEMA_FILENAME As String = "datanameclauselookup_schema_v1.0.xml"
+    Public Const DNCL_DATASET_NAME As String = "DataNameClauseLookup"
+    Public Const MDB_OLE_CONNECT_STRING As String = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}"
+    Public Const GDB_PERSONAL_OLE_CONNECT_STRING As String = "Provider=ESRI.GeoDB.OLEDB.1;{0};Extended Properties=WorkspaceType= esriCore.AccessWorkspaceFactory.1;Geometry={1}"
+    Public Const GDB_FILE_OLE_CONNECT_STRING As String = "Provider=ESRI.GeoDB.OLEDB.1;{0};Extended Properties=WorkspaceType= esriDataSourcesGDB.FileGDBWorkspaceFactory.1;Geometry={1}"
+    Public Const GDB_SDE_OLE_CONNECT_STRING As String = "Provider=ESRI.GeoDB.OLEDB.1;Extended Properties=WorkspaceType= esriDataSourcesGDB.SDEWorkspaceFactory.1;ConnectionFile={0}"
+
     'A collection of "user readable" messages describing the dataname status
     Private m_htbDNStatusStrMessages As Dictionary(Of dnNameStatus, String)
 
@@ -273,6 +289,7 @@ Public Module DataNamingConstants
     Sub New()
         initialiseDataColumnCollections()
         initialiseDNStatusStrMessages()
+        initialiseDNNameStatusValues()
     End Sub
 
     Private Sub initialiseDNNameStatusValues()
@@ -300,18 +317,19 @@ Public Module DataNamingConstants
 
     Private Sub initialiseDNStatusStrMessages()
         m_htbDNStatusStrMessages = New Dictionary(Of dnNameStatus, String)
-        m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_GEOEXTENT, "INVALID NAME: GeoExtent Clause not in list of recognised clauses")
-        m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_DATACATEGORY, "INVALID NAME: Data Category Clause not in list of recognised clauses")
-        m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_DATATHEME, "INVALID NAME: Data Theme not regonised, or not valid for Data Category")
-        m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_DATATYPE, "INVALID NAME: Data Type Clause not in list of recognised clauses")
-        m_htbDNStatusStrMessages.Add(dnNameStatus.INCORRECT_DATATYPE, "ERROR: Data Type Clause does not match underlying data type")
-        m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_SCALE, "INVALID NAME: Data Scale Clause Clause not in list of recognised clauses")
-        m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_SOURCE, "INVALID NAME: Source Clause not in list of recognised clauses")
-        m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_PERMISSIONS, "INVALID NAME: Permissions Clause not in list of recognised clauses")
+
         m_htbDNStatusStrMessages.Add(dnNameStatus.SYNTAX_ERROR_OTHER, "SYNTAX ERROR: General Error phasing data name")
         m_htbDNStatusStrMessages.Add(dnNameStatus.SYNTAX_ERROR_CONTAINS_HYPHENS, "SYNTAX ERROR: Data Name contains hyphens")
         m_htbDNStatusStrMessages.Add(dnNameStatus.SYNTAX_ERROR_TOO_FEW_CLAUSES, "SYNTAX ERROR: Too few clauses in Data Name")
         m_htbDNStatusStrMessages.Add(dnNameStatus.SYNTAX_ERROR_DOUBLE_UNDERSCORE, "SYNTAX ERROR: Two consequtive undersource present")
+        m_htbDNStatusStrMessages.Add(dnNameStatus.INCORRECT_DATATYPE, "ERROR: Data Type Clause does not match underlying data type")
+        m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_GEOEXTENT, "INVALID NAME: GeoExtent Clause not in list of recognised clauses")
+        m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_DATACATEGORY, "INVALID NAME: Data Category Clause not in list of recognised clauses")
+        m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_DATATHEME, "INVALID NAME: Data Theme not regonised, or not valid for Data Category")
+        m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_DATATYPE, "INVALID NAME: Data Type Clause not in list of recognised clauses")
+        m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_SCALE, "INVALID NAME: Data Scale Clause Clause not in list of recognised clauses")
+        m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_SOURCE, "INVALID NAME: Source Clause not in list of recognised clauses")
+        m_htbDNStatusStrMessages.Add(dnNameStatus.INVALID_PERMISSIONS, "INVALID NAME: Permissions Clause not in list of recognised clauses")
         m_htbDNStatusStrMessages.Add(dnNameStatus.WARN_MISSING_SCALE_CLAUSE, "WARNING: Optional Scale Clause not present")
         m_htbDNStatusStrMessages.Add(dnNameStatus.WARN_MISSING_PERMISSIONS_CLAUSE, "WARNING: Optional Permissions Clause not present")
         m_htbDNStatusStrMessages.Add(dnNameStatus.WARN_TWO_CHAR_FREE_TEXT, "WARNING: Two charater long free text, could be misformed permissions clause")

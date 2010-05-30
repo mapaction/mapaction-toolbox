@@ -72,6 +72,62 @@ Public Class DataNameClauseLookupFactory
         Return dnclResult
     End Function
 
+
+    ''' <summary>
+    ''' Create a new IDataNameClauseLookup, based on the location specified.
+    ''' </summary>
+    ''' <param name="strPath">A string of the path to the specific physical location 
+    ''' of the Data Name Clause Lookup Tables</param>
+    ''' <returns>A new IDataNameClauseLookup, based on the location specified.</returns>
+    ''' <remarks>
+    ''' Create a new IDataNameClauseLookup, based on the type and location specified.
+    ''' 
+    ''' If the string is to an Access DB, then the method will first attempt to open
+    ''' it as a GDB and if that fails it will attempt to open it as a regular Access DB.
+    ''' All other paths are interperated as pointing to a GDB (either filebased or a 
+    ''' connection file).
+    ''' </remarks>
+    Public Function createDataNameClauseLookup(ByRef strPath As String) As IDataNameClauseLookup
+        Dim dnclResult As IDataNameClauseLookup
+        Dim fInfo As FileInfo
+        Dim dInfo As DirectoryInfo
+        Dim strAryArgs(1) As String
+
+        fInfo = New FileInfo(strPath)
+        strAryArgs(0) = strPath
+
+
+        If (fInfo.Attributes And FileAttributes.Directory) = FileAttributes.Directory Then
+            'args(0) is a directory
+            'therefore it is either a filebasedGDB or a normal directory
+            If fInfo.FullName.EndsWith(".gdb") Then
+                dnclResult = createDataNameClauseLookup(dnClauseLookupType.ESRI_GDB, strAryArgs)
+            Else
+                dInfo = New DirectoryInfo(fInfo.FullName)
+                dnclResult = createDataNameClauseLookup(dInfo)
+            End If
+
+        ElseIf fInfo.Exists() Then
+            Select Case fInfo.Extension
+                Case ".sde", ".ags", ".gds"
+                    dnclResult = createDataNameClauseLookup(dnClauseLookupType.ESRI_GDB, strAryArgs)
+                Case ".mdb"
+                    Try
+                        dnclResult = createDataNameClauseLookup(dnClauseLookupType.ESRI_GDB, strAryArgs)
+                    Catch ex As Exception
+                        dnclResult = createDataNameClauseLookup(dnClauseLookupType.MDB, strAryArgs)
+                    End Try
+                Case Else
+                    Throw New ArgumentException(String.Format("Data Name Clause Lookup Tables could not be found at:", strPath))
+            End Select
+        Else
+            Throw New ArgumentException(String.Format("Data Name Clause Lookup Tables could not be found at:", strPath))
+        End If
+
+        Return dnclResult
+    End Function
+
+
     ''' <summary>
     ''' Searches for the physical location of Data Name Clause Lookup Tables within the 
     ''' Directory specified.

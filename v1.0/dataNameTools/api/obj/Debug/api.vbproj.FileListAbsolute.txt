@@ -16,3 +16,4 @@ D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTool
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\api\obj\Debug\api.dll
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\api\obj\Debug\api.xml
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\api\obj\Debug\api.pdb
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\api\bin\Debug\api.dll.config

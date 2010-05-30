@@ -8,6 +8,4 @@ D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\data
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\obj\Debug\CommandlineTesting.xml
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\obj\Debug\CommandlineTesting.pdb
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\obj\Debug\CommandlineTesting.vbproj.ResolveComReference.cache
-D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\bin\Debug\ma-datanaming.exe
-D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\bin\Debug\ma-datanaming.pdb
-D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\bin\Debug\ma-datanaming.xml
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\bin\Debug\CommandlineTesting.exe.config

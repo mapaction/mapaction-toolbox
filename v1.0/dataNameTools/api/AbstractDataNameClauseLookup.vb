@@ -1,5 +1,8 @@
 ﻿Imports System.Data
+Imports System.Data.Common
 Imports System.IO
+Imports System.Configuration
+Imports System.Xml
 
 ''' <summary>
 ''' Provides a framework for the implenmentation of the IDataNameClauseLookup interface.
@@ -26,71 +29,165 @@ Public MustInherit Class AbstractDataNameClauseLookup
         'initialiseAllTables()
     End Sub
 
-    ''' <summary>
-    ''' Opens each of the dataname clause lookup tables. Must be called from the constructor
-    ''' </summary>
-    ''' <remarks>
-    ''' Opens each of the dataname clause lookup tables. Must be called from the constructor
-    ''' 
-    ''' Uses the subclasses implenmentation of the openTable() method.
-    ''' </remarks>
+    '''' <summary>
+    '''' Opens each of the dataname clause lookup tables. Must be called from the constructor
+    '''' </summary>
+    '''' <remarks>
+    '''' Opens each of the dataname clause lookup tables. Must be called from the constructor
+    '''' 
+    '''' Uses the subclasses implenmentation of the openTable() method.
+    '''' </remarks>
+    'Protected Sub initialiseAllTables()
+    '    Dim dtbCurrent As DataTable
+    '    Dim arylColDetails As ArrayList
+
+    '    For Each strTableName In g_strAryClauseTableNames
+    '        Try
+    '            dtbCurrent = openTable(strTableName)
+    '            arylColDetails = New ArrayList
+
+    '            For Each col In dtbCurrent.Columns
+    '                arylColDetails.Add(col)
+    '            Next
+
+    '            If doDataColumnsMatch(CType(g_htbAllDataNameColumns.Item(strTableName), ArrayList), arylColDetails) Then
+    '                Select Case strTableName
+    '                    Case TABLENAME_GEOEXTENT
+    '                        m_dtbGeoExtentClauses = dtbCurrent
+
+    '                    Case TABLENAME_DATA_CAT
+    '                        m_dtbDataCategoriesClauses = dtbCurrent
+
+    '                    Case TABLENAME_DATA_THEME
+    '                        m_dtbDataThemeClauses = dtbCurrent
+
+    '                    Case TABLENAME_DATA_TYPE
+    '                        m_dtbDataTypeClauses = dtbCurrent
+
+    '                    Case TABLENAME_SCALE
+    '                        m_dtbScaleClauses = dtbCurrent
+
+    '                    Case TABLENAME_SOURCE
+    '                        m_dtbSourceClauses = dtbCurrent
+
+    '                    Case TABLENAME_PERMISSION
+    '                        m_dtbPermissionClauses = dtbCurrent
+
+    '                End Select
+    '            End If
+    '        Catch ex As Exception
+    '            Throw New LookupTableException(dnLookupTableError.general, strTableName, ex)
+    '        End Try
+
+    '    Next
+    'End Sub
+
+    Protected Friend MustOverride Function getDBDataAdapter() As DbDataAdapter
+
+
     Protected Sub initialiseAllTables()
-        Dim dtbCurrent As DataTable
-        Dim arylColDetails As ArrayList
+        Dim ds As DataSet
+        Dim da As DbDataAdapter
+        Dim strQuery As String
+        Dim strDSName As String
+        Dim strSchemaFileName As String
+        Dim strXMLSchema As String
+        Dim txtRdrXMLSchema As TextReader
+        Dim dtm As DataTableMapping
+        Dim dcl As DataColumn
 
-        For Each tableName In g_strAryClauseTableNames
-            Try
-                dtbCurrent = openTable(tableName)
-                arylColDetails = New ArrayList
+        ''
+        'Get various information about the Dataset name and schema
+        'strDSName = System.Configuration.ConfigurationManager.AppSettings.Item(APP_CONF_DNCL_DATASET_NAME)
+        'strSchemaFileName = System.Configuration.ConfigurationManager.AppSettings.Item(APP_CONF_SCHEMA_FILENAME)
+        strDSName = DNCL_DATASET_NAME
+        strSchemaFileName = SCHEMA_FILENAME
 
-                For Each col In dtbCurrent.Columns
-                    arylColDetails.Add(col)
+        'System.Console.WriteLine("strDSName : " & strDSName)
+        'System.Console.WriteLine("strSchemaFileName : " & strSchemaFileName)
+
+        My.Resources.ResourceManager.IgnoreCase = True
+        'strXMLSchema = My.Resources.ResourceManager.GetString(strSchemaFileName)
+        strXMLSchema = My.Resources.datanameclauselookup_schema_v1_0
+
+        txtRdrXMLSchema = New StringReader(strXMLSchema)
+
+        ''
+        'Create the new Dataset object
+        ds = New DataSet(strDSName)
+        ds.ReadXmlSchema(txtRdrXMLSchema)
+
+        'ds.WriteXmlSchema(System.Console.OpenStandardOutput())
+        'System.Console.WriteLine()
+        'System.Console.WriteLine()
+
+        ''
+        'Now get the DataAdapter from the implementing subclass
+        da = getDBDataAdapter()
+
+        'todo HIGH resovle DataAdapter.MissingMappingAction problem
+        ' Since the schema has already been read above, then I would
+        ' expect this to work with the setting:
+        '   da.MissingMappingAction = MissingMappingAction.Error
+        ' but it doesn't for some reason. No idea why...!
+        da.MissingMappingAction = MissingMappingAction.Passthrough
+        da.MissingSchemaAction = MissingSchemaAction.Error
+        da.FillLoadOption = LoadOption.OverwriteChanges
+
+        Try
+            'Now load each of the data name clause lookup tables
+            For Each strTableName In g_strAryClauseTableNames
+                'Nice simple select querry
+                strQuery = "SELECT * FROM " & strTableName
+                da.SelectCommand.CommandText = strQuery
+
+                'Set up the mappings
+                dtm = da.TableMappings.Add(strTableName, strTableName)
+
+                For i As Integer = 0 To ds.Tables.Item(strTableName).Columns.Count - 1
+                    dcl = ds.Tables.Item(strTableName).Columns.Item(i)
+                    dtm.ColumnMappings.Add(dcl.ColumnName, dcl.ColumnName)
                 Next
 
-                If doDataColumnsMatch(CType(g_htbAllDataNameColumns.Item(tableName), ArrayList), arylColDetails) Then
-                    Select Case tableName
-                        Case TABLENAME_GEOEXTENT
-                            m_dtbGeoExtentClauses = dtbCurrent
+                'And fill using the dataadapter
+                da.Fill(ds, strTableName)
+            Next
 
-                        Case TABLENAME_DATA_CAT
-                            m_dtbDataCategoriesClauses = dtbCurrent
+            'Now setup refs to the individual tables. This step is could probably be
+            'removed and just directly ref ds.Tables.Item through the class.
+            m_dtbGeoExtentClauses = ds.Tables.Item(TABLENAME_GEOEXTENT)
+            m_dtbDataCategoriesClauses = ds.Tables.Item(TABLENAME_DATA_CAT)
+            m_dtbDataThemeClauses = ds.Tables.Item(TABLENAME_DATA_THEME)
+            m_dtbDataTypeClauses = ds.Tables.Item(TABLENAME_DATA_TYPE)
+            m_dtbScaleClauses = ds.Tables.Item(TABLENAME_SCALE)
+            m_dtbSourceClauses = ds.Tables.Item(TABLENAME_SOURCE)
+            m_dtbPermissionClauses = ds.Tables.Item(TABLENAME_PERMISSION)
 
-                        Case TABLENAME_DATA_THEME
-                            m_dtbDataThemeClauses = dtbCurrent
 
-                        Case TABLENAME_DATA_TYPE
-                            m_dtbDataTypeClauses = dtbCurrent
+            'ds.WriteXmlSchema("D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\" & _
+            '                  "experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\schema.xml")
 
-                        Case TABLENAME_SCALE
-                            m_dtbScaleClauses = dtbCurrent
+            'ds.WriteXml("D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\" & _
+            '            "experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\output.xml")
 
-                        Case TABLENAME_SOURCE
-                            m_dtbSourceClauses = dtbCurrent
+        Catch sysEx As SystemException
+            Throw New LookupTableException(dnLookupTableError.general, strDSName, sysEx)
+        End Try
 
-                        Case TABLENAME_PERMISSION
-                            m_dtbPermissionClauses = dtbCurrent
-
-                    End Select
-                End If
-            Catch ex As Exception
-                Throw New LookupTableException(dnLookupTableError.general, tableName, ex)
-            End Try
-
-        Next
     End Sub
 
-    ''' <summary>
-    ''' This method provides an implenmention specific means to open an individual flat table
-    ''' from a data source (eg, Access DB, ESRI GDB, XML files etc).
-    ''' </summary>
-    ''' <param name="strTableName">The name of the table to open. This should normally be passed
-    ''' using one of the API constants with the prefix "TABLENAME_"</param>
-    ''' <returns>A DataTable object representing the named table</returns>
-    ''' <remarks>
-    ''' This method provides an implenmention specific means to open an individual flat table
-    ''' from a data source (eg, Access DB, ESRI GDB, XML files etc).
-    ''' </remarks>
-    Protected MustOverride Function openTable(ByVal strTableName As String) As DataTable
+    '''' <summary>
+    '''' This method provides an implenmention specific means to open an individual flat table
+    '''' from a data source (eg, Access DB, ESRI GDB, XML files etc).
+    '''' </summary>
+    '''' <param name="strTableName">The name of the table to open. This should normally be passed
+    '''' using one of the API constants with the prefix "TABLENAME_"</param>
+    '''' <returns>A DataTable object representing the named table</returns>
+    '''' <remarks>
+    '''' This method provides an implenmention specific means to open an individual flat table
+    '''' from a data source (eg, Access DB, ESRI GDB, XML files etc).
+    '''' </remarks>
+    'Protected MustOverride Function openTable(ByVal strTableName As String) As DataTable
 
     ''' <summary>
     ''' Returns a string describing the storage location of the dataname clause tables.
@@ -115,81 +212,81 @@ Public MustInherit Class AbstractDataNameClauseLookup
     ''' If the location of these tables cannot represented as an operating system file (eg if they 
     ''' are located in a RDBMS) then the Nothing object is returned.
     ''' </remarks>
-    Public MustOverride Function getPath() As fileinfo Implements IDataNameClauseLookup.getPath
+    Public MustOverride Function getPath() As FileInfo Implements IDataNameClauseLookup.getPath
 
-    ''' <summary>
-    ''' Compared two ArrayLists of DataColumn objects, to confirm whether or not the specfication
-    ''' of the columns (ie the schema) is identical for both.
-    ''' </summary>
-    ''' <param name="aryl1">An ArrayList of DataColumn objects</param>
-    ''' <param name="aryl2">An ArrayList of DataColumn objects</param>
-    ''' <returns>TRUE = the DataColumn specfications match. If the DataColumn specfications
-    ''' do not match then a LookupTableException is thrown.</returns>
-    ''' <remarks>
-    ''' Compared two ArrayLists of DataColumn objects, to confirm whether or not the specfication
-    ''' of the columns (ie the schema) is identical for both. This is used to verify the schema of
-    ''' any Data Name Clause Lookup Tables that have been opened.
-    ''' 
-    ''' Is this really the best way to check the schema of the DB? probably could be done better using the XML schema definition stuff in ADO.NET
-    ''' Columns *must* be in the same order.
-    ''' </remarks>
-    Private Function doDataColumnsMatch(ByRef aryl1 As ArrayList, ByRef aryl2 As ArrayList) As Boolean
-        Dim blnOverallResult As Boolean
-        Dim blnCurColMatch As Boolean 'The result of the current column comparision
-        Dim enuExcepReason As dnLookupTableError
-        Dim strMismatchColDesc As String 'description of the name and table of a failed column
-        Dim dc1 As DataColumn, dc2 As DataColumn
+    '''' <summary>
+    '''' Compared two ArrayLists of DataColumn objects, to confirm whether or not the specfication
+    '''' of the columns (ie the schema) is identical for both.
+    '''' </summary>
+    '''' <param name="aryl1">An ArrayList of DataColumn objects</param>
+    '''' <param name="aryl2">An ArrayList of DataColumn objects</param>
+    '''' <returns>TRUE = the DataColumn specfications match. If the DataColumn specfications
+    '''' do not match then a LookupTableException is thrown.</returns>
+    '''' <remarks>
+    '''' Compared two ArrayLists of DataColumn objects, to confirm whether or not the specfication
+    '''' of the columns (ie the schema) is identical for both. This is used to verify the schema of
+    '''' any Data Name Clause Lookup Tables that have been opened.
+    '''' 
+    '''' Is this really the best way to check the schema of the DB? probably could be done better using the XML schema definition stuff in ADO.NET
+    '''' Columns *must* be in the same order.
+    '''' </remarks>
+    'Private Function doDataColumnsMatch(ByRef aryl1 As ArrayList, ByRef aryl2 As ArrayList) As Boolean
+    '    Dim blnOverallResult As Boolean
+    '    Dim blnCurColMatch As Boolean 'The result of the current column comparision
+    '    Dim enuExcepReason As dnLookupTableError
+    '    Dim strMismatchColDesc As String 'description of the name and table of a failed column
+    '    Dim dc1 As DataColumn, dc2 As DataColumn
 
-        'todo MEDIUM: Adjust doDataColumnsMatch to allow for optional ObjectID column
+    '    'todo MEDIUM: Adjust doDataColumnsMatch to allow for optional ObjectID column
 
-        'assume true until proved otherwise
-        blnOverallResult = True
+    '    'assume true until proved otherwise
+    '    blnOverallResult = True
 
-        If aryl1.Count <> aryl2.Count Then
-            'returnRes = False
-            Throw New LookupTableException(dnLookupTableError.wrongNoOfCols, _
-                                           CStr(aryl1.Count & " vs " & aryl2.Count))
-        Else
-            For intCurIndx = 0 To (aryl1.Count - 1)
-                dc1 = CType(aryl1.Item(intCurIndx), DataColumn)
-                dc2 = CType(aryl2.Item(intCurIndx), DataColumn)
-                blnCurColMatch = False
+    '    If aryl1.Count <> aryl2.Count Then
+    '        'returnRes = False
+    '        Throw New LookupTableException(dnLookupTableError.wrongNoOfCols, _
+    '                                       CStr(aryl1.Count & " vs " & aryl2.Count))
+    '    Else
+    '        For intCurIndx = 0 To (aryl1.Count - 1)
+    '            dc1 = CType(aryl1.Item(intCurIndx), DataColumn)
+    '            dc2 = CType(aryl2.Item(intCurIndx), DataColumn)
+    '            blnCurColMatch = False
 
-                Select Case True
-                    Case dc1.ColumnName <> dc2.ColumnName
-                        enuExcepReason = dnLookupTableError.colNamesMismatch
-                    Case dc1.DataType.FullName <> dc2.DataType.FullName
-                        enuExcepReason = dnLookupTableError.colTypeMismatch
-                    Case dc1.MaxLength <> dc2.MaxLength
-                        enuExcepReason = dnLookupTableError.colLenthMismatch
-                    Case dc1.Unique <> dc2.Unique
-                        enuExcepReason = dnLookupTableError.colUniqueReqMismatch
-                    Case dc1.AutoIncrement <> dc2.AutoIncrement
-                        enuExcepReason = dnLookupTableError.colAutoIncrementMismatch
-                    Case dc1.Caption <> dc2.Caption
-                        enuExcepReason = dnLookupTableError.colCaptionMismatch
-                    Case dc1.ReadOnly <> dc2.ReadOnly
-                        enuExcepReason = dnLookupTableError.colReadOnlyMismatch
-                    Case Else
-                        blnCurColMatch = True
-                End Select
+    '            Select Case True
+    '                Case dc1.ColumnName <> dc2.ColumnName
+    '                    enuExcepReason = dnLookupTableError.colNamesMismatch
+    '                Case dc1.DataType.FullName <> dc2.DataType.FullName
+    '                    enuExcepReason = dnLookupTableError.colTypeMismatch
+    '                Case dc1.MaxLength <> dc2.MaxLength
+    '                    enuExcepReason = dnLookupTableError.colLenthMismatch
+    '                Case dc1.Unique <> dc2.Unique
+    '                    enuExcepReason = dnLookupTableError.colUniqueReqMismatch
+    '                Case dc1.AutoIncrement <> dc2.AutoIncrement
+    '                    enuExcepReason = dnLookupTableError.colAutoIncrementMismatch
+    '                Case dc1.Caption <> dc2.Caption
+    '                    enuExcepReason = dnLookupTableError.colCaptionMismatch
+    '                Case dc1.ReadOnly <> dc2.ReadOnly
+    '                    enuExcepReason = dnLookupTableError.colReadOnlyMismatch
+    '                Case Else
+    '                    blnCurColMatch = True
+    '            End Select
 
 
-                If Not blnCurColMatch Then
-                    strMismatchColDesc = "Table1: " & dc1.Table.TableName & _
-                                         "Column1: " & dc1.ColumnName & _
-                                         "Table2: " & dc2.Table.TableName & _
-                                         "Column2: " & dc2.ColumnName
+    '            If Not blnCurColMatch Then
+    '                strMismatchColDesc = "Table1: " & dc1.Table.TableName & _
+    '                                     "Column1: " & dc1.ColumnName & _
+    '                                     "Table2: " & dc2.Table.TableName & _
+    '                                     "Column2: " & dc2.ColumnName
 
-                    Throw New LookupTableException(enuExcepReason, strMismatchColDesc)
-                End If
-            Next
-        End If
+    '                Throw New LookupTableException(enuExcepReason, strMismatchColDesc)
+    '            End If
+    '        Next
+    '    End If
 
-        Return blnOverallResult
-    End Function
+    '    Return blnOverallResult
+    'End Function
 
-  
+
     ''' <summary>
     ''' A convenience function to extact all of the clauses (ie the Primary Keys) from a
     ''' Data Name Clause Lookup Table.
@@ -449,7 +546,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
     ''' Checks whether a particular test String is a valid Data Category Clause.
     ''' The strings are converted to lower case before comparision.
     ''' </remarks>
-    Public Function isValidDataCategoryClause(ByVal strTestDataCatClause As String) As Boolean Implements IDataNameClauseLookup.isvalidDataCategoryClause
+    Public Function isValidDataCategoryClause(ByVal strTestDataCatClause As String) As Boolean Implements IDataNameClauseLookup.isValidDataCategoryClause
         Return isStrInPriKeyCol(strTestDataCatClause, m_dtbDataCategoriesClauses)
     End Function
 
@@ -472,7 +569,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
     ''' </remarks>
     Public Function isValidDataThemeClause(ByVal strTestDataThemeClause As String, _
                                            ByVal strTestDataCatClause As String) _
-                          As Boolean Implements IDataNameClauseLookup.isvalidDataThemeClause
+                          As Boolean Implements IDataNameClauseLookup.isValidDataThemeClause
 
         Dim intThemeCol As Integer, intCatCol As Integer
         Dim blnIsValid As Boolean
@@ -513,7 +610,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
     ''' The strings are converted to lower case before comparision.
     ''' </remarks>
     Public Function isValidDataTypeClause(ByVal strTestDataTypeClause As String) As Boolean _
-                                            Implements IDataNameClauseLookup.isvalidDataTypeClause
+                                            Implements IDataNameClauseLookup.isValidDataTypeClause
         Return isStrInPriKeyCol(strTestDataTypeClause, m_dtbDataTypeClauses)
     End Function
 
@@ -529,7 +626,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
     ''' Checks whether a particular test String is a valid Geoextent Clause.
     ''' The strings are converted to lower case before comparision.
     ''' </remarks>
-    Public Function isValidGeoextentClause(ByVal strTestGeoExtentClause As String) As Boolean Implements IDataNameClauseLookup.isvalidGeoextentClause
+    Public Function isValidGeoextentClause(ByVal strTestGeoExtentClause As String) As Boolean Implements IDataNameClauseLookup.isValidGeoextentClause
         isValidGeoextentClause = isStrInPriKeyCol(strTestGeoExtentClause, m_dtbGeoExtentClauses)
     End Function
 
@@ -545,7 +642,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
     ''' Checks whether a particular test String is a valid Permissions Clause.
     ''' The strings are converted to lower case before comparision.
     ''' </remarks>
-    Public Function isValidPermissionsClause(ByVal strTestPermissionsClause As String) As Boolean Implements IDataNameClauseLookup.isvalidPermissionsClause
+    Public Function isValidPermissionsClause(ByVal strTestPermissionsClause As String) As Boolean Implements IDataNameClauseLookup.isValidPermissionsClause
         isValidPermissionsClause = isStrInPriKeyCol(strTestPermissionsClause, m_dtbPermissionClauses)
     End Function
 
@@ -561,7 +658,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
     ''' Checks whether a particular test String is a valid Scale Clause.
     ''' The strings are converted to lower case before comparision.
     ''' </remarks>
-    Public Function isValidScaleClause(ByVal strTestScaleClause As String) As Boolean Implements IDataNameClauseLookup.isvalidScaleClause
+    Public Function isValidScaleClause(ByVal strTestScaleClause As String) As Boolean Implements IDataNameClauseLookup.isValidScaleClause
         isValidScaleClause = isStrInPriKeyCol(strTestScaleClause, m_dtbScaleClauses)
     End Function
 
@@ -577,7 +674,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
     ''' Checks whether a particular test String is a valid Source Clause.
     ''' The strings are converted to lower case before comparision.
     ''' </remarks>
-    Public Function isValidSourceClause(ByVal strTestSourceClause As String) As Boolean Implements IDataNameClauseLookup.isvalidSourceClause
+    Public Function isValidSourceClause(ByVal strTestSourceClause As String) As Boolean Implements IDataNameClauseLookup.isValidSourceClause
         isValidSourceClause = isStrInPriKeyCol(strTestSourceClause, m_dtbSourceClauses)
     End Function
 

@@ -2,7 +2,6 @@
 Imports ESRI.ArcGIS.Geometry
 Imports System.IO
 
-'todo HIGH: check the name of the XXXX factory class
 ''' <summary>
 ''' Provides a specfic implenmentation of the IDataName, based on ESRI 
 ''' FeatureClasses in their various guises (eg shapefiles or members of
@@ -13,8 +12,9 @@ Imports System.IO
 ''' FeatureClasses in their various guises (eg shapefiles or members of
 ''' a GDB).
 '''
-''' There is no public constructor for this class. New instances should be generated using 
-''' the XXXX factory class.
+''' There is no public constructor for this class. New instances should
+''' be generated using the getLayerDataNamesList() method of a relevant
+''' IDataListConnection object.
 '''  </remarks>
 Public Class DataNameESRIFeatureClass
     Inherits AbstractDataName

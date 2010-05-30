@@ -11,7 +11,7 @@ Public Class LookupTableException
         m_strSearchParam = strSearchParam
     End Sub
 
-    Protected Friend Sub New(ByVal enmErrorType As dnLookupTableError, ByVal strSearchParam As String, ByRef innerEx As Exception)
+    Protected Friend Sub New(ByVal enmErrorType As dnLookupTableError, ByVal strSearchParam As String, ByVal innerEx As Exception)
         MyBase.New(createMessage(enmErrorType, strSearchParam), innerEx)
         m_enmErrorType = enmErrorType
         m_strSearchParam = strSearchParam

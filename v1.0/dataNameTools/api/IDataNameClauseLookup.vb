@@ -1,6 +1,5 @@
 ﻿Imports System.IO
 
-' todo HIGH: double check the name of the XXXX factory class
 ''' <summary>
 ''' Classes implementing this interface provide a means to interact with a collection of flat database
 ''' tables, which collectively, list valid values for each individual clause in a data name.
@@ -21,7 +20,8 @@
 ''' 
 ''' It is not expected that that will be any public constructors for classes implenementing IDataNameClauseLookup.
 ''' In general, instances of IDataNameClauseLookup should be obtained either by use of the 
-''' IDataList.getDefaultDataNameClauseLookup() method or by using a correponding XXXX Factory class.
+''' IDataList.getDefaultDataNameClauseLookup() method or by using a correponding DataNameClauseLookupFactory
+''' factory class.
 ''' </remarks>
 Public Interface IDataNameClauseLookup
 

@@ -2,9 +2,6 @@
 Imports ESRI.ArcGIS.DataSourcesGDB
 Imports System.IO
 
-'todo HIGH: should getESRIWorkspaceFromFile be moved to this class?
-'todo HIGH: should getNamesStrFromESRIDataSetName be moved to this class?
-'todo HIGH: should getESRIDataSetNamesFromWorkspace be moved to this class?
 ''' <summary>
 ''' Provides a specfic implenmentation of the IDataListConnection, based on reading 
 ''' the list from an ESRI Geodatabase.
@@ -157,7 +154,6 @@ Public Class DataListGeoDBConnection
     ''' Returns a String which describes the type of connection.
     ''' </remarks>
     Public Overrides Function getDataListConnectionTypeDesc() As String
-        'todo LOW: move this to DataNamingConstants
         Return DATALIST_TYPE_GDB
     End Function
 
@@ -238,7 +234,7 @@ Public Class DataListGeoDBConnection
         Return True
     End Function
 
-    'todo MEDIUM check teh use fo connection file paths in this method.
+    'todo MEDIUM check the use of connection file paths in this method.
     ''' <summary>
     ''' This method will attempt to physically locate a suitable set of DataNames Clause Lookup Tables, initially
     ''' by checking the contents of this GDB, and if that fails by searching the directory containing the GDB or
@@ -320,5 +316,77 @@ Public Class DataListGeoDBConnection
 
         Return lstDName
     End Function
+
+    ''' <summary>
+    ''' Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
+    ''' an IWorkspace or IEnumDatasetName object.
+    ''' </summary>
+    ''' <param name="wrksp">A IWorkspace object</param>
+    ''' <param name="blnRecuse">TRUE = The workspace should be recused if relevant,
+    ''' FALSE = the workspace should not be recursed</param>
+    ''' <returns>a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
+    ''' an IWorkspace or IEnumDatasetName object.</returns>
+    ''' <remarks>
+    ''' Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
+    ''' an IWorkspace or IEnumDatasetName object.
+    ''' 
+    ''' To access the IDataset themselves use the method getESRIDataSetsFromWorkspace()
+    ''' </remarks>
+    Private Function getESRIDataSetNamesFromWorkspace(ByRef wrksp As IWorkspace, ByVal blnRecuse As Boolean) As List(Of IDatasetName)
+        Return getESRIDataSetNamesFromWorkspace(wrksp.DatasetNames(esriDatasetType.esriDTAny), blnRecuse)
+    End Function
+
+    ''' <summary>
+    ''' Returns a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
+    ''' an IWorkspace or IEnumDatasetName object.
+    ''' </summary>
+    ''' <param name="edn">A DatasetName emnumerator IEnumDatasetName</param>
+    ''' <param name="blnRecuse">TRUE = The workspace should be recused if relevant,
+    ''' FALSE = the workspace should not be recursed</param>
+    ''' <returns>a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
+    ''' an IWorkspace or IEnumDatasetName object.</returns>
+    ''' <remarks>
+    ''' Returns a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
+    ''' an IWorkspace or IEnumDatasetName object.
+    ''' 
+    ''' To access the IDataset themselves use the method getESRIDataSetsFromWorkspace()
+    ''' </remarks>
+    Private Function getESRIDataSetNamesFromWorkspace(ByRef edn As IEnumDatasetName, _
+                                                      ByVal blnRecuse As Boolean) As List(Of IDatasetName)
+        Dim lstDSNames As New List(Of IDatasetName)
+        Dim dsName As IDatasetName
+
+        dsName = edn.Next()
+
+        While Not dsName Is Nothing
+            If blnRecuse And (dsName.Type = esriDatasetType.esriDTContainer) Then
+                lstDSNames.AddRange(getESRIDataSetNamesFromWorkspace(dsName.SubsetNames, blnRecuse))
+            Else
+                lstDSNames.Add(dsName)
+            End If
+            dsName = edn.Next()
+        End While
+
+        Return lstDSNames
+    End Function
+
+    ''' <summary>
+    ''' A convinence function for exacting a list of names as strings froma list of IDatasetName objects.
+    ''' </summary>
+    ''' <param name="dsList">A list of IDatasetName objects</param>
+    ''' <returns>A List(Of Strings), with the names of each of the dsList objects.</returns>
+    ''' <remarks>
+    ''' A convinence function for exacting a list of names as strings froma list of IDatasetName objects.
+    ''' </remarks>
+    Private Function getNamesStrFromESRIDataSetName(ByRef dsList As List(Of IDatasetName)) As List(Of String)
+        Dim strList As New List(Of String)
+
+        For Each ds In dsList
+            strList.Add(ds.Name)
+        Next
+
+        Return strList
+    End Function
+
 
 End Class
