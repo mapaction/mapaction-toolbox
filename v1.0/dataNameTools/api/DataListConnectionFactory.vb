@@ -182,7 +182,7 @@ Public Class DataListConnectionFactory
     ''' Creates a new IDataListConnection (specifically a DataListMXDConnection) 
     ''' based on the reference to the IMxDocument object from within ArcMap.
     ''' </remarks>
-    Public Function createGeoDataListConnection(ByRef mxMap As IMxDocument) As IDataListConnection
+    Public Function createDataListConnection(ByRef mxMap As IMxDocument) As IDataListConnection
         Return New DataListMXDConnection(mxMap)
     End Function
 

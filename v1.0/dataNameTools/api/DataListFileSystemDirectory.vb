@@ -176,7 +176,6 @@ Public Class DataListFileSystemDirectory
     ''' Returns a String which describes the type of connection.
     ''' </remarks>
     Public Overrides Function getDataListConnectionTypeDesc() As String
-        'todo LOW: move this to DataNameConstants module
         Return DATALIST_TYPE_DIR
     End Function
 

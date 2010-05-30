@@ -3,7 +3,6 @@ Imports ESRI.ArcGIS.Geodatabase
 Imports ESRI.ArcGIS.DataSourcesGDB
 Imports ESRI.ArcGIS.DataSourcesFile
 
-'todo HIGH: check the required access (public, friend, private) requirements for each method in this module.
 ''' <summary>
 ''' A private convenience module to help search directories for the DataName
 ''' Clause Lookup table in whatever form they may take.
@@ -99,12 +98,12 @@ Friend Module MADirectorySearcher
     Private Function getMARootDir(ByRef fInfoArg As FileInfo) As DirectoryInfo
         Dim dInfoRoot As DirectoryInfo
 
-        If fInfoArg.Exists() And (Not (fInfoArg.Attributes And FileAttributes.Directory) = FileAttributes.Directory) Then
-            dInfoRoot = getMARootDir(fInfoArg.Directory)
-        ElseIf (fInfoArg.Attributes And FileAttributes.Directory) = FileAttributes.Directory Then
+        If (fInfoArg.Attributes And FileAttributes.Directory) = FileAttributes.Directory Then
             Dim dInfo As DirectoryInfo
             dInfo = New DirectoryInfo(fInfoArg.FullName)
             dInfoRoot = getMARootDir(dInfo)
+        ElseIf fInfoArg.Exists() Then
+            dInfoRoot = getMARootDir(fInfoArg.Directory)
         Else
             Throw New ArgumentException("File not found " & fInfoArg.FullName)
         End If
@@ -291,119 +290,49 @@ Friend Module MADirectorySearcher
     Friend Function getESRIWorkspaceFromFile(ByVal fInfo As FileInfo) As IWorkspace
         Dim wkspReturnRef As ESRI.ArcGIS.Geodatabase.IWorkspace = Nothing
 
-        If Not fInfo.Exists() Then
+        'Note fInfo.Exists() = FALSE if the file is a directory
+        If (fInfo.Attributes And FileAttributes.Directory) = FileAttributes.Directory Then
+            Dim dInfo As DirectoryInfo
+            dInfo = New DirectoryInfo(fInfo.FullName)
+
+            Dim wkspFactory2 As IWorkspaceFactory2
+
+            If dInfo.FullName.EndsWith(".gdb") Then
+                wkspFactory2 = New FileGDBWorkspaceFactoryClass
+                'myGDBtype = GDB_TYPE_FILEGDB
+            Else
+                wkspFactory2 = New ShapefileWorkspaceFactory
+            End If
+
+            wkspReturnRef = wkspFactory2.OpenFromFile(dInfo.FullName, 0)
+
+        ElseIf fInfo.Exists() Then
+            'Reference is to a file, it is either a Access DB, a connection file or an error
+            Dim wkspFactory As IWorkspaceFactory
+
+            Select Case fInfo.Extension
+                Case ".mdb"
+                    wkspFactory = New AccessWorkspaceFactoryClass
+                    'myGDBtype = GDB_TYPE_MDB
+                Case ".sde", ".ags", ".gds"
+                    wkspFactory = New SdeWorkspaceFactory
+                    'myGDBtype = GDB_TYPE_SDE_BY_CONFILE
+                Case Else
+                    Throw New ArgumentException("GeoDatabase type not recgonised")
+            End Select
+
+            wkspReturnRef = wkspFactory.OpenFromFile(fInfo.FullName, 0)
+
+        Else
+            'Reference is not to a file, it is either a directory or it does not exist
             Throw New ArgumentException("GeoDatabase type not recgonised. The file " & _
                                         fInfo.FullName & " does not exist")
-        Else
-            If (Not (fInfo.Attributes And FileAttributes.Directory) = FileAttributes.Directory) Then
-                Dim wkspFactory As IWorkspaceFactory
-
-                Select Case fInfo.Extension
-                    Case ".mdb"
-                        wkspFactory = New AccessWorkspaceFactoryClass
-                        'myGDBtype = GDB_TYPE_MDB
-                    Case ".sde", ".ags", ".gds"
-                        wkspFactory = New SdeWorkspaceFactory
-                        'myGDBtype = GDB_TYPE_SDE_BY_CONFILE
-                    Case Else
-                        Throw New ArgumentException("GeoDatabase type not recgonised")
-                End Select
-
-                wkspReturnRef = wkspFactory.OpenFromFile(fInfo.FullName, 0)
-
-            ElseIf (fInfo.Attributes And FileAttributes.Directory) = FileAttributes.Directory Then
-                Dim dInfo As DirectoryInfo
-                dInfo = New DirectoryInfo(fInfo.FullName)
-
-                Dim wkspFactory2 As IWorkspaceFactory2
-
-                If dInfo.FullName.EndsWith(".gdb") Then
-                    wkspFactory2 = New FileGDBWorkspaceFactoryClass
-                    'myGDBtype = GDB_TYPE_FILEGDB
-                Else
-                    wkspFactory2 = New ShapefileWorkspaceFactory
-                End If
-
-                wkspReturnRef = wkspFactory2.OpenFromFile(dInfo.FullName, 0)
-
-            End If
         End If
 
         Return wkspReturnRef
     End Function
 
-    ''' <summary>
-    ''' Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
-    ''' an IWorkspace or IEnumDatasetName object.
-    ''' </summary>
-    ''' <param name="wrksp">A IWorkspace object</param>
-    ''' <param name="blnRecuse">TRUE = The workspace should be recused if relevant,
-    ''' FALSE = the workspace should not be recursed</param>
-    ''' <returns>a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
-    ''' an IWorkspace or IEnumDatasetName object.</returns>
-    ''' <remarks>
-    ''' Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
-    ''' an IWorkspace or IEnumDatasetName object.
-    ''' 
-    ''' To access the IDataset themselves use the method getESRIDataSetsFromWorkspace()
-    ''' </remarks>
-    Friend Function getESRIDataSetNamesFromWorkspace(ByRef wrksp As IWorkspace, ByVal blnRecuse As Boolean) As List(Of IDatasetName)
-        Return getESRIDataSetNamesFromWorkspace(wrksp.DatasetNames(esriDatasetType.esriDTAny), blnRecuse)
-    End Function
-
-    ''' <summary>
-    ''' Returns a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
-    ''' an IWorkspace or IEnumDatasetName object.
-    ''' </summary>
-    ''' <param name="edn">A DatasetName emnumerator IEnumDatasetName</param>
-    ''' <param name="blnRecuse">TRUE = The workspace should be recused if relevant,
-    ''' FALSE = the workspace should not be recursed</param>
-    ''' <returns>a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
-    ''' an IWorkspace or IEnumDatasetName object.</returns>
-    ''' <remarks>
-    ''' Returns a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
-    ''' an IWorkspace or IEnumDatasetName object.
-    ''' 
-    ''' To access the IDataset themselves use the method getESRIDataSetsFromWorkspace()
-    ''' </remarks>
-    Friend Function getESRIDataSetNamesFromWorkspace(ByRef edn As IEnumDatasetName, _
-                                                      ByVal blnRecuse As Boolean) As List(Of IDatasetName)
-        Dim lstDSNames As New List(Of IDatasetName)
-        Dim dsName As IDatasetName
-
-        dsName = edn.Next()
-
-        While Not dsName Is Nothing
-            If blnRecuse And (dsName.Type = esriDatasetType.esriDTContainer) Then
-                lstDSNames.AddRange(getESRIDataSetNamesFromWorkspace(dsName.SubsetNames, blnRecuse))
-            Else
-                lstDSNames.Add(dsName)
-            End If
-            dsName = edn.Next()
-        End While
-
-        Return lstDSNames
-    End Function
-
-
-    ''' <summary>
-    ''' A convinence function for exacting a list of names as strings froma list of IDatasetName objects.
-    ''' </summary>
-    ''' <param name="dsList">A list of IDatasetName objects</param>
-    ''' <returns>A List(Of Strings), with the names of each of the dsList objects.</returns>
-    ''' <remarks>
-    ''' A convinence function for exacting a list of names as strings froma list of IDatasetName objects.
-    ''' </remarks>
-    Friend Function getNamesStrFromESRIDataSetName(ByRef dsList As List(Of IDatasetName)) As List(Of String)
-        Dim strList As New List(Of String)
-
-        For Each ds In dsList
-            strList.Add(ds.Name)
-        Next
-
-        Return strList
-    End Function
-
+ 
 
     ''' <summary>
     ''' Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
@@ -425,7 +354,6 @@ Friend Module MADirectorySearcher
                                                   ByVal blnRecuse As Boolean) As List(Of IDataset)
         Return getESRIDataSetsFromWorkspace(wrksp.Datasets(esriDatasetType.esriDTAny), blnRecuse)
     End Function
-
 
     ''' <summary>
     ''' Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
@@ -461,5 +389,6 @@ Friend Module MADirectorySearcher
 
         Return lstDSet
     End Function
+   
 
 End Module

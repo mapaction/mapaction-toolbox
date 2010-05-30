@@ -6,74 +6,20 @@ api
 </name>
 </assembly>
 <members>
-<member name="M:mapaction.datanames.api.GDBDataNameClauseLookup.#ctor(ESRI.ArcGIS.Geodatabase.IWorkspace@)">
+<member name="M:mapaction.datanames.api.DataNameStringFormater.getDataNamingStatusMessage(System.Int64)">
 	<summary>
- The constuctor. This should only be call from within the relevant 
- factory class.
- </summary>
-	<param name="dnlw"></param>
-	<remarks>
- The constuctor. This should only be call from within the relevant 
- factory class.
- </remarks>
-</member><member name="M:mapaction.datanames.api.GDBDataNameClauseLookup.#ctor(System.String)">
+	</summary>
+	<param name="lngStatus"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:mapaction.datanames.api.DataNameStringFormater">
 	<summary>
- The constuctor. This should only be call from within the relevant 
- factory class.
- </summary>
-	<param name="strPathName">A string presenting the path </param>
-	<remarks>
- The constuctor. This should only be call from within the relevant 
- factory class.
- </remarks>
-</member><member name="M:mapaction.datanames.api.GDBDataNameClauseLookup.getDetails">
-	<summary>
- Returns the Path name used to connect to the GDB.
- </summary>
-	<returns>The Path name used to connect to the GDB.</returns>
-	<remarks>
- Returns the Path name used to connect to the GDB.
- </remarks>
-</member><member name="M:mapaction.datanames.api.GDBDataNameClauseLookup.getPath">
-	<summary>
- Returns the Path name used to connect to the GDB.
- </summary>
-	<returns>The Path name used to connect to the GDB.</returns>
-	<remarks>
- Returns the Path name used to connect to the GDB.
- </remarks>
-</member><member name="T:mapaction.datanames.api.GDBDataNameClauseLookup">
-	<summary>
- Provides a specfic implenmentation of the IDataNameClauseLookup, based on storing the
- Data Name Clause Lookup Tables in any form of ESRI GDB (file, personal, SDE etc)
+ For want of anywhere better this module is for functions which
+ manipulate strings to make them suitable for display to users.
  </summary>
 	<remarks>
- Provides a specfic implenmentation of the IDataNameClauseLookup, based on storing the
- Data Name Clause Lookup Tables in any form of ESRI GDB (file, personal, SDE etc)
-
- There is no public constructor for this class. New instances should be generated using 
- the XXXX factory class.
- </remarks>
-</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.initialiseAllTables">
-	<summary>
- Opens each of the dataname clause lookup tables. Must be called from the constructor
- </summary>
-	<remarks>
- Opens each of the dataname clause lookup tables. Must be called from the constructor
- 
- Uses the subclasses implenmentation of the openTable() method.
- </remarks>
-</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.openTable(System.String)">
-	<summary>
- This method provides an implenmention specific means to open an individual flat table
- from a data source (eg, Access DB, ESRI GDB, XML files etc).
- </summary>
-	<param name="strTableName">The name of the table to open. This should normally be passed
- using one of the API constants with the prefix "TABLENAME_"</param>
-	<returns>A DataTable object representing the named table</returns>
-	<remarks>
- This method provides an implenmention specific means to open an individual flat table
- from a data source (eg, Access DB, ESRI GDB, XML files etc).
+ For want of anywhere better this module is for functions which
+ manipulate strings to make them suitable for display to users.
  </remarks>
 </member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getDetails">
 	<summary>
@@ -97,23 +43,6 @@ api
  
  If the location of these tables cannot represented as an operating system file (eg if they 
  are located in a RDBMS) then the Nothing object is returned.
- </remarks>
-</member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.doDataColumnsMatch(System.Collections.ArrayList@,System.Collections.ArrayList@)">
-	<summary>
- Compared two ArrayLists of DataColumn objects, to confirm whether or not the specfication
- of the columns (ie the schema) is identical for both.
- </summary>
-	<param name="aryl1">An ArrayList of DataColumn objects</param>
-	<param name="aryl2">An ArrayList of DataColumn objects</param>
-	<returns>TRUE = the DataColumn specfications match. If the DataColumn specfications
- do not match then a LookupTableException is thrown.</returns>
-	<remarks>
- Compared two ArrayLists of DataColumn objects, to confirm whether or not the specfication
- of the columns (ie the schema) is identical for both. This is used to verify the schema of
- any Data Name Clause Lookup Tables that have been opened.
- 
- Is this really the best way to check the schema of the DB? probably could be done better using the XML schema definition stuff in ADO.NET
- Columns *must* be in the same order.
  </remarks>
 </member><member name="M:mapaction.datanames.api.AbstractDataNameClauseLookup.getListFromTable(System.Data.DataTable@)">
 	<summary>
@@ -565,10 +494,71 @@ api
   Overrides the current thread's CurrentUICulture property for all
   resource lookups using this strongly typed resource class.
 </summary>
+</member><member name="P:mapaction.datanames.api.My.Resources.Resources.datanameclauselookup_schema_v1_0">
+	<summary>
+  Looks up a localized string similar to &lt;?xml version="1.0"?&gt;
+&lt;xs:schema id="dncl" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"&gt;
+  &lt;xs:element name="dncl" msdata:IsDataSet="true" msdata:UseCurrentLocale="true"&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
+        &lt;xs:element name="datanaming_clause_geoextent"&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name="clause" type="xs:string" minOccurs="0" /&gt;
+               [rest of string was truncated]";.
+</summary>
 </member><member name="T:mapaction.datanames.api.My.Resources.Resources">
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.
 </summary>
+</member><member name="M:mapaction.datanames.api.GDBDataNameClauseLookup.#ctor(ESRI.ArcGIS.Geodatabase.IWorkspace@)">
+	<summary>
+ The constuctor. This should only be call from within the relevant 
+ factory class.
+ </summary>
+	<param name="dnlw"></param>
+	<remarks>
+ The constuctor. This should only be call from within the relevant 
+ factory class.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.GDBDataNameClauseLookup.#ctor(System.String)">
+	<summary>
+ The constuctor. This should only be call from within the relevant 
+ factory class.
+ </summary>
+	<param name="strPathName">A string presenting the path </param>
+	<remarks>
+ The constuctor. This should only be call from within the relevant 
+ factory class.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.GDBDataNameClauseLookup.getDetails">
+	<summary>
+ Returns the Path name used to connect to the GDB.
+ </summary>
+	<returns>The Path name used to connect to the GDB.</returns>
+	<remarks>
+ Returns the Path name used to connect to the GDB.
+ </remarks>
+</member><member name="M:mapaction.datanames.api.GDBDataNameClauseLookup.getPath">
+	<summary>
+ Returns the Path name used to connect to the GDB.
+ </summary>
+	<returns>The Path name used to connect to the GDB.</returns>
+	<remarks>
+ Returns the Path name used to connect to the GDB.
+ </remarks>
+</member><member name="T:mapaction.datanames.api.GDBDataNameClauseLookup">
+	<summary>
+ Provides a specfic implenmentation of the IDataNameClauseLookup, based on storing the
+ Data Name Clause Lookup Tables in any form of ESRI GDB (file, personal, SDE etc)
+ </summary>
+	<remarks>
+ Provides a specfic implenmentation of the IDataNameClauseLookup, based on storing the
+ Data Name Clause Lookup Tables in any form of ESRI GDB (file, personal, SDE etc)
+
+ There is no public constructor for this class. New instances should be generated using 
+ the XXXX factory class.
+ </remarks>
 </member><member name="M:mapaction.datanames.api.DataListMXDConnection.#ctor(System.IO.FileInfo@)">
 	<summary>
  Constructs a new MXD list based on the MXD file in the argument. This version
@@ -811,6 +801,21 @@ api
  If dnClauseLookupType.ESRI_GDB then either strAryArgs(0) should be the full path of 
  the GDB or strAryArgs should be a collection of connection parameters for an SDE GDB.
  </remarks>
+</member><member name="M:mapaction.datanames.api.DataNameClauseLookupFactory.createDataNameClauseLookup(System.String@)">
+	<summary>
+ Create a new IDataNameClauseLookup, based on the location specified.
+ </summary>
+	<param name="strPath">A string of the path to the specific physical location 
+ of the Data Name Clause Lookup Tables</param>
+	<returns>A new IDataNameClauseLookup, based on the location specified.</returns>
+	<remarks>
+ Create a new IDataNameClauseLookup, based on the type and location specified.
+ 
+ If the string is to an Access DB, then the method will first attempt to open
+ it as a GDB and if that fails it will attempt to open it as a regular Access DB.
+ All other paths are interperated as pointing to a GDB (either filebased or a 
+ connection file).
+ </remarks>
 </member><member name="M:mapaction.datanames.api.DataNameClauseLookupFactory.createDataNameClauseLookup(System.IO.DirectoryInfo@)">
 	<summary>
  Searches for the physical location of Data Name Clause Lookup Tables within the 
@@ -924,7 +929,7 @@ api
   strPath is a directory with extention = ".gdb", a DataListDBConnection is returned.
  If strPath is a directory with no extention, a DataListFileSystemDirectory is returned.
  </remarks>
-</member><member name="M:mapaction.datanames.api.DataListConnectionFactory.createGeoDataListConnection(ESRI.ArcGIS.ArcMapUI.IMxDocument@)">
+</member><member name="M:mapaction.datanames.api.DataListConnectionFactory.createDataListConnection(ESRI.ArcGIS.ArcMapUI.IMxDocument@)">
 	<summary>
  Creates a new IDataListConnection (specifically a DataListMXDConnection) 
  based on the reference to the IMxDocument object from within ArcMap.
@@ -1205,7 +1210,8 @@ api
  
  It is not expected that that will be any public constructors for classes implenementing IDataNameClauseLookup.
  In general, instances of IDataNameClauseLookup should be obtained either by use of the 
- IDataList.getDefaultDataNameClauseLookup() method or by using a correponding XXXX Factory class.
+ IDataList.getDefaultDataNameClauseLookup() method or by using a correponding DataNameClauseLookupFactory
+ factory class.
  </remarks>
 </member><member name="M:mapaction.datanames.api.DataListGeoDBConnection.#ctor(System.String)">
 	<summary>
@@ -1357,6 +1363,47 @@ api
  same map/data frame or within different maps/data frames) are filtered out and only 
  occur once in the returned list.
  </remarks>
+</member><member name="M:mapaction.datanames.api.DataListGeoDBConnection.getESRIDataSetNamesFromWorkspace(ESRI.ArcGIS.Geodatabase.IWorkspace@,System.Boolean)">
+	<summary>
+ Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
+ an IWorkspace or IEnumDatasetName object.
+ </summary>
+	<param name="wrksp">A IWorkspace object</param>
+	<param name="blnRecuse">TRUE = The workspace should be recused if relevant,
+ FALSE = the workspace should not be recursed</param>
+	<returns>a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
+ an IWorkspace or IEnumDatasetName object.</returns>
+	<remarks>
+ Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
+ an IWorkspace or IEnumDatasetName object.
+ 
+ To access the IDataset themselves use the method getESRIDataSetsFromWorkspace()
+ </remarks>
+</member><member name="M:mapaction.datanames.api.DataListGeoDBConnection.getESRIDataSetNamesFromWorkspace(ESRI.ArcGIS.Geodatabase.IEnumDatasetName@,System.Boolean)">
+	<summary>
+ Returns a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
+ an IWorkspace or IEnumDatasetName object.
+ </summary>
+	<param name="edn">A DatasetName emnumerator IEnumDatasetName</param>
+	<param name="blnRecuse">TRUE = The workspace should be recused if relevant,
+ FALSE = the workspace should not be recursed</param>
+	<returns>a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
+ an IWorkspace or IEnumDatasetName object.</returns>
+	<remarks>
+ Returns a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
+ an IWorkspace or IEnumDatasetName object.
+ 
+ To access the IDataset themselves use the method getESRIDataSetsFromWorkspace()
+ </remarks>
+</member><member name="M:mapaction.datanames.api.DataListGeoDBConnection.getNamesStrFromESRIDataSetName(System.Collections.Generic.List{ESRI.ArcGIS.Geodatabase.IDatasetName}@)">
+	<summary>
+ A convinence function for exacting a list of names as strings froma list of IDatasetName objects.
+ </summary>
+	<param name="dsList">A list of IDatasetName objects</param>
+	<returns>A List(Of Strings), with the names of each of the dsList objects.</returns>
+	<remarks>
+ A convinence function for exacting a list of names as strings froma list of IDatasetName objects.
+ </remarks>
 </member><member name="T:mapaction.datanames.api.DataListGeoDBConnection">
 	<summary>
  Provides a specfic implenmentation of the IDataListConnection, based on reading 
@@ -1482,8 +1529,9 @@ api
  FeatureClasses in their various guises (eg shapefiles or members of
  a GDB).
 
- There is no public constructor for this class. New instances should be generated using 
- the XXXX factory class.
+ There is no public constructor for this class. New instances should
+ be generated using the getLayerDataNamesList() method of a relevant
+ IDataListConnection object.
   </remarks>
 </member><member name="M:mapaction.datanames.api.AbstractDataListConnection.#ctor(System.Boolean)">
 	<summary>
@@ -1606,8 +1654,9 @@ api
  are "normal" operating system files and are not a component of a logical
  GIS file (eg shapefiles)
 
- There is no public constructor for this class. New instances should be generated using 
- the XXXX factory class.
+ There is no public constructor for this class. New instances should
+ be generated using the getLayerDataNamesList() method of a relevant
+ IDataListConnection object.
   </remarks>
 </member><member name="M:mapaction.datanames.api.IDataName.getNameStr">
 	<summary>
@@ -2763,47 +2812,6 @@ api
  If fInfo is a directory with extention = ".gdb", returns a FileGDBWorkspaceFactoryClass
  If fInfo is a directory with no extention, returns a ShapefileWorkspaceFactory
  </remarks>
-</member><member name="M:mapaction.datanames.api.MADirectorySearcher.getESRIDataSetNamesFromWorkspace(ESRI.ArcGIS.Geodatabase.IWorkspace@,System.Boolean)">
-	<summary>
- Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
- an IWorkspace or IEnumDatasetName object.
- </summary>
-	<param name="wrksp">A IWorkspace object</param>
-	<param name="blnRecuse">TRUE = The workspace should be recused if relevant,
- FALSE = the workspace should not be recursed</param>
-	<returns>a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
- an IWorkspace or IEnumDatasetName object.</returns>
-	<remarks>
- Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
- an IWorkspace or IEnumDatasetName object.
- 
- To access the IDataset themselves use the method getESRIDataSetsFromWorkspace()
- </remarks>
-</member><member name="M:mapaction.datanames.api.MADirectorySearcher.getESRIDataSetNamesFromWorkspace(ESRI.ArcGIS.Geodatabase.IEnumDatasetName@,System.Boolean)">
-	<summary>
- Returns a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
- an IWorkspace or IEnumDatasetName object.
- </summary>
-	<param name="edn">A DatasetName emnumerator IEnumDatasetName</param>
-	<param name="blnRecuse">TRUE = The workspace should be recused if relevant,
- FALSE = the workspace should not be recursed</param>
-	<returns>a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
- an IWorkspace or IEnumDatasetName object.</returns>
-	<remarks>
- Returns a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
- an IWorkspace or IEnumDatasetName object.
- 
- To access the IDataset themselves use the method getESRIDataSetsFromWorkspace()
- </remarks>
-</member><member name="M:mapaction.datanames.api.MADirectorySearcher.getNamesStrFromESRIDataSetName(System.Collections.Generic.List{ESRI.ArcGIS.Geodatabase.IDatasetName}@)">
-	<summary>
- A convinence function for exacting a list of names as strings froma list of IDatasetName objects.
- </summary>
-	<param name="dsList">A list of IDatasetName objects</param>
-	<returns>A List(Of Strings), with the names of each of the dsList objects.</returns>
-	<remarks>
- A convinence function for exacting a list of names as strings froma list of IDatasetName objects.
- </remarks>
 </member><member name="M:mapaction.datanames.api.MADirectorySearcher.getESRIDataSetsFromWorkspace(ESRI.ArcGIS.Geodatabase.IWorkspace@,System.Boolean)">
 	<summary>
  Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
@@ -2868,26 +2876,6 @@ api
  The constuctor. This should only be call from within the relevant 
  factory class.
  </remarks>
-</member><member name="M:mapaction.datanames.api.MDBDataNameClauseLookup.initialiseConnectionObject(System.IO.FileInfo@)">
-	<summary>
- Sets up the m_DBConnection object. Only called from within the constructor
- </summary>
-	<param name="fInfoPathToMDB">A string of the full path to the Access MDB file</param>
-	<remarks>
- Sets up the m_DBConnection object. Only called from within the constructor
- </remarks>
-</member><member name="M:mapaction.datanames.api.MDBDataNameClauseLookup.openTable(System.String)">
-	<summary>
- This method opens the individual named flat table from as a DataTable object from the 
- Access DB.
- </summary>
-	<param name="strTableName">The name of the table to open. This should normally be passed
- using one of the API constants with the prefix "TABLENAME_"</param>
-	<returns>A DataTable object representing the named table</returns>
-	<remarks>
- This method opens the individual named flat table from as a DataTable object from the 
- Access DB.
- </remarks>
 </member><member name="M:mapaction.datanames.api.MDBDataNameClauseLookup.getDetails">
 	<summary>
  Returns the ConnectionString used to connect to the Acess DB.
@@ -2926,7 +2914,7 @@ api
  Data Name Clause Lookup Tables in an Access Database file.
 
  There is no public constructor for this class. New instances should be generated using 
- the XXXX factory class.
+ the DataNameClauseLookupFactory factory class.
  </remarks>
 </member><member name="T:mapaction.datanames.api.dnNameStatus">
 	<summary>

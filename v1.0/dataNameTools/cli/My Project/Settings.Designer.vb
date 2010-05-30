@@ -53,18 +53,6 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\MapAction\bronze\custom_tools\man"& _ 
-            "agedcode\mapaction-toolbox\experimental\datanamingAPI\MA_DataNamer\data-naming-c"& _ 
-            "onventions-beta_v0.8.mdb")>  _
-        Public ReadOnly Property data_naming_conventions_beta_v0_8ConnectionString() As String
-            Get
-                Return CType(Me("data_naming_conventions_beta_v0_8ConnectionString"),String)
-            End Get
-        End Property
     End Class
 End Namespace
 
@@ -76,9 +64,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.CommandlineTesting.My.MySettings
+        Friend ReadOnly Property Settings() As Global.mapaction.datanames.cli.My.MySettings
             Get
-                Return Global.CommandlineTesting.My.MySettings.Default
+                Return Global.mapaction.datanames.cli.My.MySettings.Default
             End Get
         End Property
     End Module

@@ -750,12 +750,12 @@ Public MustInherit Class AbstractDataName
 
         Select Case strClauseName
             Case CLAUSE_GEOEXTENT
-                If lstCurNameParts.Item(0) Is Nothing OrElse lstCurNameParts.Count < 1 Then
+                If lstCurNameParts.Count < 1 OrElse lstCurNameParts.Item(0) Is Nothing Then
                     lngResultVal = lngResultVal Or dnNameStatus.SYNTAX_ERROR_TOO_FEW_CLAUSES Or dnNameStatus.INVALID_GEOEXTENT
                 Else
                     'system.console.WriteLine("CLAUSE_GEOEXTENT: " & curNameParts(0))
 
-                    If Not m_DNCL.isvalidGeoextentClause(lstCurNameParts.Item(0)) Then
+                    If Not m_DNCL.isValidGeoextentClause(lstCurNameParts.Item(0)) Then
                         lngResultVal = lngResultVal Or dnNameStatus.INVALID_GEOEXTENT
                     End If
 
@@ -769,7 +769,7 @@ Public MustInherit Class AbstractDataName
                 'Since the DataCategory and DataTheme are nested it makes sence to test the two clauses together.
                 'This Select Case is present for consistancy, so that this function proceedes parsing the DataName
                 'in the order from left to right.
-                If lstCurNameParts.Item(0) Is Nothing OrElse lstCurNameParts.Count < 1 Then
+                If lstCurNameParts.Count < 1 OrElse lstCurNameParts.Item(0) Is Nothing Then
                     lngResultVal = lngResultVal Or dnNameStatus.SYNTAX_ERROR_TOO_FEW_CLAUSES Or dnNameStatus.INVALID_DATACATEGORY
                 Else
                     'system.console.WriteLine("CLAUSE_DATACATEGORY: " & curNameParts(0))
@@ -781,16 +781,16 @@ Public MustInherit Class AbstractDataName
             Case CLAUSE_DATATHEME
                 'We need a minimum of two clauses here and then must truncate by two clauses before moving on to the
                 'next clause
-                If lstCurNameParts.Item(0) Is Nothing OrElse lstCurNameParts.Count < 2 OrElse lstCurNameParts(1) Is Nothing Then
+                If lstCurNameParts.Count < 2 OrElse lstCurNameParts.Item(0) Is Nothing Then
                     lngResultVal = lngResultVal Or dnNameStatus.SYNTAX_ERROR_TOO_FEW_CLAUSES Or dnNameStatus.INVALID_DATATHEME
                 Else
                     'system.console.WriteLine("CLAUSE_DATATHEME: " & curNameParts(0))
 
                     'Are the next two clauses valid DataCategory and DataTheme respectively?
-                    If Not m_DNCL.isvalidDataThemeClause(lstCurNameParts(1), lstCurNameParts.Item(0)) Then
+                    If Not m_DNCL.isValidDataThemeClause(lstCurNameParts(1), lstCurNameParts.Item(0)) Then
                         lngResultVal = lngResultVal Or dnNameStatus.INVALID_DATATHEME
                         'Check Three.one
-                        If Not m_DNCL.isvalidDataCategoryClause(lstCurNameParts(1)) Then
+                        If Not m_DNCL.isValidDataCategoryClause(lstCurNameParts(1)) Then
                             lngResultVal = lngResultVal Or dnNameStatus.INVALID_DATACATEGORY
                         End If
                     End If
@@ -804,12 +804,12 @@ Public MustInherit Class AbstractDataName
 
             Case CLAUSE_DATATYPE
                 'NOTE THAT THIS DOES NOT TEST WHETHER THE DATA TYPE ACURATELY REFLECTS THE UNDERLYING DATA!
-                If lstCurNameParts.Item(0) Is Nothing OrElse lstCurNameParts.Count < 1 Then
+                If lstCurNameParts.Count < 1 OrElse lstCurNameParts.Item(0) Is Nothing Then
                     lngResultVal = lngResultVal Or dnNameStatus.SYNTAX_ERROR_TOO_FEW_CLAUSES Or dnNameStatus.INVALID_DATATYPE
                 Else
                     'system.console.WriteLine("CLAUSE_DATATYPE: " & curNameParts(0))
 
-                    If Not m_DNCL.isvalidDataTypeClause(lstCurNameParts.Item(0)) Then
+                    If Not m_DNCL.isValidDataTypeClause(lstCurNameParts.Item(0)) Then
                         'system.console.WriteLine("Not myDNCL.isvalidDataTypeClause(curNameParts(0))")
                         lngResultVal = lngResultVal Or dnNameStatus.INVALID_DATATYPE
                     End If
@@ -826,7 +826,7 @@ Public MustInherit Class AbstractDataName
                 End If
 
             Case CLAUSE_SCALE
-                If lstCurNameParts.Item(0) Is Nothing OrElse lstCurNameParts.Count < 1 Then
+                If lstCurNameParts.Count < 1 OrElse lstCurNameParts.Item(0) Is Nothing Then
                     'we've got to the end without finding a scale clause which means we have problems!
                     lngResultVal = lngResultVal Or dnNameStatus.INVALID_SOURCE Or dnNameStatus.WARN_MISSING_SCALE_CLAUSE
                 Else
@@ -842,7 +842,7 @@ Public MustInherit Class AbstractDataName
                     lstTempNameParts.RemoveAt(0)
                     lngTempResult = getNameValidityStatus(lstTempNameParts, CLAUSE_SOURCE)
 
-                    If m_DNCL.isvalidScaleClause(lstCurNameParts.Item(0)) Then
+                    If m_DNCL.isValidScaleClause(lstCurNameParts.Item(0)) Then
                         'Scale is present which is good, move on to the next thing - source
                         lngResultVal = lngResultVal Or lngTempResult
                     Else
@@ -859,13 +859,13 @@ Public MustInherit Class AbstractDataName
                 End If
 
             Case CLAUSE_SOURCE
-                If lstCurNameParts.Item(0) Is Nothing OrElse lstCurNameParts.Count < 1 Then
+                If lstCurNameParts.Count < 1 OrElse lstCurNameParts.Item(0) Is Nothing Then
                     'we've got to the end without finding a source clause which means we have problems!
                     lngResultVal = lngResultVal Or dnNameStatus.INVALID_SOURCE
                 Else
                     'system.console.WriteLine("CLAUSE_SOURCE: " & curNameParts(0))
 
-                    If Not m_DNCL.isvalidSourceClause(lstCurNameParts.Item(0)) Then
+                    If Not m_DNCL.isValidSourceClause(lstCurNameParts.Item(0)) Then
                         'Either the source clause is incorrect OR the scale clause has been
                         'incorrectly assigned as missing/present. Either way return an incorrect source error.
                         lngResultVal = lngResultVal Or dnNameStatus.INVALID_SOURCE
@@ -878,16 +878,16 @@ Public MustInherit Class AbstractDataName
                 End If
 
             Case CLAUSE_PERMISSIONS
-                If lstCurNameParts.Item(0) Is Nothing OrElse lstCurNameParts.Count < 1 Then
+                If lstCurNameParts.Count < 1 OrElse lstCurNameParts.Item(0) Is Nothing Then
                     'we've got to the end without finding an optional permissions clause.
                     lngResultVal = lngResultVal Or dnNameStatus.WARN_MISSING_PERMISSIONS_CLAUSE
                 Else
                     'system.console.WriteLine("CLAUSE_PERMISSIONS: " & curNameParts(0))
 
-                    If m_DNCL.isvalidPermissionsClause(lstCurNameParts.Item(0)) Then
+                    If m_DNCL.isValidPermissionsClause(lstCurNameParts.Item(0)) Then
                         'Permissions is present which is good, move on to the next thing but we don't care about
                         'short free text now, so we only need to know if there is more text
-                        If Not lstCurNameParts(1) Is Nothing Then
+                        If lstCurNameParts.Count > 1 Then
                             lngResultVal = lngResultVal Or dnNameStatus.INFO_FREE_TEXT_PRESENT
                             ''system.console.WriteLine("free-text A ")
                         End If
@@ -903,7 +903,8 @@ Public MustInherit Class AbstractDataName
             Case CLAUSE_FREETEXT
                 ''system.console.WriteLine("free-text  " & curNameParts(0))
 
-                If lstCurNameParts.Item(0) Is Nothing OrElse lstCurNameParts.Count < 1 Then
+                'If lstCurNameParts.Item(0) Is Nothing OrElse lstCurNameParts.Count < 1 Then
+                If lstCurNameParts.Count < 1 OrElse lstCurNameParts.Item(0) Is Nothing Then
                     'we've got to the end without finding any free text
                 Else
                     'system.console.WriteLine("CLAUSE_FREETEXT: " & curNameParts(0))

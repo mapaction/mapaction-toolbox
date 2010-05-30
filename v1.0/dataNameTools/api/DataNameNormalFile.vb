@@ -1,6 +1,5 @@
 ﻿Imports System.IO
 
-'todo HIGH: check the name of the XXXX factory class
 ''' <summary>
 ''' Provides a specfic implenmentation of the IDataName, based on files which
 ''' are "normal" operating system files and are not a component of a logical
@@ -11,8 +10,9 @@
 ''' are "normal" operating system files and are not a component of a logical
 ''' GIS file (eg shapefiles)
 '''
-''' There is no public constructor for this class. New instances should be generated using 
-''' the XXXX factory class.
+''' There is no public constructor for this class. New instances should
+''' be generated using the getLayerDataNamesList() method of a relevant
+''' IDataListConnection object.
 '''  </remarks>
 Public Class DataNameNormalFile
     Inherits AbstractDataName
@@ -68,7 +68,6 @@ Public Class DataNameNormalFile
         Return m_fInfo.FullName
     End Function
 
-    'todo HIGH check that this shouldn't be an enumeration type
     ''' <summary>
     ''' Generally assumed to be a table for the non-GIS files.
     ''' </summary>
