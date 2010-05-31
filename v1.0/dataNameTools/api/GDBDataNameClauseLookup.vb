@@ -145,19 +145,19 @@ Public Class GDBDataNameClauseLookup
                 Throw New ArgumentException("GeoDatabase type not recgonised")
             End If
 
-        ElseIf Not m_fInfoPath.Exists() Then
+        ElseIf m_fInfoPath.Exists() Then
             Select Case m_fInfoPath.Extension
                 Case ".mdb"
                     '"Provider=ESRI.GeoDB.OLEDB.1;{0};Extended Properties=WorkspaceType= esriCore.AccessWorkspaceFactory.1;Geometry={1}"
                     'strConnectPattern = System.Configuration.ConfigurationManager.AppSettings.Item(APP_CONF_GDB_PERSONAL_OLE_CONNECT_STRING)
                     strConnectPattern = GDB_PERSONAL_OLE_CONNECT_STRING
-                    strConnection = String.Format(strConnectPattern, strConnectPattern, strGeoDBType)
+                    strConnection = String.Format(strConnectPattern, m_fInfoPath.FullName, strGeoDBType)
 
                 Case ".sde", ".ags", ".gds"
                     '"Provider=ESRI.GeoDB.OLEDB.1;Extended Properties=WorkspaceType= esriDataSourcesGDB.SDEWorkspaceFactory.1;ConnectionFile={0}"
                     'strConnectPattern = System.Configuration.ConfigurationManager.AppSettings.Item(APP_CONF_GDB_SDE_OLE_CONNECT_STRING)
                     strConnectPattern = GDB_SDE_OLE_CONNECT_STRING
-                    strConnection = String.Format(strConnectPattern, strConnectPattern)
+                    strConnection = String.Format(strConnectPattern, m_fInfoPath.FullName)
 
                 Case Else
                     Throw New ArgumentException("GeoDatabase type not recgonised")
@@ -167,6 +167,8 @@ Public Class GDBDataNameClauseLookup
             Throw New ArgumentException("Invalid path passed to New GDBDataNameClauseLookup(fileInfoArg)")
 
         End If
+
+        'System.Console.WriteLine("getDBDataAdapter() strConnection: " & strConnection)
 
         oleDBConnection = New OleDbConnection(strConnection)
         oleDBConnection.Open()
