@@ -1,12 +1,12 @@
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cli\bin\Release\maDataNameChecker.exe
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cli\bin\Release\maDataNameChecker.pdb
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cli\bin\Release\maDataNameChecker.xml
-D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cli\bin\Release\api.dll
-D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cli\bin\Release\api.pdb
-D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cli\bin\Release\api.xml
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cli\obj\Release\ResolveAssemblyReference.cache
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cli\obj\Release\mapaction.datanames.cli.Resources.resources
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cli\obj\Release\cli.vbproj.GenerateResource.Cache
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cli\obj\Release\maDataNameChecker.exe
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cli\obj\Release\maDataNameChecker.xml
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cli\obj\Release\maDataNameChecker.pdb
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cli\bin\Release\mapaction.datanames.api.dll
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cli\bin\Release\mapaction.datanames.api.pdb
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cli\bin\Release\mapaction.datanames.api.xml

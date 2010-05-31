@@ -131,7 +131,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
         '   da.MissingMappingAction = MissingMappingAction.Error
         ' but it doesn't for some reason. No idea why...!
         da.MissingMappingAction = MissingMappingAction.Passthrough
-        da.MissingSchemaAction = MissingSchemaAction.Error
+        da.MissingSchemaAction = MissingSchemaAction.Add
         da.FillLoadOption = LoadOption.OverwriteChanges
 
         Try

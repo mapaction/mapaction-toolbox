@@ -24,8 +24,8 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Me.lblFilePath = New System.Windows.Forms.Label
         Me.btnProcess = New System.Windows.Forms.Button
         Me.rdbSelectCurMap = New System.Windows.Forms.RadioButton
@@ -40,6 +40,13 @@ Partial Class frmMain
         Me.btnBrowse = New System.Windows.Forms.Button
         Me.lblProgress = New System.Windows.Forms.Label
         Me.datGV_NameList = New System.Windows.Forms.DataGridView
+        Me.clmFileName = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.clmStatus = New System.Windows.Forms.DataGridViewCheckBoxColumn
+        Me.clmWarning = New System.Windows.Forms.DataGridViewCheckBoxColumn
+        Me.clmError = New System.Windows.Forms.DataGridViewCheckBoxColumn
+        Me.clmStatusIcon = New System.Windows.Forms.DataGridViewImageColumn
+        Me.clmComments = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.clmRename = New System.Windows.Forms.DataGridViewButtonColumn
         Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog
         Me.timerCheckForMXD = New System.Windows.Forms.Timer(Me.components)
         Me.lblDataStatus = New System.Windows.Forms.Label
@@ -53,13 +60,6 @@ Partial Class frmMain
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel
         Me.Panel1 = New System.Windows.Forms.Panel
-        Me.clmFileName = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.clmStatus = New System.Windows.Forms.DataGridViewCheckBoxColumn
-        Me.clmWarning = New System.Windows.Forms.DataGridViewCheckBoxColumn
-        Me.clmError = New System.Windows.Forms.DataGridViewCheckBoxColumn
-        Me.clmStatusIcon = New System.Windows.Forms.DataGridViewImageColumn
-        Me.clmComments = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.clmRename = New System.Windows.Forms.DataGridViewButtonColumn
         Me.GroupBox1.SuspendLayout()
         CType(Me.datGV_NameList, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
@@ -86,9 +86,10 @@ Partial Class frmMain
         Me.btnProcess.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.btnProcess.Enabled = False
         Me.btnProcess.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.btnProcess.Location = New System.Drawing.Point(818, 153)
+        Me.btnProcess.Location = New System.Drawing.Point(633, 146)
+        Me.btnProcess.Margin = New System.Windows.Forms.Padding(10)
         Me.btnProcess.Name = "btnProcess"
-        Me.btnProcess.Size = New System.Drawing.Size(94, 23)
+        Me.btnProcess.Size = New System.Drawing.Size(80, 23)
         Me.btnProcess.TabIndex = 14
         Me.btnProcess.Text = "PROCESS"
         Me.btnProcess.UseVisualStyleBackColor = False
@@ -127,9 +128,10 @@ Partial Class frmMain
         'btnClose
         '
         Me.btnClose.Dock = System.Windows.Forms.DockStyle.Top
-        Me.btnClose.Location = New System.Drawing.Point(818, 3)
+        Me.btnClose.Location = New System.Drawing.Point(633, 10)
+        Me.btnClose.Margin = New System.Windows.Forms.Padding(10)
         Me.btnClose.Name = "btnClose"
-        Me.btnClose.Size = New System.Drawing.Size(94, 23)
+        Me.btnClose.Size = New System.Drawing.Size(80, 23)
         Me.btnClose.TabIndex = 13
         Me.btnClose.Text = "Close"
         Me.btnClose.UseVisualStyleBackColor = True
@@ -147,7 +149,7 @@ Partial Class frmMain
         Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox1.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(809, 83)
+        Me.GroupBox1.Size = New System.Drawing.Size(617, 83)
         Me.GroupBox1.TabIndex = 15
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Select Source for Layers"
@@ -227,141 +229,8 @@ Partial Class frmMain
         Me.datGV_NameList.Name = "datGV_NameList"
         Me.datGV_NameList.ReadOnly = True
         Me.datGV_NameList.RowHeadersVisible = False
-        Me.datGV_NameList.Size = New System.Drawing.Size(915, 252)
+        Me.datGV_NameList.Size = New System.Drawing.Size(723, 122)
         Me.datGV_NameList.TabIndex = 21
-        '
-        'OpenFileDialog
-        '
-        Me.OpenFileDialog.Title = "Hello World"
-        '
-        'timerCheckForMXD
-        '
-        Me.timerCheckForMXD.Interval = 100000
-        '
-        'lblDataStatus
-        '
-        Me.lblDataStatus.AutoSize = True
-        Me.lblDataStatus.Location = New System.Drawing.Point(662, 93)
-        Me.lblDataStatus.Name = "lblDataStatus"
-        Me.lblDataStatus.Size = New System.Drawing.Size(85, 13)
-        Me.lblDataStatus.TabIndex = 23
-        Me.lblDataStatus.Text = "Current data fine"
-        Me.lblDataStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'txtBxDNLookupPath
-        '
-        Me.txtBxDNLookupPath.Enabled = False
-        Me.txtBxDNLookupPath.Location = New System.Drawing.Point(9, 42)
-        Me.txtBxDNLookupPath.Name = "txtBxDNLookupPath"
-        Me.txtBxDNLookupPath.ReadOnly = True
-        Me.txtBxDNLookupPath.Size = New System.Drawing.Size(497, 20)
-        Me.txtBxDNLookupPath.TabIndex = 24
-        '
-        'ckBxOverrideLookupDB
-        '
-        Me.ckBxOverrideLookupDB.AutoSize = True
-        Me.ckBxOverrideLookupDB.Location = New System.Drawing.Point(17, 19)
-        Me.ckBxOverrideLookupDB.Name = "ckBxOverrideLookupDB"
-        Me.ckBxOverrideLookupDB.Size = New System.Drawing.Size(72, 17)
-        Me.ckBxOverrideLookupDB.TabIndex = 26
-        Me.ckBxOverrideLookupDB.Text = "(Override)"
-        Me.ckBxOverrideLookupDB.UseVisualStyleBackColor = True
-        '
-        'btnBrowseLookup
-        '
-        Me.btnBrowseLookup.Enabled = False
-        Me.btnBrowseLookup.Location = New System.Drawing.Point(521, 42)
-        Me.btnBrowseLookup.Name = "btnBrowseLookup"
-        Me.btnBrowseLookup.Size = New System.Drawing.Size(75, 23)
-        Me.btnBrowseLookup.TabIndex = 27
-        Me.btnBrowseLookup.Text = "Browse..."
-        Me.btnBrowseLookup.UseVisualStyleBackColor = True
-        '
-        'GroupBox2
-        '
-        Me.GroupBox2.Controls.Add(Me.txtBxDNLookupPath)
-        Me.GroupBox2.Controls.Add(Me.ckBxOverrideLookupDB)
-        Me.GroupBox2.Controls.Add(Me.btnBrowseLookup)
-        Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupBox2.Location = New System.Drawing.Point(3, 92)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(809, 84)
-        Me.GroupBox2.TabIndex = 28
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Data Name Clause Lookup"
-        '
-        'DataGridViewImageColumn1
-        '
-        Me.DataGridViewImageColumn1.HeaderText = "Status"
-        Me.DataGridViewImageColumn1.Image = Global.MA_DataNamer.My.Resources.Resources.Yes
-        Me.DataGridViewImageColumn1.Name = "DataGridViewImageColumn1"
-        Me.DataGridViewImageColumn1.ReadOnly = True
-        Me.DataGridViewImageColumn1.ToolTipText = "File status: Valid, Warning, Error"
-        '
-        'imgLatestDataLoaded
-        '
-        Me.imgLatestDataLoaded.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.imgLatestDataLoaded.ErrorImage = CType(resources.GetObject("imgLatestDataLoaded.ErrorImage"), System.Drawing.Image)
-        Me.imgLatestDataLoaded.Image = Global.MA_DataNamer.My.Resources.Resources.TrafficLightRed2
-        Me.imgLatestDataLoaded.InitialImage = CType(resources.GetObject("imgLatestDataLoaded.InitialImage"), System.Drawing.Image)
-        Me.imgLatestDataLoaded.Location = New System.Drawing.Point(818, 3)
-        Me.imgLatestDataLoaded.Name = "imgLatestDataLoaded"
-        Me.imgLatestDataLoaded.Size = New System.Drawing.Size(94, 83)
-        Me.imgLatestDataLoaded.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.imgLatestDataLoaded.TabIndex = 22
-        Me.imgLatestDataLoaded.TabStop = False
-        '
-        'TableLayoutPanel1
-        '
-        Me.TableLayoutPanel1.ColumnCount = 2
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.GroupBox2, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.GroupBox1, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.imgLatestDataLoaded, 1, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.btnProcess, 1, 1)
-        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
-        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 2
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(915, 179)
-        Me.TableLayoutPanel1.TabIndex = 29
-        '
-        'FlowLayoutPanel1
-        '
-        Me.FlowLayoutPanel1.Controls.Add(Me.lblProgress)
-        Me.FlowLayoutPanel1.Controls.Add(Me.pgbProgressBar)
-        Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(3, 3)
-        Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(809, 40)
-        Me.FlowLayoutPanel1.TabIndex = 30
-        '
-        'TableLayoutPanel2
-        '
-        Me.TableLayoutPanel2.ColumnCount = 2
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
-        Me.TableLayoutPanel2.Controls.Add(Me.btnClose, 1, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.FlowLayoutPanel1, 0, 0)
-        Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(0, 431)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 1
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(915, 46)
-        Me.TableLayoutPanel2.TabIndex = 31
-        '
-        'Panel1
-        '
-        Me.Panel1.Controls.Add(Me.datGV_NameList)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel1.Location = New System.Drawing.Point(0, 179)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(915, 252)
-        Me.Panel1.TabIndex = 32
         '
         'clmFileName
         '
@@ -420,9 +289,9 @@ Partial Class frmMain
         '
         'clmComments
         '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.clmComments.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.clmComments.DefaultCellStyle = DataGridViewCellStyle3
         Me.clmComments.FillWeight = 350.0!
         Me.clmComments.HeaderText = "Comments, Warnings and Errors"
         Me.clmComments.MinimumWidth = 250
@@ -432,9 +301,9 @@ Partial Class frmMain
         '
         'clmRename
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ActiveBorder
-        Me.clmRename.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.ActiveBorder
+        Me.clmRename.DefaultCellStyle = DataGridViewCellStyle4
         Me.clmRename.DividerWidth = 10
         Me.clmRename.FillWeight = 75.0!
         Me.clmRename.FlatStyle = System.Windows.Forms.FlatStyle.System
@@ -446,17 +315,150 @@ Partial Class frmMain
         Me.clmRename.UseColumnTextForButtonValue = True
         Me.clmRename.Width = 75
         '
-        'Main
+        'OpenFileDialog
+        '
+        Me.OpenFileDialog.Title = "Hello World"
+        '
+        'timerCheckForMXD
+        '
+        Me.timerCheckForMXD.Interval = 100000
+        '
+        'lblDataStatus
+        '
+        Me.lblDataStatus.AutoSize = True
+        Me.lblDataStatus.Location = New System.Drawing.Point(662, 93)
+        Me.lblDataStatus.Name = "lblDataStatus"
+        Me.lblDataStatus.Size = New System.Drawing.Size(85, 13)
+        Me.lblDataStatus.TabIndex = 23
+        Me.lblDataStatus.Text = "Current data fine"
+        Me.lblDataStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'txtBxDNLookupPath
+        '
+        Me.txtBxDNLookupPath.Enabled = False
+        Me.txtBxDNLookupPath.Location = New System.Drawing.Point(9, 42)
+        Me.txtBxDNLookupPath.Name = "txtBxDNLookupPath"
+        Me.txtBxDNLookupPath.ReadOnly = True
+        Me.txtBxDNLookupPath.Size = New System.Drawing.Size(497, 20)
+        Me.txtBxDNLookupPath.TabIndex = 24
+        '
+        'ckBxOverrideLookupDB
+        '
+        Me.ckBxOverrideLookupDB.AutoSize = True
+        Me.ckBxOverrideLookupDB.Location = New System.Drawing.Point(17, 19)
+        Me.ckBxOverrideLookupDB.Name = "ckBxOverrideLookupDB"
+        Me.ckBxOverrideLookupDB.Size = New System.Drawing.Size(72, 17)
+        Me.ckBxOverrideLookupDB.TabIndex = 26
+        Me.ckBxOverrideLookupDB.Text = "(Override)"
+        Me.ckBxOverrideLookupDB.UseVisualStyleBackColor = True
+        '
+        'btnBrowseLookup
+        '
+        Me.btnBrowseLookup.Enabled = False
+        Me.btnBrowseLookup.Location = New System.Drawing.Point(521, 42)
+        Me.btnBrowseLookup.Name = "btnBrowseLookup"
+        Me.btnBrowseLookup.Size = New System.Drawing.Size(75, 23)
+        Me.btnBrowseLookup.TabIndex = 27
+        Me.btnBrowseLookup.Text = "Browse..."
+        Me.btnBrowseLookup.UseVisualStyleBackColor = True
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.txtBxDNLookupPath)
+        Me.GroupBox2.Controls.Add(Me.ckBxOverrideLookupDB)
+        Me.GroupBox2.Controls.Add(Me.btnBrowseLookup)
+        Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupBox2.Location = New System.Drawing.Point(3, 92)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(617, 84)
+        Me.GroupBox2.TabIndex = 28
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "Data Name Clause Lookup"
+        '
+        'DataGridViewImageColumn1
+        '
+        Me.DataGridViewImageColumn1.HeaderText = "Status"
+        Me.DataGridViewImageColumn1.Image = Global.MA_DataNamer.My.Resources.Resources.Yes
+        Me.DataGridViewImageColumn1.Name = "DataGridViewImageColumn1"
+        Me.DataGridViewImageColumn1.ReadOnly = True
+        Me.DataGridViewImageColumn1.ToolTipText = "File status: Valid, Warning, Error"
+        '
+        'imgLatestDataLoaded
+        '
+        Me.imgLatestDataLoaded.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.imgLatestDataLoaded.ErrorImage = CType(resources.GetObject("imgLatestDataLoaded.ErrorImage"), System.Drawing.Image)
+        Me.imgLatestDataLoaded.Image = Global.MA_DataNamer.My.Resources.Resources.TrafficLightRed2
+        Me.imgLatestDataLoaded.InitialImage = CType(resources.GetObject("imgLatestDataLoaded.InitialImage"), System.Drawing.Image)
+        Me.imgLatestDataLoaded.Location = New System.Drawing.Point(626, 3)
+        Me.imgLatestDataLoaded.Name = "imgLatestDataLoaded"
+        Me.imgLatestDataLoaded.Size = New System.Drawing.Size(94, 83)
+        Me.imgLatestDataLoaded.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.imgLatestDataLoaded.TabIndex = 22
+        Me.imgLatestDataLoaded.TabStop = False
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.ColumnCount = 2
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.GroupBox2, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.GroupBox1, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.imgLatestDataLoaded, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.btnProcess, 1, 1)
+        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 2
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(723, 179)
+        Me.TableLayoutPanel1.TabIndex = 29
+        '
+        'FlowLayoutPanel1
+        '
+        Me.FlowLayoutPanel1.Controls.Add(Me.lblProgress)
+        Me.FlowLayoutPanel1.Controls.Add(Me.pgbProgressBar)
+        Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(3, 3)
+        Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(617, 40)
+        Me.FlowLayoutPanel1.TabIndex = 30
+        '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.ColumnCount = 2
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.btnClose, 1, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.FlowLayoutPanel1, 0, 0)
+        Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(0, 301)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 1
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(723, 46)
+        Me.TableLayoutPanel2.TabIndex = 31
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.datGV_NameList)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel1.Location = New System.Drawing.Point(0, 179)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(723, 122)
+        Me.Panel1.TabIndex = 32
+        '
+        'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(915, 477)
+        Me.ClientSize = New System.Drawing.Size(723, 347)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.TableLayoutPanel2)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Controls.Add(Me.lblDataStatus)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Name = "Main"
+        Me.Name = "frmMain"
         Me.Text = "MapAction Data Namer"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()

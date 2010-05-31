@@ -63,14 +63,13 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
         '''&lt;xs:schema id=&quot;dncl&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;
-        '''  &lt;xs:element name=&quot;dncl&quot; msdata:IsDataSet=&quot;true&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;
+        '''  &lt;xs:element name=&quot;DataNameClauseLookup&quot; msdata:IsDataSet=&quot;true&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;
         '''    &lt;xs:complexType&gt;
         '''      &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;
         '''        &lt;xs:element name=&quot;datanaming_clause_geoextent&quot;&gt;
         '''          &lt;xs:complexType&gt;
         '''            &lt;xs:sequence&gt;
-        '''              &lt;xs:element name=&quot;clause&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;
-        '''               [rest of string was truncated]&quot;;.
+        '''              &lt;xs:element name=&quot;clause&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt; [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property datanameclauselookup_schema_v1_0() As String
             Get
