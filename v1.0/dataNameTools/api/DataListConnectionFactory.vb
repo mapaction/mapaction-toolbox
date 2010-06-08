@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports ESRI.ArcGIS.ArcMapUI
+Imports ESRI.ArcGIS.Framework
 
 ''' <summary>
 ''' A factory class for generating IDataListConnection objects.
@@ -117,7 +118,16 @@ Public Class DataListConnectionFactory
             'See if the first argument is a valid file or directory
             fInfoArgs = New FileInfo(strAryArgs(0))
 
-            If (fInfoArgs.Attributes And FileAttributes.Directory) = FileAttributes.Directory Then
+
+            If fInfoArgs.Exists() Then
+                'args(0) is a file
+                'therefore it is either a personal GDB, a GDB connection file or an MXD
+                If fInfoArgs.Extension = ".mxd" Then
+                    dlcResult = createDataListConnection(dnListType.MXD, strAryArgs)
+                Else
+                    dlcResult = createDataListConnection(dnListType.GDB, strAryArgs)
+                End If
+            ElseIf (New DirectoryInfo(fInfoArgs.FullName)).Exists() Then
                 'args(0) is a directory
                 'therefore it is either a filebasedGDB or a normal directory
                 If fInfoArgs.FullName.EndsWith(".gdb") Then
@@ -126,14 +136,6 @@ Public Class DataListConnectionFactory
                     dlcResult = createDataListConnection(dnListType.DIR, strAryArgs)
                 End If
 
-            ElseIf fInfoArgs.Exists() Then
-                'args(0) is a file
-                'therefore it is either a personal GDB, a GDB connection file or an MXD
-                If fInfoArgs.Extension = ".mxd" Then
-                    dlcResult = createDataListConnection(dnListType.MXD, strAryArgs)
-                Else
-                    dlcResult = createDataListConnection(dnListType.GDB, strAryArgs)
-                End If
             Else
                 'args(0) is neither a file nor a directory, hence we will try it as a list of
                 'connection proporties
@@ -170,20 +172,25 @@ Public Class DataListConnectionFactory
     End Function
 
 
-    ''' <summary>
-    ''' Creates a new IDataListConnection (specifically a DataListMXDConnection) 
-    ''' based on the reference to the IMxDocument object from within ArcMap.
-    ''' </summary>
-    ''' <param name="mxMap">A reference to the IMxDocument object from within 
-    ''' ArcMap.</param>
-    ''' <returns>An IDataListConnection based on the MXD currently loaded
-    ''' into ArcMap.</returns>
-    ''' <remarks>
-    ''' Creates a new IDataListConnection (specifically a DataListMXDConnection) 
-    ''' based on the reference to the IMxDocument object from within ArcMap.
-    ''' </remarks>
-    Public Function createDataListConnection(ByRef mxMap As IMxDocument) As IDataListConnection
-        Return New DataListMXDConnection(mxMap)
+    '''' <summary>
+    '''' Creates a new IDataListConnection (specifically a DataListMXDConnection) 
+    '''' based on the reference to the IMxDocument object from within ArcMap.
+    '''' </summary>
+    '''' <param name="mxMap">A reference to the IMxDocument object from within 
+    '''' ArcMap.</param>
+    '''' <returns>An IDataListConnection based on the MXD currently loaded
+    '''' into ArcMap.</returns>
+    '''' <remarks>
+    '''' Creates a new IDataListConnection (specifically a DataListMXDConnection) 
+    '''' based on the reference to the IMxDocument object from within ArcMap.
+    '''' </remarks>
+    'Public Function createDataListConnection(ByRef mxMap As IMxDocument) As IDataListConnection
+    '    Return New DataListMXDConnection(mxMap)
+    'End Function
+
+    'todo HIGH test this
+    Public Function createDataListConnection(ByRef app As IApplication) As IDataListConnection
+        Return New DataListMXDConnection(app)
     End Function
 
 End Class

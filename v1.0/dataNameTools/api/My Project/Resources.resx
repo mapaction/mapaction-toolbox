@@ -121,4 +121,10 @@
   <data name="datanameclauselookup_schema_v1_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\datanameclauselookup_schema_v1.0.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="fallbackMDBfilename" xml:space="preserve">
+    <value>fall_back_data_naming_conventions_v1.0.mdb</value>
+  </data>
+  <data name="fall_back_data_naming_conventions_v1_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\fall_back_data_naming_conventions_v1.0.mdb;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

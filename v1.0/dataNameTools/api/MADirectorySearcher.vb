@@ -97,13 +97,15 @@ Friend Module MADirectorySearcher
     ''' </remarks>
     Private Function getMARootDir(ByRef fInfoArg As FileInfo) As DirectoryInfo
         Dim dInfoRoot As DirectoryInfo
+        Dim dInfo As DirectoryInfo
 
-        If (fInfoArg.Attributes And FileAttributes.Directory) = FileAttributes.Directory Then
-            Dim dInfo As DirectoryInfo
+        dInfo = New DirectoryInfo(fInfoArg.FullName)
+
+        If fInfoArg.Exists() Then
+            dInfoRoot = getMARootDir(fInfoArg.Directory)
+        ElseIf dInfo.Exists() Then
             dInfo = New DirectoryInfo(fInfoArg.FullName)
             dInfoRoot = getMARootDir(dInfo)
-        ElseIf fInfoArg.Exists() Then
-            dInfoRoot = getMARootDir(fInfoArg.Directory)
         Else
             Throw New ArgumentException("File not found " & fInfoArg.FullName)
         End If
@@ -289,24 +291,11 @@ Friend Module MADirectorySearcher
     ''' </remarks>
     Friend Function getESRIWorkspaceFromFile(ByVal fInfo As FileInfo) As IWorkspace
         Dim wkspReturnRef As ESRI.ArcGIS.Geodatabase.IWorkspace = Nothing
+        Dim dInfo As DirectoryInfo
+        dInfo = New DirectoryInfo(fInfo.FullName)
 
         'Note fInfo.Exists() = FALSE if the file is a directory
-        If (fInfo.Attributes And FileAttributes.Directory) = FileAttributes.Directory Then
-            Dim dInfo As DirectoryInfo
-            dInfo = New DirectoryInfo(fInfo.FullName)
-
-            Dim wkspFactory2 As IWorkspaceFactory2
-
-            If dInfo.FullName.EndsWith(".gdb") Then
-                wkspFactory2 = New FileGDBWorkspaceFactoryClass
-                'myGDBtype = GDB_TYPE_FILEGDB
-            Else
-                wkspFactory2 = New ShapefileWorkspaceFactory
-            End If
-
-            wkspReturnRef = wkspFactory2.OpenFromFile(dInfo.FullName, 0)
-
-        ElseIf fInfo.Exists() Then
+        If fInfo.Exists() Then
             'Reference is to a file, it is either a Access DB, a connection file or an error
             Dim wkspFactory As IWorkspaceFactory
 
@@ -322,6 +311,17 @@ Friend Module MADirectorySearcher
             End Select
 
             wkspReturnRef = wkspFactory.OpenFromFile(fInfo.FullName, 0)
+        ElseIf dInfo.Exists() Then
+            Dim wkspFactory2 As IWorkspaceFactory2
+
+            If dInfo.FullName.EndsWith(".gdb") Then
+                wkspFactory2 = New FileGDBWorkspaceFactoryClass
+                'myGDBtype = GDB_TYPE_FILEGDB
+            Else
+                wkspFactory2 = New ShapefileWorkspaceFactory
+            End If
+
+            wkspReturnRef = wkspFactory2.OpenFromFile(dInfo.FullName, 0)
 
         Else
             'Reference is not to a file, it is either a directory or it does not exist

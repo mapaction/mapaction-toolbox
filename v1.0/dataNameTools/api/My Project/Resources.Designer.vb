@@ -76,5 +76,21 @@ Namespace My.Resources
                 Return ResourceManager.GetString("datanameclauselookup_schema_v1_0", resourceCulture)
             End Get
         End Property
+        
+        Friend ReadOnly Property fall_back_data_naming_conventions_v1_0() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("fall_back_data_naming_conventions_v1_0", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to fall_back_data_naming_conventions_v1.0.mdb.
+        '''</summary>
+        Friend ReadOnly Property fallbackMDBfilename() As String
+            Get
+                Return ResourceManager.GetString("fallbackMDBfilename", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace

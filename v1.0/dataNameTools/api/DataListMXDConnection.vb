@@ -104,31 +104,38 @@ Public Class DataListMXDConnection
     ''' Constructs a new MXD list based on the IMxDocument in the argument. This version
     ''' of the constructor assumes that we are operating in the an ArcMap environment
     ''' </summary>
-    ''' <param name="mxDoc">A IMxDocument passed from the parent ArcMap application .</param>
+    ''' <param name="app">A IApplication passed from the parent ArcMap application .</param>
     ''' <remarks>
     ''' Constructs a new MXD list based on the the IMxDocument in the argument. This version
     ''' of the constructor assumes that we are operating in the an ArcMap environment
     ''' 
     ''' This constuctor should only be call from within the relevant factory class.
     ''' </remarks>
-    Protected Friend Sub New(ByRef mxDoc As IMxDocument)
-        Dim appParent As IApplication
+    Protected Friend Sub New(ByRef app As IApplication)
+        'Protected Friend Sub New(ByRef mxDoc As IMxDocument)
+        'Dim appParent As IApplication
 
+        'mxDoc.
         'set the mapdoc reference
-        m_MxDocument = mxDoc
-        m_blnMxDocument = True
+        'just to be clear that this may throw an error
+        Try
+            m_MxDocument = CType(app.Document, IMxDocument)
+            m_blnMxDocument = True
+        Catch ex As Exception
+            Throw ex
+        End Try
 
         'Now set the path name....
 
         'I cannot believe that this is the best way to find 
         'out the name of the current MXD in ArcMap!!!!
-        Dim t As Type = Type.GetTypeFromProgID("esriFramework.AppRef")
-        Dim obj As System.Object = Activator.CreateInstance(t)
-        Dim app As IApplication = CType(obj, IApplication)
-        appParent = app
+        'Dim t As Type = Type.GetTypeFromProgID("esriFramework.AppRef")
+        'Dim obj As System.Object = Activator.CreateInstance(t)
+        'Dim app As IApplication = CType(obj, IApplication)
+        'appParent = app
 
         ' get current MXD name
-        m_fInfoFullPath = New FileInfo(appParent.Templates.Item(appParent.Templates.Count - 1))
+        m_fInfoFullPath = New FileInfo(app.Templates.Item(app.Templates.Count - 1))
     End Sub
 
 

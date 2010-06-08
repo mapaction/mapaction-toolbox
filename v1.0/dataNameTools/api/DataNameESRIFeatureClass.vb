@@ -34,9 +34,13 @@ Public Class DataNameESRIFeatureClass
     ''' Create a new IDataName for the specified ESRI.ArcGIS.Geodatabase.IDataset.
     ''' </remarks>
     Protected Friend Sub New(ByVal ds As IDataset, ByRef dncl As IDataNameClauseLookup, ByVal blnAllowReNames As Boolean)
-        MyBase.new(removePrefixFromBrowseName(ds.BrowseName), dncl, blnAllowReNames)
+        MyBase.new(removePrefixFromBrowseName(ds), dncl, blnAllowReNames)
         m_DataSet = ds
         'System.Console.WriteLine("Testing ds.BrowseName: " & ds.BrowseName)
+        'ds.
+        'Dim a As ESRI.ArcGIS.Geodatabase.esriWorkspaceType
+        'a = 
+        'ds.Workspace.Type
     End Sub
 
     ''' <summary>
@@ -67,7 +71,7 @@ Public Class DataNameESRIFeatureClass
     ''' A private helper function to remove and RDBMS user, schema and/or database prefixes
     ''' from the Name string.
     ''' </summary>
-    ''' <param name="strBrowseName">The name of the table as it appears in the RDMS system.
+    ''' <param name="ds">The IDataset representing of the table/featureclass as it appears in the RDMS system.
     ''' </param>
     ''' <returns>The name of the table with the RDBMS user, schema and/or database prefixes
     ''' removed if necessary.</returns>
@@ -75,8 +79,12 @@ Public Class DataNameESRIFeatureClass
     ''' A private helper function to remove and RDBMS user, schema and/or database prefixes
     ''' from the Name string.
     ''' </remarks>
-    Private Shared Function removePrefixFromBrowseName(ByVal strBrowseName As String) As String
-        If strBrowseName.Contains(".") Then
+    Private Shared Function removePrefixFromBrowseName(ByVal ds As IDataset) As String
+        Dim strBrowseName As String
+        strBrowseName = ds.BrowseName
+
+        If ds.Workspace.Type <> esriWorkspaceType.esriFileSystemWorkspace And _
+            strBrowseName.Contains(".") Then
             Return strBrowseName.Substring(strBrowseName.LastIndexOf(".") + 1)
         Else
             Return strBrowseName
@@ -106,6 +114,16 @@ Public Class DataNameESRIFeatureClass
         Return strPath
     End Function
 
+    ''' <summary>
+    ''' Returns the underlying IDataSet Object.
+    ''' </summary>
+    ''' <returns>A object appropriate for the particular implenmentation</returns>
+    ''' <remarks>
+    ''' Returns the underlying IDataSet Object.
+    ''' </remarks>
+    Public Overrides Function getObject() As Object
+        Return m_DataSet
+    End Function
 
     ''' <summary>
     ''' Returns the fully qualified path and name of the current feature class as a String.

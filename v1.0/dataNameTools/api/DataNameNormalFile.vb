@@ -52,6 +52,17 @@ Public Class DataNameNormalFile
         Return m_fInfo.DirectoryName
     End Function
 
+    ''' <summary>
+    ''' Returns the underlying FileInfo Object.
+    ''' </summary>
+    ''' <returns>A object appropriate for the particular implenmentation</returns>
+    ''' <remarks>
+    ''' Returns the underlying FileInfo Object.
+    ''' </remarks>
+    Public Overrides Function getObject() As Object
+        Return m_fInfo
+    End Function
+
 
     ''' <summary>
     ''' Returns the fully qualified path and name of the current file as a String.

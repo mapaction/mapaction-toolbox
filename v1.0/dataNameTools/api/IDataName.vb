@@ -46,6 +46,19 @@ Public Interface IDataName
 
 
     ''' <summary>
+    ''' Allows the IDataName to return an object representing the dataset named 
+    ''' in this interface.
+    ''' </summary>
+    ''' <returns>A object appropriate for the particular implenmentation</returns>
+    ''' <remarks>
+    ''' Allows the IDataName to return an object representing the dataset named 
+    ''' in this interface. For DataNameESRIFeatureClass this is an IDataSet and for
+    ''' DataNameNormalFile this is a FileInfo object
+    ''' </remarks>
+    Function getObject() As Object
+
+
+    ''' <summary>
     ''' Returns the fully qualified IDataName as a String if possible.
     ''' </summary>
     ''' <returns>
@@ -183,7 +196,7 @@ Public Interface IDataName
     ''' </remarks>
     Sub rename(ByVal newNameStr As String)
 
-
+#Region "change methods"
     ''' <summary>
     ''' A convenance function, to subsutute the GeoExtent clause of the current name with a new value.
     ''' </summary>
@@ -313,5 +326,19 @@ Public Interface IDataName
     ''' .isRenameable()] or is not syntaticatally correct [test with .isNameParseable()]
     ''' </remarks>
     Sub changeFreeTextClause(ByVal newFreeTextClause As String)
+
+#End Region
+
+#Region "get name part methods"
+    Function getGeoExtentClause() As String
+    Function getDataCategoryClause() As String
+    Function getDataThemeClause() As String
+    Function getDataTypeClause() As String
+    Function getPermissionsClause() As String
+    Function getScaleClause() As String
+    Function getSourceClause() As String
+    Function getFreeTextClause() As String
+#End Region
+
 
 End Interface

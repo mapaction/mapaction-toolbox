@@ -134,18 +134,7 @@ Public Class GDBDataNameClauseLookup
         strGeoDBType = "WKB"
         'strGeoDBType = "OBJECT"
 
-        If ((m_fInfoPath.Attributes And FileAttributes.Directory) = FileAttributes.Directory) Then
-            If m_fInfoPath.FullName.EndsWith(".gdb") Then
-                '"Provider=ESRI.GeoDB.OLEDB.1;{0};Extended Properties=WorkspaceType= esriDataSourcesGDB.FileGDBWorkspaceFactory.1;Geometry={1}"
-                'strConnectPattern = System.Configuration.ConfigurationManager.AppSettings.Item(APP_CONF_GDB_FILE_OLE_CONNECT_STRING)
-                strConnectPattern = GDB_FILE_OLE_CONNECT_STRING
-                strConnection = String.Format(strConnectPattern, strConnectPattern, strGeoDBType)
-
-            Else
-                Throw New ArgumentException("GeoDatabase type not recgonised")
-            End If
-
-        ElseIf m_fInfoPath.Exists() Then
+        If m_fInfoPath.Exists() Then
             Select Case m_fInfoPath.Extension
                 Case ".mdb"
                     '"Provider=ESRI.GeoDB.OLEDB.1;{0};Extended Properties=WorkspaceType= esriCore.AccessWorkspaceFactory.1;Geometry={1}"
@@ -162,6 +151,16 @@ Public Class GDBDataNameClauseLookup
                 Case Else
                     Throw New ArgumentException("GeoDatabase type not recgonised")
             End Select
+
+        ElseIf (New DirectoryInfo(m_fInfoPath.FullName)).Exists() Then
+            If m_fInfoPath.FullName.EndsWith(".gdb") Then
+                '"Provider=ESRI.GeoDB.OLEDB.1;{0};Extended Properties=WorkspaceType= esriDataSourcesGDB.FileGDBWorkspaceFactory.1;Geometry={1}"
+                'strConnectPattern = System.Configuration.ConfigurationManager.AppSettings.Item(APP_CONF_GDB_FILE_OLE_CONNECT_STRING)
+                strConnectPattern = GDB_FILE_OLE_CONNECT_STRING
+                strConnection = String.Format(strConnectPattern, strConnectPattern, strGeoDBType)
+            Else
+                Throw New ArgumentException("GeoDatabase type not recgonised")
+            End If
 
         Else
             Throw New ArgumentException("Invalid path passed to New GDBDataNameClauseLookup(fileInfoArg)")
