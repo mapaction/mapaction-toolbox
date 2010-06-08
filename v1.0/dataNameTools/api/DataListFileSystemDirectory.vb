@@ -104,9 +104,9 @@ Public Class DataListFileSystemDirectory
         dncFact = DataNameClauseLookupFactory.getFactory()
 
         Try
-            dncl = dncFact.createDataNameClauseLookup(getMAActiveDataDir(m_DirInfo.FullName))
+            dncl = DataNameClauseLookupFactory.createDataNameClauseLookup(getMAActiveDataDir(m_DirInfo.FullName))
         Catch ex As Exception
-            dncl = dncFact.createDataNameClauseLookup(m_DirInfo)
+            dncl = DataNameClauseLookupFactory.createDataNameClauseLookup(m_DirInfo)
         End Try
 
         Return dncl
@@ -204,7 +204,7 @@ Public Class DataListFileSystemDirectory
         Dim lstDN As New List(Of IDataName)
         Dim blnAllowRenames As Boolean
 
-        blnAllowRenames = ((m_DirInfo.Attributes And FileAttributes.ReadOnly) = FileAttributes.ReadOnly)
+        blnAllowRenames = Not ((m_DirInfo.Attributes And FileAttributes.ReadOnly) = FileAttributes.ReadOnly)
 
         'open the GIS related files using an Arc Workspace
         'Don't recuse here becuase this is taken care of by the directory recursing below

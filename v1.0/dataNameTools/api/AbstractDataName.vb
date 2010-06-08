@@ -65,6 +65,18 @@ Public MustInherit Class AbstractDataName
     '''</remarks>
     Public MustOverride Function getPathStr() As String Implements IDataName.getPathStr
 
+    ''' <summary>
+    ''' Allows the IDataName to return an object representing the dataset named 
+    ''' in this interface.
+    ''' </summary>
+    ''' <returns>A object appropriate for the particular implenmentation</returns>
+    ''' <remarks>
+    ''' Allows the IDataName to return an object representing the dataset named 
+    ''' in this interface. For DataNameESRIFeatureClass this is an IDataSet and for
+    ''' DataNameNormalFile this is a FileInfo object
+    ''' </remarks>
+    Public MustOverride Function getObject() As Object Implements IDataName.getObject
+
 
     ''' <summary>
     ''' This method is used to check that the data type clause matches actually physical data type.
@@ -348,6 +360,39 @@ Public MustInherit Class AbstractDataName
     ''' </remarks>
     Public MustOverride Sub performRename(ByVal newNameStr As String)
 
+#Region "get methods"
+    Public Function getGeoExtentClause() As String Implements IDataName.getGeoExtentClause
+        Return getNameClause(CLAUSE_GEOEXTENT)
+    End Function
+
+    Public Function getDataCategoryClause() As String Implements IDataName.getDataCategoryClause
+        Return getNameClause(CLAUSE_DATACATEGORY)
+    End Function
+
+    Public Function getDataThemeClause() As String Implements IDataName.getDataThemeClause
+        Return getNameClause(CLAUSE_DATATHEME)
+    End Function
+
+    Public Function getDataTypeClause() As String Implements IDataName.getDataTypeClause
+        Return getNameClause(CLAUSE_DATATYPE)
+    End Function
+
+    Public Function getPermissionsClause() As String Implements IDataName.getPermissionsClause
+        Return getNameClause(CLAUSE_PERMISSIONS)
+    End Function
+    Public Function getScaleClause() As String Implements IDataName.getScaleClause
+        Return getNameClause(CLAUSE_SCALE)
+    End Function
+    Public Function getSourceClause() As String Implements IDataName.getSourceClause
+        Return getNameClause(CLAUSE_SOURCE)
+    End Function
+    Public Function getFreeTextClause() As String Implements IDataName.getFreeTextClause
+        Return getNameClause(CLAUSE_FREETEXT)
+    End Function
+
+#End Region
+
+#Region "change methods"
 
     ''' <summary>
     ''' A convenance function, to subsutute the GeoExtent clause of the current name with a new value.
@@ -502,6 +547,7 @@ Public MustInherit Class AbstractDataName
         rename(generateNameWithReplacedClause(strNewFreeText, CLAUSE_FREETEXT))
     End Sub
 
+#End Region
 
     ''' <summary>
     ''' The method does NOT alter the underlying DataName - for that use the rename function. This function is 
@@ -586,6 +632,28 @@ Public MustInherit Class AbstractDataName
         Return stbNewVal.ToString()
     End Function
 
+
+    Private Function getNameClause(ByVal strClauseName As String) As String
+        Dim strClause As String
+        Dim lstNameParts As New List(Of String)
+        Dim srtClauseIdx As Short
+
+        If Not isNameParseable() Then
+            Throw New ErroreousDataNameException(checkNameStatus())
+        Else
+            lstNameParts.AddRange(Strings.Split(m_strName, "_"))
+            srtClauseIdx = getClauseIndex(strClauseName)
+
+            If srtClauseIdx = -1 Then
+                strClause = Nothing
+            Else
+                strClause = lstNameParts.Item(srtClauseIdx)
+            End If
+
+        End If
+
+        Return strClause
+    End Function
 
     ''' <summary>
     ''' Returns a ZERO based index of the named clause for the current IDataName, accounting for 

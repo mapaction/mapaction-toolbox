@@ -53,6 +53,17 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=|DataDirectory|\fall_back_data_namin"& _ 
+            "g_conventions_v1.0.mdb;Persist Security Info=True")>  _
+        Public ReadOnly Property data_naming_conventions_v0_9ConnectionString() As String
+            Get
+                Return CType(Me("data_naming_conventions_v0_9ConnectionString"),String)
+            End Get
+        End Property
     End Class
 End Namespace
 

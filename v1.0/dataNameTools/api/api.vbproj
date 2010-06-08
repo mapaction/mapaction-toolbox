@@ -81,6 +81,11 @@
     <Compile Include="ErroreousDataNameException.vb" />
     <Compile Include="DataListConnectionFactory.vb" />
     <Compile Include="ESRIlicenceHandler.vb" />
+    <Compile Include="fallback_data_naming_conventions_v1_0.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>fallback_data_naming_conventions_v1_0.xsd</DependentUpon>
+    </Compile>
     <Compile Include="FileInfoComparer.vb" />
     <Compile Include="GDBDataNameClauseLookup.vb" />
     <Compile Include="IDataListConnection.vb" />
@@ -131,6 +136,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="datanameclauselookup_schema_v1.0.xml" />
+    <None Include="fallback_data_naming_conventions_v1_0.xsc">
+      <DependentUpon>fallback_data_naming_conventions_v1_0.xsd</DependentUpon>
+    </None>
+    <None Include="fallback_data_naming_conventions_v1_0.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>fallback_data_naming_conventions_v1_0.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="fallback_data_naming_conventions_v1_0.xss">
+      <DependentUpon>fallback_data_naming_conventions_v1_0.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fall_back_data_naming_conventions_v1.0.mdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,6 +6,15 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "cli", "cli\cli.vbproj", "{7E7BE5CC-74CE-41E4-A8EB-1E753F99072B}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "setup", "setup\setup.vdproj", "{58B69D4E-A501-48F2-8C0A-D015018C7979}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BA705B1E-278F-40A2-AE26-84875A0485A9} = {BA705B1E-278F-40A2-AE26-84875A0485A9}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "gui", "gui\gui.vbproj", "{36C25405-968F-4227-BC2E-A44028CF13D0}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ArcToolBars", "ArcToolBars\ArcToolBars.vbproj", "{BA705B1E-278F-40A2-AE26-84875A0485A9}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "cartotools", "cartotools\cartotools.vbproj", "{8E2CC15D-A244-4AE9-A9B0-4F4BF911BB6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +33,19 @@ Global
 		{58B69D4E-A501-48F2-8C0A-D015018C7979}.Debug|Any CPU.ActiveCfg = Release
 		{58B69D4E-A501-48F2-8C0A-D015018C7979}.Debug|Any CPU.Build.0 = Release
 		{58B69D4E-A501-48F2-8C0A-D015018C7979}.Release|Any CPU.ActiveCfg = Release
+		{58B69D4E-A501-48F2-8C0A-D015018C7979}.Release|Any CPU.Build.0 = Release
+		{36C25405-968F-4227-BC2E-A44028CF13D0}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{36C25405-968F-4227-BC2E-A44028CF13D0}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{36C25405-968F-4227-BC2E-A44028CF13D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36C25405-968F-4227-BC2E-A44028CF13D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA705B1E-278F-40A2-AE26-84875A0485A9}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{BA705B1E-278F-40A2-AE26-84875A0485A9}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{BA705B1E-278F-40A2-AE26-84875A0485A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA705B1E-278F-40A2-AE26-84875A0485A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E2CC15D-A244-4AE9-A9B0-4F4BF911BB6E}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{8E2CC15D-A244-4AE9-A9B0-4F4BF911BB6E}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{8E2CC15D-A244-4AE9-A9B0-4F4BF911BB6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E2CC15D-A244-4AE9-A9B0-4F4BF911BB6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
