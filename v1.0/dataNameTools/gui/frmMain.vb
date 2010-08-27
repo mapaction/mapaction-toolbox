@@ -42,15 +42,15 @@ Public Class frmMain
                                             dListSelectorPnl.DataNameClauseLookup)
 
             m_tssLabel.Text = "Complete"
-            'm_tsProgBar.Visible = False
-            'm_tssProgLbl.Visible = False
+            m_tsProgBar.Visible = False
+            m_tssProgLbl.Visible = False
             m_tmrErrorDisplay.Enabled = True
         End If
 
     End Sub
 
     Private Sub updateProgDisplay(ByVal processed As Integer, ByVal total As Integer) Handles dNamesGridView.addRowsProgress
-        m_tsProgBar.Maximum = total + 3
+        m_tsProgBar.Maximum = total
         m_tsProgBar.Value = processed
 
         m_tssProgLbl.Text = String.Format("{0} out of {1} completed", processed, total)
