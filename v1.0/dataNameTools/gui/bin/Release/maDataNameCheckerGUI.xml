@@ -6,7 +6,19 @@ maDataNameCheckerGUI
 </name>
 </assembly>
 <members>
-<member name="M:mapaction.datanames.gui.DataListSelectorPanel.validatePath(System.String)">
+<member name="M:mapaction.datanames.gui.DataListSelectorPanel.validatePath(System.String,System.Boolean)">
+	<summary>
+ Attempts to reutrn a valid path based on the string provided.
+ </summary>
+	<param name="strUnvalidiatedPath"></param>
+	<remarks>
+ Attempts to reutrn a valid path based on the string provided.
+ 
+ If strUnvalidiatedPath points to a valid directory then m_strLastDataListPath the directory
+ If strUnvalidiatedPath points to a valid file then m_strLastDataListPath the file's directory
+ If strUnvalidiatedPath does not point to a valid file or directory then the value 'Nothing' is returned
+ </remarks>
+</member><member name="M:mapaction.datanames.gui.DataListSelectorPanel_orgional.validatePath(System.String)">
 	<summary>
  Sets the value of m_strLastDataListPath
  </summary>
@@ -31,6 +43,58 @@ maDataNameCheckerGUI
 </member><member name="T:mapaction.datanames.gui.My.Resources.Resources">
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="T:mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSet.datanaming_clause_data_categoriesDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSet.datanaming_clause_data_categoriesRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSet.datanaming_clause_data_categoriesRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSet">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSetTableAdapters.datanaming_clause_data_categoriesTableAdapter">
+	<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member><member name="M:mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSetTableAdapters.TableAdapterManager.UpdateUpdatedRows(mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSet,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Update rows in top-down order.
+</summary>
+</member><member name="M:mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSetTableAdapters.TableAdapterManager.UpdateInsertedRows(mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSet,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Insert rows in top-down order.
+</summary>
+</member><member name="M:mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSetTableAdapters.TableAdapterManager.UpdateDeletedRows(mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSet,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Delete rows in bottom-up order.
+</summary>
+</member><member name="M:mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSetTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member><member name="M:mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSetTableAdapters.TableAdapterManager.UpdateAll(mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSet)">
+	<summary>
+Update all changes to the dataset.
+</summary>
+</member><member name="T:mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSetTableAdapters.TableAdapterManager.UpdateOrderOption">
+	<summary>
+Update Order Option
+</summary>
+</member><member name="T:mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSetTableAdapters.TableAdapterManager.SelfReferenceComparer">
+	<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member><member name="T:mapaction.datanames.gui._fall_back_data_naming_conventions_v1_0DataSetTableAdapters.TableAdapterManager">
+	<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
 </summary>
 </member><member name="M:mapaction.datanames.gui.LicenseInitializer.LicenseMessage">
 	<summary>

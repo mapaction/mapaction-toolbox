@@ -54,6 +54,8 @@ Public Enum dnNameStatus As Long
     INVALID_SCALE = INVALID Or CLng(2 ^ 15)
     INVALID_SOURCE = INVALID Or CLng(2 ^ 16)
     INVALID_PERMISSIONS = INVALID Or CLng(2 ^ 17)
+    'INVALID_NOT_CHECKED is returned if only the syntax of the data name is check, and 
+    'not whether it conforms to the specified data name lookup tables.
 
     ' Syntax Errors
     ' Start at 2^20

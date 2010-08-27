@@ -108,7 +108,7 @@ Module maDataNameChecker
                 '' Third loop through IDataName details
                 '''''''''''''''''''
                 For Each dnCurrent In lstDNtoTest
-                    'todo Rewrite the way that the names are tested in the testingCommandline
+                    'todo MEDIUM: Rewrite the way that the names are tested in the testingCommandline
                     lngStatus = dnCurrent.checkNameStatus()
 
                     System.Console.WriteLine()

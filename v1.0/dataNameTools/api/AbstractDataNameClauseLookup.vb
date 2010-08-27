@@ -125,7 +125,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
         'Now get the DataAdapter from the implementing subclass
         da = getDBDataAdapter()
 
-        'todo HIGH resovle DataAdapter.MissingMappingAction problem
+        'todo HIGH: resovle DataAdapter.MissingMappingAction problem
         ' Since the schema has already been read above, then I would
         ' expect this to work with the setting:
         '   da.MissingMappingAction = MissingMappingAction.Error

@@ -188,7 +188,7 @@ Public Class DataListConnectionFactory
     '    Return New DataListMXDConnection(mxMap)
     'End Function
 
-    'todo HIGH test this
+    'todo HIGH: test this
     Public Function createDataListConnection(ByRef app As IApplication) As IDataListConnection
         Return New DataListMXDConnection(app)
     End Function

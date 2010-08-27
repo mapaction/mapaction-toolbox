@@ -100,11 +100,11 @@ Public NotInheritable Class cmdSetDCNLlPath
             End If
         End If
 
-        ' TODO:  Add other initialization code
+        'Add other initialization code here
     End Sub
 
     Public Overrides Sub OnClick()
-        'TODO: Add cmdSetDCNLlPath.OnClick implementation
+        'todo MEDIUM: Add cmdSetDCNLlPath.OnClick implementation
         Dim nWnd As NativeWindow
 
         nWnd = New NativeWindow()

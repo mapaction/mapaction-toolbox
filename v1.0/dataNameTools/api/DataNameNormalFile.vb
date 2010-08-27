@@ -108,7 +108,7 @@ Public Class DataNameNormalFile
     ''' </remarks>
     Public Overrides Sub performRename(ByVal strNewName As String)
         If Not isRenameable() Then
-            'todo move string into constants file
+            'todo MEDIUM: move string into constants file
             Throw New RenamingDataException("Unable to rename File: " & m_strName, Me)
         Else
             If m_fInfo.DirectoryName.EndsWith(Path.DirectorySeparatorChar) Then

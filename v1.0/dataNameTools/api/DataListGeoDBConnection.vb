@@ -158,7 +158,7 @@ Public Class DataListGeoDBConnection
     End Function
 
 
-    'todo MEDIUM check if this method need to explictly take recursion into account
+    'todo MEDIUM: check if this method need to explictly take recursion into account
     ''' <summary>
     ''' A convenience function to test whether or not the named layer is present in this GDB.
     ''' </summary>
@@ -234,7 +234,7 @@ Public Class DataListGeoDBConnection
         Return True
     End Function
 
-    'todo MEDIUM check the use of connection file paths in this method.
+    'todo MEDIUM: check the use of connection file paths in this method.
     ''' <summary>
     ''' This method will attempt to physically locate a suitable set of DataNames Clause Lookup Tables, initially
     ''' by checking the contents of this GDB, and if that fails by searching the directory containing the GDB or

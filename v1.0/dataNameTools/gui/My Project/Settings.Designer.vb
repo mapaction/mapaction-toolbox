@@ -53,6 +53,18 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\MapAction\bronze\custom_tools\man"& _ 
+            "agedcode\mapaction-toolbox\v1.0\dataNameTools\api\fall_back_data_naming_conventi"& _ 
+            "ons_v1.0.mdb;Persist Security Info=True")>  _
+        Public ReadOnly Property fall_back_data_naming_conventions_v1_0ConnectionString() As String
+            Get
+                Return CType(Me("fall_back_data_naming_conventions_v1_0ConnectionString"),String)
+            End Get
+        End Property
     End Class
 End Namespace
 

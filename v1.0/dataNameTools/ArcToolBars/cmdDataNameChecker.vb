@@ -92,12 +92,10 @@ Public NotInheritable Class cmdDataNameChecker
             End If
         End If
 
-        ' TODO:  Add other initialization code
+        'Add other initialization code here
     End Sub
 
     Public Overrides Sub OnClick()
-        'TODO: Add cmdMapDataNameChecker.OnClick implementation
-
         Dim nWnd As NativeWindow
 
         nWnd = New NativeWindow()
