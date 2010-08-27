@@ -156,7 +156,7 @@ Public Class DataNameClauseLookupFactory
         If Not dInfo.Exists() Then
             Throw New ArgumentException("DataNameClauseLookup tables could not be found in not existent directory " & dInfo.FullName)
         Else
-            'todo LOW For now we temporarily call look for a standalone MDB before a GDB. In due course the ESRI route should be prefered
+            'todo LOW: For now we temporarily call look for a standalone MDB before a GDB. In due course the ESRI route should be prefered
 
             'Search for MDBs and open as an MDBDataNameClauseLookup
             Dim aryFInfoAccessDBs() As FileInfo
@@ -216,7 +216,7 @@ Public Class DataNameClauseLookupFactory
 
         'strMDBpath = My.Application.Info.DirectoryPath & My.Resources.fallbackMDBfilename
 
-        'TODO HIGH Undo this ugly hack!!!!
+        'todo HIGH: Undo this ugly hack!!!!
         strMDBpath = "C:\Program Files\MapAction\dataNameTools\" & _
                         "fall_back_data_naming_conventions_v1.0.mdb"
         dnclResult = New MDBDataNameClauseLookup(strMDBpath)

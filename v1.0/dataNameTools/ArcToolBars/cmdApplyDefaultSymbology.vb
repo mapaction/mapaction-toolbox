@@ -90,13 +90,11 @@ Public NotInheritable Class cmdApplyDefaultSymbology
             End If
         End If
 
-        ' TODO:  Add other initialization code
+        'Add other initialization code here
     End Sub
 
     Public Overrides Sub OnClick()
-        'TODO: Add cmdApplyDefaultSymbology.OnClick implementation
-        'MsgBox("hello!")
-        'TODO: Add Map/PageLayout related logic
+        'todo MEDIUM: Add Map/PageLayout related logic
         Dim strResult As String
         Dim mxDoc As IMxDocument
 

@@ -2,6 +2,7 @@
 Imports ESRI.ArcGIS.Carto
 Imports ESRI.ArcGIS.Controls
 Imports ESRI.ArcGIS.Display
+Imports ESRI.ArcGIS.esriSystem
 Imports ESRI.ArcGIS.Framework
 Imports ESRI.ArcGIS.SystemUI
 Imports ESRI.ArcGIS.ADF.BaseClasses
@@ -64,6 +65,17 @@ Public Module DefaultSymbololgy
         End Set
     End Property
 
+    Public Sub setDefaultRootSymbPath(ByRef mxDoc As IMxDocument)
+        Dim strPth As String
+
+        strPth = getMARootDir(m_dataList.getPath()).FullName & "\3_Mapping\31_Resources\312_Layer_files"
+
+        MsgBox("Default Root Symbols Directory:" & vbNewLine & strPth)
+
+        m_dInfoSymbRoot = New DirectoryInfo(strPth)
+
+    End Sub
+
     'Private Sub setDataNameList(ByRef mxDoc As IMxDocument)
     Private Sub setDataNameList(ByRef app As IApplication)
         'Dim dnclFactory As DataNameClauseLookupFactory
@@ -106,58 +118,72 @@ Public Module DefaultSymbololgy
         Dim toc As IContentsView
         Dim stb As New StringBuilder
 
-        If m_dInfoSymbRoot Is Nothing Then
-            stb.AppendLine("Cannot attempt to apply default symbology until root directory is defined")
-        Else
-            Dim blnGotDNCL As Boolean
 
-            Try
-                setDataNameList(app)
-                blnGotDNCL = True
-            Catch exDNameList As Exception
-                stb.AppendLine("Unable to find data name clause lookup tables")
-                stb.AppendLine("It may help to save the MXD in the standard location in folder 33_MXD_Maps")
-                stb.AppendLine(exDNameList.Message)
-                blnGotDNCL = False
-            End Try
+        Dim blnGotDNCL As Boolean
 
-            If blnGotDNCL Then
-                toc = mxDoc.ContentsView(0) ' Display View
-
-                stb.AppendLine("Attempted to apply default symbology for map:")
-                stb.AppendLine(m_dataList.getPath().FullName)
-                stb.AppendLine()
-
-                applyDefaultSymbols(toc.SelectedItem, stb)
-                mxDoc.ActiveView.Refresh()
+        Try
+            setDataNameList(app)
+            blnGotDNCL = True
+            If m_dInfoSymbRoot Is Nothing Then
+                'stb.AppendLine("Cannot attempt to apply default symbology until root directory is defined")
+                setDefaultRootSymbPath(mxDoc)
             End If
+        Catch exDNameList As Exception
+            stb.AppendLine("Unable to find data name clause lookup tables")
+            stb.AppendLine("It may help to save the MXD in the standard location in folder 33_MXD_Maps")
+            stb.AppendLine(exDNameList.Message)
+            blnGotDNCL = False
+        End Try
+
+        If blnGotDNCL Then
+            toc = mxDoc.ContentsView(0) ' Display View
+
+            stb.AppendLine("Attempted to apply default symbology for map:")
+            stb.AppendLine(m_dataList.getPath().FullName)
+            stb.AppendLine()
+
+            applyDefaultSymbols(toc.SelectedItem, stb)
+            mxDoc.ActiveView.Refresh()
+            toc.Refresh(toc.SelectedItem)
         End If
+
+        System.Console.Write(stb.ToString())
 
         Return stb.ToString()
     End Function
 
     Public Function applyDefaultSymbols(ByRef obj As Object, ByRef stb As StringBuilder) As StringBuilder
-        Dim aryTemp As Array
-        Dim colTemp As Collection
+        'Dim aryTemp As Array
+        'Dim colTemp As Collection
         Dim mapTemp As IMap
         Dim lyrTemp As ILayer
+        Dim setTemp As ISet
         Dim stbResult As StringBuilder
 
-        If TypeOf obj Is Array Then
-            aryTemp = CType(obj, Array)
+        'If TypeOf obj Is Array Then
+        '    aryTemp = CType(obj, Array)
 
-            For i = 0 To (aryTemp.Length - 1)
-                stbResult = applyDefaultSymbols(aryTemp.GetValue(i), stb)
-            Next
+        '    stb.AppendLine("applyDefaultSymbols obj is Array")
+        '    System.Console.WriteLine("applyDefaultSymbols obj is Array")
 
-        ElseIf TypeOf obj Is Collection Then
-            colTemp = CType(obj, Collection)
+        '    For i = 0 To (aryTemp.Count - 1)
+        '        stbResult = applyDefaultSymbols(aryTemp.Element(i), stb)
+        '    Next
 
-            For Each objCurrent In colTemp
-                stbResult = applyDefaultSymbols(objCurrent, stb)
-            Next
-        ElseIf TypeOf obj Is IMap Then
+        'ElseIf TypeOf obj Is Collection Then
+        '    colTemp = CType(obj, Collection)
+
+        '    stb.AppendLine("applyDefaultSymbols obj is Collection")
+        '    System.Console.WriteLine("applyDefaultSymbols obj is Collection")
+
+        '    For Each objCurrent In colTemp
+        '        stbResult = applyDefaultSymbols(objCurrent, stb)
+        '    Next
+        If TypeOf obj Is IMap Then
             mapTemp = CType(obj, IMap)
+
+            stb.AppendLine("applyDefaultSymbols obj is IMap")
+            System.Console.WriteLine("applyDefaultSymbols obj is IMap")
 
             stb.AppendFormat("For Data Frame; {0}", mapTemp.Name)
             stb.AppendLine()
@@ -167,7 +193,26 @@ Public Module DefaultSymbololgy
 
         ElseIf TypeOf obj Is ILayer Then
             lyrTemp = CType(obj, ILayer)
+
+            stb.AppendLine("applyDefaultSymbols obj is ILayer")
+            System.Console.WriteLine("applyDefaultSymbols obj is ILayer")
+
             stbResult = applyDefaultSymbols(lyrTemp, stb)
+        ElseIf TypeOf obj Is ISet Then
+            setTemp = CType(obj, ISet)
+
+            stb.AppendLine("applyDefaultSymbols obj is ISet")
+            System.Console.WriteLine("applyDefaultSymbols obj is ISet")
+
+            For i = 0 To (setTemp.Count - 1)
+                stbResult = applyDefaultSymbols(setTemp.Next, stb)
+            Next
+            
+        Else
+            TypeName(obj)
+            stb.AppendLine("applyDefaultSymbols obj is unknown: " & TypeName(obj))
+            System.Console.WriteLine("applyDefaultSymbols obj is unknown: " & TypeName(obj))
+
         End If
 
         Return stbResult

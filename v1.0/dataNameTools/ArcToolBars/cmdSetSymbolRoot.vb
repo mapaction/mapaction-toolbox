@@ -99,11 +99,11 @@ Public NotInheritable Class cmdSetSymbolRoot
             End If
         End If
 
-        ' TODO:  Add other initialization code
+        'Add other initialization code here
     End Sub
 
     Public Overrides Sub OnClick()
-        'TODO: Add cmdSetSymbolRoot.OnClick implementation
+        'todo MEDIUM: Add cmdSetSymbolRoot.OnClick implementation
         Dim nWnd As NativeWindow
 
         nWnd = New NativeWindow()

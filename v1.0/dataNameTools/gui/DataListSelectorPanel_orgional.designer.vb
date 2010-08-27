@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class DataListSelectorPanel
+Partial Class DataListSelectorPanel_orgional
     Inherits System.Windows.Forms.UserControl
 
     'UserControl overrides dispose to clean up the component list.
@@ -318,14 +318,14 @@ Partial Class DataListSelectorPanel
         Me.txtBoxDNCL.Size = New System.Drawing.Size(307, 20)
         Me.txtBoxDNCL.TabIndex = 3
         '
-        'DataListSelectorPanel
+        'DataListSelectorPanel_orgional
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.tblPnlOverall)
         Me.MaximumSize = New System.Drawing.Size(1000, 170)
         Me.MinimumSize = New System.Drawing.Size(450, 170)
-        Me.Name = "DataListSelectorPanel"
+        Me.Name = "DataListSelectorPanel_orgional"
         Me.Size = New System.Drawing.Size(450, 170)
         Me.grpBxDataList.ResumeLayout(False)
         Me.tblPnlDataList.ResumeLayout(False)

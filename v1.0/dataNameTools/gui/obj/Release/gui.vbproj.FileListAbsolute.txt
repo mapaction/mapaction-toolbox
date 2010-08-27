@@ -6,6 +6,7 @@ D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTool
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\bin\Release\mapaction.datanames.api.pdb
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\bin\Release\mapaction.datanames.api.xml
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\obj\Release\ResolveAssemblyReference.cache
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\obj\Release\mapaction.datanames.gui.ClauseSelector.resources
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\obj\Release\mapaction.datanames.gui.DataListSelectorPanel.resources
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\obj\Release\mapaction.datanames.gui.DataNamesGridView.resources
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\obj\Release\mapaction.datanames.gui.frmMain.resources
@@ -14,3 +15,7 @@ D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTool
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\obj\Release\maDataNameCheckerGUI.exe
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\obj\Release\maDataNameCheckerGUI.xml
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\obj\Release\maDataNameCheckerGUI.pdb
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\bin\Release\maDataNameCheckerGUI.exe.config
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\obj\Release\mapaction.datanames.gui.testForm.resources
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\obj\Release\mapaction.datanames.gui.DataListSelectorPanel_orgional.resources
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\obj\Release\mapaction.datanames.gui.frmMain_origional.resources

@@ -17,6 +17,8 @@ Public Class DataNamesGridView
     Private m_intIdxComments As Integer = 3
     Private m_intIdxPath As Integer = 4
 
+    Public Event addRowsProgress(ByVal processed As Integer, ByVal total As Integer)
+
     Public Sub New()
 
         ' This call is required by the Windows Form Designer.
@@ -42,10 +44,17 @@ Public Class DataNamesGridView
     End Sub
 
     Public Sub addDataNames(ByRef dnList As IDataListConnection, ByRef dncl As IDataNameClauseLookup)
+        Dim intTotal As Integer
+        Dim intCnt As Integer = 1
+
         clearGrid()
+
+        intTotal = dnList.getLayerDataNamesList(dncl).Count
 
         For Each dn In dnList.getLayerDataNamesList(dncl)
             addRow(dn)
+            RaiseEvent addRowsProgress(intCnt, intTotal)
+            intCnt = intCnt + 1
         Next
 
     End Sub

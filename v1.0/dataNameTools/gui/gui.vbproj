@@ -83,9 +83,11 @@
     <Reference Include="ESRI.ArcGIS.SystemUI, Version=9.3.0.1770, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -102,10 +104,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="ClauseSelector.Designer.vb">
+      <DependentUpon>ClauseSelector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ClauseSelector.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="frmMain_origional.designer.vb">
+      <DependentUpon>frmMain_origional.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain_origional.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DataListSelectorPanel.designer.vb">
       <DependentUpon>DataListSelectorPanel.vb</DependentUpon>
     </Compile>
     <Compile Include="DataListSelectorPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataListSelectorPanel_orgional.designer.vb">
+      <DependentUpon>DataListSelectorPanel_orgional.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataListSelectorPanel_orgional.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="DataNamesGridView.designer.vb">
@@ -136,10 +156,30 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="testForm.Designer.vb">
+      <DependentUpon>testForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="testForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="_fall_back_data_naming_conventions_v1_0DataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_fall_back_data_naming_conventions_v1_0DataSet.xsd</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ClauseSelector.resx">
+      <DependentUpon>ClauseSelector.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain_origional.resx">
+      <DependentUpon>frmMain_origional.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DataListSelectorPanel.resx">
       <DependentUpon>DataListSelectorPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataListSelectorPanel_orgional.resx">
+      <DependentUpon>DataListSelectorPanel_orgional.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataNamesGridView.resx">
       <DependentUpon>DataNamesGridView.vb</DependentUpon>
@@ -152,6 +192,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="testForm.resx">
+      <DependentUpon>testForm.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -214,7 +257,20 @@
     <None Include="Resources\icoTrafficLightGreen.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="Resources\icoTrafficLightRed.bmp" />
+    <None Include="_fall_back_data_naming_conventions_v1_0DataSet.xsc">
+      <DependentUpon>_fall_back_data_naming_conventions_v1_0DataSet.xsd</DependentUpon>
+    </None>
+    <None Include="_fall_back_data_naming_conventions_v1_0DataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>_fall_back_data_naming_conventions_v1_0DataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="_fall_back_data_naming_conventions_v1_0DataSet.xss">
+      <DependentUpon>_fall_back_data_naming_conventions_v1_0DataSet.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

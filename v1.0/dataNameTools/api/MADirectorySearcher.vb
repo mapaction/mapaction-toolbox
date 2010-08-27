@@ -11,7 +11,7 @@ Imports ESRI.ArcGIS.DataSourcesFile
 ''' A private convenience module to help search directories for the DataName
 ''' Clause Lookup table in whatever form they may take.
 ''' </remarks>
-Friend Module MADirectorySearcher
+Public Module MADirectorySearcher
 
 
     ''' <summary>
@@ -95,7 +95,7 @@ Friend Module MADirectorySearcher
     ''' If the root of the MapAction directory structure cannot be found then an
     ''' ArgumentException is thrown.
     ''' </remarks>
-    Private Function getMARootDir(ByRef fInfoArg As FileInfo) As DirectoryInfo
+    Public Function getMARootDir(ByRef fInfoArg As FileInfo) As DirectoryInfo
         Dim dInfoRoot As DirectoryInfo
         Dim dInfo As DirectoryInfo
 
@@ -332,7 +332,7 @@ Friend Module MADirectorySearcher
         Return wkspReturnRef
     End Function
 
- 
+
 
     ''' <summary>
     ''' Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
@@ -389,6 +389,6 @@ Friend Module MADirectorySearcher
 
         Return lstDSet
     End Function
-   
+
 
 End Module
