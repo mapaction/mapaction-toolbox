@@ -32,6 +32,7 @@ Partial Class DataListSelectorPanel
         Me.m_chkBxRecurse = New System.Windows.Forms.CheckBox
         Me.m_btnBrowseDataList = New System.Windows.Forms.Button
         Me.m_txtBoxDataList = New System.Windows.Forms.TextBox
+        Me.m_picBxDataListReadiness = New System.Windows.Forms.PictureBox
         Me.m_tblPnlOverall = New System.Windows.Forms.TableLayoutPanel
         Me.m_grpBoxDNCLT = New System.Windows.Forms.GroupBox
         Me.m_tblPnlDNCLTall = New System.Windows.Forms.TableLayoutPanel
@@ -44,10 +45,10 @@ Partial Class DataListSelectorPanel
         Me.m_btnBrowseDNCLT = New System.Windows.Forms.Button
         Me.m_txtBoxDNCL = New System.Windows.Forms.TextBox
         Me.m_picBxDNCLReadiness = New System.Windows.Forms.PictureBox
-        Me.m_picBxDataListReadiness = New System.Windows.Forms.PictureBox
         Me.m_grpBxDataList.SuspendLayout()
         Me.m_tblPnlDataList.SuspendLayout()
         Me.m_flwPnlListType.SuspendLayout()
+        CType(Me.m_picBxDataListReadiness, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.m_tblPnlOverall.SuspendLayout()
         Me.m_grpBoxDNCLT.SuspendLayout()
         Me.m_tblPnlDNCLTall.SuspendLayout()
@@ -55,7 +56,6 @@ Partial Class DataListSelectorPanel
         Me.m_flwPlnDCNLtype.SuspendLayout()
         Me.m_tblPnlDNCLTlower.SuspendLayout()
         CType(Me.m_picBxDNCLReadiness, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.m_picBxDataListReadiness, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'm_grpBxDataList
@@ -179,6 +179,22 @@ Partial Class DataListSelectorPanel
         Me.m_txtBoxDataList.Name = "m_txtBoxDataList"
         Me.m_txtBoxDataList.Size = New System.Drawing.Size(422, 20)
         Me.m_txtBoxDataList.TabIndex = 3
+        '
+        'm_picBxDataListReadiness
+        '
+        Me.m_picBxDataListReadiness.BackColor = System.Drawing.Color.Transparent
+        Me.m_picBxDataListReadiness.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.m_picBxDataListReadiness.ErrorImage = Global.mapaction.datanames.gui.My.Resources.Resources.icoTrafficLightRed
+        Me.m_picBxDataListReadiness.Image = Global.mapaction.datanames.gui.My.Resources.Resources.icoTrafficLightRed
+        Me.m_picBxDataListReadiness.InitialImage = Global.mapaction.datanames.gui.My.Resources.Resources.icoTrafficLightRed
+        Me.m_picBxDataListReadiness.Location = New System.Drawing.Point(553, 0)
+        Me.m_picBxDataListReadiness.Margin = New System.Windows.Forms.Padding(0)
+        Me.m_picBxDataListReadiness.Name = "m_picBxDataListReadiness"
+        Me.m_tblPnlDataList.SetRowSpan(Me.m_picBxDataListReadiness, 2)
+        Me.m_picBxDataListReadiness.Size = New System.Drawing.Size(38, 60)
+        Me.m_picBxDataListReadiness.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.m_picBxDataListReadiness.TabIndex = 4
+        Me.m_picBxDataListReadiness.TabStop = False
         '
         'm_tblPnlOverall
         '
@@ -339,22 +355,6 @@ Partial Class DataListSelectorPanel
         Me.m_picBxDNCLReadiness.TabIndex = 1
         Me.m_picBxDNCLReadiness.TabStop = False
         '
-        'm_picBxDataListReadiness
-        '
-        Me.m_picBxDataListReadiness.BackColor = System.Drawing.Color.Transparent
-        Me.m_picBxDataListReadiness.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.m_picBxDataListReadiness.ErrorImage = Global.mapaction.datanames.gui.My.Resources.Resources.icoTrafficLightRed
-        Me.m_picBxDataListReadiness.Image = Global.mapaction.datanames.gui.My.Resources.Resources.icoTrafficLightRed
-        Me.m_picBxDataListReadiness.InitialImage = Global.mapaction.datanames.gui.My.Resources.Resources.icoTrafficLightRed
-        Me.m_picBxDataListReadiness.Location = New System.Drawing.Point(553, 0)
-        Me.m_picBxDataListReadiness.Margin = New System.Windows.Forms.Padding(0)
-        Me.m_picBxDataListReadiness.Name = "m_picBxDataListReadiness"
-        Me.m_tblPnlDataList.SetRowSpan(Me.m_picBxDataListReadiness, 2)
-        Me.m_picBxDataListReadiness.Size = New System.Drawing.Size(38, 60)
-        Me.m_picBxDataListReadiness.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.m_picBxDataListReadiness.TabIndex = 4
-        Me.m_picBxDataListReadiness.TabStop = False
-        '
         'DataListSelectorPanel
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -369,6 +369,7 @@ Partial Class DataListSelectorPanel
         Me.m_tblPnlDataList.PerformLayout()
         Me.m_flwPnlListType.ResumeLayout(False)
         Me.m_flwPnlListType.PerformLayout()
+        CType(Me.m_picBxDataListReadiness, System.ComponentModel.ISupportInitialize).EndInit()
         Me.m_tblPnlOverall.ResumeLayout(False)
         Me.m_grpBoxDNCLT.ResumeLayout(False)
         Me.m_tblPnlDNCLTall.ResumeLayout(False)
@@ -379,7 +380,6 @@ Partial Class DataListSelectorPanel
         Me.m_tblPnlDNCLTlower.ResumeLayout(False)
         Me.m_tblPnlDNCLTlower.PerformLayout()
         CType(Me.m_picBxDNCLReadiness, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.m_picBxDataListReadiness, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
