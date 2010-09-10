@@ -17,6 +17,7 @@
 
 Imports ESRI.ArcGIS.Geodatabase
 Imports ESRI.ArcGIS.Geometry
+Imports ESRI.ArcGIS.Carto
 Imports System.IO
 
 ''' <summary>
@@ -182,8 +183,24 @@ Public Class DataNameESRIFeatureClass
         Dim strType As String
         Dim fc As IFeatureClass
 
+        'check to see if there is an under lying Feature Class
         If TypeOf m_DataSet Is IFeatureClass Then
+            'This works for ArcCatalog
             fc = DirectCast(m_DataSet, IFeatureClass)
+        ElseIf TypeOf m_DataSet Is ESRI.ArcGIS.Carto.IFeatureLayer Then
+            'This works for ArcMap
+            fc = DirectCast(m_DataSet, IFeatureLayer).FeatureClass
+        Else
+            fc = Nothing
+        End If
+
+        'MsgBox("m_DataSet.type = " & m_DataSet.Type & " cast " & (TypeOf m_DataSet Is IFeatureClass) & "  " & _
+        '       (TypeOf m_DataSet Is ESRI.ArcGIS.Carto.IFeatureLayer))
+
+        If fc IsNot Nothing Then
+            'fc = DirectCast(m_DataSet, IFeatureClass)
+            'MsgBox("fc.type = " & fc.ShapeType)
+
             Select Case fc.ShapeType
                 Case esriGeometryType.esriGeometryPoint, _
                          esriGeometryType.esriGeometryMultipoint
