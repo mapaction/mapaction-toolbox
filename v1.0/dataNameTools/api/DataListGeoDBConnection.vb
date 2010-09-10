@@ -396,13 +396,13 @@ Public Class DataListGeoDBConnection
     ''' A convinence function for exacting a list of names as strings froma list of IDatasetName objects.
     ''' </remarks>
     Private Function getNamesStrFromESRIDataSetName(ByRef dsList As List(Of IDatasetName)) As List(Of String)
-        Dim strList As New List(Of String)
+        Dim lstDSNames As New List(Of String)
 
         For Each ds In dsList
-            strList.Add(ds.Name)
+            lstDSNames.Add(ds.Name)
         Next
 
-        Return strList
+        Return lstDSNames
     End Function
 
 
