@@ -93,6 +93,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="BasicDataRenameDialog.Designer.vb">
+      <DependentUpon>BasicDataRenameDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="BasicDataRenameDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ClauseSelector.Designer.vb">
       <DependentUpon>ClauseSelector.vb</DependentUpon>
     </Compile>
@@ -158,6 +164,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="BasicDataRenameDialog.resx">
+      <DependentUpon>BasicDataRenameDialog.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ClauseSelector.resx">
       <DependentUpon>ClauseSelector.vb</DependentUpon>
     </EmbeddedResource>
