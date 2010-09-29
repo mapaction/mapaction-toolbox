@@ -239,7 +239,7 @@ Public Class DataListMXDConnection
         strMxdPath = getpath().FullName
 
         Try
-            dnclRef = DataNameClauseLookupFactory.getFactory().createDataNameClauseLookup(getMAActiveDataDir(strMxdPath))
+            dnclRef = DataNameClauseLookupFactory.createDataNameClauseLookup(getMAActiveDataDir(strMxdPath), True)
         Catch ex As Exception
             'todo LOW: put in some fancy foot work to loop through the layers and find the 
             'most common root for the data and try that/those path(s).

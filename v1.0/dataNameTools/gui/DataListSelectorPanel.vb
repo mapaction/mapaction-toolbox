@@ -114,7 +114,7 @@ Public Class DataListSelectorPanel
         m_htbStatusStrings.Add(DataListSelectorPanelStatus.READY, "Ready")
 
         'Other stuff
-        m_radBtnDCNL_MDB.Checked = True
+        m_radBtnDCNL_Manual_MDB.Checked = True
     End Sub
 
     Public Sub setArcGISRef(ByRef app As IApplication)
@@ -301,80 +301,116 @@ Public Class DataListSelectorPanel
             Catch ex1 As Exception
                 Dim strMsg As String = String.Format("Unable to open a valid Data List at :{0}{1}{2}Please check and try again.", Chr(13), m_txtBoxDataList.Text, Chr(13))
 
+                'MsgBox(ex1.ToString)
+
                 m_DataList = Nothing
                 setReadinessState()
                 RaiseEvent inputError(strMsg)
-
             End Try
         Else
             m_DataList = Nothing
             setReadinessState()
-        End If
+
+            If m_txtBoxDataList.Text <> String.Empty Then
+                Dim strMsg As String = String.Format("Unable to open a valid Data List at :{0}{1}{2}Please check and try again.", Chr(13), m_txtBoxDataList.Text, Chr(13))
+                RaiseEvent inputError(strMsg)
+            End If
+
+            End If
 
     End Sub
 
     Private Sub handleDNCLChange(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-            Handles m_chkBxOverrideDNCLT.CheckedChanged, _
+            Handles _
                     m_txtBoxDNCL.TextChanged, _
                     m_grpBoxDNCLT.EnabledChanged, _
-                    m_radBtnDCNL_MDB.CheckedChanged, _
-                    m_radBtnDNCL_GDB.CheckedChanged
+                    m_radBtn_AutoDNCLT.CheckedChanged, _
+                    m_radBtn_ManualDNCLT.CheckedChanged, _
+                    m_radBtn_FallbackDNCLT.CheckedChanged, _
+                    m_radBtnDCNL_Manual_MDB.CheckedChanged, _
+                    m_radBtnDNCL_Manual_GDB.CheckedChanged, _
+                    m_chkBxReadOnly.CheckedChanged
 
         If m_grpBoxDNCLT.Enabled Then
             'Set various GUI elements
-            m_txtBoxDNCL.ReadOnly = Not m_chkBxOverrideDNCLT.Checked
-            m_flwPlnDCNLtype.Enabled = m_chkBxOverrideDNCLT.Checked
-            m_btnBrowseDNCLT.Enabled = m_chkBxOverrideDNCLT.Checked
+            m_txtBoxDNCL.ReadOnly = Not m_radBtn_ManualDNCLT.Checked
+            m_flwPlnDCNLmanualType.Enabled = m_radBtn_ManualDNCLT.Checked
+            m_btnBrowseDNCLT.Enabled = m_radBtn_ManualDNCLT.Checked
+            m_chkBxReadOnly.Enabled = m_radBtn_ManualDNCLT.Checked
 
-            If m_chkBxOverrideDNCLT.Checked Then
-                'Manually specify DNCL
-                Dim dnclFactory As DataNameClauseLookupFactory
-                Dim strAryArgs(1) As String
-
-                If isValidFileOrDirectory(m_txtBoxDNCL.Text) Then
-
-                    dnclFactory = DataNameClauseLookupFactory.getFactory()
-                    strAryArgs(0) = m_txtBoxDNCL.Text
-
+            Select Case True
+                Case m_radBtn_AutoDNCLT.Checked
+                    'create automatic/default DNCL
                     Try
-                        If m_radBtnDNCL_GDB.Checked = True Then
-                            m_dncl = DataNameClauseLookupFactory.createDataNameClauseLookup(dnClauseLookupType.ESRI_GDB, strAryArgs)
-                        Else
-                            m_dncl = DataNameClauseLookupFactory.createDataNameClauseLookup(dnClauseLookupType.MDB, strAryArgs)
-                        End If
+                        m_dncl = m_DataList.getDefaultDataNameClauseLookup()
+                        m_txtBoxDNCL.Text = m_dncl.getPath.FullName
+                        m_txtBoxDNCL.ReadOnly = True
+                        m_chkBxReadOnly.Checked = False
 
                         setReadinessState()
-                    Catch ex As Exception
-                        Dim strMsg As String = String.Format("Unable to locate valid Data Name Clause Lookup Tables at the specificed location :{0}{1}{2}Please try again.", Chr(13), m_txtBoxDNCL.Text, Chr(13))
-
-                        m_dncl = Nothing
-                        setReadinessState()
+                    Catch ex2 As Exception
+                        Dim strMsg As String = String.Format("Unable to automatically locate valid Data Name Clause Lookup Tables in the Current Data List at :{0}{1}{2}Please manually locate them below.", Chr(13), m_DataList.getPath(), Chr(13))
 
                         RaiseEvent inputError(strMsg)
                         'MsgBox(strMsg, CType(MsgBoxStyle.ApplicationModal + MsgBoxStyle.OkOnly + MsgBoxStyle.Information, MsgBoxStyle), "Data List Selection")
+
+                        m_dncl = Nothing
+                        setReadinessState()
+                        m_radBtn_ManualDNCLT.Checked = True
                     End Try
-                Else
-                    setReadinessState()
-                End If
-            Else
-                'create automatic/default DNCL
-                Try
-                    m_dncl = m_DataList.getDefaultDataNameClauseLookup()
-                    m_txtBoxDNCL.Text = m_dncl.getPath.FullName
-                    m_txtBoxDNCL.ReadOnly = True
 
-                    setReadinessState()
-                Catch ex2 As Exception
-                    Dim strMsg As String = String.Format("Unable to automatically locate valid Data Name Clause Lookup Tables in the Current Data List at :{0}{1}{2}Please manually locate them below.", Chr(13), m_DataList.getPath(), Chr(13))
+                Case m_radBtn_ManualDNCLT.Checked
+                    'Manually specify DNCL
+                    Dim dnclFactory As DataNameClauseLookupFactory
+                    Dim strAryArgs(1) As String
 
-                    RaiseEvent inputError(strMsg)
-                    'MsgBox(strMsg, CType(MsgBoxStyle.ApplicationModal + MsgBoxStyle.OkOnly + MsgBoxStyle.Information, MsgBoxStyle), "Data List Selection")
+                    If isValidFileOrDirectory(m_txtBoxDNCL.Text) Then
 
-                    m_dncl = Nothing
-                    setReadinessState()
-                    m_chkBxOverrideDNCLT.Checked = True
-                End Try
-            End If
+                        dnclFactory = DataNameClauseLookupFactory.getFactory()
+                        strAryArgs(0) = m_txtBoxDNCL.Text
+
+                        Try
+                            If m_radBtnDNCL_Manual_GDB.Checked = True Then
+                                m_dncl = DataNameClauseLookupFactory.createDataNameClauseLookup(dnClauseLookupType.ESRI_GDB, strAryArgs, (Not m_chkBxReadOnly.Checked))
+                            Else
+                                m_dncl = DataNameClauseLookupFactory.createDataNameClauseLookup(dnClauseLookupType.MDB, strAryArgs, (Not m_chkBxReadOnly.Checked))
+                            End If
+
+                            setReadinessState()
+                        Catch ex As Exception
+                            Dim strMsg As String = String.Format("Unable to locate valid Data Name Clause Lookup Tables at the specificed location :{0}{1}{2}Please try again.", Chr(13), m_txtBoxDNCL.Text, Chr(13))
+
+                            m_dncl = Nothing
+                            setReadinessState()
+
+                            RaiseEvent inputError(strMsg)
+                            'MsgBox(strMsg, CType(MsgBoxStyle.ApplicationModal + MsgBoxStyle.OkOnly + MsgBoxStyle.Information, MsgBoxStyle), "Data List Selection")
+                        End Try
+                    Else
+                        setReadinessState()
+                    End If
+
+                Case m_radBtn_FallbackDNCLT.Checked
+                    Try
+                        m_dncl = DataNameClauseLookupFactory.getFallBackDataNameClauseLookup()
+                        m_txtBoxDNCL.Text = m_dncl.getPath.FullName
+                        m_txtBoxDNCL.ReadOnly = True
+                        m_chkBxReadOnly.Checked = True
+
+                        setReadinessState()
+                    Catch ex As Exception
+                        Dim strMsg As String = String.Format("Unable to locate built-in Data Name Clause Lookup Tables. Please check your installation. Please locate them manually.")
+                        MsgBox(ex.ToString)
+
+                        RaiseEvent inputError(strMsg)
+                        'MsgBox(strMsg, CType(MsgBoxStyle.ApplicationModal + MsgBoxStyle.OkOnly + MsgBoxStyle.Information, MsgBoxStyle), "Data List Selection")
+
+                        m_dncl = Nothing
+                        setReadinessState()
+                        m_radBtn_ManualDNCLT.Checked = True
+                    End Try
+            End Select
+
         Else
             'if m_grpBoxDNCLT is not enabled then set m_dncl to Nothing. Should be already but just in case.
             m_dncl = Nothing
@@ -556,7 +592,7 @@ Public Class DataListSelectorPanel
                 strStartingPath = validatePath(m_txtBoxDataList.Text, False)
                 If strStartingPath IsNot Nothing Then
                     m_gxDialog.StartingLocation = strStartingPath
-                Else
+                ElseIf m_strLastDataListDirPath IsNot Nothing Then
                     m_gxDialog.StartingLocation = m_strLastDataListGDBPath
                 End If
 
@@ -595,7 +631,7 @@ Public Class DataListSelectorPanel
             m_strLastDNCLPath = validatePath(m_txtBoxDNCL.Text, False)
         End If
 
-        If m_radBtnDNCL_GDB.Checked Then
+        If m_radBtnDNCL_Manual_GDB.Checked Then
 
             Dim gxFltrContain As IGxObjectFilter
             Dim gxFltrFileGDB As IGxObjectFilter
@@ -634,10 +670,10 @@ Public Class DataListSelectorPanel
 
         If strNewDNCLPath IsNot Nothing Then
             m_txtBoxDNCL.Text = strNewDNCLPath
-            m_strLastDNCLPath = validatePath(strNewDNCLPath, m_radBtnDCNL_MDB.Checked)
+            m_strLastDNCLPath = validatePath(strNewDNCLPath, m_radBtnDCNL_Manual_MDB.Checked)
         End If
 
     End Sub
 
-  
+
 End Class

@@ -42,6 +42,8 @@ Public MustInherit Class AbstractDataNameClauseLookup
     Private m_dtbPermissionClauses As DataTable
     'Private doRecusion As Boolean
 
+    Protected m_lngReadWriteMode As Long
+
     Protected Sub New()
         'initialiseAllTables()
     End Sub

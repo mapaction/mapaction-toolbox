@@ -22,6 +22,7 @@ Partial Class DataListSelectorPanel
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container
         Me.m_grpBxDataList = New System.Windows.Forms.GroupBox
         Me.m_tblPnlDataList = New System.Windows.Forms.TableLayoutPanel
         Me.m_flwPnlListType = New System.Windows.Forms.FlowLayoutPanel
@@ -36,15 +37,20 @@ Partial Class DataListSelectorPanel
         Me.m_tblPnlOverall = New System.Windows.Forms.TableLayoutPanel
         Me.m_grpBoxDNCLT = New System.Windows.Forms.GroupBox
         Me.m_tblPnlDNCLTall = New System.Windows.Forms.TableLayoutPanel
-        Me.m_tblPnlDNCLTupper = New System.Windows.Forms.TableLayoutPanel
-        Me.m_chkBxOverrideDNCLT = New System.Windows.Forms.CheckBox
-        Me.m_flwPlnDCNLtype = New System.Windows.Forms.FlowLayoutPanel
-        Me.m_radBtnDNCL_GDB = New System.Windows.Forms.RadioButton
-        Me.m_radBtnDCNL_MDB = New System.Windows.Forms.RadioButton
         Me.m_tblPnlDNCLTlower = New System.Windows.Forms.TableLayoutPanel
         Me.m_btnBrowseDNCLT = New System.Windows.Forms.Button
         Me.m_txtBoxDNCL = New System.Windows.Forms.TextBox
         Me.m_picBxDNCLReadiness = New System.Windows.Forms.PictureBox
+        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer
+        Me.m_flwPnl_DNCTOption = New System.Windows.Forms.FlowLayoutPanel
+        Me.m_radBtn_AutoDNCLT = New System.Windows.Forms.RadioButton
+        Me.m_radBtn_ManualDNCLT = New System.Windows.Forms.RadioButton
+        Me.m_radBtn_FallbackDNCLT = New System.Windows.Forms.RadioButton
+        Me.m_flwPlnDCNLmanualType = New System.Windows.Forms.FlowLayoutPanel
+        Me.m_radBtnDNCL_Manual_GDB = New System.Windows.Forms.RadioButton
+        Me.m_radBtnDCNL_Manual_MDB = New System.Windows.Forms.RadioButton
+        Me.m_chkBxReadOnly = New System.Windows.Forms.CheckBox
+        Me.m_ttpAutoDNCLT = New System.Windows.Forms.ToolTip(Me.components)
         Me.m_grpBxDataList.SuspendLayout()
         Me.m_tblPnlDataList.SuspendLayout()
         Me.m_flwPnlListType.SuspendLayout()
@@ -52,10 +58,13 @@ Partial Class DataListSelectorPanel
         Me.m_tblPnlOverall.SuspendLayout()
         Me.m_grpBoxDNCLT.SuspendLayout()
         Me.m_tblPnlDNCLTall.SuspendLayout()
-        Me.m_tblPnlDNCLTupper.SuspendLayout()
-        Me.m_flwPlnDCNLtype.SuspendLayout()
         Me.m_tblPnlDNCLTlower.SuspendLayout()
         CType(Me.m_picBxDNCLReadiness, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer1.Panel1.SuspendLayout()
+        Me.SplitContainer1.Panel2.SuspendLayout()
+        Me.SplitContainer1.SuspendLayout()
+        Me.m_flwPnl_DNCTOption.SuspendLayout()
+        Me.m_flwPlnDCNLmanualType.SuspendLayout()
         Me.SuspendLayout()
         '
         'm_grpBxDataList
@@ -228,9 +237,9 @@ Partial Class DataListSelectorPanel
         Me.m_tblPnlDNCLTall.ColumnCount = 2
         Me.m_tblPnlDNCLTall.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.m_tblPnlDNCLTall.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 38.0!))
-        Me.m_tblPnlDNCLTall.Controls.Add(Me.m_tblPnlDNCLTupper, 0, 0)
         Me.m_tblPnlDNCLTall.Controls.Add(Me.m_tblPnlDNCLTlower, 0, 1)
         Me.m_tblPnlDNCLTall.Controls.Add(Me.m_picBxDNCLReadiness, 1, 0)
+        Me.m_tblPnlDNCLTall.Controls.Add(Me.SplitContainer1, 0, 0)
         Me.m_tblPnlDNCLTall.Dock = System.Windows.Forms.DockStyle.Fill
         Me.m_tblPnlDNCLTall.Location = New System.Drawing.Point(3, 16)
         Me.m_tblPnlDNCLTall.Name = "m_tblPnlDNCLTall"
@@ -239,69 +248,6 @@ Partial Class DataListSelectorPanel
         Me.m_tblPnlDNCLTall.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.m_tblPnlDNCLTall.Size = New System.Drawing.Size(591, 60)
         Me.m_tblPnlDNCLTall.TabIndex = 5
-        '
-        'm_tblPnlDNCLTupper
-        '
-        Me.m_tblPnlDNCLTupper.ColumnCount = 2
-        Me.m_tblPnlDNCLTupper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.17809!))
-        Me.m_tblPnlDNCLTupper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.82192!))
-        Me.m_tblPnlDNCLTupper.Controls.Add(Me.m_chkBxOverrideDNCLT, 0, 0)
-        Me.m_tblPnlDNCLTupper.Controls.Add(Me.m_flwPlnDCNLtype, 1, 0)
-        Me.m_tblPnlDNCLTupper.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.m_tblPnlDNCLTupper.Location = New System.Drawing.Point(0, 0)
-        Me.m_tblPnlDNCLTupper.Margin = New System.Windows.Forms.Padding(0)
-        Me.m_tblPnlDNCLTupper.Name = "m_tblPnlDNCLTupper"
-        Me.m_tblPnlDNCLTupper.RowCount = 1
-        Me.m_tblPnlDNCLTupper.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.m_tblPnlDNCLTupper.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23.0!))
-        Me.m_tblPnlDNCLTupper.Size = New System.Drawing.Size(553, 23)
-        Me.m_tblPnlDNCLTupper.TabIndex = 0
-        '
-        'm_chkBxOverrideDNCLT
-        '
-        Me.m_chkBxOverrideDNCLT.AutoSize = True
-        Me.m_chkBxOverrideDNCLT.Location = New System.Drawing.Point(8, 3)
-        Me.m_chkBxOverrideDNCLT.Margin = New System.Windows.Forms.Padding(8, 3, 3, 3)
-        Me.m_chkBxOverrideDNCLT.Name = "m_chkBxOverrideDNCLT"
-        Me.m_chkBxOverrideDNCLT.Size = New System.Drawing.Size(254, 17)
-        Me.m_chkBxOverrideDNCLT.TabIndex = 4
-        Me.m_chkBxOverrideDNCLT.Text = "Override default data name clause lookup tables"
-        Me.m_chkBxOverrideDNCLT.UseVisualStyleBackColor = True
-        '
-        'm_flwPlnDCNLtype
-        '
-        Me.m_flwPlnDCNLtype.Controls.Add(Me.m_radBtnDNCL_GDB)
-        Me.m_flwPlnDCNLtype.Controls.Add(Me.m_radBtnDCNL_MDB)
-        Me.m_flwPlnDCNLtype.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.m_flwPlnDCNLtype.Enabled = False
-        Me.m_flwPlnDCNLtype.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.m_flwPlnDCNLtype.Location = New System.Drawing.Point(382, 0)
-        Me.m_flwPlnDCNLtype.Margin = New System.Windows.Forms.Padding(0)
-        Me.m_flwPlnDCNLtype.Name = "m_flwPlnDCNLtype"
-        Me.m_flwPlnDCNLtype.Size = New System.Drawing.Size(171, 23)
-        Me.m_flwPlnDCNLtype.TabIndex = 5
-        '
-        'm_radBtnDNCL_GDB
-        '
-        Me.m_radBtnDNCL_GDB.AutoSize = True
-        Me.m_radBtnDNCL_GDB.Location = New System.Drawing.Point(120, 3)
-        Me.m_radBtnDNCL_GDB.Name = "m_radBtnDNCL_GDB"
-        Me.m_radBtnDNCL_GDB.Size = New System.Drawing.Size(48, 17)
-        Me.m_radBtnDNCL_GDB.TabIndex = 0
-        Me.m_radBtnDNCL_GDB.TabStop = True
-        Me.m_radBtnDNCL_GDB.Text = "GDB"
-        Me.m_radBtnDNCL_GDB.UseVisualStyleBackColor = True
-        '
-        'm_radBtnDCNL_MDB
-        '
-        Me.m_radBtnDCNL_MDB.AutoSize = True
-        Me.m_radBtnDCNL_MDB.Location = New System.Drawing.Point(54, 3)
-        Me.m_radBtnDCNL_MDB.Name = "m_radBtnDCNL_MDB"
-        Me.m_radBtnDCNL_MDB.Size = New System.Drawing.Size(60, 17)
-        Me.m_radBtnDCNL_MDB.TabIndex = 1
-        Me.m_radBtnDCNL_MDB.TabStop = True
-        Me.m_radBtnDCNL_MDB.Text = "Access"
-        Me.m_radBtnDCNL_MDB.UseVisualStyleBackColor = True
         '
         'm_tblPnlDNCLTlower
         '
@@ -355,6 +301,118 @@ Partial Class DataListSelectorPanel
         Me.m_picBxDNCLReadiness.TabIndex = 1
         Me.m_picBxDNCLReadiness.TabStop = False
         '
+        'SplitContainer1
+        '
+        Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
+        Me.SplitContainer1.Margin = New System.Windows.Forms.Padding(0)
+        Me.SplitContainer1.Name = "SplitContainer1"
+        '
+        'SplitContainer1.Panel1
+        '
+        Me.SplitContainer1.Panel1.Controls.Add(Me.m_flwPnl_DNCTOption)
+        '
+        'SplitContainer1.Panel2
+        '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.m_flwPlnDCNLmanualType)
+        Me.SplitContainer1.Size = New System.Drawing.Size(553, 23)
+        Me.SplitContainer1.SplitterDistance = 270
+        Me.SplitContainer1.TabIndex = 2
+        '
+        'm_flwPnl_DNCTOption
+        '
+        Me.m_flwPnl_DNCTOption.Controls.Add(Me.m_radBtn_AutoDNCLT)
+        Me.m_flwPnl_DNCTOption.Controls.Add(Me.m_radBtn_ManualDNCLT)
+        Me.m_flwPnl_DNCTOption.Controls.Add(Me.m_radBtn_FallbackDNCLT)
+        Me.m_flwPnl_DNCTOption.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.m_flwPnl_DNCTOption.Location = New System.Drawing.Point(0, 0)
+        Me.m_flwPnl_DNCTOption.Margin = New System.Windows.Forms.Padding(0)
+        Me.m_flwPnl_DNCTOption.Name = "m_flwPnl_DNCTOption"
+        Me.m_flwPnl_DNCTOption.Size = New System.Drawing.Size(270, 23)
+        Me.m_flwPnl_DNCTOption.TabIndex = 6
+        '
+        'm_radBtn_AutoDNCLT
+        '
+        Me.m_radBtn_AutoDNCLT.AutoSize = True
+        Me.m_radBtn_AutoDNCLT.Checked = True
+        Me.m_radBtn_AutoDNCLT.Location = New System.Drawing.Point(3, 3)
+        Me.m_radBtn_AutoDNCLT.Name = "m_radBtn_AutoDNCLT"
+        Me.m_radBtn_AutoDNCLT.Size = New System.Drawing.Size(84, 17)
+        Me.m_radBtn_AutoDNCLT.TabIndex = 6
+        Me.m_radBtn_AutoDNCLT.TabStop = True
+        Me.m_radBtn_AutoDNCLT.Text = "Auto Search"
+        Me.m_ttpAutoDNCLT.SetToolTip(Me.m_radBtn_AutoDNCLT, "Automaticaly search for Data Name Clause " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Lookup Tables based on the location of" & _
+                "" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "the Data List")
+        Me.m_radBtn_AutoDNCLT.UseVisualStyleBackColor = True
+        '
+        'm_radBtn_ManualDNCLT
+        '
+        Me.m_radBtn_ManualDNCLT.AutoSize = True
+        Me.m_radBtn_ManualDNCLT.Location = New System.Drawing.Point(93, 3)
+        Me.m_radBtn_ManualDNCLT.Name = "m_radBtn_ManualDNCLT"
+        Me.m_radBtn_ManualDNCLT.Size = New System.Drawing.Size(93, 17)
+        Me.m_radBtn_ManualDNCLT.TabIndex = 7
+        Me.m_radBtn_ManualDNCLT.Text = "Manual Select"
+        Me.m_ttpAutoDNCLT.SetToolTip(Me.m_radBtn_ManualDNCLT, "Manually select the location of the Data Name Clause Lookup Tables")
+        Me.m_radBtn_ManualDNCLT.UseVisualStyleBackColor = True
+        '
+        'm_radBtn_FallbackDNCLT
+        '
+        Me.m_radBtn_FallbackDNCLT.AutoSize = True
+        Me.m_radBtn_FallbackDNCLT.Location = New System.Drawing.Point(192, 3)
+        Me.m_radBtn_FallbackDNCLT.Name = "m_radBtn_FallbackDNCLT"
+        Me.m_radBtn_FallbackDNCLT.Size = New System.Drawing.Size(56, 17)
+        Me.m_radBtn_FallbackDNCLT.TabIndex = 8
+        Me.m_radBtn_FallbackDNCLT.Text = "Built-in"
+        Me.m_ttpAutoDNCLT.SetToolTip(Me.m_radBtn_FallbackDNCLT, "Use the built-in read-only lookup example" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Data Name Clause Lookup Tables")
+        Me.m_radBtn_FallbackDNCLT.UseVisualStyleBackColor = True
+        '
+        'm_flwPlnDCNLmanualType
+        '
+        Me.m_flwPlnDCNLmanualType.Controls.Add(Me.m_radBtnDNCL_Manual_GDB)
+        Me.m_flwPlnDCNLmanualType.Controls.Add(Me.m_radBtnDCNL_Manual_MDB)
+        Me.m_flwPlnDCNLmanualType.Controls.Add(Me.m_chkBxReadOnly)
+        Me.m_flwPlnDCNLmanualType.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.m_flwPlnDCNLmanualType.Enabled = False
+        Me.m_flwPlnDCNLmanualType.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
+        Me.m_flwPlnDCNLmanualType.Location = New System.Drawing.Point(0, 0)
+        Me.m_flwPlnDCNLmanualType.Margin = New System.Windows.Forms.Padding(0)
+        Me.m_flwPlnDCNLmanualType.Name = "m_flwPlnDCNLmanualType"
+        Me.m_flwPlnDCNLmanualType.Size = New System.Drawing.Size(279, 23)
+        Me.m_flwPlnDCNLmanualType.TabIndex = 5
+        '
+        'm_radBtnDNCL_Manual_GDB
+        '
+        Me.m_radBtnDNCL_Manual_GDB.AutoSize = True
+        Me.m_radBtnDNCL_Manual_GDB.Location = New System.Drawing.Point(228, 3)
+        Me.m_radBtnDNCL_Manual_GDB.Name = "m_radBtnDNCL_Manual_GDB"
+        Me.m_radBtnDNCL_Manual_GDB.Size = New System.Drawing.Size(48, 17)
+        Me.m_radBtnDNCL_Manual_GDB.TabIndex = 0
+        Me.m_radBtnDNCL_Manual_GDB.TabStop = True
+        Me.m_radBtnDNCL_Manual_GDB.Text = "GDB"
+        Me.m_radBtnDNCL_Manual_GDB.UseVisualStyleBackColor = True
+        '
+        'm_radBtnDCNL_Manual_MDB
+        '
+        Me.m_radBtnDCNL_Manual_MDB.AutoSize = True
+        Me.m_radBtnDCNL_Manual_MDB.Location = New System.Drawing.Point(162, 3)
+        Me.m_radBtnDCNL_Manual_MDB.Name = "m_radBtnDCNL_Manual_MDB"
+        Me.m_radBtnDCNL_Manual_MDB.Size = New System.Drawing.Size(60, 17)
+        Me.m_radBtnDCNL_Manual_MDB.TabIndex = 1
+        Me.m_radBtnDCNL_Manual_MDB.TabStop = True
+        Me.m_radBtnDCNL_Manual_MDB.Text = "Access"
+        Me.m_radBtnDCNL_Manual_MDB.UseVisualStyleBackColor = True
+        '
+        'm_chkBxReadOnly
+        '
+        Me.m_chkBxReadOnly.AutoSize = True
+        Me.m_chkBxReadOnly.Location = New System.Drawing.Point(80, 3)
+        Me.m_chkBxReadOnly.Name = "m_chkBxReadOnly"
+        Me.m_chkBxReadOnly.Size = New System.Drawing.Size(76, 17)
+        Me.m_chkBxReadOnly.TabIndex = 2
+        Me.m_chkBxReadOnly.Text = "Read Only"
+        Me.m_chkBxReadOnly.UseVisualStyleBackColor = True
+        '
         'DataListSelectorPanel
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -373,13 +431,16 @@ Partial Class DataListSelectorPanel
         Me.m_tblPnlOverall.ResumeLayout(False)
         Me.m_grpBoxDNCLT.ResumeLayout(False)
         Me.m_tblPnlDNCLTall.ResumeLayout(False)
-        Me.m_tblPnlDNCLTupper.ResumeLayout(False)
-        Me.m_tblPnlDNCLTupper.PerformLayout()
-        Me.m_flwPlnDCNLtype.ResumeLayout(False)
-        Me.m_flwPlnDCNLtype.PerformLayout()
         Me.m_tblPnlDNCLTlower.ResumeLayout(False)
         Me.m_tblPnlDNCLTlower.PerformLayout()
         CType(Me.m_picBxDNCLReadiness, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer1.Panel1.ResumeLayout(False)
+        Me.SplitContainer1.Panel2.ResumeLayout(False)
+        Me.SplitContainer1.ResumeLayout(False)
+        Me.m_flwPnl_DNCTOption.ResumeLayout(False)
+        Me.m_flwPnl_DNCTOption.PerformLayout()
+        Me.m_flwPlnDCNLmanualType.ResumeLayout(False)
+        Me.m_flwPlnDCNLmanualType.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -388,7 +449,6 @@ Partial Class DataListSelectorPanel
     Private WithEvents m_tblPnlDNCLTlower As System.Windows.Forms.TableLayoutPanel
     Private WithEvents m_btnBrowseDNCLT As System.Windows.Forms.Button
     Private WithEvents m_txtBoxDNCL As System.Windows.Forms.TextBox
-    Private WithEvents m_chkBxOverrideDNCLT As System.Windows.Forms.CheckBox
     Private WithEvents m_radBtnGDB As System.Windows.Forms.RadioButton
     Private WithEvents m_grpBxDataList As System.Windows.Forms.GroupBox
     Private WithEvents m_tblPnlDataList As System.Windows.Forms.TableLayoutPanel
@@ -400,11 +460,17 @@ Partial Class DataListSelectorPanel
     Private WithEvents m_btnBrowseDataList As System.Windows.Forms.Button
     Private WithEvents m_txtBoxDataList As System.Windows.Forms.TextBox
     Private WithEvents m_tblPnlDNCLTall As System.Windows.Forms.TableLayoutPanel
-    Private WithEvents m_tblPnlDNCLTupper As System.Windows.Forms.TableLayoutPanel
-    Private WithEvents m_flwPlnDCNLtype As System.Windows.Forms.FlowLayoutPanel
-    Private WithEvents m_radBtnDNCL_GDB As System.Windows.Forms.RadioButton
-    Private WithEvents m_radBtnDCNL_MDB As System.Windows.Forms.RadioButton
+    Private WithEvents m_flwPlnDCNLmanualType As System.Windows.Forms.FlowLayoutPanel
+    Private WithEvents m_radBtnDNCL_Manual_GDB As System.Windows.Forms.RadioButton
+    Private WithEvents m_radBtnDCNL_Manual_MDB As System.Windows.Forms.RadioButton
     Friend WithEvents m_picBxDataListReadiness As System.Windows.Forms.PictureBox
     Friend WithEvents m_picBxDNCLReadiness As System.Windows.Forms.PictureBox
+    Friend WithEvents m_flwPnl_DNCTOption As System.Windows.Forms.FlowLayoutPanel
+    Private WithEvents m_chkBxReadOnly As System.Windows.Forms.CheckBox
+    Private WithEvents m_radBtn_AutoDNCLT As System.Windows.Forms.RadioButton
+    Private WithEvents m_radBtn_ManualDNCLT As System.Windows.Forms.RadioButton
+    Private WithEvents m_radBtn_FallbackDNCLT As System.Windows.Forms.RadioButton
+    Private WithEvents SplitContainer1 As System.Windows.Forms.SplitContainer
+    Private WithEvents m_ttpAutoDNCLT As System.Windows.Forms.ToolTip
 
 End Class

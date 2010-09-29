@@ -18,19 +18,6 @@ maDataNameCheckerGUI
  If strUnvalidiatedPath points to a valid file then m_strLastDataListPath the file's directory
  If strUnvalidiatedPath does not point to a valid file or directory then the value 'Nothing' is returned
  </remarks>
-</member><member name="M:mapaction.datanames.gui.DataListSelectorPanel_orgional.validatePath(System.String)">
-	<summary>
- Sets the value of m_strLastDataListPath
- </summary>
-	<param name="strUnvalidiatedPath"></param>
-	<remarks>
- Sets the value of m_strLastDataListPath
- 
- If strUnvalidiatedPath points to a valid directory then m_strLastDataListPath the directory
- If strUnvalidiatedPath points to a valid file then m_strLastDataListPath the file's directory
- If strUnvalidiatedPath does not point to a valid file or directory then m_strLastDataListPath 
- is left unchanged.
- </remarks>
 </member><member name="P:mapaction.datanames.gui.My.Resources.Resources.ResourceManager">
 	<summary>
   Returns the cached ResourceManager instance used by this class.

@@ -18,6 +18,7 @@
 Imports ESRI.ArcGIS.Geodatabase
 Imports ESRI.ArcGIS.DataSourcesGDB
 Imports System.IO
+Imports ADODB
 
 ''' <summary>
 ''' Provides a specfic implenmentation of the IDataListConnection, based on reading 
@@ -282,7 +283,7 @@ Public Class DataListGeoDBConnection
         'System.Console.WriteLine("starting DataListGeoDBConnection.getDefaultDataNameClauseLookup()")
         Try
             'System.Console.WriteLine("Try 1")
-            dnclDefault = New GDBDataNameClauseLookup(m_wkspDNLT)
+            dnclDefault = New GDBDataNameClauseLookup(m_wkspDNLT, ConnectModeEnum.adModeShareDenyWrite)
         Catch ex1 As Exception
             'System.Console.WriteLine(ex1.ToString)
             Try

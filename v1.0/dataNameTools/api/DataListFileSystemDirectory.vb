@@ -121,9 +121,9 @@ Public Class DataListFileSystemDirectory
         dncFact = DataNameClauseLookupFactory.getFactory()
 
         Try
-            dncl = DataNameClauseLookupFactory.createDataNameClauseLookup(getMAActiveDataDir(m_DirInfo.FullName))
+            dncl = DataNameClauseLookupFactory.createDataNameClauseLookup(getMAActiveDataDir(m_DirInfo.FullName), True)
         Catch ex As Exception
-            dncl = DataNameClauseLookupFactory.createDataNameClauseLookup(m_DirInfo)
+            dncl = DataNameClauseLookupFactory.createDataNameClauseLookup(m_DirInfo, True)
         End Try
 
         Return dncl
