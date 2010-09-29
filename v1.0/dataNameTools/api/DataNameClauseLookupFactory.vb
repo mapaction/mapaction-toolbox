@@ -16,6 +16,7 @@
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 Imports System.IO
+Imports ADODB
 
 ''' <summary>
 ''' A factory class for generating IDataNameClauseLookup objects.
@@ -74,14 +75,15 @@ Public Class DataNameClauseLookupFactory
     ''' the GDB or strAryArgs should be a collection of connection parameters for an SDE GDB.
     ''' </remarks>
     Public Shared Function createDataNameClauseLookup(ByVal enuDNCLType As dnClauseLookupType, _
-                                               ByRef strAryArgs() As String) As IDataNameClauseLookup
+                                               ByRef strAryArgs() As String, _
+                                               ByVal blnReadWrite As Boolean) As IDataNameClauseLookup
         Dim dnclResult As IDataNameClauseLookup
 
         Select Case enuDNCLType
             Case dnClauseLookupType.MDB
-                dnclResult = New MDBDataNameClauseLookup(strAryArgs(0))
+                dnclResult = New MDBDataNameClauseLookup(strAryArgs(0), getRWmodeAsLong(blnReadWrite))
             Case dnClauseLookupType.ESRI_GDB
-                dnclResult = New GDBDataNameClauseLookup(strAryArgs(0))
+                dnclResult = New GDBDataNameClauseLookup(strAryArgs(0), getRWmodeAsLong(blnReadWrite))
             Case Else
                 Throw New ArgumentException("DataNameClauseLookup of type " & enuDNCLType & " not recgonised.")
         End Select
@@ -104,7 +106,7 @@ Public Class DataNameClauseLookupFactory
     ''' All other paths are interperated as pointing to a GDB (either filebased or a 
     ''' connection file).
     ''' </remarks>
-    Public Shared Function createDataNameClauseLookup(ByRef strPath As String) As IDataNameClauseLookup
+    Public Shared Function createDataNameClauseLookup(ByRef strPath As String, ByVal blnReadWriteMode As Boolean) As IDataNameClauseLookup
         Dim dnclResult As IDataNameClauseLookup
         Dim fInfo As FileInfo
         Dim dInfo As DirectoryInfo
@@ -117,12 +119,12 @@ Public Class DataNameClauseLookupFactory
         If fInfo.Exists() Then
             Select Case fInfo.Extension
                 Case ".sde", ".ags", ".gds"
-                    dnclResult = createDataNameClauseLookup(dnClauseLookupType.ESRI_GDB, strAryArgs)
+                    dnclResult = createDataNameClauseLookup(dnClauseLookupType.ESRI_GDB, strAryArgs, blnReadWriteMode)
                 Case ".mdb"
                     Try
-                        dnclResult = createDataNameClauseLookup(dnClauseLookupType.ESRI_GDB, strAryArgs)
+                        dnclResult = createDataNameClauseLookup(dnClauseLookupType.ESRI_GDB, strAryArgs, blnReadWriteMode)
                     Catch ex As Exception
-                        dnclResult = createDataNameClauseLookup(dnClauseLookupType.MDB, strAryArgs)
+                        dnclResult = createDataNameClauseLookup(dnClauseLookupType.MDB, strAryArgs, blnReadWriteMode)
                     End Try
                 Case Else
                     Throw New ArgumentException(String.Format("Data Name Clause Lookup Tables could not be found at:", strPath))
@@ -131,10 +133,10 @@ Public Class DataNameClauseLookupFactory
             'args(0) is a directory
             'therefore it is either a filebasedGDB or a normal directory
             If fInfo.FullName.EndsWith(".gdb") Then
-                dnclResult = createDataNameClauseLookup(dnClauseLookupType.ESRI_GDB, strAryArgs)
+                dnclResult = createDataNameClauseLookup(dnClauseLookupType.ESRI_GDB, strAryArgs, blnReadWriteMode)
             Else
                 dInfo = New DirectoryInfo(fInfo.FullName)
-                dnclResult = createDataNameClauseLookup(dInfo)
+                dnclResult = createDataNameClauseLookup(dInfo, blnReadWriteMode)
             End If
         Else
             Throw New ArgumentException(String.Format("Data Name Clause Lookup Tables could not be found at:", strPath))
@@ -163,7 +165,7 @@ Public Class DataNameClauseLookupFactory
     ''' If an Access DB is not found then the method searchs for any GDB with teh relevant
     ''' tables present.
     ''' </remarks>
-    Public Shared Function createDataNameClauseLookup(ByRef dInfo As DirectoryInfo) As IDataNameClauseLookup
+    Public Shared Function createDataNameClauseLookup(ByRef dInfo As DirectoryInfo, ByVal blnReadWriteMode As Boolean) As IDataNameClauseLookup
         Dim dnclResult As IDataNameClauseLookup
         Dim lstfInfo As List(Of FileInfo)
 
@@ -191,7 +193,7 @@ Public Class DataNameClauseLookupFactory
                 'System.Console.WriteLine("found file: " & curFileInfo.FullName)
                 If dnclResult Is Nothing Then
                     Try
-                        dnclResult = New MDBDataNameClauseLookup(curFileInfo)
+                        dnclResult = New MDBDataNameClauseLookup(curFileInfo, getRWmodeAsLong(blnReadWriteMode))
                     Catch ex As Exception
                         'System.Console.WriteLine("MDBDataNameClauseLookup threw an exception")
                         'System.Console.WriteLine(ex.ToString())
@@ -207,7 +209,7 @@ Public Class DataNameClauseLookupFactory
                     'System.Console.WriteLine("found file: " & curFileInfo.FullName)
                     If dnclResult Is Nothing Then
                         Try
-                            dnclResult = New GDBDataNameClauseLookup(curFileInfo.FullName)
+                            dnclResult = New GDBDataNameClauseLookup(curFileInfo.FullName, getRWmodeAsLong(blnReadWriteMode))
                         Catch ex As Exception
                             'System.Console.WriteLine("GeoDBDataNameClauseLookup threw an exception")
                             'System.Console.WriteLine(ex.ToString())
@@ -229,15 +231,27 @@ Public Class DataNameClauseLookupFactory
 
     Public Shared Function getFallBackDataNameClauseLookup() As IDataNameClauseLookup
         Dim dnclResult As IDataNameClauseLookup
-        Dim strMDBpath As String
+        Dim strDSNpath As String
 
         'strMDBpath = My.Application.Info.DirectoryPath & My.Resources.fallbackMDBfilename
 
         'todo HIGH: Undo this ugly hack!!!!
-        strMDBpath = "C:\Program Files\MapAction\dataNameTools\" & _
-                        "fall_back_data_naming_conventions_v1.0.mdb"
-        dnclResult = New MDBDataNameClauseLookup(strMDBpath)
-
+        strDSNpath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFiles) & _
+                        "\MapAction\dataNameTools\fall_back_data_naming_conventions_v1.0.dsn"
+        'dnclResult = New MDBDataNameClauseLookup(strMDBpath, getRWmodeAsLong(False))
+        dnclResult = New MDBDataNameClauseLookup(strDSNpath, getRWmodeAsLong(False), True)
         Return dnclResult
+    End Function
+
+    Private Shared Function getRWmodeAsLong(ByVal blnReadWrite As Boolean) As Long
+        Dim lngResult As Long
+
+        If blnReadWrite Then
+            lngResult = ConnectModeEnum.adModeShareDenyNone
+        Else
+            lngResult = ConnectModeEnum.adModeRead
+        End If
+
+        Return lngResult
     End Function
 End Class

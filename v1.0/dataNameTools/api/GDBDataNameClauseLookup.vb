@@ -49,9 +49,10 @@ Public Class GDBDataNameClauseLookup
     ''' The constuctor. This should only be call from within the relevant 
     ''' factory class.
     ''' </remarks>
-    Protected Friend Sub New(ByRef dnlw As ESRI.ArcGIS.Geodatabase.IWorkspace)
+    Protected Friend Sub New(ByRef dnlw As ESRI.ArcGIS.Geodatabase.IWorkspace, ByVal lngReadWriteMode As Long)
         m_wkspDataNameLookup = dnlw
         m_fInfoPath = New FileInfo(dnlw.PathName)
+        m_lngReadWriteMode = lngReadWriteMode
         initialiseAllTables()
     End Sub
 
@@ -65,10 +66,11 @@ Public Class GDBDataNameClauseLookup
     ''' The constuctor. This should only be call from within the relevant 
     ''' factory class.
     ''' </remarks>
-    Protected Friend Sub New(ByVal strPathName As String)
+    Protected Friend Sub New(ByVal strPathName As String, ByVal lngReadWriteMode As Long)
         'ESRI.ArcGIS.Geodatabase.IWorkspace()
         m_wkspDataNameLookup = getESRIWorkspaceFromFile(strPathName)
         m_fInfoPath = New FileInfo(strPathName)
+        m_lngReadWriteMode = lngReadWriteMode
         initialiseAllTables()
     End Sub
 
@@ -157,13 +159,13 @@ Public Class GDBDataNameClauseLookup
                     '"Provider=ESRI.GeoDB.OLEDB.1;{0};Extended Properties=WorkspaceType= esriCore.AccessWorkspaceFactory.1;Geometry={1}"
                     'strConnectPattern = System.Configuration.ConfigurationManager.AppSettings.Item(APP_CONF_GDB_PERSONAL_OLE_CONNECT_STRING)
                     strConnectPattern = GDB_PERSONAL_OLE_CONNECT_STRING
-                    strConnection = String.Format(strConnectPattern, m_fInfoPath.FullName, strGeoDBType)
+                    strConnection = String.Format(strConnectPattern, m_fInfoPath.FullName, strGeoDBType, m_lngReadWriteMode)
 
                 Case ".sde", ".ags", ".gds"
                     '"Provider=ESRI.GeoDB.OLEDB.1;Extended Properties=WorkspaceType= esriDataSourcesGDB.SDEWorkspaceFactory.1;ConnectionFile={0}"
                     'strConnectPattern = System.Configuration.ConfigurationManager.AppSettings.Item(APP_CONF_GDB_SDE_OLE_CONNECT_STRING)
                     strConnectPattern = GDB_SDE_OLE_CONNECT_STRING
-                    strConnection = String.Format(strConnectPattern, m_fInfoPath.FullName)
+                    strConnection = String.Format(strConnectPattern, m_fInfoPath.FullName, m_lngReadWriteMode)
 
                 Case Else
                     Throw New ArgumentException("GeoDatabase type not recgonised")
@@ -174,7 +176,7 @@ Public Class GDBDataNameClauseLookup
                 '"Provider=ESRI.GeoDB.OLEDB.1;{0};Extended Properties=WorkspaceType= esriDataSourcesGDB.FileGDBWorkspaceFactory.1;Geometry={1}"
                 'strConnectPattern = System.Configuration.ConfigurationManager.AppSettings.Item(APP_CONF_GDB_FILE_OLE_CONNECT_STRING)
                 strConnectPattern = GDB_FILE_OLE_CONNECT_STRING
-                strConnection = String.Format(strConnectPattern, strConnectPattern, strGeoDBType)
+                strConnection = String.Format(strConnectPattern, strConnectPattern, strGeoDBType, m_lngReadWriteMode)
             Else
                 Throw New ArgumentException("GeoDatabase type not recgonised")
             End If

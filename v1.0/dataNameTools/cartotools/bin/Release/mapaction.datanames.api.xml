@@ -647,7 +647,7 @@ TableAdapterManager is used to coordinate TableAdapters in the dataset to enable
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.
 </summary>
-</member><member name="M:mapaction.datanames.api.GDBDataNameClauseLookup.#ctor(ESRI.ArcGIS.Geodatabase.IWorkspace@)">
+</member><member name="M:mapaction.datanames.api.GDBDataNameClauseLookup.#ctor(ESRI.ArcGIS.Geodatabase.IWorkspace@,System.Int64)">
 	<summary>
  The constuctor. This should only be call from within the relevant 
  factory class.
@@ -657,7 +657,7 @@ TableAdapterManager is used to coordinate TableAdapters in the dataset to enable
  The constuctor. This should only be call from within the relevant 
  factory class.
  </remarks>
-</member><member name="M:mapaction.datanames.api.GDBDataNameClauseLookup.#ctor(System.String)">
+</member><member name="M:mapaction.datanames.api.GDBDataNameClauseLookup.#ctor(System.String,System.Int64)">
 	<summary>
  The constuctor. This should only be call from within the relevant 
  factory class.
@@ -922,7 +922,7 @@ TableAdapterManager is used to coordinate TableAdapters in the dataset to enable
 	<remarks>
  A method for obtaining a reference to this object.
  </remarks>
-</member><member name="M:mapaction.datanames.api.DataNameClauseLookupFactory.createDataNameClauseLookup(mapaction.datanames.api.dnClauseLookupType,System.String[]@)">
+</member><member name="M:mapaction.datanames.api.DataNameClauseLookupFactory.createDataNameClauseLookup(mapaction.datanames.api.dnClauseLookupType,System.String[]@,System.Boolean)">
 	<summary>
  Create a new IDataNameClauseLookup, based on the type and location specified.
  </summary>
@@ -937,7 +937,7 @@ TableAdapterManager is used to coordinate TableAdapters in the dataset to enable
  If dnClauseLookupType.ESRI_GDB then either strAryArgs(0) should be the full path of 
  the GDB or strAryArgs should be a collection of connection parameters for an SDE GDB.
  </remarks>
-</member><member name="M:mapaction.datanames.api.DataNameClauseLookupFactory.createDataNameClauseLookup(System.String@)">
+</member><member name="M:mapaction.datanames.api.DataNameClauseLookupFactory.createDataNameClauseLookup(System.String@,System.Boolean)">
 	<summary>
  Create a new IDataNameClauseLookup, based on the location specified.
  </summary>
@@ -952,7 +952,7 @@ TableAdapterManager is used to coordinate TableAdapters in the dataset to enable
  All other paths are interperated as pointing to a GDB (either filebased or a 
  connection file).
  </remarks>
-</member><member name="M:mapaction.datanames.api.DataNameClauseLookupFactory.createDataNameClauseLookup(System.IO.DirectoryInfo@)">
+</member><member name="M:mapaction.datanames.api.DataNameClauseLookupFactory.createDataNameClauseLookup(System.IO.DirectoryInfo@,System.Boolean)">
 	<summary>
  Searches for the physical location of Data Name Clause Lookup Tables within the 
  Directory specified.
@@ -3016,9 +3016,9 @@ TableAdapterManager is used to coordinate TableAdapters in the dataset to enable
  A private convenience module to help search directories for the DataName
  Clause Lookup table in whatever form they may take.
  </remarks>
-</member><member name="M:mapaction.datanames.api.MDBDataNameClauseLookup.#ctor(System.String)">
+</member><member name="M:mapaction.datanames.api.MDBDataNameClauseLookup.#ctor(System.String,System.Int64)">
 	<summary>
- The constuctor. This should only be call from within the relevant 
+ The constuctor. This should only be called from within the relevant 
  factory class.
  </summary>
 	<param name="strFullName">A string of the full path to the Access MDB file</param>
@@ -3026,7 +3026,7 @@ TableAdapterManager is used to coordinate TableAdapters in the dataset to enable
  The constuctor. This should only be call from within the relevant 
  factory class.
  </remarks>
-</member><member name="M:mapaction.datanames.api.MDBDataNameClauseLookup.#ctor(System.IO.FileInfo@)">
+</member><member name="M:mapaction.datanames.api.MDBDataNameClauseLookup.#ctor(System.IO.FileInfo@,System.Int64)">
 	<summary>
  The constuctor. This should only be call from within the relevant 
  factory class.

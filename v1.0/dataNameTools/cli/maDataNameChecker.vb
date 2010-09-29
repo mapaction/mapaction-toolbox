@@ -114,7 +114,7 @@ Module maDataNameChecker
                     System.Console.WriteLine(dncl.getDetails())
                 Else
                     dnclFactory = DataNameClauseLookupFactory.getFactory()
-                    dncl = dnclFactory.createDataNameClauseLookup(m_strLookupTablesPath)
+                    dncl = dnclFactory.createDataNameClauseLookup(m_strLookupTablesPath, False)
                 End If
 
                 dlc.setRecuse(m_blnRecuse)

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{36C25405-968F-4227-BC2E-A44028CF13D0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -93,10 +93,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="BasicDataRenameDialog.Designer.vb">
-      <DependentUpon>BasicDataRenameDialog.vb</DependentUpon>
+    <Compile Include="DataRenameDialog.Designer.vb">
+      <DependentUpon>DataRenameDialog.vb</DependentUpon>
     </Compile>
-    <Compile Include="BasicDataRenameDialog.vb">
+    <Compile Include="DataRenameDialog.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ClauseSelector.Designer.vb">
@@ -105,22 +105,10 @@
     <Compile Include="ClauseSelector.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="frmMain_origional.designer.vb">
-      <DependentUpon>frmMain_origional.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmMain_origional.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="DataListSelectorPanel.designer.vb">
       <DependentUpon>DataListSelectorPanel.vb</DependentUpon>
     </Compile>
     <Compile Include="DataListSelectorPanel.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="DataListSelectorPanel_orgional.designer.vb">
-      <DependentUpon>DataListSelectorPanel_orgional.vb</DependentUpon>
-    </Compile>
-    <Compile Include="DataListSelectorPanel_orgional.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="DataNamesGridView.designer.vb">
@@ -164,26 +152,25 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="BasicDataRenameDialog.resx">
-      <DependentUpon>BasicDataRenameDialog.vb</DependentUpon>
+    <EmbeddedResource Include="DataRenameDialog.resx">
+      <DependentUpon>DataRenameDialog.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ClauseSelector.resx">
       <DependentUpon>ClauseSelector.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmMain_origional.resx">
-      <DependentUpon>frmMain_origional.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DataListSelectorPanel.resx">
       <DependentUpon>DataListSelectorPanel.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataListSelectorPanel_orgional.resx">
-      <DependentUpon>DataListSelectorPanel_orgional.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DataNamesGridView.resx">
       <DependentUpon>DataNamesGridView.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -193,6 +180,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="testForm.resx">
       <DependentUpon>testForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

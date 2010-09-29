@@ -111,7 +111,7 @@ Public Module DefaultSymbololgy
             Try
                 srtAryPath(0) = rootSymbDNCLpath.FullName
                 'MsgBox(rootSymbDNCLpath.FullName)
-                m_dncl = DataNameClauseLookupFactory.createDataNameClauseLookup(dnClauseLookupType.MDB, srtAryPath)
+                m_dncl = DataNameClauseLookupFactory.createDataNameClauseLookup(dnClauseLookupType.MDB, srtAryPath, False)
                 'MsgBox("Got data naming clause")
             Catch ex2 As Exception
                 Try

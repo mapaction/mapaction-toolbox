@@ -34,6 +34,8 @@ Public Class DataNamesGridView
     Private m_intIdxComments As Integer = 3
     Private m_intIdxPath As Integer = 4
 
+    Private m_dnRenameDialog As DataRenameDialog = New DataRenameDialog
+
     Public Event addRowsProgress(ByVal processed As Integer, ByVal total As Integer)
 
     Public Sub New()
@@ -169,6 +171,7 @@ Public Class DataNamesGridView
                 CType(datGV.Rows(e.RowIndex).Cells(m_intIdxButtn), DataGridViewDisableButtonCell)
             If buttonCell.Enabled Then
                 'datGV.Rows(e.RowIndex).Cells(e.ColumnIndex).Value.ToString() & " is enabled: " & buttonCell.Enabled)
+                'm_dnRenameDialog.ShowDialog()
                 MsgBox("Renaming not yet implenmented")
             End If
         End If

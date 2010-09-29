@@ -18,7 +18,9 @@
 Imports System.Data
 Imports System.Data.Common
 Imports System.Data.OleDb
+Imports System.Data.Odbc
 Imports System.IO
+Imports ADODB
 
 ''' <summary>
 ''' Provides a specfic implenmentation of the IDataNameClauseLookup, based on storing the
@@ -34,11 +36,12 @@ Imports System.IO
 Public Class MDBDataNameClauseLookup
     Inherits AbstractDataNameClauseLookup
 
-    Private m_DBConnection As OleDbConnection = Nothing
+    Private m_DBConnection As DbConnection = Nothing
     Private m_fInfoPath As FileInfo
+    Private m_blnIsFallBack As Boolean
 
     ''' <summary>
-    ''' The constuctor. This should only be call from within the relevant 
+    ''' The constuctor. This should only be called from within the relevant 
     ''' factory class.
     ''' </summary>
     ''' <param name="strFullName">A string of the full path to the Access MDB file</param>
@@ -46,7 +49,11 @@ Public Class MDBDataNameClauseLookup
     ''' The constuctor. This should only be call from within the relevant 
     ''' factory class.
     ''' </remarks>
-    Protected Friend Sub New(ByVal strFullName As String)
+    Protected Friend Sub New(ByVal strFullName As String, ByVal lngReadWriteMode As Long)
+        Me.New(strFullName, lngReadWriteMode, False)
+    End Sub
+
+    Protected Friend Sub New(ByVal strFullName As String, ByVal lngReadWriteMode As Long, ByVal blnIsFallBack As Boolean)
         Dim fInfoArg As FileInfo
 
         If strFullName Is Nothing Then
@@ -54,6 +61,8 @@ Public Class MDBDataNameClauseLookup
         Else
             fInfoArg = New FileInfo(strFullName)
             m_fInfoPath = fInfoArg
+            m_lngReadWriteMode = lngReadWriteMode
+            m_blnIsFallBack = blnIsFallBack
             'System.Console.WriteLine("args(0)= " & args(0))
             'initialiseConnectionObject(fInfoArg)
             initialiseAllTables()
@@ -71,8 +80,9 @@ Public Class MDBDataNameClauseLookup
     ''' The constuctor. This should only be call from within the relevant 
     ''' factory class.
     ''' </remarks>
-    Protected Friend Sub New(ByRef fileInfoArg As FileInfo)
+    Protected Friend Sub New(ByRef fileInfoArg As FileInfo, ByVal lngReadWriteMode As Long)
         m_fInfoPath = fileInfoArg
+        m_lngReadWriteMode = lngReadWriteMode
         'initialiseConnectionObject(fileInfoArg)
         initialiseAllTables()
     End Sub
@@ -103,22 +113,43 @@ Public Class MDBDataNameClauseLookup
     Protected Friend Overrides Function getDBDataAdapter() As System.Data.Common.DbDataAdapter
         Dim daResult As DbDataAdapter
         Dim strConnectPattern As String
-        Dim dbCommand As OleDbCommand = New OleDb.OleDbCommand
+        Dim oleCommand As OleDbCommand = New OleDbCommand
+        Dim odbcCommand As OdbcCommand = New OdbcCommand
+        Dim odbcConnection As OdbcConnection = Nothing
+        Dim oleDBConnection As OleDbConnection = Nothing
 
         If Not m_fInfoPath.Exists() Then
+            MsgBox(m_fInfoPath.FullName)
             Throw New ArgumentException("Invalid path passed to New MDBDataNameClauseLookup(fileInfoArg)")
         Else
             'strConnectPattern = System.Configuration.ConfigurationManager.AppSettings.Item(APP_CONF_MDB_OLE_CONNECT_STRING)
-            strConnectPattern = MDB_OLE_CONNECT_STRING
+            If m_blnIsFallBack Then
+                strConnectPattern = String.Format(FALLBACK_MDB_OLE_CONNECT_STRING, m_fInfoPath.FullName)
+                'strConnectPattern = FALLBACK_MDB_OLE_CONNECT_STRING
+                If (m_DBConnection Is Nothing) Or (Not (TypeOf m_DBConnection Is OdbcConnection)) Then
+                    odbcConnection = New Odbc.OdbcConnection(strConnectPattern)
+                    odbcConnection.Open()
+                    m_DBConnection = odbcConnection
+                Else
+                    odbcConnection = TryCast(m_DBConnection, OdbcConnection)
+                End If
 
-            If m_DBConnection Is Nothing Then
-                m_DBConnection = New OleDbConnection(String.Format(strConnectPattern, m_fInfoPath.FullName))
-                m_DBConnection.Open()
+                odbcCommand.Connection = odbcConnection
+                daResult = New Odbc.OdbcDataAdapter(odbcCommand)
+            Else
+                strConnectPattern = String.Format(MDB_OLE_CONNECT_STRING, m_lngReadWriteMode, m_fInfoPath.FullName)
 
+                If (m_DBConnection Is Nothing) Or (Not (TypeOf m_DBConnection Is OleDbConnection)) Then
+                    oleDBConnection = New OleDbConnection(strConnectPattern)
+                    oleDBConnection.Open()
+                    m_DBConnection = oleDBConnection
+                Else
+                    oleDBConnection = TryCast(m_DBConnection, OleDbConnection)
+                End If
+
+                oleCommand.Connection = oleDBConnection
+                daResult = New OleDbDataAdapter(oleCommand)
             End If
-
-            dbCommand.Connection = m_DBConnection
-            daResult = New OleDbDataAdapter(dbCommand)
         End If
 
         Return daResult
