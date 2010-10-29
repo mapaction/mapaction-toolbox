@@ -18,3 +18,4 @@ D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTool
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\obj\Release\maDataNameCheckerGUI.xml
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\obj\Release\maDataNameCheckerGUI.pdb
 D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\obj\Release\mapaction.datanames.gui.DataRenameDialog.resources
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\gui\obj\Release\mapaction.datanames.gui.FreeTextPanel.resources

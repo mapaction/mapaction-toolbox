@@ -145,6 +145,12 @@
     <Compile Include="testForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FreeTextPanel.Designer.vb">
+      <DependentUpon>FreeTextPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FreeTextPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="_fall_back_data_naming_conventions_v1_0DataSet.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -166,6 +172,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataNamesGridView.resx">
       <DependentUpon>DataNamesGridView.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FreeTextPanel.resx">
+      <DependentUpon>FreeTextPanel.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">

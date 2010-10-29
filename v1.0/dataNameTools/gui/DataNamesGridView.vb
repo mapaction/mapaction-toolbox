@@ -171,7 +171,7 @@ Public Class DataNamesGridView
                 CType(datGV.Rows(e.RowIndex).Cells(m_intIdxButtn), DataGridViewDisableButtonCell)
             If buttonCell.Enabled Then
                 'datGV.Rows(e.RowIndex).Cells(e.ColumnIndex).Value.ToString() & " is enabled: " & buttonCell.Enabled)
-                'm_dnRenameDialog.ShowDialog()
+                m_dnRenameDialog.ShowDialog()
                 MsgBox("Renaming not yet implenmented")
             End If
         End If

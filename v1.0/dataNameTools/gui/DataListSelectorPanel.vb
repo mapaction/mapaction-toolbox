@@ -491,11 +491,19 @@ Public Class DataListSelectorPanel
     End Function
 
     Private Function isValidFileOrDirectory(ByVal strPath As String) As Boolean
+        Dim blnResult As Boolean
+
         If strPath Is Nothing OrElse strPath = String.Empty Then
-            Return False
+            blnResult = False
         Else
-            Return isValidFileOrDirectory(New FileInfo(strPath))
+            Try
+                blnResult = isValidFileOrDirectory(New FileInfo(strPath))
+            Catch ex As Exception
+                blnResult = False
+            End Try
         End If
+
+        Return blnResult
     End Function
 
     Private Function isValidFileOrDirectory(ByVal fInfo As FileInfo) As Boolean
