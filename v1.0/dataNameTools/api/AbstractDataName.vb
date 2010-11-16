@@ -32,6 +32,8 @@ Public MustInherit Class AbstractDataName
     Private m_lngCachedBitSum As Long
     Protected Friend m_blnAllowReNaming As Boolean
 
+    Public Event NameChanged(ByVal strOldName As String, ByRef dnRenamed As IDataName) Implements IDataName.NameChanged
+
     ''' <summary>
     ''' Creates a new IDataName.
     ''' </summary>
@@ -350,9 +352,13 @@ Public MustInherit Class AbstractDataName
     ''' If the renaming fails for any reason a RenamingDataException is thrown.
     ''' </remarks>
     Public Sub rename(ByVal strNewName As String) Implements IDataName.rename
+        Dim strOldName As String
+
         If m_blnAllowReNaming Then
+            strOldName = m_strName
             resetCacheFlags()
             performRename(strNewName)
+            RaiseEvent NameChanged(strOldName, Me)
         Else
             Throw New RenamingDataException(Me)
         End If
@@ -375,7 +381,7 @@ Public MustInherit Class AbstractDataName
     ''' End users should not call this method, but use the rename() method 
     ''' instead.
     ''' </remarks>
-    Public MustOverride Sub performRename(ByVal newNameStr As String)
+    Protected MustOverride Sub performRename(ByVal newNameStr As String)
 
 #Region "get methods"
     Public Function getGeoExtentClause() As String Implements IDataName.getGeoExtentClause
@@ -1007,6 +1013,10 @@ Public MustInherit Class AbstractDataName
         End Select
 
         Return lngResultVal
+    End Function
+
+    Public Function checkPropossedNameStatus(ByVal str_PropossedName As String) As Long Implements IDataName.checkPropossedNameStatus
+        Return getNameSyntaxStatus(str_PropossedName)
     End Function
 
 End Class

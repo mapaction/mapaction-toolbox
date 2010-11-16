@@ -123,6 +123,8 @@ Public Interface IDataName
     ''' </remarks>
     Function checkNameStatus() As Long
 
+    Function checkPropossedNameStatus(ByVal str_PropossedName As String) As Long
+
     ''' <summary>
     ''' Tests whether or not the IDataName is syntatically correct.
     ''' </summary>
@@ -212,6 +214,8 @@ Public Interface IDataName
     ''' If the renaming fails for any reason a RenamingDataException is thrown.
     ''' </remarks>
     Sub rename(ByVal newNameStr As String)
+
+    Event NameChanged(ByVal strOldName As String, ByRef dnRenamed As IDataName)
 
 #Region "change methods"
     ''' <summary>

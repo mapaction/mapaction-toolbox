@@ -265,7 +265,7 @@ Public Class DataNameESRIFeatureClass
     ''' End users should not call this method, but use the rename() method 
     ''' instead.
     ''' </remarks>
-    Public Overrides Sub performRename(ByVal strNewName As String)
+    Protected Overrides Sub performRename(ByVal strNewName As String)
         If Not isRenameable() Then
             Throw New RenamingDataException(Me)
         Else

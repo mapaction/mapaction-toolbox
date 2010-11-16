@@ -68,7 +68,7 @@ Public Class GDBDataNameClauseLookup
     ''' </remarks>
     Protected Friend Sub New(ByVal strPathName As String, ByVal lngReadWriteMode As Long)
         'ESRI.ArcGIS.Geodatabase.IWorkspace()
-        m_wkspDataNameLookup = getESRIWorkspaceFromFile(strPathName)
+        m_wkspDataNameLookup = getESRIWorkspacesFromFile(strPathName)
         m_fInfoPath = New FileInfo(strPathName)
         m_lngReadWriteMode = lngReadWriteMode
         initialiseAllTables()

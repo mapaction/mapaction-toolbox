@@ -51,6 +51,7 @@ Public NotInheritable Class maBronzeArcMapToolBar
     Private Shared Sub ArcGISCategoryRegistration(ByVal registerType As Type)
         Dim regKey As String = String.Format("HKEY_CLASSES_ROOT\CLSID\{{{0}}}", registerType.GUID)
         MxCommandBars.Register(regKey)
+        GxCommandBars.Register(regKey)
 
     End Sub
     ''' <summary>
@@ -60,7 +61,7 @@ Public NotInheritable Class maBronzeArcMapToolBar
     Private Shared Sub ArcGISCategoryUnregistration(ByVal registerType As Type)
         Dim regKey As String = String.Format("HKEY_CLASSES_ROOT\CLSID\{{{0}}}", registerType.GUID)
         MxCommandBars.Unregister(regKey)
-
+        GxCommandBars.Unregister(regKey)
     End Sub
 
 #End Region

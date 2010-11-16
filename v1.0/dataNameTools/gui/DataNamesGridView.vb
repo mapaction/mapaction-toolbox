@@ -34,6 +34,9 @@ Public Class DataNamesGridView
     Private m_intIdxComments As Integer = 3
     Private m_intIdxPath As Integer = 4
 
+    'Private m_lstDataNames As List(Of IDataName)
+    Private m_dicDataNames As Dictionary(Of DataGridViewRow, IDataName)
+
     Private m_dnRenameDialog As DataRenameDialog = New DataRenameDialog
 
     Public Event addRowsProgress(ByVal processed As Integer, ByVal total As Integer)
@@ -49,17 +52,26 @@ Public Class DataNamesGridView
 
         Dim column1 As New DataGridViewDisableButtonColumn()
         column1.Name = "Rename"
+        column1.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+        column1.DefaultCellStyle.BackColor = SystemColors.ButtonFace
 
         datGV.Columns.Insert(m_intIdxButtn, column1)
 
         For i = 0 To (datGV.Columns.Count - 1)
             System.Console.WriteLine(datGV.Columns.Item(i).Name & " : " & datGV.Columns.Item(i).Index)
         Next
-
     End Sub
 
     Public Sub clearGrid()
         datGV.Rows.Clear()
+        If m_dicDataNames IsNot Nothing Then
+            For Each dName In m_dicDataNames.Values
+                RemoveHandler dName.NameChanged, AddressOf dataNameChangeHandler
+            Next
+        End If
+
+        'm_lstDataNames = New List(Of IDataName)
+        m_dicDataNames = New Dictionary(Of DataGridViewRow, IDataName)()
     End Sub
 
     Public Sub addDataNames(ByRef dnList As IDataListConnection, ByRef dncl As IDataNameClauseLookup)
@@ -79,12 +91,27 @@ Public Class DataNamesGridView
     End Sub
 
     Private Sub addRow(ByRef dName As IDataName)
+        Dim rDGVRow As New DataGridViewRow  'Rows to be added to the datagrid view. I dont like Dim here - but it's the correct way
+        rDGVRow.CreateCells(datGV)
+
+        'Add the dataName to our list
+        'm_lstDataNames.Add(dName)
+        m_dicDataNames.Add(rDGVRow, dName)
+
+        'add as rename listener
+        AddHandler dName.NameChanged, AddressOf dataNameChangeHandler
+
+        'update the contents of the row
+        updateRow(rDGVRow, dName)
+
+        'Now add the completed row
+        datGV.Rows.Add(rDGVRow)
+    End Sub
+
+    Private Sub updateRow(ByRef rDGVRow As DataGridViewRow, ByRef dName As IDataName)
         Dim lngNameStatus As Long
         Dim strStatusMsg As String
         Dim intLineCnt As Integer
-
-        Dim rDGVRow As New DataGridViewRow  'Rows to be added to the datagrid view. I dont like Dim here - but it's the correct way
-        rDGVRow.CreateCells(datGV)
 
         'Get Name status
         lngNameStatus = dName.checkNameStatus()
@@ -124,7 +151,7 @@ Public Class DataNamesGridView
         '    rDGVRow.Height = CInt(datGV.RowTemplate.Height * intLineCnt * 0.9)
         'End If
 
-        rDGVRow.Height = 5 + (10 * intLineCnt)
+        'rDGVRow.Height = 5 + (10 * intLineCnt)
 
         'For Each statusStr In statusList
         '    If (Not statusStr Is Nothing) Or (Not statusStr = "") Then
@@ -141,11 +168,20 @@ Public Class DataNamesGridView
 
         'Add Path
         rDGVRow.Cells.Item(m_intIdxPath).Value = dName.getPathStr
-
-        'Now add the completed row
-        datGV.Rows.Add(rDGVRow)
     End Sub
 
+    Private Sub dataNameChangeHandler(ByVal strOldName As String, ByRef dnRenamed As IDataName)
+        'updateRow(datGV.Rows(m_lstDataNames.IndexOf(dnRenamed)), dnRenamed)
+        'updateRow(datGV.Rows(m_dicDataNames.Keys.
+        'updateRow(m_dicDataNames.GetO
+
+        For Each pair In m_dicDataNames
+            'KeyValuePair(Of DataGridViewRow, IDataName)
+            If dnRenamed.Equals(pair.Value) Then
+                updateRow(pair.Key, dnRenamed)
+            End If
+        Next
+    End Sub
 
     ' This event handler manually raises the CellValueChanged event
     ' by calling the CommitEdit method.
@@ -165,14 +201,16 @@ Public Class DataNamesGridView
         ByVal e As DataGridViewCellEventArgs) _
         Handles datGV.CellClick
 
-        If e.ColumnIndex = m_intIdxButtn Then
+        If ((e.ColumnIndex = m_intIdxButtn) And (e.RowIndex >= 0)) Then
 
             Dim buttonCell As DataGridViewDisableButtonCell = _
                 CType(datGV.Rows(e.RowIndex).Cells(m_intIdxButtn), DataGridViewDisableButtonCell)
             If buttonCell.Enabled Then
                 'datGV.Rows(e.RowIndex).Cells(e.ColumnIndex).Value.ToString() & " is enabled: " & buttonCell.Enabled)
+                'm_dnRenameDialog.dataName = m_lstDataNames.Item(e.RowIndex)
+                m_dnRenameDialog.dataName = m_dicDataNames.Item(datGV.Rows.Item(e.RowIndex))
                 m_dnRenameDialog.ShowDialog()
-                MsgBox("Renaming not yet implenmented")
+                'MsgBox("Renaming not yet implenmented")
             End If
         End If
     End Sub

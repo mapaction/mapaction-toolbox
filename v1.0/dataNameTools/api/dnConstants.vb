@@ -328,7 +328,8 @@ Public Module DataNamingConstants
         m_lstDNNameStatusValues.Add(dnNameStatus.INVALID_PERMISSIONS)
         m_lstDNNameStatusValues.Add(dnNameStatus.INVALID_SCALE)
         m_lstDNNameStatusValues.Add(dnNameStatus.INVALID_SOURCE)
-        m_lstDNNameStatusValues.Add(dnNameStatus.INCORRECT_DATATYPE)
+        'todo check this commenting out
+        'm_lstDNNameStatusValues.Add(dnNameStatus.INCORRECT_DATATYPE)
         m_lstDNNameStatusValues.Add(dnNameStatus.WARN_MISSING_SCALE_CLAUSE)
         m_lstDNNameStatusValues.Add(dnNameStatus.WARN_MISSING_PERMISSIONS_CLAUSE)
         m_lstDNNameStatusValues.Add(dnNameStatus.WARN_TWO_CHAR_FREE_TEXT)
