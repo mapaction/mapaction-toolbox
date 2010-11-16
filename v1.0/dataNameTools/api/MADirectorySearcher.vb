@@ -317,15 +317,15 @@ Public Module MADirectorySearcher
         Dim lstWrkSpFactories As New List(Of IWorkspaceFactory2)
 
         lstWrkSpFactories.Add(New AccessWorkspaceFactoryClass)
-        'lstWrkSpFactories.Add(New ArcInfoWorkspaceFactory)
-        'lstWrkSpFactories.Add(New ExcelWorkspaceFactory)
+        lstWrkSpFactories.Add(New ArcInfoWorkspaceFactory)
+        lstWrkSpFactories.Add(New ExcelWorkspaceFactory)
         lstWrkSpFactories.Add(New FileGDBWorkspaceFactory)
-        'lstWrkSpFactories.Add(New NetCDFWorkspaceFactory)
-        'lstWrkSpFactories.Add(New OLEDBWorkspaceFactory)
+        lstWrkSpFactories.Add(New NetCDFWorkspaceFactory)
+        lstWrkSpFactories.Add(New OLEDBWorkspaceFactory)
         lstWrkSpFactories.Add(New RasterWorkspaceFactory)
         lstWrkSpFactories.Add(New SdeWorkspaceFactory)
         lstWrkSpFactories.Add(New ShapefileWorkspaceFactory)
-        'lstWrkSpFactories.Add(New TinWorkspaceFactory)
+        lstWrkSpFactories.Add(New TinWorkspaceFactory)
 
         dInfo = New DirectoryInfo(fInfo.FullName)
 

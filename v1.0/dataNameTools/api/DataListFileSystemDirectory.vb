@@ -277,7 +277,7 @@ Public Class DataListFileSystemDirectory
             Next
         Next
 
-        For Each curFileInfo In filterFilesForSpecialGISData()
+        For Each curFileInfo In filterFilesForSpecialGISData(False)
             lstStrNames.Add(curFileInfo.Name)
         Next
 
@@ -338,7 +338,7 @@ Public Class DataListFileSystemDirectory
             'System.Console.WriteLine("curFileInfo.Name " & curFileInfo.Name.Remove(curFileInfo.Name.LastIndexOf(curFileInfo.Extension)) & "   curFileInfo.FullName " & curFileInfo.Extension)
 
             Select Case curFileInfo.Extension
-                Case ".shp", ".bmp", ".gif", ".img", ".jpg", "jp2", ".png", ".tif", ".asc"
+                Case ".shp", ".bmp", ".gif", ".img", ".jpg", ".jp2", ".png", ".tif", ".asc", ".sid"
                     'Only add if not part of a shapefile
                     lstSpecialFileNames.Add(curFileInfo.Name.Remove(curFileInfo.Name.LastIndexOf(curFileInfo.Extension)))
                     If blnIncludeSpecialBaseFiles Then
@@ -386,13 +386,17 @@ Public Class DataListFileSystemDirectory
     ''' </remarks>
     Private Function allBaseFileNameOptions(ByVal strFileName As String) As List(Of String)
         Dim lstStrAllOptions As New List(Of String)
+        Dim strCur As String
 
-        Do While strFileName <> String.Empty
-            If strFileName.LastIndexOf(".") >= 0 Then
-                lstStrAllOptions.Add(strFileName)
-                strFileName = Left(strFileName, strFileName.LastIndexOf("."))
+        strCur = strFileName
+
+        Do While strCur <> String.Empty
+            lstStrAllOptions.Add(strCur)
+
+            If strCur.LastIndexOf(".") >= 0 Then
+                strCur = Left(strFileName, strCur.LastIndexOf("."))
             Else
-                strFileName = String.Empty
+                strCur = String.Empty
             End If
         Loop
 
@@ -417,7 +421,7 @@ Public Class DataListFileSystemDirectory
         allDirInfos = m_DirInfo.GetDirectories()
 
         For Each subDir In allDirInfos
-            If Not subDir.FullName.EndsWith(".gdb") Then
+            If Not (subDir.FullName.EndsWith(".gdb") Or subDir.Name.Equals("info")) Then
                 filteredDirInfos.Add(subDir)
             End If
         Next
