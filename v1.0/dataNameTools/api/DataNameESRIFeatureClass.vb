@@ -99,14 +99,29 @@ Public Class DataNameESRIFeatureClass
     ''' </remarks>
     Private Shared Function removePrefixFromBrowseName(ByVal ds As IDataset) As String
         Dim strBrowseName As String
+        Dim strResult As String
         strBrowseName = ds.BrowseName
 
         If ds.Workspace.Type <> esriWorkspaceType.esriFileSystemWorkspace And _
             strBrowseName.Contains(".") Then
-            Return strBrowseName.Substring(strBrowseName.LastIndexOf(".") + 1)
+            strResult = strBrowseName.Substring(strBrowseName.LastIndexOf(".") + 1)
         Else
-            Return strBrowseName
+            strResult = strBrowseName
         End If
+
+        Return strResult
+    End Function
+
+    Public Overrides Function getNameStr() As String
+        Dim strResult As String
+
+        If m_DataSet.Type = esriDatasetType.esriDTRasterDataset And m_strName.Contains(".") Then
+            strResult = m_strName.Substring(0, Math.Min(m_strName.LastIndexOf("."), m_strName.Length - 1))
+        Else
+            strResult = m_strName
+        End If
+
+        Return strResult
     End Function
 
     ''' <summary>

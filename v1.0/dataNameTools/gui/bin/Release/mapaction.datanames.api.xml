@@ -1486,6 +1486,38 @@ TableAdapterManager is used to coordinate TableAdapters in the dataset to enable
  same map/data frame or within different maps/data frames) are filtered out and only 
  occur once in the returned list.
  </remarks>
+</member><member name="M:mapaction.datanames.api.DataListGeoDBConnection.getESRIDataSetNamesFromWorkspace(ESRI.ArcGIS.Geodatabase.IWorkspace@,System.Boolean)">
+	<summary>
+ Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
+ an IWorkspace or IEnumDatasetName object.
+ </summary>
+	<param name="wrksp">A IWorkspace object</param>
+	<param name="blnRecuse">TRUE = The workspace should be recused if relevant,
+ FALSE = the workspace should not be recursed</param>
+	<returns>a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
+ an IWorkspace or IEnumDatasetName object.</returns>
+	<remarks>
+ Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
+ an IWorkspace or IEnumDatasetName object.
+ 
+ To access the IDataset themselves use the method getESRIDataSetsFromWorkspace()
+ </remarks>
+</member><member name="M:mapaction.datanames.api.DataListGeoDBConnection.getESRIDataSetNamesFromWorkspace(ESRI.ArcGIS.Geodatabase.IEnumDatasetName@,System.Boolean)">
+	<summary>
+ Returns a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
+ an IWorkspace or IEnumDatasetName object.
+ </summary>
+	<param name="edn">A DatasetName emnumerator IEnumDatasetName</param>
+	<param name="blnRecuse">TRUE = The workspace should be recused if relevant,
+ FALSE = the workspace should not be recursed</param>
+	<returns>a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
+ an IWorkspace or IEnumDatasetName object.</returns>
+	<remarks>
+ Returns a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
+ an IWorkspace or IEnumDatasetName object.
+ 
+ To access the IDataset themselves use the method getESRIDataSetsFromWorkspace()
+ </remarks>
 </member><member name="M:mapaction.datanames.api.DataListGeoDBConnection.getNamesStrFromESRIDataSetName(System.Collections.Generic.List{ESRI.ArcGIS.Geodatabase.IDatasetName}@)">
 	<summary>
  A convinence function for exacting a list of names as strings froma list of IDatasetName objects.
@@ -2907,7 +2939,7 @@ TableAdapterManager is used to coordinate TableAdapters in the dataset to enable
 	<param name="dirArg"></param>
 	<returns></returns>
 	<remarks></remarks>
-</member><member name="M:mapaction.datanames.api.MADirectorySearcher.getESRIWorkspaceFromFile(System.String)">
+</member><member name="M:mapaction.datanames.api.MADirectorySearcher.getESRIWorkspacesFromFile(System.String)">
 	<summary>
  Searches for an appropriate type of ESRI IWorkspace based on the nature of the fInfo
  passed.
@@ -2924,7 +2956,7 @@ TableAdapterManager is used to coordinate TableAdapters in the dataset to enable
  If strFullFilePath is a directory with extention = ".gdb", returns a FileGDBWorkspaceFactoryClass
  If strFullFilePath is a directory with no extention, returns a ShapefileWorkspaceFactory
  </remarks>
-</member><member name="M:mapaction.datanames.api.MADirectorySearcher.getESRIWorkspaceFromFile(System.IO.FileInfo)">
+</member><member name="M:mapaction.datanames.api.MADirectorySearcher.getESRIWorkspacesFromFile(System.IO.FileInfo)">
 	<summary>
  Searches for an appropriate type of ESRI IWorkspace based on the nature of the fInfo
  passed.

@@ -63,9 +63,9 @@ Public MustInherit Class AbstractDataName
     End Sub
 
 
-    Public Function getNameStr() As String Implements IDataName.getNameStr
-        Return m_strName
-    End Function
+    Public MustOverride Function getNameStr() As String Implements IDataName.getNameStr
+    '    Return m_strName
+    'End Function
 
     ''' <summary>
     ''' Returns the path of the current DataName as a String if possible. Should not 
