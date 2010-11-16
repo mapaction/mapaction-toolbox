@@ -21,6 +21,7 @@ Imports System.IO
 Imports System.Configuration
 Imports System.Xml
 
+
 ''' <summary>
 ''' Provides a framework for the implenmentation of the IDataNameClauseLookup interface.
 ''' </summary>
@@ -32,6 +33,8 @@ Imports System.Xml
 ''' </remarks>
 Public MustInherit Class AbstractDataNameClauseLookup
     Implements IDataNameClauseLookup
+
+    Private m_DataSet As DataSet
 
     Private m_dtbGeoExtentClauses As DataTable
     Private m_dtbDataCategoriesClauses As DataTable
@@ -47,6 +50,12 @@ Public MustInherit Class AbstractDataNameClauseLookup
     Protected Sub New()
         'initialiseAllTables()
     End Sub
+
+    Friend ReadOnly Property dataSet() As DataSet
+        Get
+            Return m_DataSet
+        End Get
+    End Property
 
     '''' <summary>
     '''' Opens each of the dataname clause lookup tables. Must be called from the constructor
@@ -171,6 +180,9 @@ Public MustInherit Class AbstractDataNameClauseLookup
                 'And fill using the dataadapter
                 da.Fill(ds, strTableName)
             Next
+
+            'set the global m_dataSet paramter
+            m_DataSet = ds
 
             'Now setup refs to the individual tables. This step is could probably be
             'removed and just directly ref ds.Tables.Item through the class.
@@ -337,7 +349,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
         getListFromTable = lstReturnStrs
     End Function
 
-
+    'todo: HIGH Rewrite this using dt.select() method!
     ''' <summary>
     ''' Checks whether a particular test String is listed in the primary key column of the 
     ''' DataTable. All strings are converted to lower case before comparision.

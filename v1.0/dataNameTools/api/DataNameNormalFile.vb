@@ -123,16 +123,25 @@ Public Class DataNameNormalFile
     ''' End users should not call this method, but use the rename() method 
     ''' instead.
     ''' </remarks>
-    Public Overrides Sub performRename(ByVal strNewName As String)
+    Protected Overrides Sub performRename(ByVal strNewName As String)
+        Dim strPath As String
+
         If Not isRenameable() Then
             'todo MEDIUM: move string into constants file
             Throw New RenamingDataException("Unable to rename File: " & m_strName, Me)
         Else
             If m_fInfo.DirectoryName.EndsWith(Path.DirectorySeparatorChar) Then
-                m_fInfo.MoveTo(m_fInfo.DirectoryName & strNewName)
+                strPath = m_fInfo.DirectoryName
             Else
-                m_fInfo.MoveTo(m_fInfo.DirectoryName & Path.DirectorySeparatorChar & strNewName)
+                strPath = m_fInfo.DirectoryName & Path.DirectorySeparatorChar
             End If
+
+            If m_strName.EndsWith(m_fInfo.Extension) Then
+                m_fInfo.MoveTo(strPath & strNewName)
+            Else
+                m_fInfo.MoveTo(strPath & strNewName & m_fInfo.Extension)
+            End If
+
             m_strName = m_fInfo.Name.Remove(m_fInfo.Name.LastIndexOf(m_fInfo.Extension))
         End If
     End Sub

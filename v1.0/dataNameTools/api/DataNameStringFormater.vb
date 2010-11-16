@@ -43,7 +43,8 @@ Public Class DataNameStringFormater
             End If
         Next
 
-        Return stb.ToString()
+        'remove the last new line char if there is one
+        Return stb.ToString(0, Math.Max(0, stb.Length - 2))
     End Function
 
 End Class

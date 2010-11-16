@@ -61,7 +61,7 @@ Public Class DataListFileSystemDirectory
             Throw New ArgumentException("Non-existent directory: " & dInfoArg.FullName)
         Else
             m_DirInfo = dInfoArg
-            m_ESRIWorkspace = getESRIWorkspaceFromFile(New FileInfo(dInfoArg.FullName))
+            m_ESRIWorkspace = getESRIWorkspacesFromFile(New FileInfo(dInfoArg.FullName))
         End If
     End Sub
 
@@ -265,6 +265,13 @@ Public Class DataListFileSystemDirectory
     ''' </remarks>
     Public Overrides Function getLayerNamesStrings() As List(Of String)
         Dim lstStrNames As New List(Of String)
+
+        'TODO: HIGH why are we check the esriworkspace here as well?
+        ''open the GIS related files using an Arc Workspace
+        ''Don't recuse here becuase this is taken care of by the directory recursing below
+        'For Each ds In getESRIDataSetsFromWorkspace(m_ESRIWorkspace, False)
+        '    lstDN.Add(New DataNameESRIFeatureClass(ds, dnclUserSelected, blnAllowRenames))
+        'Next
 
         For Each curFileInfo In filterFilesForSpecialGISData()
             lstStrNames.Add(curFileInfo.Name)
