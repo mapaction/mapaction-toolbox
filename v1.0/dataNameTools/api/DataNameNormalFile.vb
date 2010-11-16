@@ -105,6 +105,9 @@ Public Class DataNameNormalFile
         Return DATATYPE_CLAUSE_TABLE
     End Function
 
+    Public Overrides Function getNameStr() As String
+        Return m_strName
+    End Function
 
     ''' <summary>
     ''' Renames the underlying file with the new name. The new name does not

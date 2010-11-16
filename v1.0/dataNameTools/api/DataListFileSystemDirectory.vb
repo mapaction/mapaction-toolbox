@@ -42,7 +42,7 @@ Public Class DataListFileSystemDirectory
     Inherits AbstractDataListConnection
 
     Private m_DirInfo As DirectoryInfo
-    Private m_ESRIWorkspace As IWorkspace
+    Private m_lstESRIWorkspaces As List(Of IWorkspace)
 
 
     ''' <summary>
@@ -61,7 +61,7 @@ Public Class DataListFileSystemDirectory
             Throw New ArgumentException("Non-existent directory: " & dInfoArg.FullName)
         Else
             m_DirInfo = dInfoArg
-            m_ESRIWorkspace = getESRIWorkspacesFromFile(New FileInfo(dInfoArg.FullName))
+            m_lstESRIWorkspaces = getESRIWorkspacesFromFile(New FileInfo(dInfoArg.FullName))
         End If
     End Sub
 
@@ -225,8 +225,10 @@ Public Class DataListFileSystemDirectory
 
         'open the GIS related files using an Arc Workspace
         'Don't recuse here becuase this is taken care of by the directory recursing below
-        For Each ds In getESRIDataSetsFromWorkspace(m_ESRIWorkspace, False)
-            lstDN.Add(New DataNameESRIFeatureClass(ds, dnclUserSelected, blnAllowRenames))
+        For Each wrkSp In m_lstESRIWorkspaces
+            For Each ds In getESRIDataSetsFromWorkspace(wrkSp, False)
+                lstDN.Add(New DataNameESRIFeatureClass(ds, dnclUserSelected, blnAllowRenames))
+            Next
         Next
 
         'open the non-GIS related files using regular OS FileInfo Obj
@@ -266,12 +268,14 @@ Public Class DataListFileSystemDirectory
     Public Overrides Function getLayerNamesStrings() As List(Of String)
         Dim lstStrNames As New List(Of String)
 
-        'TODO: HIGH why are we check the esriworkspace here as well?
-        ''open the GIS related files using an Arc Workspace
+       ''open the GIS related files using an Arc Workspace
         ''Don't recuse here becuase this is taken care of by the directory recursing below
-        'For Each ds In getESRIDataSetsFromWorkspace(m_ESRIWorkspace, False)
-        '    lstDN.Add(New DataNameESRIFeatureClass(ds, dnclUserSelected, blnAllowRenames))
-        'Next
+        For Each wrkSp In m_lstESRIWorkspaces
+            For Each ds In getESRIDataSetsFromWorkspace(wrkSp, False)
+                'lstStrNames.Add(New DataNameESRIFeatureClass(ds, dnclUserSelected, blnAllowRenames))
+                lstStrNames.Add(ds.BrowseName)
+            Next
+        Next
 
         For Each curFileInfo In filterFilesForSpecialGISData()
             lstStrNames.Add(curFileInfo.Name)
@@ -385,8 +389,8 @@ Public Class DataListFileSystemDirectory
 
         Do While strFileName <> String.Empty
             If strFileName.LastIndexOf(".") >= 0 Then
-                strFileName = Left(strFileName, strFileName.LastIndexOf("."))
                 lstStrAllOptions.Add(strFileName)
+                strFileName = Left(strFileName, strFileName.LastIndexOf("."))
             Else
                 strFileName = String.Empty
             End If

@@ -34,7 +34,7 @@ Imports ADODB
 Public Class DataListGeoDBConnection
     Inherits AbstractDataListConnection
 
-    Private m_wkspDNLT As IWorkspace = Nothing
+    Private m_lstWkSp As New List(Of IWorkspace)
     Private m_fInfoPath As FileInfo
 
     'todo LOW: implenment constructor for DataListGeoDBConnection based on connection parameters for SDE.
@@ -74,15 +74,12 @@ Public Class DataListGeoDBConnection
     ''' This constuctor should only be call from within the relevant factory class.
     ''' </remarks>
     Sub New(ByVal strFullFilePath As String)
-        Dim lstWrkSp As List(Of IWorkspace) = Nothing
 
         Try
             'Use a try block to catch null, nothing or invalid strFullFilePath
-            lstWrkSp = getESRIWorkspacesFromFile(strFullFilePath)
+            m_lstWkSp = getESRIWorkspacesFromFile(strFullFilePath)
         Finally
-            If lstWrkSp IsNot Nothing AndAlso lstWrkSp.Count = 1 Then
-                m_wkspDNLT = lstWrkSp.Item(0)
-            Else
+            If m_lstWkSp Is Nothing OrElse m_lstWkSp.Count = 0 Then
                 Throw New ArgumentException("Unable to open DataListGeoDBConnection")
             End If
 
@@ -109,25 +106,23 @@ Public Class DataListGeoDBConnection
     ''' </remarks>
     Sub New(ByVal strFileName As String, ByVal strDirectory As String)
         Dim strFullFilePath As String = Nothing
-        Dim lstWrkSp As List(Of IWorkspace) = Nothing
 
         Try
-            'Use a try block to catch null, nothing or invalid strFullFilePath
             If strDirectory.EndsWith(Path.DirectorySeparatorChar) Then
                 strFullFilePath = strDirectory & strFileName
             Else
                 strFullFilePath = strDirectory & Path.DirectorySeparatorChar & strFileName
             End If
 
-            lstWrkSp = getESRIWorkspacesFromFile(strFullFilePath)
+            m_lstWkSp = getESRIWorkspacesFromFile(strFullFilePath)
+
         Finally
-            If lstWrkSp IsNot Nothing AndAlso lstWrkSp.Count = 1 Then
-                m_wkspDNLT = lstWrkSp.Item(0)
-            Else
+            If m_lstWkSp Is Nothing OrElse m_lstWkSp.Count = 0 Then
                 Throw New ArgumentException("Unable to open DataListGeoDBConnection")
             End If
 
             m_fInfoPath = New FileInfo(strFullFilePath)
+
         End Try
 
     End Sub
@@ -146,19 +141,13 @@ Public Class DataListGeoDBConnection
     ''' This constuctor should only be call from within the relevant factory class.
     ''' </remarks>
     Sub New(ByRef fInfo As FileInfo)
-        Dim lstWrkSp As List(Of IWorkspace) = Nothing
+        m_lstWkSp = getESRIWorkspacesFromFile(fInfo)
 
-        Try
-            lstWrkSp = getESRIWorkspacesFromFile(fInfo)
-        Finally
-            If lstWrkSp IsNot Nothing AndAlso lstWrkSp.Count = 1 Then
-                m_wkspDNLT = lstWrkSp.Item(0)
-            Else
-                Throw New ArgumentException("Unable to open DataListGeoDBConnection")
-            End If
+        If m_lstWkSp Is Nothing OrElse m_lstWkSp.Count = 0 Then
+            Throw New ArgumentException("Unable to open DataListGeoDBConnection")
+        End If
 
-            m_fInfoPath = fInfo
-        End Try
+        m_fInfoPath = fInfo
     End Sub
 
   
@@ -204,16 +193,18 @@ Public Class DataListGeoDBConnection
         Dim dsnCurrent As IDatasetName
         Dim blnResult As Boolean = False
 
-        edn = m_wkspDNLT.DatasetNames(esriDatasetType.esriDTAny)
+        For Each wrkSp In m_lstWkSp
+            edn = wrkSp.DatasetNames(esriDatasetType.esriDTAny)
 
-        dsnCurrent = edn.Next()
+            dsnCurrent = edn.Next()
 
-        Do While (Not dsnCurrent Is Nothing) And (Not blnResult)
-            If dsnCurrent.ToString() = strLayerName Then
-                blnResult = True
-            End If
-        Loop
-        
+            Do While (Not dsnCurrent Is Nothing) And (Not blnResult)
+                If dsnCurrent.ToString() = strLayerName Then
+                    blnResult = True
+                End If
+            Loop
+        Next
+
         Return blnResult
     End Function
 
@@ -230,7 +221,13 @@ Public Class DataListGeoDBConnection
     ''' by this MXD.
     ''' </remarks>
     Public Overrides Function getLayerNamesStrings() As List(Of String)
-        Return getNamesStrFromESRIDataSetName(getESRIDataSetNamesFromWorkspace(m_wkspDNLT, getRecuse()))
+        Dim lstDS As New List(Of IDatasetName)
+
+        For Each wrkSp In m_lstWkSp
+            lstDS.AddRange(getESRIDataSetNamesFromWorkspace(wrkSp, getRecuse()))
+        Next
+
+        Return getNamesStrFromESRIDataSetName(lstDS)
     End Function
 
 
@@ -244,7 +241,14 @@ Public Class DataListGeoDBConnection
     ''' necessarily just the file path.
     ''' </remarks>
     Public Overrides Function getDetails() As String
-        Return m_wkspDNLT.ConnectionProperties.ToString()
+        Dim stb As New System.Text.StringBuilder
+
+        For Each wrkSp In m_lstWkSp
+            stb.AppendLine(wrkSp.ConnectionProperties.ToString())
+        Next
+
+        'remove the last new line char if there is one
+        Return stb.ToString(0, Math.Max(0, stb.Length - 2))
     End Function
 
 
@@ -297,22 +301,23 @@ Public Class DataListGeoDBConnection
         'System.Console.WriteLine("starting DataListGeoDBConnection.getDefaultDataNameClauseLookup()")
         Try
             'System.Console.WriteLine("Try 1")
-            dnclDefault = New GDBDataNameClauseLookup(m_wkspDNLT, ConnectModeEnum.adModeShareDenyWrite)
+            dnclDefault = New GDBDataNameClauseLookup(m_fInfoPath.FullName, ConnectModeEnum.adModeShareDenyWrite)
         Catch ex1 As Exception
             'System.Console.WriteLine(ex1.ToString)
             Try
                 'System.Console.WriteLine("Try 2")
 
-                If m_wkspDNLT.IsDirectory Then
-                    dnclDefault = New DataListFileSystemDirectory(m_wkspDNLT.PathName).getDefaultDataNameClauseLookup()
+                If (m_fInfoPath.Attributes And FileAttributes.Directory) = FileAttributes.Directory Then
+                    'If m_wkspDNLT.IsDirectory Then
+                    dnclDefault = New DataListFileSystemDirectory(m_fInfoPath.FullName).getDefaultDataNameClauseLookup()
                 Else
-                    dnclDefault = New DataListFileSystemDirectory(New FileInfo(m_wkspDNLT.PathName).DirectoryName) _
+                    dnclDefault = New DataListFileSystemDirectory(m_fInfoPath.DirectoryName) _
                                             .getDefaultDataNameClauseLookup()
                 End If
 
             Catch ex2 As Exception
                 System.Console.WriteLine(ex2.ToString)
-                Throw New LookupTableException(dnLookupTableError.DefaultTablesNotFound, m_wkspDNLT.PathName)
+                Throw New LookupTableException(dnLookupTableError.DefaultTablesNotFound, m_fInfoPath.FullName)
             End Try
         End Try
 
@@ -340,67 +345,69 @@ Public Class DataListGeoDBConnection
         Dim lstDSet As List(Of IDataset)
         Dim lstDName As New List(Of IDataName)
 
-        lstDSet = getESRIDataSetsFromWorkspace(m_wkspDNLT, getRecuse())
+        For Each wrkSP In m_lstWkSp
+            lstDSet = getESRIDataSetsFromWorkspace(wrkSP, getRecuse())
 
-        For Each ds In lstDSet
-            lstDName.Add(New DataNameESRIFeatureClass(ds, dnclUserSelected, True))
+            For Each ds In lstDSet
+                lstDName.Add(New DataNameESRIFeatureClass(ds, dnclUserSelected, True))
+            Next
         Next
 
         Return lstDName
     End Function
 
-    '''' <summary>
-    '''' Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
-    '''' an IWorkspace or IEnumDatasetName object.
-    '''' </summary>
-    '''' <param name="wrksp">A IWorkspace object</param>
-    '''' <param name="blnRecuse">TRUE = The workspace should be recused if relevant,
-    '''' FALSE = the workspace should not be recursed</param>
-    '''' <returns>a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
-    '''' an IWorkspace or IEnumDatasetName object.</returns>
-    '''' <remarks>
-    '''' Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
-    '''' an IWorkspace or IEnumDatasetName object.
-    '''' 
-    '''' To access the IDataset themselves use the method getESRIDataSetsFromWorkspace()
-    '''' </remarks>
-    'Private Function getESRIDataSetNamesFromWorkspace(ByRef wrksp As IWorkspace, ByVal blnRecuse As Boolean) As List(Of IDatasetName)
-    '    Return getESRIDataSetNamesFromWorkspace(wrksp.DatasetNames(esriDatasetType.esriDTAny), blnRecuse)
-    'End Function
+    ''' <summary>
+    ''' Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
+    ''' an IWorkspace or IEnumDatasetName object.
+    ''' </summary>
+    ''' <param name="wrksp">A IWorkspace object</param>
+    ''' <param name="blnRecuse">TRUE = The workspace should be recused if relevant,
+    ''' FALSE = the workspace should not be recursed</param>
+    ''' <returns>a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
+    ''' an IWorkspace or IEnumDatasetName object.</returns>
+    ''' <remarks>
+    ''' Returns a list of ESRI.ArcGIS.Geodatabase.IDataset objects present within
+    ''' an IWorkspace or IEnumDatasetName object.
+    ''' 
+    ''' To access the IDataset themselves use the method getESRIDataSetsFromWorkspace()
+    ''' </remarks>
+    Private Function getESRIDataSetNamesFromWorkspace(ByRef wrksp As IWorkspace, ByVal blnRecuse As Boolean) As List(Of IDatasetName)
+        Return getESRIDataSetNamesFromWorkspace(wrksp.DatasetNames(esriDatasetType.esriDTAny), blnRecuse)
+    End Function
 
-    '''' <summary>
-    '''' Returns a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
-    '''' an IWorkspace or IEnumDatasetName object.
-    '''' </summary>
-    '''' <param name="edn">A DatasetName emnumerator IEnumDatasetName</param>
-    '''' <param name="blnRecuse">TRUE = The workspace should be recused if relevant,
-    '''' FALSE = the workspace should not be recursed</param>
-    '''' <returns>a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
-    '''' an IWorkspace or IEnumDatasetName object.</returns>
-    '''' <remarks>
-    '''' Returns a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
-    '''' an IWorkspace or IEnumDatasetName object.
-    '''' 
-    '''' To access the IDataset themselves use the method getESRIDataSetsFromWorkspace()
-    '''' </remarks>
-    'Private Function getESRIDataSetNamesFromWorkspace(ByRef edn As IEnumDatasetName, _
-    '                                                  ByVal blnRecuse As Boolean) As List(Of IDatasetName)
-    '    Dim lstDSNames As New List(Of IDatasetName)
-    '    Dim dsName As IDatasetName
+    ''' <summary>
+    ''' Returns a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
+    ''' an IWorkspace or IEnumDatasetName object.
+    ''' </summary>
+    ''' <param name="edn">A DatasetName emnumerator IEnumDatasetName</param>
+    ''' <param name="blnRecuse">TRUE = The workspace should be recused if relevant,
+    ''' FALSE = the workspace should not be recursed</param>
+    ''' <returns>a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
+    ''' an IWorkspace or IEnumDatasetName object.</returns>
+    ''' <remarks>
+    ''' Returns a list of ESRI.ArcGIS.Geodatabase.IDatasetName objects present within
+    ''' an IWorkspace or IEnumDatasetName object.
+    ''' 
+    ''' To access the IDataset themselves use the method getESRIDataSetsFromWorkspace()
+    ''' </remarks>
+    Private Function getESRIDataSetNamesFromWorkspace(ByRef edn As IEnumDatasetName, _
+                                                      ByVal blnRecuse As Boolean) As List(Of IDatasetName)
+        Dim lstDSNames As New List(Of IDatasetName)
+        Dim dsName As IDatasetName
 
-    '    dsName = edn.Next()
+        dsName = edn.Next()
 
-    '    While Not dsName Is Nothing
-    '        If blnRecuse And (dsName.Type = esriDatasetType.esriDTContainer) Then
-    '            lstDSNames.AddRange(getESRIDataSetNamesFromWorkspace(dsName.SubsetNames, blnRecuse))
-    '        Else
-    '            lstDSNames.Add(dsName)
-    '        End If
-    '        dsName = edn.Next()
-    '    End While
+        While Not dsName Is Nothing
+            If blnRecuse And (dsName.Type = esriDatasetType.esriDTContainer) Then
+                lstDSNames.AddRange(getESRIDataSetNamesFromWorkspace(dsName.SubsetNames, blnRecuse))
+            Else
+                lstDSNames.Add(dsName)
+            End If
+            dsName = edn.Next()
+        End While
 
-    '    Return lstDSNames
-    'End Function
+        Return lstDSNames
+    End Function
 
     ''' <summary>
     ''' A convinence function for exacting a list of names as strings froma list of IDatasetName objects.

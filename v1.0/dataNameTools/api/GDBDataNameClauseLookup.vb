@@ -37,7 +37,7 @@ Public Class GDBDataNameClauseLookup
     Inherits AbstractDataNameClauseLookup
 
     'ESRI.ArcGIS.Utility.Converter.ToDataSet
-    Private m_wkspDataNameLookup As ESRI.ArcGIS.Geodatabase.IWorkspace = Nothing
+    Private m_wkspDataNameLookup As IWorkspace = Nothing
     Private m_fInfoPath As FileInfo
 
     ''' <summary>
@@ -68,7 +68,15 @@ Public Class GDBDataNameClauseLookup
     ''' </remarks>
     Protected Friend Sub New(ByVal strPathName As String, ByVal lngReadWriteMode As Long)
         'ESRI.ArcGIS.Geodatabase.IWorkspace()
-        m_wkspDataNameLookup = getESRIWorkspacesFromFile(strPathName)
+        Dim lstWrkSp As List(Of IWorkspace)
+
+        lstWrkSp = getESRIWorkspacesFromFile(strPathName)
+        If lstWrkSp.Count = 1 Then
+            m_wkspDataNameLookup = lstWrkSp.Item(0)
+        Else
+            Throw New ArgumentException("Unable to open GDBDataNameClauseLookup")
+        End If
+
         m_fInfoPath = New FileInfo(strPathName)
         m_lngReadWriteMode = lngReadWriteMode
         initialiseAllTables()
@@ -142,6 +150,7 @@ Public Class GDBDataNameClauseLookup
     '    Return dtb
     'End Function
 
+    'todo: HIGH rewirte this using esri IESRIDataSourceCreate.CreateDataSource method
     Protected Friend Overrides Function getDBDataAdapter() As System.Data.Common.DbDataAdapter
         Dim daResult As DbDataAdapter
         Dim strConnectPattern As String
