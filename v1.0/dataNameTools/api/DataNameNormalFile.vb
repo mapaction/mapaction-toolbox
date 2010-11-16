@@ -49,7 +49,10 @@ Public Class DataNameNormalFile
     ''' Create a new IDataName for the specified file.
     ''' </remarks>
     Friend Sub New(ByVal fInfo As FileInfo, ByRef dncl As IDataNameClauseLookup, ByVal blnAllowReNames As Boolean)
-        MyBase.new(fInfo.Name.Remove(fInfo.Name.LastIndexOf(fInfo.Extension)), dncl, blnAllowReNames)
+        'If(fInfo.Name.Contains("."), fInfo.Name.Remove(fInfo.Name.LastIndexOf(fInfo.Extension)), fInfo.Name)
+
+        MyBase.new(If(fInfo.Name.Contains("."), fInfo.Name.Remove(fInfo.Name.LastIndexOf(fInfo.Extension)), fInfo.Name) _
+                   , dncl, blnAllowReNames)
         m_fInfo = fInfo
     End Sub
 
