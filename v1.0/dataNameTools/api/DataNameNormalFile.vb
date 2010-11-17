@@ -104,7 +104,7 @@ Public Class DataNameNormalFile
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Protected Friend Overrides Function getUnderlyingDataType() As String
+    Public Overrides Function getUnderlyingDataType() As String
         Return DATATYPE_CLAUSE_TABLE
     End Function
 

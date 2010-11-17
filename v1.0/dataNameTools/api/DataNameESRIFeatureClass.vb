@@ -194,70 +194,130 @@ Public Class DataNameESRIFeatureClass
     ''' This method is called within the checkNameStatus() method to ensure
     ''' that the type specified in the data name matches the underlying geographical type.
     ''' </remarks>
-    Protected Friend Overrides Function getUnderlyingDataType() As String
+    Public Overrides Function getUnderlyingDataType() As String
         Dim strType As String
         Dim fc As IFeatureClass
 
         'check to see if there is an under lying Feature Class
-        If TypeOf m_DataSet Is IFeatureClass Then
-            'This works for ArcCatalog
-            fc = DirectCast(m_DataSet, IFeatureClass)
-        ElseIf TypeOf m_DataSet Is ESRI.ArcGIS.Carto.IFeatureLayer Then
-            'This works for ArcMap
-            fc = DirectCast(m_DataSet, IFeatureLayer).FeatureClass
-        Else
-            fc = Nothing
-        End If
+        'If TypeOf m_DataSet Is IFeatureClass Then
+        '    'This works for ArcCatalog
+        '    fc = DirectCast(m_DataSet, IFeatureClass)
+        'ElseIf TypeOf m_DataSet Is ESRI.ArcGIS.Carto.IFeatureLayer Then
+        '    'This works for ArcMap
+        '    fc = DirectCast(m_DataSet, IFeatureLayer).FeatureClass
+        'Else
+        '    fc = Nothing
+        'End If
 
-        'MsgBox("m_DataSet.type = " & m_DataSet.Type & " cast " & (TypeOf m_DataSet Is IFeatureClass) & "  " & _
-        '       (TypeOf m_DataSet Is ESRI.ArcGIS.Carto.IFeatureLayer))
+        ''MsgBox("m_DataSet.type = " & m_DataSet.Type & " cast " & (TypeOf m_DataSet Is IFeatureClass) & "  " & _
+        ''       (TypeOf m_DataSet Is ESRI.ArcGIS.Carto.IFeatureLayer))
 
-        If fc IsNot Nothing Then
-            'fc = DirectCast(m_DataSet, IFeatureClass)
-            'MsgBox("fc.type = " & fc.ShapeType)
+        'If fc IsNot Nothing Then
+        '    'fc = DirectCast(m_DataSet, IFeatureClass)
+        '    'MsgBox("fc.type = " & fc.ShapeType)
 
-            Select Case fc.ShapeType
-                Case esriGeometryType.esriGeometryPoint, _
-                         esriGeometryType.esriGeometryMultipoint
-                    strType = DATATYPE_CLAUSE_POINT
+        '    Select Case fc.ShapeType
+        '        Case esriGeometryType.esriGeometryPoint, _
+        '                 esriGeometryType.esriGeometryMultipoint
+        '            strType = DATATYPE_CLAUSE_POINT
 
-                Case esriGeometryType.esriGeometryLine, _
-                        esriGeometryType.esriGeometryCircularArc, _
-                        esriGeometryType.esriGeometryEllipticArc, _
-                        esriGeometryType.esriGeometryBezier3Curve, _
-                        esriGeometryType.esriGeometryPath, _
-                        esriGeometryType.esriGeometryPolyline, _
-                        esriGeometryType.esriGeometryRay
-                    strType = DATATYPE_CLAUSE_LINE
+        '        Case esriGeometryType.esriGeometryLine, _
+        '                esriGeometryType.esriGeometryCircularArc, _
+        '                esriGeometryType.esriGeometryEllipticArc, _
+        '                esriGeometryType.esriGeometryBezier3Curve, _
+        '                esriGeometryType.esriGeometryPath, _
+        '                esriGeometryType.esriGeometryPolyline, _
+        '                esriGeometryType.esriGeometryRay
+        '            strType = DATATYPE_CLAUSE_LINE
 
-                Case esriGeometryType.esriGeometryRing, _
-                        esriGeometryType.esriGeometryPolygon, _
-                        esriGeometryType.esriGeometryEnvelope, _
-                        esriGeometryType.esriGeometryMultiPatch, _
-                        esriGeometryType.esriGeometryTriangleStrip, _
-                        esriGeometryType.esriGeometryTriangleFan, _
-                        esriGeometryType.esriGeometryTriangles
-                    strType = DATATYPE_CLAUSE_POLYGON
-                Case Else
+        '        Case esriGeometryType.esriGeometryRing, _
+        '                esriGeometryType.esriGeometryPolygon, _
+        '                esriGeometryType.esriGeometryEnvelope, _
+        '                esriGeometryType.esriGeometryMultiPatch, _
+        '                esriGeometryType.esriGeometryTriangleStrip, _
+        '                esriGeometryType.esriGeometryTriangleFan, _
+        '                esriGeometryType.esriGeometryTriangles
+        '            strType = DATATYPE_CLAUSE_POLYGON
+        '        Case Else
+        '            strType = DATATYPE_CLAUSE_UNKNOWN
+        '    End Select
+
+        'ElseIf TypeOf m_DataSet Is IRaster Then
+        '    strType = DATATYPE_CLAUSE_RASTER
+
+        'ElseIf TypeOf m_DataSet Is IRasterCatalog Then
+        '    strType = DATATYPE_CLAUSE_RASTER_CATALOG
+
+        'ElseIf TypeOf m_DataSet Is ITin Then
+        '    strType = DATATYPE_CLAUSE_TIN
+
+        'ElseIf TypeOf m_DataSet Is ITable Then
+        '    strType = DATATYPE_CLAUSE_TABLE
+
+        'End If
+
+
+        Select Case m_DataSet.Type
+            Case esriDatasetType.esriDTFeatureClass
+                'check to see if there is an under lying Feature Class
+                If TypeOf m_DataSet Is IFeatureClass Then
+                    'This works for ArcCatalog
+                    fc = DirectCast(m_DataSet, IFeatureClass)
+                ElseIf TypeOf m_DataSet Is ESRI.ArcGIS.Carto.IFeatureLayer Then
+                    'This works for ArcMap
+                    fc = DirectCast(m_DataSet, IFeatureLayer).FeatureClass
+                Else
+                    fc = Nothing
+                End If
+
+                'MsgBox("m_DataSet.type = " & m_DataSet.Type & " cast " & (TypeOf m_DataSet Is IFeatureClass) & "  " & _
+                '       (TypeOf m_DataSet Is ESRI.ArcGIS.Carto.IFeatureLayer))
+                If fc IsNot Nothing Then
+                    'fc = DirectCast(m_DataSet, IFeatureClass)
+                    'MsgBox("fc.type = " & fc.ShapeType)
+
+                    Select Case fc.ShapeType
+                        Case esriGeometryType.esriGeometryPoint, _
+                                 esriGeometryType.esriGeometryMultipoint
+                            strType = DATATYPE_CLAUSE_POINT
+
+                        Case esriGeometryType.esriGeometryLine, _
+                                esriGeometryType.esriGeometryCircularArc, _
+                                esriGeometryType.esriGeometryEllipticArc, _
+                                esriGeometryType.esriGeometryBezier3Curve, _
+                                esriGeometryType.esriGeometryPath, _
+                                esriGeometryType.esriGeometryPolyline, _
+                                esriGeometryType.esriGeometryRay
+                            strType = DATATYPE_CLAUSE_LINE
+
+                        Case esriGeometryType.esriGeometryRing, _
+                                esriGeometryType.esriGeometryPolygon, _
+                                esriGeometryType.esriGeometryEnvelope, _
+                                esriGeometryType.esriGeometryMultiPatch, _
+                                esriGeometryType.esriGeometryTriangleStrip, _
+                                esriGeometryType.esriGeometryTriangleFan, _
+                                esriGeometryType.esriGeometryTriangles
+                            strType = DATATYPE_CLAUSE_POLYGON
+                        Case Else
+                            strType = DATATYPE_CLAUSE_UNKNOWN
+                    End Select
+
+                Else
                     strType = DATATYPE_CLAUSE_UNKNOWN
-            End Select
-
-        ElseIf TypeOf m_DataSet Is IRaster Then
-            strType = DATATYPE_CLAUSE_RASTER
-
-        ElseIf TypeOf m_DataSet Is IRasterCatalog Then
-            strType = DATATYPE_CLAUSE_RASTER_CATALOG
-
-        ElseIf TypeOf m_DataSet Is ITin Then
-            strType = DATATYPE_CLAUSE_TIN
-
-        ElseIf TypeOf m_DataSet Is ITable Then
-            strType = DATATYPE_CLAUSE_TABLE
-
-        Else
-            strType = DATATYPE_CLAUSE_UNKNOWN
-
-        End If
+                End If
+            Case esriDatasetType.esriDTRasterCatalog
+                strType = DATATYPE_CLAUSE_RASTER_CATALOG
+            Case esriDatasetType.esriDTRasterDataset
+                strType = DATATYPE_CLAUSE_RASTER
+            Case esriDatasetType.esriDTTin
+                strType = DATATYPE_CLAUSE_TIN
+            Case esriDatasetType.esriDTText
+                strType = DATATYPE_CLAUSE_TEXT
+            Case esriDatasetType.esriDTTable
+                strType = DATATYPE_CLAUSE_TABLE
+            Case Else
+                strType = DATATYPE_CLAUSE_UNKNOWN
+        End Select
 
         Return strType
     End Function

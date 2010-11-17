@@ -125,6 +125,8 @@ Public Interface IDataName
 
     Function checkPropossedNameStatus(ByVal str_PropossedName As String) As Long
 
+    Function getUnderlyingDataType() As String
+
     ''' <summary>
     ''' Tests whether or not the IDataName is syntatically correct.
     ''' </summary>

@@ -72,7 +72,8 @@ Public MustInherit Class AbstractDataListConnection
 
     Public MustOverride Function getDataListConnectionTypeDesc() As String Implements IDataListConnection.getDataListConnectionTypeDesc
 
-    Public MustOverride Function getLayerNamesStrings() As List(Of String) Implements IDataListConnection.getLayerNamesStrings
+    Public MustOverride Function getLayerNamesStrings() As List(Of String)
+    'Public MustOverride Function getLayerNamesStrings() As List(Of String) Implements IDataListConnection.getLayerNamesStrings
 
     Public MustOverride Function getLayerDataNamesList(ByRef myDNCL As IDataNameClauseLookup) As List(Of IDataName) Implements IDataListConnection.getLayerDataNamesList
 

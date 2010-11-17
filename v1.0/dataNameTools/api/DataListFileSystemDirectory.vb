@@ -219,6 +219,7 @@ Public Class DataListFileSystemDirectory
     ''' </remarks>
     Public Overrides Function getLayerDataNamesList(ByRef dnclUserSelected As IDataNameClauseLookup) As List(Of IDataName)
         Dim lstDN As New List(Of IDataName)
+        Dim lstStrSpecialFileNames As New List(Of String)
         Dim blnAllowRenames As Boolean
 
         blnAllowRenames = Not ((m_DirInfo.Attributes And FileAttributes.ReadOnly) = FileAttributes.ReadOnly)
@@ -228,11 +229,12 @@ Public Class DataListFileSystemDirectory
         For Each wrkSp In m_lstESRIWorkspaces
             For Each ds In getESRIDataSetsFromWorkspace(wrkSp, False)
                 lstDN.Add(New DataNameESRIFeatureClass(ds, dnclUserSelected, blnAllowRenames))
+                lstStrSpecialFileNames.Add(ds.BrowseName)
             Next
         Next
 
         'open the non-GIS related files using regular OS FileInfo Obj
-        For Each fInfo In filterFilesForSpecialGISData(False)
+        For Each fInfo In filterFilesForSpecialGISData(False, lstStrSpecialFileNames)
             lstDN.Add(New DataNameNormalFile(fInfo, dnclUserSelected, blnAllowRenames))
         Next
 
@@ -270,27 +272,26 @@ Public Class DataListFileSystemDirectory
 
        ''open the GIS related files using an Arc Workspace
         ''Don't recuse here becuase this is taken care of by the directory recursing below
-        For Each wrkSp In m_lstESRIWorkspaces
-            For Each ds In getESRIDataSetsFromWorkspace(wrkSp, False)
-                'lstStrNames.Add(New DataNameESRIFeatureClass(ds, dnclUserSelected, blnAllowRenames))
-                lstStrNames.Add(ds.BrowseName)
-            Next
-        Next
+        'For Each wrkSp In m_lstESRIWorkspaces
+        '    For Each ds In getESRIDataSetsFromWorkspace(wrkSp, False)
+        '        lstStrNames.Add(ds.BrowseName)
+        '    Next
+        'Next
 
-        For Each curFileInfo In filterFilesForSpecialGISData(False)
-            lstStrNames.Add(curFileInfo.Name)
-        Next
+        'For Each curFileInfo In filterFilesForSpecialGISData(False)
+        '    lstStrNames.Add(curFileInfo.Name)
+        'Next
 
-        'Now recurse if necessary
-        If getRecuse() Then
-            Dim dataList As IDataListConnection
+        ''Now recurse if necessary
+        'If getRecuse() Then
+        '    Dim dataList As IDataListConnection
 
-            For Each dInfo In filterDirsForSpecialGISData()
-                dataList = New DataListFileSystemDirectory(dInfo)
-                dataList.setRecuse(getRecuse())
-                lstStrNames.AddRange(dataList.getLayerNamesStrings())
-            Next
-        End If
+        '    For Each dInfo In filterDirsForSpecialGISData()
+        '        dataList = New DataListFileSystemDirectory(dInfo)
+        '        dataList.setRecuse(getRecuse())
+        '        lstStrNames.AddRange(dataList.getLayerNamesStrings())
+        '    Next
+        'End If
 
         Return lstStrNames
     End Function
@@ -300,9 +301,9 @@ Public Class DataListFileSystemDirectory
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Private Function filterFilesForSpecialGISData() As List(Of FileInfo)
-        Return filterFilesForSpecialGISData(True)
-    End Function
+    'Private Function filterFilesForSpecialGISData() As List(Of FileInfo)
+    '    Return filterFilesForSpecialGISData(True)
+    'End Function
 
 
     ''' <summary>
@@ -325,27 +326,28 @@ Public Class DataListFileSystemDirectory
     ''' If an DBF or XML file is included which is not part of a logical GIS file, then these are included in the 
     ''' returned List.
     ''' </remarks>
-    Private Function filterFilesForSpecialGISData(ByVal blnIncludeSpecialBaseFiles As Boolean) As List(Of FileInfo)
+    Private Function filterFilesForSpecialGISData(ByVal blnIncludeSpecialBaseFiles As Boolean, _
+                                                  ByRef lstSpecialFileNames As List(Of String)) As List(Of FileInfo)
         Dim aryfInfoAll() As FileInfo
-        Dim lstSpecialFileNames As New List(Of String)
+        'Dim lstSpecialFileNames As New List(Of String)
         Dim lstfInfoFiltered As New List(Of FileInfo)
 
         aryfInfoAll = m_DirInfo.GetFiles()
 
         'First build a list of the "front" files for multiple OS-File storage
-        For Each curFileInfo In aryfInfoAll
-            'System.Console.WriteLine("curFileInfo.Name " & curFileInfo.Name & "   curFileInfo.FullName " & curFileInfo.FullName)
-            'System.Console.WriteLine("curFileInfo.Name " & curFileInfo.Name.Remove(curFileInfo.Name.LastIndexOf(curFileInfo.Extension)) & "   curFileInfo.FullName " & curFileInfo.Extension)
+        'For Each curFileInfo In aryfInfoAll
+        '    'System.Console.WriteLine("curFileInfo.Name " & curFileInfo.Name & "   curFileInfo.FullName " & curFileInfo.FullName)
+        '    'System.Console.WriteLine("curFileInfo.Name " & curFileInfo.Name.Remove(curFileInfo.Name.LastIndexOf(curFileInfo.Extension)) & "   curFileInfo.FullName " & curFileInfo.Extension)
 
-            Select Case curFileInfo.Extension
-                Case ".shp", ".bmp", ".gif", ".img", ".jpg", ".jp2", ".png", ".tif", ".asc", ".sid"
-                    'Only add if not part of a shapefile
-                    lstSpecialFileNames.Add(curFileInfo.Name.Remove(curFileInfo.Name.LastIndexOf(curFileInfo.Extension)))
-                    If blnIncludeSpecialBaseFiles Then
-                        lstfInfoFiltered.Add(curFileInfo)
-                    End If
-            End Select
-        Next
+        '    Select Case curFileInfo.Extension
+        '        Case ".shp", ".bmp", ".gif", ".img", ".jpg", ".jp2", ".png", ".tif", ".asc", ".sid"
+        '            'Only add if not part of a shapefile
+        '            lstSpecialFileNames.Add(curFileInfo.Name.Remove(curFileInfo.Name.LastIndexOf(curFileInfo.Extension)))
+        '            If blnIncludeSpecialBaseFiles Then
+        '                lstfInfoFiltered.Add(curFileInfo)
+        '            End If
+        '    End Select
+        'Next
 
         'Now build a list of all of the files excluding those where the main part of the there name (e.g. before the 
         'extension) matches one which is in the specialFileList
@@ -380,6 +382,7 @@ Public Class DataListFileSystemDirectory
     ''' file. Takes account of the multiple extensions that shapefile member files sometimes
     ''' have. eg "example.one.shp.xml" will return:
     ''' 
+    ''' "example.one.shp.xml"
     ''' "example.one.shp" 
     ''' "example.one" 
     ''' "example" 

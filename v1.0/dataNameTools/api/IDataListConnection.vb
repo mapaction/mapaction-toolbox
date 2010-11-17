@@ -83,19 +83,19 @@ Public Interface IDataListConnection
     ''' </remarks>
     Function getPath() As fileinfo
 
-    ''' <summary>
-    ''' Returns a List of strings representing the names of all of the layers defined
-    ''' by this DataListConnection. 
-    ''' </summary>
-    ''' <returns>
-    ''' List of strings representing the names of all of the layers defined
-    ''' by this DataListConnection.
-    ''' </returns>
-    ''' <remarks>
-    ''' Returns a List of strings representing the names of all of the layers defined
-    ''' by this DataListConnection. 
-    ''' </remarks>
-    Function getLayerNamesStrings() As List(Of String)
+    '''' <summary>
+    '''' Returns a List of strings representing the names of all of the layers defined
+    '''' by this DataListConnection. 
+    '''' </summary>
+    '''' <returns>
+    '''' List of strings representing the names of all of the layers defined
+    '''' by this DataListConnection.
+    '''' </returns>
+    '''' <remarks>
+    '''' Returns a List of strings representing the names of all of the layers defined
+    '''' by this DataListConnection. 
+    '''' </remarks>
+    'Function getLayerNamesStrings() As List(Of String)
 
     ''' <summary>
     ''' Returns a List of IDataName objects representing the names of all of the layers defined

@@ -213,6 +213,7 @@ Public Module DataNamingConstants
     Public Const DATATYPE_CLAUSE_RASTER As String = "ras"
     Public Const DATATYPE_CLAUSE_RASTER_CATALOG As String = "rca"
     Public Const DATATYPE_CLAUSE_TABLE As String = "tab"
+    Public Const DATATYPE_CLAUSE_TEXT As String = "txt"
     Public Const DATATYPE_CLAUSE_TIN As String = "tin"
     Public Const DATATYPE_CLAUSE_WMS As String = "wms"
     Public Const DATATYPE_CLAUSE_WFS As String = "wfs"
