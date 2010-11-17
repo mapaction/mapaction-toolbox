@@ -108,7 +108,7 @@ Public MustInherit Class AbstractDataName
     ''' appropriate string. This method is called within the checkNameStatus() method to ensure
     ''' that the type specified in the data name matches the underlying geographical type.
     ''' </remarks>
-    Protected Friend MustOverride Function getUnderlyingDataType() As String
+    Public MustOverride Function getUnderlyingDataType() As String Implements IDataName.getUnderlyingDataType
 
     ''' <summary>
     ''' Returns the fully qualified IDataName as a String if possible.

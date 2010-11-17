@@ -481,19 +481,6 @@ TableAdapterManager is used to coordinate TableAdapters in the dataset to enable
  operating system file (eg if they are located in a RDBMS) then the 
  Nothing object is returned.
  </remarks>
-</member><member name="M:mapaction.datanames.api.IDataListConnection.getLayerNamesStrings">
-	<summary>
- Returns a List of strings representing the names of all of the layers defined
- by this DataListConnection. 
- </summary>
-	<returns>
- List of strings representing the names of all of the layers defined
- by this DataListConnection.
- </returns>
-	<remarks>
- Returns a List of strings representing the names of all of the layers defined
- by this DataListConnection. 
- </remarks>
 </member><member name="M:mapaction.datanames.api.IDataListConnection.getLayerDataNamesList">
 	<summary>
  Returns a List of IDataName objects representing the names of all of the layers defined
@@ -2701,13 +2688,7 @@ TableAdapterManager is used to coordinate TableAdapters in the dataset to enable
  by this Directory. If Recuse is set to TRUE, then layer from all of the 
  subdirectories are included.
  </remarks>
-</member><member name="M:mapaction.datanames.api.DataListFileSystemDirectory.filterFilesForSpecialGISData">
-	<summary>
- Equivilant to filterFilesForSpecialGISData(true)
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:mapaction.datanames.api.DataListFileSystemDirectory.filterFilesForSpecialGISData(System.Boolean)">
+</member><member name="M:mapaction.datanames.api.DataListFileSystemDirectory.filterFilesForSpecialGISData(System.Boolean,System.Collections.Generic.List{System.String}@)">
 	<summary>
  Returns a list of FileInfo Objects, representing the files (not subdirectories) in the Directory, filtering out
  all of the OS files which are part of logical GIS files. 
@@ -2742,6 +2723,7 @@ TableAdapterManager is used to coordinate TableAdapters in the dataset to enable
  file. Takes account of the multiple extensions that shapefile member files sometimes
  have. eg "example.one.shp.xml" will return:
  
+ "example.one.shp.xml"
  "example.one.shp" 
  "example.one" 
  "example" 

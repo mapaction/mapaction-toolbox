@@ -20,6 +20,7 @@ Public Class DataRenameDialog
                 m_Dataname = dn_New
                 m_lblOldName.Text = m_Dataname.getNameStr()
                 m_freeTxtPnl.Text = m_Dataname.getNameStr()
+                m_lblDetectedGeoType.Text = m_Dataname.getUnderlyingDataType()
 
                 If m_Dataname.isRenameable() Then
                     OK_Button.Enabled = True

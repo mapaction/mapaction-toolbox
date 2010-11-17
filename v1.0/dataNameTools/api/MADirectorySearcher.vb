@@ -15,13 +15,14 @@
 ''ESRI ArcGIS Desktop Products (ArcView, ArcEditor, ArcInfo, ArcEngine Runtime and ArcEngine Developer Kit) (or a modified version of that library), containing parts covered by the terms of ESRI's single user or concurrent use license, the licensors of this Program grant you additional permission to convey the resulting work.
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-Imports System.IO
 Imports ESRI.ArcGIS.Geodatabase
 Imports ESRI.ArcGIS.DataSourcesGDB
 Imports ESRI.ArcGIS.DataSourcesFile
 Imports ESRI.ArcGIS.DataSourcesNetCDF
 Imports ESRI.ArcGIS.DataSourcesOleDB
 Imports ESRI.ArcGIS.DataSourcesRaster
+Imports System.IO
+Imports System.Runtime.InteropServices
 
 ''' <summary>
 ''' A private convenience module to help search directories for the DataName
@@ -426,8 +427,13 @@ Public Module MADirectorySearcher
         Dim lstDSet As New List(Of IDataset)
         Dim ds As IDataset
 
-        'eds.Reset()
-        ds = eds.Next()
+        Try
+            ds = eds.Next()
+        Catch ex As COMException
+            ds = Nothing
+            System.Console.WriteLine("caught COMException")
+            System.Console.WriteLine(ex.ToString())
+        End Try
 
         While Not ds Is Nothing
             If blnRecuse And (ds.Type = esriDatasetType.esriDTContainer) Then
@@ -435,8 +441,16 @@ Public Module MADirectorySearcher
             Else
                 lstDSet.Add(ds)
             End If
-            ds = eds.Next()
+
+            Try
+                ds = eds.Next()
+            Catch ex As COMException
+                ds = Nothing
+                System.Console.WriteLine("caught COMException")
+                System.Console.WriteLine(ex.ToString())
+            End Try
         End While
+
 
         Return lstDSet
     End Function
