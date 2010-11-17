@@ -329,7 +329,7 @@ Public Class DataListFileSystemDirectory
     Private Function filterFilesForSpecialGISData(ByVal blnIncludeSpecialBaseFiles As Boolean, _
                                                   ByRef lstSpecialFileNames As List(Of String)) As List(Of FileInfo)
         Dim aryfInfoAll() As FileInfo
-        'Dim lstSpecialFileNames As New List(Of String)
+        Dim lstStrAllBaseSpecialFileNames As New List(Of String)
         Dim lstfInfoFiltered As New List(Of FileInfo)
 
         aryfInfoAll = m_DirInfo.GetFiles()
@@ -349,13 +349,22 @@ Public Class DataListFileSystemDirectory
         '    End Select
         'Next
 
+        'Allow for the fact that many of the special file names many still contain their extentions
+        lstStrAllBaseSpecialFileNames.AddRange(lstSpecialFileNames)
+
+        For Each strCur In lstSpecialFileNames
+            If strCur.Contains(".") Then
+                lstStrAllBaseSpecialFileNames.Add(Left(strCur, strCur.LastIndexOf(".")))
+            End If
+        Next
+
         'Now build a list of all of the files excluding those where the main part of the there name (e.g. before the 
         'extension) matches one which is in the specialFileList
         For Each curFileInfo In aryfInfoAll
             Dim found As Boolean = False
 
             For Each fileName In allBaseFileNameOptions(curFileInfo.Name)
-                If lstSpecialFileNames.Contains(fileName) Then
+                If lstStrAllBaseSpecialFileNames.Contains(fileName) Then
                     found = True
                 End If
             Next
@@ -397,6 +406,8 @@ Public Class DataListFileSystemDirectory
             lstStrAllOptions.Add(strCur)
 
             If strCur.LastIndexOf(".") >= 0 Then
+                'todo: should this be
+                'strCur = Left(strCur, strCur.LastIndexOf("."))
                 strCur = Left(strFileName, strCur.LastIndexOf("."))
             Else
                 strCur = String.Empty
