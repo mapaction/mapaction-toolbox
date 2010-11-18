@@ -597,6 +597,30 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_5EB20D83AED337291C494CE53E3A79ED"
+        "OwnerKey" = "8:_89573C03EC7F46C3A9DB33FE18FCEB85"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5EB20D83AED337291C494CE53E3A79ED"
+        "OwnerKey" = "8:_706B100AB17901429E4F9A57DC717A5A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5EB20D83AED337291C494CE53E3A79ED"
+        "OwnerKey" = "8:_03CEDF9EDF5A0A442933C8CF0B1030E7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5EB20D83AED337291C494CE53E3A79ED"
+        "OwnerKey" = "8:_CC1337BCB79B4B9E9D7AEDF43402306B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_6131E67553F0F1BA6D4F9B3E3D6F6232"
         "OwnerKey" = "8:_89573C03EC7F46C3A9DB33FE18FCEB85"
         "MsmSig" = "8:_UNDEFINED"
@@ -695,6 +719,18 @@
         {
         "MsmKey" = "8:_722A9B24942E1E637FA254DCD1F20683"
         "OwnerKey" = "8:_B1069111A8182083E3D6F0F249A0FC23"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_722A9B24942E1E637FA254DCD1F20683"
+        "OwnerKey" = "8:_706B100AB17901429E4F9A57DC717A5A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_722A9B24942E1E637FA254DCD1F20683"
+        "OwnerKey" = "8:_03CEDF9EDF5A0A442933C8CF0B1030E7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -893,6 +929,12 @@
         {
         "MsmKey" = "8:_B6018A85FBC7A000CA9CDED4BEF53EED"
         "OwnerKey" = "8:_C7970DCE24CC74F4237E9BDF03DAD5A7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B6018A85FBC7A000CA9CDED4BEF53EED"
+        "OwnerKey" = "8:_5EB20D83AED337291C494CE53E3A79ED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1288,6 +1330,12 @@
         "Entry"
         {
         "MsmKey" = "8:_DEAC4FAB4C22299AA51F124B7CA2408C"
+        "OwnerKey" = "8:_5EB20D83AED337291C494CE53E3A79ED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DEAC4FAB4C22299AA51F124B7CA2408C"
         "OwnerKey" = "8:_706B100AB17901429E4F9A57DC717A5A"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1432,6 +1480,18 @@
         "Entry"
         {
         "MsmKey" = "8:_E9676BD65B185B6234E4C2783C35BD60"
+        "OwnerKey" = "8:_706B100AB17901429E4F9A57DC717A5A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E9676BD65B185B6234E4C2783C35BD60"
+        "OwnerKey" = "8:_03CEDF9EDF5A0A442933C8CF0B1030E7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E9676BD65B185B6234E4C2783C35BD60"
         "OwnerKey" = "8:_CC1337BCB79B4B9E9D7AEDF43402306B"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1523,6 +1583,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_CC1337BCB79B4B9E9D7AEDF43402306B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_5EB20D83AED337291C494CE53E3A79ED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1762,8 +1828,8 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\MAdataNameToolsv1.0beta5.msi"
-        "PackageFilesAs" = "3:1"
+        "OutputFilename" = "8:Release\\MAdataNameToolsv1.0RC1.msi"
+        "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
         "Compression" = "3:2"
@@ -2354,6 +2420,37 @@
             {
             "SourcePath" = "8:mapaction.cartotools.api.xml"
             "TargetName" = "8:mapaction.cartotools.api.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_023720F7997D488098AA18D9A5951073"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5EB20D83AED337291C494CE53E3A79ED"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:ESRI.ArcGIS.DataSourcesOleDB, Version=9.3.0.1770, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_5EB20D83AED337291C494CE53E3A79ED"
+                    {
+                    "Name" = "8:ESRI.ArcGIS.DataSourcesOleDB.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:ESRI.ArcGIS.DataSourcesOleDB.dll"
+            "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_023720F7997D488098AA18D9A5951073"
             "Condition" = "8:"
@@ -3108,14 +3205,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:dataNameTools"
-        "ProductCode" = "8:{E47F19FE-EC05-4F8D-AE50-775FFF6B386D}"
-        "PackageCode" = "8:{D678D935-DF08-466C-83C2-54AF144EE3C9}"
+        "ProductCode" = "8:{EB60B36F-50D2-441A-997D-E1AF8952541A}"
+        "PackageCode" = "8:{DC07086F-1537-441C-A769-81B86285B538}"
         "UpgradeCode" = "8:{C5433491-8348-4EB9-A5E1-E5F3374690DA}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:0.9.4"
+        "ProductVersion" = "8:0.9.5"
         "Manufacturer" = "8:MapAction"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
