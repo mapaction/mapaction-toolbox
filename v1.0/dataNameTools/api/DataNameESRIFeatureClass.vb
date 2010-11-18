@@ -345,7 +345,7 @@ Public Class DataNameESRIFeatureClass
             Throw New RenamingDataException(Me)
         Else
             m_DataSet.Rename(strNewName)
-            m_strName = m_DataSet.Name
+            m_strName = removePrefixFromBrowseName(m_DataSet)
         End If
     End Sub
 

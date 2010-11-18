@@ -192,7 +192,8 @@ Public Module DataNamingConstants
     'Public Const FALLBACK_MDB_OLE_CONNECT_STRING As String = "Provider=Microsoft.Jet.OLEDB.4.0;DBQ=C:\Program Files\MapAction\dataNameTools\fall_back_data_naming_conventions_v1.0.mdb;DefaultDir=C:\Program Files\MapAction\dataNameTools;Driver={Driver do Microsoft Access (*.mdb)};DriverId=25;Exclusive=1;FIL=MS Access;MaxBufferSize=2048;MaxScanRows=8;PageTimeout=5;ReadOnly=1;SafeTransactions=0;Threads=3;UID=admin;UserCommitSync=Yes;"
     Public Const GDB_PERSONAL_OLE_CONNECT_STRING As String = "Provider=ESRI.GeoDB.OLEDB.1;{0};Mode={2};Extended Properties=WorkspaceType= esriCore.AccessWorkspaceFactory.1;Geometry={1}"
     Public Const GDB_FILE_OLE_CONNECT_STRING As String = "Provider=ESRI.GeoDB.OLEDB.1;{0};Mode={2};Extended Properties=WorkspaceType= esriDataSourcesGDB.FileGDBWorkspaceFactory.1;Geometry={1}"
-    Public Const GDB_SDE_OLE_CONNECT_STRING As String = "Provider=ESRI.GeoDB.OLEDB.1;Mode={1};Extended Properties=WorkspaceType= esriDataSourcesGDB.SDEWorkspaceFactory.1;ConnectionFile={0}"
+    'Public Const GDB_SDE_OLE_CONNECT_STRING As String = "Provider=ESRI.GeoDB.OLEDB.1;Mode={1};Extended Properties=WorkspaceType= esriDataSourcesGDB.SDEWorkspaceFactory.1;ConnectionFile={0}"
+    Public Const GDB_SDE_OLE_CONNECT_STRING As String = "Provider=ESRI.GeoDB.OLEDB.1;Extended Properties=WorkspaceType=esriDataSourcesGDB.SDEWorkspaceFactory.1;ConnectionFile={0}"
 
     'A collection of "user readable" messages describing the dataname status
     Private m_htbDNStatusStrMessages As Dictionary(Of dnNameStatus, String)
