@@ -179,6 +179,7 @@ Public MustInherit Class AbstractDataNameClauseLookup
 
                 'And fill using the dataadapter
                 da.Fill(ds, strTableName)
+                'da.Fill(ds)
             Next
 
             'set the global m_dataSet paramter

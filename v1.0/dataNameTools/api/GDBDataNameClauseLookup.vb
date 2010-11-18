@@ -17,6 +17,7 @@
 
 Imports ESRI.ArcGIS.Geodatabase
 Imports ESRI.ArcGIS.DataSourcesGDB
+Imports ESRI.ArcGIS.DataSourcesOleDB
 Imports System.IO
 Imports System.Data
 Imports System.Data.Common
@@ -150,7 +151,6 @@ Public Class GDBDataNameClauseLookup
     '    Return dtb
     'End Function
 
-    'todo: HIGH rewirte this using esri IESRIDataSourceCreate.CreateDataSource method
     Protected Friend Overrides Function getDBDataAdapter() As System.Data.Common.DbDataAdapter
         Dim daResult As DbDataAdapter
         Dim strConnectPattern As String
@@ -158,6 +158,45 @@ Public Class GDBDataNameClauseLookup
         Dim oleDBConnection As OleDb.OleDbConnection = Nothing
         Dim dbCommand As OleDb.OleDbCommand = New OleDb.OleDbCommand
         Dim strGeoDBType As String
+
+        'test here
+        'Dim dsc As IESRIDataSourceCreate
+        'Dim obj As Object
+        'dsc = New FdoAdoConnection()
+
+        'obj = dsc.CreateDataSource(m_wkspDataNameLookup)
+        'Select Case True
+        '    Case TypeOf obj Is OleDb.OleDbCommand
+        '        System.Console.WriteLine("Case TypeOf obj Is OleDb.OleDbCommand")
+        '    Case TypeOf obj Is OleDb.OleDbConnection
+        '        System.Console.WriteLine("Case TypeOf obj Is OleDb.OleDbConnection")
+        '    Case TypeOf obj Is OleDb.OleDbDataAdapter
+        '        System.Console.WriteLine("Case TypeOf obj Is OleDb.OleDbDataAdapter")
+        '    Case TypeOf obj Is OleDb.OleDbDataReader
+        '        System.Console.WriteLine("Case TypeOf obj Is OleDb.OleDbDataReader")
+        '    Case TypeOf obj Is OleDb.OleDbEnumerator
+        '        System.Console.WriteLine("Case TypeOf obj Is OleDb.OleDbEnumerator")
+        'End Select
+
+        'Dim fdoCon As IFDOToADOConnection
+        'fdoCon = New FdoAdoConnection
+        'Dim adoCon As ADODB.Connection
+        'Dim adoCommand As New ADODB.Command
+        'Dim adoRS As ADODB.Recordset
+        'adoRS = New ADODB.Recordset
+
+
+        'Dim SQLstr As String
+
+        'adoCon = CType(fdoCon.CreateADOConnection(m_wkspDataNameLookup), ADODB.Connection)
+        'System.Console.WriteLine(adoCon.ConnectionString)
+        'strConnection = adoCon.ConnectionString
+
+        'adoCommand.ActiveConnection = adoCon
+
+        ''daResult = New System.Data.OleDb.OleDbDataAdapter(adoCommand)
+        'SQLstr = "select * datanaming_clause_scale"
+        ''adoRS.Open(SQLstr, adoCon, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockOptimistic)
 
         strGeoDBType = "WKB"
         'strGeoDBType = "OBJECT"
@@ -173,6 +212,9 @@ Public Class GDBDataNameClauseLookup
                 Case ".sde", ".ags", ".gds"
                     '"Provider=ESRI.GeoDB.OLEDB.1;Extended Properties=WorkspaceType= esriDataSourcesGDB.SDEWorkspaceFactory.1;ConnectionFile={0}"
                     'strConnectPattern = System.Configuration.ConfigurationManager.AppSettings.Item(APP_CONF_GDB_SDE_OLE_CONNECT_STRING)
+
+                    'strConnectPattern = GDB_SDE_OLE_CONNECT_STRING
+                    'strConnectPattern = "Provider=ESRI.GeoDB.OLEDB.1;Extended Properties=WorkspaceType=esriDataSourcesGDB.SDEWorkspaceFactory.1;ConnectionFile={0}"
                     strConnectPattern = GDB_SDE_OLE_CONNECT_STRING
                     strConnection = String.Format(strConnectPattern, m_fInfoPath.FullName, m_lngReadWriteMode)
 
@@ -195,7 +237,7 @@ Public Class GDBDataNameClauseLookup
 
         End If
 
-        'System.Console.WriteLine("getDBDataAdapter() strConnection: " & strConnection)
+        System.Console.WriteLine("getDBDataAdapter() strConnection: " & strConnection)
 
         oleDBConnection = New OleDbConnection(strConnection)
         oleDBConnection.Open()
