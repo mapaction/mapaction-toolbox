@@ -6,7 +6,39 @@ maDataNameChecker
 </name>
 </assembly>
 <members>
-<member name="P:mapaction.datanames.cli.My.Resources.Resources.ResourceManager">
+<member name="M:mapaction.datanames.cli.LicenseInitializer.LicenseMessage">
+	<summary>
+ A summary of the status of product and extensions initialization.
+ </summary>
+</member><member name="M:mapaction.datanames.cli.LicenseInitializer.ShutdownApplication">
+	<summary>
+ Shuts down AoInitialize object and check back in extensions to ensure
+ any ESRI libraries that have been used are unloaded in the correct order.
+ </summary>
+	<remarks>Once Shutdown has been called, you cannot re-initialize the product license
+ and should not make any ArcObjects call.</remarks>
+</member><member name="M:mapaction.datanames.cli.LicenseInitializer.IsExtensionCheckedOut(ESRI.ArcGIS.esriSystem.esriLicenseExtensionCode)">
+	<summary>
+ Indicates if the extension is currently checked out.
+ </summary>
+</member><member name="M:mapaction.datanames.cli.LicenseInitializer.AddExtensions(ESRI.ArcGIS.esriSystem.esriLicenseExtensionCode[])">
+	<summary>
+ Set the extension(s) to be checked out for your ArcObjects code. 
+ </summary>
+</member><member name="M:mapaction.datanames.cli.LicenseInitializer.RemoveExtensions(ESRI.ArcGIS.esriSystem.esriLicenseExtensionCode[])">
+	<summary>
+ Check in extension(s) when it is no longer needed.
+ </summary>
+</member><member name="P:mapaction.datanames.cli.LicenseInitializer.InitializeLowerProductFirst">
+	<summary>
+ Get/Set the ordering of product code checking. If true, check from lowest to 
+ highest license. True by default.
+ </summary>
+</member><member name="P:mapaction.datanames.cli.LicenseInitializer.InitializedProduct">
+	<summary>
+ Retrieves the product code initialized in the ArcObjects application
+ </summary>
+</member><member name="P:mapaction.datanames.cli.My.Resources.Resources.ResourceManager">
 	<summary>
   Returns the cached ResourceManager instance used by this class.
 </summary>
