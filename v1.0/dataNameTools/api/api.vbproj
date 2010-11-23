@@ -103,7 +103,6 @@
     <Compile Include="dnConstants.vb" />
     <Compile Include="ErroreousDataNameException.vb" />
     <Compile Include="DataListConnectionFactory.vb" />
-    <Compile Include="ESRIlicenceHandler.vb" />
     <Compile Include="fallback_data_naming_conventions_v1_0.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

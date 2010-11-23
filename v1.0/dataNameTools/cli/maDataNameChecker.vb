@@ -15,25 +15,28 @@
 ''ESRI ArcGIS Desktop Products (ArcView, ArcEditor, ArcInfo, ArcEngine Runtime and ArcEngine Developer Kit) (or a modified version of that library), containing parts covered by the terms of ESRI's single user or concurrent use license, the licensors of this Program grant you additional permission to convey the resulting work.
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
+Imports ESRI.ArcGIS.esriSystem
+
 Imports mapaction.datanames.api
 
 
 Module maDataNameChecker
 
+    Private m_AOLicenseInitializer As LicenseInitializer = New mapaction.datanames.cli.LicenseInitializer()
     Private m_strDataListPath As String = Nothing
     Private m_strLookupTablesPath As String = Nothing
     Private m_blnRecuse As Boolean = True
 
     Sub Main(ByVal CmdArgs() As String)
+        'ESRI License Initializer generated code.
+        m_AOLicenseInitializer.InitializeApplication(New esriLicenseProductCode() {esriLicenseProductCode.esriLicenseProductCodeEngine, esriLicenseProductCode.esriLicenseProductCodeEngineGeoDB, esriLicenseProductCode.esriLicenseProductCodeArcView, esriLicenseProductCode.esriLicenseProductCodeArcEditor, esriLicenseProductCode.esriLicenseProductCodeArcInfo}, _
+        New esriLicenseExtensionCode() {})
         Dim blnNextArgIsDataList As Boolean = False
         Dim blnNextAgrIsLookupTable As Boolean = False
         Dim blnPrintVersion As Boolean = False
         Dim blnPrintHelp As Boolean = False
         Dim blnUnregconisedArg As Boolean = False
         Dim strMDBpath(1) As String
-        Dim licHandler As New ESRIlicenceHandler
-
-        licHandler.getESRIlicence()
 
         ''
         ' Read the arguments
@@ -81,8 +84,10 @@ Module maDataNameChecker
             testDataNames()
         End If
 
-        licHandler.dropESRILicence()
         'MsgBox("done")
+        'ESRI License Initializer generated code.
+        'Do not make any call to ArcObjects after ShutDownApplication()
+        m_AOLicenseInitializer.ShutdownApplication()
     End Sub
 
     Private Sub testDataNames()

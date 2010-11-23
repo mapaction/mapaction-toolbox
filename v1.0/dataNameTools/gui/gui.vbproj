@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="DataNamesGridRenameButtonColumn.vb" />
     <Compile Include="DataRenameDialog.Designer.vb">
       <DependentUpon>DataRenameDialog.vb</DependentUpon>
     </Compile>
