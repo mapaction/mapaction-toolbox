@@ -227,6 +227,7 @@ Public Class GDBDataNameClauseLookup
                 '"Provider=ESRI.GeoDB.OLEDB.1;{0};Extended Properties=WorkspaceType= esriDataSourcesGDB.FileGDBWorkspaceFactory.1;Geometry={1}"
                 'strConnectPattern = System.Configuration.ConfigurationManager.AppSettings.Item(APP_CONF_GDB_FILE_OLE_CONNECT_STRING)
                 strConnectPattern = GDB_FILE_OLE_CONNECT_STRING
+                'TODO HIGH: DO check that we ready need the string "strConnectPattern" twice.
                 strConnection = String.Format(strConnectPattern, strConnectPattern, strGeoDBType, m_lngReadWriteMode)
             Else
                 Throw New ArgumentException("GeoDatabase type not recgonised")
