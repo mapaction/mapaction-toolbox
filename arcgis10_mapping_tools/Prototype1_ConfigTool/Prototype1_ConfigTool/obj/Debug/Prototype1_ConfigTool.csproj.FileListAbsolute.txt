@@ -1,0 +1,15 @@
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\Prototype1_ConfigTool.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\Prototype1_ConfigTool.pdb
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\MapAction.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\MapAction.pdb
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\obj\Debug\Prototype1_ConfigTool.frmCreateXml.resources
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\obj\Debug\Prototype1_ConfigTool.frmEditXml.resources
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\obj\Debug\Prototype1_ConfigTool.frmMain.resources
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\obj\Debug\ResGen.read.1.tlog
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\obj\Debug\ResGen.write.1.tlog
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\obj\Debug\Prototype1_ConfigTool.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\obj\Debug\Prototype1_ConfigTool.pdb
+C:\Users\Greg\documents\visual studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\Prototype1_ConfigTool.dll.config
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\Ionic.Zip.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\Prototype1_ConfigTool.esriAddIn
