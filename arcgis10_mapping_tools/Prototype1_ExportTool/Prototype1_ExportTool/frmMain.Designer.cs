@@ -34,7 +34,6 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.btnValidate = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.prgExportProgress = new System.Windows.Forms.ProgressBar();
             this.label4 = new System.Windows.Forms.Label();
             this.chkOpenExplorer = new System.Windows.Forms.CheckBox();
             this.btnCreateZip = new System.Windows.Forms.Button();
@@ -102,8 +101,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.btnLayoutRight = new System.Windows.Forms.Button();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.tssExportProgress = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabPageExport.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -118,7 +115,6 @@
             this.tabExportTool.SuspendLayout();
             this.tabPageLayout.SuspendLayout();
             this.groupBox7.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnClose
@@ -158,17 +154,16 @@
             // btnValidate
             // 
             this.btnValidate.Enabled = false;
-            this.btnValidate.Location = new System.Drawing.Point(248, 16);
+            this.btnValidate.Location = new System.Drawing.Point(257, 160);
             this.btnValidate.Name = "btnValidate";
-            this.btnValidate.Size = new System.Drawing.Size(84, 23);
+            this.btnValidate.Size = new System.Drawing.Size(75, 23);
             this.btnValidate.TabIndex = 2;
-            this.btnValidate.Text = "Validate Form";
+            this.btnValidate.Text = "Validate";
             this.btnValidate.UseVisualStyleBackColor = true;
             this.btnValidate.Click += new System.EventHandler(this.btnValidate_Click);
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.prgExportProgress);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.chkOpenExplorer);
             this.groupBox3.Controls.Add(this.btnCreateZip);
@@ -181,13 +176,6 @@
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Directory";
-            // 
-            // prgExportProgress
-            // 
-            this.prgExportProgress.Location = new System.Drawing.Point(152, 50);
-            this.prgExportProgress.Name = "prgExportProgress";
-            this.prgExportProgress.Size = new System.Drawing.Size(100, 23);
-            this.prgExportProgress.TabIndex = 7;
             // 
             // label4
             // 
@@ -213,7 +201,7 @@
             this.btnCreateZip.Name = "btnCreateZip";
             this.btnCreateZip.Size = new System.Drawing.Size(75, 23);
             this.btnCreateZip.TabIndex = 6;
-            this.btnCreateZip.Text = "Create Zip";
+            this.btnCreateZip.Text = "Export map";
             this.btnCreateZip.UseVisualStyleBackColor = true;
             this.btnCreateZip.Click += new System.EventHandler(this.btnCreateZip_Click);
             // 
@@ -924,27 +912,11 @@
             this.btnLayoutRight.UseVisualStyleBackColor = true;
             this.btnLayoutRight.Click += new System.EventHandler(this.btnLayoutRight_Click);
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tssExportProgress});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 475);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(377, 22);
-            this.statusStrip1.TabIndex = 3;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // tssExportProgress
-            // 
-            this.tssExportProgress.Name = "tssExportProgress";
-            this.tssExportProgress.Size = new System.Drawing.Size(0, 17);
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(377, 497);
-            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.tabExportTool);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -973,10 +945,7 @@
             this.tabPageLayout.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -1054,8 +1023,5 @@
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.TextBox tbxImageDate;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.ProgressBar prgExportProgress;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel tssExportProgress;
     }
 }
