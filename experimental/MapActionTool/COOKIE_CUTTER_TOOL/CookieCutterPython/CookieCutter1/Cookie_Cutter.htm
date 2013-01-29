@@ -1,0 +1,212 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-16">
+<link rel="stylesheet" type="text/css" href="file://C:/Program Files/ArcGIS/Help/gp/81Help.css"><script type="text/javascript" language="JavaScript" src="C:/Program Files/ArcGIS/Help/gp/81Help.js"></script><script type="text/javascript" language="JavaScript" src="ms-its:Geoprocessing.chm::/81Help.js"></script><script language="JavaScript1.2"></script><title></title>
+</head>
+<body>
+<table style="margin-top:-1em; margin-bottom:0; padding:0; margin-left:-1em">
+<tr>
+<td style="background:white"><img width="875" height="70" alt="ArcToolbox banner" src="file://C:/Program Files/ArcGIS/Help/gp/AHBanner_Arctoolbox.gif"></td>
+</tr>
+</table>
+<h1>Cookie Cutter</h1>
+<p></p>
+<h2>Synopsis</h2>
+<p>Calculates material volumes from a digital elevation model based upon an input shapefile with digitized outlines (polygons) of the features of interest. </p>
+<p>History</p>
+<ul>
+<li>Original: June 2008</li>
+</ul>
+<ul>
+<li>Modified:  June 2008</li>
+</ul>
+<h2>Introduction</h2>
+<p>The "Cookie Cutter" is a group of 3 Python scripts that use the geoprocessing facilities within ArcGIS to calculate material volumes for a series of manually digitized (polygon) landforms. They are run from the "Cookie Cutter" toolbox which should be loaded within ArcToolBox. We have found that the processing may be more reliable when run from ArcCatalog rather than ArcMap. The three scripts are:
+<br><br>
+<ul>
+<li>Cookie Setup: this prepares the input file of digitized landforms and creates a directory structure for processing.</li>
+<li>Cookie Cutter: this processes each individual landform to calculate material volumes.</li>
+<li>Split Shapefile: this is a public domain Python script by Dan Patterson (Dept of Geography and Environmental, Studies, Carleton University) used by "Cookie Setup" to separate each individual polygon in to separate shapefiles.</li>
+</ul>
+</p>
+<p>Input to "Cookie Setup" is a single file that contains digitized outlines of landforms. This must be a shapefile and all features must be polygons. Each individual polygon is then copied in to a new file within the "./input" directory, such that each file only contains a single polygon. This is essential in order that each landform is processed individually. Folders named "./output" and "./temp" are created at the same time; the first is for output datasets and the second for ArcGIS's temporary files. Each individual polygon will result in the creation of 36 files in the "./output" folder. A database named "Volume_Master.dbf" is also created and placed in the project folder. This contains summary statistics for each individual landform. In particular, the "SUM" column evaluates total relief for the landform; this should be multiplied by pixel area (e.g. 25m<sup>2</sup> for a 5m by 5m pixel) to calculate volume.
+</p>
+<p>Input to "Cookie Cutter" is a single digital elevation model (DEM). This should be the DEM used to digitize the landforms (make sure that this is the original DEM and not a relief shaded image). The script then takes the first digitized outline, creates a buffer around it (user specified distance) and extracts ("cookie cuts") the shape from the original DEM. The original outline is then extracted to leave a "doughnut" of elevation values. A tensioned thin-plate spline then interpolates a basal plane across the doughnut hole. A value of 100 applies a very "tight" plane which is approriate in this situation; lower values will apply less tension and result in smaller volumetric calculations. The original DEM is then subtracted from the basal plane to leave volume. Summary statistics for each landform are automatically placed within the "./Volume_Master.dbf" database.</p>
+<p><b>Note:</b> There appears to be currently unresolved issues within ArcGIS/Python relating to the naming and character length of path names. It is therefore recommended that all project files are placed within a single directory at the top-level of a hard disk (e.g. c:\cookie_cutter).</p>
+<p>Please note that the script only works with shapefiles and that an appropriate license is required for Spatial Analyst.
+</p>
+<p>
+<h2>Outputs</h2>
+</p>
+<p><b>Cookie Setup</b>: once the three new subdirectories have been created, the input shapefile has a new column ("BACKGROUND") added to the attribute table. This is used during later processing. THe shapefile is then is split apart such that each individual polygon forms a single new shapefile created in the "./input" directory. The shapefile name combines the prefix "A" with the feature ID. Thus the first shapefile will be A0.shp.
+</p>
+<p><b>Cookie Cutter</b>: the cookie cutter performs the actual spatial processing, creating a number of files at each stage of the process. The entire processing chain is completed on each individual shapefile created by "cookie setup", looping through until they have all be processed. The output files, which are all prefixed with the input filename(e.g. "A0"), are as follows:
+<br><br>
+<ul>
+<li>A0_buffer.shp: buffered polygon outline</li>
+<li>A0_poly.img: convert the polygon outline to a raster</li>
+<li>A0_null.img: convert the raster outline to null values</li>
+<li>A0_output.img: the null values are overlaid on to the original DEM extracted using the buffered drumlin</li>
+<li>A0_output_null.img: the null values are converted to ESRI native null values</li>
+<li>A0_features.shp: the raster is now converted to a 3D shapefile (i.e. point data)</li>
+<li>A0_base.img: the "hole" in the DEM is "filled" using the spline interpolator under tension</li>
+<li>A0_volume.img: the interpolated drumlin is subtracted from the original DEM</li>
+<li>A0_volume_clip.img: the final volume calculation is clipped to the original polygon</li>
+<li>A0_volume_zone.img: the clipped volume is converted to a zonal value and is used is the calculation of drumlins statistics.</li>
+</ul>
+</p>
+
+<p>
+</p>
+
+<p>
+<h2>Using the tool</h2>
+</p>
+<p>The two-step procedure is as follows:
+<br><br><b>Step 1: Cookie Setup</b></p>
+<ul>
+<li>Project Folder:   Select a directory which contains the project data.</li>
+<li>Input Shapefile:  Select the shapefile containing the digitised outlines of features for which volumetric calculations are required.</li>
+</ul>
+<p><b>Step 2: Cookie Cutter</b></p>
+<ul>
+<li>Project Folder:   Select a directory which contains the project data.</li>
+<li>Input DEM:  Select the original digital elevation model (DEM) from which landform mapping was produced. This must be the original elevation values.</li>
+<li>Cell Size:   Input a cell size at which raster calculations will be performed.  ArcGIS can automatically use the maximum or minimum of the inputs. Aternatively a value can be specified.</li>
+<li>Spline Tension:   Input the tension value for the spline interpolator. A value of 100 applies a taught spline. Lower values will apply less tension and therefore reduce the volumetric calculations.</li>
+<li>Buffer Distance:   Input the distance that the landform outlines are buffered prior to interpolating the basal plane. We have found ~4 pixels is appropriate.</li>
+</ul>
+</p>
+
+<p>
+<h2> Command line syntax</h2>
+</p>
+<div>Cookie_Setup &lt;Project_Folder&gt; &lt;Input_shapefile&gt; <br><br><b>Parameters</b><br><table width="100%" border="0" cellpadding="5">
+<tbody>
+<tr>
+<th width="40%"><b>Expression</b></th>
+<th width="60%"><b>Explanation</b></th>
+</tr>
+<tr>
+<td class="info">&lt;Project_Folder&gt;</td>
+<td class="info" align="left">
+<p>The main folder which all project files should be saved within.</p>
+</td>
+</tr>
+<tr>
+<td class="info">&lt;Input_shapefile&gt;</td>
+<td class="info" align="left">
+<p>A single shapefile containing the digitized landform outlines used for processing.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<div>Cookie_Cutter &lt;Project_Folder&gt; &lt;Input_DEM&gt; &lt;Cell_Size&gt; &lt;Spline_Tension&gt; &lt;Buffer_Distance&gt;<br><br><b>Parameters</b><br><table width="100%" border="0" cellpadding="5">
+<tbody>
+<tr>
+<th width="40%"><b>Expression</b></th>
+<th width="60%"><b>Explanation</b></th>
+</tr>
+<tr>
+<td class="info">&lt;Project_Folder&gt;</td>
+<td class="info" align="left">
+<p>The main folder which all project files should be saved within.</p>
+</td>
+</tr>
+<tr>
+<td class="info">&lt;Input_DEM&gt;</td>
+<td class="info" align="left">
+<p>The digitial elevation model used for volumetric calculations.</p>
+</td>
+</tr>
+<tr>
+<td class="info">&lt;Cell_Size&gt;</td>
+<td class="info" align="left">
+<p>Pixel size for all raster processing.</p>
+</td>
+</tr>
+<tr>
+<td class="info">&lt;Spline_Tension&gt;</td>
+<td class="info" align="left">
+<p>Specified tension applied to the thin-plate spline for interpolating the basal plane.</p>
+</td>
+</tr>
+<tr>
+<td class="info">&lt;Buffer_Distance&gt;</td>
+<td class="info" align="left">
+<p>Distance used to buffer the original digitized landform outlines.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>
+<h2> Scripting syntax</h2>
+</p>
+<div>Cookie_Setup (Project_Folder, Input_shapefile) <br><br><b>Parameters</b><br><table width="100%" border="0" cellpadding="5">
+<tbody>
+<tr>
+<th width="40%"><b>Expression</b></th>
+<th width="60%"><b>Explanation</b></th>
+</tr>
+<tr>
+<td class="info">&lt;Project_Folder&gt;</td>
+<td class="info" align="left">
+<p>The main folder which all project files should be saved within.</p>
+</td>
+</tr>
+<tr>
+<td class="info">&lt;Input_shapefile&gt;</td>
+<td class="info" align="left">
+<p>A single shapefile containing the digitized landform outlines used for processing.</p>
+</td>
+</tr
+</tbody>
+</table>
+</div>
+<hr>
+<div>Cookie_Cutter (Project_Folder, Input_DEM, Cell_Size, Spline_Tension, Buffer_Distance)<br><br><b>Parameters</b><br><table width="100%" border="0" cellpadding="5">
+<tbody>
+<tr>
+<th width="40%"><b>Expression</b></th>
+<th width="60%"><b>Explanation</b></th>
+</tr>
+<tr>
+<td class="info">&lt;Project_Folder&gt;</td>
+<td class="info" align="left">
+<p>The main folder which all project files should be saved within.</p>
+</td>
+</tr>
+<tr>
+<td class="info">&lt;Input_DEM&gt;</td>
+<td class="info" align="left">
+<p>The digitial elevation model used for volumetric calculations.</p>
+</td>
+</tr>
+<tr>
+<td class="info">&lt;Cell_Size&gt;</td>
+<td class="info" align="left">
+<p>Pixel size for all raster processing.</p>
+</td>
+</tr>
+<tr>
+<td class="info">&lt;Spline_Tension&gt;</td>
+<td class="info" align="left">
+<p>Specified tension applied to the thin-plate spline for interpolating the basal plane.</p>
+</td>
+</tr>
+<tr>
+<td class="info">&lt;Buffer_Distance&gt;</td>
+<td class="info" align="left">
+<p>Distance used to buffer the original digitized landform outlines.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</body>
+</html>
