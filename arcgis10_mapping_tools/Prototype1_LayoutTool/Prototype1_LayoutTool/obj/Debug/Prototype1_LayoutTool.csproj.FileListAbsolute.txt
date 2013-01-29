@@ -1,0 +1,16 @@
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_LayoutTool\Prototype1_LayoutTool\bin\Debug\Prototype1_LayoutTool.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_LayoutTool\Prototype1_LayoutTool\bin\Debug\Prototype1_LayoutTool.pdb
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_LayoutTool\Prototype1_LayoutTool\bin\Debug\MapAction.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_LayoutTool\Prototype1_LayoutTool\bin\Debug\Prototype1_ConfigTool.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_LayoutTool\Prototype1_LayoutTool\bin\Debug\Ionic.Zip.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_LayoutTool\Prototype1_LayoutTool\bin\Debug\MapAction.pdb
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_LayoutTool\Prototype1_LayoutTool\bin\Debug\Prototype1_ConfigTool.pdb
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_LayoutTool\Prototype1_LayoutTool\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_LayoutTool\Prototype1_LayoutTool\obj\Debug\Prototype1_LayoutTool.frmMain.resources
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_LayoutTool\Prototype1_LayoutTool\obj\Debug\Prototype1_LayoutTool.Properties.Resources.resources
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_LayoutTool\Prototype1_LayoutTool\obj\Debug\ResGen.read.1.tlog
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_LayoutTool\Prototype1_LayoutTool\obj\Debug\ResGen.write.1.tlog
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_LayoutTool\Prototype1_LayoutTool\obj\Debug\Prototype1_LayoutTool.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_LayoutTool\Prototype1_LayoutTool\obj\Debug\Prototype1_LayoutTool.pdb
+C:\Users\Greg\documents\visual studio 2010\Projects\Prototype1_LayoutTool\Prototype1_LayoutTool\obj\Debug\Prototype1_LayoutTool.frmCheckElements.resources
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_LayoutTool\Prototype1_LayoutTool\bin\Debug\Prototype1_LayoutTool.esriAddIn
