@@ -82,7 +82,7 @@ namespace Prototype1_ExportTool
             IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
 
             var dict = new Dictionary<string, string>();
-            dict = MapAction.LayoutElements.getLayoutTextElements(pMxDoc, targetMapFrame);
+            dict = MapAction.PageLayoutProperties.getLayoutTextElements(pMxDoc, targetMapFrame);
 
             if (dict.ContainsKey("title")) { tbxMapTitle.Text = dict["title"]; }
             if (dict.ContainsKey("summary")) { tbxMapSummary.Text = dict["summary"]; }
@@ -112,8 +112,8 @@ namespace Prototype1_ExportTool
             var time = System.DateTime.Now.ToString("HH:mm:ss");
             tbxDate.Text = date;
             tbxTime.Text = time;
-            tbxPaperSize.Text = MapAction.LayoutElements.getPageSize(pMxDoc, targetMapFrame);
-            tbxScale.Text = MapAction.LayoutElements.getScale(pMxDoc, targetMapFrame);
+            tbxPaperSize.Text = MapAction.PageLayoutProperties.getPageSize(pMxDoc, targetMapFrame);
+            tbxScale.Text = MapAction.PageLayoutProperties.getScale(pMxDoc, targetMapFrame);
             
         }
 
@@ -180,13 +180,13 @@ namespace Prototype1_ExportTool
             dictImageFileSizes.Add("emf", MapAction.Utilities.getFileSize(dictFilePaths["emf"]));
 
             // Create a dictionary to get and store the map frame extents to pass to the output xml
-            Dictionary<string, string> dictFrameExtents = MapAction.LayoutElements.getDataframeProperties(pMxDoc, "Main map");
+            Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
 
             // Export KML
             string kmzPathFileName = exportPathFileName + ".kmz";
             string kmzScale;
             if (dictFrameExtents.ContainsKey("scale")) {kmzScale = dictFrameExtents["scale"];} else {kmzScale = null;};
-            MapAction.Export.exportMapFrameKmlAsRaster(pMxDoc, "Main map", @kmzPathFileName, kmzScale);
+            MapAction.MapExport.exportMapFrameKmlAsRaster(pMxDoc, "Main map", @kmzPathFileName, kmzScale);
 
             // Get the mxd filename
             string mxdName = ArcMap.Application.Document.Title;
@@ -209,7 +209,7 @@ namespace Prototype1_ExportTool
             dictFilePaths.Add("xml", xmlPath);
 
             // Create zip
-            MapAction.Export.createZip(dictFilePaths);
+            MapAction.MapExport.createZip(dictFilePaths);
             // close the wait dialog
             // dlg.lblWaitMainMessage.Text = "Export complete";
             // int milliseconds = 1250;
@@ -224,7 +224,7 @@ namespace Prototype1_ExportTool
             // If open explorer checkbox is ticked, open windows explorer to the directory 
             if (chkOpenExplorer.Checked)
             {
-                MapAction.Export.openExplorerDirectory(tbxExportZipPath.Text);
+                MapAction.MapExport.openExplorerDirectory(tbxExportZipPath.Text);
             }
 
             sw.Stop();
@@ -311,11 +311,11 @@ namespace Prototype1_ExportTool
             else
             {
                 //Output 3 image formats pdf, jpeg & emf
-                dict.Add("pdf", MapAction.Export.exportImage(pMxDoc, "pdf", nudPdfResolution.Value.ToString(), exportPathFileName, null));
-                dict.Add("jpeg", MapAction.Export.exportImage(pMxDoc, "jpeg", nudJpegResolution.Value.ToString(), exportPathFileName, null));
-                dict.Add("emf", MapAction.Export.exportImage(pMxDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, null));
-                MapAction.Export.exportImage(pMxDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
-                MapAction.Export.exportImage(pMxDoc, "jpeg", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
+                dict.Add("pdf", MapAction.MapExport.exportImage(pMxDoc, "pdf", nudPdfResolution.Value.ToString(), exportPathFileName, null));
+                dict.Add("jpeg", MapAction.MapExport.exportImage(pMxDoc, "jpeg", nudJpegResolution.Value.ToString(), exportPathFileName, null));
+                dict.Add("emf", MapAction.MapExport.exportImage(pMxDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, null));
+                MapAction.MapExport.exportImage(pMxDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
+                MapAction.MapExport.exportImage(pMxDoc, "jpeg", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
 
             }
 

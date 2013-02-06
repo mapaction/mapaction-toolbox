@@ -59,9 +59,11 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tspBtnClearForm = new System.Windows.Forms.ToolStripButton();
             this.ttpGlideNumber = new System.Windows.Forms.ToolTip(this.components);
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.gbxAutomated.SuspendLayout();
             this.gbxManual.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // gbxAutomated
@@ -202,6 +204,8 @@
             this.txtMapDocument.Name = "txtMapDocument";
             this.txtMapDocument.Size = new System.Drawing.Size(213, 20);
             this.txtMapDocument.TabIndex = 33;
+            this.txtMapDocument.TextChanged += new System.EventHandler(this.txtMapDocument_TextChanged);
+            this.txtMapDocument.Validating += new System.ComponentModel.CancelEventHandler(this.txtMapDocument_Validating);
             // 
             // label2
             // 
@@ -345,6 +349,11 @@
             this.ttpGlideNumber.IsBalloon = true;
             this.ttpGlideNumber.ReshowDelay = 10;
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider1.ContainerControl = this;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -366,6 +375,7 @@
             this.gbxManual.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -402,5 +412,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton tspBtnClearForm;
         private System.Windows.Forms.ToolTip ttpGlideNumber;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

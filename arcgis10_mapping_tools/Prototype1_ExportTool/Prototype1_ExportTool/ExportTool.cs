@@ -25,14 +25,14 @@ namespace Prototype1_ExportTool
         protected override void OnClick()
         {
             //Check if 'Main map' frame exists.  If not show a message box telling the user so. Don't open GUI.
-            //if (!LayoutElements.detectMainMapFrame())
+            //if (!PageLayoutProperties.detectMainMapFrame())
             IMxDocument MxDoc = ArcMap.Application.Document as IMxDocument;
-            if (!MapAction.LayoutElements.detectMapFrame(MxDoc, "Main map"))
+            if (!MapAction.PageLayoutProperties.detectMapFrame(MxDoc, "Main map"))
             {
                 MessageBox.Show("This tool only works with the MapAction mapping templates.  The 'Main map' map frame could not be detected. Please load a MapAction template and try again.", "Invalid map template",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            else if (MapAction.LayoutElements.detectMapFrame(MxDoc, "Main map"))
+            else if (MapAction.PageLayoutProperties.detectMapFrame(MxDoc, "Main map"))
             {
                 var dlg = new frmMain();
                 dlg.ShowDialog();

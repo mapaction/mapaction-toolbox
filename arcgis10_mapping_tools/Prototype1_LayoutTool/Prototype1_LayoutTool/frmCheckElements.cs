@@ -12,6 +12,9 @@ namespace Prototype1_LayoutTool
 {
     public partial class frmCheckElements : Form
     {
+
+        private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
+
         public frmCheckElements()
         {
             InitializeComponent();
@@ -26,8 +29,7 @@ namespace Prototype1_LayoutTool
         {
             //Call the MapAction class library and the getLayoutElements function that returns a dictionare of the key value
             //pairs of each text element in the layout
-            IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
-            Dictionary<string, string> dict = MapAction.LayoutElements.getLayoutTextElements(pMxDoc, "Main map");
+            Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, "Main map");
             
             //Check for the presence of text element items in the layout, if present change image to tick
             if (dict.ContainsKey("title"))

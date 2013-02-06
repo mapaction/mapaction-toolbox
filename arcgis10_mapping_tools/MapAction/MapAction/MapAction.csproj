@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Alpha_ConfigTool">
+      <HintPath>..\..\Alpha_ConfigTool\Alpha_ConfigTool\obj\Debug\Alpha_ConfigTool.dll</HintPath>
+    </Reference>
     <Reference Include="ESRI.ArcGIS.ArcMap, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -84,9 +87,6 @@
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\..\..\..\..\..\SoftwareDevelopment\desktop\mapaction\export_tool\docs\DotNetZipLib-DevKit-v1.9\zip-v1.9\Release\Ionic.Zip.dll</HintPath>
     </Reference>
-    <Reference Include="Prototype1_ConfigTool">
-      <HintPath>..\..\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\Prototype1_ConfigTool.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -98,8 +98,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Export.cs" />
-    <Compile Include="LayoutElements.cs" />
+    <Compile Include="MapExport.cs" />
+    <Compile Include="PageLayoutProperties.cs" />
+    <Compile Include="MapFrameProperties.cs" />
+    <Compile Include="MxdDocumentProperties.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

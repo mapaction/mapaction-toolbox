@@ -1,0 +1,15 @@
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\bin\Debug\Alpha_ConfigTool.dll.config
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\bin\Debug\Alpha_ConfigTool.dll
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\bin\Debug\Alpha_ConfigTool.pdb
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\bin\Debug\MapAction.dll
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\bin\Debug\Ionic.Zip.dll
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\bin\Debug\MapAction.pdb
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\obj\Debug\ResolveAssemblyReference.cache
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\obj\Debug\Alpha_ConfigTool.frmCreateXml.resources
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\obj\Debug\Alpha_ConfigTool.frmEditXml.resources
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\obj\Debug\Alpha_ConfigTool.frmMain.resources
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\obj\Debug\ResGen.read.1.tlog
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\obj\Debug\ResGen.write.1.tlog
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\obj\Debug\Alpha_ConfigTool.dll
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\obj\Debug\Alpha_ConfigTool.pdb
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\bin\Debug\Alpha_ConfigTool.esriAddIn
