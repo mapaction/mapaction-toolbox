@@ -15,7 +15,7 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
-using Prototype1_ConfigTool;
+using Alpha_ConfigTool;
 
 namespace MapAction
 {
@@ -159,14 +159,22 @@ namespace MapAction
 
         #region Public method getOperationConfigValues
         //Returns a dictionary of the operation_config.xml elements and values
-        public static Dictionary<string, string> getOperationConfigValues()
+        public static Dictionary<string, string> getOperationConfigValues(string path = null)
         {
+            string filepath;
+            
             //Create a dictionary to store the values from the xml
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
-            //Get the currently set filepath from the ConfigTool settings file
-            string filepath = @Prototype1_ConfigTool.Properties.Settings.Default.xml_path;
-
+            if (path == null)
+            {
+                //Get the currently set filepath from the ConfigTool settings file
+                filepath = @Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path;
+            }
+            else
+            {
+                filepath = @path;
+            }
             //If the file exists in the filepath, add each element and value of the xml file 
             //to the dictionary as key value pairs 
             try
@@ -192,8 +200,8 @@ namespace MapAction
         //Returns a dictionary of the operation_config.xml elements and values
         public static Boolean detectOperationConfig()
         {
-            string filepath = @Prototype1_ConfigTool.Properties.Settings.Default.xml_path;
-
+            string path = @Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path;
+            string filepath = path + @"\operation_config.xml";
             //If the file exists in the filepath, add each element and value of the xml file 
             //to the dictionary as key value pairs 
             if (File.Exists(@filepath))
@@ -210,7 +218,7 @@ namespace MapAction
         #region Public method hasWriteAccessToPath
         //Returns a dictionary of the operation_config.xml elements and values
         /// <summary>
-        /// This method does not correctly check access permissions.  Not sure how best to approach this.
+        /// ###This method does not correctly check access permissions.  Not sure how best to approach this.###
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
@@ -236,11 +244,18 @@ namespace MapAction
         //Get filesize given a path, return the file size in kilobytes
         public static long getFileSize(string @fileNamePath)
         {
+            if (File.Exists(@fileNamePath))
+            {
             FileInfo f_info = new FileInfo(@fileNamePath);
             long fileSize = f_info.Length;
             //change bytes to kilobytes
             fileSize = fileSize / 1000;
             return fileSize;
+            }
+            else
+            {
+                return 0;
+            }
         }
         #endregion
 
@@ -269,8 +284,8 @@ namespace MapAction
         #endregion
 
         #region Public method getMapFrameBoundingBox
-        // Get the bounding box of the map frame
-        // Return the values either in 'native' i.e. incoming coordinate system or convert them to wgs84
+        // Get the bounding box of the map frame in wgs84 unprojected
+        // ### Not not yet implemented, all returned values are wgs84 -> Return the values either in 'native' i.e. incoming coordinate system or convert them to wgs84
         public static Dictionary<string, string> getMapFrameWgs84BoundingBox(IMxDocument pMxDoc, string mapFrameName)
         {
             // Declare and initalise variables
@@ -285,14 +300,10 @@ namespace MapAction
             if (spatialRefDict["type"] == "Geographic" && spatialRefDict["datum"] == "WGS 1984")
             {
                 pActiveView = pMap as IActiveView;
-                
-                dict.Add("xMin", pActiveView.Extent.XMin.ToString());
-                dict.Add("yMin", pActiveView.Extent.YMin.ToString());
-                dict.Add("xMax", pActiveView.Extent.XMax.ToString());
-                dict.Add("yMax", pActiveView.Extent.YMax.ToString());
             }
             else
             {
+                //Convert active view to wgs 84                
                 Debug.WriteLine("Reprojecting to wgs84");
                 ISpatialReferenceFactory srFactory = new SpatialReferenceEnvironmentClass();
                 ISpatialReference wgs84;
@@ -302,12 +313,12 @@ namespace MapAction
                 wgs84.SetFalseOriginAndUnits(-180, -90, 1000000);
                 pMap.SpatialReference = wgs84;
                 pActiveView = pMap as IActiveView;
-
-                dict.Add("xMin", pActiveView.Extent.XMin.ToString());
-                dict.Add("yMin", pActiveView.Extent.YMin.ToString());
-                dict.Add("xMax", pActiveView.Extent.XMax.ToString());
-                dict.Add("yMax", pActiveView.Extent.YMax.ToString());
             }
+
+            dict.Add("xMin", pActiveView.Extent.XMin.ToString());
+            dict.Add("yMin", pActiveView.Extent.YMin.ToString());
+            dict.Add("xMax", pActiveView.Extent.XMax.ToString());
+            dict.Add("yMax", pActiveView.Extent.YMax.ToString());
             
             return dict;
 
