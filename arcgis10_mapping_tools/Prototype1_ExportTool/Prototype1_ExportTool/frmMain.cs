@@ -19,6 +19,7 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
+using Alpha_ConfigTool;
 
 
 namespace Prototype1_ExportTool
@@ -98,8 +99,17 @@ namespace Prototype1_ExportTool
 
             // Get values from the config xml
             var dictXML = new Dictionary<string, string>();
-            dictXML = MapAction.Utilities.getOperationConfigValues();
-            if (dictXML.ContainsKey("glide_no")) { tbxGlideNo.Text = dictXML["glide_no"]; }
+            string path = Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path;
+            string filePath = path + @"\operation_config.xml";
+            dictXML = MapAction.Utilities.getOperationConfigValues(filePath);
+            if (dictXML.ContainsKey("GlideNo")) { tbxGlideNo.Text = dictXML["GlideNo"]; }
+            if (dictXML.ContainsKey("Language")) { tbxLanguage.Text = dictXML["Language"]; }
+            if (dictXML.ContainsKey("OperationId")) { tbxOperationId.Text = dictXML["OperationId"]; }
+            if (dictXML.ContainsKey("DefaultPathToExportDir")) { tbxExportZipPath.Text = dictXML["DefaultPathToExportDir"]; }
+            //if (dictXML.ContainsKey("DefaultJpegResDPI")) { nudJpegResolution.Value = dictXML["DefaultJpegResDPI"]; }
+            //if (dictXML.ContainsKey("DefaultPdfResDPI")) { nudPdfResolution.Value = dictXML["DefaultPdfResDPI"]; }
+            //if (dictXML.ContainsKey("DefaultEmfResDPI")) { DefaultEmfResDPI.Value = dictXML["DefaultPdfResDPI"]; }
+
 
             // Set the spatial reference information on load
             var dictSpatialRef = new Dictionary<string, string>();

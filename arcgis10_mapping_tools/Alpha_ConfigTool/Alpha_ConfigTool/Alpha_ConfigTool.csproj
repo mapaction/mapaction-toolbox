@@ -81,18 +81,6 @@
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
     <Compile Include="CreateAndUpdateXml.cs" />
-    <Compile Include="frmCreateXml.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmCreateXml.Designer.cs">
-      <DependentUpon>frmCreateXml.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmEditXml.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmEditXml.Designer.cs">
-      <DependentUpon>frmEditXml.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,12 +132,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="frmCreateXml.resx">
-      <DependentUpon>frmCreateXml.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmEditXml.resx">
-      <DependentUpon>frmEditXml.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>

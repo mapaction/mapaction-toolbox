@@ -16,7 +16,7 @@ using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using System.Diagnostics;
-using Prototype1_ConfigTool;
+using Alpha_ConfigTool;
 
 
 namespace Prototype1_LayoutTool
@@ -68,7 +68,8 @@ namespace Prototype1_LayoutTool
         private void frmMain_Load(object sender, EventArgs e)
         {
             //Check to see if the config file exists, if not abort and send the user a message
-            string filePath = Prototype1_ConfigTool.Properties.Settings.Default.xml_path;
+            string path = Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path;
+            string filePath = path + @"\operation_config.xml";
             if (!File.Exists(@filePath))
             {
                 MessageBox.Show("The operation configuration file is required for this tool.  It cannot be located.",
@@ -161,14 +162,16 @@ namespace Prototype1_LayoutTool
 
         private static string getGlideNo()
         {
-            string glide_no = string.Empty;
+            string GlideNo = string.Empty;
+            string path = Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path + @"\operation_config.xml";
 
             if (MapAction.Utilities.detectOperationConfig())
             {
-                Dictionary<string, string> dictConfig = MapAction.Utilities.getOperationConfigValues();
-                glide_no = dictConfig["glide_no"];
+                Dictionary<string, string> dictConfig = MapAction.Utilities.getOperationConfigValues(path);
+                if (dictConfig.ContainsKey("GlideNo")) { GlideNo = dictConfig["GlideNo"]; } 
             }
-            return glide_no;
+
+            return GlideNo;
         }
 
         public static void setAllElements(Dictionary<string, string> dict)
