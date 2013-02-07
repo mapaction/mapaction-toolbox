@@ -69,6 +69,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.numEmfDpi = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
             this.gbxCrashMoveFolder.SuspendLayout();
             this.gbxConfigXmlValues.SuspendLayout();
             this.tabConfigXml.SuspendLayout();
@@ -78,6 +80,7 @@
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPdfDpi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numJpegDpi)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numEmfDpi)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSave
@@ -675,6 +678,8 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.numEmfDpi);
+            this.tabPage4.Controls.Add(this.label2);
             this.tabPage4.Controls.Add(this.btnSetExportToolPath);
             this.tabPage4.Controls.Add(this.numPdfDpi);
             this.tabPage4.Controls.Add(this.numJpegDpi);
@@ -692,7 +697,7 @@
             // 
             // btnSetExportToolPath
             // 
-            this.btnSetExportToolPath.Location = new System.Drawing.Point(362, 66);
+            this.btnSetExportToolPath.Location = new System.Drawing.Point(357, 93);
             this.btnSetExportToolPath.Name = "btnSetExportToolPath";
             this.btnSetExportToolPath.Size = new System.Drawing.Size(33, 23);
             this.btnSetExportToolPath.TabIndex = 3;
@@ -751,7 +756,7 @@
             // 
             // tbxExportToolPath
             // 
-            this.tbxExportToolPath.Location = new System.Drawing.Point(123, 69);
+            this.tbxExportToolPath.Location = new System.Drawing.Point(122, 96);
             this.tbxExportToolPath.Name = "tbxExportToolPath";
             this.tbxExportToolPath.Size = new System.Drawing.Size(230, 20);
             this.tbxExportToolPath.TabIndex = 2;
@@ -759,7 +764,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(14, 72);
+            this.label9.Location = new System.Drawing.Point(13, 99);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(81, 13);
             this.label9.TabIndex = 45;
@@ -782,6 +787,37 @@
             this.label11.Size = new System.Drawing.Size(47, 13);
             this.label11.TabIndex = 41;
             this.label11.Text = "Jpeg dpi";
+            // 
+            // numEmfDpi
+            // 
+            this.numEmfDpi.Location = new System.Drawing.Point(123, 70);
+            this.numEmfDpi.Maximum = new decimal(new int[] {
+            1200,
+            0,
+            0,
+            0});
+            this.numEmfDpi.Minimum = new decimal(new int[] {
+            96,
+            0,
+            0,
+            0});
+            this.numEmfDpi.Name = "numEmfDpi";
+            this.numEmfDpi.Size = new System.Drawing.Size(120, 20);
+            this.numEmfDpi.TabIndex = 46;
+            this.numEmfDpi.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(14, 72);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(46, 13);
+            this.label2.TabIndex = 47;
+            this.label2.Text = "EMF dpi";
             // 
             // frmMain
             // 
@@ -812,6 +848,7 @@
             this.tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPdfDpi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numJpegDpi)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numEmfDpi)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -858,5 +895,7 @@
         private System.Windows.Forms.TextBox tbxPrimaryEmail;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.CheckBox chkEditConfigXml;
+        private System.Windows.Forms.NumericUpDown numEmfDpi;
+        private System.Windows.Forms.Label label2;
     }
 }

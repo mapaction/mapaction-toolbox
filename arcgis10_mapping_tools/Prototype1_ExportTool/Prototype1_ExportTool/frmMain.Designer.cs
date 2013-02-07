@@ -555,7 +555,6 @@
             this.tbxLanguage.Name = "tbxLanguage";
             this.tbxLanguage.Size = new System.Drawing.Size(243, 20);
             this.tbxLanguage.TabIndex = 18;
-            this.tbxLanguage.Text = "English";
             // 
             // label22
             // 

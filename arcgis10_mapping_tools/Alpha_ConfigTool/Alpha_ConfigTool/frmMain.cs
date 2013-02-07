@@ -34,14 +34,6 @@ namespace Alpha_ConfigTool
             InitializeComponent();
         }
 
-        private void btnCreateNewXmlDoc_Click(object sender, EventArgs e)
-        {
-            frmCreateXml dlg = new frmCreateXml();
-            this.Close();
-            dlg.TopMost = true;
-            dlg.Show();
-        }
-
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -95,53 +87,6 @@ namespace Alpha_ConfigTool
          
         }
 
-        private void btnGetEditXmlPath_Click(object sender, EventArgs e)
-        {
-            string settingsFilePath = @Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path;
-            string textboxPath = tbxPathToCrashMove.Text;
-            if (MapAction.Utilities.detectOperationConfig())
-            {
-                if (@settingsFilePath != tbxPathToCrashMove.Text)
-                {
-                    MessageBox.Show("The config file in use is different to path specified above. Please edit the current config file or create a new file.",
-                        "Invalid directory", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-                else
-                {
-                    //check the path to the existing file exists.  If true open the file in the edit dialog.
-                    if (File.Exists(@textboxPath))
-                    {
-                        //instantiate and show the edit xml form
-                        frmEditXml dlg = new frmEditXml();
-                        this.Close();
-                        dlg.TopMost = true;
-                        dlg.Show();
-                    }
-                    else
-                    {
-                        MessageBox.Show("The file path for the operation_config.xml is invalid.", "Invalid directory");
-                    }
-                }
-            }
-            else
-            {
-                //set up a timer and flash the background of the tbxPathToExistingXml control red for .25 of a second
-                //then take the form focus
-                Timer t = new Timer();
-                t.Interval = 250;
-                t.Tick += delegate(System.Object o, System.EventArgs error)
-                {
-                    t.Stop();
-                    t.Dispose();
-                    tbxPathToCrashMove.Focus();
-                    tbxPathToCrashMove.BackColor = System.Drawing.Color.White;
-                    //rdoPathXml.Checked = true;
-                };
-                t.Start();
-                tbxPathToCrashMove.BackColor = ColorTranslator.FromHtml("#FFE5EB");
-            }
-        }
-
         private void btnSave_Click(object sender, EventArgs e)
         {            
             //Set the application configuration file setting 'opXmlConfig' to the textbox path
@@ -151,11 +96,11 @@ namespace Alpha_ConfigTool
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
             }
-            //else if (!File.Exists(tbxPathToCrashMove.Text))
-            //{
-            //    MessageBox.Show("The path to the config file is invalid.  Please set a valid path or use cancel to close the tool.", "Invalid directory",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
+            else if (!Directory.Exists(tbxPathToCrashMove.Text))
+            {
+               MessageBox.Show("The crash move folder path is invalid.  Please set a valid path or use cancel to close the tool.", "Invalid directory",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             else
             {
                 if (_configXmlEditState != false)
@@ -235,6 +180,7 @@ namespace Alpha_ConfigTool
             dict.Add("DefaultDonorsText", tbxDonorText.Text);
             dict.Add("DefaultJpegResDPI", numJpegDpi.Value.ToString());
             dict.Add("DefaultPdfResDPI", numPdfDpi.Value.ToString());
+            dict.Add("DefaultEmfResDPI", numPdfDpi.Value.ToString());
             dict.Add("DefaultPathToExportDir", tbxExportToolPath.Text);
 
             return dict;
