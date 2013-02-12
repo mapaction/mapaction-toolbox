@@ -15,7 +15,8 @@ namespace Prototype1_LayoutTool
 
         public static void checkElement(ToolTip tooltip, TextBox element, string element_name) 
         {
-            Dictionary<string, string> _dictConfig = MapAction.Utilities.getOperationConfigValues();
+            string path = Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path + @"\operation_config.xml";
+            Dictionary<string, string> _dictConfig = MapAction.Utilities.getOperationConfigValues(path);
 
             if (element_name == "Operation Name")
             {
@@ -42,10 +43,10 @@ namespace Prototype1_LayoutTool
             }
             else if (element_name == "Glide Number")
             {
-                string glide_no = string.Empty;
-                if (_dictConfig.ContainsKey("glide_no")) {glide_no = _dictConfig["glide_no"]; };
+                string GlideNo = string.Empty;
+                if (_dictConfig.ContainsKey("GlideNo")) {GlideNo = _dictConfig["GlideNo"]; };
 
-                if (element.Text != glide_no)
+                if (element.Text != GlideNo)
                 {
                     //Set the tooltip
                     tooltip.Active = true;

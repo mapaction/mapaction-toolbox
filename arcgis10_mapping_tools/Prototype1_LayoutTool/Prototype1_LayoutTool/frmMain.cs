@@ -16,13 +16,16 @@ using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using System.Diagnostics;
-using Prototype1_ConfigTool;
+using Alpha_ConfigTool;
 
 
 namespace Prototype1_LayoutTool
 {
     public partial class frmMain : Form
     {
+
+        private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
+
         public frmMain()
         {
             InitializeComponent();
@@ -32,19 +35,19 @@ namespace Prototype1_LayoutTool
         {
             //Call the MapAction class library and the getLayoutElements function that returns a dictionare of the key value
             //pairs of each text element in the layout
-            IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
-            Dictionary<string, string> dict = MapAction.LayoutElements.getLayoutTextElements(pMxDoc, "Main map");
+            //IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
+            Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, "Main map");
             
                 txtScale.Text = txtScale.Text = updateScale();
                 txtSpatialReference.Text = getSpatialReference();
-                txtMapDocument.Text = txtMapDocument.Text = MapAction.LayoutElements.getMxdTitle(ArcMap.Application);
+                txtMapDocument.Text = txtMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
                 txtGlideNumber.Text = getGlideNo();
 
         }
 
         private void btnMapDocument_Click(object sender, EventArgs e)
         {
-            txtMapDocument.Text = MapAction.LayoutElements.getMxdTitle(ArcMap.Application);
+            txtMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
         }
 
         private void btnSpatialReference_Click(object sender, EventArgs e)
@@ -65,7 +68,8 @@ namespace Prototype1_LayoutTool
         private void frmMain_Load(object sender, EventArgs e)
         {
             //Check to see if the config file exists, if not abort and send the user a message
-            string filePath = Prototype1_ConfigTool.Properties.Settings.Default.xml_path;
+            string path = Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path;
+            string filePath = path + @"\operation_config.xml";
             if (!File.Exists(@filePath))
             {
                 MessageBox.Show("The operation configuration file is required for this tool.  It cannot be located.",
@@ -77,8 +81,8 @@ namespace Prototype1_LayoutTool
             
             //Call the MapAction class library and the getLayoutElements function that returns a dictionare of the key value
             //pairs of each text element in the layout
-            IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
-            Dictionary<string, string> dict = MapAction.LayoutElements.getLayoutTextElements(pMxDoc, "Main map");
+            //IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
+            Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, "Main map");
             
             //Check if the various elements existist that automated update, if not disable the automation buttons.
             //If they are present then update the text boxes with the value from the dictionary 
@@ -158,20 +162,21 @@ namespace Prototype1_LayoutTool
 
         private static string getGlideNo()
         {
-            string glide_no = string.Empty;
+            string GlideNo = string.Empty;
+            string path = Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path + @"\operation_config.xml";
 
             if (MapAction.Utilities.detectOperationConfig())
             {
-                Dictionary<string, string> dictConfig = MapAction.Utilities.getOperationConfigValues();
-                glide_no = dictConfig["glide_no"];
+                Dictionary<string, string> dictConfig = MapAction.Utilities.getOperationConfigValues(path);
+                if (dictConfig.ContainsKey("GlideNo")) { GlideNo = dictConfig["GlideNo"]; } 
             }
-            return glide_no;
+
+            return GlideNo;
         }
 
         public static void setAllElements(Dictionary<string, string> dict)
         {
-            IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
-            IPageLayout pLayout = pMxDoc.PageLayout;
+            IPageLayout pLayout = _pMxDoc.PageLayout;
             IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
             pGraphics.Reset();
 
@@ -227,7 +232,7 @@ namespace Prototype1_LayoutTool
                 System.Diagnostics.Debug.WriteLine(e);
             }
 
-            IActiveView activeView = pMxDoc.ActivatedView as IActiveView;
+            IActiveView activeView = _pMxDoc.ActivatedView as IActiveView;
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
 
         }
@@ -235,8 +240,8 @@ namespace Prototype1_LayoutTool
 
         public static string updateScale()
         {
-            string scale = MapAction.LayoutElements.getScale(ArcMap.Application.Document as IMxDocument, "Main map");
-            string pageSize = MapAction.LayoutElements.getPageSize(ArcMap.Application.Document as IMxDocument, "Main map");
+            string scale = MapAction.PageLayoutProperties.getScale(ArcMap.Application.Document as IMxDocument, "Main map");
+            string pageSize = MapAction.PageLayoutProperties.getPageSize(ArcMap.Application.Document as IMxDocument, "Main map");
             string scaleString = scale + " (At " + pageSize + ")";
             return scaleString;
         }
@@ -245,6 +250,30 @@ namespace Prototype1_LayoutTool
         {
             //Perform validation checks
             ErrorCheckAndDisplay.checkElement(ttpGlideNumber, txtGlideNumber, "Glide Number");
+        }
+
+        private void txtMapDocument_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtMapDocument.Text.Trim() == String.Empty)
+            {
+                errorProvider1.SetError(txtMapDocument, "Map document name required");
+                //e.Cancel = true;
+            }
+            else
+                errorProvider1.Dispose();
+                errorProvider1.SetError(txtMapDocument, "");
+        }
+
+        private void txtMapDocument_TextChanged(object sender, EventArgs e)
+        {
+            if (txtMapDocument.Text.Trim() == String.Empty)
+            {
+                errorProvider1.SetError(txtMapDocument, "Map document name required");
+                //e.Cancel = true;
+            }
+            else
+                errorProvider1.Dispose();
+            errorProvider1.SetError(txtMapDocument, "");
         }
 
 

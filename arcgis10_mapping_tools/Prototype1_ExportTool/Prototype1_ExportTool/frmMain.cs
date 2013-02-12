@@ -19,6 +19,7 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
+using Alpha_ConfigTool;
 
 
 namespace Prototype1_ExportTool
@@ -82,45 +83,57 @@ namespace Prototype1_ExportTool
             IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
 
             var dict = new Dictionary<string, string>();
-            dict = MapAction.LayoutElements.getLayoutTextElements(pMxDoc, targetMapFrame);
+            dict = MapAction.PageLayoutProperties.getLayoutTextElements(pMxDoc, targetMapFrame);
 
             if (dict.ContainsKey("title")) { tbxMapTitle.Text = dict["title"]; }
             if (dict.ContainsKey("summary")) { tbxMapSummary.Text = dict["summary"]; }
             if (dict.ContainsKey("mxd_name")) { tbxMapDocument.Text = dict["mxd_name"]; }
             //if (dict.ContainsKey("scale_text")) { tbxMapDocument.Text = dict["scale_text"]; }
             
-            //Remove formatting from data source before updating the textbox
+            // Remove formatting from data source before updating the textbox
             string datasource;
             string unformatedDataSource = string.Empty;
             if (dict.ContainsKey("data_source")) { unformatedDataSource = dict["data_source"]; };
             datasource = Regex.Replace(unformatedDataSource, "\\<.*?\\>", String.Empty);
             if (dict.ContainsKey("data_source")) { tbxDataSources.Text = datasource; }
 
-            //Get values from the config xml
+            // Get values from the config xml
             var dictXML = new Dictionary<string, string>();
-            dictXML = MapAction.Utilities.getOperationConfigValues();
-            if (dictXML.ContainsKey("glide_no")) { tbxGlideNo.Text = dictXML["glide_no"]; }
+            string path = Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path;
+            string filePath = path + @"\operation_config.xml";
+            dictXML = MapAction.Utilities.getOperationConfigValues(filePath);
+            if (dictXML.ContainsKey("GlideNo")) { tbxGlideNo.Text = dictXML["GlideNo"]; }
+            if (dictXML.ContainsKey("Language")) { tbxLanguage.Text = dictXML["Language"]; }
+            if (dictXML.ContainsKey("OperationId")) { tbxOperationId.Text = dictXML["OperationId"]; }
+            if (dictXML.ContainsKey("DefaultPathToExportDir")) { tbxExportZipPath.Text = dictXML["DefaultPathToExportDir"]; }
+            //if (dictXML.ContainsKey("DefaultJpegResDPI")) { nudJpegResolution.Value = dictXML["DefaultJpegResDPI"]; }
+            //if (dictXML.ContainsKey("DefaultPdfResDPI")) { nudPdfResolution.Value = dictXML["DefaultPdfResDPI"]; }
+            //if (dictXML.ContainsKey("DefaultEmfResDPI")) { DefaultEmfResDPI.Value = dictXML["DefaultPdfResDPI"]; }
 
-            //Set the spatial reference information on load
+
+            // Set the spatial reference information on load
             var dictSpatialRef = new Dictionary<string, string>();
             dictSpatialRef  = MapAction.Utilities.getDataFrameSpatialReference(pMxDoc, targetMapFrame);
             tbxDatum.Text = dictSpatialRef["datum"];
             tbxProjection.Text = dictSpatialRef["projection"];
 
-            //Set the 'metadata' tab elements
+            // Set the 'metadata' tab elements
             var date = System.DateTime.Today.ToString("dd/MM/yyyy");
             var time = System.DateTime.Now.ToString("HH:mm:ss");
             tbxDate.Text = date;
             tbxTime.Text = time;
-            tbxPaperSize.Text = MapAction.LayoutElements.getPageSize(pMxDoc, targetMapFrame);
-            tbxScale.Text = MapAction.LayoutElements.getScale(pMxDoc, targetMapFrame);
+            tbxPaperSize.Text = MapAction.PageLayoutProperties.getPageSize(pMxDoc, targetMapFrame);
+            tbxScale.Text = MapAction.PageLayoutProperties.getScale(pMxDoc, targetMapFrame);
             
         }
 
         private void btnCreateZip_Click(object sender, EventArgs e)
         {
-            tssExportProgress.Text = "Checking input";
 
+            // Create and start a stopwatch to measure the function performance
+            Stopwatch sw = Stopwatch.StartNew();
+
+            // Start checks before running the the acutal create elements
             if (tbxMapDocument.Text == string.Empty)
             {
                 MessageBox.Show("A document name is required. It is used as a part of the output file names.",
@@ -153,34 +166,42 @@ namespace Prototype1_ExportTool
             }
             Debug.WriteLine("checks on export complete");
 
-            // this method doesn't correctly check for permissions, requires updating.  
-            //MapAction.Utilities.detectWriteAccessToPath(path);
+            // Get the path and file name to pass to the various functions
+            string exportPathFileName = getExportPathFileName(tbxExportZipPath.Text, tbxMapDocument.Text);
+
+            // Disable the button after the export checks are complete to prevent multiple clicks
+            this.Enabled = false;
+
+            // this method doesn't correctly in checking for permissions, requires updating.  
+            // MapAction.Utilities.detectWriteAccessToPath(path);
 
             IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
             IActiveView pActiveView = pMxDoc.ActiveView;
 
-            //Call to export the images and return a dictionary of the file sizes
+            // Call to export the images and return a dictionary of the file sizes
             Dictionary<string, string> dictFilePaths = exportAllImages();
 
-            //create a dictionary to store the image file sizes to add to the output xml
+            // Create a dictionary to store the image file sizes to add to the output xml
             Dictionary<string, long> dictImageFileSizes = new Dictionary<string, long>();
-            //Calculate the file size of each image and add it to the dictionary
-            tssExportProgress.Text = "Exporting PDF";
+            // Calculate the file size of each image and add it to the dictionary
             dictImageFileSizes.Add("pdf", MapAction.Utilities.getFileSize(dictFilePaths["pdf"]));
-            tssExportProgress.Text = "Exporting JPEG";
             System.Windows.Forms.Application.DoEvents();
             dictImageFileSizes.Add("jpeg", MapAction.Utilities.getFileSize(dictFilePaths["jpeg"]));
-            tssExportProgress.Text = "Exporting EMF";
             dictImageFileSizes.Add("emf", MapAction.Utilities.getFileSize(dictFilePaths["emf"]));
 
-            //create a dictionary to get and store the map frame extents to pass to the output xml
-            Dictionary<string, string> dictFrameExtents = MapAction.LayoutElements.getDataframeProperties(pMxDoc, "Main map");
+            // Create a dictionary to get and store the map frame extents to pass to the output xml
+            Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
 
-            //Get the mxd filename
+            // Export KML
+            string kmzPathFileName = exportPathFileName + ".kmz";
+            string kmzScale;
+            if (dictFrameExtents.ContainsKey("scale")) {kmzScale = dictFrameExtents["scale"];} else {kmzScale = null;};
+            MapAction.MapExport.exportMapFrameKmlAsRaster(pMxDoc, "Main map", @kmzPathFileName, kmzScale);
+
+            // Get the mxd filename
             string mxdName = ArcMap.Application.Document.Title;
-            tssExportProgress.Text = "Creating XML";
             System.Windows.Forms.Application.DoEvents();
-            //Create the output xml file & return the xml path           
+            // Create the output xml file & return the xml path           
             string xmlPath = string.Empty;
             try
             {
@@ -194,36 +215,38 @@ namespace Prototype1_ExportTool
                 return;
             }
 
-            //add the xml path to the dictFilePaths, which is the input into the creatZip method
+            // Add the xml path to the dictFilePaths, which is the input into the creatZip method
             dictFilePaths.Add("xml", xmlPath);
 
-            //Create zip
-            tssExportProgress.Text = "Creating ZIP";
-            MapAction.Export.createZip(dictFilePaths);
-            tssExportProgress.Text = "Export complete!";
-            //close the wait dialog
-            //dlg.lblWaitMainMessage.Text = "Export complete";
-            //int milliseconds = 1250;
-            //Thread.Sleep(milliseconds);
+            // Create zip
+            MapAction.MapExport.createZip(dictFilePaths);
+            // close the wait dialog
+            // dlg.lblWaitMainMessage.Text = "Export complete";
+            // int milliseconds = 1250;
+            // Thread.Sleep(milliseconds);
             this.Close();
 
-            //the output filepath
+            // the output filepath
 
             MessageBox.Show("Files successfully output to: " + Environment.NewLine + path,
                 "Export complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            //if open explorer checkbox is ticked, open windows explorer to the directory 
+            // If open explorer checkbox is ticked, open windows explorer to the directory 
             if (chkOpenExplorer.Checked)
             {
-                MapAction.Export.openExplorerDirectory(tbxExportZipPath.Text);
+                MapAction.MapExport.openExplorerDirectory(tbxExportZipPath.Text);
             }
+
+            sw.Stop();
+            string timeTaken = Math.Round((sw.Elapsed.TotalMilliseconds / 1000),2).ToString();
+            Debug.WriteLine("Time taken: ", timeTaken);
 
         }
 
         private Dictionary<string, string> getExportToolValues(Dictionary<string, long> dictImageFileSizes, 
             Dictionary<string, string> dictFilePaths, Dictionary<string, string> dictFrameExtents, string mxdName)
         {
-            //Create a dictionary and add values from Export form
+            // Create a dictionary and add values from Export form
             var dict = new Dictionary<string, string>()
             {
                 {"operationID",     tbxOperationId.Text},
@@ -272,8 +295,8 @@ namespace Prototype1_ExportTool
 
         private void btnValidate_Click(object sender, EventArgs e)
         {
-            //Start validation procedures
-            //List<string> lstEmptyFields = validation.getEmptyRequiredFieldList(getExportToolValues());
+            // Start validation procedures
+            // List<string> lstEmptyFields = validation.getEmptyRequiredFieldList(getExportToolValues());
 
             //lblEmptyXmlFieldCount.Text = lstEmptyFields.Count.ToString();
             //string returnString = string.Join(Environment.NewLine, lstEmptyFields.ToArray());
@@ -283,8 +306,11 @@ namespace Prototype1_ExportTool
         private Dictionary<string, string> exportAllImages()
         {
             IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
-            IActiveView pActiveView = pMxDoc.ActiveView;
+            //IActiveView pActiveView = pMxDoc.ActiveView;
             var dict = new Dictionary<string, string>();
+
+            // Get the path and file name to pass to the various functions
+            string exportPathFileName = getExportPathFileName(tbxExportZipPath.Text, tbxMapDocument.Text);
 
             //check to see variable exists
             if (!Directory.Exists(@tbxExportZipPath.Text) || tbxMapDocument.Text == "" || tbxMapDocument.Text == string.Empty)
@@ -295,9 +321,12 @@ namespace Prototype1_ExportTool
             else
             {
                 //Output 3 image formats pdf, jpeg & emf
-                dict.Add("pdf", MapAction.Export.exportImage(pActiveView, "pdf", nudPdfResolution.Value.ToString(), tbxExportZipPath.Text, tbxMapDocument.Text));
-                dict.Add("jpeg", MapAction.Export.exportImage(pActiveView, "jpeg", nudJpegResolution.Value.ToString(), tbxExportZipPath.Text, tbxMapDocument.Text));
-                dict.Add("emf", MapAction.Export.exportImage(pActiveView, "emf", nudEmfResolution.Value.ToString(), tbxExportZipPath.Text, tbxMapDocument.Text));
+                dict.Add("pdf", MapAction.MapExport.exportImage(pMxDoc, "pdf", nudPdfResolution.Value.ToString(), exportPathFileName, null));
+                dict.Add("jpeg", MapAction.MapExport.exportImage(pMxDoc, "jpeg", nudJpegResolution.Value.ToString(), exportPathFileName, null));
+                dict.Add("emf", MapAction.MapExport.exportImage(pMxDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, null));
+                MapAction.MapExport.exportImage(pMxDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
+                MapAction.MapExport.exportImage(pMxDoc, "jpeg", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
+
             }
 
             return dict;
@@ -334,6 +363,16 @@ namespace Prototype1_ExportTool
                 tbxGlideNo.ReadOnly = true; 
             }
         }
+
+        private string getExportPathFileName(string path, string documentName)
+        {
+            // Concatenate the 
+            string pathFileName = @path + "\\" + documentName;
+            return pathFileName; 
+        
+        }
+
+
 
     }
 }
