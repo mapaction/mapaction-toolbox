@@ -106,9 +106,9 @@ namespace Prototype1_ExportTool
             if (dictXML.ContainsKey("Language")) { tbxLanguage.Text = dictXML["Language"]; }
             if (dictXML.ContainsKey("OperationId")) { tbxOperationId.Text = dictXML["OperationId"]; }
             if (dictXML.ContainsKey("DefaultPathToExportDir")) { tbxExportZipPath.Text = dictXML["DefaultPathToExportDir"]; }
-            //if (dictXML.ContainsKey("DefaultJpegResDPI")) { nudJpegResolution.Value = dictXML["DefaultJpegResDPI"]; }
-            //if (dictXML.ContainsKey("DefaultPdfResDPI")) { nudPdfResolution.Value = dictXML["DefaultPdfResDPI"]; }
-            //if (dictXML.ContainsKey("DefaultEmfResDPI")) { DefaultEmfResDPI.Value = dictXML["DefaultPdfResDPI"]; }
+            if (dictXML.ContainsKey("DefaultJpegResDPI")) { nudJpegResolution.Value = Convert.ToDecimal(dictXML["DefaultJpegResDPI"]); }
+            if (dictXML.ContainsKey("DefaultPdfResDPI")) { nudPdfResolution.Value = Convert.ToDecimal(dictXML["DefaultPdfResDPI"]); }
+            if (dictXML.ContainsKey("DefaultEmfResDPI")) { nudEmfResolution.Value = Convert.ToDecimal(dictXML["DefaultPdfResDPI"]); }
 
 
             // Set the spatial reference information on load
