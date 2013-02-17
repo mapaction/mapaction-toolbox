@@ -78,11 +78,14 @@ namespace Alpha_LayoutTool
             }
             
             //Perform validation checks
-            FormValidation.validateSpatialReference(tbxSpatialReference, eprSpatialReference);
-            FormValidation.validateDataSources(tbxDataSources, eprDataSources);
-            FormValidation.validateMapSummary(tbxSummary, eprMapSummary);
             FormValidation.validateMapTitle(tbxTitle, eprMapTitle);
+            FormValidation.validateMapSummary(tbxSummary, eprMapSummary);
+            FormValidation.validateDataSources(tbxDataSources, eprDataSources);
             FormValidation.validateMapNumber(tbxMapNumber, eprMapNumber);
+            FormValidation.validateMapDocument(tbxMapDocument, eprMapDocument);
+            FormValidation.validateSpatialReference(tbxSpatialReference, eprSpatialReference);
+            FormValidation.validateScaleText(tbxScale, eprScaleText);
+            FormValidation.validateGlideNumber(tbxGlideNumber, eprGlideNumber);
 
             //Call the MapAction class library and the getLayoutElements function that returns a dictionare of the key value
             //pairs of each text element in the layout
