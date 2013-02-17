@@ -376,7 +376,7 @@
             this.tabPageUser.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageUser.Size = new System.Drawing.Size(352, 426);
             this.tabPageUser.TabIndex = 1;
-            this.tabPageUser.Text = "User input";
+            this.tabPageUser.Text = "Map catalogue";
             this.tabPageUser.UseVisualStyleBackColor = true;
             // 
             // groupBox2
@@ -551,7 +551,7 @@
             // 
             // tbxLanguage
             // 
-            this.tbxLanguage.Location = new System.Drawing.Point(86, 130);
+            this.tbxLanguage.Location = new System.Drawing.Point(86, 152);
             this.tbxLanguage.Name = "tbxLanguage";
             this.tbxLanguage.Size = new System.Drawing.Size(243, 20);
             this.tbxLanguage.TabIndex = 18;
@@ -559,7 +559,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(5, 133);
+            this.label22.Location = new System.Drawing.Point(5, 155);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(55, 13);
             this.label22.TabIndex = 17;
@@ -592,7 +592,7 @@
             this.tbxImageAccessNotes.Multiline = true;
             this.tbxImageAccessNotes.Name = "tbxImageAccessNotes";
             this.tbxImageAccessNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbxImageAccessNotes.Size = new System.Drawing.Size(243, 20);
+            this.tbxImageAccessNotes.Size = new System.Drawing.Size(243, 46);
             this.tbxImageAccessNotes.TabIndex = 4;
             // 
             // cboQualityControl
@@ -601,7 +601,7 @@
             this.cboQualityControl.Items.AddRange(new object[] {
             "Local",
             "Double checked"});
-            this.cboQualityControl.Location = new System.Drawing.Point(86, 103);
+            this.cboQualityControl.Location = new System.Drawing.Point(86, 125);
             this.cboQualityControl.Name = "cboQualityControl";
             this.cboQualityControl.Size = new System.Drawing.Size(243, 21);
             this.cboQualityControl.TabIndex = 11;
@@ -629,7 +629,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(6, 103);
+            this.label17.Location = new System.Drawing.Point(6, 125);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(74, 13);
             this.label17.TabIndex = 6;
@@ -665,7 +665,7 @@
             this.tabPageLayout.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageLayout.Size = new System.Drawing.Size(352, 426);
             this.tabPageLayout.TabIndex = 0;
-            this.tabPageLayout.Text = "Metadata";
+            this.tabPageLayout.Text = "Map infomation";
             this.tabPageLayout.UseVisualStyleBackColor = true;
             // 
             // chkEditAllFields
@@ -673,9 +673,9 @@
             this.chkEditAllFields.AutoSize = true;
             this.chkEditAllFields.Location = new System.Drawing.Point(12, 396);
             this.chkEditAllFields.Name = "chkEditAllFields";
-            this.chkEditAllFields.Size = new System.Drawing.Size(84, 17);
+            this.chkEditAllFields.Size = new System.Drawing.Size(153, 17);
             this.chkEditAllFields.TabIndex = 11;
-            this.chkEditAllFields.Text = "Edit all fields";
+            this.chkEditAllFields.Text = "Override values for export?";
             this.chkEditAllFields.UseVisualStyleBackColor = true;
             this.chkEditAllFields.CheckedChanged += new System.EventHandler(this.chkEditAllFields_CheckedChanged);
             // 
