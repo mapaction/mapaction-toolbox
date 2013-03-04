@@ -25,7 +25,7 @@ namespace Alpha_LayoutTool
             }
             else if (MapAction.PageLayoutProperties.detectMapFrame(MxDoc, "Main map"))
             {
-                var form = new frmMain();
+                frmMain form = new frmMain();
                 form.ShowDialog();
             }
         }

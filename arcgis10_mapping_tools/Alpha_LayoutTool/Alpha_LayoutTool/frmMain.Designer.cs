@@ -60,26 +60,35 @@
             this.tspBtnCheckElements = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tspBtnClearForm = new System.Windows.Forms.ToolStripButton();
-            this.ttpGlideNumber = new System.Windows.Forms.ToolTip(this.components);
-            this.eprMapNumber = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprMapNumberError = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprMapTitle = new System.Windows.Forms.ErrorProvider(this.components);
-            this.eprMapDocument = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprMapDocumentWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprMapSummary = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprDataSources = new System.Windows.Forms.ErrorProvider(this.components);
-            this.eprSpatialReference = new System.Windows.Forms.ErrorProvider(this.components);
-            this.eprScaleText = new System.Windows.Forms.ErrorProvider(this.components);
-            this.eprGlideNumber = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprSpatialReferenceWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprScaleTextError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprGlideNumberWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprMapNumberWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprGlideNumberError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprSpatialReferenceError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprScaleTextWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprMapDocumentError = new System.Windows.Forms.ErrorProvider(this.components);
             this.gbxAutomated.SuspendLayout();
             this.gbxManual.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.eprMapNumber)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprMapNumberError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapTitle)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eprMapDocument)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprMapDocumentWarning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapSummary)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprDataSources)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eprSpatialReference)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eprScaleText)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eprGlideNumber)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprSpatialReferenceWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprScaleTextError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprGlideNumberWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprMapNumberWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprGlideNumberError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprSpatialReferenceError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprScaleTextWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprMapDocumentError)).BeginInit();
             this.SuspendLayout();
             // 
             // gbxAutomated
@@ -382,53 +391,78 @@
             this.tspBtnClearForm.Text = "Clear form";
             this.tspBtnClearForm.Click += new System.EventHandler(this.tspBtnClearForm_Click);
             // 
-            // ttpGlideNumber
+            // eprMapNumberError
             // 
-            this.ttpGlideNumber.AutomaticDelay = 50;
-            this.ttpGlideNumber.AutoPopDelay = 10000;
-            this.ttpGlideNumber.InitialDelay = 50;
-            this.ttpGlideNumber.IsBalloon = true;
-            this.ttpGlideNumber.ReshowDelay = 10;
-            // 
-            // eprMapNumber
-            // 
-            this.eprMapNumber.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.eprMapNumber.ContainerControl = this;
+            this.eprMapNumberError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprMapNumberError.ContainerControl = this;
             // 
             // eprMapTitle
             // 
             this.eprMapTitle.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.eprMapTitle.ContainerControl = this;
+            this.eprMapTitle.Icon = ((System.Drawing.Icon)(resources.GetObject("eprMapTitle.Icon")));
             // 
-            // eprMapDocument
+            // eprMapDocumentWarning
             // 
-            this.eprMapDocument.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.eprMapDocument.ContainerControl = this;
+            this.eprMapDocumentWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprMapDocumentWarning.ContainerControl = this;
+            this.eprMapDocumentWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprMapDocumentWarning.Icon")));
             // 
             // eprMapSummary
             // 
             this.eprMapSummary.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.eprMapSummary.ContainerControl = this;
+            this.eprMapSummary.Icon = ((System.Drawing.Icon)(resources.GetObject("eprMapSummary.Icon")));
             // 
             // eprDataSources
             // 
             this.eprDataSources.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.eprDataSources.ContainerControl = this;
+            this.eprDataSources.Icon = ((System.Drawing.Icon)(resources.GetObject("eprDataSources.Icon")));
             // 
-            // eprSpatialReference
+            // eprSpatialReferenceWarning
             // 
-            this.eprSpatialReference.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.eprSpatialReference.ContainerControl = this;
+            this.eprSpatialReferenceWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprSpatialReferenceWarning.ContainerControl = this;
+            this.eprSpatialReferenceWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprSpatialReferenceWarning.Icon")));
             // 
-            // eprScaleText
+            // eprScaleTextError
             // 
-            this.eprScaleText.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.eprScaleText.ContainerControl = this;
+            this.eprScaleTextError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprScaleTextError.ContainerControl = this;
             // 
-            // eprGlideNumber
+            // eprGlideNumberWarning
             // 
-            this.eprGlideNumber.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.eprGlideNumber.ContainerControl = this;
+            this.eprGlideNumberWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprGlideNumberWarning.ContainerControl = this;
+            this.eprGlideNumberWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprGlideNumberWarning.Icon")));
+            // 
+            // eprMapNumberWarning
+            // 
+            this.eprMapNumberWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprMapNumberWarning.ContainerControl = this;
+            this.eprMapNumberWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprMapNumberWarning.Icon")));
+            // 
+            // eprGlideNumberError
+            // 
+            this.eprGlideNumberError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprGlideNumberError.ContainerControl = this;
+            // 
+            // eprSpatialReferenceError
+            // 
+            this.eprSpatialReferenceError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprSpatialReferenceError.ContainerControl = this;
+            // 
+            // eprScaleTextWarning
+            // 
+            this.eprScaleTextWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprScaleTextWarning.ContainerControl = this;
+            this.eprScaleTextWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprScaleTextWarning.Icon")));
+            // 
+            // eprMapDocumentError
+            // 
+            this.eprMapDocumentError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprMapDocumentError.ContainerControl = this;
             // 
             // frmMain
             // 
@@ -451,14 +485,19 @@
             this.gbxManual.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.eprMapNumber)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprMapNumberError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapTitle)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eprMapDocument)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprMapDocumentWarning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapSummary)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprDataSources)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eprSpatialReference)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eprScaleText)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eprGlideNumber)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprSpatialReferenceWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprScaleTextError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprGlideNumberWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprMapNumberWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprGlideNumberError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprSpatialReferenceError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprScaleTextWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprMapDocumentError)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -494,16 +533,20 @@
         private System.Windows.Forms.ToolStripButton tspBtnCheckElements;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton tspBtnClearForm;
-        private System.Windows.Forms.ToolTip ttpGlideNumber;
         private System.Windows.Forms.TextBox tbxDataSources;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ErrorProvider eprMapNumber;
+        private System.Windows.Forms.ErrorProvider eprMapNumberError;
         private System.Windows.Forms.ErrorProvider eprMapTitle;
-        private System.Windows.Forms.ErrorProvider eprMapDocument;
+        private System.Windows.Forms.ErrorProvider eprMapDocumentWarning;
         private System.Windows.Forms.ErrorProvider eprMapSummary;
         private System.Windows.Forms.ErrorProvider eprDataSources;
-        private System.Windows.Forms.ErrorProvider eprSpatialReference;
-        private System.Windows.Forms.ErrorProvider eprScaleText;
-        private System.Windows.Forms.ErrorProvider eprGlideNumber;
+        private System.Windows.Forms.ErrorProvider eprSpatialReferenceWarning;
+        private System.Windows.Forms.ErrorProvider eprScaleTextError;
+        private System.Windows.Forms.ErrorProvider eprGlideNumberWarning;
+        private System.Windows.Forms.ErrorProvider eprMapNumberWarning;
+        private System.Windows.Forms.ErrorProvider eprGlideNumberError;
+        private System.Windows.Forms.ErrorProvider eprSpatialReferenceError;
+        private System.Windows.Forms.ErrorProvider eprScaleTextWarning;
+        private System.Windows.Forms.ErrorProvider eprMapDocumentError;
     }
 }
