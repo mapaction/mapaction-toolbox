@@ -81,11 +81,11 @@ namespace Alpha_LayoutTool
             FormValidation.validateMapTitle(tbxTitle, eprMapTitle);
             FormValidation.validateMapSummary(tbxSummary, eprMapSummary);
             FormValidation.validateDataSources(tbxDataSources, eprDataSources);
-            FormValidation.validateMapNumber(tbxMapNumber, eprMapNumber);
-            FormValidation.validateMapDocument(tbxMapDocument, eprMapDocument);
-            FormValidation.validateSpatialReference(tbxSpatialReference, eprSpatialReference);
-            FormValidation.validateScaleText(tbxScale, eprScaleText);
-            FormValidation.validateGlideNumber(tbxGlideNumber, eprGlideNumber);
+            FormValidation.validateMapNumber(tbxMapNumber, eprMapNumberWarning, eprMapNumberError);
+            FormValidation.validateMapDocument(tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
+            FormValidation.validateSpatialReference(tbxSpatialReference, eprSpatialReferenceWarning, eprSpatialReferenceError);
+            FormValidation.validateScaleText(tbxScale, eprScaleTextWarning, eprScaleTextError);
+            FormValidation.validateGlideNumber(tbxGlideNumber, eprGlideNumberWarning, eprSpatialReferenceError);
 
             //Call the MapAction class library and the getLayoutElements function that returns a dictionare of the key value
             //pairs of each text element in the layout
@@ -121,8 +121,21 @@ namespace Alpha_LayoutTool
             this.tbxGlideNumber.Text = string.Empty;
         }
 
+        private void disposeAllErrorProviders()
+        {
+            FormValidation.disposeErrorProvider(eprDataSources);
+            FormValidation.disposeErrorProvider(eprGlideNumberWarning);
+            FormValidation.disposeErrorProvider(eprMapDocumentWarning);
+            FormValidation.disposeErrorProvider(eprMapNumberError);
+            FormValidation.disposeErrorProvider(eprMapSummary);
+            FormValidation.disposeErrorProvider(eprMapTitle);
+            FormValidation.disposeErrorProvider(eprScaleTextError);
+            FormValidation.disposeErrorProvider(eprSpatialReferenceWarning);
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            this.disposeAllErrorProviders();
             this.Close();
         }
 
@@ -140,7 +153,7 @@ namespace Alpha_LayoutTool
             dict.Add("glide_no", this.tbxGlideNumber.Text);
 
             setAllElements(dict);
-
+            this.disposeAllErrorProviders();
             this.Close();
         }
 
@@ -264,7 +277,7 @@ namespace Alpha_LayoutTool
         //Perform validation checks on text change in each form element
         private void tbxMapNumber_TextChanged(object sender, EventArgs e)
         {
-            FormValidation.validateMapNumber(tbxMapNumber, eprMapNumber);
+            FormValidation.validateMapNumber(tbxMapNumber, eprMapNumberWarning, eprMapNumberError);
         }
 
         private void tbxTitle_TextChanged(object sender, EventArgs e)
@@ -284,22 +297,22 @@ namespace Alpha_LayoutTool
 
         private void tbxSpatialReference_TextChanged(object sender, EventArgs e)
         {
-            FormValidation.validateSpatialReference(tbxSpatialReference, eprSpatialReference); 
+            FormValidation.validateSpatialReference(tbxSpatialReference, eprSpatialReferenceWarning, eprSpatialReferenceError); 
         }
 
         private void tbxMapDocument_TextChanged(object sender, EventArgs e)
         {
-            FormValidation.validateMapDocument(tbxMapDocument, eprMapDocument);
+            FormValidation.validateMapDocument(tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
         }
 
         private void tbxScale_TextChanged(object sender, EventArgs e)
         {
-            FormValidation.validateScaleText(tbxScale, eprScaleText);
+            FormValidation.validateScaleText(tbxScale, eprScaleTextWarning, eprScaleTextError);
         }
 
         private void tbxGlideNumber_TextChanged(object sender, EventArgs e)
         {
-            FormValidation.validateGlideNumber(tbxGlideNumber, eprGlideNumber);
+            FormValidation.validateGlideNumber(tbxGlideNumber, eprGlideNumberWarning, eprGlideNumberError);
         }
 
 

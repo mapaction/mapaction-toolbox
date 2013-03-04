@@ -291,18 +291,16 @@ namespace MapAction
             // Declare and initalise variables
             Dictionary<string, string> dict = new Dictionary<string, string>(); 
             IMap pMap = Utilities.getMapFrame(pMxDoc, mapFrameName);
-            IActiveView pActiveView;
+            IActiveView pActiveView = pMap as IActiveView;
+            IEnvelope2 pEnvelope = pActiveView.Extent as IEnvelope2;
 
             // Get the spatial reference of the map frame
             // If not Geographic / WGS 84, convert it
             var spatialRefDict = getDataFrameSpatialReference(pMxDoc, mapFrameName);
 
-            if (spatialRefDict["type"] == "Geographic" && spatialRefDict["datum"] == "WGS 1984")
+            if (spatialRefDict["type"] != "Geographic" && spatialRefDict["datum"] != "WGS 1984")
             {
-                pActiveView = pMap as IActiveView;
-            }
-            else
-            {
+           
                 //Convert active view to wgs 84                
                 Debug.WriteLine("Reprojecting to wgs84");
                 ISpatialReferenceFactory srFactory = new SpatialReferenceEnvironmentClass();
@@ -311,14 +309,13 @@ namespace MapAction
                 IGeographicCoordinateSystem gcs = srFactory.CreateGeographicCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
                 wgs84 = gcs;
                 wgs84.SetFalseOriginAndUnits(-180, -90, 1000000);
-                pMap.SpatialReference = wgs84;
-                pActiveView = pMap as IActiveView;
+                pEnvelope.Project(wgs84);
             }
 
-            dict.Add("xMin", pActiveView.Extent.XMin.ToString());
-            dict.Add("yMin", pActiveView.Extent.YMin.ToString());
-            dict.Add("xMax", pActiveView.Extent.XMax.ToString());
-            dict.Add("yMax", pActiveView.Extent.YMax.ToString());
+            dict.Add("xMin", pEnvelope.XMin.ToString());
+            dict.Add("yMin", pEnvelope.YMin.ToString());
+            dict.Add("xMax", pEnvelope.XMax.ToString());
+            dict.Add("yMax", pEnvelope.YMax.ToString());
             
             return dict;
 
