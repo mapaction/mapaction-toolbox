@@ -10,4 +10,4 @@ C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigT
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\obj\Debug\ResGen.write.1.tlog
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\obj\Debug\Alpha_ConfigTool.dll
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\obj\Debug\Alpha_ConfigTool.pdb
-C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\alpha_ConfigTool\Alpha_ConfigTool\bin\Debug\Alpha_ConfigTool.esriAddIn
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_ConfigTool\Alpha_ConfigTool\bin\Debug\Alpha_ConfigTool.esriAddIn
