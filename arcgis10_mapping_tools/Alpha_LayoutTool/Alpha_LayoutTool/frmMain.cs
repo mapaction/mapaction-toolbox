@@ -69,13 +69,8 @@ namespace Alpha_LayoutTool
         {
             
             //Check to see if the config file exists, if not abort and send the user a message
-            string path = Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path;
-            string filePath = path + @"\operation_config.xml";
-            if (!File.Exists(@filePath))
-            {
-                MessageBox.Show("The operation configuration file is required for this tool.  It cannot be located.",
-                    "Configuration file required", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //string path = Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path;
+            //string filePath = path + @"\operation_config.xml";
             
             //Perform validation checks
             FormValidation.validateMapTitle(tbxTitle, eprMapTitle);
