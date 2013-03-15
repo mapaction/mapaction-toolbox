@@ -21,7 +21,7 @@ namespace Alpha_ConfigTool
         private const string _defaultDonorText = "MapAction is grateful for the support of UK aid from the Department for International Development";
         private const decimal _defaultJpegDpi = 300;
         private const decimal _defaultPdfDpi = 300;
-        private const string _defaultExportToolPath = "/GIS/3_Mapping/34_Map_Products_MapAction /MA001_001";
+        private const string _defaultExportToolPath = "";
 
         private Boolean _configXmlEditState = false;
         private Boolean _configXmlNewFile = false;
@@ -308,7 +308,23 @@ namespace Alpha_ConfigTool
         {
             if (chkEditConfigXml.Checked == true)
             {
-                tabConfigXml.Enabled = true;
+                //tabConfigXml.Enabled = true;
+                tbxOperationName.Enabled = true;
+                tbxGlideNo.Enabled = true;
+                cboLanguage.Enabled = true;
+                cboCountry.Enabled = true;
+                cboTimeZone.Enabled = true;
+                tbxOperationId.Enabled = true;
+                tbxPrimaryEmail.Enabled = true;
+                tbxSourceOrganisation.Enabled = true;
+                tbxDislaimerText.Enabled = true;
+                tbxDonorText.Enabled = true;
+                numJpegDpi.Enabled = true;
+                numPdfDpi.Enabled = true;
+                numEmfDpi.Enabled = true;
+                tbxExportToolPath.Enabled = true;
+                btnSetExportToolPath.Enabled = true;
+
                 _configXmlEditState = true;
                 btnSave.Enabled = true;
                 if (_configXmlNewFile == false)
@@ -322,7 +338,21 @@ namespace Alpha_ConfigTool
             }
             else
             {
-                tabConfigXml.Enabled = false;
+                tbxOperationName.Enabled = false;
+                tbxGlideNo.Enabled = false;
+                cboLanguage.Enabled = false;
+                cboCountry.Enabled = false;
+                cboTimeZone.Enabled = false;
+                tbxOperationId.Enabled = false;
+                tbxPrimaryEmail.Enabled = false;
+                tbxSourceOrganisation.Enabled = false;
+                tbxDislaimerText.Enabled = false;
+                tbxDonorText.Enabled = false;
+                numJpegDpi.Enabled = false;
+                numPdfDpi.Enabled = false;
+                numEmfDpi.Enabled = false;
+                tbxExportToolPath.Enabled = false;
+                btnSetExportToolPath.Enabled = false;
             }
         }
 

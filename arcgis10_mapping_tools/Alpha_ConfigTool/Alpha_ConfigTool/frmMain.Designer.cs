@@ -62,6 +62,8 @@
             this.tbxDislaimerText = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.numEmfDpi = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
             this.btnSetExportToolPath = new System.Windows.Forms.Button();
             this.numPdfDpi = new System.Windows.Forms.NumericUpDown();
             this.numJpegDpi = new System.Windows.Forms.NumericUpDown();
@@ -69,8 +71,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.numEmfDpi = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
             this.gbxCrashMoveFolder.SuspendLayout();
             this.gbxConfigXmlValues.SuspendLayout();
             this.tabConfigXml.SuspendLayout();
@@ -78,9 +78,9 @@
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numEmfDpi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPdfDpi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numJpegDpi)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numEmfDpi)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSave
@@ -171,7 +171,6 @@
             this.tabConfigXml.Controls.Add(this.tabPage2);
             this.tabConfigXml.Controls.Add(this.tabPage3);
             this.tabConfigXml.Controls.Add(this.tabPage4);
-            this.tabConfigXml.Enabled = false;
             this.tabConfigXml.Location = new System.Drawing.Point(9, 19);
             this.tabConfigXml.Name = "tabConfigXml";
             this.tabConfigXml.SelectedIndex = 0;
@@ -200,6 +199,7 @@
             // 
             // cboTimeZone
             // 
+            this.cboTimeZone.Enabled = false;
             this.cboTimeZone.FormattingEnabled = true;
             this.cboTimeZone.Items.AddRange(new object[] {
             "UTC-12",
@@ -234,6 +234,7 @@
             // 
             // cboCountry
             // 
+            this.cboCountry.Enabled = false;
             this.cboCountry.FormattingEnabled = true;
             this.cboCountry.Items.AddRange(new object[] {
             "AFGHANISTAN",
@@ -492,6 +493,7 @@
             // 
             // cboLanguage
             // 
+            this.cboLanguage.Enabled = false;
             this.cboLanguage.FormattingEnabled = true;
             this.cboLanguage.Items.AddRange(new object[] {
             "English",
@@ -534,6 +536,7 @@
             // 
             // tbxGlideNo
             // 
+            this.tbxGlideNo.Enabled = false;
             this.tbxGlideNo.Location = new System.Drawing.Point(123, 43);
             this.tbxGlideNo.Name = "tbxGlideNo";
             this.tbxGlideNo.Size = new System.Drawing.Size(257, 20);
@@ -550,6 +553,7 @@
             // 
             // tbxOperationName
             // 
+            this.tbxOperationName.Enabled = false;
             this.tbxOperationName.Location = new System.Drawing.Point(123, 17);
             this.tbxOperationName.Name = "tbxOperationName";
             this.tbxOperationName.Size = new System.Drawing.Size(257, 20);
@@ -582,6 +586,7 @@
             // 
             // tbxPrimaryEmail
             // 
+            this.tbxPrimaryEmail.Enabled = false;
             this.tbxPrimaryEmail.Location = new System.Drawing.Point(123, 43);
             this.tbxPrimaryEmail.Name = "tbxPrimaryEmail";
             this.tbxPrimaryEmail.Size = new System.Drawing.Size(257, 20);
@@ -598,6 +603,7 @@
             // 
             // tbxSourceOrganisation
             // 
+            this.tbxSourceOrganisation.Enabled = false;
             this.tbxSourceOrganisation.Location = new System.Drawing.Point(123, 69);
             this.tbxSourceOrganisation.Name = "tbxSourceOrganisation";
             this.tbxSourceOrganisation.Size = new System.Drawing.Size(257, 20);
@@ -614,6 +620,7 @@
             // 
             // tbxOperationId
             // 
+            this.tbxOperationId.Enabled = false;
             this.tbxOperationId.Location = new System.Drawing.Point(123, 17);
             this.tbxOperationId.Name = "tbxOperationId";
             this.tbxOperationId.Size = new System.Drawing.Size(257, 20);
@@ -644,6 +651,7 @@
             // 
             // tbxDonorText
             // 
+            this.tbxDonorText.Enabled = false;
             this.tbxDonorText.Location = new System.Drawing.Point(123, 96);
             this.tbxDonorText.Multiline = true;
             this.tbxDonorText.Name = "tbxDonorText";
@@ -661,6 +669,7 @@
             // 
             // tbxDislaimerText
             // 
+            this.tbxDislaimerText.Enabled = false;
             this.tbxDislaimerText.Location = new System.Drawing.Point(123, 17);
             this.tbxDislaimerText.Multiline = true;
             this.tbxDislaimerText.Name = "tbxDislaimerText";
@@ -695,8 +704,41 @@
             this.tabPage4.Text = "Settings";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // numEmfDpi
+            // 
+            this.numEmfDpi.Enabled = false;
+            this.numEmfDpi.Location = new System.Drawing.Point(123, 70);
+            this.numEmfDpi.Maximum = new decimal(new int[] {
+            1200,
+            0,
+            0,
+            0});
+            this.numEmfDpi.Minimum = new decimal(new int[] {
+            96,
+            0,
+            0,
+            0});
+            this.numEmfDpi.Name = "numEmfDpi";
+            this.numEmfDpi.Size = new System.Drawing.Size(120, 20);
+            this.numEmfDpi.TabIndex = 46;
+            this.numEmfDpi.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(14, 72);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(46, 13);
+            this.label2.TabIndex = 47;
+            this.label2.Text = "EMF dpi";
+            // 
             // btnSetExportToolPath
             // 
+            this.btnSetExportToolPath.Enabled = false;
             this.btnSetExportToolPath.Location = new System.Drawing.Point(357, 93);
             this.btnSetExportToolPath.Name = "btnSetExportToolPath";
             this.btnSetExportToolPath.Size = new System.Drawing.Size(33, 23);
@@ -707,6 +749,7 @@
             // 
             // numPdfDpi
             // 
+            this.numPdfDpi.Enabled = false;
             this.numPdfDpi.Location = new System.Drawing.Point(123, 44);
             this.numPdfDpi.Maximum = new decimal(new int[] {
             1200,
@@ -729,6 +772,7 @@
             // 
             // numJpegDpi
             // 
+            this.numJpegDpi.Enabled = false;
             this.numJpegDpi.Increment = new decimal(new int[] {
             10,
             0,
@@ -756,6 +800,7 @@
             // 
             // tbxExportToolPath
             // 
+            this.tbxExportToolPath.Enabled = false;
             this.tbxExportToolPath.Location = new System.Drawing.Point(122, 96);
             this.tbxExportToolPath.Name = "tbxExportToolPath";
             this.tbxExportToolPath.Size = new System.Drawing.Size(230, 20);
@@ -788,37 +833,6 @@
             this.label11.TabIndex = 41;
             this.label11.Text = "Jpeg dpi";
             // 
-            // numEmfDpi
-            // 
-            this.numEmfDpi.Location = new System.Drawing.Point(123, 70);
-            this.numEmfDpi.Maximum = new decimal(new int[] {
-            1200,
-            0,
-            0,
-            0});
-            this.numEmfDpi.Minimum = new decimal(new int[] {
-            96,
-            0,
-            0,
-            0});
-            this.numEmfDpi.Name = "numEmfDpi";
-            this.numEmfDpi.Size = new System.Drawing.Size(120, 20);
-            this.numEmfDpi.TabIndex = 46;
-            this.numEmfDpi.Value = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 72);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 13);
-            this.label2.TabIndex = 47;
-            this.label2.Text = "EMF dpi";
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -846,9 +860,9 @@
             this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numEmfDpi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPdfDpi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numJpegDpi)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numEmfDpi)).EndInit();
             this.ResumeLayout(false);
 
         }
