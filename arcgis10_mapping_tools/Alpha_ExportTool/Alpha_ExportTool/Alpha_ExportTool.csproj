@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Alpha_ExportTool</RootNamespace>
-    <AssemblyName>Prototype1_ExportTool</AssemblyName>
+    <AssemblyName>Alpha_ExportTool</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>

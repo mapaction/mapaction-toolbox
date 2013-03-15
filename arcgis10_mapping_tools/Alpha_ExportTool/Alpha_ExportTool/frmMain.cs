@@ -144,6 +144,9 @@ namespace Alpha_ExportTool
             dictXML = MapAction.Utilities.getOperationConfigValues(filePath);
             if (dictXML.ContainsKey("GlideNo")) { tbxGlideNo.Text = dictXML["GlideNo"]; }
             if (dictXML.ContainsKey("Language")) { tbxLanguage.Text = dictXML["Language"]; }
+            if (dictXML.ContainsKey("Country")) { tbxCountries.Text = dictXML["Country"]; }
+            string operational_id = dictXML["OperationId"];
+            Debug.WriteLine("Op ID: " + operational_id);
             if (dictXML.ContainsKey("OperationId")) { tbxOperationId.Text = dictXML["OperationId"]; }
             if (dictXML.ContainsKey("DefaultPathToExportDir")) { tbxExportZipPath.Text = dictXML["DefaultPathToExportDir"]; }
             if (dictXML.ContainsKey("DefaultJpegResDPI")) { nudJpegResolution.Value = Convert.ToDecimal(dictXML["DefaultJpegResDPI"]); }
@@ -547,12 +550,12 @@ namespace Alpha_ExportTool
 
         private void cboStatus_TextChanged(object sender, EventArgs e)
         {
-            FormValidation.validateStatus(cboStatus, eprStatusWarning);
+            _statusValidationResult = FormValidation.validateStatus(cboStatus, eprStatusWarning);
         }
 
         private void cboAccess_TextChanged(object sender, EventArgs e)
         {
-            _statusValidationResult = FormValidation.validateStatus(cboAccess, eprAccessWarning);
+            _accessValidationResult = FormValidation.validateAccess(cboAccess, eprAccessWarning);
         }
 
         private void tbxImageAccessNotes_TextChanged(object sender, EventArgs e)

@@ -334,8 +334,14 @@ namespace Alpha_ExportTool
         public static string validateImageryDate(Control control, ErrorProvider epr)
         {
             epr.SetIconPadding(control, 5);
-            validateEmptyField(control, epr);
-            return "Blank";
+            if (validateEmptyField(control, epr))
+            {
+                return "Valid";
+            }
+            else
+            {
+                return "Blank";
+            }
         }
 
         public static string validateDataSources(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
@@ -420,13 +426,29 @@ namespace Alpha_ExportTool
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
             string automatedValue = frmMain.getGlideNo();
+            string mapValue = string.Empty;
+
+            //Get and set the map value
+            var dict = new Dictionary<string, string>();
+            dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, targetMapFrame);
+            //Update form text boxes with values from the map
+            if (dict.ContainsKey("glide_no")) {  mapValue = dict["glide_no"]; }
 
             if (validateEmptyField(control, eprWarning))
             {
-                if (control.Text.Trim() != automatedValue && control.Text != string.Empty)
+                if (control.Text.Trim() != mapValue && control.Text != string.Empty)
                 {
                     eprError.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
-                    eprError.SetError(control, "Text differs from the operation_config.xml value");
+                    eprError.SetError(control, 
+                        "The value is different to the page layout.");
+                    return "Error";
+                }
+                else if (control.Text.Trim() != automatedValue && control.Text != string.Empty)
+                {
+                    eprError.SetError(control, "");
+                    eprError.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
+                    eprError.SetError(control,
+                        "The page layout and the operation_config.xml value don't match. Use the Layout Tool to resolve this.");
                     return "Error";
                 }
                 else
@@ -437,7 +459,7 @@ namespace Alpha_ExportTool
             }
             else
             {
-                eprError.SetError(control, "");
+                eprError.Dispose();
                 validateEmptyField(control, eprWarning);
                 return "Blank";
             }
@@ -447,50 +469,92 @@ namespace Alpha_ExportTool
         public static string validateLocation(Control control, ErrorProvider epr)
         {
             epr.SetIconPadding(control, 5);
-            validateEmptyField(control, epr);
-            return "Blank";
+            if (validateEmptyField(control, epr))
+            {
+                return "Valid";
+            }
+            else
+            {
+                return "Blank";
+            }
         }
 
         public static string validateTheme(Control control, ErrorProvider epr)
         {
             epr.SetIconPadding(control, 5);
-            validateEmptyField(control, epr);
-            return "Blank";
+            if (validateEmptyField(control, epr))
+            {
+                return "Valid";
+            }
+            else
+            {
+                return "Blank";
+            }
         }
 
         public static string validateCountries(Control control, ErrorProvider epr)
         {
             epr.SetIconPadding(control, 5);
-            validateEmptyField(control, epr);
-            return "Blank";
+            if (validateEmptyField(control, epr))
+            {
+                return "Valid";
+            }
+            else
+            {
+                return "Blank";
+            }
         }
 
         public static string validateStatus(Control control, ErrorProvider epr)
         {
             epr.SetIconPadding(control, 5);
-            validateEmptyField(control, epr);
-            return "Blank";
+            if (validateEmptyField(control, epr))
+            {
+                return "Valid";
+            }
+            else
+            {
+                return "Blank";
+            }
         }
 
         public static string validateAccess(Control control, ErrorProvider epr)
         {
             epr.SetIconPadding(control, 5);
-            validateEmptyField(control, epr);
-            return "Blank";
+            if (validateEmptyField(control, epr))
+            {
+                return "Valid";
+            }
+            else
+            {
+                return "Blank";
+            }
         }
 
         public static string validateAccessNote(Control control, ErrorProvider epr)
         {
             epr.SetIconPadding(control, 5);
-            validateEmptyField(control, epr);
-            return "Blank";
+            if (validateEmptyField(control, epr))
+            {
+                return "Valid";
+            }
+            else
+            {
+                return "Blank";
+            }
         }
 
         public static string validateQualityControl(Control control, ErrorProvider epr)
         {
             epr.SetIconPadding(control, 5);
-            validateEmptyField(control, epr);
-            return "Blank";
+            if (validateEmptyField(control, epr))
+            {
+                return "Valid";
+            }
+            else
+            {
+                return "Blank";
+            }
         }
 
         public static string validateLanguage(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
