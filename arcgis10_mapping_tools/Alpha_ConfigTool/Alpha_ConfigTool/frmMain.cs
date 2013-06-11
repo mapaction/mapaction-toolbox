@@ -47,7 +47,25 @@ namespace Alpha_ConfigTool
             //set up select folder dialog properties 
             FolderBrowserDialog dlg = new FolderBrowserDialog();
             //set the intial path
-            dlg.SelectedPath = @"c:\";
+            //if the current path in the dialog is populated and valid, use that path
+            string setPath = tbxPathToCrashMove.Text;
+            if (setPath == "" || setPath == string.Empty)
+            {
+                dlg.SelectedPath = @"c:\";
+            }
+            else
+            {
+                if (Directory.Exists(setPath))
+                {
+                    dlg.SelectedPath = @setPath;
+                }
+                else
+                {
+                    dlg.SelectedPath = @"c:\";
+                }
+            }
+
+
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 tbxPathToCrashMove.Text = dlg.SelectedPath;
