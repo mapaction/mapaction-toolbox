@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="mapaction.dataname.DataListGeoDBConnection">
+    <Position X="5.5" Y="2.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Private" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAEAIEAAAAAQANFAAAAAAAAQAAAAAAAAAAiCBAAAA=</HashCode>
+      <FileName>DataListGeoDBConnection.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mapaction.dataname.AbstractDataNameClauseLookup">
+    <Position X="5.75" Y="7" Width="2" />
+    <TypeIdentifier>
+      <HashCode>MADDAAAAAEDAIAGEgVAQACwAQwggAAACAQBBAIAAKAY=</HashCode>
+      <FileName>AbstractDataNameClauseLookup.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="mapaction.dataname.AbstractWriteableDataNameClauseLookup">
+    <Position X="8.25" Y="11" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QAQAAAAgAAACQAggAAAAAADAQAAAAAEACAAIAAACAAA=</HashCode>
+      <FileName>AbstractWriteableDataNameClauseLookup.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.462" />
+  </Class>
+  <Class Name="mapaction.dataname.AbstractGeoDataListConnection">
+    <Position X="3" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAQAFEAAIgAAQAQAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>AbstractGeoDataListConnection.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="mapaction.dataname.GeoDataListConnectionFactory">
+    <Position X="11" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAIAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>GeoDataListConnectionFactory.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mapaction.dataname.DataNameClauseLookupFactory">
+    <Position X="11" Y="4" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAIAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataNameClauseLookupFactory.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mapaction.dataname.MDBDataNameClauseLookup">
+    <Position X="8.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAFCAAAAAAAAgAAAAAYAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MDBDataNameClauseLookup.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mapaction.datanaming.LookupTableException" Collapsed="true">
+    <Position X="14" Y="3.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LookupTableException.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mapaction.dataname.DataNameNormalFile">
+    <Position X="15.5" Y="9.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>CgAAQAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>DataNameNormalFile.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mapaction.datanaming.RenamingDataException">
+    <Position X="14" Y="4.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RenamingDataException.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mapaction.dataname.AbstractDataName">
+    <Position X="13" Y="8.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AgiBQCAAAIgiAAAAAAEEgQADIAQgCAIIBCAIAAMAIAE=</HashCode>
+      <FileName>AbstractDataName.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="mapaction.dataname.DataListFileSystemDirectory">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <InheritanceLine Type="mapaction.dataname.AbstractGeoDataListConnection" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5" Y="2.25" />
+        <Point X="8.25" Y="2.25" />
+        <Point X="8.25" Y="2.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AIACAAIAAAAAAYCFEAAACAAAAQAAAQAAAAAAAABAAAA=</HashCode>
+      <FileName>DataListFileSystemDirectory.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mapaction.dataname.DataNameESRIFeatureClass">
+    <Position X="15.5" Y="12.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>IgAAQAAAAAAAAAACAAAAgAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>DataNameESRIFeatureClass.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mapaction.dataname.DataListMXDConnection">
+    <Position X="9.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAKAAAAAAQAFEAEAAAAAAQgAAAAgEAAAAABAAIA=</HashCode>
+      <FileName>DataListMXDConnection.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="mapaction.dataname.IDataNameClauseLookup">
+    <Position X="0.5" Y="7.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>EAADAAAAAEBAIAGAARAAACQAQQggAAAAAQBBAIAACAI=</HashCode>
+      <FileName>IDataNameClauseLookup.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="mapaction.dataname.IWriteableDataNameClauseLookup">
+    <Position X="3" Y="9.25" Width="2.25" />
+    <InheritanceLine Type="mapaction.dataname.IDataNameClauseLookup" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.75" Y="8.188" />
+        <Point X="4.125" Y="8.188" />
+        <Point X="4.125" Y="9.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>QAQAAAAgAAACQAggAAAAAADAQAAAAAEACAAIAAACAAA=</HashCode>
+      <FileName>IWriteableDataNameClauseLookup.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="mapaction.dataname.IGeoDataListConnection">
+    <Position X="0.5" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAQAFEAAIgAAAAQAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>IGeoDataListConnection.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="mapaction.dataname.IDataName">
+    <Position X="10.75" Y="7" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAiAQAAAAAgiAAAAAAEAAQADIAQACAIIAAAAAAEAIAE=</HashCode>
+      <FileName>IDataName.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Module Name="mapaction.dataname.DataNamingConstants">
+    <Position X="17.5" Y="0.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIAACEAQAABIAABAIhhBMCISAAJhMAAQCDAggEAgAKA=</HashCode>
+      <FileName>DataNamingConstants.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
