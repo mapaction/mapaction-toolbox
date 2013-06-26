@@ -1,0 +1,93 @@
+,
+clause,Description
+agricltr,Agriculture Cluster
+alertnet,Alertnet
+amb,Ambulance Service
+aster,Advanced Spaceborne Thermal Emission and Reflection Radiometer
+bart,Collins Bartholomew
+cccm,CCCM Cluster
+ceger,Early Recovery Cluster
+cgiar,Consultative Group on International Agricultural Research
+ciesin,Center for International Earth Science Information Network
+civdef,National civil defence source
+dlr,Deutsches Zentrum für Luft- und Raumfahrt / German Aerospace Centre
+escltr,Emergency Shelter Cluster
+esri,ESRI
+etc,Emergency Communications Cluster
+eudasm,European Digital Archive of Soil Maps
+fact,Field Assessment and Coordination Team
+feat,Flash Environmental Assessment Tool
+fire,Fire Service
+gadm,GADM Global Administrative Areas
+gaul,Global Administrative Unit Layers
+ge,Google Earth
+geoeye,GeoEye
+gist,Geographic Information Support Team
+govd,Government - regional
+govl,Government - local
+govn,Government - national
+gps,GPS
+gpw,Gridded Population of the World
+grump,Global Rural-Urban Mapping Project
+healcltr,Health Cluster
+hit,Hazard Identification Tool
+igad,Intergovernmental Authority on Develpoment
+insarag,INSARAG
+iscgm,ISCGM Global Mapping
+jdf,J. de Ferranti DEMs (north of SRTM)
+landsat,Landsat Geocover
+landscan,LandScan
+logs,Logs Cluster
+ma,MapAction
+mag,Mines Advisory Group
+mapstor,Topo scans: Russian (MapStor)
+merlin,Merlin
+met,National meteorological service
+mil,National military source
+mix,Mix of data sources
+modis,Moderate Resolution Imaging Spectroradiometer
+msf,Medicins Sans Frontieres
+navteq,Navteq
+nga,National Geospatial Intelligence Agency
+ngagn,NGA Geonames gazetteer
+ngashore,NGA shorelines
+noaa,National Oceanic and Atmospheric Administration
+npa,Norwegion Peoples Aid
+nutcltr,Nutrition Cluster
+ocha3w,UN-OCHA 3W Database
+osm,OpenStreetMap
+oxfam,Oxfam
+police,Police Service
+protcltr,Protection Cluster
+salb,Second Administrative Level Boundaries
+srtm,Shuttle Radar Topography Mission
+statoid,Statoid: data on admin units
+tnc,The Nature Conservancy
+trmm,Tropical Rainfall Measuring Mission
+tsf,Telecom Sans Frontier
+uncs,UN Cartographic Section
+undac,UN Disaster Assessment Coordination
+undp,UN Development Program
+undpko,UN Department for Peacekeeping Operations
+unfao,UN Food and Agriculture Organisation
+unfis,UN-OCHA Field Information Services
+ungiwg,UNGIWG Core Geodatabase
+unhic,UN Humanitarian Information Centre
+unicef,UNICEF
+unifad,UN International Fund for Agricultural Development
+uniom,UN International Organization for Migration
+unknown,Unknown
+unma,UN MineAction
+unocha,UNOCHA
+unosat,UNOSAT
+unrw,UN ReliefWeb
+unsdit,UN-SDI-T
+unwfp,UN World Food Programme
+unwho,UN World Health Organisation
+usams,US Army Map Service
+usgs,USGS
+usnhc,US National Hurricane Center
+utpcl,Uni of Texas Perry-Castaneda Library Map Collection
+vmap,Vmap
+washcltr,WASH Cluster 
+wdpa,Word Database of Protected Areas

@@ -1,0 +1,9 @@
+c:\users\greg\documents\visual studio 2010\Projects\Prototype1_DatasetRename\Prototype1_DatasetRename\bin\Debug\Prototype1_DatasetRename.dll
+c:\users\greg\documents\visual studio 2010\Projects\Prototype1_DatasetRename\Prototype1_DatasetRename\bin\Debug\Prototype1_DatasetRename.pdb
+c:\users\greg\documents\visual studio 2010\Projects\Prototype1_DatasetRename\Prototype1_DatasetRename\obj\Debug\ResolveAssemblyReference.cache
+c:\users\greg\documents\visual studio 2010\Projects\Prototype1_DatasetRename\Prototype1_DatasetRename\obj\Debug\Prototype1_DatasetRename.frmMain.resources
+c:\users\greg\documents\visual studio 2010\Projects\Prototype1_DatasetRename\Prototype1_DatasetRename\obj\Debug\ResGen.read.1.tlog
+c:\users\greg\documents\visual studio 2010\Projects\Prototype1_DatasetRename\Prototype1_DatasetRename\obj\Debug\ResGen.write.1.tlog
+c:\users\greg\documents\visual studio 2010\Projects\Prototype1_DatasetRename\Prototype1_DatasetRename\obj\Debug\Prototype1_DatasetRename.dll
+c:\users\greg\documents\visual studio 2010\Projects\Prototype1_DatasetRename\Prototype1_DatasetRename\obj\Debug\Prototype1_DatasetRename.pdb
+c:\users\greg\documents\visual studio 2010\Projects\Prototype1_DatasetRename\Prototype1_DatasetRename\bin\Debug\Prototype1_DatasetRename.esriAddIn

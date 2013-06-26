@@ -1,0 +1,13 @@
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cartotools\bin\Release\fall_back_data_naming_conventions_v1.0.mdb
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cartotools\bin\Release\mapaction.cartotools.api.dll
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cartotools\bin\Release\mapaction.cartotools.api.pdb
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cartotools\bin\Release\mapaction.cartotools.api.xml
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cartotools\bin\Release\mapaction.datanames.api.dll
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cartotools\bin\Release\mapaction.datanames.api.pdb
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cartotools\bin\Release\mapaction.datanames.api.xml
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cartotools\obj\Release\ResolveAssemblyReference.cache
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cartotools\obj\Release\mapaction.cartotools.api.Resources.resources
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cartotools\obj\Release\cartotools.vbproj.GenerateResource.Cache
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cartotools\obj\Release\mapaction.cartotools.api.dll
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cartotools\obj\Release\mapaction.cartotools.api.xml
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\v1.0\dataNameTools\cartotools\obj\Release\mapaction.cartotools.api.pdb

@@ -1,0 +1,11 @@
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\obj\Debug\ResolveAssemblyReference.cache
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\obj\Debug\CommandlineTesting.Resources.resources
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\obj\Debug\CommandlineTesting.vbproj.GenerateResource.Cache
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\bin\Debug\CommandlineTesting.exe
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\bin\Debug\CommandlineTesting.pdb
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\bin\Debug\CommandlineTesting.xml
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\obj\Debug\CommandlineTesting.exe
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\obj\Debug\CommandlineTesting.xml
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\obj\Debug\CommandlineTesting.pdb
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\obj\Debug\CommandlineTesting.vbproj.ResolveComReference.cache
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\datanamingAPI\ma-namingAPI\CommandlineTesting\bin\Debug\CommandlineTesting.exe.config
