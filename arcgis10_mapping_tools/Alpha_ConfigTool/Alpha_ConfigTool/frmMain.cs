@@ -123,15 +123,13 @@ namespace Alpha_ConfigTool
             {
                 if (_configXmlEditState != false)
                 {
-                    Properties.Settings.Default.crash_move_folder_path = tbxPathToCrashMove.Text;
-                    Properties.Settings.Default.Save();
+                    MapAction.Utilities.setCrashMovePathTest(tbxPathToCrashMove.Text);
                     createConfigXml(_configXmlNewFile);
                 }
                 else if (_configXmlEditState != true)
                 {
                     //Save the path of the config file to the applicaton settings file
-                    Properties.Settings.Default.crash_move_folder_path = tbxPathToCrashMove.Text;
-                    Properties.Settings.Default.Save();
+                    MapAction.Utilities.setCrashMovePathTest(tbxPathToCrashMove.Text);
                     MessageBox.Show("Config file path successfully updated.", "Config file path",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -146,9 +144,8 @@ namespace Alpha_ConfigTool
             //dlgDefaultValuesOrExistingXml();
             
             //get the preset path from the configuration file
-            string path = Properties.Settings.Default.crash_move_folder_path;
-            string filepath = path + @"\operation_config.xml";
-            Debug.WriteLine("path: " + path);
+            string path = MapAction.Utilities.getCrashMoveFolderPath();
+            string filepath = MapAction.Utilities.getOperationConfigFilePath();
             //Check if the config file has been set and if it exists
             if (@path != "" && !MapAction.Utilities.detectOperationConfig())
             {
@@ -268,7 +265,7 @@ namespace Alpha_ConfigTool
         public Boolean dlgDefaultValuesOrExistingXml()
         {
             //Get the currently set path
-            string crashMovePath = Properties.Settings.Default.crash_move_folder_path;
+            string crashMovePath = MapAction.Utilities.getCrashMoveFolderPath();
             string xmlPath = crashMovePath + @"\opertional_config.xml";
             //Check if the path exists 
             if (File.Exists(@xmlPath))

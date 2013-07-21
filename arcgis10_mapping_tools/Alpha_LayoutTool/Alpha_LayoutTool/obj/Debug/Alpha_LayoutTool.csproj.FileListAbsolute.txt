@@ -32,10 +32,8 @@ C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutT
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutTool\Prototype1_LayoutTool\bin\Debug\Alpha_LayoutTool.esriAddIn
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\bin\Debug\Alpha_LayoutTool.dll
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\bin\Debug\Alpha_LayoutTool.pdb
-C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\bin\Debug\Alpha_ConfigTool.dll
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\bin\Debug\MapAction.dll
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\bin\Debug\Ionic.Zip.dll
-C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\bin\Debug\Alpha_ConfigTool.pdb
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\bin\Debug\MapAction.pdb
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\obj\Debug\ResolveAssemblyReference.cache
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\obj\Debug\Alpha_LayoutTool.frmCheckElements.resources
