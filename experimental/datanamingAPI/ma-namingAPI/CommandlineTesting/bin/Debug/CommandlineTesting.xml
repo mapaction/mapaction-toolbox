@@ -1,0 +1,49 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CommandlineTesting
+</name>
+</assembly>
+<members>
+<member name="P:CommandlineTesting.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:CommandlineTesting.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="P:CommandlineTesting.My.Resources.Resources.datanameclauselookup_schema_v1_0">
+	<summary>
+  Looks up a localized string similar to &lt;?xml version="1.0"?&gt;
+&lt;xs:schema id="dncl" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"&gt;
+  &lt;xs:element name="dncl" msdata:IsDataSet="true" msdata:UseCurrentLocale="true"&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
+        &lt;xs:element name="datanaming_clause_geoextent"&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name="clause" type="xs:string" minOccurs="0" /&gt;
+               [rest of string was truncated]";.
+</summary>
+</member><member name="P:CommandlineTesting.My.Resources.Resources.schema">
+	<summary>
+  Looks up a localized string similar to &lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;xs:schema id="dncl" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"&gt;
+  &lt;xs:element name="dncl" msdata:IsDataSet="true" msdata:UseCurrentLocale="true"&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
+        &lt;xs:element name="datanaming_clause_geoextent"&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name="clause" type="xs:string" minOccurs="0" / [rest of string was truncated]";.
+</summary>
+</member><member name="T:CommandlineTesting.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+</members>
+</doc>

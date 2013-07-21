@@ -1,0 +1,11 @@
+,
+ln,Line / polyline
+pt,Point
+py,Polygon / area
+ras,Raster (datatset)
+rca,Raster Catalog
+tab,Table
+tin,TIN
+unkwn,Unknown
+wfs,Web Feature Service
+wms,Web Mapping Service

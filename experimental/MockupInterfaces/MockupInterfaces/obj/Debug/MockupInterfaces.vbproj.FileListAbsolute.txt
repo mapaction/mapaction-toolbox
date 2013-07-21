@@ -1,0 +1,4 @@
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\MockupInterfaces\MockupInterfaces\bin\Debug\WindowsApplication1.exe.config
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\MockupInterfaces\MockupInterfaces\obj\Debug\WindowsApplication1.exe
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\MockupInterfaces\MockupInterfaces\obj\Debug\WindowsApplication1.xml
+D:\MapAction\bronze\custom_tools\managedcode\mapaction-toolbox\experimental\MockupInterfaces\MockupInterfaces\obj\Debug\WindowsApplication1.pdb

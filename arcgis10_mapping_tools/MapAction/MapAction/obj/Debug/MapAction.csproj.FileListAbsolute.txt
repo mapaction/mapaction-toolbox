@@ -1,0 +1,15 @@
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\MapAction\MapAction\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\MapAction\MapAction\bin\Debug\MapAction.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\MapAction\MapAction\bin\Debug\MapAction.pdb
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\MapAction\MapAction\bin\Debug\Ionic.Zip.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\MapAction\MapAction\bin\Debug\Prototype1_ConfigTool.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\MapAction\MapAction\bin\Debug\Prototype1_ConfigTool.pdb
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\MapAction\MapAction\obj\Debug\MapAction.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\MapAction\MapAction\obj\Debug\MapAction.pdb
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\obj\Debug\ResolveAssemblyReference.cache
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\MapAction.dll.config
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\MapAction.dll
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\MapAction.pdb
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\Ionic.Zip.dll
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\obj\Debug\MapAction.dll
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\obj\Debug\MapAction.pdb

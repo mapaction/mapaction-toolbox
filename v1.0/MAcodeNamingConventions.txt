@@ -1,0 +1,32 @@
+
+
+Interfaces: prefix with capital "I"
+MustInherit: prefix with "Abstract"
+FactoryClasses: <name of class produced> suffix with "Factory"
+
+
+DataName = dn or DN
+
+strAry = String Arrays
+htb = HashTable
+dcl = DataColunm
+aryl = Array List
+dtb = DataTable
+lst<T> = List(Of T)
+stb = StringBuilder
+wksp = ESRI.ArcGIS.Geodatabase.IWorkspace
+fInfo = FileInfo
+dInfo = DirectoryInfo
+edn = IEnumDatasetName
+eds = IEnumDataset
+dsn =  ESRI.ArcGIS.Geodatabase.IDatasetName
+dncFact = DataNameClauseLookupFactory
+dncl = IDataNameClauseLookup
+dlc = IDataListConnection
+txtRdr = TextReader
+
+
+
+    
+
+
