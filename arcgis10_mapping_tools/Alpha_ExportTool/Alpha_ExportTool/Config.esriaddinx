@@ -1,10 +1,10 @@
 ﻿<ESRI.Configuration xmlns="http://schemas.esri.com/Desktop/AddIns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Name>Alpha_ExportTool</Name>
   <AddInID>{1472afad-112a-4f7e-9d6e-5b2083d133bf}</AddInID>
-  <Description>Type in a description for this Add-in.</Description>
+  <Description>This tool exports the map to an image (pdf, jpeg, emf), and the map metadata to an XML document ready for upload onto the MapAction map catalogue</Description>
   <Version>1.0</Version>
   <Image>Images\ExportTool.png</Image>
-  <Author>Greg</Author>
+  <Author>Greg Vaughan</Author>
   <Company>MapAction</Company>
   <Date>03/12/2012</Date>
   <Targets>
@@ -13,7 +13,7 @@
   <AddIn language="CLR" library="Alpha_ExportTool.dll" namespace="Alpha_ExportTool">
     <ArcMap>
       <Commands>
-        <Button id="Alpha_ExportTool_ExportTool" class="ExportTool" message="Exports layout to image (pdf, jpeg, emf) and creates xml metadata ready to be uploaded to the MapAction website." caption="Export Tool" tip="Export layout" category="MapAction Mapping Tools" image="Images\ExportTool.png" />
+        <Button id="Alpha_ExportTool_ExportTool" class="ExportTool" message="Exports the map layout to an image (pdf, jpeg, emf) and creates the map metadata xml ready to be uploaded to the MapAction website" caption="Export Tool" tip="Export layout" category="MapAction Mapping Tools" image="Images\ExportTool.png" />
       </Commands>
     </ArcMap>
   </AddIn>
