@@ -19,8 +19,6 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
-using Alpha_ConfigTool;
-
 
 namespace Alpha_ExportTool
 {
@@ -139,7 +137,7 @@ namespace Alpha_ExportTool
 
             // Update form values from the config xml
             var dictXML = new Dictionary<string, string>();
-            string path = Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path;
+            string path = MapAction.Utilities.getCrashMoveFolderPath();
             string filePath = path + @"\operation_config.xml";
             dictXML = MapAction.Utilities.getOperationConfigValues(filePath);
             if (dictXML.ContainsKey("GlideNo")) { tbxGlideNo.Text = dictXML["GlideNo"]; }
@@ -435,7 +433,7 @@ namespace Alpha_ExportTool
         public static string getGlideNo()
         {
             string GlideNo = string.Empty;
-            string path = Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path + @"\operation_config.xml";
+            string path = MapAction.Utilities.getOperationConfigFilePath();
 
             if (MapAction.Utilities.detectOperationConfig())
             {

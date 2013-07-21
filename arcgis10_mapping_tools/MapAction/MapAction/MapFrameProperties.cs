@@ -15,7 +15,6 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
-using Alpha_ConfigTool;
 
 namespace MapAction
 {

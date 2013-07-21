@@ -8,11 +8,6 @@ namespace MapAction
     class MxdDocumentProperties
     {
 
-
-
-
-
-
         // psuedo methods list
 
         // mxd title
@@ -21,7 +16,6 @@ namespace MapAction
 
 
         // arcmap version
-
 
 
     }
