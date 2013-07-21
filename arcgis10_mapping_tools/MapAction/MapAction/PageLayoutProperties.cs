@@ -221,8 +221,8 @@ namespace MapAction
             string mapTitle = null;
             try
             {
-                mapTitle = pApp.Document.Title;
-                mapTitle = mapTitle.TrimEnd('d', 'x', 'm', '.');
+                mapTitle = pApp.Document.Title; 
+                //mapTitle = mapTitle.Substring(0,mapTitle.Length - 4);
             }
             catch (Exception e)
             {
