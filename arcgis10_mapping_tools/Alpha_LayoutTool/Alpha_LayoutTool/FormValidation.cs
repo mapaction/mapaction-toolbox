@@ -164,7 +164,7 @@ namespace Alpha_LayoutTool
         {
             eprWarning.SetIconPadding(control, 33);
             eprError.SetIconPadding(control, 33);
-            string automatedValue = frmMain.getGlideNo();
+            string automatedValue =  LayoutToolAutomatedValues.getGlideNo();
 
             if (validateEmptyField(control, eprWarning))
             {

@@ -71,6 +71,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.tbxOrganisationUrl = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.gbxCrashMoveFolder.SuspendLayout();
             this.gbxConfigXmlValues.SuspendLayout();
             this.tabConfigXml.SuspendLayout();
@@ -202,31 +204,46 @@
             this.cboTimeZone.Enabled = false;
             this.cboTimeZone.FormattingEnabled = true;
             this.cboTimeZone.Items.AddRange(new object[] {
-            "UTC-12",
-            "UTC-11",
-            "UTC-10",
-            "UTC-9",
-            "UTC-8",
-            "UTC-7",
-            "UTC-6",
-            "UTC-5",
-            "UTC-4",
-            "UTC-3",
-            "UTC-2",
-            "UTC-1",
-            "UTC0",
-            "UTC+1",
-            "UTC+2",
-            "UTC+3",
-            "UTC+4",
-            "UTC+5",
-            "UTC+6",
-            "UTC+7",
-            "UTC+8",
-            "UTC+9",
-            "UTC+10",
-            "UTC+11",
-            "UTC+12"});
+            "UTC-12:00",
+            "UTC-11:00",
+            "UTC-10:00",
+            "UTC-09:30",
+            "UTC-09:00",
+            "UTC-08:00",
+            "UTC-07:00",
+            "UTC-06:00",
+            "UTC-05:00",
+            "UTC-04:30",
+            "UTC-04:00",
+            "UTC-03:30",
+            "UTC-03:00",
+            "UTC-02:00",
+            "UTC-01:00",
+            "UTC±00:00",
+            "UTC+01:00",
+            "UTC+02:00",
+            "UTC+03:00",
+            "UTC+03:30",
+            "UTC+04:00",
+            "UTC+04:30",
+            "UTC+05:00",
+            "UTC+05:30",
+            "UTC+05:45",
+            "UTC+06:00",
+            "UTC+06:30",
+            "UTC+07:00",
+            "UTC+08:00",
+            "UTC+08:45",
+            "UTC+09:00",
+            "UTC+09:30",
+            "UTC+10:00",
+            "UTC+10:30",
+            "UTC+11:00",
+            "UTC+11:30",
+            "UTC+12:00",
+            "UTC+12:45",
+            "UTC+13:00",
+            "UTC+14:00"});
             this.cboTimeZone.Location = new System.Drawing.Point(123, 122);
             this.cboTimeZone.Name = "cboTimeZone";
             this.cboTimeZone.Size = new System.Drawing.Size(257, 21);
@@ -570,6 +587,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.tbxOrganisationUrl);
+            this.tabPage2.Controls.Add(this.label12);
             this.tabPage2.Controls.Add(this.tbxPrimaryEmail);
             this.tabPage2.Controls.Add(this.label18);
             this.tabPage2.Controls.Add(this.tbxSourceOrganisation);
@@ -587,7 +606,7 @@
             // tbxPrimaryEmail
             // 
             this.tbxPrimaryEmail.Enabled = false;
-            this.tbxPrimaryEmail.Location = new System.Drawing.Point(123, 43);
+            this.tbxPrimaryEmail.Location = new System.Drawing.Point(123, 95);
             this.tbxPrimaryEmail.Name = "tbxPrimaryEmail";
             this.tbxPrimaryEmail.Size = new System.Drawing.Size(257, 20);
             this.tbxPrimaryEmail.TabIndex = 1;
@@ -595,7 +614,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(14, 46);
+            this.label18.Location = new System.Drawing.Point(14, 98);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(68, 13);
             this.label18.TabIndex = 53;
@@ -604,7 +623,7 @@
             // tbxSourceOrganisation
             // 
             this.tbxSourceOrganisation.Enabled = false;
-            this.tbxSourceOrganisation.Location = new System.Drawing.Point(123, 69);
+            this.tbxSourceOrganisation.Location = new System.Drawing.Point(123, 43);
             this.tbxSourceOrganisation.Name = "tbxSourceOrganisation";
             this.tbxSourceOrganisation.Size = new System.Drawing.Size(257, 20);
             this.tbxSourceOrganisation.TabIndex = 2;
@@ -612,7 +631,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 72);
+            this.label4.Location = new System.Drawing.Point(14, 46);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(66, 13);
             this.label4.TabIndex = 51;
@@ -833,6 +852,23 @@
             this.label11.TabIndex = 41;
             this.label11.Text = "Jpeg dpi";
             // 
+            // tbxOrganisationUrl
+            // 
+            this.tbxOrganisationUrl.Enabled = false;
+            this.tbxOrganisationUrl.Location = new System.Drawing.Point(123, 69);
+            this.tbxOrganisationUrl.Name = "tbxOrganisationUrl";
+            this.tbxOrganisationUrl.Size = new System.Drawing.Size(257, 20);
+            this.tbxOrganisationUrl.TabIndex = 54;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(14, 72);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(80, 13);
+            this.label12.TabIndex = 55;
+            this.label12.Text = "Organisation url";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -911,5 +947,7 @@
         private System.Windows.Forms.CheckBox chkEditConfigXml;
         private System.Windows.Forms.NumericUpDown numEmfDpi;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox tbxOrganisationUrl;
+        private System.Windows.Forms.Label label12;
     }
 }

@@ -43,7 +43,6 @@ C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutT
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\obj\Debug\ResGen.write.1.tlog
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\obj\Debug\Alpha_LayoutTool.dll
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\obj\Debug\Alpha_LayoutTool.pdb
-C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\bin\Debug\Alpha_LayoutTool.esriAddIn
 D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\bin\Debug\Alpha_LayoutTool.dll
 D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\bin\Debug\Alpha_LayoutTool.pdb
 D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\bin\Debug\Alpha_ConfigTool.dll
@@ -59,3 +58,4 @@ D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\Alpha_Layo
 D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\obj\Debug\Alpha_LayoutTool.dll
 D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\obj\Debug\Alpha_LayoutTool.pdb
 D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\bin\Debug\Alpha_LayoutTool.esriAddIn
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Alpha_LayoutTool\Alpha_LayoutTool\bin\Debug\Alpha_LayoutTool.esriAddIn

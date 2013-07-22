@@ -29,6 +29,8 @@ namespace Alpha_LayoutTool
             InitializeComponent();
         }
 
+
+        //Gets the automated values for Tab 1 and populates each textbox
         private void btnUpdateAll_Click(object sender, EventArgs e)
         {
             //Call the MapAction class library and the getLayoutElements function that returns a dictionare of the key value
@@ -39,7 +41,7 @@ namespace Alpha_LayoutTool
                 tbxScale.Text = tbxScale.Text = updateScale();
                 tbxSpatialReference.Text = getSpatialReference();
                 tbxMapDocument.Text = tbxMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
-                tbxGlideNumber.Text = getGlideNo();
+                tbxGlideNumber.Text = LayoutToolAutomatedValues.getGlideNo();
 
         }
 
@@ -60,7 +62,7 @@ namespace Alpha_LayoutTool
 
         private void btnGlideNo_Click(object sender, EventArgs e)
         {
-            tbxGlideNumber.Text = getGlideNo();
+            tbxGlideNumber.Text = LayoutToolAutomatedValues.getGlideNo();
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -100,6 +102,11 @@ namespace Alpha_LayoutTool
             if (dict.ContainsKey("scale") == true) { tbxScale.Text = dict["scale"]; } else { tbxScale.Text = "Element not present"; tbxScale.ReadOnly = true; btnUpdateScale.Enabled = false; };
             if (dict.ContainsKey("spatial_reference") == true) { tbxSpatialReference.Text = dict["spatial_reference"]; } else { tbxSpatialReference.Text = "Element not present"; tbxSpatialReference.ReadOnly = true; btnSpatialReference.Enabled = false; };
             if (dict.ContainsKey("glide_no") == true) { tbxGlideNumber.Text = dict["glide_no"]; } else { tbxGlideNumber.Text = "Element not present"; tbxGlideNumber.ReadOnly = true; btnGlideNo.Enabled = false; };
+            //Tab 2 - Standard elements
+            if (dict.ContainsKey("organisation_details") == true) { tbxProducedBy.Text = dict["organisation_details"]; } else { tbxProducedBy.Text = "Element not present"; tbxProducedBy.ReadOnly = true; btnUpdateProducedBy.Enabled = false; };
+            if (dict.ContainsKey("donor_credit") == true) { tbxDonorCredits.Text = dict["donor_credit"]; } else { tbxDonorCredits.Text = "Element not present"; tbxDonorCredits.ReadOnly = true; btnUpdateDonorCredits.Enabled = false; };
+            if (dict.ContainsKey("timezone") == true) { tbxTimezone.Text = dict["timezone"]; } else { tbxTimezone.Text = "Element not present"; tbxTimezone.ReadOnly = true; btnUpdateTimezone.Enabled = false; };
+            if (dict.ContainsKey("disclaimer") == true) { tbxDisclaimer.Text = dict["disclaimer"]; } else { tbxDisclaimer.Text = "Element not present"; tbxDisclaimer.ReadOnly = true; btnUpdateDisclaimer.Enabled = false; };
         }
 
         private void tspBtnClearForm_Click(object sender, EventArgs e)
@@ -177,19 +184,7 @@ namespace Alpha_LayoutTool
             return stringSpatialRef;
         }
 
-        public static string getGlideNo()
-        {
-            string GlideNo = string.Empty;
-            string path = MapAction.Utilities.getOperationConfigFilePath();
 
-            if (MapAction.Utilities.detectOperationConfig())
-            {
-                Dictionary<string, string> dictConfig = MapAction.Utilities.getOperationConfigValues(path);
-                if (dictConfig.ContainsKey("GlideNo")) { GlideNo = dictConfig["GlideNo"]; } 
-            }
-
-            return GlideNo;
-        }
 
         public static void setAllElements(Dictionary<string, string> dict)
         {
@@ -307,6 +302,43 @@ namespace Alpha_LayoutTool
         {
             FormValidation.validateGlideNumber(tbxGlideNumber, eprGlideNumberWarning, eprGlideNumberError);
         }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        //Update disclaimer tab 2 automated  value button 
+
+        //Gets the automated values for Tab 2 and populates each textbox
+        private void btnUpdateAllTab2_Click(object sender, EventArgs e)
+        {
+            tbxDonorCredits.Text = LayoutToolAutomatedValues.getConfigDonorText();
+            tbxTimezone.Text = LayoutToolAutomatedValues.getConfigTimezone();
+            tbxProducedBy.Text = LayoutToolAutomatedValues.getProducedByText();
+            tbxDisclaimer.Text = LayoutToolAutomatedValues.getConfigDisclaimer();
+        }
+
+        private void btnUpdateDisclaimer_Click(object sender, EventArgs e)
+        {
+            tbxDisclaimer.Text = LayoutToolAutomatedValues.getConfigDisclaimer();
+        }
+
+        private void btnUpdateTimezone_Click(object sender, EventArgs e)
+        {
+            tbxTimezone.Text = LayoutToolAutomatedValues.getConfigTimezone();
+        }
+
+        private void btnUpdateOrganisationDetails_Click(object sender, EventArgs e)
+        {
+            tbxProducedBy.Text = LayoutToolAutomatedValues.getProducedByText();
+        }
+
+        private void btnUpdateDonorCredits_Click(object sender, EventArgs e)
+        {
+            tbxDonorCredits.Text = LayoutToolAutomatedValues.getConfigDonorText();
+        }
+
 
 
     }

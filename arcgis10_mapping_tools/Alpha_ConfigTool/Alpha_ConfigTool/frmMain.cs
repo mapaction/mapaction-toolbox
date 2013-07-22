@@ -189,8 +189,9 @@ namespace Alpha_ConfigTool
             dict.Add("Country", cboCountry.Text);
             dict.Add("TimeZone", cboTimeZone.Text);
             dict.Add("OperationId", tbxOperationId.Text);
-            dict.Add("DeploymentPrimaryEmail", tbxPrimaryEmail.Text);
             dict.Add("DefaultSourceOrganisation", tbxSourceOrganisation.Text);
+            dict.Add("DefaultSourceOrganisationUrl", tbxOrganisationUrl.Text);
+            dict.Add("DeploymentPrimaryEmail", tbxPrimaryEmail.Text);
             dict.Add("DefaultDisclaimerText", tbxDislaimerText.Text);
             dict.Add("DefaultDonorsText", tbxDonorText.Text);
             dict.Add("DefaultJpegResDPI", numJpegDpi.Value.ToString());
@@ -297,6 +298,7 @@ namespace Alpha_ConfigTool
             tbxOperationId.Text = dict["OperationId"];
             tbxPrimaryEmail.Text = dict["DeploymentPrimaryEmail"];
             tbxSourceOrganisation.Text = dict["DefaultSourceOrganisation"];
+            tbxOrganisationUrl.Text = dict["DefaultSourceOrganisationUrl"];
             tbxDislaimerText.Text = dict["DefaultDisclaimerText"];
             tbxDonorText.Text = dict["DefaultDonorsText"];
             numJpegDpi.Value = decimal.Parse(dict["DefaultJpegResDPI"]);
@@ -330,8 +332,9 @@ namespace Alpha_ConfigTool
                 cboCountry.Enabled = true;
                 cboTimeZone.Enabled = true;
                 tbxOperationId.Enabled = true;
-                tbxPrimaryEmail.Enabled = true;
                 tbxSourceOrganisation.Enabled = true;
+                tbxOrganisationUrl.Enabled = true;
+                tbxPrimaryEmail.Enabled = true;
                 tbxDislaimerText.Enabled = true;
                 tbxDonorText.Enabled = true;
                 numJpegDpi.Enabled = true;
@@ -359,8 +362,9 @@ namespace Alpha_ConfigTool
                 cboCountry.Enabled = false;
                 cboTimeZone.Enabled = false;
                 tbxOperationId.Enabled = false;
-                tbxPrimaryEmail.Enabled = false;
                 tbxSourceOrganisation.Enabled = false;
+                tbxOrganisationUrl.Enabled = false;
+                tbxPrimaryEmail.Enabled = false;
                 tbxDislaimerText.Enabled = false;
                 tbxDonorText.Enabled = false;
                 numJpegDpi.Enabled = false;
