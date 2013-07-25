@@ -35,7 +35,7 @@ namespace Alpha_LayoutTool
 
         }
 
-        //Validate individual form elements
+        //Validate individual form elements for tab 1
         public static void validateMapTitle(Control control, ErrorProvider epr)
         {
             epr.SetIconPadding(control, 3);
@@ -165,6 +165,111 @@ namespace Alpha_LayoutTool
             eprWarning.SetIconPadding(control, 33);
             eprError.SetIconPadding(control, 33);
             string automatedValue =  LayoutToolAutomatedValues.getGlideNo();
+
+            if (validateEmptyField(control, eprWarning))
+            {
+                if (control.Text.Trim() != automatedValue && control.Text != string.Empty)
+                {
+                    eprError.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
+                    eprError.SetError(control, "Text differs from automated value");
+                }
+                else
+                {
+                    eprError.SetError(control, "");
+                }
+            }
+            else
+            {
+                eprError.SetError(control, "");
+                validateEmptyField(control, eprWarning);
+            }
+
+        }
+
+        //Validate individual form elements for tab 2
+        public static void validateDisclaimer(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
+        {
+            eprWarning.SetIconPadding(control, 33);
+            eprError.SetIconPadding(control, 33);
+            string automatedValue = LayoutToolAutomatedValues.getConfigDisclaimer();
+
+            if (validateEmptyField(control, eprWarning))
+            {
+                if (control.Text.Trim() != automatedValue && control.Text != string.Empty)
+                {
+                    eprError.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
+                    eprError.SetError(control, "Text differs from automated value");
+                }
+                else
+                {
+                    eprError.SetError(control, "");
+                }
+            }
+            else
+            {
+                eprError.SetError(control, "");
+                validateEmptyField(control, eprWarning);
+            }
+
+        }
+
+        public static void validateDonorCredit(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
+        {
+            eprWarning.SetIconPadding(control, 33);
+            eprError.SetIconPadding(control, 33);
+            string automatedValue = LayoutToolAutomatedValues.getConfigDonorText();
+
+            if (validateEmptyField(control, eprWarning))
+            {
+                if (control.Text.Trim() != automatedValue && control.Text != string.Empty)
+                {
+                    eprError.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
+                    eprError.SetError(control, "Text differs from automated value");
+                }
+                else
+                {
+                    eprError.SetError(control, "");
+                }
+            }
+            else
+            {
+                eprError.SetError(control, "");
+                validateEmptyField(control, eprWarning);
+            }
+
+        }
+
+        public static void validateMapProducer(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
+        {
+            eprWarning.SetIconPadding(control, 33);
+            eprError.SetIconPadding(control, 33);
+            string automatedValue = LayoutToolAutomatedValues.getProducedByText();
+
+            if (validateEmptyField(control, eprWarning))
+            {
+                if (control.Text.Trim() != automatedValue && control.Text != string.Empty)
+                {
+                    eprError.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
+                    eprError.SetError(control, "Text differs from automated value");
+                }
+                else
+                {
+                    eprError.SetError(control, "");
+                }
+            }
+            else
+            {
+                eprError.SetError(control, "");
+                validateEmptyField(control, eprWarning);
+            }
+
+        }
+
+        public static void validateTimezone(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
+        {
+            eprWarning.SetIconPadding(control, 33);
+            eprError.SetIconPadding(control, 33);
+            string automatedValue = LayoutToolAutomatedValues.getConfigTimezone();
 
             if (validateEmptyField(control, eprWarning))
             {

@@ -85,12 +85,20 @@
             this.btnUpdateDisclaimer = new System.Windows.Forms.Button();
             this.btnUpdateProducedBy = new System.Windows.Forms.Button();
             this.btnUpdateDonorCredits = new System.Windows.Forms.Button();
-            this.tbxProducedBy = new System.Windows.Forms.TextBox();
+            this.tbxMapProducer = new System.Windows.Forms.TextBox();
             this.lblOrganisation = new System.Windows.Forms.Label();
-            this.tbxDonorCredits = new System.Windows.Forms.TextBox();
+            this.tbxDonorCredit = new System.Windows.Forms.TextBox();
             this.lblDonorCredits = new System.Windows.Forms.Label();
             this.tbxDisclaimer = new System.Windows.Forms.TextBox();
             this.lblDisclaimer = new System.Windows.Forms.Label();
+            this.eprDisclaimerWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprDisclaimerError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprDonorWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprDonorError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprProducedByWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprTimezoneWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprProducedByError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprTimezoneError = new System.Windows.Forms.ErrorProvider(this.components);
             this.gbxAutomated.SuspendLayout();
             this.gbxManual.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -111,6 +119,14 @@
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eprDisclaimerWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprDisclaimerError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprDonorWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprDonorError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprProducedByWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprTimezoneWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprProducedByError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprTimezoneError)).BeginInit();
             this.SuspendLayout();
             // 
             // gbxAutomated
@@ -411,6 +427,7 @@
             this.tspBtnClearForm.Name = "tspBtnClearForm";
             this.tspBtnClearForm.Size = new System.Drawing.Size(23, 22);
             this.tspBtnClearForm.Text = "Clear form";
+            this.tspBtnClearForm.ToolTipText = "Clear form";
             this.tspBtnClearForm.Click += new System.EventHandler(this.tspBtnClearForm_Click);
             // 
             // eprMapNumberError
@@ -529,9 +546,9 @@
             this.groupBox1.Controls.Add(this.btnUpdateDisclaimer);
             this.groupBox1.Controls.Add(this.btnUpdateProducedBy);
             this.groupBox1.Controls.Add(this.btnUpdateDonorCredits);
-            this.groupBox1.Controls.Add(this.tbxProducedBy);
+            this.groupBox1.Controls.Add(this.tbxMapProducer);
             this.groupBox1.Controls.Add(this.lblOrganisation);
-            this.groupBox1.Controls.Add(this.tbxDonorCredits);
+            this.groupBox1.Controls.Add(this.tbxDonorCredit);
             this.groupBox1.Controls.Add(this.lblDonorCredits);
             this.groupBox1.Controls.Add(this.tbxDisclaimer);
             this.groupBox1.Controls.Add(this.lblDisclaimer);
@@ -540,7 +557,6 @@
             this.groupBox1.Size = new System.Drawing.Size(352, 277);
             this.groupBox1.TabIndex = 41;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // btnUpdateTimezone
             // 
@@ -558,6 +574,7 @@
             this.tbxTimezone.Name = "tbxTimezone";
             this.tbxTimezone.Size = new System.Drawing.Size(207, 20);
             this.tbxTimezone.TabIndex = 56;
+            this.tbxTimezone.TextChanged += new System.EventHandler(this.tbxTimezone_TextChanged);
             // 
             // label8
             // 
@@ -591,7 +608,7 @@
             // btnUpdateDisclaimer
             // 
             this.btnUpdateDisclaimer.Image = global::Alpha_LayoutTool.Properties.Resources.refresh17x17px;
-            this.btnUpdateDisclaimer.Location = new System.Drawing.Point(304, 70);
+            this.btnUpdateDisclaimer.Location = new System.Drawing.Point(304, 67);
             this.btnUpdateDisclaimer.Name = "btnUpdateDisclaimer";
             this.btnUpdateDisclaimer.Size = new System.Drawing.Size(23, 23);
             this.btnUpdateDisclaimer.TabIndex = 52;
@@ -611,39 +628,41 @@
             // btnUpdateDonorCredits
             // 
             this.btnUpdateDonorCredits.Image = global::Alpha_LayoutTool.Properties.Resources.refresh17x17px;
-            this.btnUpdateDonorCredits.Location = new System.Drawing.Point(304, 135);
+            this.btnUpdateDonorCredits.Location = new System.Drawing.Point(304, 131);
             this.btnUpdateDonorCredits.Name = "btnUpdateDonorCredits";
             this.btnUpdateDonorCredits.Size = new System.Drawing.Size(23, 23);
             this.btnUpdateDonorCredits.TabIndex = 50;
             this.btnUpdateDonorCredits.UseVisualStyleBackColor = true;
             this.btnUpdateDonorCredits.Click += new System.EventHandler(this.btnUpdateDonorCredits_Click);
             // 
-            // tbxProducedBy
+            // tbxMapProducer
             // 
-            this.tbxProducedBy.Location = new System.Drawing.Point(91, 177);
-            this.tbxProducedBy.Multiline = true;
-            this.tbxProducedBy.Name = "tbxProducedBy";
-            this.tbxProducedBy.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbxProducedBy.Size = new System.Drawing.Size(207, 58);
-            this.tbxProducedBy.TabIndex = 9;
+            this.tbxMapProducer.Location = new System.Drawing.Point(91, 177);
+            this.tbxMapProducer.Multiline = true;
+            this.tbxMapProducer.Name = "tbxMapProducer";
+            this.tbxMapProducer.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbxMapProducer.Size = new System.Drawing.Size(207, 58);
+            this.tbxMapProducer.TabIndex = 9;
+            this.tbxMapProducer.TextChanged += new System.EventHandler(this.tbxMapProducer_TextChanged);
             // 
             // lblOrganisation
             // 
             this.lblOrganisation.AutoSize = true;
             this.lblOrganisation.Location = new System.Drawing.Point(6, 180);
             this.lblOrganisation.Name = "lblOrganisation";
-            this.lblOrganisation.Size = new System.Drawing.Size(67, 13);
+            this.lblOrganisation.Size = new System.Drawing.Size(73, 13);
             this.lblOrganisation.TabIndex = 8;
-            this.lblOrganisation.Text = "Produced by";
+            this.lblOrganisation.Text = "Map producer";
             // 
-            // tbxDonorCredits
+            // tbxDonorCredit
             // 
-            this.tbxDonorCredits.Location = new System.Drawing.Point(91, 113);
-            this.tbxDonorCredits.Multiline = true;
-            this.tbxDonorCredits.Name = "tbxDonorCredits";
-            this.tbxDonorCredits.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbxDonorCredits.Size = new System.Drawing.Size(207, 58);
-            this.tbxDonorCredits.TabIndex = 3;
+            this.tbxDonorCredit.Location = new System.Drawing.Point(91, 113);
+            this.tbxDonorCredit.Multiline = true;
+            this.tbxDonorCredit.Name = "tbxDonorCredit";
+            this.tbxDonorCredit.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbxDonorCredit.Size = new System.Drawing.Size(207, 58);
+            this.tbxDonorCredit.TabIndex = 3;
+            this.tbxDonorCredit.TextChanged += new System.EventHandler(this.tbxDonorCredit_TextChanged);
             // 
             // lblDonorCredits
             // 
@@ -662,6 +681,7 @@
             this.tbxDisclaimer.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbxDisclaimer.Size = new System.Drawing.Size(207, 58);
             this.tbxDisclaimer.TabIndex = 1;
+            this.tbxDisclaimer.TextChanged += new System.EventHandler(this.tbxDisclaimer_TextChanged);
             // 
             // lblDisclaimer
             // 
@@ -671,6 +691,50 @@
             this.lblDisclaimer.Size = new System.Drawing.Size(55, 13);
             this.lblDisclaimer.TabIndex = 0;
             this.lblDisclaimer.Text = "Disclaimer";
+            // 
+            // eprDisclaimerWarning
+            // 
+            this.eprDisclaimerWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprDisclaimerWarning.ContainerControl = this;
+            this.eprDisclaimerWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprDisclaimerWarning.Icon")));
+            // 
+            // eprDisclaimerError
+            // 
+            this.eprDisclaimerError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprDisclaimerError.ContainerControl = this;
+            // 
+            // eprDonorWarning
+            // 
+            this.eprDonorWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprDonorWarning.ContainerControl = this;
+            this.eprDonorWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprDonorWarning.Icon")));
+            // 
+            // eprDonorError
+            // 
+            this.eprDonorError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprDonorError.ContainerControl = this;
+            // 
+            // eprProducedByWarning
+            // 
+            this.eprProducedByWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprProducedByWarning.ContainerControl = this;
+            this.eprProducedByWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprProducedByWarning.Icon")));
+            // 
+            // eprTimezoneWarning
+            // 
+            this.eprTimezoneWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprTimezoneWarning.ContainerControl = this;
+            this.eprTimezoneWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprTimezoneWarning.Icon")));
+            // 
+            // eprProducedByError
+            // 
+            this.eprProducedByError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprProducedByError.ContainerControl = this;
+            // 
+            // eprTimezoneError
+            // 
+            this.eprTimezoneError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprTimezoneError.ContainerControl = this;
             // 
             // frmMain
             // 
@@ -710,6 +774,14 @@
             this.tabPage2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eprDisclaimerWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprDisclaimerError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprDonorWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprDonorError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprProducedByWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprTimezoneWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprProducedByError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprTimezoneError)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -764,7 +836,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox tbxDonorCredits;
+        private System.Windows.Forms.TextBox tbxDonorCredit;
         private System.Windows.Forms.Label lblDonorCredits;
         private System.Windows.Forms.TextBox tbxDisclaimer;
         private System.Windows.Forms.Label lblDisclaimer;
@@ -772,11 +844,19 @@
         private System.Windows.Forms.Button btnUpdateDisclaimer;
         private System.Windows.Forms.Button btnUpdateProducedBy;
         private System.Windows.Forms.Button btnUpdateDonorCredits;
-        private System.Windows.Forms.TextBox tbxProducedBy;
+        private System.Windows.Forms.TextBox tbxMapProducer;
         private System.Windows.Forms.TextBox tbxTimezone;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnUpdateAllTab2;
         private System.Windows.Forms.Button btnUpdateTimezone;
+        private System.Windows.Forms.ErrorProvider eprDisclaimerWarning;
+        private System.Windows.Forms.ErrorProvider eprDisclaimerError;
+        private System.Windows.Forms.ErrorProvider eprDonorWarning;
+        private System.Windows.Forms.ErrorProvider eprDonorError;
+        private System.Windows.Forms.ErrorProvider eprProducedByWarning;
+        private System.Windows.Forms.ErrorProvider eprTimezoneWarning;
+        private System.Windows.Forms.ErrorProvider eprProducedByError;
+        private System.Windows.Forms.ErrorProvider eprTimezoneError;
     }
 }
