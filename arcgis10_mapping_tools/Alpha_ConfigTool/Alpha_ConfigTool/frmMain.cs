@@ -169,7 +169,11 @@ namespace Alpha_ConfigTool
                 //If the path is set but doesn't exist, return a message to the user in the directory area
                 tbxPathToCrashMove.Text = "other error";
             }
-             
+
+            //Perform validation checks
+            FormValidation.validateOperationName(tbxOperationName, eprOperationNameWarning);
+            FormValidation.validateGlideNumber(tbxGlideNo, eprGlideNoWarning, eprGlideNoError);
+            FormValidation.validatePrimaryEmail(tbxPrimaryEmail, eprPrimaryEmailWarning, eprPrimaryEmailError);
         }
 
         public void setPathToConfig(string path)
@@ -402,6 +406,21 @@ namespace Alpha_ConfigTool
             {
                 tbxExportToolPath.Text = dlg.SelectedPath;
             }
+        }
+
+        private void tbxOperationName_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateOperationName(tbxOperationName, eprOperationNameWarning);
+        }
+
+        private void tbxGlideNo_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateGlideNumber(tbxGlideNo, eprGlideNoWarning, eprGlideNoError);
+        }
+
+        private void tbxPrimaryEmail_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validatePrimaryEmail(tbxPrimaryEmail, eprPrimaryEmailWarning, eprPrimaryEmailError);
         }
 
 
