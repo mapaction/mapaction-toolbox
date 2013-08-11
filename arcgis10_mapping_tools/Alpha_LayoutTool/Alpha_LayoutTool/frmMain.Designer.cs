@@ -130,7 +130,7 @@
             this.btnUpdateAll.Location = new System.Drawing.Point(120, 24);
             this.btnUpdateAll.Name = "btnUpdateAll";
             this.btnUpdateAll.Size = new System.Drawing.Size(34, 23);
-            this.btnUpdateAll.TabIndex = 34;
+            this.btnUpdateAll.TabIndex = 5;
             this.btnUpdateAll.UseVisualStyleBackColor = true;
             this.btnUpdateAll.Click += new System.EventHandler(this.btnUpdateAll_Click);
             // 
@@ -140,7 +140,7 @@
             this.btnMapDocument.Location = new System.Drawing.Point(304, 53);
             this.btnMapDocument.Name = "btnMapDocument";
             this.btnMapDocument.Size = new System.Drawing.Size(23, 23);
-            this.btnMapDocument.TabIndex = 49;
+            this.btnMapDocument.TabIndex = 7;
             this.btnMapDocument.UseVisualStyleBackColor = true;
             this.btnMapDocument.Click += new System.EventHandler(this.btnMapDocument_Click);
             // 
@@ -150,7 +150,7 @@
             this.btnUpdateScale.Location = new System.Drawing.Point(304, 113);
             this.btnUpdateScale.Name = "btnUpdateScale";
             this.btnUpdateScale.Size = new System.Drawing.Size(23, 23);
-            this.btnUpdateScale.TabIndex = 48;
+            this.btnUpdateScale.TabIndex = 11;
             this.btnUpdateScale.UseVisualStyleBackColor = true;
             this.btnUpdateScale.Click += new System.EventHandler(this.btnUpdateScale_Click);
             // 
@@ -160,7 +160,7 @@
             this.btnGlideNo.Location = new System.Drawing.Point(304, 143);
             this.btnGlideNo.Name = "btnGlideNo";
             this.btnGlideNo.Size = new System.Drawing.Size(23, 23);
-            this.btnGlideNo.TabIndex = 47;
+            this.btnGlideNo.TabIndex = 13;
             this.btnGlideNo.UseVisualStyleBackColor = true;
             this.btnGlideNo.Click += new System.EventHandler(this.btnGlideNo_Click);
             // 
@@ -170,7 +170,7 @@
             this.btnSpatialReference.Location = new System.Drawing.Point(304, 82);
             this.btnSpatialReference.Name = "btnSpatialReference";
             this.btnSpatialReference.Size = new System.Drawing.Size(23, 23);
-            this.btnSpatialReference.TabIndex = 45;
+            this.btnSpatialReference.TabIndex = 9;
             this.btnSpatialReference.UseVisualStyleBackColor = true;
             this.btnSpatialReference.Click += new System.EventHandler(this.btnSpatialReference_Click);
             // 
@@ -179,7 +179,7 @@
             this.tbxGlideNumber.Location = new System.Drawing.Point(103, 145);
             this.tbxGlideNumber.Name = "tbxGlideNumber";
             this.tbxGlideNumber.Size = new System.Drawing.Size(195, 20);
-            this.tbxGlideNumber.TabIndex = 43;
+            this.tbxGlideNumber.TabIndex = 12;
             this.tbxGlideNumber.TextChanged += new System.EventHandler(this.tbxGlideNumber_TextChanged);
             // 
             // label9
@@ -196,7 +196,7 @@
             this.tbxSpatialReference.Location = new System.Drawing.Point(103, 85);
             this.tbxSpatialReference.Name = "tbxSpatialReference";
             this.tbxSpatialReference.Size = new System.Drawing.Size(195, 20);
-            this.tbxSpatialReference.TabIndex = 39;
+            this.tbxSpatialReference.TabIndex = 8;
             this.tbxSpatialReference.TextChanged += new System.EventHandler(this.tbxSpatialReference_TextChanged);
             // 
             // label7
@@ -213,7 +213,7 @@
             this.tbxScale.Location = new System.Drawing.Point(103, 115);
             this.tbxScale.Name = "tbxScale";
             this.tbxScale.Size = new System.Drawing.Size(195, 20);
-            this.tbxScale.TabIndex = 36;
+            this.tbxScale.TabIndex = 10;
             this.tbxScale.TextChanged += new System.EventHandler(this.tbxScale_TextChanged);
             // 
             // label4
@@ -230,7 +230,7 @@
             this.tbxMapDocument.Location = new System.Drawing.Point(103, 55);
             this.tbxMapDocument.Name = "tbxMapDocument";
             this.tbxMapDocument.Size = new System.Drawing.Size(195, 20);
-            this.tbxMapDocument.TabIndex = 33;
+            this.tbxMapDocument.TabIndex = 6;
             this.tbxMapDocument.TextChanged += new System.EventHandler(this.tbxMapDocument_TextChanged);
             // 
             // label2
@@ -247,7 +247,7 @@
             this.btnCancel.Location = new System.Drawing.Point(195, 461);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 42;
+            this.btnCancel.TabIndex = 14;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -257,7 +257,7 @@
             this.btnSave.Location = new System.Drawing.Point(276, 461);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 41;
+            this.btnSave.TabIndex = 15;
             this.btnSave.Text = "Update";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -286,7 +286,7 @@
             this.tbxDataSources.Name = "tbxDataSources";
             this.tbxDataSources.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbxDataSources.Size = new System.Drawing.Size(224, 58);
-            this.tbxDataSources.TabIndex = 9;
+            this.tbxDataSources.TabIndex = 3;
             this.tbxDataSources.TextChanged += new System.EventHandler(this.tbxDataSources_TextChanged);
             // 
             // label5
@@ -303,7 +303,7 @@
             this.tbxMapNumber.Location = new System.Drawing.Point(103, 213);
             this.tbxMapNumber.Name = "tbxMapNumber";
             this.tbxMapNumber.Size = new System.Drawing.Size(224, 20);
-            this.tbxMapNumber.TabIndex = 7;
+            this.tbxMapNumber.TabIndex = 4;
             this.tbxMapNumber.TextChanged += new System.EventHandler(this.tbxMapNumber_TextChanged);
             // 
             // label3
@@ -322,7 +322,7 @@
             this.tbxSummary.Name = "tbxSummary";
             this.tbxSummary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbxSummary.Size = new System.Drawing.Size(224, 58);
-            this.tbxSummary.TabIndex = 3;
+            this.tbxSummary.TabIndex = 2;
             this.tbxSummary.TextChanged += new System.EventHandler(this.tbxSummary_TextChanged);
             // 
             // lblSummary
