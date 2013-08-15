@@ -1,0 +1,15 @@
+D:\MapAction\bronze\custom_tools\testing\WindowsApplication1\WindowsApplication1\bin\Debug\data-naming-conventions-beta_v0.8.mdb
+D:\MapAction\bronze\custom_tools\testing\WindowsApplication1\WindowsApplication1\bin\Debug\WindowsApplication1.exe.config
+D:\MapAction\bronze\custom_tools\testing\WindowsApplication1\WindowsApplication1\bin\Debug\WindowsApplication1.exe
+D:\MapAction\bronze\custom_tools\testing\WindowsApplication1\WindowsApplication1\bin\Debug\WindowsApplication1.pdb
+D:\MapAction\bronze\custom_tools\testing\WindowsApplication1\WindowsApplication1\bin\Debug\WindowsApplication1.xml
+D:\MapAction\bronze\custom_tools\testing\WindowsApplication1\WindowsApplication1\obj\Debug\ResolveAssemblyReference.cache
+D:\MapAction\bronze\custom_tools\testing\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.Form1.resources
+D:\MapAction\bronze\custom_tools\testing\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.Resources.resources
+D:\MapAction\bronze\custom_tools\testing\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.vbproj.GenerateResource.Cache
+D:\MapAction\bronze\custom_tools\testing\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.exe
+D:\MapAction\bronze\custom_tools\testing\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.xml
+D:\MapAction\bronze\custom_tools\testing\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.pdb
+D:\MapAction\bronze\custom_tools\testing\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.Component1.resources
+D:\MapAction\bronze\custom_tools\testing\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.Form2.resources
+D:\MapAction\bronze\custom_tools\testing\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.UserControl2.resources

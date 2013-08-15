@@ -1,0 +1,97 @@
+,
+ad,Administrative boundary (various levels)
+ad0,Administrative boundary (level 0 natonal)
+ad1,Administrative boundary (level 1)
+ad2,Administrative boundary (level 2)
+ad3,Administrative boundary (level 3)
+ad4,Administrative boundary (level 4)
+ad5,Administrative boundary (level 5)
+ad6,Administrative boundary (level 6)
+aer,Aerial photography
+aff,Affected area
+agr,Agriculture
+air,Airport / Airstrip
+aoi,Area of Interest
+ass,Assessment route / location
+bdg,Building
+brg,Bridge
+bst,Bus station
+can,Canal
+cas,Casualty number location
+cem,Cemetery
+cli,Clipping polygon / mask
+cnt,Continent boundary
+con,Contour
+cst,Coastline
+cul,Cultural region
+dam,Dam
+dem,Digital Elevation Model
+dis,Warehouses / Distribution Centres
+dmg,Damage
+dtm,Digital Terrain Model
+ebu,Earthquake buffer
+edu,School
+env,Environmental
+epd,Epidemic
+epi,Earthquake / Tsunami Epicentre
+eth,Ethnic group
+flo,Flood extents
+fue,Fuel depot
+geo,Geology
+gph,Geophysical
+gps,GPS survey
+haz,Hazards
+hlz,Heliport
+hos,Hospitals / Medical Centres
+hsh,Hill Shade
+hub,UN Centres
+hwy,Highway
+idp,IDP numbers
+iko,Ikonos
+irr,Irrigation
+lak,Lakes
+lan,Language distribution
+lav,Lava flow
+lnd,Landcover
+log,Logistics
+lsa,Landsat
+mbk,MapBook Index Grids
+med,Medical facilities
+mil,Military installations
+min,Mine fields
+mor,Morgue and location for storage of dead
+mov,Movements of Population
+mts,Mine threat status (roads)
+ngo,NGO offices
+pco,Pcode list
+pho,Photo location
+pop,Population distribution
+port,Seaport
+pst,Power Station
+pwl,Power Line
+qbd,QuickBird
+rds,Road
+ref,Refugee location
+res,Reservoir
+riv,River
+rrd,Railway / railroad
+rst,Railway station
+sat,Generic satellite imagery
+sbu,Security buffer
+sca,Map scan
+sea,Sea / Ocean
+sec,Security status
+shh,Shipping Hazards
+shl,Shelter
+sit,Sites of interest
+sli,Landslide
+soil,Soil
+spo,Spot
+spt,Spot heights
+stl,Settlement (city town populated place)
+tel,Mobile Telephone Coverage
+vol,Volcano location
+wat,Watershed
+wea,Weather
+wes,Water and sanitation
+www,Who / What / Where location
