@@ -15,7 +15,6 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
-using Alpha_ConfigTool;
 
 namespace MapAction
 {
@@ -169,7 +168,7 @@ namespace MapAction
             if (path == null)
             {
                 //Get the currently set filepath from the ConfigTool settings file
-                filepath = @Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path;
+                filepath = @Properties.Settings.Default.crash_move_folder_path;
             }
             else
             {
@@ -200,7 +199,7 @@ namespace MapAction
         //Returns a dictionary of the operation_config.xml elements and values
         public static Boolean detectOperationConfig()
         {
-            string path = @Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path;
+            string path = @Properties.Settings.Default.crash_move_folder_path;
             string filepath = path + @"\operation_config.xml";
             //If the file exists in the filepath, add each element and value of the xml file 
             //to the dictionary as key value pairs 

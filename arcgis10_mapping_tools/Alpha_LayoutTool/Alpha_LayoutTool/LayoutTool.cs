@@ -19,7 +19,7 @@ namespace Alpha_LayoutTool
             //Check to see if element name duplicates exist
             //Check to see if the operational config file exists
              //Check to see if the config file exists, if not abort and send the user a message
-            string path = Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path;
+            string path = MapAction.Properties.Settings.Default.crash_move_folder_path;
             string filePath = path + @"\operation_config.xml";
             IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
             if (!MapAction.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))

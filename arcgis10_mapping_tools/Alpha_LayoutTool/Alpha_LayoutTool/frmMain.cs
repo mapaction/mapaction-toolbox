@@ -16,7 +16,7 @@ using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using System.Diagnostics;
-using Alpha_ConfigTool;
+using MapAction;
 
 
 namespace Alpha_LayoutTool
@@ -69,7 +69,7 @@ namespace Alpha_LayoutTool
         {
             
             //Check to see if the config file exists, if not abort and send the user a message
-            //string path = Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path;
+            //string path = MapAction.Properties.Settings.Default.crash_move_folder_path;
             //string filePath = path + @"\operation_config.xml";
             
             //Perform validation checks
@@ -182,7 +182,7 @@ namespace Alpha_LayoutTool
         public static string getGlideNo()
         {
             string GlideNo = string.Empty;
-            string path = Alpha_ConfigTool.Properties.Settings.Default.crash_move_folder_path + @"\operation_config.xml";
+            string path = MapAction.Properties.Settings.Default.crash_move_folder_path + @"\operation_config.xml";
 
             if (MapAction.Utilities.detectOperationConfig())
             {
