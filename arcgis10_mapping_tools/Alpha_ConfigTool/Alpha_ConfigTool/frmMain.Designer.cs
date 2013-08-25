@@ -79,6 +79,10 @@
             this.eprGlideNoWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprPrimaryEmailWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprPrimaryEmailError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprLanguageWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprCountryWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprTimezoneWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprTimezoneError = new System.Windows.Forms.ErrorProvider(this.components);
             this.gbxCrashMoveFolder.SuspendLayout();
             this.gbxConfigXmlValues.SuspendLayout();
             this.tabConfigXml.SuspendLayout();
@@ -94,6 +98,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.eprGlideNoWarning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprPrimaryEmailWarning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprPrimaryEmailError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprLanguageWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprCountryWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprTimezoneWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprTimezoneError)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSave
@@ -911,6 +919,29 @@
             this.eprPrimaryEmailError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.eprPrimaryEmailError.ContainerControl = this;
             // 
+            // eprLanguageWarning
+            // 
+            this.eprLanguageWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprLanguageWarning.ContainerControl = this;
+            this.eprLanguageWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprLanguageWarning.Icon")));
+            // 
+            // eprCountryWarning
+            // 
+            this.eprCountryWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprCountryWarning.ContainerControl = this;
+            this.eprCountryWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprCountryWarning.Icon")));
+            // 
+            // eprTimezoneWarning
+            // 
+            this.eprTimezoneWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprTimezoneWarning.ContainerControl = this;
+            this.eprTimezoneWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprTimezoneWarning.Icon")));
+            // 
+            // eprTimezoneError
+            // 
+            this.eprTimezoneError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprTimezoneError.ContainerControl = this;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -946,6 +977,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.eprGlideNoWarning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprPrimaryEmailWarning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprPrimaryEmailError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprLanguageWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprCountryWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprTimezoneWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprTimezoneError)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1001,5 +1036,9 @@
         private System.Windows.Forms.ErrorProvider eprGlideNoWarning;
         private System.Windows.Forms.ErrorProvider eprPrimaryEmailWarning;
         private System.Windows.Forms.ErrorProvider eprPrimaryEmailError;
+        private System.Windows.Forms.ErrorProvider eprLanguageWarning;
+        private System.Windows.Forms.ErrorProvider eprCountryWarning;
+        private System.Windows.Forms.ErrorProvider eprTimezoneWarning;
+        private System.Windows.Forms.ErrorProvider eprTimezoneError;
     }
 }
