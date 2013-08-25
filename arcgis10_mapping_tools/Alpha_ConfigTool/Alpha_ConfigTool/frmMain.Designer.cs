@@ -83,6 +83,12 @@
             this.eprCountryWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprTimezoneWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprTimezoneError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprOperationIdWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprOrganisationWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprUrlWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprDisclaimerWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprDonorTextWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprExportPath = new System.Windows.Forms.ErrorProvider(this.components);
             this.gbxCrashMoveFolder.SuspendLayout();
             this.gbxConfigXmlValues.SuspendLayout();
             this.tabConfigXml.SuspendLayout();
@@ -102,6 +108,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.eprCountryWarning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprTimezoneWarning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprTimezoneError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprOperationIdWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprOrganisationWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprUrlWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprDisclaimerWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprDonorTextWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprExportPath)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSave
@@ -267,6 +279,7 @@
             this.cboTimeZone.Name = "cboTimeZone";
             this.cboTimeZone.Size = new System.Drawing.Size(288, 21);
             this.cboTimeZone.TabIndex = 4;
+            this.cboTimeZone.TextChanged += new System.EventHandler(this.cboTimeZone_TextChanged);
             // 
             // cboCountry
             // 
@@ -526,6 +539,7 @@
             this.cboCountry.Name = "cboCountry";
             this.cboCountry.Size = new System.Drawing.Size(288, 21);
             this.cboCountry.TabIndex = 3;
+            this.cboCountry.TextChanged += new System.EventHandler(this.cboCountry_TextChanged);
             // 
             // cboLanguage
             // 
@@ -542,6 +556,7 @@
             this.cboLanguage.Name = "cboLanguage";
             this.cboLanguage.Size = new System.Drawing.Size(288, 21);
             this.cboLanguage.TabIndex = 2;
+            this.cboLanguage.TextChanged += new System.EventHandler(this.cboLanguage_TextChanged);
             // 
             // label3
             // 
@@ -631,6 +646,7 @@
             this.tbxOrganisationUrl.Name = "tbxOrganisationUrl";
             this.tbxOrganisationUrl.Size = new System.Drawing.Size(288, 20);
             this.tbxOrganisationUrl.TabIndex = 54;
+            this.tbxOrganisationUrl.TextChanged += new System.EventHandler(this.tbxOrganisationUrl_TextChanged);
             // 
             // label12
             // 
@@ -666,6 +682,7 @@
             this.tbxSourceOrganisation.Name = "tbxSourceOrganisation";
             this.tbxSourceOrganisation.Size = new System.Drawing.Size(288, 20);
             this.tbxSourceOrganisation.TabIndex = 2;
+            this.tbxSourceOrganisation.TextChanged += new System.EventHandler(this.tbxSourceOrganisation_TextChanged);
             // 
             // label4
             // 
@@ -683,6 +700,7 @@
             this.tbxOperationId.Name = "tbxOperationId";
             this.tbxOperationId.Size = new System.Drawing.Size(288, 20);
             this.tbxOperationId.TabIndex = 0;
+            this.tbxOperationId.TextChanged += new System.EventHandler(this.tbxOperationId_TextChanged);
             // 
             // label19
             // 
@@ -715,6 +733,7 @@
             this.tbxDonorText.Name = "tbxDonorText";
             this.tbxDonorText.Size = new System.Drawing.Size(288, 73);
             this.tbxDonorText.TabIndex = 1;
+            this.tbxDonorText.TextChanged += new System.EventHandler(this.tbxDonorText_TextChanged);
             // 
             // label8
             // 
@@ -733,6 +752,7 @@
             this.tbxDislaimerText.Name = "tbxDislaimerText";
             this.tbxDislaimerText.Size = new System.Drawing.Size(288, 73);
             this.tbxDislaimerText.TabIndex = 0;
+            this.tbxDislaimerText.TextChanged += new System.EventHandler(this.tbxDislaimerText_TextChanged);
             // 
             // label5
             // 
@@ -863,6 +883,7 @@
             this.tbxExportToolPath.Name = "tbxExportToolPath";
             this.tbxExportToolPath.Size = new System.Drawing.Size(253, 20);
             this.tbxExportToolPath.TabIndex = 3;
+            this.tbxExportToolPath.TextChanged += new System.EventHandler(this.tbxExportToolPath_TextChanged);
             // 
             // label9
             // 
@@ -942,6 +963,42 @@
             this.eprTimezoneError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.eprTimezoneError.ContainerControl = this;
             // 
+            // eprOperationIdWarning
+            // 
+            this.eprOperationIdWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprOperationIdWarning.ContainerControl = this;
+            this.eprOperationIdWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprOperationIdWarning.Icon")));
+            // 
+            // eprOrganisationWarning
+            // 
+            this.eprOrganisationWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprOrganisationWarning.ContainerControl = this;
+            this.eprOrganisationWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprOrganisationWarning.Icon")));
+            // 
+            // eprUrlWarning
+            // 
+            this.eprUrlWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprUrlWarning.ContainerControl = this;
+            this.eprUrlWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprUrlWarning.Icon")));
+            // 
+            // eprDisclaimerWarning
+            // 
+            this.eprDisclaimerWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprDisclaimerWarning.ContainerControl = this;
+            this.eprDisclaimerWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprDisclaimerWarning.Icon")));
+            // 
+            // eprDonorTextWarning
+            // 
+            this.eprDonorTextWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprDonorTextWarning.ContainerControl = this;
+            this.eprDonorTextWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprDonorTextWarning.Icon")));
+            // 
+            // eprExportPath
+            // 
+            this.eprExportPath.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprExportPath.ContainerControl = this;
+            this.eprExportPath.Icon = ((System.Drawing.Icon)(resources.GetObject("eprExportPath.Icon")));
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -981,6 +1038,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.eprCountryWarning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprTimezoneWarning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprTimezoneError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprOperationIdWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprOrganisationWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprUrlWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprDisclaimerWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprDonorTextWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprExportPath)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1040,5 +1103,11 @@
         private System.Windows.Forms.ErrorProvider eprCountryWarning;
         private System.Windows.Forms.ErrorProvider eprTimezoneWarning;
         private System.Windows.Forms.ErrorProvider eprTimezoneError;
+        private System.Windows.Forms.ErrorProvider eprOperationIdWarning;
+        private System.Windows.Forms.ErrorProvider eprOrganisationWarning;
+        private System.Windows.Forms.ErrorProvider eprUrlWarning;
+        private System.Windows.Forms.ErrorProvider eprDisclaimerWarning;
+        private System.Windows.Forms.ErrorProvider eprDonorTextWarning;
+        private System.Windows.Forms.ErrorProvider eprExportPath;
     }
 }
