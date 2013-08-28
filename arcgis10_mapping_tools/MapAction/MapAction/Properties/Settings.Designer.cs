@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Alpha_ConfigTool.Properties {
+namespace MapAction.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -20,6 +20,18 @@ namespace Alpha_ConfigTool.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string crash_move_folder_path {
+            get {
+                return ((string)(this["crash_move_folder_path"]));
+            }
+            set {
+                this["crash_move_folder_path"] = value;
             }
         }
     }

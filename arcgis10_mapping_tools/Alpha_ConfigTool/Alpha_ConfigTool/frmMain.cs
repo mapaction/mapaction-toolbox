@@ -123,15 +123,15 @@ namespace Alpha_ConfigTool
             {
                 if (_configXmlEditState != false)
                 {
-                    Properties.Settings.Default.crash_move_folder_path = tbxPathToCrashMove.Text;
-                    Properties.Settings.Default.Save();
+                    MapAction.Properties.Settings.Default.crash_move_folder_path = tbxPathToCrashMove.Text;
+                    MapAction.Properties.Settings.Default.Save();
                     createConfigXml(_configXmlNewFile);
                 }
                 else if (_configXmlEditState != true)
                 {
                     //Save the path of the config file to the applicaton settings file
-                    Properties.Settings.Default.crash_move_folder_path = tbxPathToCrashMove.Text;
-                    Properties.Settings.Default.Save();
+                    MapAction.Properties.Settings.Default.crash_move_folder_path = tbxPathToCrashMove.Text;
+                    MapAction.Properties.Settings.Default.Save();
                     MessageBox.Show("Config file path successfully updated.", "Config file path",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -146,7 +146,7 @@ namespace Alpha_ConfigTool
             //dlgDefaultValuesOrExistingXml();
             
             //get the preset path from the configuration file
-            string path = Properties.Settings.Default.crash_move_folder_path;
+            string path = MapAction.Properties.Settings.Default.crash_move_folder_path;
             string filepath = path + @"\operation_config.xml";
             Debug.WriteLine("path: " + path);
             //Check if the config file has been set and if it exists
@@ -242,7 +242,7 @@ namespace Alpha_ConfigTool
                     MessageBox.Show(msgBoxTextSuccessCreateXML, msgBoxHeaderSuccessCreateXML,
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //set the settings file with the new directory
-                    //Properties.Settings.Default.crash_move_folder_path = @savedPath;
+                    //MapAction.Properties.Settings.Default.crash_move_folder_path = @savedPath;
                     createTrueFalse = true;
                 }
                 else if (File.Exists(@savedPath) && newXML == false)
@@ -251,7 +251,7 @@ namespace Alpha_ConfigTool
                     MessageBox.Show(msgBoxTextSuccessUpdateXML, msgBoxHeaderSuccessUpdateXML,
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //set the settings file with the new directory
-                    //Properties.Settings.Default.crash_move_folder_path = @savedPath;
+                    //MapAction.Properties.Settings.Default.crash_move_folder_path = @savedPath;
                     createTrueFalse = true;
                 }
                 else
@@ -268,7 +268,7 @@ namespace Alpha_ConfigTool
         public Boolean dlgDefaultValuesOrExistingXml()
         {
             //Get the currently set path
-            string crashMovePath = Properties.Settings.Default.crash_move_folder_path;
+            string crashMovePath = MapAction.Properties.Settings.Default.crash_move_folder_path;
             string xmlPath = crashMovePath + @"\opertional_config.xml";
             //Check if the path exists 
             if (File.Exists(@xmlPath))

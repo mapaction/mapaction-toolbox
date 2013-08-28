@@ -1,6 +1,9 @@
 D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\MapActionToolbars\bin\Debug\MapActionToolbars.dll
 D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\MapActionToolbars\bin\Debug\MapActionToolbars.pdb
-D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\MapActionToolbars\obj\Debug\MapActionToolbars.csprojResolveAssemblyReference.cache
 D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\MapActionToolbars\obj\Debug\MapActionToolbars.dll
 D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\MapActionToolbars\obj\Debug\MapActionToolbars.pdb
-D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\MapActionToolbars\bin\Debug\MapActionToolbars.esriAddIn
+Z:\code\nunit-trail\arcgis10_mapping_tools\MapActionToolbars\bin\Debug\MapActionToolbars.dll
+Z:\code\nunit-trail\arcgis10_mapping_tools\MapActionToolbars\bin\Debug\MapActionToolbars.pdb
+Z:\code\nunit-trail\arcgis10_mapping_tools\MapActionToolbars\obj\Debug\MapActionToolbars.csprojResolveAssemblyReference.cache
+Z:\code\nunit-trail\arcgis10_mapping_tools\MapActionToolbars\obj\Debug\MapActionToolbars.dll
+Z:\code\nunit-trail\arcgis10_mapping_tools\MapActionToolbars\obj\Debug\MapActionToolbars.pdb
