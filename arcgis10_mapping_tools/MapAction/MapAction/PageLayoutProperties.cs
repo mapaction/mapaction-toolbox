@@ -221,8 +221,26 @@ namespace MapAction
             string mapTitle = null;
             try
             {
-                mapTitle = pApp.Document.Title;
-                mapTitle = mapTitle.TrimEnd('d', 'x', 'm', '.');
+                
+           
+                mapTitle = pApp.Document.Title; 
+
+                if (mapTitle.Contains(".mxd") == true)
+                {
+                    //string input = "OneTwoThree";
+                    mapTitle = mapTitle.Substring(0, mapTitle.Length - 4);
+
+
+                }
+                else
+                {
+                    mapTitle = mapTitle;
+
+                }
+
+                
+
+                //mapTitle = mapTitle.Substring(0,mapTitle.Length - 4);
             }
             catch (Exception e)
             {

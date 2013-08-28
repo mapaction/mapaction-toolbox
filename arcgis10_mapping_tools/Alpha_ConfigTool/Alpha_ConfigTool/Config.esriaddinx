@@ -13,7 +13,7 @@
   <AddIn language="CLR" library="Alpha_ConfigTool.dll" namespace="Alpha_ConfigTool">
     <ArcMap>
       <Commands>
-        <Button id="MapAction_Alpha_ConfigTool_ConfigTool" class="ConfigTool" message="MapAction custom software group" caption="Configuration tool" tip="Create/edit Operational XML" category="MapAction Mapping Tools" image="Images\ConfigTool.png" />
+        <Button id="MapAction_Alpha_ConfigTool_ConfigTool" class="ConfigTool" message="Create or edit the operational details XML file which is used by the MapAction layout and export tools" caption="Configuration tool" category="MapAction Mapping Tools" image="Images\ConfigTool.png" />
       </Commands>
     </ArcMap>
   </AddIn>

@@ -588,7 +588,7 @@
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(70, 13);
             this.label36.TabIndex = 17;
-            this.label36.Text = "Date sources";
+            this.label36.Text = "Data sources";
             // 
             // label35
             // 

@@ -13,3 +13,18 @@ C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Protot
 C:\Users\Greg\documents\visual studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\Prototype1_ConfigTool.dll.config
 C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\Ionic.Zip.dll
 C:\Users\Greg\Documents\Visual Studio 2010\Projects\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\Prototype1_ConfigTool.esriAddIn
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\Prototype1_ConfigTool.dll.config
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\Prototype1_ConfigTool.dll
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\Prototype1_ConfigTool.pdb
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\MapAction.dll
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\Ionic.Zip.dll
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\MapAction.pdb
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_ConfigTool\Prototype1_ConfigTool\obj\Debug\ResolveAssemblyReference.cache
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_ConfigTool\Prototype1_ConfigTool\obj\Debug\Prototype1_ConfigTool.frmCreateXml.resources
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_ConfigTool\Prototype1_ConfigTool\obj\Debug\Prototype1_ConfigTool.frmEditXml.resources
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_ConfigTool\Prototype1_ConfigTool\obj\Debug\Prototype1_ConfigTool.frmMain.resources
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_ConfigTool\Prototype1_ConfigTool\obj\Debug\ResGen.read.1.tlog
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_ConfigTool\Prototype1_ConfigTool\obj\Debug\ResGen.write.1.tlog
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_ConfigTool\Prototype1_ConfigTool\obj\Debug\Prototype1_ConfigTool.dll
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_ConfigTool\Prototype1_ConfigTool\obj\Debug\Prototype1_ConfigTool.pdb
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_ConfigTool\Prototype1_ConfigTool\bin\Debug\Prototype1_ConfigTool.esriAddIn

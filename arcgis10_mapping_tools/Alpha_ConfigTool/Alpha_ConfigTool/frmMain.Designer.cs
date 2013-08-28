@@ -720,7 +720,7 @@
             0});
             this.numEmfDpi.Name = "numEmfDpi";
             this.numEmfDpi.Size = new System.Drawing.Size(120, 20);
-            this.numEmfDpi.TabIndex = 46;
+            this.numEmfDpi.TabIndex = 2;
             this.numEmfDpi.Value = new decimal(new int[] {
             300,
             0,
@@ -742,7 +742,7 @@
             this.btnSetExportToolPath.Location = new System.Drawing.Point(357, 93);
             this.btnSetExportToolPath.Name = "btnSetExportToolPath";
             this.btnSetExportToolPath.Size = new System.Drawing.Size(33, 23);
-            this.btnSetExportToolPath.TabIndex = 3;
+            this.btnSetExportToolPath.TabIndex = 4;
             this.btnSetExportToolPath.Text = "...";
             this.btnSetExportToolPath.UseVisualStyleBackColor = true;
             this.btnSetExportToolPath.Click += new System.EventHandler(this.btnSetExportToolPath_Click);
@@ -804,7 +804,7 @@
             this.tbxExportToolPath.Location = new System.Drawing.Point(122, 96);
             this.tbxExportToolPath.Name = "tbxExportToolPath";
             this.tbxExportToolPath.Size = new System.Drawing.Size(230, 20);
-            this.tbxExportToolPath.TabIndex = 2;
+            this.tbxExportToolPath.TabIndex = 3;
             // 
             // label9
             // 
