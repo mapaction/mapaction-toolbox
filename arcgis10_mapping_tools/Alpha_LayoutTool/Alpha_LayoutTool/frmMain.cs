@@ -16,8 +16,6 @@ using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using System.Diagnostics;
-using MapAction;
-
 
 namespace Alpha_LayoutTool
 {
@@ -31,6 +29,8 @@ namespace Alpha_LayoutTool
             InitializeComponent();
         }
 
+
+        //Gets the automated values for Tab 1 and populates each textbox
         private void btnUpdateAll_Click(object sender, EventArgs e)
         {
             //Call the MapAction class library and the getLayoutElements function that returns a dictionare of the key value
@@ -41,7 +41,7 @@ namespace Alpha_LayoutTool
                 tbxScale.Text = tbxScale.Text = updateScale();
                 tbxSpatialReference.Text = getSpatialReference();
                 tbxMapDocument.Text = tbxMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
-                tbxGlideNumber.Text = getGlideNo();
+                tbxGlideNumber.Text = LayoutToolAutomatedValues.getGlideNo();
 
         }
 
@@ -62,7 +62,7 @@ namespace Alpha_LayoutTool
 
         private void btnGlideNo_Click(object sender, EventArgs e)
         {
-            tbxGlideNumber.Text = getGlideNo();
+            tbxGlideNumber.Text = LayoutToolAutomatedValues.getGlideNo();
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -72,7 +72,7 @@ namespace Alpha_LayoutTool
             //string path = MapAction.Properties.Settings.Default.crash_move_folder_path;
             //string filePath = path + @"\operation_config.xml";
             
-            //Perform validation checks
+            //Perform validation checks tab 1
             FormValidation.validateMapTitle(tbxTitle, eprMapTitle);
             FormValidation.validateMapSummary(tbxSummary, eprMapSummary);
             FormValidation.validateDataSources(tbxDataSources, eprDataSources);
@@ -81,7 +81,12 @@ namespace Alpha_LayoutTool
             FormValidation.validateSpatialReference(tbxSpatialReference, eprSpatialReferenceWarning, eprSpatialReferenceError);
             FormValidation.validateScaleText(tbxScale, eprScaleTextWarning, eprScaleTextError);
             FormValidation.validateGlideNumber(tbxGlideNumber, eprGlideNumberWarning, eprSpatialReferenceError);
-
+            //Perform validation checks tab 2
+            FormValidation.validateDisclaimer(tbxDisclaimer, eprDisclaimerWarning, eprDisclaimerError);
+            FormValidation.validateDonorCredit(tbxDonorCredit, eprDonorWarning, eprDonorError);
+            FormValidation.validateMapProducer(tbxMapProducer, eprProducedByWarning, eprProducedByError);
+            FormValidation.validateTimezone(tbxTimezone, eprTimezoneWarning, eprTimezoneError);
+            
             //Call the MapAction class library and the getLayoutElements function that returns a dictionare of the key value
             //pairs of each text element in the layout
             //IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
@@ -102,10 +107,16 @@ namespace Alpha_LayoutTool
             if (dict.ContainsKey("scale") == true) { tbxScale.Text = dict["scale"]; } else { tbxScale.Text = "Element not present"; tbxScale.ReadOnly = true; btnUpdateScale.Enabled = false; };
             if (dict.ContainsKey("spatial_reference") == true) { tbxSpatialReference.Text = dict["spatial_reference"]; } else { tbxSpatialReference.Text = "Element not present"; tbxSpatialReference.ReadOnly = true; btnSpatialReference.Enabled = false; };
             if (dict.ContainsKey("glide_no") == true) { tbxGlideNumber.Text = dict["glide_no"]; } else { tbxGlideNumber.Text = "Element not present"; tbxGlideNumber.ReadOnly = true; btnGlideNo.Enabled = false; };
+            //Tab 2 - Standard elements
+            if (dict.ContainsKey("map_producer") == true) { tbxMapProducer.Text = dict["map_producer"]; } else { tbxMapProducer.Text = "Element not present"; tbxMapProducer.ReadOnly = true; btnUpdateProducedBy.Enabled = false; };
+            if (dict.ContainsKey("donor_credit") == true) { tbxDonorCredit.Text = dict["donor_credit"]; } else { tbxDonorCredit.Text = "Element not present"; tbxDonorCredit.ReadOnly = true; btnUpdateDonorCredits.Enabled = false; };
+            if (dict.ContainsKey("timezone") == true) { tbxTimezone.Text = dict["timezone"]; } else { tbxTimezone.Text = "Element not present"; tbxTimezone.ReadOnly = true; btnUpdateTimezone.Enabled = false; };
+            if (dict.ContainsKey("disclaimer") == true) { tbxDisclaimer.Text = dict["disclaimer"]; } else { tbxDisclaimer.Text = "Element not present"; tbxDisclaimer.ReadOnly = true; btnUpdateDisclaimer.Enabled = false; };
         }
 
         private void tspBtnClearForm_Click(object sender, EventArgs e)
         {
+            //Clear tab 1
             this.tbxTitle.Text = string.Empty;
             this.tbxSummary.Text = string.Empty;
             this.tbxDataSources.Text = string.Empty;
@@ -114,6 +125,11 @@ namespace Alpha_LayoutTool
             this.tbxScale.Text = string.Empty;
             this.tbxSpatialReference.Text = string.Empty;
             this.tbxGlideNumber.Text = string.Empty;
+            //Clear tab 2
+            tbxMapProducer.Text = string.Empty;
+            tbxDisclaimer.Text = string.Empty;
+            tbxDonorCredit.Text = string.Empty;
+            tbxTimezone.Text = string.Empty;
         }
 
         private void disposeAllErrorProviders()
@@ -146,6 +162,10 @@ namespace Alpha_LayoutTool
             dict.Add("scale", this.tbxScale.Text);
             dict.Add("spatial_reference", this.tbxSpatialReference.Text);
             dict.Add("glide_no", this.tbxGlideNumber.Text);
+            dict.Add("timezone", this.tbxTimezone.Text);
+            dict.Add("donor_credit", this.tbxDonorCredit.Text);
+            dict.Add("disclaimer", this.tbxDisclaimer.Text);
+            dict.Add("map_producer", this.tbxMapProducer.Text);
 
             setAllElements(dict);
             this.disposeAllErrorProviders();
@@ -179,19 +199,7 @@ namespace Alpha_LayoutTool
             return stringSpatialRef;
         }
 
-        public static string getGlideNo()
-        {
-            string GlideNo = string.Empty;
-            string path = MapAction.Properties.Settings.Default.crash_move_folder_path + @"\operation_config.xml";
 
-            if (MapAction.Utilities.detectOperationConfig())
-            {
-                Dictionary<string, string> dictConfig = MapAction.Utilities.getOperationConfigValues(path);
-                if (dictConfig.ContainsKey("GlideNo")) { GlideNo = dictConfig["GlideNo"]; } 
-            }
-
-            return GlideNo;
-        }
 
         public static void setAllElements(Dictionary<string, string> dict)
         {
@@ -243,6 +251,22 @@ namespace Alpha_LayoutTool
                         else if (pElementProp.Name == "glide_no")
                         {
                             pTextElement.Text = dict["glide_no"];
+                        }
+                        else if (pElementProp.Name == "map_producer")
+                        {
+                            pTextElement.Text = dict["map_producer"];
+                        }
+                        else if (pElementProp.Name == "disclaimer")
+                        {
+                            pTextElement.Text = dict["disclaimer"];
+                        }
+                        else if (pElementProp.Name == "donor_credit")
+                        {
+                            pTextElement.Text = dict["donor_credit"];
+                        }
+                        else if (pElementProp.Name == "timezone")
+                        {
+                            pTextElement.Text = dict["timezone"];
                         }
 
                     }
@@ -309,6 +333,60 @@ namespace Alpha_LayoutTool
         {
             FormValidation.validateGlideNumber(tbxGlideNumber, eprGlideNumberWarning, eprGlideNumberError);
         }
+
+        //Update disclaimer tab 2 automated  value button 
+
+        //Gets the automated values for Tab 2 and populates each textbox
+        private void btnUpdateAllTab2_Click(object sender, EventArgs e)
+        {
+            Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, "Main map");
+            //If the elements are present in the map, update the values
+            if (dict.ContainsKey("donor_credit") == true) { tbxDonorCredit.Text = LayoutToolAutomatedValues.getConfigDonorText(); } 
+            if (dict.ContainsKey("timezone") == true) { tbxTimezone.Text = LayoutToolAutomatedValues.getConfigTimezone(); } 
+            if (dict.ContainsKey("map_producer") == true) { tbxMapProducer.Text = LayoutToolAutomatedValues.getProducedByText(); }
+            if (dict.ContainsKey("disclaimer") == true) { tbxDisclaimer.Text = LayoutToolAutomatedValues.getConfigDisclaimer(); } 
+        }
+
+        private void btnUpdateDisclaimer_Click(object sender, EventArgs e)
+        {
+            tbxDisclaimer.Text = LayoutToolAutomatedValues.getConfigDisclaimer();
+        }
+
+        private void btnUpdateTimezone_Click(object sender, EventArgs e)
+        {
+            tbxTimezone.Text = LayoutToolAutomatedValues.getConfigTimezone();
+        }
+
+        private void btnUpdateOrganisationDetails_Click(object sender, EventArgs e)
+        {
+            tbxMapProducer.Text = LayoutToolAutomatedValues.getProducedByText();
+        }
+
+        private void btnUpdateDonorCredits_Click(object sender, EventArgs e)
+        {
+            tbxDonorCredit.Text = LayoutToolAutomatedValues.getConfigDonorText();
+        }
+
+        private void tbxDisclaimer_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateDisclaimer(tbxDisclaimer, eprDisclaimerWarning, eprDisclaimerError);
+        }
+
+        private void tbxDonorCredit_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateDonorCredit(tbxDonorCredit, eprDonorWarning, eprDonorError);
+        }
+
+        private void tbxMapProducer_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateMapProducer(tbxMapProducer, eprProducedByWarning, eprProducedByError);
+        }
+
+        private void tbxTimezone_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateTimezone(tbxTimezone, eprTimezoneWarning, eprTimezoneError);
+        }
+
 
 
     }

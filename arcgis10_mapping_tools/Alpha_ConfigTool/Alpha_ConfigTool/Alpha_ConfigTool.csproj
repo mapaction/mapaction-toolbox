@@ -80,6 +80,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
+    <Compile Include="FormValidation.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>

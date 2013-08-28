@@ -241,6 +241,7 @@ namespace MapAction
                 
 
                 //mapTitle = mapTitle.Substring(0,mapTitle.Length - 4);
+                System.Diagnostics.Debug.WriteLine(mapTitle);
             }
             catch (Exception e)
             {

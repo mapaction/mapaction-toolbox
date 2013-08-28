@@ -16,7 +16,6 @@ using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 
-
 namespace MapAction
 {
     class MapFrameProperties

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -50,6 +51,8 @@
             this.tbxOperationName = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tbxOrganisationUrl = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.tbxPrimaryEmail = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.tbxSourceOrganisation = new System.Windows.Forms.TextBox();
@@ -71,6 +74,11 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.eprOperationNameWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprGlideNoError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprGlideNoWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprPrimaryEmailWarning = new System.Windows.Forms.ErrorProvider(this.components);
+            this.eprPrimaryEmailError = new System.Windows.Forms.ErrorProvider(this.components);
             this.gbxCrashMoveFolder.SuspendLayout();
             this.gbxConfigXmlValues.SuspendLayout();
             this.tabConfigXml.SuspendLayout();
@@ -81,6 +89,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.numEmfDpi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPdfDpi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numJpegDpi)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprOperationNameWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprGlideNoError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprGlideNoWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprPrimaryEmailWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprPrimaryEmailError)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSave
@@ -111,14 +124,14 @@
             this.gbxCrashMoveFolder.Controls.Add(this.label1);
             this.gbxCrashMoveFolder.Location = new System.Drawing.Point(12, 12);
             this.gbxCrashMoveFolder.Name = "gbxCrashMoveFolder";
-            this.gbxCrashMoveFolder.Size = new System.Drawing.Size(425, 55);
+            this.gbxCrashMoveFolder.Size = new System.Drawing.Size(458, 55);
             this.gbxCrashMoveFolder.TabIndex = 11;
             this.gbxCrashMoveFolder.TabStop = false;
             this.gbxCrashMoveFolder.Text = "Crash move folder";
             // 
             // btnPathToExistingXml
             // 
-            this.btnPathToExistingXml.Location = new System.Drawing.Point(386, 20);
+            this.btnPathToExistingXml.Location = new System.Drawing.Point(395, 20);
             this.btnPathToExistingXml.Name = "btnPathToExistingXml";
             this.btnPathToExistingXml.Size = new System.Drawing.Size(33, 23);
             this.btnPathToExistingXml.TabIndex = 18;
@@ -131,7 +144,7 @@
             this.tbxPathToCrashMove.Enabled = false;
             this.tbxPathToCrashMove.Location = new System.Drawing.Point(96, 20);
             this.tbxPathToCrashMove.Name = "tbxPathToCrashMove";
-            this.tbxPathToCrashMove.Size = new System.Drawing.Size(284, 20);
+            this.tbxPathToCrashMove.Size = new System.Drawing.Size(293, 20);
             this.tbxPathToCrashMove.TabIndex = 0;
             // 
             // label1
@@ -149,7 +162,7 @@
             this.gbxConfigXmlValues.Controls.Add(this.tabConfigXml);
             this.gbxConfigXmlValues.Location = new System.Drawing.Point(13, 73);
             this.gbxConfigXmlValues.Name = "gbxConfigXmlValues";
-            this.gbxConfigXmlValues.Size = new System.Drawing.Size(424, 231);
+            this.gbxConfigXmlValues.Size = new System.Drawing.Size(457, 231);
             this.gbxConfigXmlValues.TabIndex = 14;
             this.gbxConfigXmlValues.TabStop = false;
             this.gbxConfigXmlValues.Text = "Configuration XML";
@@ -174,7 +187,7 @@
             this.tabConfigXml.Location = new System.Drawing.Point(9, 19);
             this.tabConfigXml.Name = "tabConfigXml";
             this.tabConfigXml.SelectedIndex = 0;
-            this.tabConfigXml.Size = new System.Drawing.Size(409, 204);
+            this.tabConfigXml.Size = new System.Drawing.Size(442, 204);
             this.tabConfigXml.TabIndex = 0;
             // 
             // tabPage1
@@ -192,7 +205,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(401, 178);
+            this.tabPage1.Size = new System.Drawing.Size(434, 178);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Emergency";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -202,34 +215,49 @@
             this.cboTimeZone.Enabled = false;
             this.cboTimeZone.FormattingEnabled = true;
             this.cboTimeZone.Items.AddRange(new object[] {
-            "UTC-12",
-            "UTC-11",
-            "UTC-10",
-            "UTC-9",
-            "UTC-8",
-            "UTC-7",
-            "UTC-6",
-            "UTC-5",
-            "UTC-4",
-            "UTC-3",
-            "UTC-2",
-            "UTC-1",
-            "UTC0",
-            "UTC+1",
-            "UTC+2",
-            "UTC+3",
-            "UTC+4",
-            "UTC+5",
-            "UTC+6",
-            "UTC+7",
-            "UTC+8",
-            "UTC+9",
-            "UTC+10",
-            "UTC+11",
-            "UTC+12"});
+            "UTC-12:00",
+            "UTC-11:00",
+            "UTC-10:00",
+            "UTC-09:30",
+            "UTC-09:00",
+            "UTC-08:00",
+            "UTC-07:00",
+            "UTC-06:00",
+            "UTC-05:00",
+            "UTC-04:30",
+            "UTC-04:00",
+            "UTC-03:30",
+            "UTC-03:00",
+            "UTC-02:00",
+            "UTC-01:00",
+            "UTC±00:00",
+            "UTC+01:00",
+            "UTC+02:00",
+            "UTC+03:00",
+            "UTC+03:30",
+            "UTC+04:00",
+            "UTC+04:30",
+            "UTC+05:00",
+            "UTC+05:30",
+            "UTC+05:45",
+            "UTC+06:00",
+            "UTC+06:30",
+            "UTC+07:00",
+            "UTC+08:00",
+            "UTC+08:45",
+            "UTC+09:00",
+            "UTC+09:30",
+            "UTC+10:00",
+            "UTC+10:30",
+            "UTC+11:00",
+            "UTC+11:30",
+            "UTC+12:00",
+            "UTC+12:45",
+            "UTC+13:00",
+            "UTC+14:00"});
             this.cboTimeZone.Location = new System.Drawing.Point(123, 122);
             this.cboTimeZone.Name = "cboTimeZone";
-            this.cboTimeZone.Size = new System.Drawing.Size(257, 21);
+            this.cboTimeZone.Size = new System.Drawing.Size(288, 21);
             this.cboTimeZone.TabIndex = 4;
             // 
             // cboCountry
@@ -488,7 +516,7 @@
             "ZIMBABWE"});
             this.cboCountry.Location = new System.Drawing.Point(123, 95);
             this.cboCountry.Name = "cboCountry";
-            this.cboCountry.Size = new System.Drawing.Size(257, 21);
+            this.cboCountry.Size = new System.Drawing.Size(288, 21);
             this.cboCountry.TabIndex = 3;
             // 
             // cboLanguage
@@ -504,7 +532,7 @@
             "Russian"});
             this.cboLanguage.Location = new System.Drawing.Point(123, 69);
             this.cboLanguage.Name = "cboLanguage";
-            this.cboLanguage.Size = new System.Drawing.Size(257, 21);
+            this.cboLanguage.Size = new System.Drawing.Size(288, 21);
             this.cboLanguage.TabIndex = 2;
             // 
             // label3
@@ -539,8 +567,9 @@
             this.tbxGlideNo.Enabled = false;
             this.tbxGlideNo.Location = new System.Drawing.Point(123, 43);
             this.tbxGlideNo.Name = "tbxGlideNo";
-            this.tbxGlideNo.Size = new System.Drawing.Size(257, 20);
+            this.tbxGlideNo.Size = new System.Drawing.Size(288, 20);
             this.tbxGlideNo.TabIndex = 1;
+            this.tbxGlideNo.TextChanged += new System.EventHandler(this.tbxGlideNo_TextChanged);
             // 
             // label20
             // 
@@ -556,8 +585,9 @@
             this.tbxOperationName.Enabled = false;
             this.tbxOperationName.Location = new System.Drawing.Point(123, 17);
             this.tbxOperationName.Name = "tbxOperationName";
-            this.tbxOperationName.Size = new System.Drawing.Size(257, 20);
+            this.tbxOperationName.Size = new System.Drawing.Size(288, 20);
             this.tbxOperationName.TabIndex = 0;
+            this.tbxOperationName.TextChanged += new System.EventHandler(this.tbxOperationName_TextChanged);
             // 
             // label21
             // 
@@ -570,6 +600,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.tbxOrganisationUrl);
+            this.tabPage2.Controls.Add(this.label12);
             this.tabPage2.Controls.Add(this.tbxPrimaryEmail);
             this.tabPage2.Controls.Add(this.label18);
             this.tabPage2.Controls.Add(this.tbxSourceOrganisation);
@@ -579,23 +611,41 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(401, 178);
+            this.tabPage2.Size = new System.Drawing.Size(434, 178);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Response";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // tbxOrganisationUrl
+            // 
+            this.tbxOrganisationUrl.Enabled = false;
+            this.tbxOrganisationUrl.Location = new System.Drawing.Point(123, 69);
+            this.tbxOrganisationUrl.Name = "tbxOrganisationUrl";
+            this.tbxOrganisationUrl.Size = new System.Drawing.Size(288, 20);
+            this.tbxOrganisationUrl.TabIndex = 54;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(14, 72);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(80, 13);
+            this.label12.TabIndex = 55;
+            this.label12.Text = "Organisation url";
+            // 
             // tbxPrimaryEmail
             // 
             this.tbxPrimaryEmail.Enabled = false;
-            this.tbxPrimaryEmail.Location = new System.Drawing.Point(123, 43);
+            this.tbxPrimaryEmail.Location = new System.Drawing.Point(123, 95);
             this.tbxPrimaryEmail.Name = "tbxPrimaryEmail";
-            this.tbxPrimaryEmail.Size = new System.Drawing.Size(257, 20);
+            this.tbxPrimaryEmail.Size = new System.Drawing.Size(288, 20);
             this.tbxPrimaryEmail.TabIndex = 1;
+            this.tbxPrimaryEmail.TextChanged += new System.EventHandler(this.tbxPrimaryEmail_TextChanged);
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(14, 46);
+            this.label18.Location = new System.Drawing.Point(14, 98);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(68, 13);
             this.label18.TabIndex = 53;
@@ -604,15 +654,15 @@
             // tbxSourceOrganisation
             // 
             this.tbxSourceOrganisation.Enabled = false;
-            this.tbxSourceOrganisation.Location = new System.Drawing.Point(123, 69);
+            this.tbxSourceOrganisation.Location = new System.Drawing.Point(123, 43);
             this.tbxSourceOrganisation.Name = "tbxSourceOrganisation";
-            this.tbxSourceOrganisation.Size = new System.Drawing.Size(257, 20);
+            this.tbxSourceOrganisation.Size = new System.Drawing.Size(288, 20);
             this.tbxSourceOrganisation.TabIndex = 2;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 72);
+            this.label4.Location = new System.Drawing.Point(14, 46);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(66, 13);
             this.label4.TabIndex = 51;
@@ -623,7 +673,7 @@
             this.tbxOperationId.Enabled = false;
             this.tbxOperationId.Location = new System.Drawing.Point(123, 17);
             this.tbxOperationId.Name = "tbxOperationId";
-            this.tbxOperationId.Size = new System.Drawing.Size(257, 20);
+            this.tbxOperationId.Size = new System.Drawing.Size(288, 20);
             this.tbxOperationId.TabIndex = 0;
             // 
             // label19
@@ -644,7 +694,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(401, 178);
+            this.tabPage3.Size = new System.Drawing.Size(434, 178);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Credits";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -655,7 +705,7 @@
             this.tbxDonorText.Location = new System.Drawing.Point(123, 96);
             this.tbxDonorText.Multiline = true;
             this.tbxDonorText.Name = "tbxDonorText";
-            this.tbxDonorText.Size = new System.Drawing.Size(258, 73);
+            this.tbxDonorText.Size = new System.Drawing.Size(288, 73);
             this.tbxDonorText.TabIndex = 1;
             // 
             // label8
@@ -673,7 +723,7 @@
             this.tbxDislaimerText.Location = new System.Drawing.Point(123, 17);
             this.tbxDislaimerText.Multiline = true;
             this.tbxDislaimerText.Name = "tbxDislaimerText";
-            this.tbxDislaimerText.Size = new System.Drawing.Size(258, 73);
+            this.tbxDislaimerText.Size = new System.Drawing.Size(288, 73);
             this.tbxDislaimerText.TabIndex = 0;
             // 
             // label5
@@ -699,7 +749,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(401, 178);
+            this.tabPage4.Size = new System.Drawing.Size(434, 178);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Settings";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -739,7 +789,7 @@
             // btnSetExportToolPath
             // 
             this.btnSetExportToolPath.Enabled = false;
-            this.btnSetExportToolPath.Location = new System.Drawing.Point(357, 93);
+            this.btnSetExportToolPath.Location = new System.Drawing.Point(381, 93);
             this.btnSetExportToolPath.Name = "btnSetExportToolPath";
             this.btnSetExportToolPath.Size = new System.Drawing.Size(33, 23);
             this.btnSetExportToolPath.TabIndex = 4;
@@ -803,7 +853,7 @@
             this.tbxExportToolPath.Enabled = false;
             this.tbxExportToolPath.Location = new System.Drawing.Point(122, 96);
             this.tbxExportToolPath.Name = "tbxExportToolPath";
-            this.tbxExportToolPath.Size = new System.Drawing.Size(230, 20);
+            this.tbxExportToolPath.Size = new System.Drawing.Size(253, 20);
             this.tbxExportToolPath.TabIndex = 3;
             // 
             // label9
@@ -833,11 +883,39 @@
             this.label11.TabIndex = 41;
             this.label11.Text = "Jpeg dpi";
             // 
+            // eprOperationNameWarning
+            // 
+            this.eprOperationNameWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprOperationNameWarning.ContainerControl = this;
+            this.eprOperationNameWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprOperationNameWarning.Icon")));
+            // 
+            // eprGlideNoError
+            // 
+            this.eprGlideNoError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprGlideNoError.ContainerControl = this;
+            // 
+            // eprGlideNoWarning
+            // 
+            this.eprGlideNoWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprGlideNoWarning.ContainerControl = this;
+            this.eprGlideNoWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprGlideNoWarning.Icon")));
+            // 
+            // eprPrimaryEmailWarning
+            // 
+            this.eprPrimaryEmailWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprPrimaryEmailWarning.ContainerControl = this;
+            this.eprPrimaryEmailWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprPrimaryEmailWarning.Icon")));
+            // 
+            // eprPrimaryEmailError
+            // 
+            this.eprPrimaryEmailError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.eprPrimaryEmailError.ContainerControl = this;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(450, 340);
+            this.ClientSize = new System.Drawing.Size(477, 340);
             this.Controls.Add(this.gbxConfigXmlValues);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
@@ -863,6 +941,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.numEmfDpi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPdfDpi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numJpegDpi)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprOperationNameWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprGlideNoError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprGlideNoWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprPrimaryEmailWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eprPrimaryEmailError)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -911,5 +994,12 @@
         private System.Windows.Forms.CheckBox chkEditConfigXml;
         private System.Windows.Forms.NumericUpDown numEmfDpi;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox tbxOrganisationUrl;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ErrorProvider eprOperationNameWarning;
+        private System.Windows.Forms.ErrorProvider eprGlideNoError;
+        private System.Windows.Forms.ErrorProvider eprGlideNoWarning;
+        private System.Windows.Forms.ErrorProvider eprPrimaryEmailWarning;
+        private System.Windows.Forms.ErrorProvider eprPrimaryEmailError;
     }
 }

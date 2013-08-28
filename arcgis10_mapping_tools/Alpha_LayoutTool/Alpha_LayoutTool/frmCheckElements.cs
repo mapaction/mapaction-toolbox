@@ -71,11 +71,27 @@ namespace Alpha_LayoutTool
             {
                 imgGlideNoStatus.Image = Properties.Resources.tick_17px;
             }
-            //Detect 'Main map' frame
-            //if (MapAction.LayoutElements.detectMapFrame(pMxDoc, "Main map"))
-            //{
-            //    imgMainMapFrameStatus.Image = Properties.Resources.tick_17px;
-            //}
+
+            if (dict.ContainsKey("disclaimer"))
+            {
+                imgDisclaimerStatus.Image = Properties.Resources.tick_17px;
+            }
+
+            if (dict.ContainsKey("donor_credit"))
+            {
+                imgDonorCreditStatus.Image = Properties.Resources.tick_17px;
+            }
+
+            if (dict.ContainsKey("map_producer"))
+            {
+                imgProducedByStatus.Image = Properties.Resources.tick_17px;
+            }
+
+            if (dict.ContainsKey("timezone"))
+            {
+                imgTimezoneStatus.Image = Properties.Resources.tick_17px;
+            }
+
         }
 
 

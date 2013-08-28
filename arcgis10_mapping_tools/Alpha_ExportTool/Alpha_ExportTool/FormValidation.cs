@@ -393,8 +393,8 @@ namespace Alpha_ExportTool
             string automatedValue = string.Empty;
             
             var dictXML = new Dictionary<string, string>();
-            string path = MapAction.Properties.Settings.Default.crash_move_folder_path;
-            string filePath = path + @"\operation_config.xml";
+            string path = MapAction.Utilities.getCrashMoveFolderPath();
+            string filePath = MapAction.Utilities.getOperationConfigFilePath();
             dictXML = MapAction.Utilities.getOperationConfigValues(filePath);
             if (dictXML.ContainsKey("OperationId")) { automatedValue = dictXML["OperationId"]; }
 
@@ -564,8 +564,8 @@ namespace Alpha_ExportTool
             string automatedValue = string.Empty;
 
             var dictXML = new Dictionary<string, string>();
-            string path = MapAction.Properties.Settings.Default.crash_move_folder_path;
-            string filePath = path + @"\operation_config.xml";
+            string path = MapAction.Utilities.getCrashMoveFolderPath();
+            string filePath = MapAction.Utilities.getOperationConfigFilePath();
             dictXML = MapAction.Utilities.getOperationConfigValues(filePath);
             if (dictXML.ContainsKey("Language")) { automatedValue = dictXML["Language"]; }
 

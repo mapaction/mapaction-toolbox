@@ -168,7 +168,7 @@ namespace MapAction
             if (path == null)
             {
                 //Get the currently set filepath from the ConfigTool settings file
-                filepath = @Properties.Settings.Default.crash_move_folder_path;
+                filepath = Properties.Settings.Default.crash_move_folder_path;
             }
             else
             {
@@ -192,25 +192,6 @@ namespace MapAction
                 Debug.WriteLine(e.Message);
             }
             return dict;
-        }
-        #endregion
-
-        #region Public method detectOperationConfig
-        //Returns a dictionary of the operation_config.xml elements and values
-        public static Boolean detectOperationConfig()
-        {
-            string path = @Properties.Settings.Default.crash_move_folder_path;
-            string filepath = path + @"\operation_config.xml";
-            //If the file exists in the filepath, add each element and value of the xml file 
-            //to the dictionary as key value pairs 
-            if (File.Exists(@filepath))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
         #endregion
 
@@ -321,5 +302,71 @@ namespace MapAction
         }
         #endregion
 
+        #region Public method detectOperationConfig
+        //Returns a dictionary of the operation_config.xml elements and values
+        public static Boolean detectOperationConfig()
+        {
+            string path = Properties.Settings.Default.crash_move_folder_path;
+            string filepath = path + @"\operation_config.xml";
+            //If the file exists in the filepath, add each element and value of the xml file 
+            //to the dictionary as key value pairs 
+            if (File.Exists(@filepath))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region Public method getCrashMoveFolderPath()
+
+        public static string getCrashMoveFolderPath()
+        {
+            return Properties.Settings.Default.crash_move_folder_path;
+        }
+
+        #endregion
+
+        #region Public method setCrashMoveFolderPath()
+
+        public static string setCrashMovePathTest(string path)
+        {
+
+            if (Directory.Exists(path))
+            {
+                MapAction.Properties.Settings.Default.crash_move_folder_path = path;
+                Properties.Settings.Default.Save();
+                return Properties.Settings.Default.crash_move_folder_path;
+            }
+            else
+            {
+                return string.Empty;
+            }
+            
+        }
+
+        #endregion
+
+        #region Public method getOperationConfigFilePath()
+
+        public static string getOperationConfigFilePath()
+        {
+            string fullPath;
+            if (detectOperationConfig())
+            {
+                fullPath = Properties.Settings.Default.crash_move_folder_path + @"\operation_config.xml";
+                return fullPath;
+            }
+            else
+            {
+                return string.Empty;
+            }
+            
+        }
+
+        #endregion
     }
 }

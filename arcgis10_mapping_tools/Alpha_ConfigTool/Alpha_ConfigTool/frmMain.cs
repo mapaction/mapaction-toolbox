@@ -123,15 +123,13 @@ namespace Alpha_ConfigTool
             {
                 if (_configXmlEditState != false)
                 {
-                    MapAction.Properties.Settings.Default.crash_move_folder_path = tbxPathToCrashMove.Text;
-                    MapAction.Properties.Settings.Default.Save();
+                    MapAction.Utilities.setCrashMovePathTest(tbxPathToCrashMove.Text);
                     createConfigXml(_configXmlNewFile);
                 }
                 else if (_configXmlEditState != true)
                 {
                     //Save the path of the config file to the applicaton settings file
-                    MapAction.Properties.Settings.Default.crash_move_folder_path = tbxPathToCrashMove.Text;
-                    MapAction.Properties.Settings.Default.Save();
+                    MapAction.Utilities.setCrashMovePathTest(tbxPathToCrashMove.Text);
                     MessageBox.Show("Config file path successfully updated.", "Config file path",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -146,9 +144,8 @@ namespace Alpha_ConfigTool
             //dlgDefaultValuesOrExistingXml();
             
             //get the preset path from the configuration file
-            string path = MapAction.Properties.Settings.Default.crash_move_folder_path;
-            string filepath = path + @"\operation_config.xml";
-            Debug.WriteLine("path: " + path);
+            string path = MapAction.Utilities.getCrashMoveFolderPath();
+            string filepath = MapAction.Utilities.getOperationConfigFilePath();
             //Check if the config file has been set and if it exists
             if (@path != "" && !MapAction.Utilities.detectOperationConfig())
             {
@@ -172,7 +169,11 @@ namespace Alpha_ConfigTool
                 //If the path is set but doesn't exist, return a message to the user in the directory area
                 tbxPathToCrashMove.Text = "other error";
             }
-             
+
+            //Perform validation checks
+            FormValidation.validateOperationName(tbxOperationName, eprOperationNameWarning);
+            FormValidation.validateGlideNumber(tbxGlideNo, eprGlideNoWarning, eprGlideNoError);
+            FormValidation.validatePrimaryEmail(tbxPrimaryEmail, eprPrimaryEmailWarning, eprPrimaryEmailError);
         }
 
         public void setPathToConfig(string path)
@@ -192,8 +193,9 @@ namespace Alpha_ConfigTool
             dict.Add("Country", cboCountry.Text);
             dict.Add("TimeZone", cboTimeZone.Text);
             dict.Add("OperationId", tbxOperationId.Text);
-            dict.Add("DeploymentPrimaryEmail", tbxPrimaryEmail.Text);
             dict.Add("DefaultSourceOrganisation", tbxSourceOrganisation.Text);
+            dict.Add("DefaultSourceOrganisationUrl", tbxOrganisationUrl.Text);
+            dict.Add("DeploymentPrimaryEmail", tbxPrimaryEmail.Text);
             dict.Add("DefaultDisclaimerText", tbxDislaimerText.Text);
             dict.Add("DefaultDonorsText", tbxDonorText.Text);
             dict.Add("DefaultJpegResDPI", numJpegDpi.Value.ToString());
@@ -268,7 +270,7 @@ namespace Alpha_ConfigTool
         public Boolean dlgDefaultValuesOrExistingXml()
         {
             //Get the currently set path
-            string crashMovePath = MapAction.Properties.Settings.Default.crash_move_folder_path;
+            string crashMovePath = MapAction.Utilities.getCrashMoveFolderPath();
             string xmlPath = crashMovePath + @"\opertional_config.xml";
             //Check if the path exists 
             if (File.Exists(@xmlPath))
@@ -300,6 +302,7 @@ namespace Alpha_ConfigTool
             tbxOperationId.Text = dict["OperationId"];
             tbxPrimaryEmail.Text = dict["DeploymentPrimaryEmail"];
             tbxSourceOrganisation.Text = dict["DefaultSourceOrganisation"];
+            tbxOrganisationUrl.Text = dict["DefaultSourceOrganisationUrl"];
             tbxDislaimerText.Text = dict["DefaultDisclaimerText"];
             tbxDonorText.Text = dict["DefaultDonorsText"];
             numJpegDpi.Value = decimal.Parse(dict["DefaultJpegResDPI"]);
@@ -333,8 +336,9 @@ namespace Alpha_ConfigTool
                 cboCountry.Enabled = true;
                 cboTimeZone.Enabled = true;
                 tbxOperationId.Enabled = true;
-                tbxPrimaryEmail.Enabled = true;
                 tbxSourceOrganisation.Enabled = true;
+                tbxOrganisationUrl.Enabled = true;
+                tbxPrimaryEmail.Enabled = true;
                 tbxDislaimerText.Enabled = true;
                 tbxDonorText.Enabled = true;
                 numJpegDpi.Enabled = true;
@@ -362,8 +366,9 @@ namespace Alpha_ConfigTool
                 cboCountry.Enabled = false;
                 cboTimeZone.Enabled = false;
                 tbxOperationId.Enabled = false;
-                tbxPrimaryEmail.Enabled = false;
                 tbxSourceOrganisation.Enabled = false;
+                tbxOrganisationUrl.Enabled = false;
+                tbxPrimaryEmail.Enabled = false;
                 tbxDislaimerText.Enabled = false;
                 tbxDonorText.Enabled = false;
                 numJpegDpi.Enabled = false;
@@ -401,6 +406,21 @@ namespace Alpha_ConfigTool
             {
                 tbxExportToolPath.Text = dlg.SelectedPath;
             }
+        }
+
+        private void tbxOperationName_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateOperationName(tbxOperationName, eprOperationNameWarning);
+        }
+
+        private void tbxGlideNo_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateGlideNumber(tbxGlideNo, eprGlideNoWarning, eprGlideNoError);
+        }
+
+        private void tbxPrimaryEmail_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validatePrimaryEmail(tbxPrimaryEmail, eprPrimaryEmailWarning, eprPrimaryEmailError);
         }
 
 

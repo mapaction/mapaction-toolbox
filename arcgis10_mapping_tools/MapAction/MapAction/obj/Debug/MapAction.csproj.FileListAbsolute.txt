@@ -6,14 +6,6 @@ C:\Users\Greg\Documents\Visual Studio 2010\Projects\MapAction\MapAction\bin\Debu
 C:\Users\Greg\Documents\Visual Studio 2010\Projects\MapAction\MapAction\bin\Debug\Prototype1_ConfigTool.pdb
 C:\Users\Greg\Documents\Visual Studio 2010\Projects\MapAction\MapAction\obj\Debug\MapAction.dll
 C:\Users\Greg\Documents\Visual Studio 2010\Projects\MapAction\MapAction\obj\Debug\MapAction.pdb
-C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\MapAction.dll
-C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\MapAction.pdb
-C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\Ionic.Zip.dll
-C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\obj\Debug\ResolveAssemblyReference.cache
-C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\obj\Debug\MapAction.dll
-C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\obj\Debug\MapAction.pdb
-C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\Alpha_ConfigTool.dll
-C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\Alpha_ConfigTool.pdb
 D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\MapAction\MapAction\obj\Debug\MapAction.csprojResolveAssemblyReference.cache
 D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\MapAction\MapAction\obj\Debug\MapAction.dll
 D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\MapAction\MapAction\obj\Debug\MapAction.pdb
@@ -21,10 +13,10 @@ D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\MapAction\
 D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\MapAction.pdb
 D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\Alpha_ConfigTool.dll
 D:\work\custom-software-group\code\nunit-trail\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\Alpha_ConfigTool.pdb
-C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\MapAction.dll
-C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\MapAction.pdb
-C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\Alpha_ConfigTool.dll
-C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\Alpha_ConfigTool.pdb
-C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\MapAction\MapAction\obj\Debug\ResolveAssemblyReference.cache
-C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\MapAction\MapAction\obj\Debug\MapAction.dll
-C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\MapAction\MapAction\obj\Debug\MapAction.pdb
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\MapAction.dll.config
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\MapAction.dll
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\MapAction.pdb
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\Ionic.Zip.dll
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\obj\Debug\ResolveAssemblyReference.cache
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\obj\Debug\MapAction.dll
+C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\obj\Debug\MapAction.pdb
