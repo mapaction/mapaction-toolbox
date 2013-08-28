@@ -244,7 +244,7 @@ namespace Alpha_ConfigTool
                     MessageBox.Show(msgBoxTextSuccessCreateXML, msgBoxHeaderSuccessCreateXML,
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //set the settings file with the new directory
-                    //Properties.Settings.Default.crash_move_folder_path = @savedPath;
+                    //MapAction.Properties.Settings.Default.crash_move_folder_path = @savedPath;
                     createTrueFalse = true;
                 }
                 else if (File.Exists(@savedPath) && newXML == false)
@@ -253,7 +253,7 @@ namespace Alpha_ConfigTool
                     MessageBox.Show(msgBoxTextSuccessUpdateXML, msgBoxHeaderSuccessUpdateXML,
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //set the settings file with the new directory
-                    //Properties.Settings.Default.crash_move_folder_path = @savedPath;
+                    //MapAction.Properties.Settings.Default.crash_move_folder_path = @savedPath;
                     createTrueFalse = true;
                 }
                 else
