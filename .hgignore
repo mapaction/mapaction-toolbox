@@ -3,6 +3,7 @@ syntax: glob
 *.obj
 *.pdb
 *.user
+*.orig
 *.[Cc]ache
 Bb]in
 [Dd]ebug*/**
