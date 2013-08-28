@@ -124,6 +124,7 @@ namespace Alpha_ConfigTool
                 if (_configXmlEditState != false)
                 {
                     MapAction.Utilities.setCrashMovePathTest(tbxPathToCrashMove.Text);
+                    MapAction.Utilities.setCrashMovePathTest(tbxPathToCrashMove.Text);
                     createConfigXml(_configXmlNewFile);
                 }
                 else if (_configXmlEditState != true)
@@ -173,7 +174,16 @@ namespace Alpha_ConfigTool
             //Perform validation checks
             FormValidation.validateOperationName(tbxOperationName, eprOperationNameWarning);
             FormValidation.validateGlideNumber(tbxGlideNo, eprGlideNoWarning, eprGlideNoError);
+            FormValidation.validateLanguage(cboLanguage, eprLanguageWarning);
+            FormValidation.validateCountry(cboCountry, eprCountryWarning);
+            FormValidation.validateTimezone(cboTimeZone, eprTimezoneWarning, eprTimezoneError);
+            FormValidation.validateOperationID(tbxOperationId, eprOperationIdWarning);
+            FormValidation.validateOrganisation(tbxSourceOrganisation, eprOrganisationWarning);
+            FormValidation.validateUrl(tbxOrganisationUrl, eprUrlWarning);
             FormValidation.validatePrimaryEmail(tbxPrimaryEmail, eprPrimaryEmailWarning, eprPrimaryEmailError);
+            FormValidation.validateDisclaimer(tbxDislaimerText, eprDisclaimerWarning);
+            FormValidation.validateDonor(tbxDonorText, eprDonorTextWarning);
+            FormValidation.validateExportPath(tbxExportToolPath, eprExportPath);
         }
 
         public void setPathToConfig(string path)
@@ -194,6 +204,8 @@ namespace Alpha_ConfigTool
             dict.Add("TimeZone", cboTimeZone.Text);
             dict.Add("OperationId", tbxOperationId.Text);
             dict.Add("DefaultSourceOrganisation", tbxSourceOrganisation.Text);
+            dict.Add("DefaultSourceOrganisationUrl", tbxOrganisationUrl.Text);
+            dict.Add("DeploymentPrimaryEmail", tbxPrimaryEmail.Text);
             dict.Add("DefaultSourceOrganisationUrl", tbxOrganisationUrl.Text);
             dict.Add("DeploymentPrimaryEmail", tbxPrimaryEmail.Text);
             dict.Add("DefaultDisclaimerText", tbxDislaimerText.Text);
@@ -244,7 +256,7 @@ namespace Alpha_ConfigTool
                     MessageBox.Show(msgBoxTextSuccessCreateXML, msgBoxHeaderSuccessCreateXML,
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //set the settings file with the new directory
-                    //MapAction.Properties.Settings.Default.crash_move_folder_path = @savedPath;
+                    //Properties.Settings.Default.crash_move_folder_path = @savedPath;
                     createTrueFalse = true;
                 }
                 else if (File.Exists(@savedPath) && newXML == false)
@@ -253,7 +265,7 @@ namespace Alpha_ConfigTool
                     MessageBox.Show(msgBoxTextSuccessUpdateXML, msgBoxHeaderSuccessUpdateXML,
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //set the settings file with the new directory
-                    //MapAction.Properties.Settings.Default.crash_move_folder_path = @savedPath;
+                    //Properties.Settings.Default.crash_move_folder_path = @savedPath;
                     createTrueFalse = true;
                 }
                 else
@@ -302,6 +314,7 @@ namespace Alpha_ConfigTool
             tbxOperationId.Text = dict["OperationId"];
             tbxPrimaryEmail.Text = dict["DeploymentPrimaryEmail"];
             tbxSourceOrganisation.Text = dict["DefaultSourceOrganisation"];
+            tbxOrganisationUrl.Text = dict["DefaultSourceOrganisationUrl"];
             tbxOrganisationUrl.Text = dict["DefaultSourceOrganisationUrl"];
             tbxDislaimerText.Text = dict["DefaultDisclaimerText"];
             tbxDonorText.Text = dict["DefaultDonorsText"];
@@ -421,6 +434,51 @@ namespace Alpha_ConfigTool
         private void tbxPrimaryEmail_TextChanged(object sender, EventArgs e)
         {
             FormValidation.validatePrimaryEmail(tbxPrimaryEmail, eprPrimaryEmailWarning, eprPrimaryEmailError);
+        }
+
+        private void cboLanguage_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateLanguage(cboLanguage, eprLanguageWarning);
+        }
+
+        private void cboCountry_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateCountry(cboCountry, eprCountryWarning);
+        }
+
+        private void cboTimeZone_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateTimezone(cboTimeZone, eprTimezoneWarning, eprTimezoneError);
+        }
+
+        private void tbxOperationId_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateOperationID(tbxOperationId, eprOperationIdWarning);
+        }
+
+        private void tbxSourceOrganisation_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateOrganisation(tbxSourceOrganisation, eprOrganisationWarning);
+        }
+
+        private void tbxOrganisationUrl_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateUrl(tbxOrganisationUrl, eprUrlWarning);
+        }
+
+        private void tbxDislaimerText_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateDisclaimer(tbxDislaimerText, eprDisclaimerWarning);
+        }
+
+        private void tbxDonorText_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateDonor(tbxDonorText, eprDonorTextWarning);
+        }
+
+        private void tbxExportToolPath_TextChanged(object sender, EventArgs e)
+        {
+            FormValidation.validateExportPath(tbxExportToolPath, eprExportPath);
         }
 
 
