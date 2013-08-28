@@ -1,0 +1,11 @@
+syntax: glob
+
+*.obj
+*.pdb
+*.user
+*.[Cc]ache
+Bb]in
+[Dd]ebug*/**
+obj/
+[Rr]elease*/**
+[Tt]humbs.db
