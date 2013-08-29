@@ -206,8 +206,9 @@ namespace Alpha_ConfigTool
             dict.Add("DefaultSourceOrganisation", tbxSourceOrganisation.Text);
             dict.Add("DefaultSourceOrganisationUrl", tbxOrganisationUrl.Text);
             dict.Add("DeploymentPrimaryEmail", tbxPrimaryEmail.Text);
-            dict.Add("DefaultSourceOrganisationUrl", tbxOrganisationUrl.Text);
-            dict.Add("DeploymentPrimaryEmail", tbxPrimaryEmail.Text);
+            //check that this line can be removed
+            //dict.Add("DefaultSourceOrganisationUrl", tbxOrganisationUrl.Text);
+            //dict.Add("DeploymentPrimaryEmail", tbxPrimaryEmail.Text);
             dict.Add("DefaultDisclaimerText", tbxDislaimerText.Text);
             dict.Add("DefaultDonorsText", tbxDonorText.Text);
             dict.Add("DefaultJpegResDPI", numJpegDpi.Value.ToString());

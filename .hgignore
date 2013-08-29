@@ -4,6 +4,7 @@ syntax: glob
 *.pdb
 *.user
 *.orig
+*.suo
 *.dll
 *.[Cc]ache
 Bb]in

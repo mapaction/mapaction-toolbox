@@ -23,7 +23,7 @@ namespace MapAction
 
         #region Public method createXML
         //Creates an xml given a dictionary of tags and values.  Also pass in the root element, file path and filename.
-        public static string createXML(Dictionary<string, string> dict, string rootElement, string path, string fileName, int numRootElements)
+        public static string createXML(Dictionary<string, string> usDict, string rootElement, string path, string fileName, int numRootElements)
         {
             //set output path and filename
             string pathFileName;
@@ -40,6 +40,10 @@ namespace MapAction
                 Debug.WriteLine(pathFileName);
             }
 
+            // Check that the dictionary we are writing has valid XML values (ie local paths are converted to URIs etc)
+            //Dictionary<string, string> sDict = usDict;
+            Dictionary<string, string> sDict = sDictFromUsDict(usDict);
+            
             //Create and add the root element
             var xml = new XDocument();
             
@@ -54,7 +58,7 @@ namespace MapAction
                 try
                 {
                     //Add each value pair in the passed dictionary as the elements of the xml doc
-                    foreach (KeyValuePair<String, String> row in dict)
+                    foreach (KeyValuePair<String, String> row in sDict)
                     {
                         var element = new XElement(row.Key, row.Value);
                         Debug.WriteLine("Element: " + element);
@@ -73,7 +77,7 @@ namespace MapAction
                 //Add each value pair in the passed dictionary as the elements of the xml doc
                 try
                 {
-                    foreach (KeyValuePair<String, String> row in dict)
+                    foreach (KeyValuePair<String, String> row in sDict)
                     {
                         var element = new XElement(row.Key, row.Value);
                         Debug.WriteLine("Element: " + element);
@@ -181,9 +185,17 @@ namespace MapAction
                 if (File.Exists(@filepath))
                 {
                     XDocument doc = XDocument.Load(@filepath);
-                    foreach (XElement i in doc.Root.Descendants())
+                    foreach (XElement usEle in doc.Root.Descendants())
                     {
-                        dict.Add(i.Name.ToString(), i.Value.ToString());
+                        if (usEle.Name.ToString().Equals("DefaultPathToExportDir", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            Uri absURI = new Uri(usEle.Value.ToString(), UriKind.Absolute);
+                            dict.Add(usEle.Name.ToString(), absURI.LocalPath);
+                        }
+                        else
+                        {
+                            dict.Add(usEle.Name.ToString(), usEle.Value.ToString());
+                        }
                     }
                 }
             }
@@ -368,5 +380,33 @@ namespace MapAction
         }
 
         #endregion
+
+        /*
+         * Creates a new copy of dirtyDict, ensuring that any filepaths in the values are converted
+         * to XML safe file:/// type URLs.
+         */
+        private static Dictionary<string, string> sDictFromUsDict(Dictionary<string, string> dirtyDict)
+        {
+            //Create a dictionary to store the clean values
+            Dictionary<string, string> cleanURLsdict = new Dictionary<string, string>();
+
+            //Add each value pair in the passed dictionary as the elements of the xml doc
+            foreach (KeyValuePair<String, String> dirtyRow in dirtyDict)
+            {
+                if (dirtyRow.Key.Equals("DefaultPathToExportDir", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    Uri absURI = new Uri(@dirtyRow.Value, UriKind.Absolute);
+                    cleanURLsdict.Add(dirtyRow.Key, absURI.AbsoluteUri);
+                }
+                else
+                {
+                    cleanURLsdict.Add(dirtyRow.Key, dirtyRow.Value);
+                }
+            }
+            return cleanURLsdict;
+        }
+
+
+
     }
 }
