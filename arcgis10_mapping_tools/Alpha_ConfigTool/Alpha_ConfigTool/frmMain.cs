@@ -415,7 +415,19 @@ namespace Alpha_ConfigTool
             //set up select folder dialog properties 
             FolderBrowserDialog dlg = new FolderBrowserDialog();
             //set the intial path 
-            dlg.SelectedPath = @"c:\";
+            if (Directory.Exists(@tbxExportToolPath.Text))
+            {
+                dlg.SelectedPath = @tbxExportToolPath.Text;
+            }
+            else if (Directory.Exists(@tbxPathToCrashMove.Text))
+            {
+                dlg.SelectedPath = @tbxPathToCrashMove.Text;
+            }
+            else
+            {
+                dlg.SelectedPath = @"C:\";
+            }
+
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 tbxExportToolPath.Text = dlg.SelectedPath;

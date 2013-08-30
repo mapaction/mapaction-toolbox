@@ -83,7 +83,21 @@ namespace Alpha_ExportTool
             //set up select folder dialog properties 
             FolderBrowserDialog dlg = new FolderBrowserDialog();
             //set the intial path
-            dlg.SelectedPath = @"c:\";
+            if (Directory.Exists(@tbxExportZipPath.Text)) 
+            {
+                dlg.SelectedPath = @tbxExportZipPath.Text;
+            }
+            else if (Directory.Exists(@MapAction.Utilities.getCrashMoveFolderPath()))
+            {
+                dlg.SelectedPath = @MapAction.Utilities.getCrashMoveFolderPath();
+            }
+            else
+            {
+                dlg.SelectedPath = @"C:\";
+            }
+
+
+
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 tbxExportZipPath.Text = dlg.SelectedPath;

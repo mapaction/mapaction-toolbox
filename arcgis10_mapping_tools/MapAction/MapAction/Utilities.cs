@@ -164,7 +164,8 @@ namespace MapAction
         //Returns a dictionary of the operation_config.xml elements and values
         public static Dictionary<string, string> getOperationConfigValues(string path = null)
         {
-            string filepath;
+            string opCfgFilePath;
+            Uri cmfURI;
             
             //Create a dictionary to store the values from the xml
             Dictionary<string, string> dict = new Dictionary<string, string>();
@@ -172,25 +173,29 @@ namespace MapAction
             if (path == null)
             {
                 //Get the currently set filepath from the ConfigTool settings file
-                filepath = Properties.Settings.Default.crash_move_folder_path;
+                opCfgFilePath = Properties.Settings.Default.crash_move_folder_path;
             }
             else
             {
-                filepath = @path;
+                opCfgFilePath = @path;
             }
+
+            cmfURI = new Uri(System.IO.Path.GetDirectoryName(opCfgFilePath), UriKind.Absolute);
+
             //If the file exists in the filepath, add each element and value of the xml file 
             //to the dictionary as key value pairs 
             try
             {
-                if (File.Exists(@filepath))
+                if (File.Exists(@opCfgFilePath))
                 {
-                    XDocument doc = XDocument.Load(@filepath);
+                    XDocument doc = XDocument.Load(@opCfgFilePath);
                     foreach (XElement usEle in doc.Root.Descendants())
                     {
                         if (usEle.Name.ToString().Equals("DefaultPathToExportDir", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            Uri absURI = new Uri(usEle.Value.ToString(), UriKind.Absolute);
-                            dict.Add(usEle.Name.ToString(), absURI.LocalPath);
+                            //Uri absExportURI = new Uri(usEle.Value.ToString(), UriKind.Absolute);
+                            //absExportURI.MakeRelativeUri(cmfURI)
+                            dict.Add(usEle.Name.ToString(), absPathFromRel(usEle.Value.ToString()));
                         }
                         else
                         {
@@ -395,8 +400,14 @@ namespace MapAction
             {
                 if (dirtyRow.Key.Equals("DefaultPathToExportDir", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    Uri absURI = new Uri(@dirtyRow.Value, UriKind.Absolute);
-                    cleanURLsdict.Add(dirtyRow.Key, absURI.AbsoluteUri);
+                    //Uri absURI = new Uri(@dirtyRow.Value, UriKind.Absolute);
+                    //cleanURLsdict.Add(dirtyRow.Key, absURI.AbsoluteUri);
+
+                    //Uri absExportURI = new Uri(usEle.Value.ToString(), UriKind.Absolute);
+                    ////absExportURI.MakeRelativeUri(cmfURI)
+                    //dict.Add(usEle.Name.ToString(), cmfURI.MakeRelativeUri(absExportURI).ToString());
+
+                    cleanURLsdict.Add(dirtyRow.Key, relPathFromAbs(dirtyRow.Value));
                 }
                 else
                 {
@@ -406,6 +417,30 @@ namespace MapAction
             return cleanURLsdict;
         }
 
+        /*
+         * Returns a URI path relative to getOperationConfigFilePath() 
+         */
+        public static string relPathFromAbs(string absPath)
+        {
+            MessageBox.Show("crash_move_folder_path = " + Properties.Settings.Default.crash_move_folder_path);
+            Uri cmfURI = new Uri(@Properties.Settings.Default.crash_move_folder_path + @"\", UriKind.Absolute);
+            Uri absURI = new Uri(@absPath, UriKind.Absolute);
+            MessageBox.Show("cmfURI = " + cmfURI.ToString());
+            MessageBox.Show("absURI = " + absURI.ToString());
+
+            return cmfURI.MakeRelativeUri(absURI).ToString();
+        }
+
+        /*
+        * Returns an absolute URI path by prefixing getOperationConfigFilePath() to the argument
+        */
+        public static string absPathFromRel(string relPath)
+        {
+            Uri cmfURI = new Uri(@Properties.Settings.Default.crash_move_folder_path + @"\", UriKind.Absolute);
+            Uri relURI = new Uri(@relPath, UriKind.Relative);
+
+            return Uri.UnescapeDataString(new Uri(cmfURI, relURI).LocalPath);
+        }
 
 
     }
