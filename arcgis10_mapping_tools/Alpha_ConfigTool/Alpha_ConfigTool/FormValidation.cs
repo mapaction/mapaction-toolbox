@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -94,6 +95,12 @@ namespace Alpha_ConfigTool
         {
             epr.SetIconPadding(control, 40);
             validateEmptyField(control, epr);
+            
+            if (!Directory.Exists(@control.Text))
+            {
+                epr.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
+                epr.SetError(control, "Export Path is not valid.");
+            }
         }
 
         //Validate individual form elements for blank values and regular expressions
