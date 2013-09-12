@@ -398,7 +398,13 @@ namespace Alpha_ConfigTool
         {
             foreach (Control ctrl in parent.Controls)
             {
-                if (ctrl.Controls.Count > 0) clearAllChildControls(ctrl);
+                // The NumericUpDown Control has Textbox as its child control. This prevents the NumericUpDown 
+                // child textbox from being cleared since that problably isn't the intention.
+                if (ctrl.Controls.Count > 0 && !(ctrl is NumericUpDown))
+                {
+                    clearAllChildControls(ctrl);
+                } 
+
                 if (ctrl is TextBox)
                 {
                     ctrl.Text = String.Empty;
@@ -492,6 +498,11 @@ namespace Alpha_ConfigTool
         private void tbxExportToolPath_TextChanged(object sender, EventArgs e)
         {
             FormValidation.validateExportPath(tbxExportToolPath, eprExportPath);
+        }
+
+        private void numEmfDpi_ValueChanged(object sender, EventArgs e)
+        {
+
         }
 
 
