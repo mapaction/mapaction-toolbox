@@ -785,6 +785,11 @@
             // numEmfDpi
             // 
             this.numEmfDpi.Enabled = false;
+            this.numEmfDpi.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.numEmfDpi.Location = new System.Drawing.Point(123, 70);
             this.numEmfDpi.Maximum = new decimal(new int[] {
             1200,
@@ -792,7 +797,7 @@
             0,
             0});
             this.numEmfDpi.Minimum = new decimal(new int[] {
-            96,
+            24,
             0,
             0,
             0});
@@ -804,6 +809,7 @@
             0,
             0,
             0});
+            this.numEmfDpi.ValueChanged += new System.EventHandler(this.numEmfDpi_ValueChanged);
             // 
             // label2
             // 
@@ -828,6 +834,11 @@
             // numPdfDpi
             // 
             this.numPdfDpi.Enabled = false;
+            this.numPdfDpi.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.numPdfDpi.Location = new System.Drawing.Point(123, 44);
             this.numPdfDpi.Maximum = new decimal(new int[] {
             1200,
@@ -835,7 +846,7 @@
             0,
             0});
             this.numPdfDpi.Minimum = new decimal(new int[] {
-            96,
+            24,
             0,
             0,
             0});
@@ -863,7 +874,7 @@
             0,
             0});
             this.numJpegDpi.Minimum = new decimal(new int[] {
-            96,
+            24,
             0,
             0,
             0});
