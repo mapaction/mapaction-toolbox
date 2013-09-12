@@ -122,7 +122,7 @@
             this.btnSave.Location = new System.Drawing.Point(342, 310);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 13;
+            this.btnSave.TabIndex = 4;
             this.btnSave.Text = "Create XML";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -132,7 +132,7 @@
             this.btnCancel.Location = new System.Drawing.Point(261, 310);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 12;
+            this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -145,7 +145,7 @@
             this.gbxCrashMoveFolder.Location = new System.Drawing.Point(12, 12);
             this.gbxCrashMoveFolder.Name = "gbxCrashMoveFolder";
             this.gbxCrashMoveFolder.Size = new System.Drawing.Size(458, 55);
-            this.gbxCrashMoveFolder.TabIndex = 11;
+            this.gbxCrashMoveFolder.TabIndex = 0;
             this.gbxCrashMoveFolder.TabStop = false;
             this.gbxCrashMoveFolder.Text = "Crash move folder";
             // 
@@ -183,7 +183,7 @@
             this.gbxConfigXmlValues.Location = new System.Drawing.Point(13, 73);
             this.gbxConfigXmlValues.Name = "gbxConfigXmlValues";
             this.gbxConfigXmlValues.Size = new System.Drawing.Size(457, 231);
-            this.gbxConfigXmlValues.TabIndex = 14;
+            this.gbxConfigXmlValues.TabIndex = 2;
             this.gbxConfigXmlValues.TabStop = false;
             this.gbxConfigXmlValues.Text = "Configuration XML";
             // 
@@ -193,7 +193,7 @@
             this.chkEditConfigXml.Location = new System.Drawing.Point(370, 19);
             this.chkEditConfigXml.Name = "chkEditConfigXml";
             this.chkEditConfigXml.Size = new System.Drawing.Size(44, 17);
-            this.chkEditConfigXml.TabIndex = 1;
+            this.chkEditConfigXml.TabIndex = 0;
             this.chkEditConfigXml.Text = "Edit";
             this.chkEditConfigXml.UseVisualStyleBackColor = true;
             this.chkEditConfigXml.CheckedChanged += new System.EventHandler(this.chkEditConfigXml_CheckedChanged);
@@ -208,7 +208,7 @@
             this.tabConfigXml.Name = "tabConfigXml";
             this.tabConfigXml.SelectedIndex = 0;
             this.tabConfigXml.Size = new System.Drawing.Size(442, 204);
-            this.tabConfigXml.TabIndex = 0;
+            this.tabConfigXml.TabIndex = 1;
             // 
             // tabPage1
             // 
@@ -278,7 +278,7 @@
             this.cboTimeZone.Location = new System.Drawing.Point(123, 122);
             this.cboTimeZone.Name = "cboTimeZone";
             this.cboTimeZone.Size = new System.Drawing.Size(288, 21);
-            this.cboTimeZone.TabIndex = 4;
+            this.cboTimeZone.TabIndex = 5;
             this.cboTimeZone.TextChanged += new System.EventHandler(this.cboTimeZone_TextChanged);
             // 
             // cboCountry
@@ -538,7 +538,7 @@
             this.cboCountry.Location = new System.Drawing.Point(123, 95);
             this.cboCountry.Name = "cboCountry";
             this.cboCountry.Size = new System.Drawing.Size(288, 21);
-            this.cboCountry.TabIndex = 3;
+            this.cboCountry.TabIndex = 4;
             this.cboCountry.TextChanged += new System.EventHandler(this.cboCountry_TextChanged);
             // 
             // cboLanguage
@@ -555,7 +555,7 @@
             this.cboLanguage.Location = new System.Drawing.Point(123, 69);
             this.cboLanguage.Name = "cboLanguage";
             this.cboLanguage.Size = new System.Drawing.Size(288, 21);
-            this.cboLanguage.TabIndex = 2;
+            this.cboLanguage.TabIndex = 3;
             this.cboLanguage.TextChanged += new System.EventHandler(this.cboLanguage_TextChanged);
             // 
             // label3
@@ -591,7 +591,7 @@
             this.tbxGlideNo.Location = new System.Drawing.Point(123, 43);
             this.tbxGlideNo.Name = "tbxGlideNo";
             this.tbxGlideNo.Size = new System.Drawing.Size(288, 20);
-            this.tbxGlideNo.TabIndex = 1;
+            this.tbxGlideNo.TabIndex = 2;
             this.tbxGlideNo.TextChanged += new System.EventHandler(this.tbxGlideNo_TextChanged);
             // 
             // label20
@@ -609,7 +609,7 @@
             this.tbxOperationName.Location = new System.Drawing.Point(123, 17);
             this.tbxOperationName.Name = "tbxOperationName";
             this.tbxOperationName.Size = new System.Drawing.Size(288, 20);
-            this.tbxOperationName.TabIndex = 0;
+            this.tbxOperationName.TabIndex = 1;
             this.tbxOperationName.TextChanged += new System.EventHandler(this.tbxOperationName_TextChanged);
             // 
             // label21
@@ -618,7 +618,7 @@
             this.label21.Location = new System.Drawing.Point(14, 20);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(82, 13);
-            this.label21.TabIndex = 33;
+            this.label21.TabIndex = 1;
             this.label21.Text = "Operation name";
             // 
             // tabPage2
@@ -645,7 +645,7 @@
             this.tbxOrganisationUrl.Location = new System.Drawing.Point(123, 69);
             this.tbxOrganisationUrl.Name = "tbxOrganisationUrl";
             this.tbxOrganisationUrl.Size = new System.Drawing.Size(288, 20);
-            this.tbxOrganisationUrl.TabIndex = 54;
+            this.tbxOrganisationUrl.TabIndex = 3;
             this.tbxOrganisationUrl.TextChanged += new System.EventHandler(this.tbxOrganisationUrl_TextChanged);
             // 
             // label12
@@ -663,7 +663,7 @@
             this.tbxPrimaryEmail.Location = new System.Drawing.Point(123, 95);
             this.tbxPrimaryEmail.Name = "tbxPrimaryEmail";
             this.tbxPrimaryEmail.Size = new System.Drawing.Size(288, 20);
-            this.tbxPrimaryEmail.TabIndex = 1;
+            this.tbxPrimaryEmail.TabIndex = 4;
             this.tbxPrimaryEmail.TextChanged += new System.EventHandler(this.tbxPrimaryEmail_TextChanged);
             // 
             // label18
