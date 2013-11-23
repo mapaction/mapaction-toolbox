@@ -249,6 +249,7 @@ namespace Alpha_ConfigTool
                 catch (Exception error)
                 {
                     Debug.WriteLine(error.Message);
+                    MessageBox.Show(error.Message);
                 }
                 //Check to see the file was actually created on disk, return a message with the result.  Close all dialogs.
                 if (File.Exists(@savedPath) && newXML == true)
