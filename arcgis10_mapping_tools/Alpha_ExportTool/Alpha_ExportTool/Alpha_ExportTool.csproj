@@ -90,8 +90,12 @@
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <HintPath>Resources\Ionic.Zip.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="MapAction">
-      <HintPath>..\..\MapAction\MapAction\obj\Debug\MapAction.dll</HintPath>
+      <HintPath>..\..\MapAction\MapAction\bin\Debug\MapAction.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
