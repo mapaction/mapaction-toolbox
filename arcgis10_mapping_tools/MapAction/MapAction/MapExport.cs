@@ -17,7 +17,7 @@ using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Output;
 using ESRI.ArcGIS.Geoprocessing;
-// using Ionic.Zip;
+using Ionic.Zip;
 
 namespace MapAction
 {
@@ -105,15 +105,7 @@ namespace MapAction
             }
             else if (exportType == "jpeg")
             {
-                IExportJPEG m_export;
                 docExport = new ExportJPEGClass();
-                if (docExport is IExportJPEG)
-                {
-                    m_export = (IExportJPEG)docExport;
-                    m_export.ProgressiveMode = false;   //hardcoded progressive mode value here
-                    m_export.Quality = 80;              //hardcoded quality value here
-                    docExport = (IExport)m_export;
-                }
             }
             else
             {
@@ -203,25 +195,6 @@ namespace MapAction
         }
         #endregion
 
-        private static string get7zipExePath()
-        {
-            string[] possiblePaths = new[] {@"C:\Program Files\7-Zip\7z.exe", @"C:\Program Files (x86)\7-Zip\7z.exe"};
-            string rtnVal;
-            rtnVal = String.Empty;
-            
-            System.IO.FileInfo possibleFI;
-
-            foreach (string p in possiblePaths)
-            {
-                possibleFI = new System.IO.FileInfo(p);
-                if (possibleFI.Exists)
-                {
-                    rtnVal = p;
-                }
-            }
-            return rtnVal;
-        }
-
         #region Public method createZip
         //Create a zip file of input file paths
         public static Boolean createZip(Dictionary<string,string> dictPaths)
@@ -232,50 +205,23 @@ namespace MapAction
             string savePath = @System.IO.Path.GetDirectoryName(dictPaths["xml"]) + @"\" + zipFileName;
             Debug.WriteLine("save path: " + savePath);
             
-            //try
-            //{
-            //    using (ZipFile zip = new ZipFile())
-            //    {
-            //        foreach (var i in dictPaths)
-            //        {
-            //            zip.AddFile(@i.Value, @"\");
-            //        }
-            //        zip.Save(@savePath);
-            //    }
-            //}
-            //catch (Exception e_zip)
-            //{
-            //    Debug.WriteLine("Error writing zip file");
-            //    Debug.WriteLine(e_zip.Message);
-            //    return false;
-            //}
- 
-            ////////////////////////////////////
-            // 7zip version
-            ////////////////////////////////////
             try
             {
-                string zipExePath = get7zipExePath();
-
-                if (!String.IsNullOrEmpty(zipExePath))
+                using (ZipFile zip = new ZipFile())
                 {
-
-                    Process zipProc = new Process();
-                    // Configure the process using the StartInfo properties.
-                    zipProc.StartInfo.FileName = zipExePath;
-                    zipProc.StartInfo.Arguments = String.Format("a -y -tzip {0} {1} {2} {3}", savePath, dictPaths["xml"], dictPaths["jpeg"], dictPaths["pdf"]);
-                    zipProc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
-                    zipProc.Start();
-                    zipProc.WaitForExit();// Waits here for the process to exit.
+                    foreach (var i in dictPaths)
+                    {
+                        zip.AddFile(@i.Value, @"\");
+                    }
+                    zip.Save(@savePath);
                 }
             }
-            catch (Exception e)
+            catch (Exception e_zip)
             {
                 Debug.WriteLine("Error writing zip file");
-                Debug.WriteLine(e.Message);
+                Debug.WriteLine(e_zip.Message);
                 return false;
             }
-
             return true;
         }
         #endregion
