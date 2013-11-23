@@ -422,7 +422,7 @@ namespace MapAction
          */
         public static string relPathFromAbs(string absPath)
         {
-            MessageBox.Show("crash_move_folder_path = " + Properties.Settings.Default.crash_move_folder_path);
+            //MessageBox.Show("crash_move_folder_path = " + Properties.Settings.Default.crash_move_folder_path);
             Uri cmfURI = new Uri(@Properties.Settings.Default.crash_move_folder_path + @"\", UriKind.Absolute);
             Uri absURI = new Uri(@absPath, UriKind.Absolute);
             //MessageBox.Show("cmfURI = " + cmfURI.ToString());
