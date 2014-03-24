@@ -30,3 +30,10 @@ C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Prototype1_La
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Prototype1_LayoutTool\Prototype1_LayoutTool\bin\Debug\Alpha_ConfigTool.dll
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Prototype1_LayoutTool\Prototype1_LayoutTool\bin\Debug\Alpha_ConfigTool.pdb
 C:\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\Prototype1_LayoutTool\Prototype1_LayoutTool\bin\Debug\Prototype1_LayoutTool.esriAddIn
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_LayoutTool\Prototype1_LayoutTool\obj\Debug\ResolveAssemblyReference.cache
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_LayoutTool\Prototype1_LayoutTool\obj\Debug\Prototype1_LayoutTool.frmCheckElements.resources
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_LayoutTool\Prototype1_LayoutTool\obj\Debug\Prototype1_LayoutTool.frmMain.resources
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_LayoutTool\Prototype1_LayoutTool\obj\Debug\Prototype1_LayoutTool.Properties.Resources.resources
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_LayoutTool\Prototype1_LayoutTool\obj\Debug\ResGen.read.1.tlog
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_LayoutTool\Prototype1_LayoutTool\obj\Debug\ResGen.write.1.tlog
+C:\Work\Chris\mapaction-toolbox-ChrisE\arcgis10_mapping_tools\Prototype1_LayoutTool\Prototype1_LayoutTool\obj\Debug\Prototype1_LayoutTool.pdb
