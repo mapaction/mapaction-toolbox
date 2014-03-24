@@ -150,7 +150,7 @@ namespace Prototype1_LayoutTool
             }
             else if (dictSpatialRef["type"] == "Projected")
             {
-                stringSpatialRef = dictSpatialRef["projection"];
+                stringSpatialRef = dictSpatialRef["projection"] + " / " + dictSpatialRef["datum"]; 
             }
             else
             {

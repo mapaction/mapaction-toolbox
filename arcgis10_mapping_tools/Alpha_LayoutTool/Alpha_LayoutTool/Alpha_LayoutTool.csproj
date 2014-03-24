@@ -159,6 +159,7 @@
   <ItemGroup>
     <EmbeddedResource Include="frmCheckElements.resx">
       <DependentUpon>frmCheckElements.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
