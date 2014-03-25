@@ -1,0 +1,16 @@
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\RenameLayer\RenameLayer\bin\Debug\Resources\layer_name_lookup.accdb
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\RenameLayer\RenameLayer\bin\Debug\RenameLayer.dll.config
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\RenameLayer\RenameLayer\bin\Debug\RenameLayer.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\RenameLayer\RenameLayer\bin\Debug\RenameLayer.pdb
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\RenameLayer\RenameLayer\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\RenameLayer\RenameLayer\obj\Debug\RenameLayer.frmMain.resources
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\RenameLayer\RenameLayer\obj\Debug\RenameLayer.frmPermissionsHelp.resources
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\RenameLayer\RenameLayer\obj\Debug\RenameLayer.Properties.Resources.resources
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\RenameLayer\RenameLayer\obj\Debug\ResGen.read.1.tlog
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\RenameLayer\RenameLayer\obj\Debug\ResGen.write.1.tlog
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\RenameLayer\RenameLayer\obj\Debug\RenameLayer.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\RenameLayer\RenameLayer\obj\Debug\RenameLayer.pdb
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\RenameLayer\RenameLayer\bin\Debug\MapAction.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\RenameLayer\RenameLayer\bin\Debug\Ionic.Zip.dll
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\RenameLayer\RenameLayer\bin\Debug\MapAction.pdb
+C:\Users\Greg\Documents\Visual Studio 2010\Projects\RenameLayer\RenameLayer\bin\Debug\RenameLayer.esriAddIn
