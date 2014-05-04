@@ -1,4 +1,5 @@
 
+#last edited by Chris Ewing, MapAction, 4th May 2014
 #2_append_difference_FT.py - creates a bat file and runs Osmosis to append the
 #OSC file to the master OSM.PBF file
 
@@ -29,8 +30,6 @@ javapth = r"C:\Windows\System32\java.exe"
 inWorkspace   = arcpy.GetParameterAsText(0)
 masterPBF = arcpy.GetParameterAsText(1)
 masterPBFF = inWorkspace + "\\" + masterPBF
-#latestPBF = arcpy.GetParameterAsText(2)
-#latestPBFF = inWorkspace + "\\" + latestPBF
 changeOSC =  arcpy.GetParameterAsText(2)
 changeOSCC = inWorkspace + "\\" + changeOSC
 cumulPBF = arcpy.GetParameterAsText(3)
@@ -38,33 +37,23 @@ cumulPBFF = inWorkspace + "\\" + cumulPBF
 
 env.workspace = inWorkspace
 
-
-
-
-
-
-#now create FT .bat file
-
-#D:\osmosis\bin\osmosis --read-xml-change file="planetdiff-latest.osc" --read-pbf "2014-03-26-19-17.osm.pbf" --apply-change --write-pbf file="cumulative2.osm.pbf"   
 strtopass2 = osmopth + " --read-xml-change file=" + '"' + changeOSCC + '"' + " --read-pbf " + '"' + masterPBFF + '"' + " --apply-change --write-pbf file=" + '"' + cumulPBFF + '"'
 
 try:
     bat_filename2 = r"c:\4_apply_diff_FT.bat"
-    #resorting to creating a bat file
-    str = "creating " + bat_filename2 + " ..."
-    print str
-    arcpy.AddMessage(str)
-
-    
+    #resorting to creating a bat file    
     bat_file2 = open(bat_filename2, "w")
     bat_file2.write(strtopass2)
     bat_file2.close()
-    #str = "...now run the file called " + bat_filename2
 
+    str = "running Osmosis using " + bat_filename2 + " ..."
+    print str
+    arcpy.AddMessage(str)
     subprocess.call([r"c:\4_apply_diff_FT.bat"])
-    #now delete the bat file!
     os.remove(r"c:\4_apply_diff_FT.bat")
-
+    str = "...finished!"
+    print str
+    arcpy.AddMessage(str)    
     
 except:
     str = "there is a problem!"

@@ -1,4 +1,4 @@
-
+#last edited by Chris Ewing, MapAction, 4th May 2014
 #0_get_OSM_files.py - gets the OSM pbf files from a geofabrik URL
 
 import arcpy

@@ -1,13 +1,11 @@
 
+#last edited by Chris Ewing, MapAction, 4th May 2014
 #1_create_difference_SB.py - creates a bat file and runs against osmosis to generate
 #an OSC file (containing the changes only)
 
-
 import arcpy
 from arcpy import env
-
 import subprocess, os
-
 import urllib2, re, os
 
 #set the paths for the software
@@ -26,7 +24,6 @@ javapth = r"C:\Windows\System32\java.exe"
 ##changeOSC = "planetdiff-latest.osc"
 ##changeOSCC = inWorkspace + "\\" + changeOSC
 
-
 inWorkspace   = arcpy.GetParameterAsText(0)
 masterPBF = arcpy.GetParameterAsText(1)
 masterPBFF = inWorkspace + "\\" + masterPBF
@@ -34,41 +31,26 @@ latestPBF = arcpy.GetParameterAsText(2)
 latestPBFF = inWorkspace + "\\" + latestPBF
 changeOSC =  arcpy.GetParameterAsText(3)
 changeOSCC = inWorkspace + "\\" + changeOSC
-#cumulPBF = arcpy.GetParameterAsText(4)
-#cumulPBFF = inWorkspace + "\\" + cumulPBF
 
 env.workspace = inWorkspace
 
-
-#now run Osmosis hopefully!
-#os.chdir(osmopt)
-#FNULL = open(os.devnull, 'w')#use this if you want to suppress output to stdout from the subprocess
-strtopass = osmopth + " --read-pbf file=" + '"' + masterPBFF + '"' + " --read-pbf file=" + '"' + latestPBFF + '"' + " --derive-change --write-xml-change file=" + '"' + changeOSCC + '"'
-#print strtopass
-#subprocess.Popen(strtopass) #, stdout=FNULL, stderr=FNULL, shell=True)
-#os.system(strtopass)
+#reversed order to be correct! 4th May 2014
+strtopass = osmopth + " --read-pbf file=" + '"' + latestPBFF + '"' + " --read-pbf file=" + '"' + masterPBFF + '"' + " --derive-change --write-xml-change file=" + '"' + changeOSCC + '"'
 
 try:
     bat_filename = r"c:\1_create_diff_SB.bat"
     #resorting to creating a bat file
-    str = "creating " + bat_filename + " ..."
-    print str
-    arcpy.AddMessage(str)
-
-    
     bat_file = open(bat_filename, "w")
     bat_file.write(strtopass)
     bat_file.close()
-    #str = "...now run the file called " + bat_filename
-
-    #subprocess.call([r + '"' + bat_filename + '"'])
+    str = "running Osmosis using " + bat_filename + " ..."
+    print str
+    arcpy.AddMessage(str)
     subprocess.call([r"c:\1_create_diff_SB.bat"])
-
-    #now delete the bat file!
     os.remove(r"c:\1_create_diff_SB.bat")
-    
-    #print str
-    #arcpy.AddMessage(str)
+    str = "...finished!"
+    print str
+    arcpy.AddMessage(str)
 except:
     str = "there is a problem!"
     print str
