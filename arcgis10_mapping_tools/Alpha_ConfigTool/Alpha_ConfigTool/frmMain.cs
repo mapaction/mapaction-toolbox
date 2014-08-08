@@ -18,7 +18,7 @@ namespace Alpha_ConfigTool
         private const string _defaultLanguage = "English";
         private const string _defaultSourceOrganisation = "MapAction";
         private const string _defaultDisclaimerText = "The depiction and use of boundaries, names and associated data shown here do not imply endorsement or acceptance by MapAction.";
-        private const string _defaultDonorText = "MapAction is grateful for the support of UK aid from the Department for International Development";
+        private const string _defaultDonorText = "Supported by the Department for International Development";
         private const decimal _defaultJpegDpi = 300;
         private const decimal _defaultPdfDpi = 300;
         private const string _defaultExportToolPath = "";

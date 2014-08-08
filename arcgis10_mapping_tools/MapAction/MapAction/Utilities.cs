@@ -246,7 +246,7 @@ namespace MapAction
             FileInfo f_info = new FileInfo(@fileNamePath);
             long fileSize = f_info.Length;
             //change bytes to kilobytes
-            //fileSize = fileSize / 1000;
+            //fileSize = fileSize / 1000; removed by gv 08/08/2014
             return fileSize;
             }
             else
