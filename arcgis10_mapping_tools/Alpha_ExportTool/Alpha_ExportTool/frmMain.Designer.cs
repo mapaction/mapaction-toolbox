@@ -1243,7 +1243,7 @@
             // 
             this.tbxImageDate.Location = new System.Drawing.Point(77, 286);
             this.tbxImageDate.Name = "tbxImageDate";
-            this.tbxImageDate.Size = new System.Drawing.Size(275, 20);
+            this.tbxImageDate.Size = new System.Drawing.Size(291, 20);
             this.tbxImageDate.TabIndex = 9;
             this.tbxImageDate.TextChanged += new System.EventHandler(this.tbxImageDate_TextChanged);
             // 
@@ -1254,7 +1254,7 @@
             this.tbxDataSources.Name = "tbxDataSources";
             this.tbxDataSources.ReadOnly = true;
             this.tbxDataSources.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbxDataSources.Size = new System.Drawing.Size(275, 63);
+            this.tbxDataSources.Size = new System.Drawing.Size(291, 63);
             this.tbxDataSources.TabIndex = 10;
             this.tbxDataSources.TextChanged += new System.EventHandler(this.tbxDataSources_TextChanged);
             // 
@@ -1290,7 +1290,7 @@
             this.tbxPaperSize.Location = new System.Drawing.Point(282, 258);
             this.tbxPaperSize.Name = "tbxPaperSize";
             this.tbxPaperSize.ReadOnly = true;
-            this.tbxPaperSize.Size = new System.Drawing.Size(70, 20);
+            this.tbxPaperSize.Size = new System.Drawing.Size(86, 20);
             this.tbxPaperSize.TabIndex = 8;
             this.tbxPaperSize.TextChanged += new System.EventHandler(this.tbxPaperSize_TextChanged);
             // 
@@ -1344,7 +1344,7 @@
             this.tbxDate.Location = new System.Drawing.Point(282, 207);
             this.tbxDate.Name = "tbxDate";
             this.tbxDate.ReadOnly = true;
-            this.tbxDate.Size = new System.Drawing.Size(70, 20);
+            this.tbxDate.Size = new System.Drawing.Size(86, 20);
             this.tbxDate.TabIndex = 6;
             this.tbxDate.TextChanged += new System.EventHandler(this.tbxDate_TextChanged);
             // 
@@ -1362,7 +1362,7 @@
             this.tbxTime.Location = new System.Drawing.Point(282, 232);
             this.tbxTime.Name = "tbxTime";
             this.tbxTime.ReadOnly = true;
-            this.tbxTime.Size = new System.Drawing.Size(70, 20);
+            this.tbxTime.Size = new System.Drawing.Size(86, 20);
             this.tbxTime.TabIndex = 7;
             this.tbxTime.TextChanged += new System.EventHandler(this.tbxTime_TextChanged);
             // 
@@ -1380,7 +1380,7 @@
             this.tbxMapDocument.Location = new System.Drawing.Point(77, 179);
             this.tbxMapDocument.Name = "tbxMapDocument";
             this.tbxMapDocument.ReadOnly = true;
-            this.tbxMapDocument.Size = new System.Drawing.Size(275, 20);
+            this.tbxMapDocument.Size = new System.Drawing.Size(291, 20);
             this.tbxMapDocument.TabIndex = 2;
             this.tbxMapDocument.TextChanged += new System.EventHandler(this.tbxMapDocument_TextChanged);
             // 
@@ -1400,7 +1400,7 @@
             this.tbxMapSummary.Name = "tbxMapSummary";
             this.tbxMapSummary.ReadOnly = true;
             this.tbxMapSummary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbxMapSummary.Size = new System.Drawing.Size(275, 83);
+            this.tbxMapSummary.Size = new System.Drawing.Size(291, 83);
             this.tbxMapSummary.TabIndex = 1;
             this.tbxMapSummary.TextChanged += new System.EventHandler(this.tbxMapSummary_TextChanged);
             // 
@@ -1411,7 +1411,7 @@
             this.tbxMapTitle.Name = "tbxMapTitle";
             this.tbxMapTitle.ReadOnly = true;
             this.tbxMapTitle.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbxMapTitle.Size = new System.Drawing.Size(275, 65);
+            this.tbxMapTitle.Size = new System.Drawing.Size(291, 65);
             this.tbxMapTitle.TabIndex = 0;
             this.tbxMapTitle.TextChanged += new System.EventHandler(this.tbxMapTitle_TextChanged);
             // 
