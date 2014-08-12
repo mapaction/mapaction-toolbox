@@ -172,7 +172,7 @@ namespace Alpha_ExportTool
             tbxProjection.Text = dictSpatialRef["projection"];
 
             // Set the 'metadata' tab elements
-            var date = System.DateTime.Today.ToString("dd/MM/yyyy");
+            var date = System.DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
             var time = System.DateTime.Now.ToString("HH:mm");
             tbxDate.Text = date;
             tbxTime.Text = time;
