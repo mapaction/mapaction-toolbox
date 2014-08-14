@@ -246,14 +246,14 @@ namespace Alpha_ExportTool
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
-            string automatedValue = System.DateTime.Today.ToString("dd/MM/yyyy");
-
+            string automatedValue = System.DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+            
             if (validateEmptyField(control, eprWarning))
             {
                 if (control.Text.Trim() != automatedValue && control.Text != string.Empty)
                 {
                     eprError.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
-                    eprError.SetError(control, "Date shown is not formatted to todays date(dd/mm/yyyy).");
+                    eprError.SetError(control, "Date shown is not formatted to the current date & time(yyyy-MM-dd hh:mm:ss).");
                     return "Error";
                 }
                 else
