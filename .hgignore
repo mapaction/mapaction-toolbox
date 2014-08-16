@@ -13,3 +13,7 @@ Bb]in
 obj/
 [Rr]elease*/**
 [Tt]humbs.db
+OSMChangeToolbox/osm2shp-wrapper/Tasks-for-richard-and-chrispin.txt
+OSMChangeToolbox/osm2shp-wrapper/maosmtoshape.py.bak
+OSMChangeToolbox/osm2shp-wrapper/new  2.txt
+OSMChangeToolbox/osm2shp-wrapper/test-planning-notes.txt
