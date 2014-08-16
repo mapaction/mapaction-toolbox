@@ -410,4 +410,6 @@ if __name__ == '__main__':
     start_time = datetime.datetime.now()
     do_ogr2ogr_process(cur, os.path.realpath(pbf_file), output_dir)
     end_time = datetime.datetime.now()
-    print "Time to run export: " + end_time - start_time
+    print "Time to run export:"
+    print "    start " + start_time
+    print "    end " + end_time
