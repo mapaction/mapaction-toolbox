@@ -39,7 +39,7 @@ namespace Alpha_LayoutTool
             }
             else if (MapAction.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
             {
-                frmMain form = new frmMain();
+                frmLayoutMain form = new frmLayoutMain();
                 form.ShowDialog();
             }
         }
