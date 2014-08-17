@@ -564,7 +564,7 @@
             this.btnUpdateTimezone.Location = new System.Drawing.Point(304, 239);
             this.btnUpdateTimezone.Name = "btnUpdateTimezone";
             this.btnUpdateTimezone.Size = new System.Drawing.Size(23, 23);
-            this.btnUpdateTimezone.TabIndex = 57;
+            this.btnUpdateTimezone.TabIndex = 109;
             this.btnUpdateTimezone.UseVisualStyleBackColor = true;
             this.btnUpdateTimezone.Click += new System.EventHandler(this.btnUpdateTimezone_Click);
             // 
@@ -573,7 +573,7 @@
             this.tbxTimezone.Location = new System.Drawing.Point(91, 241);
             this.tbxTimezone.Name = "tbxTimezone";
             this.tbxTimezone.Size = new System.Drawing.Size(207, 20);
-            this.tbxTimezone.TabIndex = 56;
+            this.tbxTimezone.TabIndex = 108;
             this.tbxTimezone.TextChanged += new System.EventHandler(this.tbxTimezone_TextChanged);
             // 
             // label8
@@ -601,7 +601,7 @@
             this.btnUpdateAllTab2.Location = new System.Drawing.Point(120, 19);
             this.btnUpdateAllTab2.Name = "btnUpdateAllTab2";
             this.btnUpdateAllTab2.Size = new System.Drawing.Size(34, 23);
-            this.btnUpdateAllTab2.TabIndex = 53;
+            this.btnUpdateAllTab2.TabIndex = 101;
             this.btnUpdateAllTab2.UseVisualStyleBackColor = true;
             this.btnUpdateAllTab2.Click += new System.EventHandler(this.btnUpdateAllTab2_Click);
             // 
@@ -611,7 +611,7 @@
             this.btnUpdateDisclaimer.Location = new System.Drawing.Point(304, 67);
             this.btnUpdateDisclaimer.Name = "btnUpdateDisclaimer";
             this.btnUpdateDisclaimer.Size = new System.Drawing.Size(23, 23);
-            this.btnUpdateDisclaimer.TabIndex = 52;
+            this.btnUpdateDisclaimer.TabIndex = 103;
             this.btnUpdateDisclaimer.UseVisualStyleBackColor = true;
             this.btnUpdateDisclaimer.Click += new System.EventHandler(this.btnUpdateDisclaimer_Click);
             // 
@@ -621,7 +621,7 @@
             this.btnUpdateProducedBy.Location = new System.Drawing.Point(304, 195);
             this.btnUpdateProducedBy.Name = "btnUpdateProducedBy";
             this.btnUpdateProducedBy.Size = new System.Drawing.Size(23, 23);
-            this.btnUpdateProducedBy.TabIndex = 51;
+            this.btnUpdateProducedBy.TabIndex = 107;
             this.btnUpdateProducedBy.UseVisualStyleBackColor = true;
             this.btnUpdateProducedBy.Click += new System.EventHandler(this.btnUpdateOrganisationDetails_Click);
             // 
@@ -631,7 +631,7 @@
             this.btnUpdateDonorCredits.Location = new System.Drawing.Point(304, 131);
             this.btnUpdateDonorCredits.Name = "btnUpdateDonorCredits";
             this.btnUpdateDonorCredits.Size = new System.Drawing.Size(23, 23);
-            this.btnUpdateDonorCredits.TabIndex = 50;
+            this.btnUpdateDonorCredits.TabIndex = 105;
             this.btnUpdateDonorCredits.UseVisualStyleBackColor = true;
             this.btnUpdateDonorCredits.Click += new System.EventHandler(this.btnUpdateDonorCredits_Click);
             // 
@@ -642,7 +642,7 @@
             this.tbxMapProducer.Name = "tbxMapProducer";
             this.tbxMapProducer.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbxMapProducer.Size = new System.Drawing.Size(207, 58);
-            this.tbxMapProducer.TabIndex = 9;
+            this.tbxMapProducer.TabIndex = 106;
             this.tbxMapProducer.TextChanged += new System.EventHandler(this.tbxMapProducer_TextChanged);
             // 
             // lblOrganisation
@@ -661,7 +661,7 @@
             this.tbxDonorCredit.Name = "tbxDonorCredit";
             this.tbxDonorCredit.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbxDonorCredit.Size = new System.Drawing.Size(207, 58);
-            this.tbxDonorCredit.TabIndex = 3;
+            this.tbxDonorCredit.TabIndex = 104;
             this.tbxDonorCredit.TextChanged += new System.EventHandler(this.tbxDonorCredit_TextChanged);
             // 
             // lblDonorCredits
@@ -680,7 +680,7 @@
             this.tbxDisclaimer.Name = "tbxDisclaimer";
             this.tbxDisclaimer.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbxDisclaimer.Size = new System.Drawing.Size(207, 58);
-            this.tbxDisclaimer.TabIndex = 1;
+            this.tbxDisclaimer.TabIndex = 102;
             this.tbxDisclaimer.TextChanged += new System.EventHandler(this.tbxDisclaimer_TextChanged);
             // 
             // lblDisclaimer
