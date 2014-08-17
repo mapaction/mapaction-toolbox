@@ -21,12 +21,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_313814295A08408BB90915D83924597F"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_69B8BF486B084B42B9AE24E5AC65DFA4"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -146,26 +140,6 @@
             {
             "SourcePath" = "8:..\\Alpha_ConfigTool\\Alpha_ConfigTool\\bin\\Debug\\Alpha_ConfigTool.esriAddIn"
             "TargetName" = "8:Alpha_ConfigTool.esriAddIn"
-            "Tag" = "8:"
-            "Folder" = "8:_A3B621AA21064FCCA8F3296AD4D389AF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_313814295A08408BB90915D83924597F"
-            {
-            "SourcePath" = "8:..\\MapActionToolbars\\bin\\Debug\\MapActionToolbars.esriAddIn"
-            "TargetName" = "8:MapActionToolbars.esriAddIn"
             "Tag" = "8:"
             "Folder" = "8:_A3B621AA21064FCCA8F3296AD4D389AF"
             "Condition" = "8:"
