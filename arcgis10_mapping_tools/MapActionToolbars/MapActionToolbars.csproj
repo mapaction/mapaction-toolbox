@@ -66,7 +66,34 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
+    <Compile Include="ConfigTool.cs" />
+    <Compile Include="CreateAndUpdateXml.cs" />
+    <Compile Include="FormValidationConfig.cs" />
+    <Compile Include="frmConfigMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConfigMain.designer.cs">
+      <DependentUpon>frmConfigMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCreateXml.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCreateXml.designer.cs">
+      <DependentUpon>frmCreateXml.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEditXml.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditXml.designer.cs">
+      <DependentUpon>frmEditXml.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Config.esriaddinx">
@@ -83,6 +110,33 @@
   <ItemGroup>
     <AddInContent Include="Images\ma_globe_only.png" />
     <AddInContent Include="Images\ma_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="frmConfigMain.resx">
+      <DependentUpon>frmConfigMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCreateXml.resx">
+      <DependentUpon>frmCreateXml.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEditXml.resx">
+      <DependentUpon>frmEditXml.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MapAction\MapAction\MapAction.csproj">
+      <Project>{8B7ABA1A-C659-4D80-A2EF-13D953577643}</Project>
+      <Name>MapAction</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\ConfigTool.png" />
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>

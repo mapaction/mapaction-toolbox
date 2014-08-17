@@ -43,7 +43,7 @@ namespace Alpha_ExportTool
             }
             else if (MapAction.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
             {
-                var dlg = new frmMain();
+                var dlg = new frmExportMain();
                 dlg.ShowDialog();
             }    
 

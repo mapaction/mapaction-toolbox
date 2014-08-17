@@ -100,18 +100,18 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
-    <Compile Include="FormValidation.cs" />
+    <Compile Include="FormValidationLayout.cs" />
     <Compile Include="frmCheckElements.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmCheckElements.Designer.cs">
       <DependentUpon>frmCheckElements.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmMain.cs">
+    <Compile Include="frmLayoutMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMain.Designer.cs">
-      <DependentUpon>frmMain.cs</DependentUpon>
+    <Compile Include="frmLayoutMain.Designer.cs">
+      <DependentUpon>frmLayoutMain.cs</DependentUpon>
     </Compile>
     <Compile Include="LayoutToolAutomatedValues.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -161,8 +161,8 @@
       <DependentUpon>frmCheckElements.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMain.resx">
-      <DependentUpon>frmMain.cs</DependentUpon>
+    <EmbeddedResource Include="frmLayoutMain.resx">
+      <DependentUpon>frmLayoutMain.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
