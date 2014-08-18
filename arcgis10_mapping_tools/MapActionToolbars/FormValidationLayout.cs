@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Text.RegularExpressions;
 
-namespace Alpha_LayoutTool
+namespace MapActionToolbars
 {
     public static class FormValidationLayout
     {

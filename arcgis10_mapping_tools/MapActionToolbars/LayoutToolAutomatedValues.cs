@@ -17,7 +17,7 @@ using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using System.Diagnostics;
 
-namespace Alpha_LayoutTool
+namespace MapActionToolbars
 {
     class LayoutToolAutomatedValues
     {

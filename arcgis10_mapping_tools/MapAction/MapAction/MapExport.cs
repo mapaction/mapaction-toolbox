@@ -17,7 +17,6 @@ using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Output;
 using ESRI.ArcGIS.Geoprocessing;
-// using Ionic.Zip;
 
 namespace MapAction
 {
