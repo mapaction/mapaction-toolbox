@@ -5,7 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using ESRI.ArcGIS.ArcMapUI;
 
-namespace Alpha_LayoutTool
+namespace MapActionToolbars
 {
     public class LayoutTool : ESRI.ArcGIS.Desktop.AddIns.Button
     {

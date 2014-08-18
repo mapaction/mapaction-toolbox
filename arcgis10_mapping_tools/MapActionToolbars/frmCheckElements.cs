@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using ESRI.ArcGIS.ArcMapUI;
 
-namespace Alpha_LayoutTool
+namespace MapActionToolbars
 {
     public partial class frmCheckElements : Form
     {

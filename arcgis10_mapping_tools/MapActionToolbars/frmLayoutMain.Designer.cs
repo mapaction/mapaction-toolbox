@@ -1,4 +1,4 @@
-﻿namespace Alpha_LayoutTool
+﻿namespace MapActionToolbars
 {
     partial class frmLayoutMain
     {
@@ -164,7 +164,7 @@
             // btnUpdateAll
             // 
             this.btnUpdateAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdateAll.Image = global::Alpha_LayoutTool.Properties.Resources.import20x20px;
+            this.btnUpdateAll.Image = global::MapActionToolbars.Properties.Resources.import20x20px;
             this.btnUpdateAll.Location = new System.Drawing.Point(120, 24);
             this.btnUpdateAll.Name = "btnUpdateAll";
             this.btnUpdateAll.Size = new System.Drawing.Size(34, 23);
@@ -174,7 +174,7 @@
             // 
             // btnMapDocument
             // 
-            this.btnMapDocument.Image = global::Alpha_LayoutTool.Properties.Resources.refresh17x17px;
+            this.btnMapDocument.Image = global::MapActionToolbars.Properties.Resources.refresh17x17px;
             this.btnMapDocument.Location = new System.Drawing.Point(304, 53);
             this.btnMapDocument.Name = "btnMapDocument";
             this.btnMapDocument.Size = new System.Drawing.Size(23, 23);
@@ -204,7 +204,7 @@
             // 
             // btnSpatialReference
             // 
-            this.btnSpatialReference.Image = global::Alpha_LayoutTool.Properties.Resources.refresh17x17px;
+            this.btnSpatialReference.Image = global::MapActionToolbars.Properties.Resources.refresh17x17px;
             this.btnSpatialReference.Location = new System.Drawing.Point(304, 82);
             this.btnSpatialReference.Name = "btnSpatialReference";
             this.btnSpatialReference.Size = new System.Drawing.Size(23, 23);
@@ -407,7 +407,7 @@
             // tspBtnCheckElements
             // 
             this.tspBtnCheckElements.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tspBtnCheckElements.Image = global::Alpha_LayoutTool.Properties.Resources.gear_icon;
+            this.tspBtnCheckElements.Image = global::MapActionToolbars.Properties.Resources.gear_icon;
             this.tspBtnCheckElements.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tspBtnCheckElements.Name = "tspBtnCheckElements";
             this.tspBtnCheckElements.Size = new System.Drawing.Size(23, 22);
@@ -422,7 +422,7 @@
             // tspBtnClearForm
             // 
             this.tspBtnClearForm.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tspBtnClearForm.Image = global::Alpha_LayoutTool.Properties.Resources.clear_form_icon;
+            this.tspBtnClearForm.Image = global::MapActionToolbars.Properties.Resources.clear_form_icon;
             this.tspBtnClearForm.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tspBtnClearForm.Name = "tspBtnClearForm";
             this.tspBtnClearForm.Size = new System.Drawing.Size(23, 22);
@@ -597,7 +597,7 @@
             // btnUpdateAllTab2
             // 
             this.btnUpdateAllTab2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdateAllTab2.Image = global::Alpha_LayoutTool.Properties.Resources.import20x20px;
+            this.btnUpdateAllTab2.Image = global::MapActionToolbars.Properties.Resources.import20x20px;
             this.btnUpdateAllTab2.Location = new System.Drawing.Point(120, 19);
             this.btnUpdateAllTab2.Name = "btnUpdateAllTab2";
             this.btnUpdateAllTab2.Size = new System.Drawing.Size(34, 23);
@@ -607,7 +607,7 @@
             // 
             // btnUpdateDisclaimer
             // 
-            this.btnUpdateDisclaimer.Image = global::Alpha_LayoutTool.Properties.Resources.refresh17x17px;
+            this.btnUpdateDisclaimer.Image = global::MapActionToolbars.Properties.Resources.refresh17x17px;
             this.btnUpdateDisclaimer.Location = new System.Drawing.Point(304, 67);
             this.btnUpdateDisclaimer.Name = "btnUpdateDisclaimer";
             this.btnUpdateDisclaimer.Size = new System.Drawing.Size(23, 23);
@@ -627,7 +627,7 @@
             // 
             // btnUpdateDonorCredits
             // 
-            this.btnUpdateDonorCredits.Image = global::Alpha_LayoutTool.Properties.Resources.refresh17x17px;
+            this.btnUpdateDonorCredits.Image = global::MapActionToolbars.Properties.Resources.refresh17x17px;
             this.btnUpdateDonorCredits.Location = new System.Drawing.Point(304, 131);
             this.btnUpdateDonorCredits.Name = "btnUpdateDonorCredits";
             this.btnUpdateDonorCredits.Size = new System.Drawing.Size(23, 23);

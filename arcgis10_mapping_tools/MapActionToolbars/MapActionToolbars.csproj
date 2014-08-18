@@ -69,6 +69,13 @@
     <Compile Include="ConfigTool.cs" />
     <Compile Include="CreateAndUpdateXml.cs" />
     <Compile Include="FormValidationConfig.cs" />
+    <Compile Include="FormValidationLayout.cs" />
+    <Compile Include="frmCheckElements.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCheckElements.Designer.cs">
+      <DependentUpon>frmCheckElements.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmConfigMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +94,14 @@
     <Compile Include="frmEditXml.designer.cs">
       <DependentUpon>frmEditXml.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmLayoutMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLayoutMain.Designer.cs">
+      <DependentUpon>frmLayoutMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LayoutTool.cs" />
+    <Compile Include="LayoutToolAutomatedValues.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -98,6 +113,7 @@
   <ItemGroup>
     <AddInContent Include="Config.esriaddinx">
       <Generator>ArcGISAddInHostGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Config.Designer.cs</LastGenOutput>
     </AddInContent>
   </ItemGroup>
@@ -112,6 +128,10 @@
     <AddInContent Include="Images\ma_logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmCheckElements.resx">
+      <DependentUpon>frmCheckElements.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmConfigMain.resx">
       <DependentUpon>frmConfigMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -120,6 +140,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmEditXml.resx">
       <DependentUpon>frmEditXml.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLayoutMain.resx">
+      <DependentUpon>frmLayoutMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +161,23 @@
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Images\ConfigTool.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\LayoutTool.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clear-form-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\clear-icon.png" />
+    <None Include="Resources\tick_30px.png" />
+    <None Include="Resources\tick_17px.png" />
+    <None Include="Resources\refresh17x17px.png" />
+    <None Include="Resources\import20x20px.png" />
+    <None Include="Resources\gear-icon.png" />
+    <None Include="Resources\cross_30px.png" />
+    <None Include="Resources\cross_17px.png" />
+    <None Include="Resources\clear-icon1.png" />
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
