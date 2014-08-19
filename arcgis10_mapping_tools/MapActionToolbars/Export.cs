@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.IO;
 
 
-namespace Alpha_ExportTool
+namespace MapActionToolbars
 {
     class Export
     {

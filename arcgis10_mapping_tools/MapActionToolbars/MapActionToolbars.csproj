@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ESRI.ArcGIS.ArcMap, Version=10.1.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="ESRI.ArcGIS.ArcMapUI, Version=10.1.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -80,7 +83,11 @@
     </Compile>
     <Compile Include="ConfigTool.cs" />
     <Compile Include="CreateAndUpdateXml.cs" />
+    <Compile Include="Export.cs" />
+    <Compile Include="ExportTool.cs" />
+    <Compile Include="export_validation.cs" />
     <Compile Include="FormValidationConfig.cs" />
+    <Compile Include="FormValidationExport.cs" />
     <Compile Include="FormValidationLayout.cs" />
     <Compile Include="frmCheckElements.cs">
       <SubType>Form</SubType>
@@ -105,6 +112,12 @@
     </Compile>
     <Compile Include="frmEditXml.designer.cs">
       <DependentUpon>frmEditXml.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmExportMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmExportMain.Designer.cs">
+      <DependentUpon>frmExportMain.cs</DependentUpon>
     </Compile>
     <Compile Include="frmLayoutMain.cs">
       <SubType>Form</SubType>
@@ -158,6 +171,10 @@
     <EmbeddedResource Include="frmEditXml.resx">
       <DependentUpon>frmEditXml.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmExportMain.resx">
+      <DependentUpon>frmExportMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmLayoutMain.resx">
       <DependentUpon>frmLayoutMain.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -190,7 +207,12 @@
     <None Include="Resources\clear-form-icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <AddInContent Include="Images\ExportTool.png" />
     <Content Include="Resources\clear-icon.png" />
+    <None Include="Resources\warning_17x17px.png" />
+    <None Include="Resources\right_button_20x20.png" />
+    <None Include="Resources\left_button_20x20.png" />
+    <None Include="Resources\empty17px.png" />
     <None Include="Resources\tick_30px.png" />
     <None Include="Resources\tick_17px.png" />
     <None Include="Resources\refresh17x17px.png" />
