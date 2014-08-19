@@ -1,4 +1,4 @@
-﻿namespace Alpha_ExportTool
+﻿namespace MapActionToolbars
 {
     partial class frmExportMain
     {
@@ -874,7 +874,7 @@
             // 
             // btnExportLeft
             // 
-            this.btnExportLeft.Image = global::Alpha_ExportTool.Properties.Resources.left_button_20x20;
+            this.btnExportLeft.Image = global::MapActionToolbars.Properties.Resources.left_button_20x20;
             this.btnExportLeft.Location = new System.Drawing.Point(307, 390);
             this.btnExportLeft.Name = "btnExportLeft";
             this.btnExportLeft.Size = new System.Drawing.Size(30, 30);
@@ -1154,7 +1154,7 @@
             // 
             // btnUserRight
             // 
-            this.btnUserRight.Image = global::Alpha_ExportTool.Properties.Resources.right_button_20x20;
+            this.btnUserRight.Image = global::MapActionToolbars.Properties.Resources.right_button_20x20;
             this.btnUserRight.Location = new System.Drawing.Point(344, 390);
             this.btnUserRight.Name = "btnUserRight";
             this.btnUserRight.Size = new System.Drawing.Size(30, 30);
@@ -1164,7 +1164,7 @@
             // 
             // btnUserLeft
             // 
-            this.btnUserLeft.Image = global::Alpha_ExportTool.Properties.Resources.left_button_20x20;
+            this.btnUserLeft.Image = global::MapActionToolbars.Properties.Resources.left_button_20x20;
             this.btnUserLeft.Location = new System.Drawing.Point(307, 390);
             this.btnUserLeft.Name = "btnUserLeft";
             this.btnUserLeft.Size = new System.Drawing.Size(30, 30);
@@ -1444,7 +1444,7 @@
             // 
             // btnLayoutRight
             // 
-            this.btnLayoutRight.Image = global::Alpha_ExportTool.Properties.Resources.right_button_20x20;
+            this.btnLayoutRight.Image = global::MapActionToolbars.Properties.Resources.right_button_20x20;
             this.btnLayoutRight.Location = new System.Drawing.Point(344, 390);
             this.btnLayoutRight.Name = "btnLayoutRight";
             this.btnLayoutRight.Size = new System.Drawing.Size(30, 30);

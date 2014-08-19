@@ -15,7 +15,7 @@ using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 
-namespace Alpha_ExportTool
+namespace MapActionToolbars
 {
     public static class FormValidationExport
     {

@@ -103,6 +103,16 @@ namespace MapActionToolbars.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap empty17px {
+            get {
+                object obj = ResourceManager.GetObject("empty17px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap gear_icon {
             get {
                 object obj = ResourceManager.GetObject("gear_icon", resourceCulture);
@@ -123,9 +133,29 @@ namespace MapActionToolbars.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap left_button_20x20 {
+            get {
+                object obj = ResourceManager.GetObject("left_button_20x20", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap refresh17x17px {
             get {
                 object obj = ResourceManager.GetObject("refresh17x17px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap right_button_20x20 {
+            get {
+                object obj = ResourceManager.GetObject("right_button_20x20", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -146,6 +176,16 @@ namespace MapActionToolbars.Properties {
         internal static System.Drawing.Bitmap tick_30px {
             get {
                 object obj = ResourceManager.GetObject("tick_30px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap warning_17x17px {
+            get {
+                object obj = ResourceManager.GetObject("warning_17x17px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
