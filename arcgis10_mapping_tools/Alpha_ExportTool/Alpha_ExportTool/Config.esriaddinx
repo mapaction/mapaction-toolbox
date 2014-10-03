@@ -8,7 +8,7 @@
   <Company>MapAction</Company>
   <Date>03/12/2012</Date>
   <Targets>
-    <Target name="Desktop" version="10.1" />
+    <Target name="Desktop" version="10.2" />
   </Targets>
   <AddIn language="CLR" library="Alpha_ExportTool.dll" namespace="Alpha_ExportTool">
     <ArcMap>
