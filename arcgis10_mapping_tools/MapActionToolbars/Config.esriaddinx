@@ -6,7 +6,7 @@
   <Image>Images\MapActionToolbars.png</Image>
   <Author>Software Development Group</Author>
   <Company>MapAction</Company>
-  <Date>17/08/2014</Date>
+  <Date>11/11/2014</Date>
   <Targets>
     <Target name="Desktop" version="10.1" />
   </Targets>
