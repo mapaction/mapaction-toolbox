@@ -266,7 +266,7 @@ namespace MapAction
                     Process zipProc = new Process();
                     // Configure the process using the StartInfo properties.
                     zipProc.StartInfo.FileName = zipExePath;
-                    zipProc.StartInfo.Arguments = String.Format("a -y -tzip \"{0}\" {1} {2} {3}", savePath, dictPaths["xml"], dictPaths["jpeg"], dictPaths["pdf"]);
+                    zipProc.StartInfo.Arguments = String.Format("a -y -tzip \"{0}\" \"{1}\" \"{2}\" \"{3}\"", savePath, dictPaths["xml"], dictPaths["jpeg"], dictPaths["pdf"]);
                     zipProc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
                     zipProc.Start();
                     zipProc.WaitForExit();// Waits here for the process to exit.
