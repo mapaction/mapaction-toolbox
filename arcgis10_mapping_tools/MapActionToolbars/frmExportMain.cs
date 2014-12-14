@@ -333,6 +333,7 @@ namespace MapActionToolbars
                 {"jpgresolutiondpi",nudJpegResolution.Value.ToString()},
                 {"pdffilesize",     dictImageFileSizes["pdf"].ToString()},
                 {"pdfresolutiondpi",nudPdfResolution.Value.ToString()},
+                {"kmlresolutiondpi",nudKmlResolution.Value.ToString()},
                 {"mxdfilename",     mxdName},
                 {"paperxmax",       ""},
                 {"paperxmin",       ""},
@@ -617,6 +618,8 @@ namespace MapActionToolbars
             FormValidationExport.validationCheck(_languageValidationResult, imgLanguageStatus);
 
         }
+
+       
 
     }
 }

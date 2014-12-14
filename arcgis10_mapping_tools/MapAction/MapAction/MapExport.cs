@@ -190,7 +190,8 @@ namespace MapAction
             parameters.Add("COMPOSITE");
             parameters.Add(false);
             parameters.Add(boundingBox);
-
+            parameters.Add(""); // Image Size
+            parameters.Add(dict["kmlresolutiondpi"]);
             // Execute the tool
             try
             {
