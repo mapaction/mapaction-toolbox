@@ -243,7 +243,7 @@ namespace MapActionToolbars
              string kmzPathFileName = exportPathFileName + ".kmz";
             string kmzScale;
             if (dictFrameExtents.ContainsKey("scale")) {kmzScale = dictFrameExtents["scale"];} else {kmzScale = null;};
-            MapAction.MapExport.exportMapFrameKmlAsRaster(pMxDoc, "Main map", @kmzPathFileName, kmzScale); 
+            MapAction.MapExport.exportMapFrameKmlAsRaster(pMxDoc, "Main map", @kmzPathFileName, kmzScale, (int)nudPdfResolution.Value); 
              
 
             // Get the mxd filename

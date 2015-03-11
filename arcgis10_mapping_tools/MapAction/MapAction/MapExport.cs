@@ -166,11 +166,12 @@ namespace MapAction
 
         #region Public method exportMapFrameKmlAsRaster
         // Export map frame kml as raster
-        public static void exportMapFrameKmlAsRaster(IMxDocument pMxDoc, string dataFrame, string filePathName, string scale)
+        public static void exportMapFrameKmlAsRaster(IMxDocument pMxDoc, string dataFrame, string filePathName, string scale, int kmlresolutiondpi)
         {          
             IGeoProcessor2 gp = new GeoProcessorClass();
             IVariantArray parameters = new VarArrayClass();
-            
+            IActiveView pActiveView = null;
+
             // Get the mxd path to pass as the first variable
             IDocumentInfo2 docInfo = pMxDoc as IDocumentInfo2;
             string path = docInfo.Path;
@@ -181,17 +182,24 @@ namespace MapAction
             string boundingBox = dict["xMin"] + " " + dict["yMin"] + " " + dict["xMax"] + " " + dict["yMax"];
             Debug.WriteLine("Bounding box: " + boundingBox);
 
+            // Calculate desired resolution
+            pActiveView = pMxDoc.ActiveView;
+            
+            System.Int32 screenResolution = 96;
+            System.Int32 outputResolution = Convert.ToInt32(kmlresolutiondpi);
+            Int32 imgSize = Math.Max((pActiveView.ExportFrame.right * (outputResolution / screenResolution)),(pActiveView.ExportFrame.bottom * (outputResolution / screenResolution))); // Get size of largest side.
+
             Debug.WriteLine("mxd path: " + path);
             // Add parameters 
             parameters.Add(@path);
             parameters.Add(dataFrame);
             parameters.Add(@filePathName);
             parameters.Add(scale);
-            parameters.Add("COMPOSITE");
-            parameters.Add(false);
+            parameters.Add("NO_COMPOSITE");
+            parameters.Add(false);  // Export vectors
             parameters.Add(boundingBox);
-            parameters.Add(""); // Image Size
-            parameters.Add(dict["kmlresolutiondpi"]);
+            parameters.Add(imgSize); // Image Size pixels - make dynamic
+            parameters.Add(kmlresolutiondpi);
             // Execute the tool
             try
             {

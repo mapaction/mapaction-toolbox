@@ -83,6 +83,7 @@
             this.btnExportZipPath = new System.Windows.Forms.Button();
             this.tbxExportZipPath = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label47 = new System.Windows.Forms.Label();
             this.nudKmlResolution = new System.Windows.Forms.NumericUpDown();
             this.nudEmfResolution = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
@@ -178,7 +179,6 @@
             this.eprLanguageWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprLanguageError = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprImageryDate = new System.Windows.Forms.ErrorProvider(this.components);
-            this.label47 = new System.Windows.Forms.Label();
             this.tabPageExport.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgLanguageStatus)).BeginInit();
@@ -769,16 +769,25 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Image resolution (dpi)";
             // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(159, 56);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(29, 13);
+            this.label47.TabIndex = 14;
+            this.label47.Text = "KML";
+            // 
             // nudKmlResolution
             // 
             this.nudKmlResolution.Location = new System.Drawing.Point(201, 55);
             this.nudKmlResolution.Maximum = new decimal(new int[] {
-            1000,
+            1200,
             0,
             0,
             0});
             this.nudKmlResolution.Minimum = new decimal(new int[] {
-            50,
+            96,
             0,
             0,
             0});
@@ -786,7 +795,7 @@
             this.nudKmlResolution.Size = new System.Drawing.Size(64, 20);
             this.nudKmlResolution.TabIndex = 13;
             this.nudKmlResolution.Value = new decimal(new int[] {
-            50,
+            300,
             0,
             0,
             0});
@@ -1669,15 +1678,6 @@
             this.eprImageryDate.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.eprImageryDate.ContainerControl = this;
             this.eprImageryDate.Icon = ((System.Drawing.Icon)(resources.GetObject("eprImageryDate.Icon")));
-            // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(159, 56);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(29, 13);
-            this.label47.TabIndex = 14;
-            this.label47.Text = "KML";
             // 
             // frmExportMain
             // 
