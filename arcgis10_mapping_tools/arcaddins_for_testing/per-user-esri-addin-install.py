@@ -4,6 +4,11 @@ import re
 import subprocess
 
 
+old_addin_uids = {r'{56a42ca7-d9c5-4c88-b57d-e04e9c8f9fb5}',
+                  r'{1472afad-112a-4f7e-9d6e-5b2083d133bf}',
+                  r'{8ed7a3cf-3f55-4460-b5f7-333ce742b3f5}',
+                  r'{d206869a-5273-4370-a062-c3ecad281c58}'}
+
 def is64Windows():
     return 'PROGRAMFILES(X86)' in os.environ
 
@@ -23,7 +28,6 @@ def get_regaddinexe():
         raise IOError(500, "The tool esriregaddin.exe was not found", exe)
 
 def is_arc_licensed():
-   
     try:
         import arcpy
     except RuntimeError:
@@ -33,37 +37,27 @@ def is_arc_licensed():
         print "arc is licensed for " + arcpy.ProductInfo()
         return not arcpy.ProductInfo() == "NotInitialized"
 
+def shellquote(s):
+    return '"' + s + '"'
+
 def test_start_menu_shortcut(path,name):
-    return os.path.isfile(os.path.join(path,name+".lnk"))
+    return os.path.isfile(os.path.join(path,name))
 
 def create_start_menu_shortcut(path,name):
-    class CreateShortCutError(Exception):
-        pass
-
     if not test_start_menu_shortcut(path,name):
-        sub_path = ur'nircmd\nircmdc.exe'
-        # pf = os.environ['PROGRAMFILES']
-        pf = ur'C:\Program Files'
-        cmd = [os.path.join(pf,sub_path), 
-                ur'shortcut',
-                ur'c:\py27arcgis101\ArcGIS10.1\python.exe',
-                path,
-                name,
-                os.path.realpath(sys.argv[0])]
-    
-        # for e, v in os.environ:
-            # print e, v
-        # execmd del "~$folder.desktop$\calc.lnk" 
-        print cmd
-        
-        if is64Windows():
-            testvalue = 1073756732
-        else:
-            testvalue = 4206857
+
+        cmdlst = [r'cmd',
+                r'/c',
+                r'echo', 
+                shellquote(r'c:\py27arcgis102\ArcGIS10.2\python.exe'),
+                shellquote(os.path.realpath(sys.argv[0])),
+                r'>',
+                shellquote(os.path.join(path, name))]
+
+        cmd = " ".join(cmdlst)
         
         try:
-            if not testvalue == subprocess.call(cmd):
-                raise CreateShortCutError("failed to create shortcur", str(cmd))
+            subprocess.check_call(cmd)
         except (subprocess.CalledProcessError, OSError):
             print "create shortcut failed;"
             print cmd
@@ -73,7 +67,24 @@ def create_start_menu_shortcut(path,name):
    
 def delete_start_menu_shortcut(path,name):
     if test_start_menu_shortcut(path,name):
-        os.remove(os.path.join(path,name+".lnk"))
+        os.remove(os.path.join(path,name))
+
+
+def remove_old_addin(esriregaddinexe, uids):
+    for uid in uids:
+        # print "all files = " + f
+        if re.search(r"{(\w|\d){8}(-(\w|\d){4}){3}-(\w|\d){12}}", uid) is not None:
+            # print "just addins = " + f
+            cmd = [esriregaddinexe, uid, "/u", "/s"]
+            # cmd_arg_str = os.path.join(root, f)
+            print cmd
+            try:
+                subprocess.check_call(cmd)
+            except (subprocess.CalledProcessError, OSError):
+                print "command failed"
+            else:
+                print "command completed"
+            
         
 def run_reg_addin(esriregaddinexe, installdir):
     for root, dir, filenames in os.walk(installdir):
@@ -93,15 +104,17 @@ def run_reg_addin(esriregaddinexe, installdir):
             
             
 if __name__ == '__main__':
-    sub_path = ur'Microsoft\Windows\Start Menu\Programs\Startup'
+    sub_path = r'Microsoft\Windows\Start Menu\Programs\Startup'
     pf = os.environ['APPDATA']
     print "appdata = " + pf
     shortcut_path = os.path.join(pf,sub_path)
     print "shortcut_path = " + shortcut_path
-    shortcut_name = ur'Register MA ESRI Addins'
+    shortcut_name = r'Register_MA_ESRI_Addins.bat'
 
     if is_arc_licensed():
-        run_reg_addin(get_regaddinexe(), os.path.dirname(os.path.realpath(sys.argv[0])))
+        regaddinexe = get_regaddinexe()
+        remove_old_addin(regaddinexe, old_addin_uids)
+        run_reg_addin(regaddinexe, os.path.dirname(os.path.realpath(sys.argv[0])))
         delete_start_menu_shortcut(shortcut_path, shortcut_name)
     else:
         create_start_menu_shortcut(shortcut_path, shortcut_name)
