@@ -294,12 +294,16 @@ namespace MapActionToolbars
         private Dictionary<string, string> getExportToolValues(Dictionary<string, long> dictImageFileSizes, 
             Dictionary<string, string> dictFilePaths, Dictionary<string, string> dictFrameExtents, string mxdName)
         {
+            
+            //tidy up the map title
+            string mapTitle1 = tbxMapTitle.Text.Replace(System.Environment.NewLine, " ");
+            mapTitle1 = mapTitle1.Replace("  ", " ");
             // Create a dictionary and add values from Export form
             var dict = new Dictionary<string, string>()
             {
                 {"operationID",     tbxOperationId.Text},
                 {"sourceorg",       "MapAction"}, //this is hard coded in the existing applicaton
-                {"title",           tbxMapTitle.Text},
+                {"title",           mapTitle1},
                 {"ref",             tbxMapDocument.Text},
                 {"language",        tbxLanguage.Text},
                 {"countries",       tbxCountries.Text},
