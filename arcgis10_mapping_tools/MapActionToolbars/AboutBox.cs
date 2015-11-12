@@ -20,8 +20,7 @@ namespace MapActionToolbars
             // m_thisaddin_desc = "version " + MapActionToolbars.ThisAddIn.Date.ToString();
             m_thisaddin_desc = "Version " + System.Reflection.Assembly.GetExecutingAssembly()
                                            .GetName().Version.ToString()
-                                           + "\n" +
-                               "Build date " + MapActionToolbars.ThisAddIn.Date.ToString();
+                                           + "\n";
         }
 
         protected override void OnClick()
