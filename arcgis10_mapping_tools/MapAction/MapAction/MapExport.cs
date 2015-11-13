@@ -17,7 +17,6 @@ using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Output;
 using ESRI.ArcGIS.Geoprocessing;
-// using Ionic.Zip;
 
 namespace MapAction
 {
@@ -68,8 +67,11 @@ namespace MapAction
             }
             // The Export*Class() type initializes a new export class of the desired type.
             if (exportType == "pdf")
-            {
+            { // Set PDF Export options
                 docExport = new ExportPDFClass();
+                IExportPDF iPDF_export = (IExportPDF)docExport;
+                iPDF_export.EmbedFonts = true;
+                docExport = (IExport)iPDF_export;
             }
             else if (exportType == "eps")
             {
@@ -263,7 +265,7 @@ namespace MapAction
                     Process zipProc = new Process();
                     // Configure the process using the StartInfo properties.
                     zipProc.StartInfo.FileName = zipExePath;
-                    zipProc.StartInfo.Arguments = String.Format("a -y -tzip {0} {1} {2} {3}", savePath, dictPaths["xml"], dictPaths["jpeg"], dictPaths["pdf"]);
+                    zipProc.StartInfo.Arguments = String.Format("a -y -tzip \"{0}\" \"{1}\" \"{2}\" \"{3}\"", savePath, dictPaths["xml"], dictPaths["jpeg"], dictPaths["pdf"]);
                     zipProc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
                     zipProc.Start();
                     zipProc.WaitForExit();// Waits here for the process to exit.
