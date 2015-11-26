@@ -239,12 +239,12 @@ namespace MapActionToolbars
             Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
 
             // Export KML
-            /* KML Export Disabled pending fix of export quality issues.
-             * string kmzPathFileName = exportPathFileName + ".kmz";
+            
+             string kmzPathFileName = exportPathFileName + ".kmz";
             string kmzScale;
             if (dictFrameExtents.ContainsKey("scale")) {kmzScale = dictFrameExtents["scale"];} else {kmzScale = null;};
             MapAction.MapExport.exportMapFrameKmlAsRaster(pMxDoc, "Main map", @kmzPathFileName, kmzScale); 
-             */
+             
 
             // Get the mxd filename
             string mxdName = ArcMap.Application.Document.Title;
@@ -333,6 +333,7 @@ namespace MapActionToolbars
                 {"jpgresolutiondpi",nudJpegResolution.Value.ToString()},
                 {"pdffilesize",     dictImageFileSizes["pdf"].ToString()},
                 {"pdfresolutiondpi",nudPdfResolution.Value.ToString()},
+                {"kmlresolutiondpi",nudKmlResolution.Value.ToString()},
                 {"mxdfilename",     mxdName},
                 {"paperxmax",       ""},
                 {"paperxmin",       ""},
@@ -617,6 +618,8 @@ namespace MapActionToolbars
             FormValidationExport.validationCheck(_languageValidationResult, imgLanguageStatus);
 
         }
+
+       
 
     }
 }

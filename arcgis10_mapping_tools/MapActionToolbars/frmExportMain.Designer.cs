@@ -83,6 +83,7 @@
             this.btnExportZipPath = new System.Windows.Forms.Button();
             this.tbxExportZipPath = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.nudKmlResolution = new System.Windows.Forms.NumericUpDown();
             this.nudEmfResolution = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
             this.nudJpegResolution = new System.Windows.Forms.NumericUpDown();
@@ -177,6 +178,7 @@
             this.eprLanguageWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprLanguageError = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprImageryDate = new System.Windows.Forms.ErrorProvider(this.components);
+            this.label47 = new System.Windows.Forms.Label();
             this.tabPageExport.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgLanguageStatus)).BeginInit();
@@ -202,6 +204,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.imgTitleStatus)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudKmlResolution)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudEmfResolution)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudJpegResolution)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPdfResolution)).BeginInit();
@@ -267,7 +270,7 @@
             this.tabPageExport.Location = new System.Drawing.Point(4, 22);
             this.tabPageExport.Name = "tabPageExport";
             this.tabPageExport.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageExport.Size = new System.Drawing.Size(391, 426);
+            this.tabPageExport.Size = new System.Drawing.Size(381, 426);
             this.tabPageExport.TabIndex = 4;
             this.tabPageExport.Text = "Export";
             this.tabPageExport.UseVisualStyleBackColor = true;
@@ -751,6 +754,8 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.label47);
+            this.groupBox4.Controls.Add(this.nudKmlResolution);
             this.groupBox4.Controls.Add(this.nudEmfResolution);
             this.groupBox4.Controls.Add(this.label28);
             this.groupBox4.Controls.Add(this.nudJpegResolution);
@@ -763,6 +768,28 @@
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Image resolution (dpi)";
+            // 
+            // nudKmlResolution
+            // 
+            this.nudKmlResolution.Location = new System.Drawing.Point(201, 55);
+            this.nudKmlResolution.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nudKmlResolution.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.nudKmlResolution.Name = "nudKmlResolution";
+            this.nudKmlResolution.Size = new System.Drawing.Size(64, 20);
+            this.nudKmlResolution.TabIndex = 13;
+            this.nudKmlResolution.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
             // 
             // nudEmfResolution
             // 
@@ -1643,7 +1670,16 @@
             this.eprImageryDate.ContainerControl = this;
             this.eprImageryDate.Icon = ((System.Drawing.Icon)(resources.GetObject("eprImageryDate.Icon")));
             // 
-            // frmMain
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(159, 56);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(29, 13);
+            this.label47.TabIndex = 14;
+            this.label47.Text = "KML";
+            // 
+            // frmExportMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1652,7 +1688,7 @@
             this.Controls.Add(this.tabExportTool);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmMain";
+            this.Name = "frmExportMain";
             this.Text = "Export Tool";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.tabPageExport.ResumeLayout(false);
@@ -1683,6 +1719,7 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudKmlResolution)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudEmfResolution)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudJpegResolution)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPdfResolution)).EndInit();
@@ -1885,5 +1922,7 @@
         private System.Windows.Forms.PictureBox imgScaleStatus;
         private System.Windows.Forms.PictureBox imgProjectionStatus;
         private System.Windows.Forms.PictureBox imgDatumStatus;
+        private System.Windows.Forms.NumericUpDown nudKmlResolution;
+        private System.Windows.Forms.Label label47;
     }
 }
