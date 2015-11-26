@@ -8,7 +8,7 @@
   <Company>MapAction</Company>
   <Date>19/03/2013</Date>
   <Targets>
-    <Target name="Desktop" version="10.1" />
+    <Target name="Desktop" version="10.2" />
   </Targets>
   <AddIn language="CLR" library="RenameLayer.dll" namespace="RenameLayer">
     <ArcMap>

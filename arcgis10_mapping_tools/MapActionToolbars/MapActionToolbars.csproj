@@ -37,29 +37,34 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ESRI.ArcGIS.ArcMap, Version=10.1.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.ArcMapUI, Version=10.1.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Carto, Version=10.1.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Display, Version=10.1.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.DisplayUI, Version=10.1.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Framework">
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Geometry, Version=10.1.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.System">
       <Private>False</Private>
@@ -228,7 +233,10 @@
     <AddInTargetVersion>10.1</AddInTargetVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\ESRI\ESRI.ArcGIS.AddIns.targets" Condition="Exists('$(MSBuildExtensionsPath)\ESRI\ESRI.ArcGIS.AddIns.targets')" />

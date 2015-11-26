@@ -8,7 +8,7 @@
   <Company>MapAction</Company>
   <Date>11/11/2014</Date>
   <Targets>
-    <Target name="Desktop" version="10.1" />
+    <Target name="Desktop" version="10.2" />
   </Targets>
   <AddIn language="CLR" library="MapActionToolbars.dll" namespace="MapActionToolbars">
     <ArcMap>
