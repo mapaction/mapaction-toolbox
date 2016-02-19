@@ -23,10 +23,23 @@ namespace MapAction
 {
     public static class MapExport
     {
-        
+
         #region Public method exportImage
 
-        // Exports a given page layout or map frame to a variety of image formats, returns the image file path
+        /// <summary>
+        /// Exports a given page layout or map frame to a variety of image formats, returns the image file path
+        /// </summary>
+        /// <param name="pMxDoc">Type IMxDocument - the document we're exporting! ok</param>
+        /// <param name="exportType">Type string - gives the filetype for the export (pdf, jpeg, etc). No documentation of what the legal values are, 
+        /// illustrating that this should be an enum as if a unrecognised string is given, it will just be passed back silently with no export. (Other 
+        /// error conditions lead to a null return, so this is a strange inconsistency).</param>
+        /// <param name="dpi">Type string (!) - an integer number giving the dpi of the exported image. No idea why this is currently a string - 
+        /// should be a uint16; FormatException on conversion of this is currently not handled</param>
+        /// <param name="pathDocumentName">Type string - the FOLDER path of the exported image, image filename will be constructed and placed in this folder.
+        /// No checking is done that this IS a legal folder path, though....</param>
+        /// <param name="mapFrameName">Type string - the name of the map frame to export; pass null to export activeview instead. If an unrecognised string 
+        /// is given then an error occurs (the method returns null).</param>
+        /// <returns>String representing the file path of the output image. Null return means an error occurred.</returns>
         public static string exportImage(IMxDocument pMxDoc, string exportType, string dpi, string pathDocumentName, string mapFrameName)
         {
             // Define the activeView as either the page layout or the map frame
@@ -36,7 +49,6 @@ namespace MapAction
             IMaps pMaps = pMxDoc.Maps;
             // Also construct output filename depending on the activeView / mapFrame input
             string pathFileName = string.Empty;
-
             if (mapFrameName == null)
             {
                 pActiveView = pMxDoc.ActiveView;
@@ -223,7 +235,21 @@ namespace MapAction
         }
 
         #region Public method createZip
-        //Create a zip file of input file paths
+        /// <summary>
+        /// Create a zip file of the three exported files (xml, jpeg, pdf) required for a MA export
+        /// </summary>
+        /// <param name="dictPaths">
+        /// Dictionary with string keys 'xml', 'jpeg', and 'pdf' and string values giving the file path 
+        /// of the respective exported file, to be added to the zip.
+        /// (TODO: make a proper struct or class to represent and enforce these three items of a MA export)
+        /// (TODO: Currently this does not do anything with the emf file.... is this deliberate? the client code
+        /// seems to expect that it would do!)
+        /// </param>
+        /// <returns>
+        /// Boolean, false if an exception occurred and true otherwise. The zipping is run by an external 7zip process 
+        /// (TODO figure out why, what was wrong with zipfile?) and so a True return doesn't necessarily indicate 
+        /// that 7zip completed successfully!
+        /// </returns>
         public static Boolean createZip(Dictionary<string,string> dictPaths)
         {
             //set the output filename and directory from the input files
