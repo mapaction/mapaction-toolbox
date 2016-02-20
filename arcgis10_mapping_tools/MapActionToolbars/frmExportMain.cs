@@ -359,12 +359,12 @@ namespace MapActionToolbars
         }
         
         /// <summary>
- +      /// Exports the active view of the current map to pdf, jpeg, and emf formats, and the 'Main map' view of the map to emf and jpeg.
- +      /// </summary>
- +      /// <returns>
- +      /// Dictionary of type string/string with keys 'pdf', 'jpeg', and 'emf', each having as value the respective exported file exported from 
- +      /// the active view. 
- +      /// </returns>
+        /// Exports the active view of the current map to pdf, jpeg, and emf formats, and the 'Main map' view of the map to emf and jpeg.
+        /// </summary>
+        /// <returns>
+        /// Dictionary of type string/string with keys 'pdf', 'jpeg', and 'emf', each having as value the respective exported file exported from 
+        /// the active view. 
+        /// </returns>
         /// <remarks>
         /// Note that currently the images exported from the 'main map' frame are NOT included in this dictionary, unsure if this is deliberate?
         /// </remarks
