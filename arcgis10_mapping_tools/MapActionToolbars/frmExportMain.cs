@@ -224,7 +224,7 @@ namespace MapActionToolbars
             IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
             IActiveView pActiveView = pMxDoc.ActiveView;
 
-            // Call to export the images and return a dictionary of the file sizes
+            // Call to export the images and return a dictionary of the file names
             Dictionary<string, string> dictFilePaths = exportAllImages();
 
             // Create a dictionary to store the image file sizes to add to the output xml
@@ -267,6 +267,8 @@ namespace MapActionToolbars
             dictFilePaths.Add("xml", xmlPath);
 
             // Create zip
+            // TODO Note that currently the createZip will zip the xml, jpeg, and pdf. Not the emf! 
+            // So why are we making it??
             MapAction.MapExport.createZip(dictFilePaths);
             // close the wait dialog
             // dlg.lblWaitMainMessage.Text = "Export complete";
@@ -355,7 +357,17 @@ namespace MapActionToolbars
             //string returnString = string.Join(Environment.NewLine, lstEmptyFields.ToArray());
             //lblEmptyFields.Text = returnString;
         }
-
+        
+        /// <summary>
+        /// Exports the active view of the current map to pdf, jpeg, and emf formats, and the 'Main map' view of the map to emf and jpeg.
+        /// </summary>
+        /// <returns>
+        /// Dictionary of type string/string with keys 'pdf', 'jpeg', and 'emf', each having as value the respective exported file exported from 
+        /// the active view. 
+        /// </returns>
+        /// <remarks>
+        /// Note that currently the images exported from the 'main map' frame are NOT included in this dictionary, unsure if this is deliberate?
+        /// </remarks
         private Dictionary<string, string> exportAllImages()
         {
             IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
