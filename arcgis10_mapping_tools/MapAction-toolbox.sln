@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapActionToolbars", "MapAct
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenameLayer", "RenameLayer\RenameLayer\RenameLayer.csproj", "{23EE4762-4099-4998-9043-3679C9703D49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTests", "CommonTests\CommonTests.csproj", "{EFAA6DBF-A7AF-467F-810F-75044A5EAC9F}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = MapAction-toolbox.vsmdi
@@ -38,6 +40,10 @@ Global
 		{23EE4762-4099-4998-9043-3679C9703D49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23EE4762-4099-4998-9043-3679C9703D49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23EE4762-4099-4998-9043-3679C9703D49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFAA6DBF-A7AF-467F-810F-75044A5EAC9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFAA6DBF-A7AF-467F-810F-75044A5EAC9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFAA6DBF-A7AF-467F-810F-75044A5EAC9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFAA6DBF-A7AF-467F-810F-75044A5EAC9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
