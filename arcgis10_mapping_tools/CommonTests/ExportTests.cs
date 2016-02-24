@@ -74,7 +74,17 @@ namespace MapAction.tests
 
         }
 
+        [Test]
+        public void failingTest()
+        {
+            Assert.Fail();
+        }
 
+        [Test]
+        public void passingTest()
+        {
+            Assert.Pass();
+        }
 
         private IMxDocument getMxd(string mxdPath)
         {
