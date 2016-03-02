@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Framework;
@@ -17,6 +19,7 @@ namespace MapAction.tests
         // Class properties 
         protected string exportPath;
         protected string documentName;
+        protected string testRootDir;
         protected IMxDocument pMxDoc; // Map document 
 
         public Export()
@@ -28,6 +31,9 @@ namespace MapAction.tests
             {
                 ESRI.ArcGIS.RuntimeManager.BindLicense(ESRI.ArcGIS.ProductCode.EngineOrDesktop);
             }
+            string asmbyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+            this.testRootDir = Path.Combine(asmbyPath, @"..\..\");
+            Console.WriteLine(this.testRootDir);
         }
 
         [SetUp]
@@ -37,10 +43,15 @@ namespace MapAction.tests
             //This keeps each test isolated and idenpendant from the others.
 
             this.exportPath = @"C:\Users\andrew\Documents\";  // ConfigurationManager.AppSettings["exportPath"];
-            this.documentName = @"C:\users\andrew\documents\sample_map.mxd";// ConfigurationManager.AppSettings["mapDocument"];
+            this.documentName = Path.Combine(this.testRootDir, @"testfiles\MA_A3_landscape.mxd");// ConfigurationManager.AppSettings["mapDocument"];
 
             this.pMxDoc = this.getMxd(this.documentName); // Open map document
 
+        }
+
+        public void TearDown()
+        {
+            MxDocument mxDoc = (MxDocument)this.pMxDoc;
         }
 
          /// <summary>
@@ -58,7 +69,7 @@ namespace MapAction.tests
         public void exportImageCreatesFileTest()
         {
             this.exportPath = @"C:\Users\andrew\Documents\";  // ConfigurationManager.AppSettings["exportPath"];
-            this.documentName = @"C:\users\andrew\documents\sample_map.mxd";// ConfigurationManager.AppSettings["mapDocument"];            
+            //this.documentName = @"C:\users\andrew\documents\sample_map.mxd";// ConfigurationManager.AppSettings["mapDocument"];            
 
             //Console.WriteLine("Settings2 :Export Path {0},Map Document {1}", this.exportPath, this.documentName);
 
