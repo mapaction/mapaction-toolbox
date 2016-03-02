@@ -106,9 +106,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MapAction">
-      <HintPath>..\..\..\..\..\..\..\SoftwareDevelopment\TortoiseHG\MapAction\arcgis10_mapping_tools\MapAction\MapAction\bin\Debug\MapAction.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -233,7 +230,12 @@
   <ItemGroup>
     <AddInContent Include="Images\rename_icon.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\MapAction\MapAction\MapAction.csproj">
+      <Project>{8B7ABA1A-C659-4D80-A2EF-13D953577643}</Project>
+      <Name>MapAction</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\layer_name_lookup.accdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
