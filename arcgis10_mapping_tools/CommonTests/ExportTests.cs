@@ -19,17 +19,25 @@ namespace MapAction.tests
         protected string documentName;
         protected IMxDocument pMxDoc; // Map document 
 
-
         public Export()
         {
-            // This seems to run but the instance isn't use by thetest method? 
-
-            // Default constructor.
-            this.exportPath = @"C:\Users\andrew\Documents\";  // ConfigurationManager.AppSettings["exportPath"];
-            this.documentName = @"C:\users\andrew\documents\sample_map.mxd";// ConfigurationManager.AppSettings["mapDocument"];
+            // Default constructor. This constructor is called just once.
 
             //Add runtime binding prior to any ArcObjects code in the static void Main() method.
-            ESRI.ArcGIS.RuntimeManager.Bind(ESRI.ArcGIS.ProductCode.Desktop);
+            if (ESRI.ArcGIS.RuntimeManager.ActiveRuntime == null)
+            {
+                ESRI.ArcGIS.RuntimeManager.BindLicense(ESRI.ArcGIS.ProductCode.EngineOrDesktop);
+            }
+        }
+
+        [SetUp]
+        public void Setup()
+        {
+            // This is called prior to each test and allows state to be reset.
+            //This keeps each test isolated and idenpendant from the others.
+
+            this.exportPath = @"C:\Users\andrew\Documents\";  // ConfigurationManager.AppSettings["exportPath"];
+            this.documentName = @"C:\users\andrew\documents\sample_map.mxd";// ConfigurationManager.AppSettings["mapDocument"];
 
             this.pMxDoc = this.getMxd(this.documentName); // Open map document
 
@@ -52,7 +60,7 @@ namespace MapAction.tests
             this.exportPath = @"C:\Users\andrew\Documents\";  // ConfigurationManager.AppSettings["exportPath"];
             this.documentName = @"C:\users\andrew\documents\sample_map.mxd";// ConfigurationManager.AppSettings["mapDocument"];            
 
-            Console.WriteLine("Settings2 :Export Path {0},Map Document {1}", this.exportPath, this.documentName);
+            //Console.WriteLine("Settings2 :Export Path {0},Map Document {1}", this.exportPath, this.documentName);
 
             string fileType = "pdf";
             string dpi = "300";
@@ -60,7 +68,7 @@ namespace MapAction.tests
             // Exported file name is dynamically generated : 
             // pathFileName = @pathDocumentName + "-" mapframe + "-" + dpi.ToString() + "dpi." + exportType; 
             string exportFileName = String.Format("{0}-{1}-{2}dpi.{3}", this.documentName, "mapframe", dpi, fileType);
-            Console.WriteLine("Map Title:\t{0}\nExport Filename:\t{1}", ((MxDocument)this.pMxDoc).Title,exportFileName);
+            //Console.WriteLine("Map Title:\t{0}\nExport Filename:\t{1}", ((MxDocument)this.pMxDoc).Title,exportFileName);
 
             // Test export file not present already 
             Assert.IsFalse(System.IO.File.Exists(exportFileName));
@@ -88,11 +96,11 @@ namespace MapAction.tests
 
         private IMxDocument getMxd(string mxdPath)
         {
-            Console.WriteLine(mxdPath);
+            //Console.WriteLine(mxdPath);
 
             MxDocument _pMxDoc = new MxDocumentClass();
             _pMxDoc.Parent.OpenDocument(mxdPath);
-            Console.WriteLine(_pMxDoc.Title);
+            //Console.WriteLine(_pMxDoc.Title);
             return (IMxDocument)_pMxDoc;
         }
 
