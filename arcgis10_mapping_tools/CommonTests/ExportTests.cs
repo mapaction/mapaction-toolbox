@@ -22,10 +22,10 @@ namespace MapAction.tests
         protected string testRootDir;
         protected IMxDocument pMxDoc; // Map document 
 
+
+        // Default constructor, which is called just once.
         public Export()
         {
-            // Default constructor. This constructor is called just once.
-
             //Add runtime binding prior to any ArcObjects code in the static void Main() method.
             if (ESRI.ArcGIS.RuntimeManager.ActiveRuntime == null)
             {
@@ -34,23 +34,30 @@ namespace MapAction.tests
 
             // Get path relative to the CommonTests.dll
             string asmbyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+            // Strip out spurious wording
             asmbyPath = asmbyPath.Replace(@"file:\", string.Empty);
+            // Jump up two levels in directory tree to get the VS project root
             this.testRootDir = Path.Combine(asmbyPath, @"..\..\");
-            Console.WriteLine(this.testRootDir);
         }
 
+        // This is called prior to each test and allows state to be reset.
+        // This keeps each test isolated and idenpendant from the others.
         [SetUp]
         public void Setup()
         {
-            // This is called prior to each test and allows state to be reset.
-            //This keeps each test isolated and idenpendant from the others.
+            /* TODO
+             * An alternative (and possibly better) way to get these values would be to use the configuration 
+             * manager:
+                    this.exportPath = ConfigurationManager.AppSettings["exportPath"];
+                    this.documentName = ConfigurationManager.AppSettings["mapDocument"];            
+            */
 
-            // this.exportPath = @"C:\Users\andrew\Documents\";  // ConfigurationManager.AppSettings["exportPath"];
             this.exportPath = GetTemporaryDirectory();
-            this.documentName = Path.Combine(this.testRootDir, @"testfiles\MA_A3_landscape.mxd");// ConfigurationManager.AppSettings["mapDocument"];
-            // Console.WriteLine(this.exportPath);
-            this.pMxDoc = this.getMxd(this.documentName); // Open map document
-
+            // hardcoded path to a test MXD relative to the VS Project root directory
+            // ConfigurationManager.AppSettings["mapDocument"];
+            this.documentName = Path.Combine(this.testRootDir, @"testfiles\MA_A3_landscape.mxd");
+            // Open map document
+            this.pMxDoc = this.getMxd(this.documentName); 
         }
 
         [TearDown]
@@ -59,7 +66,9 @@ namespace MapAction.tests
             //shutdown ArcMap
             MxDocument mxDoc = (MxDocument)this.pMxDoc;
             mxDoc.Parent.Shutdown();
+
             // delete the temporary directory and everything in it.
+            // Whilst we have the problem with the PDFs being exported blank in tests leave this commented out
             // Directory.Delete(this.exportPath, true);
         }
 
@@ -76,34 +85,36 @@ namespace MapAction.tests
         [Test]
         public void exportImageCreatesFileTest()
         {
-            //this.exportPath = @"C:\Users\andrew\Documents\";  // ConfigurationManager.AppSettings["exportPath"];
-            //this.documentName = @"C:\users\andrew\documents\sample_map.mxd";// ConfigurationManager.AppSettings["mapDocument"];            
-
-            Console.WriteLine("Settings2 :Export Path {0},Map Document {1}", this.exportPath, this.documentName);
+            // Console.WriteLine("Settings2 :Export Path {0},Map Document {1}", this.exportPath, this.documentName);
 
             string fileType = "pdf";
             string dpi = "300";
 
-            // Exported file name is dynamically generated : 
-            // pathFileName = @pathDocumentName + "-" mapframe + "-" + dpi.ToString() + "dpi." + exportType; 
+            /*
+             * Exported file name is dynamically generated.
+             * For individual map frames:
+             *      pathFileName = @pathDocumentName + "-" mapframe + "-" + dpi.ToString() + "dpi." + exportType; 
+             * For map layouts:
+             *      pathFileName = @pathDocumentName + "-" + dpi.ToString() + "dpi." + exportType; 
+             */
             string stubPath = Path.Combine(this.exportPath, "testmap");
-            string exportFileName = String.Format("{0}-{1}-{2}dpi.{3}", stubPath, "mapframe", dpi, fileType);
-            //Console.WriteLine("Map Title:\t{0}\nExport Filename:\t{1}", ((MxDocument)this.pMxDoc).Title,exportFileName);
+            string exportFileName = String.Format("{0}-{1}dpi.{2}", stubPath, dpi, fileType);
+
             Console.WriteLine("Export Filename:\t{0}", exportFileName);
 
             // Test export file not present already 
             Assert.IsFalse(System.IO.File.Exists(exportFileName));
-            // Test            
-            exportFileName = MapExport.exportImage(this.pMxDoc, fileType, dpi, stubPath, null);
-
+            // Do the export
+            MapExport.exportImage(this.pMxDoc, fileType, dpi, stubPath, null);
             // Assert file exported. 
             Assert.IsTrue(System.IO.File.Exists(exportFileName));
 
             // TODO - Check file exported is valid image of the type requested. 
-
+            // TODO - Check file exported is sensible size. 
         }
 
-        [Test]
+        /*
+         * [Test]
         public void failingTest()
         {
             Assert.Fail();
@@ -114,6 +125,7 @@ namespace MapAction.tests
         {
             Assert.Pass();
         }
+         */
 
         private IMxDocument getMxd(string mxdPath)
         {
@@ -125,6 +137,10 @@ namespace MapAction.tests
             return (IMxDocument)_pMxDoc;
         }
 
+
+        /*
+         * http://stackoverflow.com/questions/278439/creating-a-temporary-directory-in-windows
+         */
         private string GetTemporaryDirectory()
         {
             string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
