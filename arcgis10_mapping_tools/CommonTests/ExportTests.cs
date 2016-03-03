@@ -82,12 +82,13 @@ namespace MapAction.tests
             // ^ Is this the best way to do it, or does the runtime manager provide a method?
         }
 
-        [Test]
-        public void exportImageCreatesFileTest()
-        {
+        [TestCase("pdf")]
+        [TestCase("jpeg")]
+        public void exportImageCreatesFileTest(string fileType)
+{
             // Console.WriteLine("Settings2 :Export Path {0},Map Document {1}", this.exportPath, this.documentName);
 
-            string fileType = "pdf";
+            // string fileType = "pdf";
             string dpi = "300";
 
             /*
