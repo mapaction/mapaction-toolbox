@@ -31,7 +31,10 @@ namespace MapAction.tests
             {
                 ESRI.ArcGIS.RuntimeManager.BindLicense(ESRI.ArcGIS.ProductCode.EngineOrDesktop);
             }
+
+            // Get path relative to the CommonTests.dll
             string asmbyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+            asmbyPath = asmbyPath.Replace(@"file:\", string.Empty);
             this.testRootDir = Path.Combine(asmbyPath, @"..\..\");
             Console.WriteLine(this.testRootDir);
         }
@@ -44,7 +47,7 @@ namespace MapAction.tests
 
             this.exportPath = @"C:\Users\andrew\Documents\";  // ConfigurationManager.AppSettings["exportPath"];
             this.documentName = Path.Combine(this.testRootDir, @"testfiles\MA_A3_landscape.mxd");// ConfigurationManager.AppSettings["mapDocument"];
-
+            // Console.WriteLine(this.documentName);
             this.pMxDoc = this.getMxd(this.documentName); // Open map document
 
         }
