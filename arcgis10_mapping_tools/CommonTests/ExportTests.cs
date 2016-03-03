@@ -68,7 +68,7 @@ namespace MapAction.tests
             mxDoc.Parent.Shutdown();
 
             // delete the temporary directory and everything in it.
-            // Whilst we have the problem with the PDFs being exported blank in tests leave this commented out
+            // TODO Whilst we have the problem with the PDFs being exported blank in tests leave this commented out
             // Directory.Delete(this.exportPath, true);
         }
 
@@ -101,16 +101,22 @@ namespace MapAction.tests
             string exportFileName = String.Format("{0}-{1}dpi.{2}", stubPath, dpi, fileType);
 
             Console.WriteLine("Export Filename:\t{0}", exportFileName);
+            FileInfo fi = new FileInfo(exportFileName);
 
             // Test export file not present already 
-            Assert.IsFalse(System.IO.File.Exists(exportFileName));
+            // Assert.IsFalse(System.IO.File.Exists(exportFileName), "A map file did not exist prior to the export function being called.");
+            Assert.IsFalse(fi.Exists, "A map file did not exist prior to the export function being called as expected.");
+            
             // Do the export
             MapExport.exportImage(this.pMxDoc, fileType, dpi, stubPath, null);
+
             // Assert file exported. 
-            Assert.IsTrue(System.IO.File.Exists(exportFileName));
+            fi.Refresh();
+            Assert.IsTrue(fi.Exists, "The map file has been exported as expected.");
+            Assert.IsTrue(fi.Length > 307200, "The map file is larger than 300kb as expected.");
 
             // TODO - Check file exported is valid image of the type requested. 
-            // TODO - Check file exported is sensible size. 
+
         }
 
         /*
