@@ -45,9 +45,10 @@ namespace MapAction.tests
             // This is called prior to each test and allows state to be reset.
             //This keeps each test isolated and idenpendant from the others.
 
-            this.exportPath = @"C:\Users\andrew\Documents\";  // ConfigurationManager.AppSettings["exportPath"];
+            // this.exportPath = @"C:\Users\andrew\Documents\";  // ConfigurationManager.AppSettings["exportPath"];
+            this.exportPath = GetTemporaryDirectory();
             this.documentName = Path.Combine(this.testRootDir, @"testfiles\MA_A3_landscape.mxd");// ConfigurationManager.AppSettings["mapDocument"];
-            // Console.WriteLine(this.documentName);
+            // Console.WriteLine(this.exportPath);
             this.pMxDoc = this.getMxd(this.documentName); // Open map document
 
         }
@@ -55,8 +56,11 @@ namespace MapAction.tests
         [TearDown]
         public void TearDown()
         {
+            //shutdown ArcMap
             MxDocument mxDoc = (MxDocument)this.pMxDoc;
-            mxDoc.Parent.Shutdown();  
+            mxDoc.Parent.Shutdown();
+            // delete the temporary directory and everything in it.
+            // Directory.Delete(this.exportPath, true);
         }
 
          /// <summary>
@@ -72,23 +76,25 @@ namespace MapAction.tests
         [Test]
         public void exportImageCreatesFileTest()
         {
-            this.exportPath = @"C:\Users\andrew\Documents\";  // ConfigurationManager.AppSettings["exportPath"];
+            //this.exportPath = @"C:\Users\andrew\Documents\";  // ConfigurationManager.AppSettings["exportPath"];
             //this.documentName = @"C:\users\andrew\documents\sample_map.mxd";// ConfigurationManager.AppSettings["mapDocument"];            
 
-            //Console.WriteLine("Settings2 :Export Path {0},Map Document {1}", this.exportPath, this.documentName);
+            Console.WriteLine("Settings2 :Export Path {0},Map Document {1}", this.exportPath, this.documentName);
 
             string fileType = "pdf";
             string dpi = "300";
 
             // Exported file name is dynamically generated : 
             // pathFileName = @pathDocumentName + "-" mapframe + "-" + dpi.ToString() + "dpi." + exportType; 
-            string exportFileName = String.Format("{0}-{1}-{2}dpi.{3}", this.documentName, "mapframe", dpi, fileType);
+            string stubPath = Path.Combine(this.exportPath, "testmap");
+            string exportFileName = String.Format("{0}-{1}-{2}dpi.{3}", stubPath, "mapframe", dpi, fileType);
             //Console.WriteLine("Map Title:\t{0}\nExport Filename:\t{1}", ((MxDocument)this.pMxDoc).Title,exportFileName);
+            Console.WriteLine("Export Filename:\t{0}", exportFileName);
 
             // Test export file not present already 
             Assert.IsFalse(System.IO.File.Exists(exportFileName));
             // Test            
-            exportFileName = MapExport.exportImage(this.pMxDoc, fileType, dpi, this.documentName, "Main map");
+            exportFileName = MapExport.exportImage(this.pMxDoc, fileType, dpi, stubPath, null);
 
             // Assert file exported. 
             Assert.IsTrue(System.IO.File.Exists(exportFileName));
@@ -117,6 +123,13 @@ namespace MapAction.tests
             _pMxDoc.Parent.OpenDocument(mxdPath);
             //Console.WriteLine(_pMxDoc.Title);
             return (IMxDocument)_pMxDoc;
+        }
+
+        private string GetTemporaryDirectory()
+        {
+            string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            Directory.CreateDirectory(tempDirectory);
+            return tempDirectory;
         }
 
     }
