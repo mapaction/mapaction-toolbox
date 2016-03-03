@@ -52,9 +52,11 @@ namespace MapAction.tests
 
         }
 
+        [TearDown]
         public void TearDown()
         {
             MxDocument mxDoc = (MxDocument)this.pMxDoc;
+            mxDoc.Parent.Shutdown();  
         }
 
          /// <summary>
@@ -64,7 +66,6 @@ namespace MapAction.tests
         public void closeArcMap()
         {
             MxDocument mxDoc = (MxDocument)this.pMxDoc;
-            mxDoc.Parent.Shutdown();  
             // ^ Is this the best way to do it, or does the runtime manager provide a method?
         }
 
