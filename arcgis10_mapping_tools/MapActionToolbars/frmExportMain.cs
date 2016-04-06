@@ -370,7 +370,7 @@ namespace MapActionToolbars
         /// </remarks
         private Dictionary<string, string> exportAllImages()
         {
-            IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
+            IMapDocument pMapDoc = ArcMap.Application.Document as IMapDocument;
             //IActiveView pActiveView = pMxDoc.ActiveView;
             var dict = new Dictionary<string, string>();
 
@@ -386,11 +386,11 @@ namespace MapActionToolbars
             else
             {
                 //Output 3 image formats pdf, jpeg & emf
-                dict.Add("pdf", MapAction.MapExport.exportImage(pMxDoc, "pdf", nudPdfResolution.Value.ToString(), exportPathFileName, null));
-                dict.Add("jpeg", MapAction.MapExport.exportImage(pMxDoc, "jpeg", nudJpegResolution.Value.ToString(), exportPathFileName, null));
-                dict.Add("emf", MapAction.MapExport.exportImage(pMxDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, null));
-                MapAction.MapExport.exportImage(pMxDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
-                MapAction.MapExport.exportImage(pMxDoc, "jpeg", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
+                dict.Add("pdf", MapAction.MapExport.exportImage(pMapDoc, "pdf", nudPdfResolution.Value.ToString(), exportPathFileName, null));
+                dict.Add("jpeg", MapAction.MapExport.exportImage(pMapDoc, "jpeg", nudJpegResolution.Value.ToString(), exportPathFileName, null));
+                dict.Add("emf", MapAction.MapExport.exportImage(pMapDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, null));
+                MapAction.MapExport.exportImage(pMapDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
+                MapAction.MapExport.exportImage(pMapDoc, "jpeg", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
 
             }
 

@@ -26,26 +26,6 @@ namespace MapAction
         #region Public method exportImage
 
         /// <summary>
-        /// Exports a given page layout or map frame to a variety of image formats, returns the image file path. This overloaded version takes
-        /// a IMxDocument and tries to cast it to a IMapDocument and then calls the alternative form of the funciton. (This is normally possible 
-        /// for the MxDocument (esriArcMapUI) CoClass.
-        /// </summary>
-        public static string exportImage(IMxDocument pMxDoc, string exportType, string dpi, string pathDocumentName, string mapFrameName)
-        {
-            try
-            {
-                IMapDocument pMapDoc;
-                pMapDoc = (IMapDocument)pMxDoc;
-                return exportImage(pMapDoc, exportType, dpi, pathDocumentName, mapFrameName);
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine(e.Message);
-                throw e;
-            }
-        }
-
-        /// <summary>
         /// Exports a given page layout or map frame to a variety of image formats, returns the image file path
         /// </summary>
         /// <param name="pMapDoc">Type IMapDocument - the document we're exporting! ok</param>
