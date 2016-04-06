@@ -4,8 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Framework;
 using NUnit.Framework;
 using MapAction;
@@ -20,8 +22,10 @@ namespace MapAction.tests
         protected string exportPath;
         protected string documentName;
         protected string testRootDir;
-        protected IMxDocument pMxDoc; // Map document 
+        protected IMapDocument pMapDoc; // Map document 
 
+        [DllImport("User32.dll")]
+        public static extern int GetDesktopWindow();
 
         // Default constructor, which is called just once.
         public Export()
@@ -57,15 +61,16 @@ namespace MapAction.tests
             // ConfigurationManager.AppSettings["mapDocument"];
             this.documentName = Path.Combine(this.testRootDir, @"testfiles\MA_A3_landscape.mxd");
             // Open map document
-            this.pMxDoc = this.getMxd(this.documentName); 
+            this.pMapDoc = this.getMxd(this.documentName); 
         }
 
         [TearDown]
         public void TearDown()
         {
             //shutdown ArcMap
-            MxDocument mxDoc = (MxDocument)this.pMxDoc;
-            mxDoc.Parent.Shutdown();
+            MapDocument mxDoc = (MapDocument)this.pMapDoc;
+            //mxDoc.Parent.Shutdown();
+            mxDoc.Close();
 
             // delete the temporary directory and everything in it.
             // TODO Whilst we have the problem with the PDFs being exported blank in tests leave this commented out
@@ -78,7 +83,10 @@ namespace MapAction.tests
         [TestFixtureTearDown]
         public void closeArcMap()
         {
-            MxDocument mxDoc = (MxDocument)this.pMxDoc;
+            //MxDocument mxDoc = (MxDocument)this.pMapDoc;
+            MapDocument mxDoc = (MapDocument)this.pMapDoc;
+            //mxDoc.Parent.Shutdown();
+            mxDoc.Close();
             // ^ Is this the best way to do it, or does the runtime manager provide a method?
         }
 
@@ -109,7 +117,7 @@ namespace MapAction.tests
             Assert.IsFalse(fi.Exists, "A map file did not exist prior to the export function being called as expected.");
             
             // Do the export
-            MapExport.exportImage(this.pMxDoc, fileType, dpi, stubPath, null);
+            MapExport.exportImage(this.pMapDoc, fileType, dpi, stubPath, null);
 
             // Assert file exported. 
             fi.Refresh();
@@ -134,14 +142,19 @@ namespace MapAction.tests
         }
          */
 
-        private IMxDocument getMxd(string mxdPath)
+        private IMapDocument getMxd(string mxdPath)
         {
-            //Console.WriteLine(mxdPath);
+           
+            MapDocument _pMapDoc = new MapDocumentClass();
+            _pMapDoc.Open(mxdPath);
 
-            MxDocument _pMxDoc = new MxDocumentClass();
-            _pMxDoc.Parent.OpenDocument(mxdPath);
-            //Console.WriteLine(_pMxDoc.Title);
-            return (IMxDocument)_pMxDoc;
+            IPageLayout pageLayout = _pMapDoc.PageLayout;
+            //Key line. Must Activate the ActiveView before it will work working as expected
+            _pMapDoc.ActiveView.Activate(GetDesktopWindow()); 
+            _pMapDoc.ActiveView.Refresh();
+
+            return (IMapDocument)_pMapDoc;
+
         }
 
 

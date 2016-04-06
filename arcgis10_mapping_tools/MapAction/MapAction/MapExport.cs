@@ -28,7 +28,7 @@ namespace MapAction
         /// <summary>
         /// Exports a given page layout or map frame to a variety of image formats, returns the image file path
         /// </summary>
-        /// <param name="pMxDoc">Type IMxDocument - the document we're exporting! ok</param>
+        /// <param name="pMapDoc">Type IMapDocument - the document we're exporting! ok</param>
         /// <param name="exportType">Type string - gives the filetype for the export (pdf, jpeg, etc). Acceptable string values must currently be 
         /// identified from the code</param>
         /// <param name="dpi">Type string (!) - an string representation of an integer giving the dpi of the exported image.</param>
@@ -44,26 +44,27 @@ namespace MapAction
         /// 
         /// dpi parameter should be a uint16 not a string; FormatException on conversion of this is currently not handled
         /// </remarks>
-        public static string exportImage(IMxDocument pMxDoc, string exportType, string dpi, string pathDocumentName, string mapFrameName)
+        /// 
+        public static string exportImage(IMapDocument pMapDoc, string exportType, string dpi, string pathDocumentName, string mapFrameName)
         {
             // Define the activeView as either the page layout or the map frame
             // If the mapFrameName variable is null then the activeView is the page, otherwise it is set to the map frame name specified
             IMap pMap;
             IActiveView pActiveView = null;
-            IMaps pMaps = pMxDoc.Maps;
+            // IMaps pMaps = pMapDoc.Maps;
             // Also construct output filename depending on the activeView / mapFrame input
             string pathFileName = string.Empty;
 
             if (mapFrameName == null)
             {
-                pActiveView = pMxDoc.ActiveView;
+                pActiveView = pMapDoc.ActiveView;
                 pathFileName = @pathDocumentName + "-" + dpi.ToString() + "dpi." + exportType;
             }
-            else if (mapFrameName != null && PageLayoutProperties.detectMapFrame(pMxDoc, mapFrameName))
+            else if (mapFrameName != null && PageLayoutProperties.detectMapFrame(pMapDoc, mapFrameName))
             {
-                for (int i = 0; i <= pMaps.Count - 1; i++)
+                for (int i = 0; i <= pMapDoc.MapCount - 1; i++)
                 {
-                    pMap = pMaps.get_Item(i);
+                    pMap = pMapDoc.Map[i];
                     if (pMap.Name == mapFrameName)
                     {
                         pActiveView = pMap as IActiveView;
