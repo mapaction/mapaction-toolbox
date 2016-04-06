@@ -90,9 +90,11 @@ namespace MapAction.tests
             // ^ Is this the best way to do it, or does the runtime manager provide a method?
         }
 
-        [TestCase("pdf")]
-        [TestCase("jpeg")]
-        public void exportImageCreatesFileTest(string fileType)
+        [TestCase("pdf", null)]
+        [TestCase("jpeg", null)]
+        [TestCase("jpeg", "Main map")]
+        [TestCase("emf", "Main map")]
+        public void exportImageCreatesFileTest(string fileType, string dataFrameName)
 {
             // Console.WriteLine("Settings2 :Export Path {0},Map Document {1}", this.exportPath, this.documentName);
 
@@ -107,7 +109,16 @@ namespace MapAction.tests
              *      pathFileName = @pathDocumentName + "-" + dpi.ToString() + "dpi." + exportType; 
              */
             string stubPath = Path.Combine(this.exportPath, "testmap");
-            string exportFileName = String.Format("{0}-{1}dpi.{2}", stubPath, dpi, fileType);
+            string exportFileName;
+            if (dataFrameName == null)
+            {
+                exportFileName = String.Format("{0}-{1}dpi.{2}", stubPath, dpi, fileType);
+            }
+            else
+            {
+                exportFileName = String.Format("{0}-mapframe-{1}dpi.{2}", stubPath, dpi, fileType);
+                //pathFileName = @pathDocumentName + "-mapframe-" + dpi.ToString() + "dpi." + exportType;
+            }
 
             Console.WriteLine("Export Filename:\t{0}", exportFileName);
             FileInfo fi = new FileInfo(exportFileName);
@@ -117,12 +128,12 @@ namespace MapAction.tests
             Assert.IsFalse(fi.Exists, "A map file did not exist prior to the export function being called as expected.");
             
             // Do the export
-            MapExport.exportImage(this.pMapDoc, fileType, dpi, stubPath, null);
+            MapExport.exportImage(this.pMapDoc, fileType, dpi, stubPath, dataFrameName);
 
             // Assert file exported. 
             fi.Refresh();
             Assert.IsTrue(fi.Exists, "The map file has been exported as expected.");
-            Assert.IsTrue(fi.Length > 307200, "The map file is larger than 300kb as expected.");
+            Assert.IsTrue(fi.Length > 51200, "The map file is larger than 50kb as expected.");
 
             // TODO - Check file exported is valid image of the type requested. 
 
