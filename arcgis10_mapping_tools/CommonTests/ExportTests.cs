@@ -144,22 +144,14 @@ namespace MapAction.tests
 
         private IMapDocument getMxd(string mxdPath)
         {
-            //Console.WriteLine(mxdPath);
-
-            
+           
             MapDocument _pMapDoc = new MapDocumentClass();
-            //_pMapDoc.Parent.OpenDocument(mxdPath);
             _pMapDoc.Open(mxdPath);
-            //Console.WriteLine(_pMapDoc.Title);
 
             IPageLayout pageLayout = _pMapDoc.PageLayout;
-            // IActiveView activeView = (IActiveView)pageLayout;
-            // _pMapDoc.SetActiveView( (IActiveView)_pMapDoc.PageLayout );
-            _pMapDoc.ActiveView.Activate(GetDesktopWindow()); //Key line!!
+            //Key line. Must Activate the ActiveView before it will work working as expected
+            _pMapDoc.ActiveView.Activate(GetDesktopWindow()); 
             _pMapDoc.ActiveView.Refresh();
-
-            //IMapDocument _idoc = (IMapDocument)_pMapDoc;
-            // _pMapDoc.ActiveView.Activate(GetDesktopWindow());
 
             return (IMapDocument)_pMapDoc;
 
