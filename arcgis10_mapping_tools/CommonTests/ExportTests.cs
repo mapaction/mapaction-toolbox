@@ -139,7 +139,7 @@ namespace MapAction.tests
 
         }
 
-        [TestCase("Main map", 8, "10000000")]
+        //[TestCase("Main map", 8, "10000000")]
         [TestCase("Main map", 8, null)]
         public void exportKMLFileTest(string dataFrameName, int expectedFileSize, string scale)
         {
@@ -157,6 +157,51 @@ namespace MapAction.tests
             Assert.IsTrue(fi.Length > (expectedFileSize * 1024), "The map file is larger than 50kb as expected.");
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dataFrameName"></param>
+        /// <param name="scale"></param>
+        [TestCase("Main map", "10000000")]
+        public void legendItemCountAfterKMZExportTest(string dataFrameName, string scale)
+        {
+            string testMXDpath = Path.Combine(this.exportPath, "testmxd.mxd");
+            this.pMapDoc.SaveAs(testMXDpath, true);
+            IMapDocument testMap = getMxd(testMXDpath);
+
+            string kmlFileName = Path.Combine(this.exportPath, "testfile.kmz");
+            Console.WriteLine("Export KML filename:\t{0}", kmlFileName);
+        
+            // a function which loops through a map document and creates a list of the result. For each MapSurround in each map 
+            // it adds the legend item count (if it is a Legend) or -1 if its not. The assumes that the items will be returned
+            // the same order each time.
+            var layerCount = new Func<IMapDocument, List<int>>(mapDoc => 
+            {
+                List<int> lyrCnt = new List<int>();
+                for (int i=0; i<mapDoc.MapCount-1; i++)
+                {
+                    lyrCnt.Add(pMapDoc.Map[i].LayerCount);
+                }
+                return lyrCnt;
+            });
+
+            // count before
+            List<int> legendCountBefore = layerCount(testMap);
+            Console.WriteLine("legendCountBefore:");
+            legendCountBefore.ForEach(Console.WriteLine);
+        
+            // do the export
+            MapExport.exportMapFrameKmlAsRaster(testMap, dataFrameName, kmlFileName, scale, "50");
+            testMap.Save();
+            // count again
+            List<int> legendCountAfter = layerCount(testMap);
+            Console.WriteLine("legendCountAfter:");
+            legendCountAfter.ForEach(Console.WriteLine);
+            // compare
+            Assert.AreEqual(legendCountBefore, legendCountAfter, "No change to count in legend items during KMZ export");
+        }
+         
          /*
          * [Test]
         public void failingTest()

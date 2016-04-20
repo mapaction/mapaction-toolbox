@@ -216,6 +216,7 @@ namespace MapAction
             try
             {
                 Debug.WriteLine("Starting KML output..");
+                gp.AddOutputsToMap = true;
                 gp.Execute("MapToKML_conversion", parameters, null);
                 Debug.WriteLine("Finished KML output");
             }
