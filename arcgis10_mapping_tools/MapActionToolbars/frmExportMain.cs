@@ -239,12 +239,13 @@ namespace MapActionToolbars
             Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
 
             // Export KML
-            
-             string kmzPathFileName = exportPathFileName + ".kmz";
+            IMapDocument pMapDoc = (IMapDocument)pMxDoc;            
+            string kmzPathFileName = exportPathFileName + ".kmz";
             string kmzScale;
             if (dictFrameExtents.ContainsKey("scale")) {kmzScale = dictFrameExtents["scale"];} else {kmzScale = null;};
-            MapAction.MapExport.exportMapFrameKmlAsRaster(pMxDoc, "Main map", @kmzPathFileName, kmzScale); 
-             
+            MapAction.MapExport.exportMapFrameKmlAsRaster(pMapDoc, "Main map", @kmzPathFileName, kmzScale, nudKmlResolution.Value.ToString());
+            // Add the xml path to the dictFilePaths, which is the input into the creatZip method
+            dictFilePaths.Add("kmz", kmzPathFileName);
 
             // Get the mxd filename
             string mxdName = ArcMap.Application.Document.Title;
@@ -341,7 +342,7 @@ namespace MapActionToolbars
                 {"paperxmin",       ""},
                 {"paperymax",       ""},
                 {"paperymin",       ""},
-                {"kmzfilename",     ""},
+                {"kmzfilename",     System.IO.Path.GetFileName(dictFilePaths["kmz"])},
                 {"accessnotes",     tbxImageAccessNotes.Text}
             };
             return dict;

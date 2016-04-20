@@ -90,11 +90,11 @@ namespace MapAction.tests
             // ^ Is this the best way to do it, or does the runtime manager provide a method?
         }
 
-        [TestCase("pdf", null)]
-        [TestCase("jpeg", null)]
-        [TestCase("jpeg", "Main map")]
-        [TestCase("emf", "Main map")]
-        public void exportImageCreatesFileTest(string fileType, string dataFrameName)
+        [TestCase("pdf", null, 300)]
+        [TestCase("jpeg", null, 300)]
+        [TestCase("jpeg", "Main map", 30)]
+        [TestCase("emf", "Main map", 30)]
+        public void exportImageCreatesFileTest(string fileType, string dataFrameName, int expectedFileSize)
 {
             // Console.WriteLine("Settings2 :Export Path {0},Map Document {1}", this.exportPath, this.documentName);
 
@@ -133,13 +133,31 @@ namespace MapAction.tests
             // Assert file exported. 
             fi.Refresh();
             Assert.IsTrue(fi.Exists, "The map file has been exported as expected.");
-            Assert.IsTrue(fi.Length > 51200, "The map file is larger than 50kb as expected.");
+            Assert.IsTrue(fi.Length > (expectedFileSize * 1024), "The map file is larger than 50kb as expected.");
 
             // TODO - Check file exported is valid image of the type requested. 
 
         }
 
-        /*
+        [TestCase("Main map", 8, "10000000")]
+        [TestCase("Main map", 8, null)]
+        public void exportKMLFileTest(string dataFrameName, int expectedFileSize, string scale)
+        {
+            string kmlFileName = Path.Combine(this.exportPath, "testfile.kmz");
+            Console.WriteLine("Export KML filename:\t{0}", kmlFileName);
+            FileInfo fi = new FileInfo(kmlFileName);
+
+            // Test export file not present already 
+            // Assert.IsFalse(System.IO.File.Exists(exportFileName), "A map file did not exist prior to the export function being called.");
+            Assert.IsFalse(fi.Exists, "A map file did not exist prior to the export function being called as expected.");
+            MapExport.exportMapFrameKmlAsRaster(this.pMapDoc, dataFrameName, kmlFileName, scale, "50");
+            // Assert file exported. 
+            fi.Refresh();
+            Assert.IsTrue(fi.Exists, "The map file has been exported as expected.");
+            Assert.IsTrue(fi.Length > (expectedFileSize * 1024), "The map file is larger than 50kb as expected.");
+        }
+
+         /*
          * [Test]
         public void failingTest()
         {
