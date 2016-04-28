@@ -2,6 +2,7 @@ import os
 import sys
 import re
 import subprocess
+from shutil import copyfile
 
 
 def is64Windows():
@@ -91,17 +92,23 @@ def run_reg_addin(esriregaddinexe, installdir):
                 else:
                     print "command completed"
             
-            
+def copy_normal_mxt(appdata, installdir):
+    src_path = os.path.join(installdir, "normal.mxt")
+    dst_path = os.path.join(appdata,"ESRI", "Desktop10.2", "ArcMap", "Templates", "normal.mxt")
+    copyfile(src_path, dst_path)
+
 if __name__ == '__main__':
     sub_path = ur'Microsoft\Windows\Start Menu\Programs\Startup'
-    pf = os.environ['APPDATA']
-    print "appdata = " + pf
-    shortcut_path = os.path.join(pf,sub_path)
+    appdata = os.environ['APPDATA']
+    print "appdata = " + appdata
+    shortcut_path = os.path.join(appdata,sub_path)
     print "shortcut_path = " + shortcut_path
     shortcut_name = ur'Register MA ESRI Addins'
+    script_install_dir = os.path.dirname(os.path.realpath(sys.argv[0]))
 
     if is_arc_licensed():
-        run_reg_addin(get_regaddinexe(), os.path.dirname(os.path.realpath(sys.argv[0])))
+        run_reg_addin(get_regaddinexe(), script_install_dir)
+        copy_normal_mxt(appdata, script_install_dir)
         delete_start_menu_shortcut(shortcut_path, shortcut_name)
     else:
         create_start_menu_shortcut(shortcut_path, shortcut_name)
