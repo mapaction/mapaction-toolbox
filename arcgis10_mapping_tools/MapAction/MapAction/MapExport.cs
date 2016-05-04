@@ -186,19 +186,19 @@ namespace MapAction
 
         #region Public method exportMapFrameKmlAsRaster
         // Export map frame kml as raster
-        public static void exportMapFrameKmlAsRaster(IMxDocument pMxDoc, string dataFrame, string filePathName, string scale)
+        public static void exportMapFrameKmlAsRaster(IMapDocument pMapDoc, string dataFrame, string filePathName, string scale, string kmlresolutiondpi)
         {          
             IGeoProcessor2 gp = new GeoProcessorClass();
             IVariantArray parameters = new VarArrayClass();
             bool oldAddSetting = gp.AddOutputsToMap;
             gp.AddOutputsToMap = false;
             // Get the mxd path to pass as the first variable
-            IDocumentInfo2 docInfo = pMxDoc as IDocumentInfo2;
+            IDocumentInfo2 docInfo = pMapDoc as IDocumentInfo2;
             string path = docInfo.Path;
 
             // Get the bounding box of the map frame
             //############### This function needs to be updated to incorporate projected map frames, it currently only works if the frame is wgs84 #############
-            var dict = Utilities.getMapFrameWgs84BoundingBox(pMxDoc, dataFrame);
+            var dict = Utilities.getMapFrameWgs84BoundingBox(pMapDoc, dataFrame);
             string boundingBox = dict["xMin"] + " " + dict["yMin"] + " " + dict["xMax"] + " " + dict["yMax"];
             Debug.WriteLine("Bounding box: " + boundingBox);
 
@@ -212,8 +212,9 @@ namespace MapAction
             parameters.Add(false);
             parameters.Add(boundingBox);
             parameters.Add(""); // Image Size
-            // Hardcode the resolution pending fix to get it from the form properties
-            parameters.Add("300");
+            parameters.Add(kmlresolutiondpi);
+            // Previous attempt to Hardcode the resolution pending fix to get it from the form properties
+            // parameters.Add("300");
             // This key is not in dictionary. dict contains values pertaining to bounding box only.
             // It isn't the dictionary from frmExportMain.getExportToollValues!!
             // Suggestion 1: Use dict.TryGetValue
