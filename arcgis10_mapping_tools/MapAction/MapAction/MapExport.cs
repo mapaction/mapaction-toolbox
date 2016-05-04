@@ -190,7 +190,8 @@ namespace MapAction
         {          
             IGeoProcessor2 gp = new GeoProcessorClass();
             IVariantArray parameters = new VarArrayClass();
-            
+            bool oldAddSetting = gp.AddOutputsToMap;
+            gp.AddOutputsToMap = false;
             // Get the mxd path to pass as the first variable
             IDocumentInfo2 docInfo = pMapDoc as IDocumentInfo2;
             string path = docInfo.Path;
@@ -212,6 +213,14 @@ namespace MapAction
             parameters.Add(boundingBox);
             parameters.Add(""); // Image Size
             parameters.Add(kmlresolutiondpi);
+            // Previous attempt to Hardcode the resolution pending fix to get it from the form properties
+            // parameters.Add("300");
+            // This key is not in dictionary. dict contains values pertaining to bounding box only.
+            // It isn't the dictionary from frmExportMain.getExportToollValues!!
+            // Suggestion 1: Use dict.TryGetValue
+            // Suggestion 2: Don't use magic strings; define a class to hold the form properties, 
+            // then we'd know from intellisense that this wouldn't work...
+            //parameters.Add(dict["kmlresolutiondpi"]);
             // Execute the tool
             try
             {
@@ -223,6 +232,9 @@ namespace MapAction
             {
                 Debug.WriteLine(e);
             }
+            // does changing it affect general ArcMap environment? probably not but 
+            // I can't remember so put it back how it was to be on the safe side
+            gp.AddOutputsToMap = oldAddSetting;
         }
         #endregion
 
