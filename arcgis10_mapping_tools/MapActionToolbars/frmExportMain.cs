@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO;
 using System.Threading;
+using System.Xml.Linq;
 using ESRI.ArcGIS.ArcMap;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
@@ -52,6 +53,13 @@ namespace MapActionToolbars
         private string _accessNoteValidationResult;
         private string _qualityControlValidationResult;
         private string _languageValidationResult;
+        private string _mapNumber;
+        private const string _statusNew = "New";
+        private const string _statusUpdate = "Update";
+        private const string _statusCorrection = "Correction";
+        private const int _initialVersionNumber = 1;
+
+
 
         public frmExportMain()
         {
@@ -148,6 +156,11 @@ namespace MapActionToolbars
             if (dict.ContainsKey("summary")) { tbxMapSummary.Text = dict["summary"]; }
             if (dict.ContainsKey("mxd_name")) { tbxMapDocument.Text = dict["mxd_name"]; }
             if (dict.ContainsKey("data_sources")) { tbxDataSources.Text = dict["data_sources"]; }
+            if (dict.ContainsKey("map_no")) 
+            { 
+                _mapNumber = dict["map_no"];
+                tbxMapNumber.Text = _mapNumber;  
+            }
 
             // Update form values from the config xml
             var dictXML = new Dictionary<string, string>();
@@ -165,6 +178,9 @@ namespace MapActionToolbars
             if (dictXML.ContainsKey("DefaultPdfResDPI")) { nudPdfResolution.Value = Convert.ToDecimal(dictXML["DefaultPdfResDPI"]); }
             if (dictXML.ContainsKey("DefaultEmfResDPI")) { nudEmfResolution.Value = Convert.ToDecimal(dictXML["DefaultPdfResDPI"]); }
 
+            // Set the status value and the version number from the existing XML if it exists:
+            setValuesFromExistingXML();
+
             // Set the spatial reference information on load
             var dictSpatialRef = new Dictionary<string, string>();
             dictSpatialRef  = MapAction.Utilities.getDataFrameSpatialReference(_pMxDoc, _targetMapFrame);
@@ -179,6 +195,50 @@ namespace MapActionToolbars
             tbxPaperSize.Text = MapAction.PageLayoutProperties.getPageSize(_pMxDoc, _targetMapFrame);
             tbxScale.Text = MapAction.PageLayoutProperties.getScale(_pMxDoc, _targetMapFrame);
             
+        }
+
+        // Set the "Status" value and the VersionNumber:
+
+        private void setValuesFromExistingXML()
+        {
+            // Presume Initial Version
+            nudVersionNumber.Value = _initialVersionNumber;
+            cboStatus.Text = _statusNew;
+
+            string xmlPath = tbxExportZipPath.Text + "\\" + tbxMapDocument.Text + ".xml";
+
+            // Does the xmlPath already exist?
+            if (File.Exists(xmlPath))
+            {
+                // If it does, get the values from the current XML.
+                XDocument doc = XDocument.Load(xmlPath);
+                foreach (XElement usEle in doc.Root.Descendants())
+                {
+                    if (usEle.Name.ToString().Equals("versionNumber"))
+                    {
+                        nudVersionNumber.Value = Convert.ToDecimal(usEle.Value.ToString());
+                    }
+                    else if (usEle.Name.ToString().Equals("status"))
+                    {
+                        cboStatus.Text = usEle.Value.ToString();
+                    }
+                }
+            }
+
+            if (nudVersionNumber.Value == _initialVersionNumber)
+            {
+                cboStatus.Text = _statusNew;
+            }
+            else
+            {
+                // if the version number is > 1 and the status is "New" or not in the expected range..
+                if ((cboStatus.Text.Equals(_statusNew)) && 
+                    ((!(cboStatus.Text.Equals(_statusCorrection)) && (!(cboStatus.Text.Equals(_statusUpdate))))))
+                {
+                    // Set to 'Update'
+                    cboStatus.Text = _statusUpdate;
+                }
+            }
         }
 
         private void btnCreateZip_Click(object sender, EventArgs e)
@@ -301,9 +361,12 @@ namespace MapActionToolbars
             //tidy up the map title
             string mapTitle1 = tbxMapTitle.Text.Replace(System.Environment.NewLine, " ");
             mapTitle1 = mapTitle1.Replace("  ", " ");
+
             // Create a dictionary and add values from Export form
             var dict = new Dictionary<string, string>()
             {
+                {"versionNumber",   nudVersionNumber.Value.ToString()},
+                {"mapNumber",       tbxMapNumber.Text},
                 {"operationID",     tbxOperationId.Text},
                 {"sourceorg",       "MapAction"}, //this is hard coded in the existing applicaton
                 {"title",           mapTitle1},
@@ -500,6 +563,11 @@ namespace MapActionToolbars
             return stringSpatialRef;
         }
 
+        public string getStatus()
+        {
+            return cboStatus.Text;
+        }
+
         private void tbxMapTitle_TextChanged(object sender, EventArgs e)
         {
             _titleValidationResult = FormValidationExport.validateMapTitle(tbxMapTitle, eprMaptitleWarning, eprMapTitleError);
@@ -629,10 +697,18 @@ namespace MapActionToolbars
             FormValidationExport.validationCheck(_accessNoteValidationResult, imgAccessNoteStatus);
             FormValidationExport.validationCheck(_qualityControlValidationResult, imgQualityControlStatus);
             FormValidationExport.validationCheck(_languageValidationResult, imgLanguageStatus);
-
         }
 
-       
-
+        private void nudVersionNumber_ValueChanged(object sender, EventArgs e)
+        {
+            if (nudVersionNumber.Value == 1)
+            {
+                cboStatus.Text = "New";
+            }
+            else
+            {
+                cboStatus.Text = "Updated";
+            }
+        }
     }
 }
