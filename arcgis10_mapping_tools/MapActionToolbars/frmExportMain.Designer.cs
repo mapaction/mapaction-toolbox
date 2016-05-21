@@ -93,6 +93,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnExportLeft = new System.Windows.Forms.Button();
             this.tabPageUser = new System.Windows.Forms.TabPage();
+            this.btnLayoutRight = new System.Windows.Forms.Button();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.nudVersionNumber = new System.Windows.Forms.NumericUpDown();
+            this.labelVersionNumber = new System.Windows.Forms.Label();
+            this.label48 = new System.Windows.Forms.Label();
+            this.tbxMapNumber = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cboTheme = new System.Windows.Forms.ComboBox();
             this.label27 = new System.Windows.Forms.Label();
@@ -116,16 +122,12 @@
             this.label19 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
-            this.btnUserRight = new System.Windows.Forms.Button();
-            this.btnUserLeft = new System.Windows.Forms.Button();
             this.tabExportTool = new System.Windows.Forms.TabControl();
             this.tabPageLayout = new System.Windows.Forms.TabPage();
+            this.btnUserRight = new System.Windows.Forms.Button();
+            this.btnUserLeft = new System.Windows.Forms.Button();
             this.chkEditAllFields = new System.Windows.Forms.CheckBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.nudVersionNumber = new System.Windows.Forms.NumericUpDown();
-            this.labelVersionNumber = new System.Windows.Forms.Label();
-            this.label48 = new System.Windows.Forms.Label();
-            this.tbxMapNumber = new System.Windows.Forms.TextBox();
             this.tbxImageDate = new System.Windows.Forms.TextBox();
             this.tbxDataSources = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
@@ -148,7 +150,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.btnLayoutRight = new System.Windows.Forms.Button();
             this.eprMapTitleError = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprMaptitleWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprMapSummaryError = new System.Windows.Forms.ErrorProvider(this.components);
@@ -213,13 +214,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudJpegResolution)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPdfResolution)).BeginInit();
             this.tabPageUser.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVersionNumber)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabExportTool.SuspendLayout();
             this.tabPageLayout.SuspendLayout();
             this.groupBox7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudVersionNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapTitleError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMaptitleWarning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapSummaryError)).BeginInit();
@@ -258,7 +260,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(325, 495);
+            this.btnClose.Location = new System.Drawing.Point(325, 513);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 2;
@@ -275,7 +277,7 @@
             this.tabPageExport.Location = new System.Drawing.Point(4, 22);
             this.tabPageExport.Name = "tabPageExport";
             this.tabPageExport.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageExport.Size = new System.Drawing.Size(381, 451);
+            this.tabPageExport.Size = new System.Drawing.Size(381, 469);
             this.tabPageExport.TabIndex = 4;
             this.tabPageExport.Text = "Export";
             this.tabPageExport.UseVisualStyleBackColor = true;
@@ -326,7 +328,7 @@
             this.groupBox5.Controls.Add(this.lblTitle);
             this.groupBox5.Location = new System.Drawing.Point(7, 105);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(378, 189);
+            this.groupBox5.Size = new System.Drawing.Size(370, 189);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Validation summary";
@@ -698,7 +700,7 @@
             this.groupBox3.Controls.Add(this.tbxExportZipPath);
             this.groupBox3.Location = new System.Drawing.Point(7, 300);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(378, 83);
+            this.groupBox3.Size = new System.Drawing.Size(370, 83);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Directory";
@@ -715,7 +717,7 @@
             // chkOpenExplorer
             // 
             this.chkOpenExplorer.AutoSize = true;
-            this.chkOpenExplorer.Location = new System.Drawing.Point(94, 56);
+            this.chkOpenExplorer.Location = new System.Drawing.Point(89, 56);
             this.chkOpenExplorer.Name = "chkOpenExplorer";
             this.chkOpenExplorer.Size = new System.Drawing.Size(15, 14);
             this.chkOpenExplorer.TabIndex = 1;
@@ -723,7 +725,7 @@
             // 
             // btnCreateZip
             // 
-            this.btnCreateZip.Location = new System.Drawing.Point(295, 51);
+            this.btnCreateZip.Location = new System.Drawing.Point(290, 51);
             this.btnCreateZip.Name = "btnCreateZip";
             this.btnCreateZip.Size = new System.Drawing.Size(75, 23);
             this.btnCreateZip.TabIndex = 2;
@@ -742,7 +744,7 @@
             // 
             // btnExportZipPath
             // 
-            this.btnExportZipPath.Location = new System.Drawing.Point(335, 16);
+            this.btnExportZipPath.Location = new System.Drawing.Point(330, 16);
             this.btnExportZipPath.Name = "btnExportZipPath";
             this.btnExportZipPath.Size = new System.Drawing.Size(37, 23);
             this.btnExportZipPath.TabIndex = 0;
@@ -752,7 +754,7 @@
             // 
             // tbxExportZipPath
             // 
-            this.tbxExportZipPath.Location = new System.Drawing.Point(94, 19);
+            this.tbxExportZipPath.Location = new System.Drawing.Point(89, 19);
             this.tbxExportZipPath.Name = "tbxExportZipPath";
             this.tbxExportZipPath.Size = new System.Drawing.Size(235, 20);
             this.tbxExportZipPath.TabIndex = 0;
@@ -769,7 +771,7 @@
             this.groupBox4.Controls.Add(this.label2);
             this.groupBox4.Location = new System.Drawing.Point(6, 6);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(379, 93);
+            this.groupBox4.Size = new System.Drawing.Size(371, 93);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Image resolution (dpi)";
@@ -916,7 +918,7 @@
             // btnExportLeft
             // 
             this.btnExportLeft.Image = global::MapActionToolbars.Properties.Resources.left_button_20x20;
-            this.btnExportLeft.Location = new System.Drawing.Point(307, 390);
+            this.btnExportLeft.Location = new System.Drawing.Point(304, 431);
             this.btnExportLeft.Name = "btnExportLeft";
             this.btnExportLeft.Size = new System.Drawing.Size(30, 30);
             this.btnExportLeft.TabIndex = 6;
@@ -925,18 +927,89 @@
             // 
             // tabPageUser
             // 
+            this.tabPageUser.Controls.Add(this.btnLayoutRight);
+            this.tabPageUser.Controls.Add(this.groupBox8);
             this.tabPageUser.Controls.Add(this.groupBox2);
             this.tabPageUser.Controls.Add(this.groupBox6);
             this.tabPageUser.Controls.Add(this.groupBox1);
-            this.tabPageUser.Controls.Add(this.btnUserRight);
-            this.tabPageUser.Controls.Add(this.btnUserLeft);
             this.tabPageUser.Location = new System.Drawing.Point(4, 22);
             this.tabPageUser.Name = "tabPageUser";
             this.tabPageUser.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageUser.Size = new System.Drawing.Size(381, 451);
-            this.tabPageUser.TabIndex = 1;
+            this.tabPageUser.Size = new System.Drawing.Size(388, 469);
+            this.tabPageUser.TabIndex = 0;
             this.tabPageUser.Text = "Map Catalogue";
             this.tabPageUser.UseVisualStyleBackColor = true;
+            // 
+            // btnLayoutRight
+            // 
+            this.btnLayoutRight.Image = global::MapActionToolbars.Properties.Resources.right_button_20x20;
+            this.btnLayoutRight.Location = new System.Drawing.Point(341, 431);
+            this.btnLayoutRight.Name = "btnLayoutRight";
+            this.btnLayoutRight.Size = new System.Drawing.Size(30, 30);
+            this.btnLayoutRight.TabIndex = 13;
+            this.btnLayoutRight.UseVisualStyleBackColor = true;
+            this.btnLayoutRight.Click += new System.EventHandler(this.btnLayoutRight_Click_1);
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.nudVersionNumber);
+            this.groupBox8.Controls.Add(this.labelVersionNumber);
+            this.groupBox8.Controls.Add(this.label48);
+            this.groupBox8.Controls.Add(this.tbxMapNumber);
+            this.groupBox8.Location = new System.Drawing.Point(6, 6);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(376, 52);
+            this.groupBox8.TabIndex = 12;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Identification";
+            // 
+            // nudVersionNumber
+            // 
+            this.nudVersionNumber.Location = new System.Drawing.Point(288, 21);
+            this.nudVersionNumber.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nudVersionNumber.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudVersionNumber.Name = "nudVersionNumber";
+            this.nudVersionNumber.Size = new System.Drawing.Size(64, 20);
+            this.nudVersionNumber.TabIndex = 29;
+            this.nudVersionNumber.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // labelVersionNumber
+            // 
+            this.labelVersionNumber.AutoSize = true;
+            this.labelVersionNumber.Location = new System.Drawing.Point(241, 23);
+            this.labelVersionNumber.Name = "labelVersionNumber";
+            this.labelVersionNumber.Size = new System.Drawing.Size(42, 13);
+            this.labelVersionNumber.TabIndex = 30;
+            this.labelVersionNumber.Text = "Version";
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(6, 23);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(68, 13);
+            this.label48.TabIndex = 28;
+            this.label48.Text = "Map Number";
+            // 
+            // tbxMapNumber
+            // 
+            this.tbxMapNumber.Location = new System.Drawing.Point(88, 21);
+            this.tbxMapNumber.Name = "tbxMapNumber";
+            this.tbxMapNumber.ReadOnly = true;
+            this.tbxMapNumber.Size = new System.Drawing.Size(143, 20);
+            this.tbxMapNumber.TabIndex = 27;
             // 
             // groupBox2
             // 
@@ -944,9 +1017,9 @@
             this.groupBox2.Controls.Add(this.label27);
             this.groupBox2.Controls.Add(this.tbxCountries);
             this.groupBox2.Controls.Add(this.label20);
-            this.groupBox2.Location = new System.Drawing.Point(10, 118);
+            this.groupBox2.Location = new System.Drawing.Point(6, 163);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(375, 85);
+            this.groupBox2.Size = new System.Drawing.Size(376, 83);
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Map theme && location";
@@ -974,7 +1047,7 @@
             "Situation and Damage",
             "Water Sanitation and Hygiene",
             "Who-What-Where"});
-            this.cboTheme.Location = new System.Drawing.Point(84, 19);
+            this.cboTheme.Location = new System.Drawing.Point(84, 28);
             this.cboTheme.Name = "cboTheme";
             this.cboTheme.Size = new System.Drawing.Size(264, 21);
             this.cboTheme.TabIndex = 0;
@@ -983,7 +1056,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(5, 23);
+            this.label27.Location = new System.Drawing.Point(6, 32);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(40, 13);
             this.label27.TabIndex = 23;
@@ -991,7 +1064,7 @@
             // 
             // tbxCountries
             // 
-            this.tbxCountries.Location = new System.Drawing.Point(84, 46);
+            this.tbxCountries.Location = new System.Drawing.Point(84, 55);
             this.tbxCountries.Name = "tbxCountries";
             this.tbxCountries.Size = new System.Drawing.Size(264, 20);
             this.tbxCountries.TabIndex = 1;
@@ -1000,7 +1073,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(5, 49);
+            this.label20.Location = new System.Drawing.Point(6, 58);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(51, 13);
             this.label20.TabIndex = 15;
@@ -1014,16 +1087,16 @@
             this.groupBox6.Controls.Add(this.label6);
             this.groupBox6.Controls.Add(this.tbxOperationId);
             this.groupBox6.Controls.Add(this.label5);
-            this.groupBox6.Location = new System.Drawing.Point(7, 6);
+            this.groupBox6.Location = new System.Drawing.Point(6, 64);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(378, 106);
+            this.groupBox6.Size = new System.Drawing.Size(376, 93);
             this.groupBox6.TabIndex = 10;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Operation";
             // 
             // tbxImageLocation
             // 
-            this.tbxImageLocation.Location = new System.Drawing.Point(87, 78);
+            this.tbxImageLocation.Location = new System.Drawing.Point(87, 68);
             this.tbxImageLocation.Name = "tbxImageLocation";
             this.tbxImageLocation.Size = new System.Drawing.Size(264, 20);
             this.tbxImageLocation.TabIndex = 2;
@@ -1032,7 +1105,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(6, 81);
+            this.label26.Location = new System.Drawing.Point(6, 71);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(48, 13);
             this.label26.TabIndex = 18;
@@ -1040,7 +1113,7 @@
             // 
             // tbxGlideNo
             // 
-            this.tbxGlideNo.Location = new System.Drawing.Point(87, 52);
+            this.tbxGlideNo.Location = new System.Drawing.Point(87, 42);
             this.tbxGlideNo.Name = "tbxGlideNo";
             this.tbxGlideNo.ReadOnly = true;
             this.tbxGlideNo.Size = new System.Drawing.Size(264, 20);
@@ -1050,7 +1123,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 55);
+            this.label6.Location = new System.Drawing.Point(6, 45);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(46, 13);
             this.label6.TabIndex = 2;
@@ -1058,7 +1131,7 @@
             // 
             // tbxOperationId
             // 
-            this.tbxOperationId.Location = new System.Drawing.Point(87, 26);
+            this.tbxOperationId.Location = new System.Drawing.Point(87, 16);
             this.tbxOperationId.Name = "tbxOperationId";
             this.tbxOperationId.ReadOnly = true;
             this.tbxOperationId.Size = new System.Drawing.Size(264, 20);
@@ -1068,7 +1141,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 29);
+            this.label5.Location = new System.Drawing.Point(6, 19);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(64, 13);
             this.label5.TabIndex = 0;
@@ -1086,9 +1159,9 @@
             this.groupBox1.Controls.Add(this.label19);
             this.groupBox1.Controls.Add(this.label17);
             this.groupBox1.Controls.Add(this.label18);
-            this.groupBox1.Location = new System.Drawing.Point(7, 209);
+            this.groupBox1.Location = new System.Drawing.Point(6, 251);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(378, 178);
+            this.groupBox1.Size = new System.Drawing.Size(376, 178);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Access && QC";
@@ -1104,7 +1177,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(5, 155);
+            this.label22.Location = new System.Drawing.Point(6, 155);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(55, 13);
             this.label22.TabIndex = 17;
@@ -1113,7 +1186,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(7, 76);
+            this.label25.Location = new System.Drawing.Point(6, 76);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(66, 13);
             this.label25.TabIndex = 5;
@@ -1170,7 +1243,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(5, 45);
+            this.label19.Location = new System.Drawing.Point(6, 45);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(42, 13);
             this.label19.TabIndex = 8;
@@ -1188,61 +1261,62 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(5, 22);
+            this.label18.Location = new System.Drawing.Point(6, 22);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(37, 13);
             this.label18.TabIndex = 4;
             this.label18.Text = "Status";
             // 
-            // btnUserRight
-            // 
-            this.btnUserRight.Image = global::MapActionToolbars.Properties.Resources.right_button_20x20;
-            this.btnUserRight.Location = new System.Drawing.Point(344, 390);
-            this.btnUserRight.Name = "btnUserRight";
-            this.btnUserRight.Size = new System.Drawing.Size(30, 30);
-            this.btnUserRight.TabIndex = 0;
-            this.btnUserRight.UseVisualStyleBackColor = true;
-            this.btnUserRight.Click += new System.EventHandler(this.btnUserRight_Click);
-            // 
-            // btnUserLeft
-            // 
-            this.btnUserLeft.Image = global::MapActionToolbars.Properties.Resources.left_button_20x20;
-            this.btnUserLeft.Location = new System.Drawing.Point(307, 390);
-            this.btnUserLeft.Name = "btnUserLeft";
-            this.btnUserLeft.Size = new System.Drawing.Size(30, 30);
-            this.btnUserLeft.TabIndex = 2;
-            this.btnUserLeft.UseVisualStyleBackColor = true;
-            this.btnUserLeft.Click += new System.EventHandler(this.btnUserLeft_Click);
-            // 
             // tabExportTool
             // 
-            this.tabExportTool.Controls.Add(this.tabPageLayout);
             this.tabExportTool.Controls.Add(this.tabPageUser);
+            this.tabExportTool.Controls.Add(this.tabPageLayout);
             this.tabExportTool.Controls.Add(this.tabPageExport);
             this.tabExportTool.Location = new System.Drawing.Point(11, 12);
             this.tabExportTool.Name = "tabExportTool";
             this.tabExportTool.SelectedIndex = 0;
-            this.tabExportTool.Size = new System.Drawing.Size(389, 477);
+            this.tabExportTool.Size = new System.Drawing.Size(396, 495);
             this.tabExportTool.TabIndex = 1;
             this.tabExportTool.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabExportTool_Selected);
             // 
             // tabPageLayout
             // 
+            this.tabPageLayout.Controls.Add(this.btnUserRight);
+            this.tabPageLayout.Controls.Add(this.btnUserLeft);
             this.tabPageLayout.Controls.Add(this.chkEditAllFields);
             this.tabPageLayout.Controls.Add(this.groupBox7);
-            this.tabPageLayout.Controls.Add(this.btnLayoutRight);
             this.tabPageLayout.Location = new System.Drawing.Point(4, 22);
             this.tabPageLayout.Name = "tabPageLayout";
             this.tabPageLayout.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLayout.Size = new System.Drawing.Size(381, 451);
-            this.tabPageLayout.TabIndex = 0;
+            this.tabPageLayout.Size = new System.Drawing.Size(381, 469);
+            this.tabPageLayout.TabIndex = 1;
             this.tabPageLayout.Text = "Map Information";
             this.tabPageLayout.UseVisualStyleBackColor = true;
+            // 
+            // btnUserRight
+            // 
+            this.btnUserRight.Image = global::MapActionToolbars.Properties.Resources.right_button_20x20;
+            this.btnUserRight.Location = new System.Drawing.Point(341, 431);
+            this.btnUserRight.Name = "btnUserRight";
+            this.btnUserRight.Size = new System.Drawing.Size(30, 30);
+            this.btnUserRight.TabIndex = 12;
+            this.btnUserRight.UseVisualStyleBackColor = true;
+            this.btnUserRight.Click += new System.EventHandler(this.btnUserRight_Click_1);
+            // 
+            // btnUserLeft
+            // 
+            this.btnUserLeft.Image = global::MapActionToolbars.Properties.Resources.left_button_20x20;
+            this.btnUserLeft.Location = new System.Drawing.Point(304, 431);
+            this.btnUserLeft.Name = "btnUserLeft";
+            this.btnUserLeft.Size = new System.Drawing.Size(30, 30);
+            this.btnUserLeft.TabIndex = 13;
+            this.btnUserLeft.UseVisualStyleBackColor = true;
+            this.btnUserLeft.Click += new System.EventHandler(this.btnUserLeft_Click_1);
             // 
             // chkEditAllFields
             // 
             this.chkEditAllFields.AutoSize = true;
-            this.chkEditAllFields.Location = new System.Drawing.Point(12, 421);
+            this.chkEditAllFields.Location = new System.Drawing.Point(12, 436);
             this.chkEditAllFields.Name = "chkEditAllFields";
             this.chkEditAllFields.Size = new System.Drawing.Size(153, 17);
             this.chkEditAllFields.TabIndex = 11;
@@ -1252,10 +1326,6 @@
             // 
             // groupBox7
             // 
-            this.groupBox7.Controls.Add(this.nudVersionNumber);
-            this.groupBox7.Controls.Add(this.labelVersionNumber);
-            this.groupBox7.Controls.Add(this.label48);
-            this.groupBox7.Controls.Add(this.tbxMapNumber);
             this.groupBox7.Controls.Add(this.tbxImageDate);
             this.groupBox7.Controls.Add(this.tbxDataSources);
             this.groupBox7.Controls.Add(this.label16);
@@ -1280,63 +1350,14 @@
             this.groupBox7.Controls.Add(this.label24);
             this.groupBox7.Location = new System.Drawing.Point(6, 6);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(379, 406);
+            this.groupBox7.Size = new System.Drawing.Size(369, 386);
             this.groupBox7.TabIndex = 10;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Map";
             // 
-            // nudVersionNumber
-            // 
-            this.nudVersionNumber.Location = new System.Drawing.Point(280, 18);
-            this.nudVersionNumber.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.nudVersionNumber.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudVersionNumber.Name = "nudVersionNumber";
-            this.nudVersionNumber.Size = new System.Drawing.Size(64, 20);
-            this.nudVersionNumber.TabIndex = 25;
-            this.nudVersionNumber.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudVersionNumber.ValueChanged += new System.EventHandler(this.nudVersionNumber_ValueChanged);
-            // 
-            // labelVersionNumber
-            // 
-            this.labelVersionNumber.AutoSize = true;
-            this.labelVersionNumber.Location = new System.Drawing.Point(232, 20);
-            this.labelVersionNumber.Name = "labelVersionNumber";
-            this.labelVersionNumber.Size = new System.Drawing.Size(42, 13);
-            this.labelVersionNumber.TabIndex = 26;
-            this.labelVersionNumber.Text = "Version";
-            // 
-            // label48
-            // 
-            this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(3, 23);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(68, 13);
-            this.label48.TabIndex = 24;
-            this.label48.Text = "Map Number";
-            // 
-            // tbxMapNumber
-            // 
-            this.tbxMapNumber.Location = new System.Drawing.Point(77, 18);
-            this.tbxMapNumber.Name = "tbxMapNumber";
-            this.tbxMapNumber.ReadOnly = true;
-            this.tbxMapNumber.Size = new System.Drawing.Size(143, 20);
-            this.tbxMapNumber.TabIndex = 23;
-            // 
             // tbxImageDate
             // 
-            this.tbxImageDate.Location = new System.Drawing.Point(77, 311);
+            this.tbxImageDate.Location = new System.Drawing.Point(77, 284);
             this.tbxImageDate.Name = "tbxImageDate";
             this.tbxImageDate.Size = new System.Drawing.Size(268, 20);
             this.tbxImageDate.TabIndex = 9;
@@ -1344,7 +1365,7 @@
             // 
             // tbxDataSources
             // 
-            this.tbxDataSources.Location = new System.Drawing.Point(77, 337);
+            this.tbxDataSources.Location = new System.Drawing.Point(77, 310);
             this.tbxDataSources.Multiline = true;
             this.tbxDataSources.Name = "tbxDataSources";
             this.tbxDataSources.ReadOnly = true;
@@ -1356,7 +1377,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(6, 350);
+            this.label16.Location = new System.Drawing.Point(6, 323);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(70, 13);
             this.label16.TabIndex = 20;
@@ -1364,7 +1385,7 @@
             // 
             // tbxScale
             // 
-            this.tbxScale.Location = new System.Drawing.Point(77, 285);
+            this.tbxScale.Location = new System.Drawing.Point(77, 258);
             this.tbxScale.Name = "tbxScale";
             this.tbxScale.ReadOnly = true;
             this.tbxScale.Size = new System.Drawing.Size(143, 20);
@@ -1374,7 +1395,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(3, 288);
+            this.label14.Location = new System.Drawing.Point(3, 261);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(34, 13);
             this.label14.TabIndex = 18;
@@ -1382,7 +1403,7 @@
             // 
             // tbxPaperSize
             // 
-            this.tbxPaperSize.Location = new System.Drawing.Point(282, 283);
+            this.tbxPaperSize.Location = new System.Drawing.Point(282, 256);
             this.tbxPaperSize.Name = "tbxPaperSize";
             this.tbxPaperSize.ReadOnly = true;
             this.tbxPaperSize.Size = new System.Drawing.Size(63, 20);
@@ -1392,7 +1413,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(246, 285);
+            this.label15.Location = new System.Drawing.Point(246, 258);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(35, 13);
             this.label15.TabIndex = 16;
@@ -1400,7 +1421,7 @@
             // 
             // tbxDatum
             // 
-            this.tbxDatum.Location = new System.Drawing.Point(77, 232);
+            this.tbxDatum.Location = new System.Drawing.Point(77, 205);
             this.tbxDatum.Name = "tbxDatum";
             this.tbxDatum.ReadOnly = true;
             this.tbxDatum.Size = new System.Drawing.Size(143, 20);
@@ -1410,7 +1431,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(3, 235);
+            this.label12.Location = new System.Drawing.Point(3, 208);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(38, 13);
             this.label12.TabIndex = 14;
@@ -1418,7 +1439,7 @@
             // 
             // tbxProjection
             // 
-            this.tbxProjection.Location = new System.Drawing.Point(77, 259);
+            this.tbxProjection.Location = new System.Drawing.Point(77, 232);
             this.tbxProjection.Name = "tbxProjection";
             this.tbxProjection.ReadOnly = true;
             this.tbxProjection.Size = new System.Drawing.Size(143, 20);
@@ -1428,7 +1449,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(3, 262);
+            this.label13.Location = new System.Drawing.Point(3, 235);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(54, 13);
             this.label13.TabIndex = 12;
@@ -1436,7 +1457,7 @@
             // 
             // tbxDate
             // 
-            this.tbxDate.Location = new System.Drawing.Point(282, 232);
+            this.tbxDate.Location = new System.Drawing.Point(282, 205);
             this.tbxDate.Name = "tbxDate";
             this.tbxDate.ReadOnly = true;
             this.tbxDate.Size = new System.Drawing.Size(63, 20);
@@ -1446,7 +1467,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(246, 235);
+            this.label11.Location = new System.Drawing.Point(246, 208);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(30, 13);
             this.label11.TabIndex = 10;
@@ -1454,7 +1475,7 @@
             // 
             // tbxTime
             // 
-            this.tbxTime.Location = new System.Drawing.Point(282, 257);
+            this.tbxTime.Location = new System.Drawing.Point(282, 230);
             this.tbxTime.Name = "tbxTime";
             this.tbxTime.ReadOnly = true;
             this.tbxTime.Size = new System.Drawing.Size(63, 20);
@@ -1464,7 +1485,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(246, 258);
+            this.label10.Location = new System.Drawing.Point(246, 231);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(30, 13);
             this.label10.TabIndex = 8;
@@ -1472,7 +1493,7 @@
             // 
             // tbxMapDocument
             // 
-            this.tbxMapDocument.Location = new System.Drawing.Point(77, 204);
+            this.tbxMapDocument.Location = new System.Drawing.Point(77, 177);
             this.tbxMapDocument.Name = "tbxMapDocument";
             this.tbxMapDocument.ReadOnly = true;
             this.tbxMapDocument.Size = new System.Drawing.Size(268, 20);
@@ -1482,7 +1503,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 207);
+            this.label9.Location = new System.Drawing.Point(3, 180);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(56, 13);
             this.label9.TabIndex = 4;
@@ -1490,7 +1511,7 @@
             // 
             // tbxMapSummary
             // 
-            this.tbxMapSummary.Location = new System.Drawing.Point(77, 115);
+            this.tbxMapSummary.Location = new System.Drawing.Point(77, 88);
             this.tbxMapSummary.Multiline = true;
             this.tbxMapSummary.Name = "tbxMapSummary";
             this.tbxMapSummary.ReadOnly = true;
@@ -1501,7 +1522,7 @@
             // 
             // tbxMapTitle
             // 
-            this.tbxMapTitle.Location = new System.Drawing.Point(77, 44);
+            this.tbxMapTitle.Location = new System.Drawing.Point(77, 17);
             this.tbxMapTitle.Multiline = true;
             this.tbxMapTitle.Name = "tbxMapTitle";
             this.tbxMapTitle.ReadOnly = true;
@@ -1513,7 +1534,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 118);
+            this.label7.Location = new System.Drawing.Point(3, 91);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(50, 13);
             this.label7.TabIndex = 6;
@@ -1522,7 +1543,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 47);
+            this.label8.Location = new System.Drawing.Point(3, 20);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(27, 13);
             this.label8.TabIndex = 4;
@@ -1531,21 +1552,11 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(3, 314);
+            this.label24.Location = new System.Drawing.Point(3, 287);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(68, 13);
             this.label24.TabIndex = 22;
             this.label24.Text = "Imagery date";
-            // 
-            // btnLayoutRight
-            // 
-            this.btnLayoutRight.Image = global::MapActionToolbars.Properties.Resources.right_button_20x20;
-            this.btnLayoutRight.Location = new System.Drawing.Point(344, 415);
-            this.btnLayoutRight.Name = "btnLayoutRight";
-            this.btnLayoutRight.Size = new System.Drawing.Size(30, 30);
-            this.btnLayoutRight.TabIndex = 0;
-            this.btnLayoutRight.UseVisualStyleBackColor = true;
-            this.btnLayoutRight.Click += new System.EventHandler(this.btnLayoutRight_Click);
             // 
             // eprMapTitleError
             // 
@@ -1742,7 +1753,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(412, 522);
+            this.ClientSize = new System.Drawing.Size(419, 545);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.tabExportTool);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -1783,6 +1794,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudJpegResolution)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPdfResolution)).EndInit();
             this.tabPageUser.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVersionNumber)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox6.ResumeLayout(false);
@@ -1794,7 +1808,6 @@
             this.tabPageLayout.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudVersionNumber)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapTitleError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMaptitleWarning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapSummaryError)).EndInit();
@@ -1844,8 +1857,6 @@
         private System.Windows.Forms.TextBox tbxExportZipPath;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TabPage tabPageUser;
-        private System.Windows.Forms.Button btnUserRight;
-        private System.Windows.Forms.Button btnUserLeft;
         private System.Windows.Forms.TabControl tabExportTool;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Button btnCreateZip;
@@ -1857,7 +1868,6 @@
         private System.Windows.Forms.NumericUpDown nudJpegResolution;
         private System.Windows.Forms.TabPage tabPageLayout;
         private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.Button btnLayoutRight;
         private System.Windows.Forms.TextBox tbxDate;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox tbxTime;
@@ -1899,7 +1909,6 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TextBox tbxImageAccessNotes;
         private System.Windows.Forms.NumericUpDown nudEmfResolution;
-        private System.Windows.Forms.NumericUpDown nudVersionNumber;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.CheckBox chkEditAllFields;
         private System.Windows.Forms.ComboBox cboTheme;
@@ -1985,8 +1994,13 @@
         private System.Windows.Forms.PictureBox imgDatumStatus;
         private System.Windows.Forms.NumericUpDown nudKmlResolution;
         private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.NumericUpDown nudVersionNumber;
+        private System.Windows.Forms.Label labelVersionNumber;
         private System.Windows.Forms.Label label48;
         private System.Windows.Forms.TextBox tbxMapNumber;
-        private System.Windows.Forms.Label labelVersionNumber;
+        private System.Windows.Forms.Button btnLayoutRight;
+        private System.Windows.Forms.Button btnUserRight;
+        private System.Windows.Forms.Button btnUserLeft;
     }
 }

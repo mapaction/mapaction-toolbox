@@ -83,7 +83,7 @@ namespace MapActionToolbars
 
         private void btnExportLeft_Click(object sender, EventArgs e)
         {
-            tabExportTool.SelectedTab = tabPageUser;
+            tabExportTool.SelectedTab = tabPageLayout;
         }
 
         private void btnExportZipPath_Click(object sender, EventArgs e)
@@ -709,6 +709,21 @@ namespace MapActionToolbars
             {
                 cboStatus.Text = "Updated";
             }
+        }
+
+        private void btnLayoutRight_Click_1(object sender, EventArgs e)
+        {
+            tabExportTool.SelectedTab = tabPageLayout;
+        }
+
+        private void btnUserLeft_Click_1(object sender, EventArgs e)
+        {
+            tabExportTool.SelectedTab = tabPageUser;
+        }
+
+        private void btnUserRight_Click_1(object sender, EventArgs e)
+        {
+            tabExportTool.SelectedTab = tabPageExport;
         }
     }
 }
