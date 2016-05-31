@@ -17,6 +17,7 @@ using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Output;
 using ESRI.ArcGIS.Geoprocessing;
+using ESRI.ArcGIS.Geodatabase;
 
 namespace MapAction
 {
@@ -224,13 +225,26 @@ namespace MapAction
             // Execute the tool
             try
             {
-                Debug.WriteLine("Starting KML output..");
-                gp.Execute("MapToKML_conversion", parameters, null);
-                Debug.WriteLine("Finished KML output");
+                // Add a whole load of debugging info here;
+                // Trying to detirmine why the KML doesn't get exported when unit tested.
+                System.Console.WriteLine("Starting KML output..");
+                String settingsFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), @"geoprocessing_settingsfile.xml");
+                System.Console.WriteLine(String.Format("saving settingsFile to {0}", settingsFile));
+                gp.SaveSettings(settingsFile);
+                IGeoProcessorResult geoProcessorResult = gp.Execute("MapToKML_conversion", parameters, null);
+                IGPMessages results = geoProcessorResult.GetResultMessages();
+                IGPMessage message;
+                for (int i=0; i<results.Count; i++){
+                    message = results.GetMessage(i);
+                    System.Console.WriteLine(String.Format("ErrorCode: {0}\t  Type: {1}\t  Description: {2}", message.ErrorCode, message.Type, message.Description));
+                }
+
+                System.Console.WriteLine("Finished KML output");
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
+                System.Console.WriteLine(e);
             }
             // does changing it affect general ArcMap environment? probably not but 
             // I can't remember so put it back how it was to be on the safe side
