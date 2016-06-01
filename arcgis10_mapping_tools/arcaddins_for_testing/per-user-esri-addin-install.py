@@ -107,7 +107,9 @@ if __name__ == '__main__':
     script_install_dir = os.path.dirname(os.path.realpath(sys.argv[0]))
 
     if is_arc_licensed():
-        run_reg_addin(get_regaddinexe(), script_install_dir)
+        regaddinexe = get_regaddinexe()
+        remove_old_addin(regaddinexe, old_addin_uids)
+        run_reg_addin(regaddinexe, os.path.dirname(os.path.realpath(sys.argv[0])))
         copy_normal_mxt(appdata, script_install_dir)
         delete_start_menu_shortcut(shortcut_path, shortcut_name)
     else:
