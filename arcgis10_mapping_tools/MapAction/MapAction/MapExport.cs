@@ -228,9 +228,9 @@ namespace MapAction
                 // Add a whole load of debugging info here;
                 // Trying to detirmine why the KML doesn't get exported when unit tested.
                 System.Console.WriteLine("Starting KML output..");
-                String settingsFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), @"geoprocessing_settingsfile.xml");
-                System.Console.WriteLine(String.Format("saving settingsFile to {0}", settingsFile));
-                gp.SaveSettings(settingsFile);
+                //String settingsFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), @"geoprocessing_settingsfile.xml");
+                //System.Console.WriteLine(String.Format("saving settingsFile to {0}", settingsFile));
+                //gp.SaveSettings(settingsFile);
                 IGeoProcessorResult geoProcessorResult = gp.Execute("MapToKML_conversion", parameters, null);
                 IGPMessages results = geoProcessorResult.GetResultMessages();
                 IGPMessage message;
