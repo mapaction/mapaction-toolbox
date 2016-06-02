@@ -99,12 +99,16 @@ namespace MapAction
         #region Public method getDataFrameSpatialReference
         //Gets the spatial reference details of a given data frame. Returns a dictionary with the "type", "datum" & "projection".
         //these keys return empty if the dataframe doesn't exist, therefore test "type" != string.empty; on the other end 
-
         public static Dictionary<string, string> getDataFrameSpatialReference(IMxDocument pMxDoc, string pDataFrameName)
+        {
+            IMapDocument _mapDoc = (IMapDocument)pMxDoc;
+            return getDataFrameSpatialReference(_mapDoc, pDataFrameName);
+        }
+
+        public static Dictionary<string, string> getDataFrameSpatialReference(IMapDocument pMapDoc, string pDataFrameName)
         {
             IMap pMap;
             IMap pDataFrame = null;
-            IMaps pMaps = pMxDoc.Maps;
             string type = string.Empty;
             string datum = string.Empty;
             string projection = string.Empty;
@@ -113,9 +117,9 @@ namespace MapAction
             try
             {
                 //Search through the dataframes in the document 
-                for (int i = 0; i <= pMaps.Count - 1; i++)
+                for (int i = 0; i <= pMapDoc.MapCount - 1; i++)
                 {
-                    pMap = pMaps.get_Item(i);
+                    pMap = pMapDoc.Map[i];
                     if (pMap.Name == pDataFrameName)
                     {
                         //assign pDataFrame map where the passed dataframe name exists
@@ -278,22 +282,42 @@ namespace MapAction
             return pSelectedMap;
 
         }
+
+        public static IMap getMapFrame(IMapDocument pMapDoc, string pMapFrameName)
+        {
+            IMap pSelectedMap = null;
+            IMap pMap;
+            // Get the data frame
+            //Search through the dataframes in the document 
+            for (int i = 0; i <= pMapDoc.MapCount - 1; i++)
+            {
+                pMap = pMapDoc.Map[i];
+                if (pMap.Name == pMapFrameName)
+                {
+                    //assign pDataFrame map where the passed dataframe name exists
+                    pSelectedMap = pMap;
+                }
+            }
+
+            return pSelectedMap;
+
+        }
         #endregion
 
         #region Public method getMapFrameBoundingBox
         // Get the bounding box of the map frame in wgs84 unprojected
         // ### Not not yet implemented, all returned values are wgs84 -> Return the values either in 'native' i.e. incoming coordinate system or convert them to wgs84
-        public static Dictionary<string, string> getMapFrameWgs84BoundingBox(IMxDocument pMxDoc, string mapFrameName)
+        public static Dictionary<string, string> getMapFrameWgs84BoundingBox(IMapDocument pMapDoc, string mapFrameName)
         {
             // Declare and initalise variables
             Dictionary<string, string> dict = new Dictionary<string, string>(); 
-            IMap pMap = Utilities.getMapFrame(pMxDoc, mapFrameName);
+            IMap pMap = getMapFrame(pMapDoc, mapFrameName);
             IActiveView pActiveView = pMap as IActiveView;
             IEnvelope2 pEnvelope = pActiveView.Extent as IEnvelope2;
 
             // Get the spatial reference of the map frame
             // If not Geographic / WGS 84, convert it
-            var spatialRefDict = getDataFrameSpatialReference(pMxDoc, mapFrameName);
+            var spatialRefDict = getDataFrameSpatialReference(pMapDoc, mapFrameName);
 
             if (spatialRefDict["type"] != "Geographic" && spatialRefDict["datum"] != "WGS 1984")
             {

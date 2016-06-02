@@ -60,7 +60,48 @@ namespace MapAction
         }
         #endregion
 
+
         #region Public method detectMapFrame
+        // Determines if a given map frame exists given a name and IMapDocument reference.
+        // Boolean returns true if it exists.
+        public static Boolean detectMapFrame(IMapDocument pMapDoc, string pFrameName)
+        {
+            //try
+            //{
+            //    IMxDocument pMxDoc;
+            //    pMxDoc = (IMxDocument)pMapDoc;
+            //    return detectMapFrame(pMxDoc, pFrameName);
+            //}
+            //catch (Exception e)
+            //{
+            //    System.Diagnostics.Debug.WriteLine(e.Message);
+            //    throw e;
+            //}
+
+            IMap pMap;
+            Boolean mapFrameExists = false;
+
+            try
+            {
+                for (int i = 0; i <= pMapDoc.MapCount - 1; i++)
+                {
+                    pMap = pMapDoc.Map[i];
+                    if (pMap.Name == pFrameName)
+                    {
+                        mapFrameExists = true;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
+            return mapFrameExists;
+        
+        
+        }
+
         // Determines if a given map frame exists given a name and IMxDocument reference.
         // Boolean returns true if it exists.
         public static Boolean detectMapFrame(IMxDocument pMxDoc, string pFrameName)

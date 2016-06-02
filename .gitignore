@@ -181,3 +181,8 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+*.esriAddIn
+*.dll
+
+coverage/
+arcgis10_mapping_tools/opencover-results.xml
