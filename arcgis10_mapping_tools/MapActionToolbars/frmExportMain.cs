@@ -764,7 +764,7 @@ namespace MapActionToolbars
 
         private void button2_Click(object sender, EventArgs e)
         {
-            tabExportTool.SelectedTab = tabPageExport;
+            tabExportTool.SelectedTab = tabPageUser;
         }
 
         private void button1_Click(object sender, EventArgs e)
