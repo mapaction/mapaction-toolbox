@@ -140,7 +140,7 @@ namespace MapActionToolbars
             _operationIdValidationResult = FormValidationExport.validateOperationId(tbxOperationId, eprOperationIdWarning, eprOperationIdError);
             _glideNumberValidationResult = FormValidationExport.validateGlideNumber(tbxGlideNo, eprGlideNumberWarning, eprGlideNumberError);
             _locationValidationResult = FormValidationExport.validateLocation(tbxImageLocation, eprLocationWarning);
-            _themeValidationResult = FormValidationExport.validateTheme(cboTheme, eprThemeWarning);
+            _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
             _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
             _statusValidationResult = FormValidationExport.validateStatus(cboStatus, eprStatusWarning);
             _accessValidationResult = FormValidationExport.validateAccess(cboAccess, eprAccessWarning);
@@ -222,9 +222,30 @@ namespace MapActionToolbars
                     {
                         cboStatus.Text = usEle.Value.ToString();
                     }
+                    // In "older" XML, only a single theme was possible.  Read it in:
+                    else if (usEle.Name.ToString().Equals("theme"))
+                    {
+                        for (int i = 0; i < checkedListBoxThemes.Items.Count; i++)
+                        {
+                            if (checkedListBoxThemes.Items[i].ToString().Equals(usEle.Value.ToString()))
+                            {
+                                checkedListBoxThemes.SetItemChecked(i, true);
+                            }
+                        }        
+                    }
+                    // Read in multiple themes
+                    else if (usEle.Name.ToString().Equals("themes"))
+                    {
+                        for (int i = 0; i < checkedListBoxThemes.Items.Count; i++)
+                        {
+                            if (checkedListBoxThemes.Items[i].ToString().Equals(usEle.Value.ToString()))
+                            {
+                                checkedListBoxThemes.SetItemChecked(i, true);
+                            }
+                        }        
+                    }
                 }
             }
-
             if (nudVersionNumber.Value == _initialVersionNumber)
             {
                 cboStatus.Text = _statusNew;
@@ -362,6 +383,21 @@ namespace MapActionToolbars
             string mapTitle1 = tbxMapTitle.Text.Replace(System.Environment.NewLine, " ");
             mapTitle1 = mapTitle1.Replace("  ", " ");
 
+            System.Text.StringBuilder themes = new System.Text.StringBuilder();
+
+            int item = 0;
+            foreach (object itemChecked in checkedListBoxThemes.CheckedItems)
+            {
+                if (item > 0)
+                {
+                    themes.Append("|");
+                }
+                // Use the IndexOf method to get the index of an item.
+                themes.Append(itemChecked.ToString());
+                item++;
+            }
+            System.Console.WriteLine(themes.ToString());
+
             // Create a dictionary and add values from Export form
             var dict = new Dictionary<string, string>()
             {
@@ -392,7 +428,7 @@ namespace MapActionToolbars
                 {"imagerydate",     tbxImageDate.Text},
                 {"datasource",      tbxDataSources.Text},
                 {"location",        tbxImageLocation.Text},
-                {"theme",           cboTheme.Text},
+                {"themes",          themes.ToString()},
                 {"scale",           tbxScale.Text},
                 {"papersize",       tbxPaperSize.Text},
                 {"jpgfilesize",     dictImageFileSizes["jpeg"].ToString()},
@@ -638,11 +674,6 @@ namespace MapActionToolbars
             _locationValidationResult = FormValidationExport.validateLocation(tbxImageLocation, eprLocationWarning);
         }
 
-        private void cboTheme_TextChanged(object sender, EventArgs e)
-        {
-            _themeValidationResult = FormValidationExport.validateTheme(cboTheme, eprThemeWarning);
-        }
-
         private void tbxCountries_TextChanged(object sender, EventArgs e)
         {
             _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
@@ -713,17 +744,37 @@ namespace MapActionToolbars
 
         private void btnLayoutRight_Click_1(object sender, EventArgs e)
         {
-            tabExportTool.SelectedTab = tabPageLayout;
+            tabExportTool.SelectedTab = tabPageThemes;
         }
 
         private void btnUserLeft_Click_1(object sender, EventArgs e)
         {
-            tabExportTool.SelectedTab = tabPageUser;
+            tabExportTool.SelectedTab = tabPageThemes;
         }
 
         private void btnUserRight_Click_1(object sender, EventArgs e)
         {
             tabExportTool.SelectedTab = tabPageExport;
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            tabExportTool.SelectedTab = tabPageExport;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            tabExportTool.SelectedTab = tabPageLayout;
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
         }
     }
 }

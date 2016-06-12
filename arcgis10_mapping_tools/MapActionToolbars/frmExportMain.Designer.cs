@@ -99,11 +99,6 @@
             this.labelVersionNumber = new System.Windows.Forms.Label();
             this.label48 = new System.Windows.Forms.Label();
             this.tbxMapNumber = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.cboTheme = new System.Windows.Forms.ComboBox();
-            this.label27 = new System.Windows.Forms.Label();
-            this.tbxCountries = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.tbxImageLocation = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
@@ -123,6 +118,14 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.tabExportTool = new System.Windows.Forms.TabControl();
+            this.tabPageThemes = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.checkedListBoxThemes = new System.Windows.Forms.CheckedListBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.tbxCountries = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
             this.tabPageLayout = new System.Windows.Forms.TabPage();
             this.btnUserRight = new System.Windows.Forms.Button();
             this.btnUserLeft = new System.Windows.Forms.Button();
@@ -216,10 +219,11 @@
             this.tabPageUser.SuspendLayout();
             this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudVersionNumber)).BeginInit();
-            this.groupBox2.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabExportTool.SuspendLayout();
+            this.tabPageThemes.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.tabPageLayout.SuspendLayout();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapTitleError)).BeginInit();
@@ -277,7 +281,7 @@
             this.tabPageExport.Location = new System.Drawing.Point(4, 22);
             this.tabPageExport.Name = "tabPageExport";
             this.tabPageExport.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageExport.Size = new System.Drawing.Size(381, 469);
+            this.tabPageExport.Size = new System.Drawing.Size(388, 469);
             this.tabPageExport.TabIndex = 4;
             this.tabPageExport.Text = "Export";
             this.tabPageExport.UseVisualStyleBackColor = true;
@@ -331,7 +335,7 @@
             this.groupBox5.Size = new System.Drawing.Size(370, 189);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Validation summary";
+            this.groupBox5.Text = "Validation Summary";
             // 
             // imgLanguageStatus
             // 
@@ -504,7 +508,7 @@
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(259, 166);
+            this.label40.Location = new System.Drawing.Point(259, 163);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(55, 13);
             this.label40.TabIndex = 27;
@@ -513,20 +517,20 @@
             // label41
             // 
             this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(259, 141);
+            this.label41.Location = new System.Drawing.Point(259, 140);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(74, 13);
+            this.label41.Size = new System.Drawing.Size(75, 13);
             this.label41.TabIndex = 26;
-            this.label41.Text = "Quality control";
+            this.label41.Text = "Quality Control";
             // 
             // label42
             // 
             this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(259, 116);
+            this.label42.Location = new System.Drawing.Point(259, 117);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(66, 13);
+            this.label42.Size = new System.Drawing.Size(68, 13);
             this.label42.TabIndex = 25;
-            this.label42.Text = "Access note";
+            this.label42.Text = "Access Note";
             // 
             // label43
             // 
@@ -560,9 +564,9 @@
             this.label46.AutoSize = true;
             this.label46.Location = new System.Drawing.Point(259, 25);
             this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(40, 13);
+            this.label46.Size = new System.Drawing.Size(51, 13);
             this.label46.TabIndex = 21;
-            this.label46.Text = "Theme";
+            this.label46.Text = "Theme(s)";
             // 
             // label39
             // 
@@ -576,16 +580,16 @@
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(136, 138);
+            this.label38.Location = new System.Drawing.Point(136, 140);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(69, 13);
+            this.label38.Size = new System.Drawing.Size(71, 13);
             this.label38.TabIndex = 19;
-            this.label38.Text = "Glide number";
+            this.label38.Text = "Glide Number";
             // 
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(136, 113);
+            this.label37.Location = new System.Drawing.Point(136, 117);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(65, 13);
             this.label37.TabIndex = 18;
@@ -594,34 +598,34 @@
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(136, 91);
+            this.label36.Location = new System.Drawing.Point(136, 94);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(70, 13);
+            this.label36.Size = new System.Drawing.Size(72, 13);
             this.label36.TabIndex = 17;
-            this.label36.Text = "Data sources";
+            this.label36.Text = "Data Sources";
             // 
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(136, 68);
+            this.label35.Location = new System.Drawing.Point(136, 71);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(60, 13);
+            this.label35.Size = new System.Drawing.Size(62, 13);
             this.label35.TabIndex = 16;
-            this.label35.Text = "Image date";
+            this.label35.Text = "Image Date";
             // 
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(136, 45);
+            this.label34.Location = new System.Drawing.Point(136, 48);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(56, 13);
+            this.label34.Size = new System.Drawing.Size(58, 13);
             this.label34.TabIndex = 15;
-            this.label34.Text = "Paper size";
+            this.label34.Text = "Paper Size";
             // 
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(136, 22);
+            this.label33.Location = new System.Drawing.Point(136, 25);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(30, 13);
             this.label33.TabIndex = 14;
@@ -630,7 +634,7 @@
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(16, 138);
+            this.label32.Location = new System.Drawing.Point(16, 140);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(34, 13);
             this.label32.TabIndex = 13;
@@ -639,7 +643,7 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(16, 115);
+            this.label31.Location = new System.Drawing.Point(16, 117);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(54, 13);
             this.label31.TabIndex = 12;
@@ -648,7 +652,7 @@
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(16, 92);
+            this.label30.Location = new System.Drawing.Point(16, 94);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(38, 13);
             this.label30.TabIndex = 11;
@@ -657,7 +661,7 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(16, 69);
+            this.label29.Location = new System.Drawing.Point(16, 71);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(56, 13);
             this.label29.TabIndex = 10;
@@ -666,7 +670,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(16, 46);
+            this.label23.Location = new System.Drawing.Point(16, 48);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(50, 13);
             this.label23.TabIndex = 9;
@@ -675,7 +679,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(16, 23);
+            this.label21.Location = new System.Drawing.Point(16, 25);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(27, 13);
             this.label21.TabIndex = 8;
@@ -684,7 +688,7 @@
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Location = new System.Drawing.Point(16, 161);
+            this.lblTitle.Location = new System.Drawing.Point(16, 163);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(30, 13);
             this.lblTitle.TabIndex = 7;
@@ -738,9 +742,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(5, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 13);
+            this.label1.Size = new System.Drawing.Size(62, 13);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Export path";
+            this.label1.Text = "Export Path";
             // 
             // btnExportZipPath
             // 
@@ -774,7 +778,7 @@
             this.groupBox4.Size = new System.Drawing.Size(371, 93);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Image resolution (dpi)";
+            this.groupBox4.Text = "Image Resolution (dpi)";
             // 
             // label47
             // 
@@ -929,7 +933,6 @@
             // 
             this.tabPageUser.Controls.Add(this.btnLayoutRight);
             this.tabPageUser.Controls.Add(this.groupBox8);
-            this.tabPageUser.Controls.Add(this.groupBox2);
             this.tabPageUser.Controls.Add(this.groupBox6);
             this.tabPageUser.Controls.Add(this.groupBox1);
             this.tabPageUser.Location = new System.Drawing.Point(4, 22);
@@ -1011,74 +1014,6 @@
             this.tbxMapNumber.Size = new System.Drawing.Size(143, 20);
             this.tbxMapNumber.TabIndex = 27;
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.cboTheme);
-            this.groupBox2.Controls.Add(this.label27);
-            this.groupBox2.Controls.Add(this.tbxCountries);
-            this.groupBox2.Controls.Add(this.label20);
-            this.groupBox2.Location = new System.Drawing.Point(6, 163);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(376, 83);
-            this.groupBox2.TabIndex = 11;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Map theme && location";
-            // 
-            // cboTheme
-            // 
-            this.cboTheme.FormattingEnabled = true;
-            this.cboTheme.Items.AddRange(new object[] {
-            "Affected Population",
-            "Agriculture",
-            "Appeals",
-            "Camp Coordination / Management",
-            "Early Recovery ",
-            "Education",
-            "Emergency Shelter",
-            "Emergency Telecommunications",
-            "Environmental aspects",
-            "Health ",
-            "Logistics",
-            "Nutrition ",
-            "Orientation and Reference",
-            "Population Baseline",
-            "Search and Rescue / evacuation planning",
-            "Security, Safety and Protection",
-            "Situation and Damage",
-            "Water Sanitation and Hygiene",
-            "Who-What-Where"});
-            this.cboTheme.Location = new System.Drawing.Point(84, 28);
-            this.cboTheme.Name = "cboTheme";
-            this.cboTheme.Size = new System.Drawing.Size(264, 21);
-            this.cboTheme.TabIndex = 0;
-            this.cboTheme.TextChanged += new System.EventHandler(this.cboTheme_TextChanged);
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(6, 32);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(40, 13);
-            this.label27.TabIndex = 23;
-            this.label27.Text = "Theme";
-            // 
-            // tbxCountries
-            // 
-            this.tbxCountries.Location = new System.Drawing.Point(84, 55);
-            this.tbxCountries.Name = "tbxCountries";
-            this.tbxCountries.Size = new System.Drawing.Size(264, 20);
-            this.tbxCountries.TabIndex = 1;
-            this.tbxCountries.TextChanged += new System.EventHandler(this.tbxCountries_TextChanged);
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(6, 58);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(51, 13);
-            this.label20.TabIndex = 15;
-            this.label20.Text = "Countries";
-            // 
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.tbxImageLocation);
@@ -1125,9 +1060,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(6, 45);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(46, 13);
+            this.label6.Size = new System.Drawing.Size(51, 13);
             this.label6.TabIndex = 2;
-            this.label6.Text = "Glide no";
+            this.label6.Text = "Glide No.";
             // 
             // tbxOperationId
             // 
@@ -1143,9 +1078,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(6, 19);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(64, 13);
+            this.label5.Size = new System.Drawing.Size(65, 13);
             this.label5.TabIndex = 0;
-            this.label5.Text = "Operation id";
+            this.label5.Text = "Operation Id";
             // 
             // groupBox1
             // 
@@ -1159,7 +1094,7 @@
             this.groupBox1.Controls.Add(this.label19);
             this.groupBox1.Controls.Add(this.label17);
             this.groupBox1.Controls.Add(this.label18);
-            this.groupBox1.Location = new System.Drawing.Point(6, 251);
+            this.groupBox1.Location = new System.Drawing.Point(6, 163);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(376, 178);
             this.groupBox1.TabIndex = 0;
@@ -1188,9 +1123,9 @@
             this.label25.AutoSize = true;
             this.label25.Location = new System.Drawing.Point(6, 76);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(66, 13);
+            this.label25.Size = new System.Drawing.Size(68, 13);
             this.label25.TabIndex = 5;
-            this.label25.Text = "Access note";
+            this.label25.Text = "Access Note";
             // 
             // cboAccess
             // 
@@ -1254,9 +1189,9 @@
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(6, 125);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(74, 13);
+            this.label17.Size = new System.Drawing.Size(75, 13);
             this.label17.TabIndex = 6;
-            this.label17.Text = "Quality control";
+            this.label17.Text = "Quality Control";
             // 
             // label18
             // 
@@ -1270,6 +1205,7 @@
             // tabExportTool
             // 
             this.tabExportTool.Controls.Add(this.tabPageUser);
+            this.tabExportTool.Controls.Add(this.tabPageThemes);
             this.tabExportTool.Controls.Add(this.tabPageLayout);
             this.tabExportTool.Controls.Add(this.tabPageExport);
             this.tabExportTool.Location = new System.Drawing.Point(11, 12);
@@ -1278,6 +1214,106 @@
             this.tabExportTool.Size = new System.Drawing.Size(396, 495);
             this.tabExportTool.TabIndex = 1;
             this.tabExportTool.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabExportTool_Selected);
+            // 
+            // tabPageThemes
+            // 
+            this.tabPageThemes.Controls.Add(this.button1);
+            this.tabPageThemes.Controls.Add(this.button2);
+            this.tabPageThemes.Controls.Add(this.groupBox2);
+            this.tabPageThemes.Location = new System.Drawing.Point(4, 22);
+            this.tabPageThemes.Name = "tabPageThemes";
+            this.tabPageThemes.Size = new System.Drawing.Size(388, 469);
+            this.tabPageThemes.TabIndex = 5;
+            this.tabPageThemes.Text = "Themes";
+            this.tabPageThemes.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Image = global::MapActionToolbars.Properties.Resources.right_button_20x20;
+            this.button1.Location = new System.Drawing.Point(341, 431);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(30, 30);
+            this.button1.TabIndex = 14;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Image = global::MapActionToolbars.Properties.Resources.left_button_20x20;
+            this.button2.Location = new System.Drawing.Point(304, 431);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(30, 30);
+            this.button2.TabIndex = 15;
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.checkedListBoxThemes);
+            this.groupBox2.Controls.Add(this.label27);
+            this.groupBox2.Controls.Add(this.tbxCountries);
+            this.groupBox2.Controls.Add(this.label20);
+            this.groupBox2.Location = new System.Drawing.Point(6, 3);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(376, 362);
+            this.groupBox2.TabIndex = 12;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Map Theme && Location";
+            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            // 
+            // checkedListBox1
+            // 
+            this.checkedListBoxThemes.FormattingEnabled = true;
+            this.checkedListBoxThemes.Items.AddRange(new object[] {
+            "Affected Population",
+            "Agriculture",
+            "Appeals",
+            "Camp Coordination / Management",
+            "Early Recovery",
+            "Education",
+            "Emergency Shelter",
+            "Emergency Telecommunications",
+            "Environmental Aspects",
+            "Health",
+            "Logistics",
+            "Nutrition",
+            "Orientation and Reference",
+            "Population Baseline",
+            "Search and Rescue / Evacuation Planning",
+            "Security, Safety and Protection",
+            "Situation and Damage",
+            "Water Sanitation and Hygiene",
+            "Who-What-Where"});
+            this.checkedListBoxThemes.Location = new System.Drawing.Point(84, 28);
+            this.checkedListBoxThemes.Name = "checkedListBox1";
+            this.checkedListBoxThemes.Size = new System.Drawing.Size(264, 289);
+            this.checkedListBoxThemes.TabIndex = 16;
+            this.checkedListBoxThemes.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(6, 32);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(40, 13);
+            this.label27.TabIndex = 23;
+            this.label27.Text = "Theme";
+            // 
+            // tbxCountries
+            // 
+            this.tbxCountries.Location = new System.Drawing.Point(84, 330);
+            this.tbxCountries.Name = "tbxCountries";
+            this.tbxCountries.Size = new System.Drawing.Size(264, 20);
+            this.tbxCountries.TabIndex = 1;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(6, 335);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(51, 13);
+            this.label20.TabIndex = 15;
+            this.label20.Text = "Countries";
             // 
             // tabPageLayout
             // 
@@ -1288,7 +1324,7 @@
             this.tabPageLayout.Location = new System.Drawing.Point(4, 22);
             this.tabPageLayout.Name = "tabPageLayout";
             this.tabPageLayout.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLayout.Size = new System.Drawing.Size(381, 469);
+            this.tabPageLayout.Size = new System.Drawing.Size(388, 469);
             this.tabPageLayout.TabIndex = 1;
             this.tabPageLayout.Text = "Map Information";
             this.tabPageLayout.UseVisualStyleBackColor = true;
@@ -1379,9 +1415,9 @@
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(6, 323);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(70, 13);
+            this.label16.Size = new System.Drawing.Size(72, 13);
             this.label16.TabIndex = 20;
-            this.label16.Text = "Data sources";
+            this.label16.Text = "Data Sources";
             // 
             // tbxScale
             // 
@@ -1554,9 +1590,9 @@
             this.label24.AutoSize = true;
             this.label24.Location = new System.Drawing.Point(3, 287);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(68, 13);
+            this.label24.Size = new System.Drawing.Size(70, 13);
             this.label24.TabIndex = 22;
-            this.label24.Text = "Imagery date";
+            this.label24.Text = "Imagery Date";
             // 
             // eprMapTitleError
             // 
@@ -1797,13 +1833,14 @@
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudVersionNumber)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabExportTool.ResumeLayout(false);
+            this.tabPageThemes.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.tabPageLayout.ResumeLayout(false);
             this.tabPageLayout.PerformLayout();
             this.groupBox7.ResumeLayout(false);
@@ -1886,8 +1923,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox tbxLanguage;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TextBox tbxCountries;
-        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.ComboBox cboAccess;
         private System.Windows.Forms.ComboBox cboQualityControl;
         private System.Windows.Forms.ComboBox cboStatus;
@@ -1904,14 +1939,11 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox tbxProjection;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TextBox tbxImageAccessNotes;
         private System.Windows.Forms.NumericUpDown nudEmfResolution;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.CheckBox chkEditAllFields;
-        private System.Windows.Forms.ComboBox cboTheme;
         private System.Windows.Forms.TextBox tbxImageLocation;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.TextBox tbxImageDate;
@@ -2002,5 +2034,13 @@
         private System.Windows.Forms.Button btnLayoutRight;
         private System.Windows.Forms.Button btnUserRight;
         private System.Windows.Forms.Button btnUserLeft;
+        private System.Windows.Forms.TabPage tabPageThemes;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TextBox tbxCountries;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.CheckedListBox checkedListBoxThemes;
     }
 }
