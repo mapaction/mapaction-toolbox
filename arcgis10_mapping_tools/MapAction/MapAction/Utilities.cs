@@ -44,50 +44,54 @@ namespace MapAction
             //Dictionary<string, string> sDict = usDict;
             Dictionary<string, string> sDict = sDictFromUsDict(usDict);
             
+            String themesStr = "themes";
             //Create and add the root element
             var xml = new XDocument();
             
             //This is a quirk because the ArcGIS 9x tool output xml has 2 root elements
             //This needs to be replicated while the MA website reads the xml in the current way
+
+            XElement topElem = null;  // May not need this.
             if (numRootElements == 2)
             {
-                var topElem = new XElement("mapdoc");
+                topElem = new XElement("mapdoc");
                 xml.Add(topElem);
-                var rootElem = new XElement(rootElement);
+            }
+            var rootElem = new XElement(rootElement);
+            if (numRootElements == 2)
+            {
                 topElem.Add(rootElem);
-                try
-                {
-                    //Add each value pair in the passed dictionary as the elements of the xml doc
-                    foreach (KeyValuePair<String, String> row in sDict)
-                    {
-                        var element = new XElement(row.Key, row.Value);
-                        Debug.WriteLine("Element: " + element);
-                        rootElem.Add(element);
-                    }
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                }
             }
             else
             {
-                var rootElem = new XElement(rootElement);
                 xml.Add(rootElem);
+            }
+            try
+            {
                 //Add each value pair in the passed dictionary as the elements of the xml doc
-                try
+                foreach (KeyValuePair<String, String> row in sDict)
                 {
-                    foreach (KeyValuePair<String, String> row in sDict)
+                    var element = new XElement(row.Key, row.Value);
+                    if (row.Key.Equals(themesStr) == true)
                     {
-                        var element = new XElement(row.Key, row.Value);
-                        Debug.WriteLine("Element: " + element);
+                        var themesElem = new XElement(themesStr);
+                        rootElem.Add(themesElem);
+                        string[] themes = row.Value.Split('|');
+                        foreach (string theme in themes)
+                        {
+                            var themeElement = new XElement("theme", theme);
+                            themesElem.Add(themeElement);
+                        }
+                    }
+                    else
+                    {
                         rootElem.Add(element);
                     }
                 }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
             }
 
             xml.Save(pathFileName);
