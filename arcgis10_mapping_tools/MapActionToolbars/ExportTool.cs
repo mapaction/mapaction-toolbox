@@ -25,6 +25,7 @@ namespace MapActionToolbars
         {
             //Check if 'Main map' frame exists.  If not show a message box telling the user so. Don't open GUI.
             //if (!PageLayoutProperties.detectMainMapFrame())
+            string duplicates = "";
             IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
             if (!MapAction.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
             {
@@ -36,9 +37,9 @@ namespace MapActionToolbars
                 MessageBox.Show("The operation configuration file is required for this tool.  It cannot be located.",
                     "Configuration file required", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else if (MapAction.PageLayoutProperties.checkLayoutTextElementsForDuplicates(pMxDoc, "Main map"))
+            else if (MapAction.PageLayoutProperties.checkLayoutTextElementsForDuplicates(pMxDoc, "Main map", out duplicates))
             {
-                MessageBox.Show("Duplicate named elements have been identified in the layout. Please remove duplicate element names before trying again.", "Invalid map template",
+                MessageBox.Show("Duplicate named elements have been identified in the layout. Please remove duplicate element names \"" + duplicates + "\" before trying again.", "Invalid map template",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (MapAction.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
