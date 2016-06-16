@@ -193,11 +193,11 @@ namespace MapAction
         #region Public method checkLayoutTextElementsForDuplicates
         //Checks the element names of the page layout 
         //returns boolean true if duplicates exist
-        public static Boolean checkLayoutTextElementsForDuplicates(IMxDocument pMxDoc, string pFrameName)
+        public static Boolean checkLayoutTextElementsForDuplicates(IMxDocument pMxDoc, string pFrameName, out string duplicatesString)
         {
             //create list to store name of text elements
             List<string> lst = new List<string>();
-            Boolean duplicates; 
+            Boolean duplicates = false; 
             //check if the frame passed exists in the map document
             if (PageLayoutProperties.detectMapFrame(pMxDoc, pFrameName))
             {
@@ -237,21 +237,40 @@ namespace MapAction
                     System.Diagnostics.Debug.WriteLine(e);
                 }
             }
+            // Find if duplicates exist
+            var allList = new List<string>();
+            var duplicateList = new List<string>();
 
-            //Find if duplicates exist
-            int duplicateCount = lst.Count() - lst.Distinct().Count();
+            // Search for duplicates
+            foreach (var s in lst)
+            {
+                if (!allList.Contains(s))
+                {
+                    allList.Add(s);
+                }
+                else
+                {
+                    duplicateList.Add(s);
+                }
+            }
 
-            if (duplicateCount != 0)
+            int dupeCount = 0;
+            duplicatesString = "";
+            if (duplicateList.Count() > 0)
             {
                 duplicates = true;
-                return duplicates;
+                // Concatenate string for error message
+                foreach (var s in duplicateList)
+                {
+                    if (dupeCount > 0)
+                    {
+                        // Separate with a comma
+                        duplicatesString = duplicatesString + ", ";
+                    }
+                    duplicatesString = duplicatesString + s;
+                }
             }
-            else
-            {
-                duplicates = false;
-                return duplicates;
-            }
-
+            return duplicates;
         }
         #endregion
 
@@ -262,8 +281,6 @@ namespace MapAction
             string mapTitle = null;
             try
             {
-                
-           
                 mapTitle = pApp.Document.Title; 
 
                 if (mapTitle.Contains(".mxd") == true)
