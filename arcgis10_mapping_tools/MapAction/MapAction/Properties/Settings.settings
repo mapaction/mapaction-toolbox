@@ -5,5 +5,8 @@
     <Setting Name="crash_move_folder_path" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="thumbnail_width_px" Type="System.UInt16" Scope="User">
+      <Value Profile="(Default)">140</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

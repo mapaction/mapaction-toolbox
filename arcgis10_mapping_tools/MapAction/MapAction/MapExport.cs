@@ -21,32 +21,28 @@ using ESRI.ArcGIS.Geodatabase;
 
 namespace MapAction
 {
+    
+
     public static class MapExport
     {
 
         #region Public method exportImage
 
+        
         /// <summary>
         /// Exports a given page layout or map frame to a variety of image formats, returns the image file path
         /// </summary>
         /// <param name="pMapDoc">Type IMapDocument - the document we're exporting! ok</param>
         /// <param name="exportType">Type string - gives the filetype for the export (pdf, jpeg, etc). Acceptable string values must currently be 
         /// identified from the code</param>
-        /// <param name="dpi">Type string (!) - an string representation of an integer giving the dpi of the exported image.</param>
+        /// <param name="dpi">Type uint16 - gives the dpi of the exported image.</param>
         /// <param name="pathDocumentName">Type string - the FOLDER path of the exported image, image filename will be constructed and placed in this folder.
         /// No checking is done that this IS a legal folder path, though....</param>
         /// <param name="mapFrameName">Type string - the name of the map frame to export; pass null to export activeview instead. If an unrecognised string 
         /// is given then an error occurs (the method returns null).</param>
         /// <returns>String representing the file path of the output image. Null return means an error occurred.</returns>
-        /// <remarks>
-        /// No documentation of what the legal values are for the exportType parameter. This should probably be replaced with an enum, 
-        /// as if a unrecognised string is given, it will just be passed back silently with no export. (Other 
-        /// error conditions lead to a null return, so this is a strange inconsistency).
         /// 
-        /// dpi parameter should be a uint16 not a string; FormatException on conversion of this is currently not handled
-        /// </remarks>
-        /// 
-        public static string exportImage(IMapDocument pMapDoc, string exportType, string dpi, string pathDocumentName, string mapFrameName)
+        public static string exportImage(IMapDocument pMapDoc, MapActionExportTypes exportType, UInt16 dpi, string pathDocumentName, string mapFrameName)
         {
             // Define the activeView as either the page layout or the map frame
             // If the mapFrameName variable is null then the activeView is the page, otherwise it is set to the map frame name specified
@@ -55,11 +51,11 @@ namespace MapAction
             // IMaps pMaps = pMapDoc.Maps;
             // Also construct output filename depending on the activeView / mapFrame input
             string pathFileName = string.Empty;
-
+            
             if (mapFrameName == null)
             {
                 pActiveView = pMapDoc.ActiveView;
-                pathFileName = @pathDocumentName + "-" + dpi.ToString() + "dpi." + exportType;
+                pathFileName = @pathDocumentName + "-" + dpi.ToString() + "dpi." + exportType.ToString();
             }
             else if (mapFrameName != null && PageLayoutProperties.detectMapFrame(pMapDoc, mapFrameName))
             {
@@ -71,7 +67,7 @@ namespace MapAction
                         pActiveView = pMap as IActiveView;
                     }
                 }
-                pathFileName = @pathDocumentName + "-mapframe-" + dpi.ToString() + "dpi." + exportType;
+                pathFileName = @pathDocumentName + "-mapframe-" + dpi.ToString() + "dpi." + exportType.ToString();
             }
             else
             {
@@ -86,46 +82,46 @@ namespace MapAction
                 return null;
             }
             // The Export*Class() type initializes a new export class of the desired type.
-            if (exportType == "pdf")
+            if (exportType == MapActionExportTypes.pdf)
             { // Set PDF Export options
                 docExport = new ExportPDFClass();
                 IExportPDF iPDF_export = (IExportPDF)docExport;
                 iPDF_export.EmbedFonts = true;
                 docExport = (IExport)iPDF_export;
             }
-            else if (exportType == "eps")
+            else if (exportType == MapActionExportTypes.eps)
             {
                 docExport = new ExportPSClass();
             }
-            else if (exportType == "ai")
+            else if (exportType == MapActionExportTypes.ai)
             {
                 docExport = new ExportAIClass();
             }
-            else if (exportType == "bmp")
+            else if (exportType == MapActionExportTypes.bmp)
             {
                 docExport = new ExportBMPClass();
             }
-            else if (exportType == "tiff")
+            else if (exportType == MapActionExportTypes.tiff)
             {
                 docExport = new ExportTIFFClass();
             }
-            else if (exportType == "svg")
+            else if (exportType == MapActionExportTypes.svg)
             {
                 docExport = new ExportSVGClass();
             }
-            else if (exportType == "png")
+            else if (exportType == MapActionExportTypes.png)
             {
                 docExport = new ExportPNGClass();
             }
-            else if (exportType == "gif")
+            else if (exportType == MapActionExportTypes.gif)
             {
                 docExport = new ExportGIFClass();
             }
-            else if (exportType == "emf")
+            else if (exportType == MapActionExportTypes.emf)
             {
                 docExport = new ExportEMFClass();
             }
-            else if (exportType == "jpeg")
+            else if (exportType == MapActionExportTypes.jpeg)
             {
                 IExportJPEG m_export;
                 docExport = new ExportJPEGClass();
@@ -137,13 +133,17 @@ namespace MapAction
                     docExport = (IExport)m_export;
                 }
             }
+          
             else
             {
-                // TODO we should return null here if that's our "error" flag, as it is elsewhere
-                return pathFileName;
+                // We can't get here unless the enum is modified
+                throw new ArgumentException("Unexpected export type requested", "exportType");
+                //return pathFileName;
             }
 
             docExport.ExportFileName = pathFileName;
+
+
 
             // Because we are exporting to a resolution that differs from screen 
             // resolution, we should assign the two values to variables for use 
@@ -161,7 +161,7 @@ namespace MapAction
             exportRECT.right = pActiveView.ExportFrame.right * (outputResolution / screenResolution);
             exportRECT.bottom = pActiveView.ExportFrame.bottom * (outputResolution / screenResolution);
             
-
+           
             // Set up the PixelBounds envelope to match the exportRECT
             IEnvelope envelope = new EnvelopeClass();
             envelope.PutCoords(exportRECT.left, exportRECT.top, exportRECT.right, exportRECT.bottom);
@@ -322,6 +322,7 @@ namespace MapAction
             try
             {
                 string zipExePath = get7zipExePath();
+                // or see http://www.dotnetperls.com/7-zip for embedding it
 
                 if (!String.IsNullOrEmpty(zipExePath))
                 {
@@ -329,7 +330,13 @@ namespace MapAction
                     Process zipProc = new Process();
                     // Configure the process using the StartInfo properties.
                     zipProc.StartInfo.FileName = zipExePath;
-                    zipProc.StartInfo.Arguments = String.Format("a -y -tzip \"{0}\" \"{1}\" \"{2}\" \"{3}\"", savePath, dictPaths["xml"], dictPaths["jpeg"], dictPaths["pdf"]);
+                    zipProc.StartInfo.Arguments = String.Format("a -y -tzip \"{0}\" \"{1}\" \"{2}\" \"{3}\" \"{4}\"", 
+                        savePath, 
+                        dictPaths["xml"], 
+                        dictPaths.FirstOrDefault(kvp=>kvp.Key == "jpeg").Value, // ["jpeg"], 
+                        dictPaths.FirstOrDefault(kvp => kvp.Key == "pdf").Value, //["pdf"]);
+                        dictPaths.FirstOrDefault(kvp=>kvp.Key == "png_thumbnail").Value)
+                    ;  
                     zipProc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
                     zipProc.Start();
                     zipProc.WaitForExit();// Waits here for the process to exit.
@@ -371,4 +378,6 @@ namespace MapAction
         #endregion
 
     }
+    
+   
 }

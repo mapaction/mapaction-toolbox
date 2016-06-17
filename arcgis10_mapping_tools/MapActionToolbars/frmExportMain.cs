@@ -20,7 +20,7 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
-
+using MapAction;
 namespace MapActionToolbars
 {
     public partial class frmExportMain : Form
@@ -311,11 +311,14 @@ namespace MapActionToolbars
             // Create a dictionary to store the image file sizes to add to the output xml
             Dictionary<string, long> dictImageFileSizes = new Dictionary<string, long>();
             // Calculate the file size of each image and add it to the dictionary
-            dictImageFileSizes.Add("pdf", MapAction.Utilities.getFileSize(dictFilePaths["pdf"]));
+            // Don't use dict.add because a) it's another place to keep track of magic strings
+            // values, and b) if we accidentally call it twice with same key we get an exception
+            foreach (var kvp in dictFilePaths)
+            {
+                dictImageFileSizes[kvp.Key] = MapAction.Utilities.getFileSize(kvp.Value);
+            }
             System.Windows.Forms.Application.DoEvents();
-            dictImageFileSizes.Add("jpeg", MapAction.Utilities.getFileSize(dictFilePaths["jpeg"]));
-            dictImageFileSizes.Add("emf", MapAction.Utilities.getFileSize(dictFilePaths["emf"]));
-
+            
             // Create a dictionary to get and store the map frame extents to pass to the output xml
             Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
 
@@ -324,10 +327,12 @@ namespace MapActionToolbars
             string kmzPathFileName = exportPathFileName + ".kmz";
             string kmzScale;
             if (dictFrameExtents.ContainsKey("scale")) {kmzScale = dictFrameExtents["scale"];} else {kmzScale = null;};
+            
+            // TODO move this to the MapImageExporter class too, for now it is still in the static MapExport class
             MapAction.MapExport.exportMapFrameKmlAsRaster(pMapDoc, "Main map", @kmzPathFileName, kmzScale, nudKmlResolution.Value.ToString());
             // Add the xml path to the dictFilePaths, which is the input into the creatZip method
-            dictFilePaths.Add("kmz", kmzPathFileName);
-
+            dictFilePaths["kmz"] = kmzPathFileName;
+            
             // Get the mxd filename
             string mxdName = ArcMap.Application.Document.Title;
             System.Windows.Forms.Application.DoEvents();
@@ -346,7 +351,7 @@ namespace MapActionToolbars
             }
 
             // Add the xml path to the dictFilePaths, which is the input into the creatZip method
-            dictFilePaths.Add("xml", xmlPath);
+            dictFilePaths["xml"] = xmlPath;
 
             // Create zip
             // TODO Note that currently the createZip will zip the xml, jpeg, and pdf. Not the emf! 
@@ -483,17 +488,43 @@ namespace MapActionToolbars
                 Debug.WriteLine("Image export variables not valid.");
                 return dict;
             }
+
             else
             {
+                // refactored export code into non-static class which handles thumbnail filename and pixel size limits 
+                MapImageExporter layoutexporter = new MapImageExporter(pMapDoc, exportPathFileName, null);
+                dict[MapActionExportTypes.pdf.ToString()] =  
+                    layoutexporter.exportImage(MapActionExportTypes.pdf, Convert.ToUInt16(nudPdfResolution.Value));
+                dict[MapActionExportTypes.jpeg.ToString()] =  
+                    layoutexporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudJpegResolution.Value));
+                dict[MapActionExportTypes.emf.ToString()] =  
+                    layoutexporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
+                // export the thumbnail, using the new functionality of specifying a pixel size rather than a dpi
+                XYDimensions thumbSize = new XYDimensions()
+                    {
+                        Width = MapAction.Properties.Settings.Default.thumbnail_width_px,
+                        Height = null // export will be constrained by width only
+                    };
+                dict[MapActionExportTypes.png_thumbnail.ToString()] =  
+                    layoutexporter.exportImage(MapActionExportTypes.png_thumbnail, thumbSize);
+
+                // What are these for? we don't zip them.
+                MapImageExporter dfExporter = new MapImageExporter(pMapDoc, exportPathFileName, "Main map");
+                dfExporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
+                dfExporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudEmfResolution.Value));
+               
                 //Output 3 image formats pdf, jpeg & emf
-                dict.Add("pdf", MapAction.MapExport.exportImage(pMapDoc, "pdf", nudPdfResolution.Value.ToString(), exportPathFileName, null));
-                dict.Add("jpeg", MapAction.MapExport.exportImage(pMapDoc, "jpeg", nudJpegResolution.Value.ToString(), exportPathFileName, null));
-                dict.Add("emf", MapAction.MapExport.exportImage(pMapDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, null));
-                MapAction.MapExport.exportImage(pMapDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
-                MapAction.MapExport.exportImage(pMapDoc, "jpeg", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
+                //dict.Add("pdf", 
+                //    MapAction.MapExport.exportImage(pMapDoc, "pdf", nudPdfResolution.Value.ToString(), exportPathFileName, null));
+                //dict.Add("jpeg", 
+                //    MapAction.MapExport.exportImage(pMapDoc, "jpeg", nudJpegResolution.Value.ToString(), exportPathFileName, null));
+                //dict.Add("emf", 
+                //    MapAction.MapExport.exportImage(pMapDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, null));
+                //// what are these for?
+                //MapAction.MapExport.exportImage(pMapDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
+                //MapAction.MapExport.exportImage(pMapDoc, "jpeg", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
 
             }
-
             return dict;
         }
 

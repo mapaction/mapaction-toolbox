@@ -90,16 +90,16 @@ namespace MapAction.tests
             // ^ Is this the best way to do it, or does the runtime manager provide a method?
         }
 
-        [TestCase("pdf", null, 300)]
-        [TestCase("jpeg", null, 300)]
-        [TestCase("jpeg", "Main map", 30)]
-        [TestCase("emf", "Main map", 30)]
-        public void exportImageCreatesFileTest(string fileType, string dataFrameName, int expectedFileSize)
+        [TestCase(MapActionExportTypes.pdf, null, 300)]
+        [TestCase(MapActionExportTypes.jpeg, null, 300)]
+        [TestCase(MapActionExportTypes.jpeg, "Main map", 30)]
+        [TestCase(MapActionExportTypes.emf, "Main map", 30)]
+        public void exportImageCreatesFileTest(MapActionExportTypes fileType, string dataFrameName, int expectedFileSize)
 {
             // Console.WriteLine("Settings2 :Export Path {0},Map Document {1}", this.exportPath, this.documentName);
 
             // string fileType = "pdf";
-            string dpi = "300";
+            UInt16 dpi = 300;
 
             /*
              * Exported file name is dynamically generated.
@@ -112,11 +112,11 @@ namespace MapAction.tests
             string exportFileName;
             if (dataFrameName == null)
             {
-                exportFileName = String.Format("{0}-{1}dpi.{2}", stubPath, dpi, fileType);
+                exportFileName = String.Format("{0}-{1}dpi.{2}", stubPath, dpi, fileType.ToString());
             }
             else
             {
-                exportFileName = String.Format("{0}-mapframe-{1}dpi.{2}", stubPath, dpi, fileType);
+                exportFileName = String.Format("{0}-mapframe-{1}dpi.{2}", stubPath, dpi, fileType.ToString());
                 //pathFileName = @pathDocumentName + "-mapframe-" + dpi.ToString() + "dpi." + exportType;
             }
 
