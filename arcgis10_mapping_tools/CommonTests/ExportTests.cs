@@ -91,7 +91,7 @@ namespace MapAction.tests
         }
        
         [TestCase(MapActionExportTypes.png_thumbnail, null, 2)]
-        [TestCase(MapActionExportTypes.jpeg, null, 100)]
+        [TestCase(MapActionExportTypes.jpeg, null, 50)]
         public void exportSizedImageNewCreatesFileTest(MapActionExportTypes fileType, string dataFrameName, int expectedFileSize)
         {
             string stubPath = Path.Combine(this.exportPath, "testmap");
@@ -99,7 +99,9 @@ namespace MapAction.tests
             ushort width;
             if (fileType == MapActionExportTypes.png_thumbnail)
             {
-                exportFileName = "thumbnail.png";
+                string outDir = this.exportPath;// just for clarity...
+
+                exportFileName = Path.Combine(outDir, "thumbnail.png");
                 width = MapAction.Properties.Settings.Default.thumbnail_width_px;
             }
             else
@@ -134,14 +136,14 @@ namespace MapAction.tests
             string resultPath = exporter.exportImage(fileType, constrainTo);
                 
             // Assert it made the file we expected it to
-            Assert.IsTrue(resultPath != null);
-            Assert.IsTrue(resultPath == exportFileName);
+            Assert.IsTrue(resultPath != null, "The export function returned a value");
+            Assert.IsTrue(resultPath == exportFileName, "The export function created the filename we were expecting");
 
             // Assert file exported. 
             fi.Refresh();
             Assert.IsTrue(fi.Exists, "The map file has been exported as expected.");
             // this test is a little difficult with a thumbnail which could be v small if the map is plain
-            Assert.IsTrue(fi.Length > (expectedFileSize * 1024), "The map file is larger than 50kb as expected.");
+            Assert.IsTrue(fi.Length > (expectedFileSize * 1024), "The map file size is vaguely sensible.");
 
 
             
