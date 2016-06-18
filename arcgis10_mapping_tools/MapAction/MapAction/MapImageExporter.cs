@@ -149,7 +149,7 @@ namespace MapAction
         /// used instead
         /// 
         /// To produce an output constrained in only one dimension, set the other dimension of the XYDimensions to 
-        /// uint.MaxValue; the unconstrained dimension will then be freely adjusted to match the map aspect.
+        /// null; the unconstrained dimension will then be freely adjusted to match the map aspect.
         /// </summary>
         /// <param name="maxSize">XYDimensions object specifying the width and/or height that the output image must fit within</param>
         /// <returns></returns>
@@ -355,6 +355,8 @@ namespace MapAction
             {
                 return null;
             }
+            // TODO we should probably change the filename to reflect a pixel size rather than a dpi - need 
+            // to check what downstream things rely on the filename though
             string outFileName = GetExportFilename(exportType, SCREEN_RES_DPI);
 
             IExport docExport = InitializeExporter(exportType);

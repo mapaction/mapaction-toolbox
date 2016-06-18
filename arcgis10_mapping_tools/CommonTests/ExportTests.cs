@@ -89,6 +89,64 @@ namespace MapAction.tests
             mxDoc.Close();
             // ^ Is this the best way to do it, or does the runtime manager provide a method?
         }
+       
+        [TestCase(MapActionExportTypes.png_thumbnail, null, 2)]
+        [TestCase(MapActionExportTypes.jpeg, null, 100)]
+        public void exportSizedImageNewCreatesFileTest(MapActionExportTypes fileType, string dataFrameName, int expectedFileSize)
+        {
+            string stubPath = Path.Combine(this.exportPath, "testmap");
+            string exportFileName;
+            ushort width;
+            if (fileType == MapActionExportTypes.png_thumbnail)
+            {
+                exportFileName = "thumbnail.png";
+                width = MapAction.Properties.Settings.Default.thumbnail_width_px;
+            }
+            else
+            {
+                // at present the sized export still uses dpi to build the filename, using screen resolution
+                int dpi = MapAction.MapImageExporter.SCREEN_RES_DPI;
+
+                width = 1024;
+                if (dataFrameName == null)
+                {
+                    exportFileName = String.Format("{0}-{1}dpi.{2}", stubPath, dpi, fileType.ToString());
+                }
+                else
+                {
+                    exportFileName = String.Format("{0}-mapframe-{1}dpi.{2}", stubPath, dpi, fileType.ToString());
+                    //pathFileName = @pathDocumentName + "-mapframe-" + dpi.ToString() + "dpi." + exportType;
+                }
+            }
+            Console.WriteLine("Export Filename:\t{0}", exportFileName);
+            FileInfo fi = new FileInfo(exportFileName);
+
+            // Test export file not present already 
+            // Assert.IsFalse(System.IO.File.Exists(exportFileName), "A map file did not exist prior to the export function being called.");
+            Assert.IsFalse(fi.Exists, "A map file did not exist prior to the export function being called as expected.");
+
+            // Do the export
+            MapImageExporter exporter = new MapImageExporter(pMapDoc, stubPath, dataFrameName);
+            XYDimensions constrainTo = new XYDimensions(){
+                Width = width,
+                Height = null
+            };
+            string resultPath = exporter.exportImage(fileType, constrainTo);
+                
+            // Assert it made the file we expected it to
+            Assert.IsTrue(resultPath != null);
+            Assert.IsTrue(resultPath == exportFileName);
+
+            // Assert file exported. 
+            fi.Refresh();
+            Assert.IsTrue(fi.Exists, "The map file has been exported as expected.");
+            // this test is a little difficult with a thumbnail which could be v small if the map is plain
+            Assert.IsTrue(fi.Length > (expectedFileSize * 1024), "The map file is larger than 50kb as expected.");
+
+
+            
+        }
+
 
         [TestCase(MapActionExportTypes.pdf, null, 300)]
         [TestCase(MapActionExportTypes.jpeg, null, 300)]
