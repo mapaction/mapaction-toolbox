@@ -246,7 +246,7 @@ namespace MapAction
         #endregion
 
         #region Public method getFileSize
-        //Get filesize given a path, return the file size in kilobytes
+        //Get filesize given a path, return the file size in bytes
         public static long getFileSize(string @fileNamePath)
         {
             if (File.Exists(@fileNamePath))
