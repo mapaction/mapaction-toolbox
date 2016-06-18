@@ -91,7 +91,7 @@ namespace MapAction.tests
         }
        
         [TestCase(MapActionExportTypes.png_thumbnail, null, 2)]
-        [TestCase(MapActionExportTypes.jpeg, null, 100)]
+        [TestCase(MapActionExportTypes.jpeg, null, 50)]
         public void exportSizedImageNewCreatesFileTest(MapActionExportTypes fileType, string dataFrameName, int expectedFileSize)
         {
             string stubPath = Path.Combine(this.exportPath, "testmap");
