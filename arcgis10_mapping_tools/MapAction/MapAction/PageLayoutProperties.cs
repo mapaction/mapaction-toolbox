@@ -150,10 +150,12 @@ namespace MapAction
                 IElement element = new TextElementClass();
                 IElementProperties2 pElementProp;
                 ITextElement pTextElement;
-
                 //loop through the text elements in the frame
                 try
                 {
+                    SimpleTextParser formattingTextParser = new SimpleTextParser();
+                    Boolean bHasTags = false;
+
                     element = (IElement)pGraphics.Next();
                     while (element != null)
                     {
@@ -166,7 +168,20 @@ namespace MapAction
                             if (pElementProp.Name != "")
                             {
                                 //store the name of the elements and the values in the dictionary as pairs
-                                dict.Add(pElementProp.Name, pTextElement.Text);
+                                // check if text element needs parsing
+                                formattingTextParser.Text = pTextElement.Text;
+                                formattingTextParser.HasTags(ref bHasTags);
+                                if (bHasTags)
+                                {
+                                    // Parse text formatting. 
+                                    formattingTextParser.Next();
+                                    dict.Add(pElementProp.Name, formattingTextParser.TextSymbol.Text);
+                                }
+                                else
+                                {
+                                    dict.Add(pElementProp.Name, pTextElement.Text);
+                                }
+                               formattingTextParser.Reset();
                             }
                         }
                         element = pGraphics.Next() as IElement;
