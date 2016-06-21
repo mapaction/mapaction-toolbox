@@ -141,6 +141,7 @@ namespace MapActionToolbars
             _glideNumberValidationResult = FormValidationExport.validateGlideNumber(tbxGlideNo, eprGlideNumberWarning, eprGlideNumberError);
             _locationValidationResult = FormValidationExport.validateLocation(tbxImageLocation, eprLocationWarning);
             _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
+            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
             _statusValidationResult = FormValidationExport.validateStatus(cboStatus, eprStatusWarning);
             _accessValidationResult = FormValidationExport.validateAccess(cboAccess, eprAccessWarning);
             _accessNoteValidationResult = FormValidationExport.validateAccessNote(tbxImageAccessNotes, eprAccessNoteWarning);
@@ -169,9 +170,6 @@ namespace MapActionToolbars
             if (dictXML.ContainsKey("GlideNo")) { tbxGlideNo.Text = dictXML["GlideNo"]; }
             if (dictXML.ContainsKey("Language")) { tbxLanguage.Text = dictXML["Language"]; }
             if (dictXML.ContainsKey("Country")) { tbxCountries.Text = dictXML["Country"]; }
-
-            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
-            
             string operational_id = dictXML["OperationId"];
             Debug.WriteLine("Op ID: " + operational_id);
             if (dictXML.ContainsKey("OperationId")) { tbxOperationId.Text = dictXML["OperationId"]; }

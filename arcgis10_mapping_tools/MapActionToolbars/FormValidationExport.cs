@@ -46,22 +46,6 @@ namespace MapActionToolbars
 
         }
 
-        private static Boolean validateThemes(Control control, ErrorProvider epr)
-        {
-
-            if (control.Text.Trim() == String.Empty)
-            {
-                epr.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
-                epr.SetError(control, "Themes not selected");
-                return false;
-            }
-            else
-            {
-                epr.SetError(control, "");
-                return true;
-            }
-
-        }
         //Validate individual form elements
         public static string validateMapTitle(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
@@ -498,7 +482,7 @@ namespace MapActionToolbars
         public static string validateTheme(Control control, ErrorProvider epr)
         {
             epr.SetIconPadding(control, 5);
-            if (validateThemes(control, epr))
+            if (validateEmptyField(control, epr))
             {
                 return "Valid";
             }
