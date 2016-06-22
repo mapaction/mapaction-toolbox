@@ -5,6 +5,21 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Text.RegularExpressions;
+//
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Diagnostics;
+using System.Windows.Forms;
+using System.IO;
+using System.Threading;
+using System.Xml.Linq;
+//
 using ESRI.ArcGIS.ArcMap;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
@@ -46,6 +61,20 @@ namespace MapActionToolbars
 
         }
 
+        private static Boolean validateThemes(CheckedListBox control, ErrorProvider epr)
+        {
+            if (control.CheckedItems.Count == 0)
+            {
+                epr.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
+                epr.SetError(control, "Themes not selected");
+                return false;
+            }
+            else
+            {
+                epr.SetError(control, "");
+                return true;
+            }
+        }
         //Validate individual form elements
         public static string validateMapTitle(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
@@ -479,10 +508,10 @@ namespace MapActionToolbars
             }
         }
 
-        public static string validateTheme(Control control, ErrorProvider epr)
+        public static string validateTheme(CheckedListBox control, ErrorProvider epr)
         {
             epr.SetIconPadding(control, 5);
-            if (validateEmptyField(control, epr))
+            if (validateThemes(control, epr))
             {
                 return "Valid";
             }

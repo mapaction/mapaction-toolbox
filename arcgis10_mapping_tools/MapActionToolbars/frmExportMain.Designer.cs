@@ -1296,6 +1296,7 @@
             this.tbxCountries.Name = "tbxCountries";
             this.tbxCountries.Size = new System.Drawing.Size(264, 20);
             this.tbxCountries.TabIndex = 12;
+            this.tbxCountries.TextChanged += new System.EventHandler(this.tbxCountries_TextChanged_1);
             // 
             // label20
             // 
