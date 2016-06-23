@@ -5,21 +5,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Text.RegularExpressions;
-//
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Diagnostics;
-using System.Windows.Forms;
-using System.IO;
-using System.Threading;
-using System.Xml.Linq;
-//
 using ESRI.ArcGIS.ArcMap;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
