@@ -154,6 +154,7 @@ namespace MapAction
                 try
                 {
                     SimpleTextParser formattingTextParser = new SimpleTextParser();
+                    formattingTextParser.TextSymbol = new TextSymbolClass();
                     Boolean bHasTags = false;
 
                     element = (IElement)pGraphics.Next();
