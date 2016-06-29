@@ -174,9 +174,25 @@ namespace MapAction
                                 formattingTextParser.HasTags(ref bHasTags);
                                 if (bHasTags)
                                 {
-                                    // Parse text formatting. 
+                                    bool continueParsing = true;
+                                    List<string> parsedText = new List<string>();
+                                    // Parse formatted text. The Textparser advances through each tagged part of the string.
                                     formattingTextParser.Next();
-                                    dict.Add(pElementProp.Name, formattingTextParser.TextSymbol.Text);
+                                    parsedText.Add(formattingTextParser.TextSymbol.Text);
+
+                                    while (continueParsing)
+                                    {
+                                        formattingTextParser.Next();
+                                        if (formattingTextParser.TextSymbol.Text == parsedText[parsedText.Count - 1])
+                                        {
+                                            continueParsing = false;
+                                        }
+                                        else
+                                        {
+                                            parsedText.Add(formattingTextParser.TextSymbol.Text);
+                                        }
+                                    }
+                                    dict.Add(pElementProp.Name, string.Join("", parsedText.ToArray()));
                                 }
                                 else
                                 {
