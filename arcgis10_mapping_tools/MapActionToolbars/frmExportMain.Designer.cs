@@ -76,6 +76,8 @@
             this.label21 = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.mapbookModeLabel = new System.Windows.Forms.Label();
+            this.mapbookMode = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.chkOpenExplorer = new System.Windows.Forms.CheckBox();
             this.btnCreateZip = new System.Windows.Forms.Button();
@@ -696,6 +698,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.mapbookModeLabel);
+            this.groupBox3.Controls.Add(this.mapbookMode);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.chkOpenExplorer);
             this.groupBox3.Controls.Add(this.btnCreateZip);
@@ -704,15 +708,37 @@
             this.groupBox3.Controls.Add(this.tbxExportZipPath);
             this.groupBox3.Location = new System.Drawing.Point(7, 300);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(370, 83);
+            this.groupBox3.Size = new System.Drawing.Size(370, 125);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Directory";
             // 
+            // mapbookModeLabel
+            // 
+            this.mapbookModeLabel.AutoSize = true;
+            this.mapbookModeLabel.Location = new System.Drawing.Point(6, 57);
+            this.mapbookModeLabel.Name = "mapbookModeLabel";
+            this.mapbookModeLabel.Size = new System.Drawing.Size(82, 13);
+            this.mapbookModeLabel.TabIndex = 10;
+            this.mapbookModeLabel.Text = "Mapbook Mode";
+            this.mapbookModeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // mapbookMode
+            // 
+            this.mapbookMode.Enabled = false;
+            this.mapbookMode.FormattingEnabled = true;
+            this.mapbookMode.Items.AddRange(new object[] {
+            "Single PDF",
+            "Multiple PDF Files"});
+            this.mapbookMode.Location = new System.Drawing.Point(90, 54);
+            this.mapbookMode.Name = "mapbookMode";
+            this.mapbookMode.Size = new System.Drawing.Size(234, 21);
+            this.mapbookMode.TabIndex = 9;
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(5, 56);
+            this.label4.Location = new System.Drawing.Point(6, 100);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(73, 13);
             this.label4.TabIndex = 8;
@@ -721,7 +747,7 @@
             // chkOpenExplorer
             // 
             this.chkOpenExplorer.AutoSize = true;
-            this.chkOpenExplorer.Location = new System.Drawing.Point(89, 56);
+            this.chkOpenExplorer.Location = new System.Drawing.Point(90, 100);
             this.chkOpenExplorer.Name = "chkOpenExplorer";
             this.chkOpenExplorer.Size = new System.Drawing.Size(15, 14);
             this.chkOpenExplorer.TabIndex = 1;
@@ -729,7 +755,7 @@
             // 
             // btnCreateZip
             // 
-            this.btnCreateZip.Location = new System.Drawing.Point(290, 51);
+            this.btnCreateZip.Location = new System.Drawing.Point(289, 90);
             this.btnCreateZip.Name = "btnCreateZip";
             this.btnCreateZip.Size = new System.Drawing.Size(75, 23);
             this.btnCreateZip.TabIndex = 2;
@@ -1261,7 +1287,7 @@
             this.groupBox2.Text = "Map Theme && Location";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
-            // checkedListBox1
+            // checkedListBoxThemes
             // 
             this.checkedListBoxThemes.FormattingEnabled = true;
             this.checkedListBoxThemes.Items.AddRange(new object[] {
@@ -1285,7 +1311,7 @@
             "Water Sanitation and Hygiene",
             "Who-What-Where"});
             this.checkedListBoxThemes.Location = new System.Drawing.Point(84, 28);
-            this.checkedListBoxThemes.Name = "checkedListBox1";
+            this.checkedListBoxThemes.Name = "checkedListBoxThemes";
             this.checkedListBoxThemes.Size = new System.Drawing.Size(264, 289);
             this.checkedListBoxThemes.TabIndex = 16;
             this.checkedListBoxThemes.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
@@ -2042,5 +2068,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckedListBox checkedListBoxThemes;
+        private System.Windows.Forms.Label mapbookModeLabel;
+        private System.Windows.Forms.ComboBox mapbookMode;
     }
 }
