@@ -85,10 +85,15 @@ namespace MapAction
         private string GetExportFilename(MapActionExportTypes exportType, UInt16 dpi)
         {
             string fileExt;
-            if (exportType == MapActionExportTypes.png_thumbnail)
+            if (exportType == MapActionExportTypes.png_thumbnail_zip)
             {
                 fileExt = "png";
                 return System.IO.Path.Combine(m_ExportDir, "thumbnail.png");
+            }
+            else if (exportType == MapActionExportTypes.png_thumbnail_local)
+            {
+                fileExt = "png";
+                return m_ExportBaseFileName + "-thumbnail." + fileExt;
             }
             else
             {
@@ -323,7 +328,9 @@ namespace MapAction
                     docExport = (IExport)m_export;
                 }
             }
-            else if (exportType == MapActionExportTypes.png_thumbnail)
+            else if (
+                exportType == MapActionExportTypes.png_thumbnail_zip 
+                || exportType == MapActionExportTypes.png_thumbnail_local)
             {
                 docExport = new ExportPNGClass();
             }
