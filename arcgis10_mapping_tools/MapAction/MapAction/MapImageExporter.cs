@@ -93,7 +93,8 @@ namespace MapAction
             else if (exportType == MapActionExportTypes.png_thumbnail_local)
             {
                 fileExt = "png";
-                return m_ExportBaseFileName + "-thumbnail." + fileExt;
+                return System.IO.Path.Combine(m_ExportDir,
+                    m_ExportBaseFileName + "-thumbnail." + fileExt);
             }
             else
             {

@@ -90,14 +90,14 @@ namespace MapAction.tests
             // ^ Is this the best way to do it, or does the runtime manager provide a method?
         }
        
-        [TestCase(MapActionExportTypes.png_thumbnail, null, 2)]
+        [TestCase(MapActionExportTypes.png_thumbnail_zip, null, 2)]
         [TestCase(MapActionExportTypes.jpeg, null, 50)]
         public void exportSizedImageNewCreatesFileTest(MapActionExportTypes fileType, string dataFrameName, int expectedFileSize)
         {
             string stubPath = Path.Combine(this.exportPath, "testmap");
             string exportFileName;
             ushort width;
-            if (fileType == MapActionExportTypes.png_thumbnail)
+            if (fileType == MapActionExportTypes.png_thumbnail_zip)
             {
                 string outDir = this.exportPath;// just for clarity...
 
