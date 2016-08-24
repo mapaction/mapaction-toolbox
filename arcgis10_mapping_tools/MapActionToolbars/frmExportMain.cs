@@ -357,6 +357,11 @@ namespace MapActionToolbars
             // TODO Note that currently the createZip will zip the xml, jpeg, and pdf. Not the emf! 
             // So why are we making it??
             MapAction.MapExport.createZip(dictFilePaths);
+            
+            // now that it's been zipped, delete the copy of the thumbnail called thumbnail.png to avoid confusion
+            string zippedThumbFile = dictFilePaths[MapActionExportTypes.png_thumbnail_zip.ToString()];
+            System.IO.File.Delete(zippedThumbFile);
+            
             // close the wait dialog
             // dlg.lblWaitMainMessage.Text = "Export complete";
             // int milliseconds = 1250;
