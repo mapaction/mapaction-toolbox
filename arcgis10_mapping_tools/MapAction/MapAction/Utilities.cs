@@ -321,9 +321,13 @@ namespace MapAction
 
             // Get the spatial reference of the map frame
             // If not Geographic / WGS 84, convert it
-            var spatialRefDict = getDataFrameSpatialReference(pMapDoc, mapFrameName);
 
-            if (spatialRefDict["type"] != "Geographic" && spatialRefDict["datum"] != "WGS 1984")
+            var spatialRefDict = getDataFrameSpatialReference(pMapDoc, mapFrameName);
+            Debug.WriteLine("spatialRefDict[\"type\"] = " + spatialRefDict["type"]);
+            Debug.WriteLine("spatialRefDict[\"datum\"] = " + spatialRefDict["datum"]);
+            Debug.WriteLine("pre : pEnvelope (" + pEnvelope.XMin.ToString() + ", " + pEnvelope.YMin.ToString() + ")(" + pEnvelope.XMax.ToString() + ", " + pEnvelope.YMax.ToString() + ")");
+
+            if (spatialRefDict["type"] != "Geographic" || spatialRefDict["datum"] != "WGS 1984")
             {
            
                 //Convert active view to wgs 84                
