@@ -194,6 +194,8 @@ namespace MapActionToolbars
             tbxTime.Text = time;
             tbxPaperSize.Text = MapAction.PageLayoutProperties.getPageSize(_pMxDoc, _targetMapFrame);
             tbxScale.Text = MapAction.PageLayoutProperties.getScale(_pMxDoc, _targetMapFrame);
+
+            // TODO: Enable mapbook dropdown if is data driven pages MXD. 
             
         }
 
@@ -807,5 +809,7 @@ namespace MapActionToolbars
         {
             _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
         }
+
+
     }
 }
