@@ -389,6 +389,7 @@ namespace MapAction
                 {
                     Utilities.ResizeImageFile(tempPath, outFileName, 0.1);
                     System.IO.File.Delete(tempPath);
+                    return outFileName;
                 }
             }
             else

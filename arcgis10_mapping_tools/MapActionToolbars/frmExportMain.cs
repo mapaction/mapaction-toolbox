@@ -360,8 +360,18 @@ namespace MapActionToolbars
             
             // now that it's been zipped, delete the copy of the thumbnail called thumbnail.png to avoid confusion
             string zippedThumbFile = dictFilePaths[MapActionExportTypes.png_thumbnail_zip.ToString()];
-            System.IO.File.Delete(zippedThumbFile);
-            
+            try
+            {
+                System.IO.File.Delete(zippedThumbFile);
+            }
+            catch (Exception ex)
+            {
+                // don't crash if the thumbnail export failed or the intermediate file can't be deleted for some reason
+                if (!(ex is ArgumentNullException || ex is UnauthorizedAccessException))
+                {
+                    throw;
+                }
+            }
             // close the wait dialog
             // dlg.lblWaitMainMessage.Text = "Export complete";
             // int milliseconds = 1250;
