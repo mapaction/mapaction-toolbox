@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>mapbook_export_tools</name>
+    </assembly>
+    <members>
+        <member name="T:mapbook_export_tools.isdpp">
+            <summary></summary>
+        </member>
+        <member name="M:mapbook_export_tools.isdpp.#ctor(System.Object)">
+            <summary>Constructor that takes all required parameters for geoprocessor execution.</summary>
+            <param name="Map_Document">Map Document (in)</param>
+        </member>
+        <member name="P:mapbook_export_tools.isdpp.Map_Document">
+            <summary>Map Document (in)</summary>
+        </member>
+        <member name="P:mapbook_export_tools.isdpp.Data_Driven_Pages_Enabled">
+            <summary>Data Driven Pages Enabled (out, Optional)</summary>
+        </member>
+        <member name="P:mapbook_export_tools.isdpp.ToolboxDirectory">
+            <summary>The directory of this tool's toolbox.</summary>
+        </member>
+        <member name="P:mapbook_export_tools.isdpp.ToolboxName">
+            <summary>The name of this tool's toolbox.</summary>
+        </member>
+        <member name="P:mapbook_export_tools.isdpp.ToolName">
+            <summary>The name of this tool.</summary>
+        </member>
+        <member name="P:mapbook_export_tools.isdpp.Alias">
+            <summary>The alias for this tool's toolbox.</summary>
+        </member>
+        <member name="P:mapbook_export_tools.isdpp.ParameterInfo">
+            <summary>The parameters used by this tool. For internal use only.</summary>
+        </member>
+        <member name="T:mapbook_export_tools.exportMapbook">
+            <summary></summary>
+        </member>
+        <member name="M:mapbook_export_tools.exportMapbook.#ctor(System.Object,System.Object)">
+            <summary>Constructor that takes all required parameters for geoprocessor execution.</summary>
+            <param name="Map_Document">Map Document (in)</param>
+            <param name="Export_Directory">Export Directory (in)</param>
+        </member>
+        <member name="P:mapbook_export_tools.exportMapbook.Map_Document">
+            <summary>Map Document (in)</summary>
+        </member>
+        <member name="P:mapbook_export_tools.exportMapbook.Export_Directory">
+            <summary>Export Directory (in)</summary>
+        </member>
+        <member name="P:mapbook_export_tools.exportMapbook.ToolboxDirectory">
+            <summary>The directory of this tool's toolbox.</summary>
+        </member>
+        <member name="P:mapbook_export_tools.exportMapbook.ToolboxName">
+            <summary>The name of this tool's toolbox.</summary>
+        </member>
+        <member name="P:mapbook_export_tools.exportMapbook.ToolName">
+            <summary>The name of this tool.</summary>
+        </member>
+        <member name="P:mapbook_export_tools.exportMapbook.Alias">
+            <summary>The alias for this tool's toolbox.</summary>
+        </member>
+        <member name="P:mapbook_export_tools.exportMapbook.ParameterInfo">
+            <summary>The parameters used by this tool. For internal use only.</summary>
+        </member>
+    </members>
+</doc>
