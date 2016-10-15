@@ -83,8 +83,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="mapbook_export_tools, Version=0.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="mapbook_export_tools">
       <HintPath>.\mapbook_export_tools.dll</HintPath>
       <Private>True</Private>
     </Reference>

@@ -26,8 +26,8 @@ class Export_mapbook(object):
         # Setup properties.
 
         self.map_doc = self._get_mxd(arcpy.GetParameterAsText(0))
-        self.export_older = arcpy.GetParameterAsText(1)
-        self.file_name = arcpy.GetParameterAsText(2)
+        self.export_path = arcpy.GetParameterAsText(1)
+        self.file_name = arcpy.GetParameterAsText(2) + ".pdf"
         self.export_mode = arcpy.GetParameterAsText(3)
         # TODO: Validate export path exists (potentially also that have write access?)
 
@@ -41,20 +41,22 @@ class Export_mapbook(object):
 
         self.page_count = self.map_doc.dataDrivenPages.pageCount
         # Export Data Driven Pages to specified directory
-        file_name = self.export_path + ".pdf"
-        self.map_doc.dataDrivenPages.exportToPDF(self.export_path + ".pdf")
+        file_name = self.export_path + "//" + self.file_name
+        self.map_doc.dataDrivenPages.exportToPDF(file_name)
         self.file_size = os.path.getsize(file_name)
+        arcpy.AddMessage("Exported {0},{1} Bytes".format(file_name, file_size ))
 
 
     def export(self):
         # Main method.
         if self.map_doc.isDDPEnabled == False:
             arcpy.AddError("Data Driven Pages is not enabled in MXD:\n" + self.map_doc.filePath)
-            arcpy.SetParameter(4,self.page_count)
-            arcpy.SetParameter(5,self.file_size)
-            return  # TODO - return page count, output PDF file size.
+
+            return
 
         self.export_dpps()
+        arcpy.SetParameter(4,self.page_count)
+        arcpy.SetParameter(5,self.file_size)
 
 
 

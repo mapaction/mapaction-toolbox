@@ -339,7 +339,7 @@ namespace MapActionToolbars
             // TODO: Get extent of dpp index dataset instead of data frame. 
             Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
 
-            if (!tbxMapbookMode.Enabled)
+            if (tbxMapbookMode.Enabled == false && 1==2) // Need a way to do this - the form elements are all disabled before export - see ^^
             {
                 // Call to export the images and return a dictionary of the file names
                 dictFilePaths = exportAllImages();
@@ -374,27 +374,37 @@ namespace MapActionToolbars
                 exportMapbook dpp_export = new exportMapbook();
                 IDocumentInfo2 docInfo = _pMxDoc as IDocumentInfo2;
                 dpp_export.Map_Document = docInfo.Path;
+                dpp_export.Export_File_Name = tbxMapDocument.Text;
                 dpp_export.Export_Path = tbxExportZipPath.Text;
-                dpp_export.DPP_Export_Mode = tbxMapbookMode.SelectedValue.ToString();
+                dpp_export.DPP_Export_Mode = tbxMapbookMode.Text;
                 // TODO: Deal with having to save doc. Just use current document in tool by default? Make MXD optional parameter?
                 IMapDocument mapDoc = (IMapDocument)_pMxDoc;
-                mapDoc.Save(true, true);
 
-                IGeoProcessorResult2 dpp_export_result = (IGeoProcessorResult2)GP.Execute(dpp_export, null);
-                if (dpp_export_result == null)
+                try
                 {
-                    String gp_error_messages = dpp_export_result.GetMessages(2);
-                    throw new Exception(gp_error_messages);
+                    IGeoProcessorResult2 dpp_export_result = (IGeoProcessorResult2)GP.Execute(dpp_export, null);
+
+                    if (dpp_export_result == null)
+                    {
+                        String gp_error_messages = dpp_export_result.GetMessages(2);
+                        throw new Exception(gp_error_messages);
+                    }
+                    else
+                    {
+#if DEBUG
+                        String gp_messages = dpp_export_result.GetMessages(0);
+#endif
+
+                        dictImageFileSizes["pdf"] = long.Parse(dpp_export_result.GetOutput(5).GetAsText());
+                        //TODO: Page Count
+
+                    }
                 }
-                else
+                catch
+                    (Exception ex)
                 {
-                #if DEBUG
-                    String gp_messages = dpp_export_result.GetMessages(0);
-                #endif
-                    
-                    dictImageFileSizes["pdf"]=  long.Parse(dpp_export_result.GetOutput(5).GetAsText());
-                    //TODO: Page Count
-
+                    // null
+                    throw ex;
                 }
                 dictFilePaths = new Dictionary<string,string>();
                 dictFilePaths["pdf"] = exportPathFileName + ".pdf";
