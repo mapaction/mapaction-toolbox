@@ -15,12 +15,16 @@ using ESRI.ArcGIS.ArcMap;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geometry;
+using ESRI.ArcGIS.Geoprocessor;
+using ESRI.ArcGIS.Geoprocessing;
 using ESRI.ArcGIS.Desktop;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using MapAction;
+using mapbook_export_tools;
+
 namespace MapActionToolbars
 {
     public partial class frmExportMain : Form
@@ -195,7 +199,27 @@ namespace MapActionToolbars
             tbxPaperSize.Text = MapAction.PageLayoutProperties.getPageSize(_pMxDoc, _targetMapFrame);
             tbxScale.Text = MapAction.PageLayoutProperties.getScale(_pMxDoc, _targetMapFrame);
 
-            // TODO: Enable mapbook dropdown if is data driven pages MXD. 
+            // Check if Data Driven Page
+            // ^^ Will probably remove this, it's likely to be slow but want to test the concept. 
+            Geoprocessor GP = new Geoprocessor();
+            isdpp is_data_driven_page = new isdpp();
+            IDocumentInfo2 docInfo = _pMxDoc as IDocumentInfo2;
+            is_data_driven_page.Map_Document = docInfo.Path;
+            IGeoProcessorResult2 isDppResult = (IGeoProcessorResult2)GP.Execute(is_data_driven_page, null);
+            if (isDppResult == null)
+            {
+                String gp_error_messages = isDppResult.GetMessages(2);
+                throw new Exception(gp_error_messages);
+            }
+            else
+            {
+            #if DEBUG
+                String gp_messages = isDppResult.GetMessages(0);
+            #endif 
+                String string_isDPP = isDppResult.GetOutput(0).GetAsText();
+                Boolean isDPP = Boolean.Parse(string_isDPP);
+                tbxMapbookMode.Enabled = isDPP;
+            }
             
         }
 
@@ -306,23 +330,27 @@ namespace MapActionToolbars
 
             IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
             IActiveView pActiveView = pMxDoc.ActiveView;
-
-            // Call to export the images and return a dictionary of the file names
-            Dictionary<string, string> dictFilePaths = exportAllImages();
-
+            // Ssetup dictionaries for metadata XML
+            Dictionary<string, string> dictFilePaths;
             // Create a dictionary to store the image file sizes to add to the output xml
             Dictionary<string, long> dictImageFileSizes = new Dictionary<string, long>();
-            // Calculate the file size of each image and add it to the dictionary
-            // Don't use dict.add because a) it's another place to keep track of magic strings
-            // values, and b) if we accidentally call it twice with same key we get an exception
-            foreach (var kvp in dictFilePaths)
+            if (!tbxMapbookMode.Enabled)
             {
-                dictImageFileSizes[kvp.Key] = MapAction.Utilities.getFileSize(kvp.Value);
-            }
-            System.Windows.Forms.Application.DoEvents();
-            
-            // Create a dictionary to get and store the map frame extents to pass to the output xml
-            Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
+                // Call to export the images and return a dictionary of the file names
+                dictFilePaths = exportAllImages();
+
+
+                // Calculate the file size of each image and add it to the dictionary
+                // Don't use dict.add because a) it's another place to keep track of magic strings
+                // values, and b) if we accidentally call it twice with same key we get an exception
+                foreach (var kvp in dictFilePaths)
+                {
+                    dictImageFileSizes[kvp.Key] = MapAction.Utilities.getFileSize(kvp.Value);
+                }
+                System.Windows.Forms.Application.DoEvents();
+
+                // Create a dictionary to get and store the map frame extents to pass to the output xml
+                Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
 
             // Export KML
             IMapDocument pMapDoc = (IMapDocument)pMxDoc;            
@@ -334,7 +362,13 @@ namespace MapActionToolbars
             MapAction.MapExport.exportMapFrameKmlAsRaster(pMapDoc, "Main map", @kmzPathFileName, kmzScale, nudKmlResolution.Value.ToString());
             // Add the xml path to the dictFilePaths, which is the input into the creatZip method
             dictFilePaths["kmz"] = kmzPathFileName;
-            
+            }
+            else
+            {
+                // Data driven pages
+
+
+            }            
             // Get the mxd filename
             string mxdName = ArcMap.Application.Document.Title;
             System.Windows.Forms.Application.DoEvents();
@@ -342,8 +376,9 @@ namespace MapActionToolbars
             string xmlPath = string.Empty;
             try
             {
-                Dictionary<string, string> dict = getExportToolValues(dictImageFileSizes, dictFilePaths, dictFrameExtents, mxdName);
-                xmlPath = MapAction.Utilities.createXML(dict, "mapdata", path, tbxMapDocument.Text, 2);
+                //TODO: Populate these dictionaries for data driven pages. 
+                // Dictionary<string, string> dict = getExportToolValues(dictImageFileSizes, dictFilePaths, dictFrameExtents, mxdName);
+                //xmlPath = MapAction.Utilities.createXML(dict, "mapdata", path, tbxMapDocument.Text, 2);
             }
             catch (Exception xml_e)
             {

@@ -77,7 +77,7 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.mapbookModeLabel = new System.Windows.Forms.Label();
-            this.mapbookMode = new System.Windows.Forms.ComboBox();
+            this.tbxMapbookMode = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.chkOpenExplorer = new System.Windows.Forms.CheckBox();
             this.btnCreateZip = new System.Windows.Forms.Button();
@@ -699,7 +699,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.mapbookModeLabel);
-            this.groupBox3.Controls.Add(this.mapbookMode);
+            this.groupBox3.Controls.Add(this.tbxMapbookMode);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.chkOpenExplorer);
             this.groupBox3.Controls.Add(this.btnCreateZip);
@@ -723,17 +723,17 @@
             this.mapbookModeLabel.Text = "Mapbook Mode";
             this.mapbookModeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // mapbookMode
+            // tbxMapbookMode
             // 
-            this.mapbookMode.Enabled = false;
-            this.mapbookMode.FormattingEnabled = true;
-            this.mapbookMode.Items.AddRange(new object[] {
+            this.tbxMapbookMode.Enabled = false;
+            this.tbxMapbookMode.FormattingEnabled = true;
+            this.tbxMapbookMode.Items.AddRange(new object[] {
             "Single PDF",
             "Multiple PDF Files"});
-            this.mapbookMode.Location = new System.Drawing.Point(90, 54);
-            this.mapbookMode.Name = "mapbookMode";
-            this.mapbookMode.Size = new System.Drawing.Size(234, 21);
-            this.mapbookMode.TabIndex = 9;
+            this.tbxMapbookMode.Location = new System.Drawing.Point(90, 54);
+            this.tbxMapbookMode.Name = "tbxMapbookMode";
+            this.tbxMapbookMode.Size = new System.Drawing.Size(234, 21);
+            this.tbxMapbookMode.TabIndex = 9;
             // 
             // label4
             // 
@@ -2069,6 +2069,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckedListBox checkedListBoxThemes;
         private System.Windows.Forms.Label mapbookModeLabel;
-        private System.Windows.Forms.ComboBox mapbookMode;
+        private System.Windows.Forms.ComboBox tbxMapbookMode;
     }
 }
