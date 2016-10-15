@@ -15,6 +15,8 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace MapAction
 {
@@ -470,6 +472,24 @@ namespace MapAction
             return Uri.UnescapeDataString(new Uri(cmfURI, relURI).LocalPath);
         }
 
+        public static void ResizeImageFile(string imageFile, string outputFile, double scaleFactor)
+        {
+            // from http://stackoverflow.com/a/11138086
+            using (var srcImage = Image.FromFile(imageFile))
+            {
+                var newWidth = (int)(srcImage.Width * scaleFactor);
+                var newHeight = (int)(srcImage.Height * scaleFactor);
+                using (var newImage = new Bitmap(newWidth, newHeight))
+                using (var graphics = Graphics.FromImage(newImage))
+                {
+                    graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                    graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    graphics.DrawImage(srcImage, new Rectangle(0, 0, newWidth, newHeight));
+                    newImage.Save(outputFile);
+                }
+            }
+        }
 
     }
 }

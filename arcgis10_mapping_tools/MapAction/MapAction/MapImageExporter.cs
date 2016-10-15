@@ -360,14 +360,38 @@ namespace MapAction
             string outFileName = GetExportFilename(exportType, SCREEN_RES_DPI);
 
             IExport docExport = InitializeExporter(exportType);
-            docExport.ExportFileName = outFileName;
-
-            tagRECT outDims = GetExportTagRect(maxSize);
-            bool result = RunExport(docExport, outDims);
-            if (result)
+ 
+            if (maxSize.MaxDim < 200)
             {
-                return outFileName;
+                // If we export very small images (such as a thumbnail) from Arcmap, then they don't look great
+                // as arc tries to make sure everything gets drawn regardless of size so the gridlines and text look
+                // really black. 
+                // In this case let's export to a much larger temporary image and then resize that using system image 
+                // manipulation library.
+                var fn = System.IO.Path.GetFileName(outFileName);
+                var tempPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "__TMP__" + fn);
+                docExport.ExportFileName = tempPath;
+                maxSize.Height *= 10;
+                maxSize.Width *= 10;
+                tagRECT outDims = GetExportTagRect(maxSize);
+                bool result = RunExport(docExport, outDims);
+                if (result)
+                {
+                    Utilities.ResizeImageFile(tempPath, outFileName, 0.1);
+                    System.IO.File.Delete(tempPath);
+                }
             }
+            else
+            {
+                docExport.ExportFileName = outFileName;
+                tagRECT outDims = GetExportTagRect(maxSize);
+                bool result = RunExport(docExport, outDims);
+                if (result)
+                {
+                    return outFileName;
+                }
+            }
+          
             return null;
         }
 
