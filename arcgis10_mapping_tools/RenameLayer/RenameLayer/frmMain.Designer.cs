@@ -72,7 +72,7 @@
             // 
             // btnRename
             // 
-            this.btnRename.Location = new System.Drawing.Point(406, 303);
+            this.btnRename.Location = new System.Drawing.Point(291, 303);
             this.btnRename.Name = "btnRename";
             this.btnRename.Size = new System.Drawing.Size(75, 23);
             this.btnRename.TabIndex = 1;
@@ -86,7 +86,7 @@
             this.cboGeoExtent.FormattingEnabled = true;
             this.cboGeoExtent.Location = new System.Drawing.Point(78, 39);
             this.cboGeoExtent.Name = "cboGeoExtent";
-            this.cboGeoExtent.Size = new System.Drawing.Size(180, 21);
+            this.cboGeoExtent.Size = new System.Drawing.Size(276, 21);
             this.cboGeoExtent.TabIndex = 0;
             this.cboGeoExtent.DropDownClosed += new System.EventHandler(this.cboGeoExtent_DropDownClosed);
             // 
@@ -110,7 +110,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(325, 303);
+            this.btnCancel.Location = new System.Drawing.Point(420, 303);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 0;
@@ -121,9 +121,9 @@
             // tbxGeoExtent
             // 
             this.tbxGeoExtent.Enabled = false;
-            this.tbxGeoExtent.Location = new System.Drawing.Point(286, 36);
+            this.tbxGeoExtent.Location = new System.Drawing.Point(408, 38);
             this.tbxGeoExtent.Name = "tbxGeoExtent";
-            this.tbxGeoExtent.Size = new System.Drawing.Size(180, 20);
+            this.tbxGeoExtent.Size = new System.Drawing.Size(246, 20);
             this.tbxGeoExtent.TabIndex = 1;
             this.tbxGeoExtent.TextChanged += new System.EventHandler(this.tbxGeoExtent_TextChanged);
             this.tbxGeoExtent.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbxGeoExtent_KeyPress);
@@ -131,7 +131,7 @@
             // chkGeoExtent
             // 
             this.chkGeoExtent.AutoSize = true;
-            this.chkGeoExtent.Location = new System.Drawing.Point(264, 39);
+            this.chkGeoExtent.Location = new System.Drawing.Point(387, 39);
             this.chkGeoExtent.Name = "chkGeoExtent";
             this.chkGeoExtent.Size = new System.Drawing.Size(15, 14);
             this.chkGeoExtent.TabIndex = 13;
@@ -141,7 +141,7 @@
             // chkSource
             // 
             this.chkSource.AutoSize = true;
-            this.chkSource.Location = new System.Drawing.Point(264, 174);
+            this.chkSource.Location = new System.Drawing.Point(387, 174);
             this.chkSource.Name = "chkSource";
             this.chkSource.Size = new System.Drawing.Size(15, 14);
             this.chkSource.TabIndex = 14;
@@ -151,7 +151,7 @@
             // chkScale
             // 
             this.chkScale.AutoSize = true;
-            this.chkScale.Location = new System.Drawing.Point(264, 147);
+            this.chkScale.Location = new System.Drawing.Point(387, 147);
             this.chkScale.Name = "chkScale";
             this.chkScale.Size = new System.Drawing.Size(15, 14);
             this.chkScale.TabIndex = 15;
@@ -161,7 +161,7 @@
             // chkType
             // 
             this.chkType.AutoSize = true;
-            this.chkType.Location = new System.Drawing.Point(264, 120);
+            this.chkType.Location = new System.Drawing.Point(387, 120);
             this.chkType.Name = "chkType";
             this.chkType.Size = new System.Drawing.Size(15, 14);
             this.chkType.TabIndex = 16;
@@ -171,7 +171,7 @@
             // chkTheme
             // 
             this.chkTheme.AutoSize = true;
-            this.chkTheme.Location = new System.Drawing.Point(264, 93);
+            this.chkTheme.Location = new System.Drawing.Point(387, 93);
             this.chkTheme.Name = "chkTheme";
             this.chkTheme.Size = new System.Drawing.Size(15, 14);
             this.chkTheme.TabIndex = 17;
@@ -181,7 +181,7 @@
             // chkCategory
             // 
             this.chkCategory.AutoSize = true;
-            this.chkCategory.Location = new System.Drawing.Point(264, 66);
+            this.chkCategory.Location = new System.Drawing.Point(387, 66);
             this.chkCategory.Name = "chkCategory";
             this.chkCategory.Size = new System.Drawing.Size(15, 14);
             this.chkCategory.TabIndex = 18;
@@ -191,9 +191,9 @@
             // tbxSource
             // 
             this.tbxSource.Enabled = false;
-            this.tbxSource.Location = new System.Drawing.Point(285, 171);
+            this.tbxSource.Location = new System.Drawing.Point(408, 171);
             this.tbxSource.Name = "tbxSource";
-            this.tbxSource.Size = new System.Drawing.Size(180, 20);
+            this.tbxSource.Size = new System.Drawing.Size(246, 20);
             this.tbxSource.TabIndex = 11;
             this.tbxSource.TextChanged += new System.EventHandler(this.tbxSource_TextChanged);
             this.tbxSource.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbxGeoExtent_KeyPress);
@@ -201,9 +201,9 @@
             // tbxScale
             // 
             this.tbxScale.Enabled = false;
-            this.tbxScale.Location = new System.Drawing.Point(285, 145);
+            this.tbxScale.Location = new System.Drawing.Point(408, 145);
             this.tbxScale.Name = "tbxScale";
-            this.tbxScale.Size = new System.Drawing.Size(180, 20);
+            this.tbxScale.Size = new System.Drawing.Size(246, 20);
             this.tbxScale.TabIndex = 9;
             this.tbxScale.TextChanged += new System.EventHandler(this.tbxScale_TextChanged);
             this.tbxScale.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbxGeoExtent_KeyPress);
@@ -211,9 +211,9 @@
             // tbxType
             // 
             this.tbxType.Enabled = false;
-            this.tbxType.Location = new System.Drawing.Point(285, 118);
+            this.tbxType.Location = new System.Drawing.Point(408, 117);
             this.tbxType.Name = "tbxType";
-            this.tbxType.Size = new System.Drawing.Size(180, 20);
+            this.tbxType.Size = new System.Drawing.Size(246, 20);
             this.tbxType.TabIndex = 7;
             this.tbxType.TextChanged += new System.EventHandler(this.tbxType_TextChanged);
             this.tbxType.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbxGeoExtent_KeyPress);
@@ -221,9 +221,9 @@
             // tbxTheme
             // 
             this.tbxTheme.Enabled = false;
-            this.tbxTheme.Location = new System.Drawing.Point(286, 91);
+            this.tbxTheme.Location = new System.Drawing.Point(408, 90);
             this.tbxTheme.Name = "tbxTheme";
-            this.tbxTheme.Size = new System.Drawing.Size(180, 20);
+            this.tbxTheme.Size = new System.Drawing.Size(246, 20);
             this.tbxTheme.TabIndex = 5;
             this.tbxTheme.TextChanged += new System.EventHandler(this.tbxTheme_TextChanged);
             this.tbxTheme.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbxGeoExtent_KeyPress);
@@ -231,9 +231,9 @@
             // tbxCategory
             // 
             this.tbxCategory.Enabled = false;
-            this.tbxCategory.Location = new System.Drawing.Point(285, 64);
+            this.tbxCategory.Location = new System.Drawing.Point(408, 66);
             this.tbxCategory.Name = "tbxCategory";
-            this.tbxCategory.Size = new System.Drawing.Size(180, 20);
+            this.tbxCategory.Size = new System.Drawing.Size(246, 20);
             this.tbxCategory.TabIndex = 3;
             this.tbxCategory.TextChanged += new System.EventHandler(this.tbxCategory_TextChanged);
             this.tbxCategory.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbxGeoExtent_KeyPress);
@@ -252,9 +252,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(15, 120);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(31, 13);
+            this.label6.Size = new System.Drawing.Size(52, 13);
             this.label6.TabIndex = 27;
-            this.label6.Text = "Type";
+            this.label6.Text = "Geometry";
             // 
             // label7
             // 
@@ -295,9 +295,9 @@
             // tbxPermission
             // 
             this.tbxPermission.Enabled = false;
-            this.tbxPermission.Location = new System.Drawing.Point(285, 198);
+            this.tbxPermission.Location = new System.Drawing.Point(408, 197);
             this.tbxPermission.Name = "tbxPermission";
-            this.tbxPermission.Size = new System.Drawing.Size(180, 20);
+            this.tbxPermission.Size = new System.Drawing.Size(246, 20);
             this.tbxPermission.TabIndex = 13;
             this.tbxPermission.TextChanged += new System.EventHandler(this.tbxPermission_TextChanged);
             this.tbxPermission.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbxGeoExtent_KeyPress);
@@ -305,7 +305,7 @@
             // chkPermission
             // 
             this.chkPermission.AutoSize = true;
-            this.chkPermission.Location = new System.Drawing.Point(264, 200);
+            this.chkPermission.Location = new System.Drawing.Point(387, 200);
             this.chkPermission.Name = "chkPermission";
             this.chkPermission.Size = new System.Drawing.Size(15, 14);
             this.chkPermission.TabIndex = 33;
@@ -316,7 +316,7 @@
             // 
             this.tbxFreeText.Location = new System.Drawing.Point(78, 224);
             this.tbxFreeText.Name = "tbxFreeText";
-            this.tbxFreeText.Size = new System.Drawing.Size(180, 20);
+            this.tbxFreeText.Size = new System.Drawing.Size(276, 20);
             this.tbxFreeText.TabIndex = 14;
             this.tbxFreeText.TextChanged += new System.EventHandler(this.tbxFreeText_TextChanged);
             this.tbxFreeText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbxFreeText_KeyPress);
@@ -361,7 +361,7 @@
             this.groupBox1.Controls.Add(this.chkCategory);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(483, 285);
+            this.groupBox1.Size = new System.Drawing.Size(671, 285);
             this.groupBox1.TabIndex = 38;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Name elements";
@@ -379,7 +379,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Location = new System.Drawing.Point(343, 15);
+            this.label5.Location = new System.Drawing.Point(459, 15);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(76, 13);
             this.label5.TabIndex = 47;
@@ -420,7 +420,7 @@
             this.cboPermission.FormattingEnabled = true;
             this.cboPermission.Location = new System.Drawing.Point(78, 197);
             this.cboPermission.Name = "cboPermission";
-            this.cboPermission.Size = new System.Drawing.Size(180, 21);
+            this.cboPermission.Size = new System.Drawing.Size(276, 21);
             this.cboPermission.TabIndex = 12;
             this.cboPermission.DropDownClosed += new System.EventHandler(this.cboPermission_DropDownClosed);
             // 
@@ -430,7 +430,7 @@
             this.cboSource.FormattingEnabled = true;
             this.cboSource.Location = new System.Drawing.Point(78, 171);
             this.cboSource.Name = "cboSource";
-            this.cboSource.Size = new System.Drawing.Size(180, 21);
+            this.cboSource.Size = new System.Drawing.Size(276, 21);
             this.cboSource.TabIndex = 10;
             this.cboSource.DropDownClosed += new System.EventHandler(this.cboSource_DropDownClosed);
             // 
@@ -440,7 +440,7 @@
             this.cboScale.FormattingEnabled = true;
             this.cboScale.Location = new System.Drawing.Point(78, 145);
             this.cboScale.Name = "cboScale";
-            this.cboScale.Size = new System.Drawing.Size(180, 21);
+            this.cboScale.Size = new System.Drawing.Size(276, 21);
             this.cboScale.TabIndex = 8;
             this.cboScale.DropDownClosed += new System.EventHandler(this.cboScale_DropDownClosed);
             // 
@@ -450,7 +450,7 @@
             this.cboTheme.FormattingEnabled = true;
             this.cboTheme.Location = new System.Drawing.Point(78, 91);
             this.cboTheme.Name = "cboTheme";
-            this.cboTheme.Size = new System.Drawing.Size(180, 21);
+            this.cboTheme.Size = new System.Drawing.Size(276, 21);
             this.cboTheme.TabIndex = 4;
             this.cboTheme.DropDownClosed += new System.EventHandler(this.cboTheme_DropDownClosed);
             // 
@@ -460,7 +460,7 @@
             this.cboCategory.FormattingEnabled = true;
             this.cboCategory.Location = new System.Drawing.Point(78, 64);
             this.cboCategory.Name = "cboCategory";
-            this.cboCategory.Size = new System.Drawing.Size(180, 21);
+            this.cboCategory.Size = new System.Drawing.Size(276, 21);
             this.cboCategory.TabIndex = 2;
             this.cboCategory.DropDownClosed += new System.EventHandler(this.cboCategory_DropDownClosed);
             // 
@@ -468,9 +468,9 @@
             // 
             this.cboType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboType.FormattingEnabled = true;
-            this.cboType.Location = new System.Drawing.Point(78, 117);
+            this.cboType.Location = new System.Drawing.Point(78, 116);
             this.cboType.Name = "cboType";
-            this.cboType.Size = new System.Drawing.Size(180, 21);
+            this.cboType.Size = new System.Drawing.Size(276, 21);
             this.cboType.TabIndex = 6;
             this.cboType.DropDownClosed += new System.EventHandler(this.cboType_DropDownClosed);
             // 
@@ -478,7 +478,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(507, 329);
+            this.ClientSize = new System.Drawing.Size(711, 329);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnRename);
