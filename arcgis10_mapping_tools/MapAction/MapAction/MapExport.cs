@@ -335,7 +335,7 @@ namespace MapAction
                         dictPaths["xml"], 
                         dictPaths.FirstOrDefault(kvp=>kvp.Key == "jpeg").Value, // ["jpeg"], 
                         dictPaths.FirstOrDefault(kvp => kvp.Key == "pdf").Value, //["pdf"]);
-                        dictPaths.FirstOrDefault(kvp=>kvp.Key == "png_thumbnail").Value)
+                        dictPaths.FirstOrDefault(kvp=>kvp.Key == "png_thumbnail_zip").Value)
                     ;  
                     zipProc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
                     zipProc.Start();
