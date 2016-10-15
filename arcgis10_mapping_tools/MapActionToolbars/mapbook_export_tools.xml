@@ -35,16 +35,30 @@
         <member name="T:mapbook_export_tools.exportMapbook">
             <summary></summary>
         </member>
-        <member name="M:mapbook_export_tools.exportMapbook.#ctor(System.Object,System.Object)">
+        <member name="M:mapbook_export_tools.exportMapbook.#ctor(System.Object,System.Object,System.String,System.String)">
             <summary>Constructor that takes all required parameters for geoprocessor execution.</summary>
             <param name="Map_Document">Map Document (in)</param>
-            <param name="Export_Directory">Export Directory (in)</param>
+            <param name="Export_Path">Export Path (in)</param>
+            <param name="Export_File_Name">Export File Name (in)</param>
+            <param name="DPP_Export_Mode">DPP Export Mode (in)</param>
         </member>
         <member name="P:mapbook_export_tools.exportMapbook.Map_Document">
             <summary>Map Document (in)</summary>
         </member>
-        <member name="P:mapbook_export_tools.exportMapbook.Export_Directory">
-            <summary>Export Directory (in)</summary>
+        <member name="P:mapbook_export_tools.exportMapbook.Export_Path">
+            <summary>Export Path (in)</summary>
+        </member>
+        <member name="P:mapbook_export_tools.exportMapbook.Export_File_Name">
+            <summary>Export File Name (in)</summary>
+        </member>
+        <member name="P:mapbook_export_tools.exportMapbook.DPP_Export_Mode">
+            <summary>DPP Export Mode (in)</summary>
+        </member>
+        <member name="P:mapbook_export_tools.exportMapbook.Page_Count">
+            <summary>Page Count (out, Optional)</summary>
+        </member>
+        <member name="P:mapbook_export_tools.exportMapbook.File_Size">
+            <summary>File Size (out, Optional)</summary>
         </member>
         <member name="P:mapbook_export_tools.exportMapbook.ToolboxDirectory">
             <summary>The directory of this tool's toolbox.</summary>

@@ -370,7 +370,32 @@ namespace MapActionToolbars
             {
                 // Data driven pages
 
+                Geoprocessor GP = new Geoprocessor();
+                exportMapbook dpp_export = new exportMapbook();
+                IDocumentInfo2 docInfo = _pMxDoc as IDocumentInfo2;
+                dpp_export.Map_Document = docInfo.Path;
+                dpp_export.Export_Path = tbxExportZipPath.Text;
+                dpp_export.DPP_Export_Mode = tbxMapbookMode.SelectedValue.ToString();
+                // TODO: Deal with having to save doc. Just use current document in tool by default? Make MXD optional parameter?
+                IMapDocument mapDoc = (IMapDocument)_pMxDoc;
+                mapDoc.Save(true, true);
 
+                IGeoProcessorResult2 dpp_export_result = (IGeoProcessorResult2)GP.Execute(dpp_export, null);
+                if (dpp_export_result == null)
+                {
+                    String gp_error_messages = dpp_export_result.GetMessages(2);
+                    throw new Exception(gp_error_messages);
+                }
+                else
+                {
+                #if DEBUG
+                    String gp_messages = dpp_export_result.GetMessages(0);
+                #endif
+                    
+                    dictImageFileSizes["pdf"]=  long.Parse(dpp_export_result.GetOutput(5).GetAsText());
+                    //TODO: Page Count
+
+                }
                 dictFilePaths = new Dictionary<string,string>();
                 dictFilePaths["pdf"] = exportPathFileName + ".pdf";
 
@@ -384,7 +409,7 @@ namespace MapActionToolbars
             {
                 //TODO: Populate these dictionaries for data driven pages. 
                  Dictionary<string, string> dict = getExportToolValues(dictImageFileSizes, dictFilePaths, dictFrameExtents, mxdName);
-                xmlPath = MapAction.Utilities.createXML(dict, "mapdata", path, tbxMapDocument.Text, 2);
+            //    xmlPath = MapAction.Utilities.createXML(dict, "mapdata", path, tbxMapDocument.Text, 2);
             }
             catch (Exception xml_e)
             {
@@ -394,7 +419,7 @@ namespace MapActionToolbars
             }
 
             // Add the xml path to the dictFilePaths, which is the input into the creatZip method
-            dictFilePaths["xml"] = xmlPath;
+            // dictFilePaths["xml"] = xmlPath;
 
             // Create zip
             // TODO Note that currently the createZip will zip the xml, jpeg, and pdf. Not the emf! 
