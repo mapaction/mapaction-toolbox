@@ -344,6 +344,8 @@ namespace MapAction
         /// <summary>
         /// Export a map image by specifying the size in pixels that the image should not exceed, in width and/or height.
         /// For example thumbnails, or other situations where the image needs to be of a specific size such as for website uses.
+        /// Images below a certain size (currently 200 pixels) will be exported to a larger file which is then resampled down to 
+        /// the requested size, due to the coarse appearance of exports from ArcMap at low resolutions.
         /// </summary>
         /// <param name="exportType">Export file type</param>
         /// <param name="maxSize">XYDimensions object specifying the width and/or height that the output image must fit within. 

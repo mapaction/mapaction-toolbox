@@ -486,6 +486,7 @@ namespace MapAction
                     graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
                     graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
                     graphics.DrawImage(srcImage, new Rectangle(0, 0, newWidth, newHeight));
+                    // this will save to png by default.
                     newImage.Save(outputFile);
                 }
             }
