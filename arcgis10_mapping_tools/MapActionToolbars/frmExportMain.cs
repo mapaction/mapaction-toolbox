@@ -334,6 +334,11 @@ namespace MapActionToolbars
             Dictionary<string, string> dictFilePaths;
             // Create a dictionary to store the image file sizes to add to the output xml
             Dictionary<string, long> dictImageFileSizes = new Dictionary<string, long>();
+
+            // Create a dictionary to get and store the map frame extents to pass to the output xml
+            // TODO: Get extent of dpp index dataset instead of data frame. 
+            Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
+
             if (!tbxMapbookMode.Enabled)
             {
                 // Call to export the images and return a dictionary of the file names
@@ -349,8 +354,6 @@ namespace MapActionToolbars
                 }
                 System.Windows.Forms.Application.DoEvents();
 
-                // Create a dictionary to get and store the map frame extents to pass to the output xml
-                Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
 
             // Export KML
             IMapDocument pMapDoc = (IMapDocument)pMxDoc;            
@@ -368,6 +371,9 @@ namespace MapActionToolbars
                 // Data driven pages
 
 
+                dictFilePaths = new Dictionary<string,string>();
+                dictFilePaths["pdf"] = exportPathFileName + ".pdf";
+
             }            
             // Get the mxd filename
             string mxdName = ArcMap.Application.Document.Title;
@@ -377,8 +383,8 @@ namespace MapActionToolbars
             try
             {
                 //TODO: Populate these dictionaries for data driven pages. 
-                // Dictionary<string, string> dict = getExportToolValues(dictImageFileSizes, dictFilePaths, dictFrameExtents, mxdName);
-                //xmlPath = MapAction.Utilities.createXML(dict, "mapdata", path, tbxMapDocument.Text, 2);
+                 Dictionary<string, string> dict = getExportToolValues(dictImageFileSizes, dictFilePaths, dictFrameExtents, mxdName);
+                xmlPath = MapAction.Utilities.createXML(dict, "mapdata", path, tbxMapDocument.Text, 2);
             }
             catch (Exception xml_e)
             {
