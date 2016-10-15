@@ -21,7 +21,8 @@ namespace MapAction
         gif,
         emf,
         jpeg,
-        png_thumbnail,
+        png_thumbnail_zip,
+        png_thumbnail_local,
         kmz
     }
 

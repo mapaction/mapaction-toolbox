@@ -357,6 +357,11 @@ namespace MapActionToolbars
             // TODO Note that currently the createZip will zip the xml, jpeg, and pdf. Not the emf! 
             // So why are we making it??
             MapAction.MapExport.createZip(dictFilePaths);
+            
+            // now that it's been zipped, delete the copy of the thumbnail called thumbnail.png to avoid confusion
+            string zippedThumbFile = dictFilePaths[MapActionExportTypes.png_thumbnail_zip.ToString()];
+            System.IO.File.Delete(zippedThumbFile);
+            
             // close the wait dialog
             // dlg.lblWaitMainMessage.Text = "Export complete";
             // int milliseconds = 1250;
@@ -493,6 +498,7 @@ namespace MapActionToolbars
             {
                 // refactored export code into non-static class which handles thumbnail filename and pixel size limits 
                 MapImageExporter layoutexporter = new MapImageExporter(pMapDoc, exportPathFileName, null);
+                // the ones added to the dictionary will be the ones that get added to the zip file
                 dict[MapActionExportTypes.pdf.ToString()] =  
                     layoutexporter.exportImage(MapActionExportTypes.pdf, Convert.ToUInt16(nudPdfResolution.Value));
                 dict[MapActionExportTypes.jpeg.ToString()] =  
@@ -505,8 +511,12 @@ namespace MapActionToolbars
                         Width = MapAction.Properties.Settings.Default.thumbnail_width_px,
                         Height = null // export will be constrained by width only
                     };
-                dict[MapActionExportTypes.png_thumbnail.ToString()] =  
-                    layoutexporter.exportImage(MapActionExportTypes.png_thumbnail, thumbSize);
+                dict[MapActionExportTypes.png_thumbnail_zip.ToString()] =  
+                    layoutexporter.exportImage(MapActionExportTypes.png_thumbnail_zip, thumbSize);
+                
+                // export a local-only copy of the thumbnail which will have a more useful filename so it isn't 
+                // overwritten when there's more than one map exported to the same folder
+                layoutexporter.exportImage(MapActionExportTypes.png_thumbnail_local, thumbSize);
 
                 // What are these for? we don't zip them.
                 MapImageExporter dfExporter = new MapImageExporter(pMapDoc, exportPathFileName, "Main map");
