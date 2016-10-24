@@ -44,7 +44,7 @@ class Export_mapbook(object):
         file_name = self.export_path + "//" + self.file_name
         self.map_doc.dataDrivenPages.exportToPDF(file_name)
         self.file_size = os.path.getsize(file_name)
-        arcpy.AddMessage("Exported {0},{1} Bytes".format(file_name, file_size ))
+        arcpy.AddMessage("Exported {0},{1} Bytes".format(file_name, self.file_size ))
 
 
     def export(self):
