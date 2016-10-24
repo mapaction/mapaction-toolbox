@@ -395,7 +395,7 @@ namespace MapActionToolbars
                         String gp_messages = dpp_export_result.GetMessages(0);
 #endif
 
-                        dictImageFileSizes["pdf"] = long.Parse(dpp_export_result.GetOutput(5).GetAsText());
+                        dictImageFileSizes["pdf"] = long.Parse(dpp_export_result.GetOutput(1).GetAsText()); // Outputs Zero indexed on number of results - not number of params.
                         //TODO: Page Count
 
                     }
