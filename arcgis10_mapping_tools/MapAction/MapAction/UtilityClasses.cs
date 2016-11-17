@@ -34,6 +34,19 @@ namespace MapAction
     {
         public UInt32? Width;
         public UInt32? Height;
+        public UInt32 MaxDim
+        {
+            get
+            {
+                if (Width.HasValue && Height.HasValue)
+                {
+                    return Math.Max(Width.Value, Height.Value);
+                }
+                else if (Width.HasValue) { return Width.Value; }
+                else if (Height.HasValue) { return Height.Value; }
+                else { return 0; }
+            }
+        }
     }
     
 }
