@@ -150,10 +150,13 @@ namespace MapAction
                 IElement element = new TextElementClass();
                 IElementProperties2 pElementProp;
                 ITextElement pTextElement;
-
                 //loop through the text elements in the frame
                 try
                 {
+                    SimpleTextParser formattingTextParser = new SimpleTextParser();
+                    formattingTextParser.TextSymbol = new TextSymbolClass();
+                    Boolean bHasTags = false;
+
                     element = (IElement)pGraphics.Next();
                     while (element != null)
                     {
@@ -166,7 +169,36 @@ namespace MapAction
                             if (pElementProp.Name != "")
                             {
                                 //store the name of the elements and the values in the dictionary as pairs
-                                dict.Add(pElementProp.Name, pTextElement.Text);
+                                // check if text element needs parsing
+                                formattingTextParser.Text = pTextElement.Text;
+                                formattingTextParser.HasTags(ref bHasTags);
+                                if (bHasTags)
+                                {
+                                    bool continueParsing = true;
+                                    List<string> parsedText = new List<string>();
+                                    // Parse formatted text. The Textparser advances through each tagged part of the string.
+                                    formattingTextParser.Next();
+                                    parsedText.Add(formattingTextParser.TextSymbol.Text);
+
+                                    while (continueParsing)
+                                    {
+                                        formattingTextParser.Next();
+                                        if (formattingTextParser.TextSymbol.Text == parsedText[parsedText.Count - 1])
+                                        {
+                                            continueParsing = false;
+                                        }
+                                        else
+                                        {
+                                            parsedText.Add(formattingTextParser.TextSymbol.Text);
+                                        }
+                                    }
+                                    dict.Add(pElementProp.Name, string.Join("", parsedText.ToArray()));
+                                }
+                                else
+                                {
+                                    dict.Add(pElementProp.Name, pTextElement.Text);
+                                }
+                               formattingTextParser.Reset();
                             }
                         }
                         element = pGraphics.Next() as IElement;
