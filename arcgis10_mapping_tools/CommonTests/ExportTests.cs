@@ -169,26 +169,29 @@ namespace MapAction.tests
              *      pathFileName = @pathDocumentName + "-" + dpi.ToString() + "dpi." + exportType; 
              */
             string stubPath = Path.Combine(this.exportPath, "testmap");
-            string exportFileName;
+            string expectedExportFileName;
             if (dataFrameName == null)
             {
-                exportFileName = String.Format("{0}-{1}dpi.{2}", stubPath, dpi, fileType.ToString());
+                expectedExportFileName = String.Format("{0}-{1}dpi.{2}", stubPath, dpi, fileType.ToString());
             }
             else
             {
-                exportFileName = String.Format("{0}-mapframe-{1}dpi.{2}", stubPath, dpi, fileType.ToString());
+                expectedExportFileName = String.Format("{0}-mapframe-{1}dpi.{2}", stubPath, dpi, fileType.ToString());
                 //pathFileName = @pathDocumentName + "-mapframe-" + dpi.ToString() + "dpi." + exportType;
             }
 
-            Console.WriteLine("Export Filename:\t{0}", exportFileName);
-            FileInfo fi = new FileInfo(exportFileName);
+            Console.WriteLine("Expected export Filename:\t{0}", expectedExportFileName);
+            FileInfo fi = new FileInfo(expectedExportFileName);
 
             // Test export file not present already 
             // Assert.IsFalse(System.IO.File.Exists(exportFileName), "A map file did not exist prior to the export function being called.");
             Assert.IsFalse(fi.Exists, "A map file did not exist prior to the export function being called as expected.");
             
             // Do the export
-            MapExport.exportImage(this.pMapDoc, fileType, dpi, stubPath, dataFrameName);
+            MapImageExporter exporter = new MapImageExporter(pMapDoc, stubPath, dataFrameName);
+            string resultPath = exporter.exportImage(fileType, dpi);
+            // changed to use non-static exporter class
+            //MapExport.exportImage(this.pMapDoc, fileType, dpi, stubPath, dataFrameName);
 
             // Assert file exported. 
             fi.Refresh();
