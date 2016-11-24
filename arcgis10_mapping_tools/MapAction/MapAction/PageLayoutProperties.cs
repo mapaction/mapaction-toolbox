@@ -38,38 +38,7 @@ namespace MapAction
         timezone
     }
         
-    //    public static Dictionary<elements, string> Names = initNames();
-        
-    //    private static Dictionary<elements, string> initNames()
-    //    {
-    //        Dictionary<elements, string> _Names = new Dictionary<elements,string>();
-    //        _Names.Add(elements.title, "title");
-    //        _Names.Add(elements.summary, "summary");
-    //        _Names.Add(elements.data_sources, "data_sources");
-    //        _Names.Add(elements.map_no, "map_no");
-    //        _Names.Add(elements.mxd_name, "mxd_name");
-    //        _Names.Add(elements.spatial_reference, "spatial_reference");
-    //        _Names.Add(elements.scale, "scale");
-    //        _Names.Add(elements.glide_no, "glide_no");
-    //        _Names.Add(elements.disclaimer, "disclaimer");
-    //        _Names.Add(elements.donor_credit, "donor_credit");
-    //        _Names.Add(elements.map_producer, "map_producer");
-    //        _Names.Add(elements.timezone, "timezone");
-    //        return _Names;
-    //    }
-
-
-    //    /// <summary>
-    //    /// Returns a string array. The order of the array is not gaurentteed.
-    //    /// </summary>
-    //    /// <returns>An string array of all MapElementNames</returns>
-    //    public static string[] getAllNames()
-    //    {
-    //        return Names.Values.ToArray();
-    //    }
-
-    //}
-
+  
     public class MapActionMapTemplateException : Exception
     {
         public MapActionMapTemplateException()
