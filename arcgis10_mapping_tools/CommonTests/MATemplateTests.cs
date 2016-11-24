@@ -31,8 +31,20 @@ namespace MapAction.tests
         {
             TestUtilities.BindESRILicense();
             this.testRootDir = TestUtilities.GetTestsRootDir();
+
+            // Openning a IMxDoc here just so that it doesn't get called every time in Setup()
+            string documentName;
+            documentName = Path.Combine(this.testRootDir, @"testfiles\MA_A3_landscape.mxd");
+            MxDocument mxd = new MxDocument();
+            mxd.Parent.OpenDocument(documentName);
+            this.pMxDoc = (IMxDocument)mxd;
         }
 
+        ~MATemplateTests()
+        {
+            MxDocument mxDoc = (MxDocument)this.pMxDoc;
+            mxDoc.Parent.Shutdown();
+        }
 
         // This is called prior to each test and allows state to be reset.
         // This keeps each test isolated and idenpendant from the others.
@@ -43,11 +55,8 @@ namespace MapAction.tests
             documentName = Path.Combine(this.testRootDir, @"testfiles\MA_A3_landscape.mxd");
             // Open map document
             this.pMapDoc = TestUtilities.GetMXD(documentName);
-            MxDocument mxd = new MxDocument();
-            mxd.Parent.OpenDocument(documentName);
-            this.pMxDoc = (IMxDocument)mxd;
         }
-
+        
 
         [TearDown]
         public void TearDown()
@@ -55,37 +64,46 @@ namespace MapAction.tests
             //shutdown ArcMap
             MapDocument mapDoc = (MapDocument)this.pMapDoc;
             mapDoc.Close();
-            MxDocument mxDoc = (MxDocument)this.pMxDoc;
-            mxDoc.Parent.Shutdown();
         }
 
-        
+
+        //[Ignore("Ignore TestMapElementNames whilst fixing PageLayoutElements")]
         [TestCase]
         public void TestMapElementNames()
         {
-            string[] referenceElements = {"title", "summary", "data_sources", "map_no", "mxd_name", "spatial_reference", "scale", "glide_no", "disclaimer", "donor_credit", "map_producer", "timezone"};
-            string[] allElements = MapElementNames.getAllNames().ToArray();
+            string[] referenceNames = {"title", "summary", "data_sources", "map_no", "mxd_name", "spatial_reference", "scale", "glide_no", "disclaimer", "donor_credit", "map_producer", "timezone"};
+            MapElementNames[] allElements = (MapElementNames[])Enum.GetValues(typeof(MapElementNames));
 
-            Array.Sort(referenceElements);
-            Array.Sort(allElements);
-
-            Assert.IsTrue((referenceElements.Length == allElements.Length) &&  Enumerable.SequenceEqual(referenceElements, allElements));
+            // TODO: Surely there is a tidier way to do this?
+            if (referenceNames.Length == allElements.Length)
+            {
+                List<string> allNamesList = new List<string>();
+                foreach (MapElementNames en in allElements)
+                {
+                    allNamesList.Add(en.ToString());
+                }
+                string[] allNames = allNamesList.ToArray();
+                Array.Sort(referenceNames);
+                Array.Sort(allNames);
+                Assert.IsTrue(Enumerable.SequenceEqual(referenceNames, allNames));
+            }
         }
 
 
+        [TestCase("non-existing-map-frame")]
         [TestCase("Main map")]
         public void TestGetLayoutTextElements(string dataFrameName)
         {
-            
             Dictionary<string, string> dict = PageLayoutProperties.getLayoutTextElements(this.pMxDoc, dataFrameName);
 
             if (dict != null)
             {
-                foreach (string elementName in MapAction.MapElementNames.getAllNames())
+                //foreach (Suit suit in Enum.GetValues(typeof(Suit)))
+                foreach (MapElementNames elementName in Enum.GetValues(typeof(MapElementNames)))
                 {
-                    if (!dict.ContainsKey(elementName))
+                    if (!dict.ContainsKey(elementName.ToString()))
                     {
-                        Assert.Fail("Could not find map elements {0}", elementName);
+                        Assert.Fail("Could not find map elements {0}", elementName.ToString());
                     }
                 }
                 Assert.Pass("All map elements found");
