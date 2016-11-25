@@ -26,3 +26,16 @@ Commandline build requirements (to be confirmed):
 - Visual Studio Professional 2008 SP1 (but not later verisons)
 - Visual Studio 2008 SDK 1.1
 - NUnit v2.6.4
+
+
+About
+=====
+Copyright (c) 2016 [MapAction](http://mapaction.org).
+
+The development of version 4 of the MapAction Toolbox was generously funded by [ECHO](http://ec.europa.eu/echo).
+
+![alt text][echologo]
+
+[echologo]: http://www.echo-visibility.eu/wp-content/uploads/2014/02/EU_Flag_HA_2016_EN-300x272.png "Funded by European Union Humanitarian Aid"
+
+

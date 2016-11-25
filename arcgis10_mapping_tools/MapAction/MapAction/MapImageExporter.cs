@@ -85,10 +85,16 @@ namespace MapAction
         private string GetExportFilename(MapActionExportTypes exportType, UInt16 dpi)
         {
             string fileExt;
-            if (exportType == MapActionExportTypes.png_thumbnail)
+            if (exportType == MapActionExportTypes.png_thumbnail_zip)
             {
                 fileExt = "png";
                 return System.IO.Path.Combine(m_ExportDir, "thumbnail.png");
+            }
+            else if (exportType == MapActionExportTypes.png_thumbnail_local)
+            {
+                fileExt = "png";
+                return System.IO.Path.Combine(m_ExportDir,
+                    m_ExportBaseFileName + "-thumbnail." + fileExt);
             }
             else
             {
@@ -323,7 +329,9 @@ namespace MapAction
                     docExport = (IExport)m_export;
                 }
             }
-            else if (exportType == MapActionExportTypes.png_thumbnail)
+            else if (
+                exportType == MapActionExportTypes.png_thumbnail_zip 
+                || exportType == MapActionExportTypes.png_thumbnail_local)
             {
                 docExport = new ExportPNGClass();
             }
@@ -344,6 +352,8 @@ namespace MapAction
         /// <summary>
         /// Export a map image by specifying the size in pixels that the image should not exceed, in width and/or height.
         /// For example thumbnails, or other situations where the image needs to be of a specific size such as for website uses.
+        /// Images below a certain size (currently 200 pixels) will be exported to a larger file which is then resampled down to 
+        /// the requested size, due to the coarse appearance of exports from ArcMap at low resolutions.
         /// </summary>
         /// <param name="exportType">Export file type</param>
         /// <param name="maxSize">XYDimensions object specifying the width and/or height that the output image must fit within. 
@@ -360,14 +370,39 @@ namespace MapAction
             string outFileName = GetExportFilename(exportType, SCREEN_RES_DPI);
 
             IExport docExport = InitializeExporter(exportType);
-            docExport.ExportFileName = outFileName;
-
-            tagRECT outDims = GetExportTagRect(maxSize);
-            bool result = RunExport(docExport, outDims);
-            if (result)
+ 
+            if (maxSize.MaxDim < 200)
             {
-                return outFileName;
+                // If we export very small images (such as a thumbnail) from Arcmap, then they don't look great
+                // as arc tries to make sure everything gets drawn regardless of size so the gridlines and text look
+                // really black. 
+                // In this case let's export to a much larger temporary image and then resize that using system image 
+                // manipulation library.
+                var fn = System.IO.Path.GetFileName(outFileName);
+                var tempPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "__TMP__" + fn);
+                docExport.ExportFileName = tempPath;
+                maxSize.Height *= 10;
+                maxSize.Width *= 10;
+                tagRECT outDims = GetExportTagRect(maxSize);
+                bool result = RunExport(docExport, outDims);
+                if (result)
+                {
+                    Utilities.ResizeImageFile(tempPath, outFileName, 0.1);
+                    System.IO.File.Delete(tempPath);
+                    return outFileName;
+                }
             }
+            else
+            {
+                docExport.ExportFileName = outFileName;
+                tagRECT outDims = GetExportTagRect(maxSize);
+                bool result = RunExport(docExport, outDims);
+                if (result)
+                {
+                    return outFileName;
+                }
+            }
+          
             return null;
         }
 
