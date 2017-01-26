@@ -20,6 +20,7 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
+using MapAction;
 
 namespace MapActionToolbars
 {
@@ -170,6 +171,9 @@ namespace MapActionToolbars
             if (dictXML.ContainsKey("GlideNo")) { tbxGlideNo.Text = dictXML["GlideNo"]; }
             if (dictXML.ContainsKey("Language")) { tbxLanguage.Text = dictXML["Language"]; }
             if (dictXML.ContainsKey("Country")) { tbxCountries.Text = dictXML["Country"]; }
+
+            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
+            
             string operational_id = dictXML["OperationId"];
             Debug.WriteLine("Op ID: " + operational_id);
             if (dictXML.ContainsKey("OperationId")) { tbxOperationId.Text = dictXML["OperationId"]; }
@@ -180,6 +184,8 @@ namespace MapActionToolbars
 
             // Set the status value and the version number from the existing XML if it exists:
             setValuesFromExistingXML();
+
+            _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
 
             // Set the spatial reference information on load
             var dictSpatialRef = new Dictionary<string, string>();
@@ -353,6 +359,21 @@ namespace MapActionToolbars
             // TODO Note that currently the createZip will zip the xml, jpeg, and pdf. Not the emf! 
             // So why are we making it??
             MapAction.MapExport.createZip(dictFilePaths);
+            
+            // now that it's been zipped, delete the copy of the thumbnail called thumbnail.png to avoid confusion
+            string zippedThumbFile = dictFilePaths[MapActionExportTypes.png_thumbnail_zip.ToString()];
+            try
+            {
+                System.IO.File.Delete(zippedThumbFile);
+            }
+            catch (Exception ex)
+            {
+                // don't crash if the thumbnail export failed or the intermediate file can't be deleted for some reason
+                if (!(ex is ArgumentNullException || ex is UnauthorizedAccessException))
+                {
+                    throw;
+                }
+            }
             // close the wait dialog
             // dlg.lblWaitMainMessage.Text = "Export complete";
             // int milliseconds = 1250;
@@ -486,6 +507,36 @@ namespace MapActionToolbars
             }
             else
             {
+                // refactored export code into non-static class which handles thumbnail filename and pixel size limits 
+                MapImageExporter layoutexporter = new MapImageExporter(pMapDoc, exportPathFileName, null);
+                // the ones added to the dictionary will be the ones that get added to the zip file
+                dict[MapActionExportTypes.pdf.ToString()] =  
+                    layoutexporter.exportImage(MapActionExportTypes.pdf, Convert.ToUInt16(nudPdfResolution.Value));
+                dict[MapActionExportTypes.jpeg.ToString()] =  
+                    layoutexporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudJpegResolution.Value));
+                dict[MapActionExportTypes.emf.ToString()] =  
+                    layoutexporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
+                // export the thumbnail, using the new functionality of specifying a pixel size rather than a dpi
+                XYDimensions thumbSize = new XYDimensions()
+                    {
+                        Width = MapAction.Properties.Settings.Default.thumbnail_width_px,
+                        Height = null // export will be constrained by width only
+                    };
+                dict[MapActionExportTypes.png_thumbnail_zip.ToString()] =  
+                    layoutexporter.exportImage(MapActionExportTypes.png_thumbnail_zip, thumbSize);
+                
+                // export a local-only copy of the thumbnail which will have a more useful filename so it isn't 
+                // overwritten when there's more than one map exported to the same folder
+                layoutexporter.exportImage(MapActionExportTypes.png_thumbnail_local, thumbSize);
+
+                // What are these for? we don't zip them.
+                MapImageExporter dfExporter = new MapImageExporter(pMapDoc, exportPathFileName, "Main map");
+                dfExporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
+                dfExporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudEmfResolution.Value));
+
+                /**
+                 *Now redundent code
+                 * 
                 //Output 3 image formats pdf, jpeg & emf
                 dict.Add("pdf", MapAction.MapExport.exportImage(pMapDoc, "pdf", nudPdfResolution.Value.ToString(), exportPathFileName, null));
                 dict.Add("jpeg", MapAction.MapExport.exportImage(pMapDoc, "jpeg", nudJpegResolution.Value.ToString(), exportPathFileName, null));
@@ -493,6 +544,7 @@ namespace MapActionToolbars
                 MapAction.MapExport.exportImage(pMapDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
                 MapAction.MapExport.exportImage(pMapDoc, "jpeg", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
 
+                 */
             }
 
             return dict;
@@ -781,7 +833,12 @@ namespace MapActionToolbars
 
         private void cboStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _statusValidationResult = FormValidationExport.validateStatus(cboStatus, nudVersionNumber, eprStatusWarning);            
+            _statusValidationResult = FormValidationExport.validateStatus(cboStatus, nudVersionNumber, eprStatusWarning);
+        }
+
+        private void tbxCountries_TextChanged_1(object sender, EventArgs e)
+        {
+            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
         }
     }
 }

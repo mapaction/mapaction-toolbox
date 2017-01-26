@@ -25,13 +25,14 @@ namespace RenameLayer
     public partial class frmMain : Form
     {
         //Create a local variable to set the path to each of the csv files that store the lookup values
-        string _extent_path = ConstructLayerName.pathToLookupCSV() + @"\geoextent.csv";
-        string _category_path = ConstructLayerName.pathToLookupCSV() + @"\category.csv";
-        string _theme_path = ConstructLayerName.pathToLookupCSV() + @"\theme.csv";
-        string _type_path = ConstructLayerName.pathToLookupCSV() + @"\type.csv";
-        string _scale_path = ConstructLayerName.pathToLookupCSV() + @"\scale.csv";
-        string _source_path = ConstructLayerName.pathToLookupCSV() + @"\source.csv";
-        string _permission_path = ConstructLayerName.pathToLookupCSV() + @"\permission.csv";
+        // added numeric prefixes and changed type to 04_geometry to fit in with revised DNC. PJR 18/08/2016
+        string _extent_path = ConstructLayerName.pathToLookupCSV() + @"\01_geoextent.csv";
+        string _category_path = ConstructLayerName.pathToLookupCSV() + @"\02_category.csv";
+        string _theme_path = ConstructLayerName.pathToLookupCSV() + @"\03_theme.csv";
+        string _type_path = ConstructLayerName.pathToLookupCSV() + @"\04_geometry.csv";
+        string _scale_path = ConstructLayerName.pathToLookupCSV() + @"\05_scale.csv";
+        string _source_path = ConstructLayerName.pathToLookupCSV() + @"\06_source.csv";
+        string _permission_path = ConstructLayerName.pathToLookupCSV() + @"\07_permission.csv";
         
         public frmMain()
         {
@@ -156,6 +157,7 @@ namespace RenameLayer
         private void frmMain_Load_1(object sender, EventArgs e)
         {
 
+            //MessageBox.Show(this, "frmMain_load_1 entered", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); //PJR 18/082016
             //Populate combo box with value from the CSV files 
             comboValues(cboGeoExtent, _extent_path);
             comboValues(cboCategory, _category_path);

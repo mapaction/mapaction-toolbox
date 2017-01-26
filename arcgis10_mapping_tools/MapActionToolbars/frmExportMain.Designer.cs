@@ -76,7 +76,6 @@
             this.label21 = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.chkOpenExplorer = new System.Windows.Forms.CheckBox();
             this.btnCreateZip = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -696,7 +695,6 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.chkOpenExplorer);
             this.groupBox3.Controls.Add(this.btnCreateZip);
             this.groupBox3.Controls.Add(this.label1);
@@ -709,19 +707,10 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Directory";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(5, 56);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(73, 13);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Open zip path";
-            // 
             // chkOpenExplorer
             // 
             this.chkOpenExplorer.AutoSize = true;
-            this.chkOpenExplorer.Location = new System.Drawing.Point(89, 56);
+            this.chkOpenExplorer.Location = new System.Drawing.Point(11, 56);
             this.chkOpenExplorer.Name = "chkOpenExplorer";
             this.chkOpenExplorer.Size = new System.Drawing.Size(15, 14);
             this.chkOpenExplorer.TabIndex = 9;
@@ -1562,7 +1551,7 @@
             // 
             // tbxMapTitle
             // 
-            this.tbxMapTitle.Location = new System.Drawing.Point(77, 17);
+            this.tbxMapTitle.Location = new System.Drawing.Point(77, 18);
             this.tbxMapTitle.Multiline = true;
             this.tbxMapTitle.Name = "tbxMapTitle";
             this.tbxMapTitle.ReadOnly = true;
@@ -1901,7 +1890,6 @@
         private System.Windows.Forms.TabControl tabExportTool;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Button btnCreateZip;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox chkOpenExplorer;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
