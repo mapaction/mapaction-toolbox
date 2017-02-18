@@ -1,4 +1,8 @@
-﻿namespace MapActionToolbars
+﻿using System.Diagnostics;
+using System.Collections.Generic;
+using System;
+
+namespace MapActionToolbars
 {
     partial class frmLayoutMain
     {
@@ -19,6 +23,7 @@
             }
             base.Dispose(disposing);
         }
+        private List<MapAction.LanguageConfig> languageDictionary;
 
         #region Windows Form Designer generated code
 
@@ -99,6 +104,8 @@
             this.eprTimezoneWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprProducedByError = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprTimezoneError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.cboLabelLanguage = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.gbxAutomated.SuspendLayout();
             this.gbxManual.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -538,6 +545,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cboLabelLanguage);
+            this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.btnUpdateTimezone);
             this.groupBox1.Controls.Add(this.tbxTimezone);
             this.groupBox1.Controls.Add(this.label8);
@@ -554,7 +563,7 @@
             this.groupBox1.Controls.Add(this.lblDisclaimer);
             this.groupBox1.Location = new System.Drawing.Point(7, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(352, 277);
+            this.groupBox1.Size = new System.Drawing.Size(352, 311);
             this.groupBox1.TabIndex = 41;
             this.groupBox1.TabStop = false;
             // 
@@ -736,7 +745,26 @@
             this.eprTimezoneError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.eprTimezoneError.ContainerControl = this;
             // 
-            // frmMain
+            // cboLabelLanguage
+            // 
+            this.cboLabelLanguage.AccessibleDescription = "";
+            this.cboLabelLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLabelLanguage.Location = new System.Drawing.Point(94, 273);
+            this.cboLabelLanguage.Name = "cboLabelLanguage";
+            this.cboLabelLanguage.Size = new System.Drawing.Size(201, 21);
+            this.cboLabelLanguage.TabIndex = 114;
+            this.cboLabelLanguage.SelectedIndexChanged += new System.EventHandler(this.cboLabelLanguage_SelectedIndexChanged);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(7, 277);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(84, 13);
+            this.label12.TabIndex = 113;
+            this.label12.Text = "Label Language";
+            // 
+            // frmLayoutMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -747,7 +775,7 @@
             this.Controls.Add(this.btnSave);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmMain";
+            this.Name = "frmLayoutMain";
             this.Text = "Layout Tool";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.gbxAutomated.ResumeLayout(false);
@@ -858,5 +886,7 @@
         private System.Windows.Forms.ErrorProvider eprTimezoneWarning;
         private System.Windows.Forms.ErrorProvider eprProducedByError;
         private System.Windows.Forms.ErrorProvider eprTimezoneError;
+        private System.Windows.Forms.ComboBox cboLabelLanguage;
+        private System.Windows.Forms.Label label12;
     }
 }
