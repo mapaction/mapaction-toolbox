@@ -15,12 +15,16 @@ using ESRI.ArcGIS.ArcMap;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geometry;
+using ESRI.ArcGIS.Geoprocessor;
+using ESRI.ArcGIS.Geoprocessing;
 using ESRI.ArcGIS.Desktop;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using MapAction;
+using mapbook_export_tools;
+
 namespace MapActionToolbars
 {
     public partial class frmExportMain : Form
@@ -194,6 +198,28 @@ namespace MapActionToolbars
             tbxTime.Text = time;
             tbxPaperSize.Text = MapAction.PageLayoutProperties.getPageSize(_pMxDoc, _targetMapFrame);
             tbxScale.Text = MapAction.PageLayoutProperties.getScale(_pMxDoc, _targetMapFrame);
+
+            // Check if Data Driven Page
+            // ^^ Will probably remove this, it's likely to be slow but want to test the concept. 
+            Geoprocessor GP = new Geoprocessor();
+            isdpp is_data_driven_page = new isdpp();
+            IDocumentInfo2 docInfo = _pMxDoc as IDocumentInfo2;
+            is_data_driven_page.Map_Document = docInfo.Path;
+            IGeoProcessorResult2 isDppResult = (IGeoProcessorResult2)GP.Execute(is_data_driven_page, null);
+            if (isDppResult == null)
+            {
+                String gp_error_messages = isDppResult.GetMessages(2);
+                throw new Exception(gp_error_messages);
+            }
+            else
+            {
+            #if DEBUG
+                String gp_messages = isDppResult.GetMessages(0);
+            #endif 
+                String string_isDPP = isDppResult.GetOutput(0).GetAsText();
+                Boolean isDPP = Boolean.Parse(string_isDPP);
+                tbxMapbookMode.Enabled = isDPP;
+            }
             
         }
 
@@ -304,23 +330,30 @@ namespace MapActionToolbars
 
             IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
             IActiveView pActiveView = pMxDoc.ActiveView;
-
-            // Call to export the images and return a dictionary of the file names
-            Dictionary<string, string> dictFilePaths = exportAllImages();
-
+            // Ssetup dictionaries for metadata XML
+            Dictionary<string, string> dictFilePaths;
             // Create a dictionary to store the image file sizes to add to the output xml
             Dictionary<string, long> dictImageFileSizes = new Dictionary<string, long>();
-            // Calculate the file size of each image and add it to the dictionary
-            // Don't use dict.add because a) it's another place to keep track of magic strings
-            // values, and b) if we accidentally call it twice with same key we get an exception
-            foreach (var kvp in dictFilePaths)
-            {
-                dictImageFileSizes[kvp.Key] = MapAction.Utilities.getFileSize(kvp.Value);
-            }
-            System.Windows.Forms.Application.DoEvents();
-            
+
             // Create a dictionary to get and store the map frame extents to pass to the output xml
+            // TODO: Get extent of dpp index dataset instead of data frame. 
             Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
+
+            if (tbxMapbookMode.Enabled == false && 1==2) // Need a way to do this - the form elements are all disabled before export - see ^^
+            {
+                // Call to export the images and return a dictionary of the file names
+                dictFilePaths = exportAllImages();
+
+
+                // Calculate the file size of each image and add it to the dictionary
+                // Don't use dict.add because a) it's another place to keep track of magic strings
+                // values, and b) if we accidentally call it twice with same key we get an exception
+                foreach (var kvp in dictFilePaths)
+                {
+                    dictImageFileSizes[kvp.Key] = MapAction.Utilities.getFileSize(kvp.Value);
+                }
+                System.Windows.Forms.Application.DoEvents();
+
 
             // Export KML
             IMapDocument pMapDoc = (IMapDocument)pMxDoc;            
@@ -332,7 +365,51 @@ namespace MapActionToolbars
             MapAction.MapExport.exportMapFrameKmlAsRaster(pMapDoc, "Main map", @kmzPathFileName, kmzScale, nudKmlResolution.Value.ToString());
             // Add the xml path to the dictFilePaths, which is the input into the creatZip method
             dictFilePaths["kmz"] = kmzPathFileName;
-            
+            }
+            else
+            {
+                // Data driven pages
+
+                Geoprocessor GP = new Geoprocessor();
+                exportMapbook dpp_export = new exportMapbook();
+                IDocumentInfo2 docInfo = _pMxDoc as IDocumentInfo2;
+                dpp_export.Map_Document = docInfo.Path;
+                dpp_export.Export_File_Name = tbxMapDocument.Text;
+                dpp_export.Export_Path = tbxExportZipPath.Text;
+                dpp_export.DPP_Export_Mode = tbxMapbookMode.Text;
+                // TODO: Deal with having to save doc. Just use current document in tool by default? Make MXD optional parameter?
+                IMapDocument mapDoc = (IMapDocument)_pMxDoc;
+
+                try
+                {
+                    IGeoProcessorResult2 dpp_export_result = (IGeoProcessorResult2)GP.Execute(dpp_export, null);
+
+                    if (dpp_export_result == null)
+                    {
+                        String gp_error_messages = dpp_export_result.GetMessages(2);
+                        throw new Exception(gp_error_messages);
+                    }
+                    else
+                    {
+#if DEBUG
+                        String gp_messages = dpp_export_result.GetMessages(0);
+#endif
+
+                        dictImageFileSizes["pdf"] = long.Parse(dpp_export_result.GetOutput(1).GetAsText()); // Outputs Zero indexed on number of results - not number of params.
+                        //TODO: Page Count
+
+                    }
+                }
+                catch
+                    (Exception ex)
+                {
+                    // null
+                    throw ex;
+                }
+                dictFilePaths = new Dictionary<string,string>();
+                dictFilePaths["pdf"] = exportPathFileName + ".pdf";
+
+            }            
             // Get the mxd filename
             string mxdName = ArcMap.Application.Document.Title;
             System.Windows.Forms.Application.DoEvents();
@@ -340,8 +417,9 @@ namespace MapActionToolbars
             string xmlPath = string.Empty;
             try
             {
-                Dictionary<string, string> dict = getExportToolValues(dictImageFileSizes, dictFilePaths, dictFrameExtents, mxdName);
-                xmlPath = MapAction.Utilities.createXML(dict, "mapdata", path, tbxMapDocument.Text, 2);
+                //TODO: Populate these dictionaries for data driven pages. 
+                 Dictionary<string, string> dict = getExportToolValues(dictImageFileSizes, dictFilePaths, dictFrameExtents, mxdName);
+            //    xmlPath = MapAction.Utilities.createXML(dict, "mapdata", path, tbxMapDocument.Text, 2);
             }
             catch (Exception xml_e)
             {
@@ -351,7 +429,7 @@ namespace MapActionToolbars
             }
 
             // Add the xml path to the dictFilePaths, which is the input into the creatZip method
-            dictFilePaths["xml"] = xmlPath;
+            // dictFilePaths["xml"] = xmlPath;
 
             // Create zip
             // TODO Note that currently the createZip will zip the xml, jpeg, and pdf. Not the emf! 
@@ -827,5 +905,7 @@ namespace MapActionToolbars
         {
             _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
         }
+
+
     }
 }

@@ -10,7 +10,7 @@
   <Targets>
     <Target name="Desktop" version="10.2" />
   </Targets>
-  <AddIn language="CLR" library="RenameLayer.dll" namespace="RenameLayer">
+  <AddIn language="CLR4.0" library="RenameLayer.dll" namespace="RenameLayer">
     <ArcMap>
       <Commands>
         <Button id="RenameLayer_RenameLayer" class="RenameLayer" message="Use the preset values to standarise the naming of files to the MapAction protocol." caption="Rename layer" tip="Rename layer to the MapAction naming convention" category="~MA Add-In Controls" image="Images\rename_icon.png" />
