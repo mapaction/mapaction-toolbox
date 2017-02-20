@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DDPExportTests.cs" />
     <Compile Include="TestUtilities.cs" />
     <Compile Include="MATemplateTests.cs" />
     <Compile Include="ExportTests.cs" />
