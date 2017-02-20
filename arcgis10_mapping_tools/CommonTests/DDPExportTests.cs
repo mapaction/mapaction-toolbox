@@ -9,6 +9,7 @@ using ESRI.ArcGIS.ArcMapUI;
 using NUnit.Framework;
 using MapAction;
 
+
 namespace MapAction.tests
 {
     /// <summary>
@@ -61,7 +62,8 @@ namespace MapAction.tests
             // Open map document
             this.pMapDoc = TestUtilities.GetMXD(documentName);
 
-            bool result = isDDP(pMapDoc);
+            MxdDocumentProperties ma_mapdoc = new MxdDocumentProperties(pMapDoc);
+            bool result = ma_mapdoc.isDataDrivePagesEnabled(pMapDoc);
 
             Assert.AreEqual(result, isDDPEnabled);
         }

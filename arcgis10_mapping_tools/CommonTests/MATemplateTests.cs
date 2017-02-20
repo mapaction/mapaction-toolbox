@@ -71,9 +71,11 @@ namespace MapAction.tests
         [TestCase]
         public void TestMapElementNames()
         {
-            string[] referenceNames = {"title", "summary", "data_sources", "map_no", "mxd_name", "spatial_reference", "scale", "glide_no", "disclaimer", "donor_credit", "map_producer", "timezone"};
+            string[] referenceNames = {"title", "summary", "data_sources", "map_no", "mxd_name", "spatial_reference",
+                                       "scale", "glide_no", "disclaimer", "donor_credit", "map_producer", "timezone"};
+            
             MapElementNames[] allElements = (MapElementNames[])Enum.GetValues(typeof(MapElementNames));
-
+            
             // TODO: Surely there is a tidier way to do this?
             if (referenceNames.Length == allElements.Length)
             {
