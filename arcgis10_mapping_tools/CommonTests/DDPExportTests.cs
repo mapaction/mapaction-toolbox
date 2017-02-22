@@ -52,7 +52,6 @@ namespace MapAction.tests
         }
 
 
-        //[Ignore("Ignore TestMapElementNames whilst fixing PageLayoutElements")]
         [TestCase(@"testfiles\ddp_enabled.mxd", true)]
         [TestCase(@"testfiles\MA_A3_landscape.mxd", false)]
         public void TestIsDataDrivenPagesEnabled(string relativeMXDfilename, bool isDDPEnabled)
@@ -62,8 +61,7 @@ namespace MapAction.tests
             // Open map document
             this.pMapDoc = TestUtilities.GetMXD(documentName);
 
-            MxdDocumentProperties ma_mapdoc = new MxdDocumentProperties(pMapDoc);
-            bool result = ma_mapdoc.isDataDrivePagesEnabled(pMapDoc);
+            bool result = PageLayoutProperties.isDataDrivenPagesEnabled(pMapDoc);
 
             Assert.AreEqual(result, isDDPEnabled);
         }
