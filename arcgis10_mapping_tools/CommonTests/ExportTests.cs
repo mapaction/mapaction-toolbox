@@ -130,9 +130,6 @@ namespace MapAction.tests
             Assert.IsTrue(fi.Exists, "The map file has been exported as expected.");
             // this test is a little difficult with a thumbnail which could be v small if the map is plain
             Assert.IsTrue(fi.Length > (expectedFileSize * 1024), "The map file size is vaguely sensible.");
-
-
-            
         }
 
 

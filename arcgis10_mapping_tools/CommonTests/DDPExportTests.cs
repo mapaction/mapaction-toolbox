@@ -13,15 +13,12 @@ using MapAction;
 namespace MapAction.tests
 {
     /// <summary>
-    /// The tests in this case are focused on the testing that code dealing with the MapAction specific MXDs work correctly
-    /// 
-    /// At present the PageLayoutProperties class is entirely procedural and only uses static methods. The layout of these test is intened to be adaptable 
-    /// to 
+    /// The tests in this case are focused on code dealing exporting MapAction specific MXDs which have DataDrivenPages enabled.
     /// </summary>
     [TestFixture]
     public class DDPExportTests
     {
-
+        protected string exportPath;
         protected string testRootDir;
         protected IMapDocument pMapDoc; // Map document 
 
@@ -40,6 +37,7 @@ namespace MapAction.tests
         public void Setup()
         {
             this.pMapDoc = null;
+            this.exportPath = TestUtilities.GetTemporaryDirectory();
         }
         
 
@@ -65,8 +63,33 @@ namespace MapAction.tests
 
             bool result = PageLayoutProperties.isDataDrivenPagesEnabled(pMapDoc);
 
-            Assert.AreEqual(result, isDDPEnabled);
+            Assert.AreEqual(isDDPEnabled, result, "Correctly detected if DataDrivenPages is enabled in example MXD");
         }
 
+        [TestCase(@"testfiles\ddp_enabled_three_pages_layout_view.mxd", 3)]
+        [TestCase(@"testfiles\ddp_enabled_single_page.mxd", 1)]
+        [TestCase(@"testfiles\MA_A3_landscape.mxd", 1)]
+        public void TestCountPdfOutputFiles(string relativeMXDfilename, int pdfCount)
+        {
+            // Open map document
+            string documentName;
+            documentName = Path.Combine(this.testRootDir, relativeMXDfilename);
+            this.pMapDoc = TestUtilities.GetMXD(documentName);
+            
+            // Query export directory
+            DirectoryInfo di = new DirectoryInfo(this.exportPath);
+            String fileExtention = "pdf";
+            String searchPattern = String.Format("*.{0}", fileExtention);
+
+            int preExportFileCnt = di.GetFiles(searchPattern).Length;
+
+            // do export
+
+            // Check result
+            int postExportFileCnt = di.GetFiles(searchPattern).Length;
+            int result = postExportFileCnt - preExportFileCnt;
+
+            Assert.AreEqual(pdfCount, result, "Expected number of files produced by DataDrivenPages Export");
+         }
     }
 }
