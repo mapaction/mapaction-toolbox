@@ -199,27 +199,10 @@ namespace MapActionToolbars
             tbxPaperSize.Text = MapAction.PageLayoutProperties.getPageSize(_pMxDoc, _targetMapFrame);
             tbxScale.Text = MapAction.PageLayoutProperties.getScale(_pMxDoc, _targetMapFrame);
 
-            // Check if Data Driven Page
-            // ^^ Will probably remove this, it's likely to be slow but want to test the concept. 
-            Geoprocessor GP = new Geoprocessor();
-            isdpp is_data_driven_page = new isdpp();
-            IDocumentInfo2 docInfo = _pMxDoc as IDocumentInfo2;
-            is_data_driven_page.Map_Document = docInfo.Path;
-            IGeoProcessorResult2 isDppResult = (IGeoProcessorResult2)GP.Execute(is_data_driven_page, null);
-            if (isDppResult == null)
-            {
-                String gp_error_messages = isDppResult.GetMessages(2);
-                throw new Exception(gp_error_messages);
-            }
-            else
-            {
-            #if DEBUG
-                String gp_messages = isDppResult.GetMessages(0);
-            #endif 
-                String string_isDPP = isDppResult.GetOutput(0).GetAsText();
-                Boolean isDPP = Boolean.Parse(string_isDPP);
-                tbxMapbookMode.Enabled = isDPP;
-            }
+            // Check if Data Driven Page and enable dropdown accordingly
+            IMapDocument mapDoc;
+            mapDoc = (_pMxDoc as MxDocument) as IMapDocument;
+            tbxMapbookMode.Enabled = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
             
         }
 
@@ -355,16 +338,16 @@ namespace MapActionToolbars
                 System.Windows.Forms.Application.DoEvents();
 
 
-            // Export KML
-            IMapDocument pMapDoc = (IMapDocument)pMxDoc;            
-            string kmzPathFileName = exportPathFileName + ".kmz";
-            string kmzScale;
-            if (dictFrameExtents.ContainsKey("scale")) {kmzScale = dictFrameExtents["scale"];} else {kmzScale = null;};
+                // Export KML
+                IMapDocument pMapDoc = (IMapDocument)pMxDoc;            
+                string kmzPathFileName = exportPathFileName + ".kmz";
+                string kmzScale;
+                if (dictFrameExtents.ContainsKey("scale")) {kmzScale = dictFrameExtents["scale"];} else {kmzScale = null;};
             
-            // TODO move this to the MapImageExporter class too, for now it is still in the static MapExport class
-            MapAction.MapExport.exportMapFrameKmlAsRaster(pMapDoc, "Main map", @kmzPathFileName, kmzScale, nudKmlResolution.Value.ToString());
-            // Add the xml path to the dictFilePaths, which is the input into the creatZip method
-            dictFilePaths["kmz"] = kmzPathFileName;
+                // TODO move this to the MapImageExporter class too, for now it is still in the static MapExport class
+                MapAction.MapExport.exportMapFrameKmlAsRaster(pMapDoc, "Main map", @kmzPathFileName, kmzScale, nudKmlResolution.Value.ToString());
+                // Add the xml path to the dictFilePaths, which is the input into the creatZip method
+                dictFilePaths["kmz"] = kmzPathFileName;
             }
             else
             {
