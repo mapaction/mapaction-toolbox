@@ -52,8 +52,9 @@ namespace MapAction.tests
         }
 
 
-        [TestCase(@"testfiles\ddp_enabled.mxd", true)]
         [TestCase(@"testfiles\ddp_enabled_single_page.mxd", true)]
+        [TestCase(@"testfiles\ddp_enabled_three_pages_layout_view.mxd", true)]
+        [TestCase(@"testfiles\ddp_enabled_three_pages_map_view.mxd", true)]
         [TestCase(@"testfiles\MA_A3_landscape.mxd", false)]
         public void TestIsDataDrivenPagesEnabled(string relativeMXDfilename, bool isDDPEnabled)
         {
