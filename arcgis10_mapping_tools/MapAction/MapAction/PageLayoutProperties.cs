@@ -436,6 +436,25 @@ namespace MapAction
         }
         #endregion
 
+        //Returns true is DataDrivenPages is Enabled, false otherwise.
+        public static bool isDataDrivenPagesEnabled(IMapDocument pMapDoc)
+        {
+            IPrintAndExport docPrintExport;
+            int pageCnt;
+
+            docPrintExport = new PrintAndExportClass();
+            pageCnt = docPrintExport.get_PageCount((IActiveView) pMapDoc.PageLayout);
+            System.Console.WriteLine(String.Format("page count {0}", pageCnt));
+
+            // Note: If DDP is not enabled get_PageCount will return 0.
+            // DDP can be enabled but with only one page in the sequence.
+            // Therefore if get_PageCount==1 then we conclude that DDP 
+            // *is* enabled.
+            return (pageCnt > 0);
+        }
+        #endregion
+
+
         // psuedo methods 
 
         // map frame count
