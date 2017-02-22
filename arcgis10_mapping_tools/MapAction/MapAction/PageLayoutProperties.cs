@@ -436,6 +436,7 @@ namespace MapAction
         }
         #endregion
 
+        #region Public method isDataDrivenPagesEnabled
         //Returns true is DataDrivenPages is Enabled, false otherwise.
         public static bool isDataDrivenPagesEnabled(IMapDocument pMapDoc)
         {
