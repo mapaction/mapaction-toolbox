@@ -17,8 +17,8 @@ namespace MapAction.tests
     /// At present the PageLayoutProperties class is entirely procedural and only uses static methods. The layout of these test is intened to be adaptable 
     /// to 
     /// </summary>
+    // [Ignore("Ignore Exports whilst fixing DDP")]
     [TestFixture]
-    [Ignore("Ignore Exports whilst fixing DDP")]
     public class MATemplateTests
     {
 

@@ -23,7 +23,6 @@ using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using MapAction;
-using mapbook_export_tools;
 
 namespace MapActionToolbars
 {
@@ -351,44 +350,11 @@ namespace MapActionToolbars
             }
             else
             {
-                // Data driven pages
+                //// Data driven pages
+                IMapDocument pMapDoc = (IMapDocument)pMxDoc;
+                MapImageExporter mie = new MapImageExporter(pMapDoc, tbxExportZipPath.Text, "Main map");
+                mie.exportDataDrivenPagesImages();
 
-                Geoprocessor GP = new Geoprocessor();
-                exportMapbook dpp_export = new exportMapbook();
-                IDocumentInfo2 docInfo = _pMxDoc as IDocumentInfo2;
-                dpp_export.Map_Document = docInfo.Path;
-                dpp_export.Export_File_Name = tbxMapDocument.Text;
-                dpp_export.Export_Path = tbxExportZipPath.Text;
-                dpp_export.DPP_Export_Mode = tbxMapbookMode.Text;
-                // TODO: Deal with having to save doc. Just use current document in tool by default? Make MXD optional parameter?
-                IMapDocument mapDoc = (IMapDocument)_pMxDoc;
-
-                try
-                {
-                    IGeoProcessorResult2 dpp_export_result = (IGeoProcessorResult2)GP.Execute(dpp_export, null);
-
-                    if (dpp_export_result == null)
-                    {
-                        String gp_error_messages = dpp_export_result.GetMessages(2);
-                        throw new Exception(gp_error_messages);
-                    }
-                    else
-                    {
-#if DEBUG
-                        String gp_messages = dpp_export_result.GetMessages(0);
-#endif
-
-                        dictImageFileSizes["pdf"] = long.Parse(dpp_export_result.GetOutput(1).GetAsText()); // Outputs Zero indexed on number of results - not number of params.
-                        //TODO: Page Count
-
-                    }
-                }
-                catch
-                    (Exception ex)
-                {
-                    // null
-                    throw ex;
-                }
                 dictFilePaths = new Dictionary<string,string>();
                 dictFilePaths["pdf"] = exportPathFileName + ".pdf";
 

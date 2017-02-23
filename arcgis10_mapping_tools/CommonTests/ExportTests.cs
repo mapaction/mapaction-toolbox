@@ -13,8 +13,8 @@ using MapAction;
 
 namespace MapAction.tests
 {
+    //[Ignore("Ignore Exports whilst fixing PageLayoutElements")]
     [TestFixture]
-    [Ignore("Ignore Exports whilst fixing PageLayoutElements")]
     public class Export
     {
         // Class properties 

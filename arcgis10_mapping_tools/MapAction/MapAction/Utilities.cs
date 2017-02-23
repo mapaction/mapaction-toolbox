@@ -494,7 +494,7 @@ namespace MapAction
 
         /// <summary>
         /// Allows a GP toolbox to be added to the output of the VS project. Using this method it can 
-        /// be preferenced using a reletive path from the .dll.
+        /// be referenced using a reletive path from the .dll.
         /// </summary>
         /// <returns>The runtime path to the mapbook_export_tools GeoProcessing Toolbox</returns>
         public static String getExportGPToolboxPath()
