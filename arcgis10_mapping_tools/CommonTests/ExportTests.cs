@@ -196,7 +196,20 @@ namespace MapAction.tests
             // Test export file not present already 
             // Assert.IsFalse(System.IO.File.Exists(exportFileName), "A map file did not exist prior to the export function being called.");
             Assert.IsFalse(fi.Exists, "A map file did not exist prior to the export function being called as expected.");
-            MapExport.exportMapFrameKmlAsRaster(this.pMapDoc, dataFrameName, kmlFileName, scale, "50");
+
+            try
+            {
+                MapExport.exportMapFrameKmlAsRaster(this.pMapDoc, dataFrameName, kmlFileName, scale, "50");
+            }
+            catch (System.Runtime.InteropServices.COMException ce)
+            {
+                System.Console.WriteLine("COMException message:");
+                System.Console.WriteLine(ce.Message);
+                System.Console.WriteLine(ce.ErrorCode);
+                System.Console.WriteLine(ce.Data);
+                System.Console.WriteLine(ce.TargetSite);
+            }
+
             // Assert file exported. 
             fi.Refresh();
             Assert.IsTrue(fi.Exists, "The map file has been exported as expected.");

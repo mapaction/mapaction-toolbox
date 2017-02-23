@@ -86,8 +86,17 @@ namespace MapAction.tests
             int preExportFileCnt = di.GetFiles(searchPattern).Length;
 
             // do export
-            MapImageExporter mie = new MapImageExporter(this.pMapDoc, baseExportFileName, "Main map");
-            mie.exportDataDrivenPagesImages();
+            try
+            {
+                MapImageExporter mie = new MapImageExporter(this.pMapDoc, baseExportFileName, "Main map");
+                mie.exportDataDrivenPagesImages();
+            }catch (System.Runtime.InteropServices.COMException ce){
+                System.Console.WriteLine("COMException message:");
+                System.Console.WriteLine(ce.Message);
+                System.Console.WriteLine(ce.ErrorCode);
+                System.Console.WriteLine(ce.Data);
+                System.Console.WriteLine(ce.TargetSite);
+            }
 
             // Check result
             int postExportFileCnt = di.GetFiles(searchPattern).Length;
