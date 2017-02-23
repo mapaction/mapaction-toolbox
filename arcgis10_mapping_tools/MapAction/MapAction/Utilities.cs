@@ -506,6 +506,7 @@ namespace MapAction
             assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             assemblyDir = System.IO.Path.GetDirectoryName(assemblyPath);
             tbxPath = System.IO.Path.Combine(assemblyDir, tbxStub);
+            System.Console.WriteLine(tbxPath);
             return tbxPath;
         }
 
