@@ -39,12 +39,14 @@ namespace MapAction.tests
 
         public static string GetTestsRootDir()
         {
+            String assemblyPath, assemblyDir, vsProjPath;
             // Get path relative to the CommonTests.dll
-            string asmbyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
-            // Strip out spurious wording
-            asmbyPath = asmbyPath.Replace(@"file:\", string.Empty);
+            assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            assemblyDir = System.IO.Path.GetDirectoryName(assemblyPath);
             // Jump up two levels in directory tree to get the VS project root
-            return Path.Combine(asmbyPath, @"..\..\");
+            vsProjPath = Path.Combine(assemblyDir, @"..\..\");
+            System.Console.WriteLine(String.Format("vsProjPath={0}", vsProjPath));
+            return vsProjPath;
         }
 
         public static IMapDocument GetMXD(string mxdPath)
