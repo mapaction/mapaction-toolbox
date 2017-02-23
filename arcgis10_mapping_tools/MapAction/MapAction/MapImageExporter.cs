@@ -474,7 +474,7 @@ namespace MapAction
             }
             else
             {
-                Geoprocessor gp = new Geoprocessor();
+                IGeoProcessor2 gp = new GeoProcessorClass();
                 gp.AddToolbox(Utilities.getExportGPToolboxPath());
                 IVariantArray parameters = new VarArrayClass();
 
@@ -486,8 +486,21 @@ namespace MapAction
 
                 // TODO: Deal with having to save doc. Just use current document in tool by default? Make MXD optional parameter?
                 // Execute the tool.
+                object sev = null;
                 IGeoProcessorResult2 dpp_export_result;
-                dpp_export_result = (IGeoProcessorResult2)gp.Execute("exportMapbook", parameters, null);
+
+                try
+                {
+                    dpp_export_result = (IGeoProcessorResult2)gp.Execute("exportMapbook", parameters, null);
+                    Console.WriteLine(gp.GetMessages(ref sev));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    string errorMsgs = gp.GetMessages(ref sev);
+                    Console.WriteLine(errorMsgs);
+                    throw ex;
+                }
 
                 if (dpp_export_result == null)
                 {
