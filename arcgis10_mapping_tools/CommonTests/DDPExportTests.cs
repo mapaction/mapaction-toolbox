@@ -76,6 +76,8 @@ namespace MapAction.tests
             documentName = Path.Combine(this.testRootDir, relativeMXDfilename);
             this.pMapDoc = TestUtilities.GetMXD(documentName);
             
+            String baseExportFileName = Path.Combine(this.exportPath, "test-ddp");
+
             // Query export directory
             DirectoryInfo di = new DirectoryInfo(this.exportPath);
             String fileExtention = "pdf";
@@ -84,6 +86,8 @@ namespace MapAction.tests
             int preExportFileCnt = di.GetFiles(searchPattern).Length;
 
             // do export
+            MapImageExporter mie = new MapImageExporter(this.pMapDoc, baseExportFileName, "Main map");
+            mie.exportDataDrivenPagesImages();
 
             // Check result
             int postExportFileCnt = di.GetFiles(searchPattern).Length;

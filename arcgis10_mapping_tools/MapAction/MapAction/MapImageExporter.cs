@@ -16,6 +16,7 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Output;
 using ESRI.ArcGIS.Geoprocessing;
 using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.Geoprocessor;
 
 namespace MapAction
 {
@@ -462,6 +463,48 @@ namespace MapAction
                 return outFileName;
             }
             return null;
+        }
+
+        public void exportDataDrivenPagesImages()
+        {
+            // If not DataDrivenPages then call exportImage as normal
+            if (!PageLayoutProperties.isDataDrivenPagesEnabled(m_MapDoc))
+            {
+                exportImage(MapActionExportTypes.pdf, 300);
+            }
+            else
+            {
+                Geoprocessor gp = new Geoprocessor();
+                gp.AddToolbox(Utilities.getExportGPToolboxPath());
+                IVariantArray parameters = new VarArrayClass();
+
+                IDocumentInfo2 docInfo = this.m_MapDoc as IDocumentInfo2;
+                parameters.Add(docInfo.Path);
+                parameters.Add(this.m_ExportDir);
+                parameters.Add(this.m_ExportBaseFileName);
+                parameters.Add("PDF_MULTIPLE_FILES_PAGE_NAME");
+
+                // TODO: Deal with having to save doc. Just use current document in tool by default? Make MXD optional parameter?
+                // Execute the tool.
+                IGeoProcessorResult2 dpp_export_result;
+                dpp_export_result = (IGeoProcessorResult2)gp.Execute("exportMapbook", parameters, null);
+
+                if (dpp_export_result == null)
+                {
+                    String gp_error_messages = dpp_export_result.GetMessages(2);
+                    throw new Exception(gp_error_messages);
+                }
+                else
+                {
+                    String gp_messages = dpp_export_result.GetMessages(0);
+                    // dictImageFileSizes["pdf"] = long.Parse(dpp_export_result.GetOutput(1).GetAsText()); // Outputs Zero indexed on number of results - not number of params.
+                    //TODO: Page Count
+                    System.Console.WriteLine(gp_messages);
+                }
+
+                //dictFilePaths = new Dictionary<string, string>();
+                //dictFilePaths["pdf"] = exportPathFileName + ".pdf";
+            }
         }
     }
 
