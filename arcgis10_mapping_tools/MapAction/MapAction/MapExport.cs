@@ -36,8 +36,7 @@ namespace MapAction
             bool oldAddSetting = gp.AddOutputsToMap;
             gp.AddOutputsToMap = false;
             // Get the mxd path to pass as the first variable
-            IDocumentInfo2 docInfo = pMapDoc as IDocumentInfo2;
-            string path = docInfo.Path;
+            string path = pMapDoc.DocumentFilename;
 
             // Get the bounding box of the map frame
             //############### This function needs to be updated to incorporate projected map frames, it currently only works if the frame is wgs84 #############
