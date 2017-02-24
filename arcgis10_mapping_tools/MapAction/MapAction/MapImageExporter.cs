@@ -481,7 +481,7 @@ namespace MapAction
                 IDocumentInfo2 docInfo = this.m_MapDoc as IDocumentInfo2;
                 System.Console.WriteLine("docInfo.Path=" + docInfo.Path);
                 System.Console.WriteLine("m_MapDoc.DocumentFilename=" + this.m_MapDoc.DocumentFilename);
-                parameters.Add(docInfo.Path);
+                parameters.Add(this.m_MapDoc.DocumentFilename);
                 parameters.Add(this.m_ExportDir);
                 parameters.Add(this.m_ExportBaseFileName);
                 parameters.Add("PDF_MULTIPLE_FILES_PAGE_NAME");
