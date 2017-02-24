@@ -479,6 +479,8 @@ namespace MapAction
                 IVariantArray parameters = new VarArrayClass();
 
                 IDocumentInfo2 docInfo = this.m_MapDoc as IDocumentInfo2;
+                System.Console.WriteLine("docInfo.Path=" + docInfo.Path);
+                System.Console.WriteLine("m_MapDoc.DocumentFilename=" + this.m_MapDoc.DocumentFilename);
                 parameters.Add(docInfo.Path);
                 parameters.Add(this.m_ExportDir);
                 parameters.Add(this.m_ExportBaseFileName);

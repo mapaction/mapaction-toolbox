@@ -42,9 +42,9 @@ namespace MapAction.tests
             String assemblyPath, assemblyDir, vsProjPath;
             // Get path relative to the CommonTests.dll
             assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            assemblyDir = System.IO.Path.GetDirectoryName(assemblyPath);
+            assemblyDir = Path.GetDirectoryName(assemblyPath);
             // Jump up two levels in directory tree to get the VS project root
-            vsProjPath = Path.Combine(assemblyDir, @"..\..\");
+            vsProjPath = Path.GetDirectoryName(Path.GetDirectoryName(assemblyDir));
             System.Console.WriteLine(String.Format("vsProjPath={0}", vsProjPath));
             return vsProjPath;
         }
