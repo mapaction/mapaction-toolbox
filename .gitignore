@@ -186,3 +186,6 @@ FakesAssemblies/
 
 coverage/
 arcgis10_mapping_tools/opencover-results.xml
+arcgis10_mapping_tools/MapAction/MapAction/MapAction - Copy.csproj
+arcgis10_mapping_tools/MapActionToolbars/MapActionToolbars - Copy.csproj
+arcgis10_mapping_tools/CommonTests/testfiles/MA_A3_landscape.mxd

@@ -45,7 +45,7 @@ namespace MapAction
         {
             m_MapDoc = pMapDoc;
 
-            m_ExportDir = System.IO.Path.GetDirectoryName(outputFileBaseName);
+            m_ExportDir = CheckOrCreateExportDir(outputFileBaseName);
             m_ExportBaseFileName = System.IO.Path.GetFileName(outputFileBaseName);
             m_CanExport = true;
             m_IsLayoutExport = false;
@@ -75,6 +75,36 @@ namespace MapAction
             }
         }
 
+        private string CheckOrCreateExportDir(string outputFileBaseName)
+        {
+            // we expect the input to be a filename stub within a folder, and we 
+            // expect the most immediate parent folder to be a MA number.
+            // e.g. c:\path\to\cmf\exports\ma_009\mapfilenamestub
+            // But this isn't necessarily the case and also the folder may not exist.
+            var attempt = System.IO.Path.GetDirectoryName(outputFileBaseName);
+            if (Directory.Exists(attempt))
+            {
+                return attempt;
+            }
+            try
+            {
+                System.IO.Directory.CreateDirectory(attempt);
+                return attempt;
+            }
+            catch (Exception e){
+                // IOException is given if attempt was actually an existing file path
+                // but that shouldn't occur as we've got it from the GetDirectoryName
+                if (e is UnauthorizedAccessException ||
+                    e is PathTooLongException || 
+                    e is DirectoryNotFoundException)
+                {
+                    // no permission, invalid, 
+                    return  CheckOrCreateExportDir(attempt);
+                }
+            }
+            return "";
+            
+        }
         /// <summary>
         /// build the output filename according to the MA export conventions, accounting for the different 
         /// naming of the thumbnail file
