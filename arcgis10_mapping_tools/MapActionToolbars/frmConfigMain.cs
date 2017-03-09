@@ -317,28 +317,6 @@ namespace MapActionToolbars
             return createTrueFalse;
         }
 
-
-        //##alpha method
-        public Boolean dlgDefaultValuesOrExistingXml()
-        {
-            //Get the currently set path
-            string crashMovePath = MapAction.Utilities.getCrashMoveFolderPath();
-            string xmlPath = crashMovePath + @"\opertional_config.xml";
-            //Check if the path exists 
-            if (File.Exists(@xmlPath))
-            {
-                populateDialogExistingConfigXml(xmlPath);
-                return true;
-            }
-            else
-            {
-                populateDialogDefaultValues();
-                return false;
-            }
-
-        }
-
-
         //##alpha method
         public void populateDialogExistingConfigXml(string path = null)
         {
