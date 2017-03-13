@@ -19,13 +19,13 @@ pipeline {
             steps {
                 node ('MA-JENKINS52') {
                     ws('%BUILD_TAG%') {
-                        echo testing some env varibles
-                        echo BUILD_TAG env.BUILD_TAG
-                        echo WORKSPACE env.WORKSPACE
-                        echo JOB_NAME env.JOB_NAME
-                        echo BUILD_DISPLAY_NAME env.BUILD_DISPLAY_NAME
-                        echo BUILD_NUMBER env.BUILD_NUMBER
-                        echo about to clone git
+                        echo 'testing some env varibles'
+                        echo 'BUILD_TAG ' + env.BUILD_TAG
+                        echo 'WORKSPACE ' + env.WORKSPACE
+                        echo 'JOB_NAME ' + env.JOB_NAME
+                        echo 'BUILD_DISPLAY_NAME ' + env.BUILD_DISPLAY_NAME
+                        echo 'BUILD_NUMBER ' + env.BUILD_NUMBER
+                        echo 'about to clone git'
                         checkout([$class: 'GitSCM', branches: [[name: '**']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/mapaction/mapaction-toolbox.git']]])
 
                         // Set Github status to "pending".
