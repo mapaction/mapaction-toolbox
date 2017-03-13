@@ -4,7 +4,7 @@ pipeline {
     options {
         timeout(time: 10, unit: 'MINUTES')
         disableConcurrentBuilds()
-        timestamps()
+        // timestamps()
     }
     
     triggers {
@@ -16,13 +16,15 @@ pipeline {
     
     stages {
         stage ('PreBuild'){
-            checkout([$class: 'GitSCM', branches: [[name: '**']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/mapaction/mapaction-toolbox.git']]])
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '**']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/mapaction/mapaction-toolbox.git']]])
 
-            // Set Github status to "pending".
-            // Use curl atm, since it is copying from the pre-Jenkinsfile config.
-            // TODO: test whether on not we can use `setGitHubPullRequestStatus`
-            // TODO: refactor the auth token to an variable to something.
-            bat '"C:\\Program Files (x86)\\Git\\bin\\curl.exe" -XPOST -H "Authorization: token github_mapaction_jenkins" https://api.github.com/repos/mapaction/mapaction-toolbox/statuses/%GIT_COMMIT% -d "{ \\"state\\": \\"pending\\",  \\"target_url\\": \\"%BUILD_URL%\\", \\"description\\": \\"JENKINS: The build and tests are pending.\\" }"'
+                // Set Github status to "pending".
+                // Use curl atm, since it is copying from the pre-Jenkinsfile config.
+                // TODO: test whether on not we can use `setGitHubPullRequestStatus`
+                // TODO: refactor the auth token to an variable to something.
+                bat '"C:\\Program Files (x86)\\Git\\bin\\curl.exe" -XPOST -H "Authorization: token github_mapaction_jenkins" https://api.github.com/repos/mapaction/mapaction-toolbox/statuses/%GIT_COMMIT% -d "{ \\"state\\": \\"pending\\",  \\"target_url\\": \\"%BUILD_URL%\\", \\"description\\": \\"JENKINS: The build and tests are pending.\\" }"'
+            }
         }
 
         stage('Build') {
@@ -41,12 +43,6 @@ pipeline {
                 // Run test
                 echo 'Running Unit tests'
                 bat '%WORKSPACE%\\arcgis10_mapping_tools\\run-unittests.cmd'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
             }
         }
     }
