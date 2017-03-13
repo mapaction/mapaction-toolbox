@@ -48,7 +48,7 @@ pipeline {
     }
     post {
         always {
-            node {
+            node ('MA-JENKINS52') {
                 echo 'This will always run'
                 // Archive:
                 archive '/arcgis10_mapping_tools/arcaddins_for_testing/*.esriAddin'
@@ -57,13 +57,13 @@ pipeline {
             }
         }
         success {
-            node {
+            node ('MA-JENKINS52') {
                 echo 'This will run only if successful'
                 bat '"C:\\Program Files (x86)\\Git\\bin\\curl.exe" -XPOST -H "Authorization: token github_mapaction_jenkins" https://api.github.com/repos/mapaction/mapaction-toolbox/statuses/%GIT_COMMIT% -d "{ \\"state\\": \\"success\\", \\"target_url\\": \\"%BUILD_URL%\\", \\"description\\": \\"JENKINS: All tests passed.\\" }"'
             }
         }
         failure {
-            node {
+            node ('MA-JENKINS52') {
                 echo 'This will run only if failed'
                 bat '"C:\\Program Files (x86)\\Git\\bin\\curl.exe" -XPOST -H "Authorization: token github_mapaction_jenkins" https://api.github.com/repos/mapaction/mapaction-toolbox/statuses/%GIT_COMMIT% -d "{ \\"state\\": \\"failure\\", \\"target_url\\":  \\"%BUILD_URL%\\", \\"description\\": \\"JENKINS: One or more tests failed.\\" }"'
             }
