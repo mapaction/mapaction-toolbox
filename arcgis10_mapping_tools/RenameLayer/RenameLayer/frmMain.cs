@@ -19,6 +19,7 @@ using ESRI.ArcGIS.Geodatabase;
 using System.Diagnostics;
 using ESRI.ArcGIS.CatalogUI;
 using ESRI.ArcGIS.Catalog;
+using Microsoft.VisualBasic.FileIO;
 
 namespace RenameLayer
 {
@@ -34,9 +35,18 @@ namespace RenameLayer
         string _source_path = ConstructLayerName.pathToLookupCSV() + @"\06_source.csv";
         string _permission_path = ConstructLayerName.pathToLookupCSV() + @"\07_permission.csv";
         
+        // new csv to hold metadata on DNC.  PJR 21/10/2016
+        // remember to change data as necessary when RenameLayer tool updates or DNC updates
+        string _DNCmetadata_path = ConstructLayerName.pathToLookupCSV() + @"\99_DNCmetadata.csv";
+        string _RenameLayerVersion = "v 1.2";
+        string _RenameLayerDate = "21 Oct 2016";
+
+        
+        
         public frmMain()
         {
             InitializeComponent();
+                                   
         }
 
         private void btnRename_Click(object sender, EventArgs e)
@@ -158,18 +168,99 @@ namespace RenameLayer
         {
 
             //MessageBox.Show(this, "frmMain_load_1 entered", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); //PJR 18/082016
+
+            // Add metadata/ QA info on this tool and on DNC to form  PJR 21/10/2016
+            this.Text = "MapAction Dataset Rename Tool " + _RenameLayerVersion ;
+            //this.Text = "MapAction Dataset Rename Tool " + _RenameLayerVersion + " of " + _RenameLayerDate;
+            label12.Text = getDNCLabel(_DNCmetadata_path);
+   
+
             //Populate combo box with value from the CSV files 
             comboValues(cboGeoExtent, _extent_path);
             comboValues(cboCategory, _category_path);
             comboValues(cboTheme, _theme_path);
             comboValues(cboType, _type_path);
+
+            // set geometry type if known   PJR 20/10/2016
+            string geomtype = getGeomType();
+            if (geomtype != "other") { cboType.SelectedValue = geomtype; }
+
             comboValues(cboScale, _scale_path);
             comboValues(cboSource, _source_path);
             comboValues(cboPermission, _permission_path);
 
+            // construct and display new file name if geometry type is already set
+            if (geomtype != "other") { lblReviewLayerName.Text = createNewLayerName(); }
+
         }
 
+        public string getDNCLabel(string DNCpath)
+        // checks for existence of DNC metadata csv file
+        // reads and returns single string designed to be assigned to Label12 on the form
+        {
+            string label="";
+            if (File.Exists(DNCpath))
+            {
+                using (TextFieldParser parser = new TextFieldParser(DNCpath, System.Text.Encoding.GetEncoding(1252)))
+                {
+                    // full qualification of FieldType required to avoid confuision with Arc FieldType
+                    parser.TextFieldType = Microsoft.VisualBasic.FileIO.FieldType.Delimited;
+                    parser.SetDelimiters(",");
+                    parser.HasFieldsEnclosedInQuotes = true;
 
+                    // read first row
+                    string[] fields = parser.ReadFields();
+                    if (fields[0] == "DNC Filename")
+                    {
+                        // looks to contain correct information
+                        // read second row
+                        fields = parser.ReadFields();
+                        label= "Clause values and descriptions based on those in: " + fields[0] + " dated " + fields[1];
+                    }
+                }
+            }
+            return label;
+
+        }
+
+        
+            public string getGeomType()
+            // queries shapefile that is to be renamed and returns geometry type as string
+            // with same values as expected by DNC
+        {
+            IGxApplication pApp = ArcMap.Application as IGxApplication;
+            string pathFileName = pApp.SelectedObject.FullName;
+            string root = System.IO.Path.GetDirectoryName(pathFileName);
+            string filename = System.IO.Path.GetFileNameWithoutExtension(pathFileName);
+            IFeatureClass fc = GetFeatureClassFromShapefileOnDisk(root, filename);
+            // get geometry type of feature class
+            string geomtype;
+            switch (fc.ShapeType)
+            {
+                case esriGeometryType.esriGeometryPoint:
+                    {
+                        geomtype = "pt";
+                        break;
+                    }
+                case esriGeometryType.esriGeometryPolyline:
+                    {
+                        geomtype = "ln";
+                        break;
+                    }
+                case esriGeometryType.esriGeometryPolygon:
+                    {
+                        geomtype = "py";
+                        break;
+                    }
+                default:
+                    {
+                        geomtype = "other";
+                        break;
+                    }
+
+            }
+            return geomtype;
+        }
 
 
         public void comboValues(ComboBox cbo, string path)
@@ -182,6 +273,16 @@ namespace RenameLayer
             
         }
 
+        public void comboValues(ComboBox cbo, string path, string selCategory)
+        {
+
+            Dictionary<string, string> d = RenameLayerToolValues.csvToDictionary(path,selCategory);
+            cbo.DataSource = new BindingSource(d, null);
+            cbo.ValueMember = "Key";
+            cbo.DisplayMember = "Value";
+
+        }
+
         //Change the GUI to reflect a change in the check box status for each input field
         public void ifCheckBoxChanged(CheckBox chk, ComboBox cbo, TextBox tbx, string path)
         {
@@ -191,6 +292,29 @@ namespace RenameLayer
                 tbx.Enabled = false;
                 tbx.Text = string.Empty;
                 comboValues(cbo, path);
+                cbo.Focus();
+            }
+            else
+            {
+                cbo.Enabled = false;
+                cbo.Text = string.Empty;
+                tbx.Enabled = true;
+                tbx.Focus();
+
+            }
+
+            lblReviewLayerName.Text = createNewLayerName();
+        }
+
+        // overload version for case when Theme check box changed  PJR 20/10/2016
+        public void ifCheckBoxChanged(CheckBox chk, ComboBox cbo, TextBox tbx, string path, string selCategory)
+        {
+            if (!chk.Checked)
+            {
+                cbo.Enabled = true;
+                tbx.Enabled = false;
+                tbx.Text = string.Empty;
+                comboValues(cbo, path,selCategory);
                 cbo.Focus();
             }
             else
@@ -223,6 +347,10 @@ namespace RenameLayer
         private void cboCategory_DropDownClosed(object sender, EventArgs e)
         {
             lblReviewLayerName.Text = createNewLayerName();
+            // regenerate combolist for theme based on selected Category
+            string _category;
+            if (!chkCategory.Checked) { _category = cboCategory.SelectedValue.ToString(); } else { _category = tbxCategory.Text; };
+            comboValues(cboTheme, _theme_path,_category);
         }
 
         private void cboTheme_DropDownClosed(object sender, EventArgs e)
@@ -253,11 +381,19 @@ namespace RenameLayer
         private void tbxCategory_TextChanged(object sender, EventArgs e)
         {
             lblReviewLayerName.Text = createNewLayerName();
+            // regenerate combolist for theme based on selected Category
+            string _category;
+            if (!chkCategory.Checked) { _category = cboCategory.SelectedValue.ToString(); } else { _category = tbxCategory.Text; };
+            comboValues(cboTheme, _theme_path, _category);
         }
 
         private void tbxTheme_TextChanged(object sender, EventArgs e)
         {
             lblReviewLayerName.Text = createNewLayerName();
+            // regenerate combolist for theme based on selected Category
+            string _category;
+            if (!chkCategory.Checked) { _category = cboCategory.SelectedValue.ToString(); } else { _category = tbxCategory.Text; };
+            comboValues(cboTheme, _theme_path, _category);
         }
 
         private void tbxType_TextChanged(object sender, EventArgs e)
@@ -292,7 +428,10 @@ namespace RenameLayer
 
         private void chkTheme_CheckedChanged(object sender, EventArgs e)
         {
-            ifCheckBoxChanged(chkTheme, cboTheme, tbxTheme, _theme_path);
+            string _category;
+            if (!chkCategory.Checked) { _category = cboCategory.SelectedValue.ToString(); } else { _category = tbxCategory.Text; };
+                        
+            ifCheckBoxChanged(chkTheme, cboTheme, tbxTheme, _theme_path, _category);
         }
 
         private void chkType_CheckedChanged(object sender, EventArgs e)
@@ -335,6 +474,8 @@ namespace RenameLayer
                 e.Handled = true;
             }
         }
+
+        
 
        
 

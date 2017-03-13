@@ -143,8 +143,6 @@ namespace MapActionToolbars
             _operationIdValidationResult = FormValidationExport.validateOperationId(tbxOperationId, eprOperationIdWarning, eprOperationIdError);
             _glideNumberValidationResult = FormValidationExport.validateGlideNumber(tbxGlideNo, eprGlideNumberWarning, eprGlideNumberError);
             _locationValidationResult = FormValidationExport.validateLocation(tbxImageLocation, eprLocationWarning);
-            _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
-            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
             _statusValidationResult = FormValidationExport.validateStatus(cboStatus, eprStatusWarning);
             _accessValidationResult = FormValidationExport.validateAccess(cboAccess, eprAccessWarning);
             _accessNoteValidationResult = FormValidationExport.validateAccessNote(tbxImageAccessNotes, eprAccessNoteWarning);
@@ -173,6 +171,9 @@ namespace MapActionToolbars
             if (dictXML.ContainsKey("GlideNo")) { tbxGlideNo.Text = dictXML["GlideNo"]; }
             if (dictXML.ContainsKey("Language")) { tbxLanguage.Text = dictXML["Language"]; }
             if (dictXML.ContainsKey("Country")) { tbxCountries.Text = dictXML["Country"]; }
+
+            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
+            
             string operational_id = dictXML["OperationId"];
             Debug.WriteLine("Op ID: " + operational_id);
             if (dictXML.ContainsKey("OperationId")) { tbxOperationId.Text = dictXML["OperationId"]; }
@@ -183,6 +184,8 @@ namespace MapActionToolbars
 
             // Set the status value and the version number from the existing XML if it exists:
             setValuesFromExistingXML();
+
+            _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
 
             // Set the spatial reference information on load
             var dictSpatialRef = new Dictionary<string, string>();
@@ -855,6 +858,9 @@ namespace MapActionToolbars
             _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
         }
 
-
+        private void tbxCountries_TextChanged_1(object sender, EventArgs e)
+        {
+            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
+        }
     }
 }

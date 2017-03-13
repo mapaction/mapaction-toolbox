@@ -188,13 +188,10 @@ namespace MapAction
                 IElement element = new TextElementClass();
                 IElementProperties2 pElementProp;
                 ITextElement pTextElement;
+
                 //loop through the text elements in the frame
                 try
                 {
-                    SimpleTextParser formattingTextParser = new SimpleTextParser();
-                    formattingTextParser.TextSymbol = new TextSymbolClass();
-                    Boolean bHasTags = false;
-
                     element = (IElement)pGraphics.Next();
                     while (element != null)
                     {
