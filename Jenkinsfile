@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage ('PreBuild'){
             steps {
-                ws('%SLAVE_ROOT%/workspace/%JOB_BASE_NAME%/%BUILD_NUMBER%') {
+                ws('%BUILD_TAG%') {
                     checkout([$class: 'GitSCM', branches: [[name: '**']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/mapaction/mapaction-toolbox.git']]])
 
                     // Set Github status to "pending".
@@ -31,7 +31,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                ws('%SLAVE_ROOT%/workspace/%JOB_BASE_NAME%/%BUILD_NUMBER%') {
+                ws('%BUILD_TAG%') {
                     echo 'Building..'
 
                     // Do the MSbuild
@@ -44,7 +44,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                ws('%SLAVE_ROOT%/workspace/%JOB_BASE_NAME%/%BUILD_NUMBER%') {
+                ws('%BUILD_TAG%') {
                     // Run test
                     echo 'Running Unit tests'
                     bat '%WORKSPACE%\\arcgis10_mapping_tools\\run-unittests.cmd'
@@ -55,7 +55,7 @@ pipeline {
     post {
         always {
             node ('MA-JENKINS52') {
-                ws('%SLAVE_ROOT%/workspace/%JOB_BASE_NAME%/%BUILD_NUMBER%') {
+                ws('%BUILD_TAG%') {
                     echo 'This will always run'
                     // Archive:
                     archive '/arcgis10_mapping_tools/arcaddins_for_testing/*.esriAddin'
@@ -66,7 +66,7 @@ pipeline {
         }
         success {
             node ('MA-JENKINS52') {
-                ws('%SLAVE_ROOT%/workspace/%JOB_BASE_NAME%/%BUILD_NUMBER%') {
+                ws('%BUILD_TAG%') {
                     echo 'This will run only if successful'
                     bat '"C:\\Program Files (x86)\\Git\\bin\\curl.exe" -XPOST -H "Authorization: token github_mapaction_jenkins" https://api.github.com/repos/mapaction/mapaction-toolbox/statuses/%GIT_COMMIT% -d "{ \\"state\\": \\"success\\", \\"target_url\\": \\"%BUILD_URL%\\", \\"description\\": \\"JENKINS: All tests passed.\\" }"'
                 }
@@ -74,7 +74,7 @@ pipeline {
         }
         failure {
             node ('MA-JENKINS52') {
-                ws('%SLAVE_ROOT%/workspace/%JOB_BASE_NAME%/%BUILD_NUMBER%') {
+                ws('%BUILD_TAG%') {
                     echo 'This will run only if failed'
                     bat '"C:\\Program Files (x86)\\Git\\bin\\curl.exe" -XPOST -H "Authorization: token github_mapaction_jenkins" https://api.github.com/repos/mapaction/mapaction-toolbox/statuses/%GIT_COMMIT% -d "{ \\"state\\": \\"failure\\", \\"target_url\\":  \\"%BUILD_URL%\\", \\"description\\": \\"JENKINS: One or more tests failed.\\" }"'
                 }
