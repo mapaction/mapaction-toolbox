@@ -23,13 +23,12 @@ node {
             stage('Build') {
                 echo 'Building'
                 checkout scm
-                // tool name: 'MSBuild v4.0.30319', type: 'msbuild'
                 bat "\"${tool 'MSBuild v4.0.30319'}\" arcgis10_mapping_tools/MapAction-toolbox.sln /t:build /p:PlatformTarget=x86 /p:Configuration=Release /maxcpucount"
-                bat '${env.WORKSPACE}\\arcgis10_mapping_tools\\arcaddins_for_testing\\post_build_copy_addins.cmd'
+                bat 'arcgis10_mapping_tools\\arcaddins_for_testing\\post_build_copy_addins.cmd'
             }
             stage('Test') {
                 echo 'testing'
-                bat '$env.WORKSPACE\\arcgis10_mapping_tools\\run-unittests.cmd'
+                bat 'arcgis10_mapping_tools\\run-unittests.cmd'
                 archiveArtifacts 'arcgis10_mapping_tools/arcaddins_for_testing/*.esriAddin'
                 junit 'TestResult.xml'
             }
