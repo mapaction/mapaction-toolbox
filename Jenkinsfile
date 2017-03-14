@@ -3,8 +3,10 @@
 node {
     ws ("workspace\\mapaction-toolbox\\${env.BUILD_NUMBER}") {
         
-        triggers {
-            PeriodicFolderTrigger(interval: 15)
+        properties{
+            triggers {
+                PeriodicFolderTrigger(interval: 15)
+            }
         }
         
         timeout(time: 10, unit: 'MINUTES'){
