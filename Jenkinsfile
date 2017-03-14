@@ -5,13 +5,11 @@ node {
     echo "${env.BUILD_NUMBER}"
     echo "${env.JOB_BASE_NAME}"
     echo "${env.BUILD_TAG}"
-    ws ("workspace\\${env.JOB_NAME}-${env.BUILD_NUMBER}") {
+    ws ("workspace\\mapaction-toolbox\\${env.BUILD_NUMBER}") {
         
-        options {
-            timeout(time: 10, unit: 'MINUTES')
-            disableConcurrentBuilds()
-            // timestamps()
-        }
+        timeout(time: 10, unit: 'MINUTES')
+        disableConcurrentBuilds()
+        // timestamps()
 
         triggers {
             // nightly build at ~0500hrs
