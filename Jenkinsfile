@@ -10,17 +10,15 @@ node {
                 SCMTrigger(scmpoll: 15)
             ])
         */  
-            
-        properties [
-            [$class: 'PipelineTriggersJobProperty',
-                triggers: [
-                    [$class: 'PeriodicFolderTrigger', 
-                        interval: '60'
-                    ],
-                    [$class: 'SCMTrigger', 
-                        scmpoll: '15'
-                    ],
-                ]
+        
+        properties [$class: 'PipelineTriggersJobProperty',
+            triggers: [
+                [$class: 'PeriodicFolderTrigger', 
+                    interval: '60'
+                ],
+                [$class: 'SCMTrigger', 
+                    scmpoll: '15'
+                ],
             ]
         ]
         
