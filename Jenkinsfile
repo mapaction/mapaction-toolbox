@@ -23,9 +23,8 @@ node {
             stage('Build') {
                 echo 'Building'
                 checkout scm
-                // git(url: 'https://github.com/mapaction/mapaction-toolbox.git', poll: true)
-                bat '""${tool \'MSBuild\'}" arcgis10_mapping_tools/MapAction-toolbox.sln /t:build /p:PlatformTarget=x86 /p:Configuration=Release /maxcpucount /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}'
-                bat '$env.WORKSPACE\\arcgis10_mapping_tools\\arcaddins_for_testing\\post_build_copy_addins.cmd'
+                // tool name: 'MSBuild v4.0.30319', type: 'msbuild'
+                bat '${env.WORKSPACE}\\arcgis10_mapping_tools\\arcaddins_for_testing\\post_build_copy_addins.cmd'
             }
             stage('Test') {
                 echo 'testing'
