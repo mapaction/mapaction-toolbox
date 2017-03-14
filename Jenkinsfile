@@ -3,12 +3,26 @@
 node {
     ws ("workspace\\mapaction-toolbox\\${env.BUILD_NUMBER}") {
         
+        /*
         properties{
             PipelineTriggersJobProperty(triggers: [
                 PeriodicFolderTrigger(interval: 60),
                 SCMTrigger(scmpoll: 15)
             ])
-        }
+        */  
+            
+        properties [
+            [$class: 'PipelineTriggersJobProperty',
+                triggers: [
+                    [$class: 'PeriodicFolderTrigger', 
+                        interval: '60'
+                    ],
+                    [$class: 'SCMTrigger', 
+                        scmpoll: '15'
+                    ],
+                ]
+            ]
+        ]
         
         timeout(time: 10, unit: 'MINUTES'){
             
