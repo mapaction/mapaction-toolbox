@@ -33,7 +33,8 @@ node {
                 } catch (error) {
                     error 'some unittests failed'
                 } finally {
-                    junit 'TestResult.xml'
+                    // junit 'TestResult.xml'
+                    step([$class: 'NUnitPublisher', testResultsPattern: 'TestResult.xml', debug: false, keepJUnitReports: true, skipJUnitArchiver:false, failIfNoResults: true])
                     archiveArtifacts 'arcgis10_mapping_tools/arcaddins_for_testing/*.esriAddin'
                 }
             }
