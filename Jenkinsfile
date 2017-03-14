@@ -11,6 +11,7 @@ node {
             ])
         */  
         
+        /*
         properties [$class: 'PipelineTriggersJobProperty',
             triggers: [
                 [$class: 'PeriodicFolderTrigger', 
@@ -21,6 +22,7 @@ node {
                 ],
             ]
         ]
+        */
         
         timeout(time: 10, unit: 'MINUTES'){
             
