@@ -35,7 +35,7 @@ node {
                 } finally {
                     // junit 'TestResult.xml'
                     step([$class: 'NUnitPublisher', testResultsPattern: 'TestResult.xml', debug: false, keepJUnitReports: true, skipJUnitArchiver:false, failIfNoResults: true])
-                    archiveArtifacts 'arcgis10_mapping_tools/arcaddins_for_testing/*.esriAddin'
+                    archiveArtifacts 'arcgis10_mapping_tools/arcaddins_for_testing/*.esriAddIn'
                 }
             }
             stage('Deploy') {
