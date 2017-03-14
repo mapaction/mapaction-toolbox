@@ -28,9 +28,14 @@ node {
             }
             stage('Test') {
                 echo 'testing'
-                bat 'arcgis10_mapping_tools\\run-unittests.cmd'
-                archiveArtifacts 'arcgis10_mapping_tools/arcaddins_for_testing/*.esriAddin'
-                junit 'TestResult.xml'
+                try{
+                    bat 'arcgis10_mapping_tools\\run-unittests.cmd'
+                } catch {
+                    error 'some unittests failed'
+                } finally {
+                    junit 'TestResult.xml'
+                    archiveArtifacts 'arcgis10_mapping_tools/arcaddins_for_testing/*.esriAddin'
+                }
             }
             stage('Deploy') {
                 echo 'deploying'
