@@ -20,13 +20,13 @@ pipeline {
                 echo 'Building'
                 git(url: 'https://github.com/mapaction/mapaction-toolbox.git', poll: true)
                 bat '""${tool \'MSBuild\'}" arcgis10_mapping_tools/MapAction-toolbox.sln /t:build /p:PlatformTarget=x86 /p:Configuration=Release /maxcpucount /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}'
-                bat '$env.WORKSPACE\arcgis10_mapping_tools\arcaddins_for_testing\post_build_copy_addins.cmd'
+                bat '$env.WORKSPACE\\arcgis10_mapping_tools\\arcaddins_for_testing\\post_build_copy_addins.cmd'
             }
         }
         stage('Test') {
             steps {
                 echo 'testing'
-                bat '$env.WORKSPACE\arcgis10_mapping_tools\run-unittests.cmd'
+                bat '$env.WORKSPACE\\arcgis10_mapping_tools\\run-unittests.cmd'
                 archiveArtifacts 'arcgis10_mapping_tools/arcaddins_for_testing/*.esriAddin'
                 junit 'TestResult.xml'
             }
