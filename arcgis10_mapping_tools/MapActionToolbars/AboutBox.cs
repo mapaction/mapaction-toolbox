@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
-using System.Reflection;
 
 
 namespace MapActionToolbars
@@ -18,15 +17,10 @@ namespace MapActionToolbars
 
         public ma_addin_about_box()
         {
-            AssemblyName an;
-            an = Assembly.GetExecutingAssembly().GetName();
-
-            String version_string = an.Version.ToString();
-            DateTime compile_date = new DateTime(2000, 1, 1);
-            compile_date = compile_date.AddDays(an.Version.Build);
-            compile_date = compile_date.AddSeconds(2 * an.Version.Revision);
-
-            m_thisaddin_desc = String.Format("Version {0}\n\n Compiled {1} {2}", version_string, compile_date.ToShortDateString(), compile_date.ToShortTimeString());
+            // m_thisaddin_desc = "version " + MapActionToolbars.ThisAddIn.Date.ToString();
+            m_thisaddin_desc = "Version " + System.Reflection.Assembly.GetExecutingAssembly()
+                                           .GetName().Version.ToString()
+                                           + "\n";
         }
 
         protected override void OnClick()

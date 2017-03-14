@@ -2,11 +2,11 @@
   <Name>RenameLayer</Name>
   <AddInID>{6365d4a2-7d42-46e4-a8a1-b4d3acc0518e}</AddInID>
   <Description>Rename a shapefile to the MapAction file naming standard.</Description>
-  <Version>1.2</Version>
+  <Version>1.1</Version>
   <Image>Images\rename_icon.png</Image>
   <Author>Greg Vaughan / Peter Robinson</Author>
   <Company>MapAction</Company>
-  <Date>21/10/2016</Date>
+  <Date>18/08/2016</Date>
   <Targets>
     <Target name="Desktop" version="10.2" />
   </Targets>

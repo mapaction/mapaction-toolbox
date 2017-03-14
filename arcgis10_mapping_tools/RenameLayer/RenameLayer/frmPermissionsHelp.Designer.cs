@@ -177,8 +177,7 @@
             this.richTextBox4.Size = new System.Drawing.Size(450, 26);
             this.richTextBox4.TabIndex = 5;
             this.richTextBox4.Text = "This dataset is for MapAction internal use only. (It is unlikely that this code w" +
-    "ill ever be used).";
-            this.richTextBox4.TextChanged += new System.EventHandler(this.richTextBox4_TextChanged);
+    "il every be used).";
             // 
             // richTextBox3
             // 

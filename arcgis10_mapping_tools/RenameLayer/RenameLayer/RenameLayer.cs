@@ -20,37 +20,24 @@ using System.Diagnostics;
 using ESRI.ArcGIS.CatalogUI;
 using ESRI.ArcGIS.Catalog;
 
-//v1.2 PJR 21/10/2016
-// - deals with csv files as produced directly fron DNC spreadsheet
-//   - ie expects non blank header row
-//   - makes use of info in 3rd column for geoextent, theme and scale
-//   - accented characters now displayed correctly in drop downs on form (no need to avoid in DNC)
-// - restricts choice of theme to be consistent with selected category
-// - fields widened to accomodate longest descriptions in DNC (eg source ASTER) - consistent with use of Consolas font at 8.25
-// - now caters for long descriptions that contain commas (instead of truncating at the first comma)
-// - automatically recognises geometry type of shapefile
-// - mono width font used for dropdowns (Consolas - hope it's generally available!) - makes for neater line up of 3rd column
-// - version of tool now in form title
-// - version of DNC used to generate cluse values abnd descriptions now at bottom of form
-//
-// Possibilities for future development:
-// * take into account feedback from user (ideas to be firmed up before implementation) eg:
-//   - put most commonly needed geoextent values at top of drop down to speed up selection of country/region for a mission
-//     (at present this can be achieved by editing 01_geoextent.csv manually; perhaps could make use of country from config tool?)
-//   - update local DNC lookup tables if custom value for a clause is entered (to ensure consistency over a mission)
-// * extend to other spatial dataset types (eg raster catalog, document with spatial data, 
-//     raster (georegistered or not), table, TIN, web feature service, web mapping service
-
-
 // v1.1 of Add-In PJR 18/08/2016 - 19/08/2016
 // - now looks for csv files in C:\MapAction\200_data_name_lookup if can't find them in crash move folder
 // - renamed csv files with numeric prefixes (01_geoextent.csv instead of geoextent.csv) as per May 2016 DNC spec
 // - renamed type.csv to 04_geometry.csv as per May 2016 DNC spec
 // - changed Type on the form to Geometry
-// - increased width of all fields on form, as some descriptions are too long to fit in otherwise
+// - increased width of all fields on form, as some descpritions are too long to fit in otherwise
 // - swapped position of the Rename and Cancel buttons to be consistent with normal arrangement
 //
-
+// Still to do:
+// * restrict choice of theme to be consistent with selected category
+// * automatically recognise geometry type of shapefile
+// * extend to other spatial dataset types (eg raster catalog, document with spatial data, 
+// *    raster (georegistered or not), table, TIN, web feature service, web mapping service
+// * update local DNC lookup tables if new value for a clause is entered
+// * take clause names that appear on form from the csv file names - eg first one is xxxx if 01_xxxx.csv is name of csv file
+// *    possible problem in that test for whether csv files present looks for existence of 01_geoextent.csv.
+// *    hence change of logic necessary
+// * take lookups from Excel spreadsheet rather than csv files to avoid need to process spreadsheet
 
 
 namespace RenameLayer

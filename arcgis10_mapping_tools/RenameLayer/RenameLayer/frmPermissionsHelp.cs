@@ -21,10 +21,5 @@ namespace RenameLayer
             this.Close();
         }
 
-        private void richTextBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }
