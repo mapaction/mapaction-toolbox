@@ -30,7 +30,7 @@ node {
                 echo 'testing'
                 try{
                     bat 'arcgis10_mapping_tools\\run-unittests.cmd'
-                } catch {
+                } catch (error) {
                     error 'some unittests failed'
                 } finally {
                     junit 'TestResult.xml'
