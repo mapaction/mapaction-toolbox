@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 node {
-    ws (env.BUILD_TAG) {
+    ws ("workspace\\${env.JOB_NAME}-${env.BUILD_NUMBER}") {
         agent any
 
         options {
