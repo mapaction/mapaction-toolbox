@@ -4,10 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.ArcMapUI;
-using NUnit.Framework;
+using ESRI.ArcGIS.Carto;
 using MapAction;
+using NUnit.Framework;
 
 namespace MapAction.tests
 {
@@ -17,11 +17,10 @@ namespace MapAction.tests
     /// At present the PageLayoutProperties class is entirely procedural and only uses static methods. The layout of these test is intened to be adaptable 
     /// to 
     /// </summary>
-    // [Ignore("Ignore Exports whilst fixing DDP")]
     [TestFixture]
     public class MATemplateTests
     {
-
+        protected string exportPath;
         protected string testRootDir;
         protected IMapDocument pMapDoc; // Map document 
         protected IMxDocument pMxDoc; // Map document 
@@ -52,10 +51,8 @@ namespace MapAction.tests
         [SetUp]
         public void Setup()
         {
-            string documentName;
-            documentName = Path.Combine(this.testRootDir, @"testfiles\MA_A3_landscape.mxd");
-            // Open map document
-            this.pMapDoc = TestUtilities.GetMXD(documentName);
+            this.pMapDoc = null;
+            this.exportPath = TestUtilities.GetTemporaryDirectory();
         }
         
 
@@ -63,8 +60,11 @@ namespace MapAction.tests
         public void TearDown()
         {
             //shutdown ArcMap
-            MapDocument mapDoc = (MapDocument)this.pMapDoc;
-            mapDoc.Close();
+            if (this.pMapDoc != null)
+            {
+                MapDocument mapDoc = (MapDocument)this.pMapDoc;
+                mapDoc.Close();
+            }
         }
 
 
@@ -92,10 +92,46 @@ namespace MapAction.tests
             }
         }
 
+        /// <summary>
+        /// This tests whether or not a suitable exception is raised
+        /// if the named map frame does not exist in the MXD
+        /// </summary>
+        /// <param name="relativeMXDfilename"></param>
+        /// <param name="dataFrameName"></param>
+        /// <param name="passExpected"></param>
+        [TestCase(@"testfiles\MA_A3_landscape.mxd", "Main map", false)]
+        [TestCase(@"testfiles\MA_A3_landscape.mxd", "non-existing-map-frame", true)]
+        public void TestMissingMapFrameException(string relativeMXDfilename, string dataFrameName, bool exceptionExpected)
+        {
+            bool exceptionRaised = false;
 
-        [TestCase("non-existing-map-frame")]
-        [TestCase("Main map")]
-        public void TestGetLayoutTextElements(string dataFrameName)
+            try
+            {
+                Dictionary<string, string> dict = PageLayoutProperties.getLayoutTextElements(this.pMxDoc, dataFrameName);
+            } catch (MapActionMapTemplateException mmte) {
+                exceptionRaised = mmte.isMapFrameMissing;
+            }
+            Assert.AreEqual(exceptionExpected, exceptionRaised, 
+                String.Format("MapFrame '{0}' -  expected:{1}, found:{2}", dataFrameName, exceptionExpected, exceptionRaised));
+        }
+
+
+        // This tests whether or not the correct information about missing and dulicate
+        // map elements is included if/when an exception in raised about an MXD which 
+        // doesn't not addear to MapAction's map template standard.
+        
+        /// <summary>
+        /// This tests whether or not the correct information about missing and dulicate 
+        /// map elements is included if/when an exception in raised about an MXD which 
+        /// doesn't not addear to MapAction's map template standard.
+        /// </summary>
+        /// <param name="relativeMXDfilename"></param>
+        /// <param name="dataFrameName"></param>
+        /// <param name="missingNum"></param>
+        /// <param name="duplicateNum"></param>
+        [Ignore("Ignore whilst test is imcomplete")]
+        [TestCase(@"testfiles\MA_A3_landscape.mxd", "Main map", 0, 0)]
+        public void TestGetLayoutTextElements(string relativeMXDfilename, string dataFrameName, int missingNum, int duplicateNum)
         {
             Dictionary<string, string> dict = PageLayoutProperties.getLayoutTextElements(this.pMxDoc, dataFrameName);
 

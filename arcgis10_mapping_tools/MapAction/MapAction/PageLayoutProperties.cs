@@ -41,19 +41,84 @@ namespace MapAction
   
     public class MapActionMapTemplateException : Exception
     {
-        public MapActionMapTemplateException()
-        {
-        }
+        /// <summary>
+        /// The path to the MXD file which is the subject of the exception.
+        /// </summary>
+        public string mxdPath { get { return m_mxdPath;  } }
+        private readonly string m_mxdPath;
 
-        public MapActionMapTemplateException(string message)
-            : base(message)
-        {
-        }
+        /// <summary>
+        /// Specifies whether the named Map Frame was found in the MXD and if that is the 
+        /// cause of the Exception being raised.
+        /// </summary>
+        public bool isMapFrameMissing { get { return m_isMapFrameMissing; } }
+        private readonly bool m_isMapFrameMissing;
 
-        public MapActionMapTemplateException(string message, Exception inner)
+
+        /// <summary>
+        /// This lists any MapElements which were not found in the MXD. Has null value if
+        /// all MapElements are present.
+        /// </summary>
+        public List<MapElementNames> missingMapElements { get { return m_missingMapElements; } }
+        private readonly List<MapElementNames> m_missingMapElements;
+
+        /// <summary>
+        /// This lists any duplicate map elements found in the MXD. Has null value if no
+        /// duplicate MapElements are present
+        /// </summary>
+        public List<MapElementNames> duplicateMapElements { get { return m_duplicateMapElements; } }
+        private readonly List<MapElementNames> m_duplicateMapElements;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message">The base Exception Class message.</param>
+        /// <param name="inner">The base Exception Class innerException property. May be null</param>
+        /// <param name="mxdPath">The path to the MXD file which is the subject of the exception</param>
+        /// <param name="isMapFrameMissing">Specifies whether the named Map Frame was found in the MXD 
+        /// and if that is the cause of the Exception being raised</param>
+        /// <param name="missingMapElements">A List of MapElements which were not found in the MXD. Can
+        /// be null if all MapElements are present</param>
+        /// <param name="duplicateMapElements">A List of duplicate MapElements which were found in the 
+        /// MXD. Can be null if no duplicate MapElements are present</param>
+        internal MapActionMapTemplateException(
+            string message, 
+            Exception inner,
+            string mxdPath,
+            bool isMapFrameMissing, 
+            List<MapElementNames> missingMapElements, 
+            List<MapElementNames> duplicateMapElements)
             : base(message, inner)
         {
+            this.m_mxdPath = mxdPath;
+            this.m_isMapFrameMissing = isMapFrameMissing;
+            this.m_missingMapElements = missingMapElements;
+            this.m_duplicateMapElements = duplicateMapElements;
         }
+
+        /// <summary>
+        /// This constructor is best used when needing to specify missingMapElements and duplicateMapElements. The named MapFrame is assumed to be present.
+        /// </summary>
+        /// <param name="message">The base Exception Class message.</param>
+        /// <param name="mxdPath">The path to the MXD file which is the subject of the exception</param>
+        /// <param name="isMapFrameMissing">Specifies whether the named Map Frame was found in the MXD 
+        /// and if that is the cause of the Exception being raised</param>
+        internal MapActionMapTemplateException(string message, string mxdPath, bool isMapFrameMissing)
+            : this(message, null, mxdPath, isMapFrameMissing, null, null)
+        {}
+
+        /// <summary>
+        /// This constructor is best used when needing to specify missingMapElements and duplicateMapElements. The named MapFrame is assumed to be present.
+        /// </summary>
+        /// <param name="message">The base Exception Class message.</param>
+        /// <param name="mxdPath">The path to the MXD file which is the subject of the exception</param>
+        /// <param name="missingMapElements">>A List of MapElements which were not found in the MXD. Can
+        /// be null if all MapElements are present</param>
+        /// <param name="duplicateMapElements">A List of duplicate MapElements which were found in the 
+        /// MXD. Can be null if no duplicate MapElements are present</param>
+        internal MapActionMapTemplateException(string message, string mxdPath, List<MapElementNames> missingMapElements, List<MapElementNames> duplicateMapElements)
+            : this(message, null, mxdPath, false, missingMapElements, duplicateMapElements)
+        {}
     }
 
     public static class PageLayoutProperties
@@ -177,6 +242,14 @@ namespace MapAction
         {
             //create dictionary to story element values
             Dictionary<string, string> dict = new Dictionary<string, string>();
+
+            // get MXD file path in case it is needed for error reporting later
+            string mxdPath = "";
+            try{
+                mxdPath = (pMxDoc as IMapDocument).DocumentFilename;
+            } catch (InvalidCastException ice){
+            }
+            
             //check if the frame passed exists in the map document
             if (PageLayoutProperties.detectMapFrame(pMxDoc, pFrameName))
             {
@@ -248,12 +321,15 @@ namespace MapAction
                 {
                     System.Diagnostics.Debug.WriteLine("Error getting elements from the map frame");
                     System.Diagnostics.Debug.WriteLine(e);
-                    throw new MapActionMapTemplateException(String.Format("Error getting element {0} from the map frame", element.ToString()), e);
+
+                    string exceptionMsg = String.Format("Error getting element {0} from the map frame", element.ToString());
+                    throw new MapActionMapTemplateException(exceptionMsg, e, mxdPath, false, null, null);
                 }
             }
             else
             {
-                throw new MapActionMapTemplateException("Unable to detect MapFrame {0} in current map document");
+                string exceptionMsg = String.Format("Unable to detect MapFrame {0} in current map document", pFrameName);
+                throw new MapActionMapTemplateException(exceptionMsg, mxdPath, true);
             }
         }
 #endregion
