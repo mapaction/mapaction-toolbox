@@ -261,14 +261,15 @@ namespace MapAction
                 IElement element = new TextElementClass();
                 IElementProperties2 pElementProp;
                 ITextElement pTextElement;
+                string debugElementName = "";
                 //loop through the text elements in the frame
                 try
                 {
-                    SimpleTextParser formattingTextParser = new SimpleTextParser();
+                    ITextParser formattingTextParser = new SimpleTextParser();
                     formattingTextParser.TextSymbol = new TextSymbolClass();
                     Boolean bHasTags = false;
 
-                    element = (IElement)pGraphics.Next();
+                    element = pGraphics.Next();
                     while (element != null)
                     {
                         if (element is ITextElement)
@@ -279,9 +280,17 @@ namespace MapAction
                             //System.Diagnostics.Debug.WriteLine(pElementProp.Name);
                             if (pElementProp.Name != "")
                             {
+                                // debugElementName = pElementProp.Name;
+                                debugElementName = String.Format("{0}, {1}", pElementProp.Name, pTextElement.Text);
                                 //store the name of the elements and the values in the dictionary as pairs
                                 // check if text element needs parsing
-                                formattingTextParser.Text = pTextElement.Text;
+
+                                // TODO: the problem with these lines seems to be related to the presence of 
+                                // an 
+                                string temp = pTextElement.Text;
+                                // temp.Replace('&', "&amp;");
+                                temp = System.Text.RegularExpressions.Regex.Replace(temp, "&(?!amp;)", "&amp;");
+                                formattingTextParser.Text = temp;
                                 formattingTextParser.HasTags(ref bHasTags);
                                 if (bHasTags)
                                 {
@@ -312,7 +321,7 @@ namespace MapAction
                                 formattingTextParser.Reset();
                             }
                         }
-                        element = pGraphics.Next() as IElement;
+                        element = pGraphics.Next();
                     }
                     //return the dictionary
                     return dict;
@@ -322,7 +331,8 @@ namespace MapAction
                     System.Diagnostics.Debug.WriteLine("Error getting elements from the map frame");
                     System.Diagnostics.Debug.WriteLine(e);
 
-                    string exceptionMsg = String.Format("Error getting element {0} from the map frame", element.ToString());
+                    // string exceptionMsg = String.Format("Error getting element {0} from the map frame", element.ToString());
+                    string exceptionMsg = String.Format("Error getting element {0} from the map frame", debugElementName);
                     throw new MapActionMapTemplateException(exceptionMsg, e, mxdPath, false, null, null);
                 }
             }
