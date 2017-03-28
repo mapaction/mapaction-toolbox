@@ -286,7 +286,8 @@ namespace MapAction
                                 // check if text element needs parsing
 
                                 // TODO: the problem with these lines seems to be related to the presence of 
-                                // an 
+                                // characters related to markup (but not used as markup) in the text. Known
+                                // problematic characters are '&<>', but this list is not exhaustive.
                                 string temp = pTextElement.Text;
                                 // temp.Replace('&', "&amp;");
                                 temp = System.Text.RegularExpressions.Regex.Replace(temp, "&(?!amp;)", "&amp;");
