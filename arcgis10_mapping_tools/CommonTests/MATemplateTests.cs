@@ -129,7 +129,7 @@ namespace MapAction.tests
         /// <param name="dataFrameName"></param>
         /// <param name="missingNum"></param>
         /// <param name="duplicateNum"></param>
-        //[Ignore("Ignore whilst test is imcomplete")]
+        [Ignore("Ignore whilst test is imcomplete")]
         [TestCase(@"testfiles\MA_A3_landscape.mxd", "Main map", 0, 0)]
         [TestCase(@"testfiles\ARCGIS_10_2_MA000_Landscape_Bottom", "Main map", 0, 0)]
         public void TestGetLayoutTextElements(string relativeMXDfilename, string dataFrameName, int missingNum, int duplicateNum)
@@ -152,6 +152,23 @@ namespace MapAction.tests
             {
                 Assert.Fail("Null object returned for map elements array");
             }
+        }
+
+
+        // no markup
+        [TestCase(@"1 - The quick brown fox", @"1 - The quick brown fox")]
+        // single bold tag
+        [TestCase(@"2 - The <BOL>quick</BOL> brown fox", @"2 - The quick brown fox")]
+        // double bold and italic tags
+        [TestCase(@"3 - The <BOL><ITA>quick</ITA> brown</BOL> fox", @"3 - The quick brown fox")]
+        // incorrectly ordered double bold tags
+        [TestCase(@"4 - The <BOL><ITA>quick<ITA> brown</BOL> fox", @"4 - The <BOL><ITA>quick<ITA> brown</BOL> fox")]
+        // ampersand
+        [TestCase(@"5 - The fox & hounds", @"5 - The fox & hounds")]
+        public void TestStripESRILabelMarkup(string input, string expectedOutput)
+        {
+            string actualOutput = PageLayoutProperties.stripESRILabelMarkup(input);
+            Assert.AreEqual(expectedOutput, actualOutput);
         }
     }
 }

@@ -250,6 +250,7 @@ namespace MapAction
             } catch (InvalidCastException ice){
             }
             
+            // APS: Why is this check necessary? 
             //check if the frame passed exists in the map document
             if (PageLayoutProperties.detectMapFrame(pMxDoc, pFrameName))
             {
@@ -344,6 +345,17 @@ namespace MapAction
             }
         }
 #endregion
+
+        /// <summary>
+        /// Removes all ESRI Label formating tags from the input string.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>A new string without any of the formating tags present in input.</returns>
+        public static string stripESRILabelMarkup(string input)
+        {
+            return String.Copy(input);
+        }
+
 
         #region Public method checkLayoutTextElementsForDuplicates
         //Checks the element names of the page layout 
