@@ -35,9 +35,9 @@ namespace MapAction.tests
             // Openning a IMxDoc here just so that it doesn't get called every time in Setup()
             string documentName;
             documentName = Path.Combine(this.testRootDir, @"testfiles\MA_A3_landscape.mxd");
-            // MxDocument mxd = new MxDocument();
-            // mxd.Parent.OpenDocument(documentName);
-            // this.pMxDoc = (IMxDocument)mxd;
+            MxDocument mxd = new MxDocument();
+            mxd.Parent.OpenDocument(documentName);
+            this.pMxDoc = (IMxDocument)mxd;
         }
 
         ~MATemplateTests()
