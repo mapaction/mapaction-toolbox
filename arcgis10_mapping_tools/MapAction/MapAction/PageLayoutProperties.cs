@@ -357,7 +357,7 @@ namespace MapAction
             ITextParser formattingTextParser = new SimpleTextParser();
             formattingTextParser.TextSymbol = new TextSymbolClass();
             bool parsingRequired = false;
-            String output;
+            string output;
 
             // If the string assigned to formattingTextParser.Text which include malformed
             // markup then a COMException is thrown.
