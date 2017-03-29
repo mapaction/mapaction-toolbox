@@ -35,15 +35,18 @@ namespace MapAction.tests
             // Openning a IMxDoc here just so that it doesn't get called every time in Setup()
             string documentName;
             documentName = Path.Combine(this.testRootDir, @"testfiles\MA_A3_landscape.mxd");
-            MxDocument mxd = new MxDocument();
-            mxd.Parent.OpenDocument(documentName);
-            this.pMxDoc = (IMxDocument)mxd;
+            // MxDocument mxd = new MxDocument();
+            // mxd.Parent.OpenDocument(documentName);
+            // this.pMxDoc = (IMxDocument)mxd;
         }
 
         ~MATemplateTests()
         {
-            MxDocument mxDoc = (MxDocument)this.pMxDoc;
-            mxDoc.Parent.Shutdown();
+            if (this.pMxDoc != null)
+            {
+                MxDocument mxDoc = (MxDocument)this.pMxDoc;
+                mxDoc.Parent.Shutdown();
+            }
         }
 
         // This is called prior to each test and allows state to be reset.
@@ -54,7 +57,7 @@ namespace MapAction.tests
             this.pMapDoc = null;
             this.exportPath = TestUtilities.GetTemporaryDirectory();
         }
-        
+
 
         [TearDown]
         public void TearDown()
@@ -74,9 +77,9 @@ namespace MapAction.tests
         {
             string[] referenceNames = {"title", "summary", "data_sources", "map_no", "mxd_name", "spatial_reference",
                                        "scale", "glide_no", "disclaimer", "donor_credit", "map_producer", "timezone"};
-            
+
             MapElementNames[] allElements = (MapElementNames[])Enum.GetValues(typeof(MapElementNames));
-            
+
             // TODO: Surely there is a tidier way to do this?
             if (referenceNames.Length == allElements.Length)
             {
@@ -108,10 +111,12 @@ namespace MapAction.tests
             try
             {
                 Dictionary<string, string> dict = PageLayoutProperties.getLayoutTextElements(this.pMxDoc, dataFrameName);
-            } catch (MapActionMapTemplateException mmte) {
+            }
+            catch (MapActionMapTemplateException mmte)
+            {
                 exceptionRaised = mmte.isMapFrameMissing;
             }
-            Assert.AreEqual(exceptionExpected, exceptionRaised, 
+            Assert.AreEqual(exceptionExpected, exceptionRaised,
                 String.Format("MapFrame '{0}' -  expected:{1}, found:{2}", dataFrameName, exceptionExpected, exceptionRaised));
         }
 
@@ -119,7 +124,7 @@ namespace MapAction.tests
         // This tests whether or not the correct information about missing and dulicate
         // map elements is included if/when an exception in raised about an MXD which 
         // doesn't not addear to MapAction's map template standard.
-        
+
         /// <summary>
         /// This tests whether or not the correct information about missing and dulicate 
         /// map elements is included if/when an exception in raised about an MXD which 
@@ -155,18 +160,37 @@ namespace MapAction.tests
         }
 
 
+        /// <summary>
+        /// This tests handling of ESRI Label markup within strings. 
+        /// 
+        /// Each of the test cases have been manually tested by entering them into a text
+        /// element in ArcMap.
+        /// </summary>
+        /// <param name="input">Input string which may contain markup</param>
+        /// <param name="expectedOutput">, Null value indicates that the expected output is identical to the input</param>
         // no markup
-        [TestCase(@"1 - The quick brown fox", @"1 - The quick brown fox")]
+        [TestCase(@"1 - The quick brown fox", null)]
         // single bold tag
         [TestCase(@"2 - The <BOL>quick</BOL> brown fox", @"2 - The quick brown fox")]
         // double bold and italic tags
         [TestCase(@"3 - The <BOL><ITA>quick</ITA> brown</BOL> fox", @"3 - The quick brown fox")]
-        // incorrectly ordered double bold tags
-        [TestCase(@"4 - The <BOL><ITA>quick<ITA> brown</BOL> fox", @"4 - The <BOL><ITA>quick<ITA> brown</BOL> fox")]
+        // incorrectly ordered double bold and italic tags
+        [TestCase(@"4 - The <BOL><ITA>quick</BOL> brown</ITA> fox", null)]
         // ampersand
-        [TestCase(@"5 - The fox & hounds", @"5 - The fox & hounds")]
+        [TestCase(@"5 - The fox & hounds", null)]
+        // ampersand and valid mark up
+        [TestCase(@"6 - The <BOL>fox</BOL> & <ITA>hounds</ITA>", null)]
+        // less than sign with valid mark up
+        [TestCase(@"7 - The <BOL>fox</BOL> < <ITA>hounds</ITA>", null)]
+        // greater than sign with valid mark up
+        [TestCase(@"8 - The <BOL>fox</BOL> > <ITA>hounds</ITA>", @"8 - The fox > hounds")]
+        // HTML encoded ampersand
+        [TestCase(@"9 - The fox &amp; hounds", null)]
+        // HTML encoded ampersand with valid mark up
+        [TestCase(@"10 - The <BOL>fox</BOL> &amp; <ITA>hounds</ITA>", @"10 - The fox & hounds")]
         public void TestStripESRILabelMarkup(string input, string expectedOutput)
         {
+            expectedOutput = expectedOutput ?? input;
             string actualOutput = PageLayoutProperties.stripESRILabelMarkup(input);
             Assert.AreEqual(expectedOutput, actualOutput);
         }
