@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Windows.Forms;
+using System.Xml.Linq;
 using ESRI.ArcGIS.ArcMap;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
@@ -347,13 +348,59 @@ namespace MapAction
 #endregion
 
         /// <summary>
-        /// Removes all ESRI Label formating tags from the input string.
+        /// Removes all valid ESRI Label formating tags from the input string.
         /// </summary>
         /// <param name="input"></param>
         /// <returns>A new string without any of the formating tags present in input.</returns>
         public static string stripESRILabelMarkup(string input)
         {
-            return String.Copy(input);
+            ITextParser formattingTextParser = new SimpleTextParser();
+            formattingTextParser.TextSymbol = new TextSymbolClass();
+            bool parsingRequired = false;
+            String output;
+
+            // If the string assigned to formattingTextParser.Text which include malformed
+            // markup then a COMException is thrown.
+            try
+            {
+                formattingTextParser.Text = input;
+                formattingTextParser.HasTags(ref parsingRequired);
+            }
+            catch (System.Runtime.InteropServices.COMException ce)
+            {
+                parsingRequired = false;
+            }
+
+
+            if (parsingRequired)
+            {
+                bool continueParsing = true;
+                List<string> parsedText = new List<string>();
+                // Parse formatted text. The Textparser advances through each tagged part of the string.
+                formattingTextParser.Next();
+                parsedText.Add(formattingTextParser.TextSymbol.Text);
+
+                while (continueParsing)
+                {
+                    formattingTextParser.Next();
+                    if (formattingTextParser.TextSymbol.Text == parsedText[parsedText.Count - 1])
+                    {
+                        continueParsing = false;
+                    }
+                    else
+                    {
+                        parsedText.Add(formattingTextParser.TextSymbol.Text);
+                    }
+                }
+                string encodedOutput = string.Join("", parsedText.ToArray());
+                output = WebUtility.HtmlDecode(encodedOutput);
+            }
+            else
+            {
+                output = input;
+            }
+
+            return output;
         }
 
 
