@@ -573,36 +573,8 @@ namespace MapActionToolbars
 
         public static string validateLanguage(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
-            eprWarning.SetIconPadding(control, 5);
-            eprError.SetIconPadding(control, 5);
-            string automatedValue = string.Empty;
-
-            var dictXML = new Dictionary<string, string>();
-            string path = MapAction.Utilities.getCrashMoveFolderPath();
-            string filePath = MapAction.Utilities.getOperationConfigFilePath();
-            dictXML = MapAction.Utilities.getOperationConfigValues(filePath);
-            if (dictXML.ContainsKey("Language")) { automatedValue = dictXML["Language"]; }
-
-            if (validateEmptyField(control, eprWarning))
-            {
-                if (control.Text.Trim() != automatedValue && control.Text != string.Empty)
-                {
-                    eprError.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
-                    eprError.SetError(control, "Text differs from the operation_config.xml value");
-                    return "Error";
-                }
-                else
-                {
-                    eprError.SetError(control, "");
-                    return "Valid";
-                }
-            }
-            else
-            {
-                eprError.SetError(control, "");
-                validateEmptyField(control, eprWarning);
-                return "Blank";
-            };
+            // Since using language_config.xml, this will always be valid.
+            return "Valid";
         }
 
         public static void validationCheck(string result, PictureBox pbox)

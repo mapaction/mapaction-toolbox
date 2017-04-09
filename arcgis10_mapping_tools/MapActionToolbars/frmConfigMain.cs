@@ -15,7 +15,6 @@ namespace MapActionToolbars
 {
     public partial class frmConfigMain : Form
     {
-        private const string _defaultLanguage = "English";
         private const string _defaultSourceOrganisation = "MapAction";
         private const string _defaultDisclaimerText = "The depiction and use of boundaries, names and associated data shown here do not imply endorsement or acceptance by MapAction.";
         private const string _defaultDonorText = "Supported by";
@@ -174,7 +173,6 @@ namespace MapActionToolbars
             //Perform validation checks
             FormValidationConfig.validateOperationName(tbxOperationName, eprOperationNameWarning);
             FormValidationConfig.validateGlideNumber(tbxGlideNo, eprGlideNoWarning, eprGlideNoError);
-            FormValidationConfig.validateLanguage(cboLanguage, eprLanguageWarning);
             FormValidationConfig.validateCountry(cboCountry, eprCountryWarning);
             FormValidationConfig.validateTimezone(cboTimeZone, eprTimezoneWarning, eprTimezoneError);
             FormValidationConfig.validateOperationID(tbxOperationId, eprOperationIdWarning);
@@ -199,7 +197,6 @@ namespace MapActionToolbars
             Dictionary<string, string> dict = new Dictionary<string, string>();
             dict.Add("OperationName", tbxOperationName.Text);
             dict.Add("GlideNo", tbxGlideNo.Text);
-            dict.Add("Language", cboLanguage.Text);
             dict.Add("Country", cboCountry.Text);
             dict.Add("TimeZone", cboTimeZone.Text);
             dict.Add("OperationId", tbxOperationId.Text);
@@ -310,7 +307,14 @@ namespace MapActionToolbars
             //Populate the text boxes with the values from the dictionary
             tbxOperationName.Text = dict["OperationName"];
             tbxGlideNo.Text = dict["GlideNo"];
-            cboLanguage.Text = dict["Language"];
+
+            if (dict.ContainsKey("Language"))
+            {
+                MessageBox.Show("The \"Language\" tag from the " + path + " file is now ignored.\n\nEnsure your MXD has a \"language_label\" element.\n\nUpdating the XML using this Operation Configuration Tool will remove the \"Language\" tag from the " + path + " file and prevent this message being shown.",
+                                "Warning", 
+                                MessageBoxButtons.OK, 
+                                MessageBoxIcon.Warning);
+            }
             cboCountry.Text = dict["Country"];
             cboTimeZone.Text = dict["TimeZone"];
             tbxOperationId.Text = dict["OperationId"];
@@ -330,7 +334,6 @@ namespace MapActionToolbars
         public void populateDialogDefaultValues()
         {
             //Set the dialog default values
-            cboLanguage.Text = _defaultLanguage;
             tbxSourceOrganisation.Text = _defaultSourceOrganisation;
             tbxDislaimerText.Text = _defaultDisclaimerText;
             tbxDonorText.Text = _defaultDonorText;
@@ -347,7 +350,6 @@ namespace MapActionToolbars
                 //tabConfigXml.Enabled = true;
                 tbxOperationName.Enabled = true;
                 tbxGlideNo.Enabled = true;
-                cboLanguage.Enabled = true;
                 cboCountry.Enabled = true;
                 cboTimeZone.Enabled = true;
                 tbxOperationId.Enabled = true;
@@ -377,7 +379,6 @@ namespace MapActionToolbars
             {
                 tbxOperationName.Enabled = false;
                 tbxGlideNo.Enabled = false;
-                cboLanguage.Enabled = false;
                 cboCountry.Enabled = false;
                 cboTimeZone.Enabled = false;
                 tbxOperationId.Enabled = false;
@@ -454,11 +455,6 @@ namespace MapActionToolbars
         private void tbxPrimaryEmail_TextChanged(object sender, EventArgs e)
         {
             FormValidationConfig.validatePrimaryEmail(tbxPrimaryEmail, eprPrimaryEmailWarning, eprPrimaryEmailError);
-        }
-
-        private void cboLanguage_TextChanged(object sender, EventArgs e)
-        {
-            FormValidationConfig.validateLanguage(cboLanguage, eprLanguageWarning);
         }
 
         private void cboCountry_TextChanged(object sender, EventArgs e)
