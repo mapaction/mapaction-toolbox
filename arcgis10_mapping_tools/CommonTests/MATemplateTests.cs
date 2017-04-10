@@ -189,11 +189,11 @@ namespace MapAction.tests
         // HTML encoded ampersand with valid mark up
         [TestCase(@"10 - The <BOL>fox</BOL> &amp; <ITA>hounds</ITA>", @"10 - The fox & hounds")]
         // Dynamic Page markup, when DDP is disabled
-        [TestCase(@"11 - The<dyn type='page' property='Name'/> quick brown fox", @"11 - The quick brown fox")]
+        //[TestCase(@"11 - The<dyn type='page' property='Name'/> quick brown fox", @"11 - The quick brown fox")]
         // Dynamic Page markup, when DDP is disabled
-        [TestCase(@"12 - The <dyn type='page' property='Name' emptyStr='quick'/> brown fox", @"12 - The quick brown fox")]
+        //[TestCase(@"12 - The <dyn type='page' property='Name' emptyStr='quick'/> brown fox", @"12 - The quick brown fox")]
         // Dynamic Page markup, when DDP is disabled and formating markup
-        [TestCase(@"13 - The <dyn type='page' property='Name' emptyStr='quick'/> brown <BOL>fox</BOL>", @"13 - The quick brown fox")]
+        //[TestCase(@"13 - The <dyn type='page' property='Name' emptyStr='quick'/> brown <BOL>fox</BOL>", @"13 - The quick brown fox")]
         public void TestStripESRILabelMarkup(string input, string expectedOutput)
         {
             expectedOutput = expectedOutput ?? input;
