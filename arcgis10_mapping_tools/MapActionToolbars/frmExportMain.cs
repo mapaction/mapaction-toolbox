@@ -326,8 +326,8 @@ namespace MapActionToolbars
             System.Windows.Forms.Application.DoEvents();
             // Create a dictionary to get and store the map frame extents to pass to the output xml
             Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
-            dictImageFileSizes.Add("jpeg", MapAction.Utilities.getFileSize(dictFilePaths["jpeg"]));
-            dictImageFileSizes.Add("emf", MapAction.Utilities.getFileSize(dictFilePaths["emf"]));
+            dictImageFileSizes["jpeg"] = MapAction.Utilities.getFileSize(dictFilePaths["jpeg"]);
+            dictImageFileSizes["emf"] = MapAction.Utilities.getFileSize(dictFilePaths["emf"]);
 
             // Export KML
             IMapDocument pMapDoc = (IMapDocument)pMxDoc;
