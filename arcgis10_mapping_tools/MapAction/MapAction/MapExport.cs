@@ -138,24 +138,6 @@ namespace MapAction
             string zipFileName = fileName + ".zip";
             string savePath = @System.IO.Path.GetDirectoryName(dictPaths["xml"]) + @"\" + zipFileName;
             Debug.WriteLine("save path: " + savePath);
-            
-            //try
-            //{
-            //    using (ZipFile zip = new ZipFile())
-            //    {
-            //        foreach (var i in dictPaths)
-            //        {
-            //            zip.AddFile(@i.Value, @"\");
-            //        }
-            //        zip.Save(@savePath);
-            //    }
-            //}
-            //catch (Exception e_zip)
-            //{
-            //    Debug.WriteLine("Error writing zip file");
-            //    Debug.WriteLine(e_zip.Message);
-            //    return false;
-            //}
  
             ////////////////////////////////////
             // 7zip version
@@ -167,17 +149,17 @@ namespace MapAction
 
                 if (!String.IsNullOrEmpty(zipExePath))
                 {
-
                     Process zipProc = new Process();
                     // Configure the process using the StartInfo properties.
                     zipProc.StartInfo.FileName = zipExePath;
-                    zipProc.StartInfo.Arguments = String.Format("a -y -tzip \"{0}\" \"{1}\" \"{2}\" \"{3}\" \"{4}\"", 
-                        savePath, 
-                        dictPaths["xml"], 
-                        dictPaths.FirstOrDefault(kvp=>kvp.Key == "jpeg").Value, // ["jpeg"], 
-                        dictPaths.FirstOrDefault(kvp => kvp.Key == "pdf").Value, //["pdf"]);
-                        dictPaths.FirstOrDefault(kvp=>kvp.Key == "png_thumbnail_zip").Value)
-                    ;  
+                    string args = String.Format("a -y -tzip {0} {1} {2} {3} {4}",
+                        quotePath(savePath), 
+                        quotePath(dictPaths["xml"]), 
+                        quotePath(dictPaths.FirstOrDefault(kvp=>kvp.Key == "jpeg").Value), // ["jpeg"], 
+                        quotePath(dictPaths.FirstOrDefault(kvp => kvp.Key == "pdf").Value), //["pdf"]);
+                        quotePath(dictPaths.FirstOrDefault(kvp=>kvp.Key == "png_thumbnail_zip").Value))
+                    ;
+                    zipProc.StartInfo.Arguments = args;
                     zipProc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
                     zipProc.Start();
                     zipProc.WaitForExit();// Waits here for the process to exit.
@@ -193,6 +175,22 @@ namespace MapAction
             return true;
         }
         #endregion
+
+        /// <summary>
+        /// Adds quotes to a file path if required.
+        /// 
+        /// If the `path` contains either a " " (space char) or a wildcard `*` or `?` then quotes 
+        /// are added.
+        /// 
+        /// TODO:
+        /// At present it doesn't handle the case were there are already quotes arround the name.
+        /// </summary>
+        /// <param name="mypath"></param>
+        /// <returns></returns>
+        private static string quotePath(string mypath){
+            // (path.Contains(" ")) ? "\"" + path + "\"" : path
+            return (mypath.IndexOfAny(" *".ToCharArray()) >= 0) ? '"' + mypath + '"' : mypath;
+        }
 
         #region Public method openExplorerDirectory
         //Open windows explorer to the directory passed

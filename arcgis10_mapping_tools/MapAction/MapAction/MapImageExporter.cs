@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.IO;
+using System.Windows.Forms;
 using ESRI.ArcGIS.ArcMap;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
@@ -498,7 +499,7 @@ namespace MapAction
                     Console.WriteLine(ex.Message);
                     string errorMsgs = gp.GetMessages(ref sev);
                     Console.WriteLine(errorMsgs);
-                    throw ex;
+                    throw;
                 }
 
                 if (dpp_export_result == null)

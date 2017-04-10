@@ -32,7 +32,6 @@ namespace MapActionToolbars
         //Need a better solution for sorting this out
         private static string _targetMapFrame = "Main map";
         private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
-        private static Dictionary<string,string>_dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, _targetMapFrame);
         
         //create a variable to hold the status of each validation check
         private string _titleValidationResult;
@@ -152,7 +151,8 @@ namespace MapActionToolbars
             _languageValidationResult = FormValidationExport.validateLanguage(tbxLanguage, eprLanguageWarning, eprLanguageError);
 
             var dict = new Dictionary<string, string>();
-            dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, _targetMapFrame);
+            // added extra parameter to say that in this case all of the ESRI markup should be stripped from the label values
+            dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, _targetMapFrame, true);
 
             //Update form text boxes with values from the map
             if (dict.ContainsKey("title")) { tbxMapTitle.Text = dict["title"]; }
@@ -272,7 +272,6 @@ namespace MapActionToolbars
 
         private void btnCreateZip_Click(object sender, EventArgs e)
         {
-
             // Create and start a stopwatch to measure the function performance
             //### Remove at a later time ###
             Stopwatch sw = Stopwatch.StartNew();
@@ -310,6 +309,10 @@ namespace MapActionToolbars
             // this method doesn't correctly in checking for permissions, requires updating.  
             // MapAction.Utilities.detectWriteAccessToPath(path);
 
+            // TODO:
+            // APS Is there a good reasons for retreving the reference to the IMxDocument
+            // via the ArcMap Application? Why not use the `frmExportMain._pMxDoc` member instead?
+            // Alternatively is the `frmExportMain._pMxDoc` member used or required?
             IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
             IActiveView pActiveView = pMxDoc.ActiveView;
             // Ssetup dictionaries for metadata XML
@@ -321,11 +324,14 @@ namespace MapActionToolbars
             // TODO: Get extent of dpp index dataset instead of data frame. 
             Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
 
-            if (tbxMapbookMode.Enabled == false && 1==2) // Need a way to do this - the form elements are all disabled before export - see ^^
+            IMapDocument mapDoc;
+            mapDoc = (pMxDoc as MxDocument) as IMapDocument;
+            bool isDDP = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
+
+            if (!isDDP) // Need a way to do this - the form elements are all disabled before export - see ^^
             {
                 // Call to export the images and return a dictionary of the file names
                 dictFilePaths = exportAllImages();
-
 
                 // Calculate the file size of each image and add it to the dictionary
                 // Don't use dict.add because a) it's another place to keep track of magic strings
@@ -335,7 +341,6 @@ namespace MapActionToolbars
                     dictImageFileSizes[kvp.Key] = MapAction.Utilities.getFileSize(kvp.Value);
                 }
                 System.Windows.Forms.Application.DoEvents();
-
 
                 // Export KML
                 IMapDocument pMapDoc = (IMapDocument)pMxDoc;            
@@ -352,13 +357,24 @@ namespace MapActionToolbars
             {
                 //// Data driven pages
                 IMapDocument pMapDoc = (IMapDocument)pMxDoc;
-                MapImageExporter mie = new MapImageExporter(pMapDoc, tbxExportZipPath.Text, "Main map");
+                MapImageExporter mie = new MapImageExporter(pMapDoc, exportPathFileName, "Main map");
                 mie.exportDataDrivenPagesImages();
 
                 dictFilePaths = new Dictionary<string,string>();
-                dictFilePaths["pdf"] = exportPathFileName + ".pdf";
-
-            }            
+                // TODO: this is a bit of a hack to work with multiple page pdf.
+                // This will add all PDF files which match teh glob. There is the potenital that this
+                // could include some that were not exported by this export event.
+                dictFilePaths["pdf"] = exportPathFileName + "*.pdf";
+                // just add in extra values here for the metadata export to work.
+                // calculating the actual size for DDP is too hard and 
+                // not worth while.
+                dictFilePaths["jpeg"] = String.Empty;
+                dictFilePaths["kmz"] = String.Empty;
+                dictFilePaths["png_thumbnail_zip"] = String.Empty;
+                dictImageFileSizes["jpeg"] = 0;
+                dictImageFileSizes["pdf"] = 0;
+                dictImageFileSizes["kmz"] = 0;
+            }
             // Get the mxd filename
             string mxdName = ArcMap.Application.Document.Title;
             System.Windows.Forms.Application.DoEvents();
@@ -366,9 +382,8 @@ namespace MapActionToolbars
             string xmlPath = string.Empty;
             try
             {
-                //TODO: Populate these dictionaries for data driven pages. 
-                 Dictionary<string, string> dict = getExportToolValues(dictImageFileSizes, dictFilePaths, dictFrameExtents, mxdName);
-            //    xmlPath = MapAction.Utilities.createXML(dict, "mapdata", path, tbxMapDocument.Text, 2);
+                Dictionary<string, string> dict = getExportToolValues(dictImageFileSizes, dictFilePaths, dictFrameExtents, mxdName);
+                xmlPath = MapAction.Utilities.createXML(dict, "mapdata", path, tbxMapDocument.Text, 2);
             }
             catch (Exception xml_e)
             {
@@ -378,23 +393,26 @@ namespace MapActionToolbars
             }
 
             // Add the xml path to the dictFilePaths, which is the input into the creatZip method
-            // dictFilePaths["xml"] = xmlPath;
+            dictFilePaths["xml"] = xmlPath;
 
             // Create zip
             // TODO Note that currently the createZip will zip the xml, jpeg, and pdf. Not the emf! 
             // So why are we making it??
             MapAction.MapExport.createZip(dictFilePaths);
             
-            // now that it's been zipped, delete the copy of the thumbnail called thumbnail.png to avoid confusion
-            string zippedThumbFile = dictFilePaths[MapActionExportTypes.png_thumbnail_zip.ToString()];
             try
             {
-                System.IO.File.Delete(zippedThumbFile);
+                // now that it's been zipped, delete the copy of the thumbnail called thumbnail.png to avoid confusion
+                string zippedThumbFile = dictFilePaths[MapActionExportTypes.png_thumbnail_zip.ToString()];
+                if (zippedThumbFile != String.Empty)
+                {
+                    System.IO.File.Delete(zippedThumbFile);
+                }
             }
             catch (Exception ex)
             {
                 // don't crash if the thumbnail export failed or the intermediate file can't be deleted for some reason
-                if (!(ex is ArgumentNullException || ex is UnauthorizedAccessException))
+                if (!(ex is ArgumentNullException || ex is UnauthorizedAccessException || ex is KeyNotFoundException))
                 {
                     throw;
                 }
@@ -422,8 +440,11 @@ namespace MapActionToolbars
 
         }
 
-        private Dictionary<string, string> getExportToolValues(Dictionary<string, long> dictImageFileSizes, 
-            Dictionary<string, string> dictFilePaths, Dictionary<string, string> dictFrameExtents, string mxdName)
+        private Dictionary<string, string> getExportToolValues(
+            Dictionary<string, long> dictImageFileSizes, 
+            Dictionary<string, string> dictFilePaths,
+            Dictionary<string, string> dictFrameExtents, 
+            string mxdName)
         {
             
             //tidy up the map title
@@ -465,8 +486,8 @@ namespace MapActionToolbars
                 {"ymin",            dictFrameExtents["yMin"]},
                 {"proj",            tbxProjection.Text},
                 {"datum",           tbxDatum.Text},
-                {"jpgfilename",     System.IO.Path.GetFileName(dictFilePaths["jpeg"])},
-                {"pdffilename",     System.IO.Path.GetFileName(dictFilePaths["pdf"])},
+                //{"jpgfilename",     System.IO.Path.GetFileName(dictFilePaths["jpeg"])},
+                //{"pdffilename",     System.IO.Path.GetFileName(dictFilePaths["pdf"])},
                 {"qclevel",         cboQualityControl.Text},
                 {"qcname",          ""},
                 {"access",          cboAccess.Text},
@@ -478,9 +499,9 @@ namespace MapActionToolbars
                 {"themes",          themes.ToString()},
                 {"scale",           tbxScale.Text},
                 {"papersize",       tbxPaperSize.Text},
-                {"jpgfilesize",     dictImageFileSizes["jpeg"].ToString()},
+                //{"jpgfilesize",     dictImageFileSizes["jpeg"].ToString()},
                 {"jpgresolutiondpi",nudJpegResolution.Value.ToString()},
-                {"pdffilesize",     dictImageFileSizes["pdf"].ToString()},
+                //{"pdffilesize",     dictImageFileSizes["pdf"].ToString()},
                 {"pdfresolutiondpi",nudPdfResolution.Value.ToString()},
                 {"kmlresolutiondpi",nudKmlResolution.Value.ToString()},
                 {"mxdfilename",     mxdName},
@@ -488,9 +509,16 @@ namespace MapActionToolbars
                 {"paperxmin",       ""},
                 {"paperymax",       ""},
                 {"paperymin",       ""},
-                {"kmzfilename",     System.IO.Path.GetFileName(dictFilePaths["kmz"])},
+                //{"kmzfilename",     System.IO.Path.GetFileName(dictFilePaths["kmz"])},
                 {"accessnotes",     tbxImageAccessNotes.Text}
             };
+
+            dict["jpgfilename"] = System.IO.Path.GetFileName(dictFilePaths["jpeg"]);
+            dict["pdffilename"] = System.IO.Path.GetFileName(dictFilePaths["pdf"]);
+            dict["jpgfilesize"] = dictImageFileSizes["jpeg"].ToString();
+            dict["pdffilesize"] = dictImageFileSizes["pdf"].ToString();
+            dict["kmzfilename"] = System.IO.Path.GetFileName(dictFilePaths["kmz"]);
+
             return dict;
             //string filename = Path.GetFileName(path);
         }

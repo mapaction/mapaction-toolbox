@@ -237,15 +237,20 @@ namespace MapAction
         #endregion method | detectMapFrame
 
         #region Public method getLayoutTextElements
-        //Gets all the text elements and their values from a map frame.
-        //returns a dictionary with key value pairs of these element / values
-        public static Dictionary<string, string> getLayoutTextElements(IMxDocument pMxDoc, string pFrameName)
+        /// <summary>
+        /// Gets all the text elements and their values from a map frame.
+        /// </summary>
+        /// <param name="pMxDoc"></param>
+        /// <param name="pFrameName"></param>
+        /// <param name="stripESRIMarkup"></param>
+        /// <returns>returns a dictionary with key value pairs of these element / values</returns>
+        public static Dictionary<string, string> getLayoutTextElements(IMxDocument pMxDoc, string pFrameName, bool stripESRIMarkup=false)
         {
             //create dictionary to story element values
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
             // get MXD file path in case it is needed for error reporting later
-            string mxdPath = "";
+            string mxdPath = String.Empty;
             try{
                 mxdPath = (pMxDoc as IMapDocument).DocumentFilename;
             } catch (InvalidCastException ice){
@@ -269,7 +274,6 @@ namespace MapAction
                 {
                     ITextParser formattingTextParser = new SimpleTextParser();
                     formattingTextParser.TextSymbol = new TextSymbolClass();
-                    Boolean bHasTags = false;
 
                     element = pGraphics.Next();
                     while (element != null)
@@ -285,43 +289,11 @@ namespace MapAction
                                 // debugElementName = pElementProp.Name;
                                 debugElementName = String.Format("{0}, {1}", pElementProp.Name, pTextElement.Text);
                                 //store the name of the elements and the values in the dictionary as pairs
-                                // check if text element needs parsing
-
-                                // TODO: the problem with these lines seems to be related to the presence of 
-                                // characters related to markup (but not used as markup) in the text. Known
-                                // problematic characters are '&<>', but this list is not exhaustive.
-                                string temp = pTextElement.Text;
-                                // temp.Replace('&', "&amp;");
-                                temp = System.Text.RegularExpressions.Regex.Replace(temp, "&(?!amp;)", "&amp;");
-                                formattingTextParser.Text = temp;
-                                formattingTextParser.HasTags(ref bHasTags);
-                                if (bHasTags)
-                                {
-                                    bool continueParsing = true;
-                                    List<string> parsedText = new List<string>();
-                                    // Parse formatted text. The Textparser advances through each tagged part of the string.
-                                    formattingTextParser.Next();
-                                    parsedText.Add(formattingTextParser.TextSymbol.Text);
-
-                                    while (continueParsing)
-                                    {
-                                        formattingTextParser.Next();
-                                        if (formattingTextParser.TextSymbol.Text == parsedText[parsedText.Count - 1])
-                                        {
-                                            continueParsing = false;
-                                        }
-                                        else
-                                        {
-                                            parsedText.Add(formattingTextParser.TextSymbol.Text);
-                                        }
-                                    }
-                                    dict.Add(pElementProp.Name, string.Join("", parsedText.ToArray()));
-                                }
-                                else
-                                {
+                                if (stripESRIMarkup){
+                                    dict.Add(pElementProp.Name, stripESRILabelMarkup(pTextElement.Text));
+                                }else{
                                     dict.Add(pElementProp.Name, pTextElement.Text);
                                 }
-                                formattingTextParser.Reset();
                             }
                         }
                         element = pGraphics.Next();
