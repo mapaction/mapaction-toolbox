@@ -119,9 +119,10 @@
             // btnSave
             // 
             this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(342, 310);
+            this.btnSave.Location = new System.Drawing.Point(513, 477);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.Size = new System.Drawing.Size(112, 35);
             this.btnSave.TabIndex = 4;
             this.btnSave.Text = "Create XML";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -129,9 +130,10 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(261, 310);
+            this.btnCancel.Location = new System.Drawing.Point(392, 477);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.Size = new System.Drawing.Size(112, 35);
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -142,18 +144,21 @@
             this.gbxCrashMoveFolder.Controls.Add(this.btnPathToExistingXml);
             this.gbxCrashMoveFolder.Controls.Add(this.tbxPathToCrashMove);
             this.gbxCrashMoveFolder.Controls.Add(this.label1);
-            this.gbxCrashMoveFolder.Location = new System.Drawing.Point(12, 12);
+            this.gbxCrashMoveFolder.Location = new System.Drawing.Point(18, 18);
+            this.gbxCrashMoveFolder.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gbxCrashMoveFolder.Name = "gbxCrashMoveFolder";
-            this.gbxCrashMoveFolder.Size = new System.Drawing.Size(458, 55);
+            this.gbxCrashMoveFolder.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gbxCrashMoveFolder.Size = new System.Drawing.Size(687, 85);
             this.gbxCrashMoveFolder.TabIndex = 0;
             this.gbxCrashMoveFolder.TabStop = false;
             this.gbxCrashMoveFolder.Text = "Crash move folder";
             // 
             // btnPathToExistingXml
             // 
-            this.btnPathToExistingXml.Location = new System.Drawing.Point(395, 20);
+            this.btnPathToExistingXml.Location = new System.Drawing.Point(592, 31);
+            this.btnPathToExistingXml.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnPathToExistingXml.Name = "btnPathToExistingXml";
-            this.btnPathToExistingXml.Size = new System.Drawing.Size(33, 23);
+            this.btnPathToExistingXml.Size = new System.Drawing.Size(50, 35);
             this.btnPathToExistingXml.TabIndex = 18;
             this.btnPathToExistingXml.Text = "...";
             this.btnPathToExistingXml.UseVisualStyleBackColor = true;
@@ -162,17 +167,20 @@
             // tbxPathToCrashMove
             // 
             this.tbxPathToCrashMove.Enabled = false;
-            this.tbxPathToCrashMove.Location = new System.Drawing.Point(96, 20);
+            this.tbxPathToCrashMove.Location = new System.Drawing.Point(144, 31);
+            this.tbxPathToCrashMove.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbxPathToCrashMove.Name = "tbxPathToCrashMove";
-            this.tbxPathToCrashMove.Size = new System.Drawing.Size(293, 20);
+            this.tbxPathToCrashMove.Size = new System.Drawing.Size(438, 26);
             this.tbxPathToCrashMove.TabIndex = 0;
+            this.tbxPathToCrashMove.TextChanged += new System.EventHandler(this.tbxPathToCrashMove_TextChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 25);
+            this.label1.Location = new System.Drawing.Point(10, 38);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 13);
+            this.label1.Size = new System.Drawing.Size(70, 20);
             this.label1.TabIndex = 19;
             this.label1.Text = "Set path";
             // 
@@ -180,9 +188,11 @@
             // 
             this.gbxConfigXmlValues.Controls.Add(this.chkEditConfigXml);
             this.gbxConfigXmlValues.Controls.Add(this.tabConfigXml);
-            this.gbxConfigXmlValues.Location = new System.Drawing.Point(13, 73);
+            this.gbxConfigXmlValues.Location = new System.Drawing.Point(20, 112);
+            this.gbxConfigXmlValues.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gbxConfigXmlValues.Name = "gbxConfigXmlValues";
-            this.gbxConfigXmlValues.Size = new System.Drawing.Size(457, 231);
+            this.gbxConfigXmlValues.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gbxConfigXmlValues.Size = new System.Drawing.Size(686, 355);
             this.gbxConfigXmlValues.TabIndex = 2;
             this.gbxConfigXmlValues.TabStop = false;
             this.gbxConfigXmlValues.Text = "Configuration XML";
@@ -190,9 +200,10 @@
             // chkEditConfigXml
             // 
             this.chkEditConfigXml.AutoSize = true;
-            this.chkEditConfigXml.Location = new System.Drawing.Point(370, 19);
+            this.chkEditConfigXml.Location = new System.Drawing.Point(555, 29);
+            this.chkEditConfigXml.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chkEditConfigXml.Name = "chkEditConfigXml";
-            this.chkEditConfigXml.Size = new System.Drawing.Size(44, 17);
+            this.chkEditConfigXml.Size = new System.Drawing.Size(63, 24);
             this.chkEditConfigXml.TabIndex = 0;
             this.chkEditConfigXml.Text = "Edit";
             this.chkEditConfigXml.UseVisualStyleBackColor = true;
@@ -204,10 +215,11 @@
             this.tabConfigXml.Controls.Add(this.tabPage2);
             this.tabConfigXml.Controls.Add(this.tabPage3);
             this.tabConfigXml.Controls.Add(this.tabPage4);
-            this.tabConfigXml.Location = new System.Drawing.Point(9, 19);
+            this.tabConfigXml.Location = new System.Drawing.Point(14, 29);
+            this.tabConfigXml.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabConfigXml.Name = "tabConfigXml";
             this.tabConfigXml.SelectedIndex = 0;
-            this.tabConfigXml.Size = new System.Drawing.Size(442, 204);
+            this.tabConfigXml.Size = new System.Drawing.Size(663, 314);
             this.tabConfigXml.TabIndex = 1;
             // 
             // tabPage1
@@ -222,10 +234,11 @@
             this.tabPage1.Controls.Add(this.label20);
             this.tabPage1.Controls.Add(this.tbxOperationName);
             this.tabPage1.Controls.Add(this.label21);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 29);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(434, 178);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPage1.Size = new System.Drawing.Size(655, 281);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Emergency";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -275,9 +288,10 @@
             "UTC+12:45",
             "UTC+13:00",
             "UTC+14:00"});
-            this.cboTimeZone.Location = new System.Drawing.Point(123, 122);
+            this.cboTimeZone.Location = new System.Drawing.Point(184, 188);
+            this.cboTimeZone.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cboTimeZone.Name = "cboTimeZone";
-            this.cboTimeZone.Size = new System.Drawing.Size(288, 21);
+            this.cboTimeZone.Size = new System.Drawing.Size(430, 28);
             this.cboTimeZone.TabIndex = 5;
             this.cboTimeZone.TextChanged += new System.EventHandler(this.cboTimeZone_TextChanged);
             // 
@@ -535,9 +549,10 @@
             "YEMEN",
             "ZAMBIA",
             "ZIMBABWE"});
-            this.cboCountry.Location = new System.Drawing.Point(123, 95);
+            this.cboCountry.Location = new System.Drawing.Point(184, 146);
+            this.cboCountry.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cboCountry.Name = "cboCountry";
-            this.cboCountry.Size = new System.Drawing.Size(288, 21);
+            this.cboCountry.Size = new System.Drawing.Size(430, 28);
             this.cboCountry.TabIndex = 4;
             this.cboCountry.TextChanged += new System.EventHandler(this.cboCountry_TextChanged);
             // 
@@ -552,72 +567,80 @@
             "Chinese",
             "Arabic",
             "Russian"});
-            this.cboLanguage.Location = new System.Drawing.Point(123, 69);
+            this.cboLanguage.Location = new System.Drawing.Point(184, 106);
+            this.cboLanguage.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cboLanguage.Name = "cboLanguage";
-            this.cboLanguage.Size = new System.Drawing.Size(288, 21);
+            this.cboLanguage.Size = new System.Drawing.Size(430, 28);
             this.cboLanguage.TabIndex = 3;
             this.cboLanguage.TextChanged += new System.EventHandler(this.cboLanguage_TextChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 125);
+            this.label3.Location = new System.Drawing.Point(21, 192);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(56, 13);
+            this.label3.Size = new System.Drawing.Size(82, 20);
             this.label3.TabIndex = 45;
             this.label3.Text = "Time zone";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(14, 99);
+            this.label6.Location = new System.Drawing.Point(21, 152);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(43, 13);
+            this.label6.Size = new System.Drawing.Size(64, 20);
             this.label6.TabIndex = 43;
             this.label6.Text = "Country";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(14, 73);
+            this.label7.Location = new System.Drawing.Point(21, 112);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(55, 13);
+            this.label7.Size = new System.Drawing.Size(81, 20);
             this.label7.TabIndex = 41;
             this.label7.Text = "Language";
             // 
             // tbxGlideNo
             // 
             this.tbxGlideNo.Enabled = false;
-            this.tbxGlideNo.Location = new System.Drawing.Point(123, 43);
+            this.tbxGlideNo.Location = new System.Drawing.Point(184, 66);
+            this.tbxGlideNo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbxGlideNo.Name = "tbxGlideNo";
-            this.tbxGlideNo.Size = new System.Drawing.Size(288, 20);
+            this.tbxGlideNo.Size = new System.Drawing.Size(430, 26);
             this.tbxGlideNo.TabIndex = 2;
             this.tbxGlideNo.TextChanged += new System.EventHandler(this.tbxGlideNo_TextChanged);
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(14, 46);
+            this.label20.Location = new System.Drawing.Point(21, 71);
+            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(46, 13);
+            this.label20.Size = new System.Drawing.Size(68, 20);
             this.label20.TabIndex = 35;
             this.label20.Text = "Glide no";
             // 
             // tbxOperationName
             // 
             this.tbxOperationName.Enabled = false;
-            this.tbxOperationName.Location = new System.Drawing.Point(123, 17);
+            this.tbxOperationName.Location = new System.Drawing.Point(184, 26);
+            this.tbxOperationName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbxOperationName.Name = "tbxOperationName";
-            this.tbxOperationName.Size = new System.Drawing.Size(288, 20);
+            this.tbxOperationName.Size = new System.Drawing.Size(430, 26);
             this.tbxOperationName.TabIndex = 1;
             this.tbxOperationName.TextChanged += new System.EventHandler(this.tbxOperationName_TextChanged);
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(14, 20);
+            this.label21.Location = new System.Drawing.Point(21, 31);
+            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(82, 13);
+            this.label21.Size = new System.Drawing.Size(123, 20);
             this.label21.TabIndex = 1;
             this.label21.Text = "Operation name";
             // 
@@ -631,10 +654,11 @@
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.tbxOperationId);
             this.tabPage2.Controls.Add(this.label19);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 29);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(434, 178);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPage2.Size = new System.Drawing.Size(655, 281);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Response";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -642,72 +666,80 @@
             // tbxOrganisationUrl
             // 
             this.tbxOrganisationUrl.Enabled = false;
-            this.tbxOrganisationUrl.Location = new System.Drawing.Point(123, 69);
+            this.tbxOrganisationUrl.Location = new System.Drawing.Point(184, 106);
+            this.tbxOrganisationUrl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbxOrganisationUrl.Name = "tbxOrganisationUrl";
-            this.tbxOrganisationUrl.Size = new System.Drawing.Size(288, 20);
+            this.tbxOrganisationUrl.Size = new System.Drawing.Size(430, 26);
             this.tbxOrganisationUrl.TabIndex = 3;
             this.tbxOrganisationUrl.TextChanged += new System.EventHandler(this.tbxOrganisationUrl_TextChanged);
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(14, 72);
+            this.label12.Location = new System.Drawing.Point(21, 111);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(80, 13);
+            this.label12.Size = new System.Drawing.Size(120, 20);
             this.label12.TabIndex = 55;
             this.label12.Text = "Organisation url";
             // 
             // tbxPrimaryEmail
             // 
             this.tbxPrimaryEmail.Enabled = false;
-            this.tbxPrimaryEmail.Location = new System.Drawing.Point(123, 95);
+            this.tbxPrimaryEmail.Location = new System.Drawing.Point(184, 146);
+            this.tbxPrimaryEmail.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbxPrimaryEmail.Name = "tbxPrimaryEmail";
-            this.tbxPrimaryEmail.Size = new System.Drawing.Size(288, 20);
+            this.tbxPrimaryEmail.Size = new System.Drawing.Size(430, 26);
             this.tbxPrimaryEmail.TabIndex = 4;
             this.tbxPrimaryEmail.TextChanged += new System.EventHandler(this.tbxPrimaryEmail_TextChanged);
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(14, 98);
+            this.label18.Location = new System.Drawing.Point(21, 151);
+            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(68, 13);
+            this.label18.Size = new System.Drawing.Size(102, 20);
             this.label18.TabIndex = 53;
             this.label18.Text = "Primary email";
             // 
             // tbxSourceOrganisation
             // 
             this.tbxSourceOrganisation.Enabled = false;
-            this.tbxSourceOrganisation.Location = new System.Drawing.Point(123, 43);
+            this.tbxSourceOrganisation.Location = new System.Drawing.Point(184, 66);
+            this.tbxSourceOrganisation.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbxSourceOrganisation.Name = "tbxSourceOrganisation";
-            this.tbxSourceOrganisation.Size = new System.Drawing.Size(288, 20);
+            this.tbxSourceOrganisation.Size = new System.Drawing.Size(430, 26);
             this.tbxSourceOrganisation.TabIndex = 2;
             this.tbxSourceOrganisation.TextChanged += new System.EventHandler(this.tbxSourceOrganisation_TextChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 46);
+            this.label4.Location = new System.Drawing.Point(21, 71);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(66, 13);
+            this.label4.Size = new System.Drawing.Size(99, 20);
             this.label4.TabIndex = 51;
             this.label4.Text = "Organisation";
             // 
             // tbxOperationId
             // 
             this.tbxOperationId.Enabled = false;
-            this.tbxOperationId.Location = new System.Drawing.Point(123, 17);
+            this.tbxOperationId.Location = new System.Drawing.Point(184, 26);
+            this.tbxOperationId.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbxOperationId.Name = "tbxOperationId";
-            this.tbxOperationId.Size = new System.Drawing.Size(288, 20);
+            this.tbxOperationId.Size = new System.Drawing.Size(430, 26);
             this.tbxOperationId.TabIndex = 0;
             this.tbxOperationId.TextChanged += new System.EventHandler(this.tbxOperationId_TextChanged);
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(14, 20);
+            this.label19.Location = new System.Drawing.Point(21, 31);
+            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(64, 13);
+            this.label19.Size = new System.Drawing.Size(95, 20);
             this.label19.TabIndex = 49;
             this.label19.Text = "Operation id";
             // 
@@ -717,10 +749,11 @@
             this.tabPage3.Controls.Add(this.label8);
             this.tabPage3.Controls.Add(this.tbxDislaimerText);
             this.tabPage3.Controls.Add(this.label5);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 29);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(434, 178);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPage3.Size = new System.Drawing.Size(655, 281);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Credits";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -728,38 +761,42 @@
             // tbxDonorText
             // 
             this.tbxDonorText.Enabled = false;
-            this.tbxDonorText.Location = new System.Drawing.Point(123, 96);
+            this.tbxDonorText.Location = new System.Drawing.Point(184, 148);
+            this.tbxDonorText.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbxDonorText.Multiline = true;
             this.tbxDonorText.Name = "tbxDonorText";
-            this.tbxDonorText.Size = new System.Drawing.Size(288, 73);
+            this.tbxDonorText.Size = new System.Drawing.Size(430, 110);
             this.tbxDonorText.TabIndex = 1;
             this.tbxDonorText.TextChanged += new System.EventHandler(this.tbxDonorText_TextChanged);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(14, 99);
+            this.label8.Location = new System.Drawing.Point(21, 152);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(56, 13);
+            this.label8.Size = new System.Drawing.Size(83, 20);
             this.label8.TabIndex = 55;
             this.label8.Text = "Donor text";
             // 
             // tbxDislaimerText
             // 
             this.tbxDislaimerText.Enabled = false;
-            this.tbxDislaimerText.Location = new System.Drawing.Point(123, 17);
+            this.tbxDislaimerText.Location = new System.Drawing.Point(184, 26);
+            this.tbxDislaimerText.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbxDislaimerText.Multiline = true;
             this.tbxDislaimerText.Name = "tbxDislaimerText";
-            this.tbxDislaimerText.Size = new System.Drawing.Size(288, 73);
+            this.tbxDislaimerText.Size = new System.Drawing.Size(430, 110);
             this.tbxDislaimerText.TabIndex = 0;
             this.tbxDislaimerText.TextChanged += new System.EventHandler(this.tbxDislaimerText_TextChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(14, 20);
+            this.label5.Location = new System.Drawing.Point(21, 31);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(75, 13);
+            this.label5.Size = new System.Drawing.Size(112, 20);
             this.label5.TabIndex = 53;
             this.label5.Text = "Disclaimer text";
             // 
@@ -774,10 +811,11 @@
             this.tabPage4.Controls.Add(this.label9);
             this.tabPage4.Controls.Add(this.label10);
             this.tabPage4.Controls.Add(this.label11);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Location = new System.Drawing.Point(4, 29);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(434, 178);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPage4.Size = new System.Drawing.Size(655, 281);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Settings";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -790,7 +828,8 @@
             0,
             0,
             0});
-            this.numEmfDpi.Location = new System.Drawing.Point(123, 70);
+            this.numEmfDpi.Location = new System.Drawing.Point(184, 108);
+            this.numEmfDpi.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numEmfDpi.Maximum = new decimal(new int[] {
             1200,
             0,
@@ -802,7 +841,7 @@
             0,
             0});
             this.numEmfDpi.Name = "numEmfDpi";
-            this.numEmfDpi.Size = new System.Drawing.Size(120, 20);
+            this.numEmfDpi.Size = new System.Drawing.Size(180, 26);
             this.numEmfDpi.TabIndex = 2;
             this.numEmfDpi.Value = new decimal(new int[] {
             300,
@@ -814,18 +853,20 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 72);
+            this.label2.Location = new System.Drawing.Point(21, 111);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 13);
+            this.label2.Size = new System.Drawing.Size(68, 20);
             this.label2.TabIndex = 47;
             this.label2.Text = "EMF dpi";
             // 
             // btnSetExportToolPath
             // 
             this.btnSetExportToolPath.Enabled = false;
-            this.btnSetExportToolPath.Location = new System.Drawing.Point(381, 93);
+            this.btnSetExportToolPath.Location = new System.Drawing.Point(572, 143);
+            this.btnSetExportToolPath.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSetExportToolPath.Name = "btnSetExportToolPath";
-            this.btnSetExportToolPath.Size = new System.Drawing.Size(33, 23);
+            this.btnSetExportToolPath.Size = new System.Drawing.Size(50, 35);
             this.btnSetExportToolPath.TabIndex = 4;
             this.btnSetExportToolPath.Text = "...";
             this.btnSetExportToolPath.UseVisualStyleBackColor = true;
@@ -839,7 +880,8 @@
             0,
             0,
             0});
-            this.numPdfDpi.Location = new System.Drawing.Point(123, 44);
+            this.numPdfDpi.Location = new System.Drawing.Point(184, 68);
+            this.numPdfDpi.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numPdfDpi.Maximum = new decimal(new int[] {
             1200,
             0,
@@ -851,7 +893,7 @@
             0,
             0});
             this.numPdfDpi.Name = "numPdfDpi";
-            this.numPdfDpi.Size = new System.Drawing.Size(120, 20);
+            this.numPdfDpi.Size = new System.Drawing.Size(180, 26);
             this.numPdfDpi.TabIndex = 1;
             this.numPdfDpi.Value = new decimal(new int[] {
             300,
@@ -867,7 +909,8 @@
             0,
             0,
             0});
-            this.numJpegDpi.Location = new System.Drawing.Point(123, 17);
+            this.numJpegDpi.Location = new System.Drawing.Point(184, 26);
+            this.numJpegDpi.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numJpegDpi.Maximum = new decimal(new int[] {
             1200,
             0,
@@ -879,7 +922,7 @@
             0,
             0});
             this.numJpegDpi.Name = "numJpegDpi";
-            this.numJpegDpi.Size = new System.Drawing.Size(120, 20);
+            this.numJpegDpi.Size = new System.Drawing.Size(180, 26);
             this.numJpegDpi.TabIndex = 0;
             this.numJpegDpi.Value = new decimal(new int[] {
             300,
@@ -890,36 +933,40 @@
             // tbxExportToolPath
             // 
             this.tbxExportToolPath.Enabled = false;
-            this.tbxExportToolPath.Location = new System.Drawing.Point(122, 96);
+            this.tbxExportToolPath.Location = new System.Drawing.Point(183, 148);
+            this.tbxExportToolPath.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbxExportToolPath.Name = "tbxExportToolPath";
-            this.tbxExportToolPath.Size = new System.Drawing.Size(253, 20);
+            this.tbxExportToolPath.Size = new System.Drawing.Size(378, 26);
             this.tbxExportToolPath.TabIndex = 3;
             this.tbxExportToolPath.TextChanged += new System.EventHandler(this.tbxExportToolPath_TextChanged);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(13, 99);
+            this.label9.Location = new System.Drawing.Point(20, 152);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(81, 13);
+            this.label9.Size = new System.Drawing.Size(121, 20);
             this.label9.TabIndex = 45;
             this.label9.Text = "Export tool path";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(14, 46);
+            this.label10.Location = new System.Drawing.Point(21, 71);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(45, 13);
+            this.label10.Size = new System.Drawing.Size(66, 20);
             this.label10.TabIndex = 43;
             this.label10.Text = "PDF dpi";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(14, 20);
+            this.label11.Location = new System.Drawing.Point(21, 31);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(47, 13);
+            this.label11.Size = new System.Drawing.Size(69, 20);
             this.label11.TabIndex = 41;
             this.label11.Text = "Jpeg dpi";
             // 
@@ -1010,18 +1057,19 @@
             this.eprExportPath.ContainerControl = this;
             this.eprExportPath.Icon = ((System.Drawing.Icon)(resources.GetObject("eprExportPath.Icon")));
             // 
-            // frmMain
+            // frmConfigMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(477, 340);
+            this.ClientSize = new System.Drawing.Size(716, 523);
             this.Controls.Add(this.gbxConfigXmlValues);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.gbxCrashMoveFolder);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmMain";
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Name = "frmConfigMain";
             this.Text = "Operation Configuration Tool";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.gbxCrashMoveFolder.ResumeLayout(false);
