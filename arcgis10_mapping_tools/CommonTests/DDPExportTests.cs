@@ -66,10 +66,13 @@ namespace MapAction.tests
             Assert.AreEqual(isDDPEnabled, result, "Correctly detected if DataDrivenPages is enabled in example MXD");
         }
 
-        [TestCase(@"testfiles\ddp_enabled_three_pages_layout_view.mxd", 3)]
-        [TestCase(@"testfiles\ddp_enabled_single_page.mxd", 1)]
-        [TestCase(@"testfiles\MA_A3_landscape.mxd", 1)]
-        public void TestCountPdfOutputFiles(string relativeMXDfilename, int pdfCount)
+        [TestCase(@"testfiles\ddp_enabled_three_pages_layout_view.mxd", 3, true)]
+        [TestCase(@"testfiles\ddp_enabled_three_pages_layout_view.mxd", 1, false)]
+        [TestCase(@"testfiles\ddp_enabled_single_page.mxd", 1, true)]
+        [TestCase(@"testfiles\ddp_enabled_single_page.mxd", 1, false)]
+        [TestCase(@"testfiles\MA_A3_landscape.mxd", 1, true)]
+        [TestCase(@"testfiles\MA_A3_landscape.mxd", 1, false)]
+        public void TestCountPdfOutputFiles(string relativeMXDfilename, int pdfCount, bool isMultiPage)
         {
             // Open map document
             string documentName;
@@ -89,7 +92,7 @@ namespace MapAction.tests
             try
             {
                 MapImageExporter mie = new MapImageExporter(this.pMapDoc, baseExportFileName, "Main map");
-                mie.exportDataDrivenPagesImages();
+                mie.exportDataDrivenPagesImages(isMultiPage);
             }catch (System.Runtime.InteropServices.COMException ce){
                 System.Console.WriteLine("COMException message:");
                 System.Console.WriteLine(ce.Message);
