@@ -14,8 +14,8 @@ namespace MapAction.tests
     /// <summary>
     /// The tests in this case are focused on the testing that code dealing with the MapAction specific MXDs work correctly
     /// 
-    /// At present the PageLayoutProperties class is entirely procedural and only uses static methods. The layout of these test is intened to be adaptable 
-    /// to 
+    /// At present the PageLayoutProperties class is entirely procedural and only uses static methods. The layout of these tests 
+    /// is intened to be adaptable to some furture refactoring of this class, as a non-statci object.
     /// </summary>
     [TestFixture]
     public class MATemplateTests
