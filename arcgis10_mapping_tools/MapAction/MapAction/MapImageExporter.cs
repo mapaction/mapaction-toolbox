@@ -466,7 +466,7 @@ namespace MapAction
             return null;
         }
 
-        public void exportDataDrivenPagesImages()
+        public void exportDataDrivenPagesImages(bool isMultipleFiles)
         {
             // If not DataDrivenPages then call exportImage as normal
             if (!PageLayoutProperties.isDataDrivenPagesEnabled(m_MapDoc))
@@ -475,6 +475,7 @@ namespace MapAction
             }
             else
             {
+                string multiplePageParameter = isMultipleFiles ? "PDF_MULTIPLE_FILES_PAGE_NAME" : "PDF_SINGLE_FILE";
                 IGeoProcessor2 gp = new GeoProcessorClass();
                 gp.AddToolbox(Utilities.getExportGPToolboxPath());
                 IVariantArray parameters = new VarArrayClass();
@@ -482,7 +483,7 @@ namespace MapAction
                 parameters.Add(this.m_MapDoc.DocumentFilename);
                 parameters.Add(this.m_ExportDir);
                 parameters.Add(this.m_ExportBaseFileName);
-                parameters.Add("PDF_MULTIPLE_FILES_PAGE_NAME");
+                parameters.Add(multiplePageParameter);
 
                 // TODO: Deal with having to save doc. Just use current document in tool by default? Make MXD optional parameter?
                 // Execute the tool.

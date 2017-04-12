@@ -734,6 +734,7 @@
             this.tbxMapbookMode.Name = "tbxMapbookMode";
             this.tbxMapbookMode.Size = new System.Drawing.Size(234, 21);
             this.tbxMapbookMode.TabIndex = 9;
+            this.tbxMapbookMode.Text = "Multiple PDF Files";
             // 
             // label4
             // 

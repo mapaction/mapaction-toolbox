@@ -358,7 +358,9 @@ namespace MapActionToolbars
                 //// Data driven pages
                 IMapDocument pMapDoc = (IMapDocument)pMxDoc;
                 MapImageExporter mie = new MapImageExporter(pMapDoc, exportPathFileName, "Main map");
-                mie.exportDataDrivenPagesImages();
+                // if exact match do a multifile export, else default to single file.
+                bool isMultiplePage = (tbxMapbookMode.Text == "Multiple PDF Files");
+                mie.exportDataDrivenPagesImages(isMultiplePage);
 
                 dictFilePaths = new Dictionary<string,string>();
                 // TODO: this is a bit of a hack to work with multiple page pdf.
