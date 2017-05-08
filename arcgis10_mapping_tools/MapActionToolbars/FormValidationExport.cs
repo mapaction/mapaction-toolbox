@@ -519,12 +519,24 @@ namespace MapActionToolbars
             }
         }
 
-        public static string validateStatus(Control control, ErrorProvider epr)
-        {
-            epr.SetIconPadding(control, 5);
-            if (validateEmptyField(control, epr))
+        public static string validateStatus(Control status, Control versionNumber, ErrorProvider epr)
+        {            
+            epr.SetIconPadding(status, 5);
+            if ((validateEmptyField(status, epr)) && (validateEmptyField(versionNumber, epr)))
             {
-                return "Valid";
+                // New / Version 1 allowed
+                // Correction / Version 1 allowed
+                // Update / Version 1 NOT allowed
+                // New / Version > 1 NOT allowed
+                if (((status.Text == "New") && (((System.Windows.Forms.NumericUpDown)versionNumber).Value != 1)) ||
+                    ((status.Text == "Update") && (((System.Windows.Forms.NumericUpDown)versionNumber).Value == 1)))
+                {
+                    return "Error";
+                }
+                else
+                {
+                    return "Valid";
+                }
             }
             else
             {

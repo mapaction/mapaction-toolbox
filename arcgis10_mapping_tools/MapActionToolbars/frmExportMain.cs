@@ -21,6 +21,7 @@ using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using MapAction;
+
 namespace MapActionToolbars
 {
     public partial class frmExportMain : Form
@@ -140,7 +141,9 @@ namespace MapActionToolbars
             _operationIdValidationResult = FormValidationExport.validateOperationId(tbxOperationId, eprOperationIdWarning, eprOperationIdError);
             _glideNumberValidationResult = FormValidationExport.validateGlideNumber(tbxGlideNo, eprGlideNumberWarning, eprGlideNumberError);
             _locationValidationResult = FormValidationExport.validateLocation(tbxImageLocation, eprLocationWarning);
-            _statusValidationResult = FormValidationExport.validateStatus(cboStatus, eprStatusWarning);
+            _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
+            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
+            _statusValidationResult = FormValidationExport.validateStatus(cboStatus, nudVersionNumber, eprStatusWarning);
             _accessValidationResult = FormValidationExport.validateAccess(cboAccess, eprAccessWarning);
             _accessNoteValidationResult = FormValidationExport.validateAccessNote(tbxImageAccessNotes, eprAccessNoteWarning);
             _qualityControlValidationResult = FormValidationExport.validateQualityControl(cboQualityControl, eprQualityControlWarning);
@@ -321,21 +324,22 @@ namespace MapActionToolbars
                 dictImageFileSizes[kvp.Key] = MapAction.Utilities.getFileSize(kvp.Value);
             }
             System.Windows.Forms.Application.DoEvents();
-            
             // Create a dictionary to get and store the map frame extents to pass to the output xml
             Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
+            dictImageFileSizes["jpeg"] = MapAction.Utilities.getFileSize(dictFilePaths["jpeg"]);
+            dictImageFileSizes["emf"] = MapAction.Utilities.getFileSize(dictFilePaths["emf"]);
 
             // Export KML
-            IMapDocument pMapDoc = (IMapDocument)pMxDoc;            
+            IMapDocument pMapDoc = (IMapDocument)pMxDoc;
+
             string kmzPathFileName = exportPathFileName + ".kmz";
             string kmzScale;
             if (dictFrameExtents.ContainsKey("scale")) {kmzScale = dictFrameExtents["scale"];} else {kmzScale = null;};
-            
             // TODO move this to the MapImageExporter class too, for now it is still in the static MapExport class
             MapAction.MapExport.exportMapFrameKmlAsRaster(pMapDoc, "Main map", @kmzPathFileName, kmzScale, nudKmlResolution.Value.ToString());
             // Add the xml path to the dictFilePaths, which is the input into the creatZip method
             dictFilePaths["kmz"] = kmzPathFileName;
-            
+
             // Get the mxd filename
             string mxdName = ArcMap.Application.Document.Title;
             System.Windows.Forms.Application.DoEvents();
@@ -355,7 +359,6 @@ namespace MapActionToolbars
 
             // Add the xml path to the dictFilePaths, which is the input into the creatZip method
             dictFilePaths["xml"] = xmlPath;
-
             // Create zip
             // TODO Note that currently the createZip will zip the xml, jpeg, and pdf. Not the emf! 
             // So why are we making it??
@@ -506,7 +509,6 @@ namespace MapActionToolbars
                 Debug.WriteLine("Image export variables not valid.");
                 return dict;
             }
-
             else
             {
                 // refactored export code into non-static class which handles thumbnail filename and pixel size limits 
@@ -535,19 +537,15 @@ namespace MapActionToolbars
                 MapImageExporter dfExporter = new MapImageExporter(pMapDoc, exportPathFileName, "Main map");
                 dfExporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
                 dfExporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudEmfResolution.Value));
-               
+
                 //Output 3 image formats pdf, jpeg & emf
-                //dict.Add("pdf", 
-                //    MapAction.MapExport.exportImage(pMapDoc, "pdf", nudPdfResolution.Value.ToString(), exportPathFileName, null));
-                //dict.Add("jpeg", 
-                //    MapAction.MapExport.exportImage(pMapDoc, "jpeg", nudJpegResolution.Value.ToString(), exportPathFileName, null));
-                //dict.Add("emf", 
-                //    MapAction.MapExport.exportImage(pMapDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, null));
-                //// what are these for?
+                //dict.Add("pdf", MapAction.MapExport.exportImage(pMapDoc, "pdf", nudPdfResolution.Value.ToString(), exportPathFileName, null));
+                //dict.Add("jpeg", MapAction.MapExport.exportImage(pMapDoc, "jpeg", nudJpegResolution.Value.ToString(), exportPathFileName, null));
+                //dict.Add("emf", MapAction.MapExport.exportImage(pMapDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, null));
                 //MapAction.MapExport.exportImage(pMapDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
                 //MapAction.MapExport.exportImage(pMapDoc, "jpeg", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
-
             }
+
             return dict;
         }
 
@@ -735,7 +733,7 @@ namespace MapActionToolbars
 
         private void cboStatus_TextChanged(object sender, EventArgs e)
         {
-            _statusValidationResult = FormValidationExport.validateStatus(cboStatus, eprStatusWarning);
+            _statusValidationResult = FormValidationExport.validateStatus(cboStatus, nudVersionNumber, eprStatusWarning);
         }
 
         private void cboAccess_TextChanged(object sender, EventArgs e)
@@ -794,6 +792,7 @@ namespace MapActionToolbars
             {
                 cboStatus.Text = "Updated";
             }
+            _statusValidationResult = FormValidationExport.validateStatus(cboStatus, nudVersionNumber, eprStatusWarning);
         }
 
         private void btnLayoutRight_Click_1(object sender, EventArgs e)
@@ -829,6 +828,11 @@ namespace MapActionToolbars
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
+        }
+
+        private void cboStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _statusValidationResult = FormValidationExport.validateStatus(cboStatus, nudVersionNumber, eprStatusWarning);
         }
 
         private void tbxCountries_TextChanged_1(object sender, EventArgs e)
