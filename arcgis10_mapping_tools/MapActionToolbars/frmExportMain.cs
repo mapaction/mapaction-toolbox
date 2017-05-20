@@ -15,12 +15,15 @@ using ESRI.ArcGIS.ArcMap;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geometry;
+using ESRI.ArcGIS.Geoprocessor;
+using ESRI.ArcGIS.Geoprocessing;
 using ESRI.ArcGIS.Desktop;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using MapAction;
+
 namespace MapActionToolbars
 {
     public partial class frmExportMain : Form
@@ -29,7 +32,6 @@ namespace MapActionToolbars
         //Need a better solution for sorting this out
         private static string _targetMapFrame = "Main map";
         private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
-        private static Dictionary<string,string>_dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, _targetMapFrame);
         
         //create a variable to hold the status of each validation check
         private string _titleValidationResult;
@@ -140,6 +142,8 @@ namespace MapActionToolbars
             _operationIdValidationResult = FormValidationExport.validateOperationId(tbxOperationId, eprOperationIdWarning, eprOperationIdError);
             _glideNumberValidationResult = FormValidationExport.validateGlideNumber(tbxGlideNo, eprGlideNumberWarning, eprGlideNumberError);
             _locationValidationResult = FormValidationExport.validateLocation(tbxImageLocation, eprLocationWarning);
+            _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
+            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
             _statusValidationResult = FormValidationExport.validateStatus(cboStatus, eprStatusWarning);
             _accessValidationResult = FormValidationExport.validateAccess(cboAccess, eprAccessWarning);
             _accessNoteValidationResult = FormValidationExport.validateAccessNote(tbxImageAccessNotes, eprAccessNoteWarning);
@@ -147,7 +151,8 @@ namespace MapActionToolbars
             _languageValidationResult = FormValidationExport.validateLanguage(tbxLanguage, eprLanguageWarning, eprLanguageError);
 
             var dict = new Dictionary<string, string>();
-            dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, _targetMapFrame);
+            // added extra parameter to say that in this case all of the ESRI markup should be stripped from the label values
+            dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, _targetMapFrame, true);
 
             //Update form text boxes with values from the map
             if (dict.ContainsKey("title")) { tbxMapTitle.Text = dict["title"]; }
@@ -168,9 +173,6 @@ namespace MapActionToolbars
             if (dictXML.ContainsKey("GlideNo")) { tbxGlideNo.Text = dictXML["GlideNo"]; }
             if (dictXML.ContainsKey("Language")) { tbxLanguage.Text = dictXML["Language"]; }
             if (dictXML.ContainsKey("Country")) { tbxCountries.Text = dictXML["Country"]; }
-
-            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
-            
             string operational_id = dictXML["OperationId"];
             Debug.WriteLine("Op ID: " + operational_id);
             if (dictXML.ContainsKey("OperationId")) { tbxOperationId.Text = dictXML["OperationId"]; }
@@ -181,8 +183,6 @@ namespace MapActionToolbars
 
             // Set the status value and the version number from the existing XML if it exists:
             setValuesFromExistingXML();
-
-            _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
 
             // Set the spatial reference information on load
             var dictSpatialRef = new Dictionary<string, string>();
@@ -197,6 +197,11 @@ namespace MapActionToolbars
             tbxTime.Text = time;
             tbxPaperSize.Text = MapAction.PageLayoutProperties.getPageSize(_pMxDoc, _targetMapFrame);
             tbxScale.Text = MapAction.PageLayoutProperties.getScale(_pMxDoc, _targetMapFrame);
+
+            // Check if Data Driven Page and enable dropdown accordingly
+            IMapDocument mapDoc;
+            mapDoc = (_pMxDoc as MxDocument) as IMapDocument;
+            tbxMapbookMode.Enabled = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
             
         }
 
@@ -267,7 +272,6 @@ namespace MapActionToolbars
 
         private void btnCreateZip_Click(object sender, EventArgs e)
         {
-
             // Create and start a stopwatch to measure the function performance
             //### Remove at a later time ###
             Stopwatch sw = Stopwatch.StartNew();
@@ -305,37 +309,74 @@ namespace MapActionToolbars
             // this method doesn't correctly in checking for permissions, requires updating.  
             // MapAction.Utilities.detectWriteAccessToPath(path);
 
+            // TODO:
+            // APS Is there a good reasons for retreving the reference to the IMxDocument
+            // via the ArcMap Application? Why not use the `frmExportMain._pMxDoc` member instead?
+            // Alternatively is the `frmExportMain._pMxDoc` member used or required?
             IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
             IActiveView pActiveView = pMxDoc.ActiveView;
-
-            // Call to export the images and return a dictionary of the file names
-            Dictionary<string, string> dictFilePaths = exportAllImages();
-
+            // Ssetup dictionaries for metadata XML
+            Dictionary<string, string> dictFilePaths;
             // Create a dictionary to store the image file sizes to add to the output xml
             Dictionary<string, long> dictImageFileSizes = new Dictionary<string, long>();
-            // Calculate the file size of each image and add it to the dictionary
-            // Don't use dict.add because a) it's another place to keep track of magic strings
-            // values, and b) if we accidentally call it twice with same key we get an exception
-            foreach (var kvp in dictFilePaths)
-            {
-                dictImageFileSizes[kvp.Key] = MapAction.Utilities.getFileSize(kvp.Value);
-            }
-            System.Windows.Forms.Application.DoEvents();
-            
+
             // Create a dictionary to get and store the map frame extents to pass to the output xml
+            // TODO: Get extent of dpp index dataset instead of data frame. 
             Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
 
-            // Export KML
-            IMapDocument pMapDoc = (IMapDocument)pMxDoc;            
-            string kmzPathFileName = exportPathFileName + ".kmz";
-            string kmzScale;
-            if (dictFrameExtents.ContainsKey("scale")) {kmzScale = dictFrameExtents["scale"];} else {kmzScale = null;};
+            IMapDocument mapDoc;
+            mapDoc = (pMxDoc as MxDocument) as IMapDocument;
+            bool isDDP = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
+
+            if (!isDDP) // Need a way to do this - the form elements are all disabled before export - see ^^
+            {
+                // Call to export the images and return a dictionary of the file names
+                dictFilePaths = exportAllImages();
+
+                // Calculate the file size of each image and add it to the dictionary
+                // Don't use dict.add because a) it's another place to keep track of magic strings
+                // values, and b) if we accidentally call it twice with same key we get an exception
+                foreach (var kvp in dictFilePaths)
+                {
+                    dictImageFileSizes[kvp.Key] = MapAction.Utilities.getFileSize(kvp.Value);
+                }
+                System.Windows.Forms.Application.DoEvents();
+
+                // Export KML
+                IMapDocument pMapDoc = (IMapDocument)pMxDoc;            
+                string kmzPathFileName = exportPathFileName + ".kmz";
+                string kmzScale;
+                if (dictFrameExtents.ContainsKey("scale")) {kmzScale = dictFrameExtents["scale"];} else {kmzScale = null;};
             
-            // TODO move this to the MapImageExporter class too, for now it is still in the static MapExport class
-            MapAction.MapExport.exportMapFrameKmlAsRaster(pMapDoc, "Main map", @kmzPathFileName, kmzScale, nudKmlResolution.Value.ToString());
-            // Add the xml path to the dictFilePaths, which is the input into the creatZip method
-            dictFilePaths["kmz"] = kmzPathFileName;
-            
+                // TODO move this to the MapImageExporter class too, for now it is still in the static MapExport class
+                MapAction.MapExport.exportMapFrameKmlAsRaster(pMapDoc, "Main map", @kmzPathFileName, kmzScale, nudKmlResolution.Value.ToString());
+                // Add the xml path to the dictFilePaths, which is the input into the creatZip method
+                dictFilePaths["kmz"] = kmzPathFileName;
+            }
+            else
+            {
+                //// Data driven pages
+                IMapDocument pMapDoc = (IMapDocument)pMxDoc;
+                MapImageExporter mie = new MapImageExporter(pMapDoc, exportPathFileName, "Main map");
+                // if exact match do a multifile export, else default to single file.
+                bool isMultiplePage = (tbxMapbookMode.Text == "Multiple PDF Files");
+                mie.exportDataDrivenPagesImages(isMultiplePage);
+
+                dictFilePaths = new Dictionary<string,string>();
+                // TODO: this is a bit of a hack to work with multiple page pdf.
+                // This will add all PDF files which match teh glob. There is the potenital that this
+                // could include some that were not exported by this export event.
+                dictFilePaths["pdf"] = exportPathFileName + "*.pdf";
+                // just add in extra values here for the metadata export to work.
+                // calculating the actual size for DDP is too hard and 
+                // not worth while.
+                dictFilePaths["jpeg"] = String.Empty;
+                dictFilePaths["kmz"] = String.Empty;
+                dictFilePaths["png_thumbnail_zip"] = String.Empty;
+                dictImageFileSizes["jpeg"] = 0;
+                dictImageFileSizes["pdf"] = 0;
+                dictImageFileSizes["kmz"] = 0;
+            }
             // Get the mxd filename
             string mxdName = ArcMap.Application.Document.Title;
             System.Windows.Forms.Application.DoEvents();
@@ -361,16 +402,19 @@ namespace MapActionToolbars
             // So why are we making it??
             MapAction.MapExport.createZip(dictFilePaths);
             
-            // now that it's been zipped, delete the copy of the thumbnail called thumbnail.png to avoid confusion
-            string zippedThumbFile = dictFilePaths[MapActionExportTypes.png_thumbnail_zip.ToString()];
             try
             {
-                System.IO.File.Delete(zippedThumbFile);
+                // now that it's been zipped, delete the copy of the thumbnail called thumbnail.png to avoid confusion
+                string zippedThumbFile = dictFilePaths[MapActionExportTypes.png_thumbnail_zip.ToString()];
+                if (zippedThumbFile != String.Empty)
+                {
+                    System.IO.File.Delete(zippedThumbFile);
+                }
             }
             catch (Exception ex)
             {
                 // don't crash if the thumbnail export failed or the intermediate file can't be deleted for some reason
-                if (!(ex is ArgumentNullException || ex is UnauthorizedAccessException))
+                if (!(ex is ArgumentNullException || ex is UnauthorizedAccessException || ex is KeyNotFoundException))
                 {
                     throw;
                 }
@@ -398,8 +442,11 @@ namespace MapActionToolbars
 
         }
 
-        private Dictionary<string, string> getExportToolValues(Dictionary<string, long> dictImageFileSizes, 
-            Dictionary<string, string> dictFilePaths, Dictionary<string, string> dictFrameExtents, string mxdName)
+        private Dictionary<string, string> getExportToolValues(
+            Dictionary<string, long> dictImageFileSizes, 
+            Dictionary<string, string> dictFilePaths,
+            Dictionary<string, string> dictFrameExtents, 
+            string mxdName)
         {
             
             //tidy up the map title
@@ -441,8 +488,8 @@ namespace MapActionToolbars
                 {"ymin",            dictFrameExtents["yMin"]},
                 {"proj",            tbxProjection.Text},
                 {"datum",           tbxDatum.Text},
-                {"jpgfilename",     System.IO.Path.GetFileName(dictFilePaths["jpeg"])},
-                {"pdffilename",     System.IO.Path.GetFileName(dictFilePaths["pdf"])},
+                //{"jpgfilename",     System.IO.Path.GetFileName(dictFilePaths["jpeg"])},
+                //{"pdffilename",     System.IO.Path.GetFileName(dictFilePaths["pdf"])},
                 {"qclevel",         cboQualityControl.Text},
                 {"qcname",          ""},
                 {"access",          cboAccess.Text},
@@ -454,9 +501,9 @@ namespace MapActionToolbars
                 {"themes",          themes.ToString()},
                 {"scale",           tbxScale.Text},
                 {"papersize",       tbxPaperSize.Text},
-                {"jpgfilesize",     dictImageFileSizes["jpeg"].ToString()},
+                //{"jpgfilesize",     dictImageFileSizes["jpeg"].ToString()},
                 {"jpgresolutiondpi",nudJpegResolution.Value.ToString()},
-                {"pdffilesize",     dictImageFileSizes["pdf"].ToString()},
+                //{"pdffilesize",     dictImageFileSizes["pdf"].ToString()},
                 {"pdfresolutiondpi",nudPdfResolution.Value.ToString()},
                 {"kmlresolutiondpi",nudKmlResolution.Value.ToString()},
                 {"mxdfilename",     mxdName},
@@ -464,9 +511,16 @@ namespace MapActionToolbars
                 {"paperxmin",       ""},
                 {"paperymax",       ""},
                 {"paperymin",       ""},
-                {"kmzfilename",     System.IO.Path.GetFileName(dictFilePaths["kmz"])},
+                //{"kmzfilename",     System.IO.Path.GetFileName(dictFilePaths["kmz"])},
                 {"accessnotes",     tbxImageAccessNotes.Text}
             };
+
+            dict["jpgfilename"] = System.IO.Path.GetFileName(dictFilePaths["jpeg"]);
+            dict["pdffilename"] = System.IO.Path.GetFileName(dictFilePaths["pdf"]);
+            dict["jpgfilesize"] = dictImageFileSizes["jpeg"].ToString();
+            dict["pdffilesize"] = dictImageFileSizes["pdf"].ToString();
+            dict["kmzfilename"] = System.IO.Path.GetFileName(dictFilePaths["kmz"]);
+
             return dict;
             //string filename = Path.GetFileName(path);
         }
@@ -831,9 +885,6 @@ namespace MapActionToolbars
             _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
         }
 
-        private void tbxCountries_TextChanged_1(object sender, EventArgs e)
-        {
-            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
-        }
+
     }
 }

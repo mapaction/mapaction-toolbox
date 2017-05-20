@@ -10,7 +10,7 @@
   <Targets>
     <Target name="Desktop" version="10.2" />
   </Targets>
-  <AddIn language="CLR" library="MapActionToolbars.dll" namespace="MapActionToolbars">
+  <AddIn language="CLR4.0" library="MapActionToolbars.dll" namespace="MapActionToolbars">
     <ArcMap>
       <Toolbars>
         <Toolbar id="MapActionToolbars_MapAction" caption="MapAction Toolbar" showInitially="true">

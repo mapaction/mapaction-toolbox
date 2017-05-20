@@ -493,6 +493,24 @@ namespace MapAction
             }
         }
 
+        /// <summary>
+        /// Allows a GP toolbox to be added to the output of the VS project. Using this method it can 
+        /// be referenced using a reletive path from the .dll.
+        /// </summary>
+        /// <returns>The runtime path to the mapbook_export_tools GeoProcessing Toolbox</returns>
+        public static String getExportGPToolboxPath()
+        {
+            String assemblyPath, assemblyDir;
+            String tbxStub = @"mapbook_export_tool\mapbook_export_tools.tbx";
+            String tbxPath;
+
+            assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            assemblyDir = System.IO.Path.GetDirectoryName(assemblyPath);
+            tbxPath = System.IO.Path.Combine(assemblyDir, tbxStub);
+            System.Console.WriteLine(tbxPath);
+            return tbxPath;
+        }
+
         #region Public method getLanguageConfigFilePath()
 
         public static string getLanguageConfigFilePath()

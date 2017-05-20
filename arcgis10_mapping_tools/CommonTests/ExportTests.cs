@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
@@ -15,33 +13,20 @@ using MapAction;
 
 namespace MapAction.tests
 {
-     [TestFixture]
+    //[Ignore("Ignore Exports whilst fixing PageLayoutElements")]
+    [TestFixture]
     public class Export
     {
         // Class properties 
         protected string exportPath;
-        protected string documentName;
         protected string testRootDir;
         protected IMapDocument pMapDoc; // Map document 
-
-        [DllImport("User32.dll")]
-        public static extern int GetDesktopWindow();
 
         // Default constructor, which is called just once.
         public Export()
         {
-            //Add runtime binding prior to any ArcObjects code in the static void Main() method.
-            if (ESRI.ArcGIS.RuntimeManager.ActiveRuntime == null)
-            {
-                ESRI.ArcGIS.RuntimeManager.BindLicense(ESRI.ArcGIS.ProductCode.EngineOrDesktop);
-            }
-
-            // Get path relative to the CommonTests.dll
-            string asmbyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
-            // Strip out spurious wording
-            asmbyPath = asmbyPath.Replace(@"file:\", string.Empty);
-            // Jump up two levels in directory tree to get the VS project root
-            this.testRootDir = Path.Combine(asmbyPath, @"..\..\");
+            TestUtilities.BindESRILicense();
+            this.testRootDir = TestUtilities.GetTestsRootDir();
         }
 
         // This is called prior to each test and allows state to be reset.
@@ -55,13 +40,14 @@ namespace MapAction.tests
                     this.exportPath = ConfigurationManager.AppSettings["exportPath"];
                     this.documentName = ConfigurationManager.AppSettings["mapDocument"];            
             */
+            string documentName;
 
-            this.exportPath = GetTemporaryDirectory();
+            this.exportPath = TestUtilities.GetTemporaryDirectory();
             // hardcoded path to a test MXD relative to the VS Project root directory
             // ConfigurationManager.AppSettings["mapDocument"];
-            this.documentName = Path.Combine(this.testRootDir, @"testfiles\MA_A3_landscape.mxd");
+            documentName = Path.Combine(this.testRootDir, @"testfiles\MA_A3_landscape.mxd");
             // Open map document
-            this.pMapDoc = this.getMxd(this.documentName); 
+            this.pMapDoc = TestUtilities.GetMXD(documentName); 
         }
 
         [TearDown]
@@ -144,9 +130,6 @@ namespace MapAction.tests
             Assert.IsTrue(fi.Exists, "The map file has been exported as expected.");
             // this test is a little difficult with a thumbnail which could be v small if the map is plain
             Assert.IsTrue(fi.Length > (expectedFileSize * 1024), "The map file size is vaguely sensible.");
-
-
-            
         }
 
 
@@ -213,7 +196,20 @@ namespace MapAction.tests
             // Test export file not present already 
             // Assert.IsFalse(System.IO.File.Exists(exportFileName), "A map file did not exist prior to the export function being called.");
             Assert.IsFalse(fi.Exists, "A map file did not exist prior to the export function being called as expected.");
-            MapExport.exportMapFrameKmlAsRaster(this.pMapDoc, dataFrameName, kmlFileName, scale, "50");
+
+            try
+            {
+                MapExport.exportMapFrameKmlAsRaster(this.pMapDoc, dataFrameName, kmlFileName, scale, "50");
+            }
+            catch (System.Runtime.InteropServices.COMException ce)
+            {
+                System.Console.WriteLine("COMException message:");
+                System.Console.WriteLine(ce.Message);
+                System.Console.WriteLine(ce.ErrorCode);
+                System.Console.WriteLine(ce.Data);
+                System.Console.WriteLine(ce.TargetSite);
+            }
+
             // Assert file exported. 
             fi.Refresh();
             Assert.IsTrue(fi.Exists, "The map file has been exported as expected.");
@@ -234,31 +230,6 @@ namespace MapAction.tests
         }
          */
 
-        private IMapDocument getMxd(string mxdPath)
-        {
-           
-            MapDocument _pMapDoc = new MapDocumentClass();
-            _pMapDoc.Open(mxdPath);
-
-            IPageLayout pageLayout = _pMapDoc.PageLayout;
-            //Key line. Must Activate the ActiveView before it will work working as expected
-            _pMapDoc.ActiveView.Activate(GetDesktopWindow()); 
-            _pMapDoc.ActiveView.Refresh();
-
-            return (IMapDocument)_pMapDoc;
-
-        }
-
-
-        /*
-         * http://stackoverflow.com/questions/278439/creating-a-temporary-directory-in-windows
-         */
-        private string GetTemporaryDirectory()
-        {
-            string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-            Directory.CreateDirectory(tempDirectory);
-            return tempDirectory;
-        }
 
     }
 }
