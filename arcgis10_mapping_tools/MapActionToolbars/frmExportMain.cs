@@ -60,7 +60,7 @@ namespace MapActionToolbars
         private const string _statusUpdate = "Update";
         private const string _statusCorrection = "Correction";
         private const int _initialVersionNumber = 1;
-
+        private string _language;
 
 
         public frmExportMain()
@@ -165,13 +165,22 @@ namespace MapActionToolbars
                 tbxMapNumber.Text = _mapNumber;  
             }
 
+            if (dict.ContainsKey("language_label"))
+            {
+                _language = dict["language_label"];
+            }
+            else
+            {
+                _language = "English";
+            }
+            tbxLanguage.Text = _language;
+
             // Update form values from the config xml
             var dictXML = new Dictionary<string, string>();
             string path = MapAction.Utilities.getCrashMoveFolderPath();
             string filePath = path + @"\operation_config.xml";
             dictXML = MapAction.Utilities.getOperationConfigValues(filePath);
             if (dictXML.ContainsKey("GlideNo")) { tbxGlideNo.Text = dictXML["GlideNo"]; }
-            if (dictXML.ContainsKey("Language")) { tbxLanguage.Text = dictXML["Language"]; }
             if (dictXML.ContainsKey("Country")) { tbxCountries.Text = dictXML["Country"]; }
             string operational_id = dictXML["OperationId"];
             Debug.WriteLine("Op ID: " + operational_id);
@@ -809,7 +818,6 @@ namespace MapActionToolbars
 
         private void tbxLanguage_TextChanged(object sender, EventArgs e)
         {
-            _languageValidationResult = FormValidationExport.validateLanguage(tbxLanguage, eprLanguageWarning, eprLanguageError);
         }
 
         private void tabExportTool_Selected(object sender, TabControlEventArgs e)

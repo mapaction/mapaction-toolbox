@@ -1132,6 +1132,7 @@
             // 
             this.tbxLanguage.Location = new System.Drawing.Point(86, 152);
             this.tbxLanguage.Name = "tbxLanguage";
+            this.tbxLanguage.ReadOnly = true;
             this.tbxLanguage.Size = new System.Drawing.Size(265, 20);
             this.tbxLanguage.TabIndex = 4;
             this.tbxLanguage.TextChanged += new System.EventHandler(this.tbxLanguage_TextChanged);
