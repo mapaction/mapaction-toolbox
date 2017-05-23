@@ -20,17 +20,30 @@ Interactive builds requirements:
 - Visual Studio 2008 or later
 - NUnit v2.6.4
 
-Commandline build requirements (to be confirmed):
+Commandline build requirements:
 - ArcMap Desktop v10.2.2 (standard edition or higher) installed and licenced
 - ArcMap SDK (ArcObjects) v10.2.2
-- Visual Studio Professional 2008 SP1 (but not later verisons)
-- Visual Studio 2008 SDK 1.1
+- Visual Studio Professional 2010 SP1
+- Visual Studio 2010 SP1 SDK 1.1
 - NUnit v2.6.4
 
+For commandline build to work correctly some post install actions are required. See [this stackexchange answer](http://gis.stackexchange.com/a/154880/34520) for details. 
+
+```winbatch
+echo about to set VS env
+call "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\vcvars32.bat"
+echo done VS env
+echo about to reg nunit.framework
+"c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\gacutil.exe" /silent /i "C:\Program Files (x86)\NUnit 2.6.4\bin\framework\nunit.framework.dll"
+echo done reg nunit.framework
+echo about to reg Microsoft.VisualStudio.Shell.9.0.dll
+"c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\gacutil.exe" /silent /i "C:\Program Files (x86)\Microsoft Visual Studio 2010 SDK SP1\VisualStudioIntegration\Common\Assemblies\v2.0\Microsoft.VisualStudio.Shell.9.0.dll"
+echo done reg Microsoft.VisualStudio.Shell.9.0.dll
+```
 
 About
 =====
-Copyright (c) 2016 [MapAction](http://mapaction.org).
+Copyright (c) 2016 [MapAction](https://mapaction.org).
 
 The development of version 4 of the MapAction Toolbox was generously funded by [ECHO](http://ec.europa.eu/echo).
 
