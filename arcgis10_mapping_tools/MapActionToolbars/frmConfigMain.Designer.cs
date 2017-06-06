@@ -281,8 +281,6 @@
             // 
             this.cboCountry.Enabled = false;
             this.cboCountry.FormattingEnabled = true;
-            this.cboCountry.Items.AddRange(this.countriesConfig.countries());
-
             this.cboCountry.Location = new System.Drawing.Point(123, 69);
             this.cboCountry.Name = "cboCountry";
             this.cboCountry.Size = new System.Drawing.Size(288, 21);

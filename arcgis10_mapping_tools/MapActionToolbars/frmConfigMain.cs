@@ -35,7 +35,11 @@ namespace MapActionToolbars
 
             // Set up Countries lookup
             this.countriesConfig = MapAction.Utilities.getCountryConfigValues(filePath);
+
             InitializeComponent();
+
+            this.cboCountry.Items.AddRange(this.countriesConfig.countries());
+
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
