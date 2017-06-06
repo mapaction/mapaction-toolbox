@@ -24,12 +24,17 @@ namespace MapActionToolbars
 
         private Boolean _configXmlEditState = false;
         private Boolean _configXmlNewFile = false;
-        private Boolean _btnSaveEnalbled = false;
         private Boolean _configPathHasChanged = false;
+        private MapAction.CountryConfig countriesConfig = null;
 
 
         public frmConfigMain()
         {
+            string path = MapAction.Utilities.getCrashMoveFolderPath();
+            string filePath = path + @"\countries_config.xml";
+
+            // Set up Countries lookup
+            this.countriesConfig = MapAction.Utilities.getCountryConfigValues(filePath);
             InitializeComponent();
         }
 
@@ -198,6 +203,7 @@ namespace MapActionToolbars
             dict.Add("OperationName", tbxOperationName.Text);
             dict.Add("GlideNo", tbxGlideNo.Text);
             dict.Add("Country", cboCountry.Text);
+            dict.Add("Alpha3Code", this.countriesConfig.lookup(cboCountry.Text, CountryFields.Alpha3));
             dict.Add("TimeZone", cboTimeZone.Text);
             dict.Add("OperationId", tbxOperationId.Text);
             dict.Add("DefaultSourceOrganisation", tbxSourceOrganisation.Text);

@@ -98,6 +98,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CountryConfig.cs" />
+    <Compile Include="CountryWithRegionalCodes.cs" />
     <Compile Include="LanguageConfig.cs" />
     <Compile Include="MapExport.cs" />
     <Compile Include="MapImageExporter.cs" />
