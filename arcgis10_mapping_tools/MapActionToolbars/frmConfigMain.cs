@@ -26,6 +26,7 @@ namespace MapActionToolbars
         private Boolean _configXmlNewFile = false;
         private Boolean _configPathHasChanged = false;
         private MapAction.CountryConfig countriesConfig = null;
+        private MapAction.LanguageCodeLookup languageCodeLookup = null;
 
 
         public frmConfigMain()
@@ -36,9 +37,15 @@ namespace MapActionToolbars
             // Set up Countries lookup
             this.countriesConfig = MapAction.Utilities.getCountryConfigValues(filePath);
 
+            // Create languages lookup
+            string languageFilePath = path + @"\language_codes.xml";
+            this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
+
             InitializeComponent();
 
             this.cboCountry.Items.AddRange(this.countriesConfig.countries());
+
+            this.cboLanguage.Items.AddRange(this.languageCodeLookup.languages());
 
         }
 
@@ -150,7 +157,7 @@ namespace MapActionToolbars
         private void frmMain_Load(object sender, EventArgs e)
         {
             //Populate the form with the xml data if it exists 
-            //dlgDefaultValuesOrExistingXml();
+            //dlgDefaultValuesOfrExistingXml();
             
             //get the preset path from the configuration file
             string path = MapAction.Utilities.getCrashMoveFolderPath();
@@ -209,6 +216,7 @@ namespace MapActionToolbars
             dict.Add("Country", cboCountry.Text);
             dict.Add("Alpha3Code", this.countriesConfig.lookup(cboCountry.Text, CountryFields.Alpha3));
             dict.Add("TimeZone", cboTimeZone.Text);
+            dict.Add("LanguageCode", this.languageCodeLookup.lookup(cboLanguage.Text, LanguageCodeFields.Alpha2));
             dict.Add("OperationId", tbxOperationId.Text);
             dict.Add("DefaultSourceOrganisation", tbxSourceOrganisation.Text);
             dict.Add("DefaultSourceOrganisationUrl", tbxOrganisationUrl.Text);
@@ -327,6 +335,7 @@ namespace MapActionToolbars
             }
             cboCountry.Text = dict["Country"];
             cboTimeZone.Text = dict["TimeZone"];
+            cboLanguage.Text = this.languageCodeLookup.lookupA2LanguageCode(dict["LanguageCode"], LanguageCodeFields.Language);
             tbxOperationId.Text = dict["OperationId"];
             tbxPrimaryEmail.Text = dict["DeploymentPrimaryEmail"];
             tbxSourceOrganisation.Text = dict["DefaultSourceOrganisation"];
@@ -362,6 +371,7 @@ namespace MapActionToolbars
                 tbxGlideNo.Enabled = true;
                 cboCountry.Enabled = true;
                 cboTimeZone.Enabled = true;
+                cboLanguage.Enabled = true;
                 tbxOperationId.Enabled = true;
                 tbxSourceOrganisation.Enabled = true;
                 tbxOrganisationUrl.Enabled = true;
@@ -391,6 +401,7 @@ namespace MapActionToolbars
                 tbxGlideNo.Enabled = false;
                 cboCountry.Enabled = false;
                 cboTimeZone.Enabled = false;
+                cboLanguage.Enabled = false;
                 tbxOperationId.Enabled = false;
                 tbxSourceOrganisation.Enabled = false;
                 tbxOrganisationUrl.Enabled = false;

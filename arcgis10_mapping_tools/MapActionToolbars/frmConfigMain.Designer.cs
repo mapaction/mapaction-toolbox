@@ -40,6 +40,8 @@
             this.chkEditConfigXml = new System.Windows.Forms.CheckBox();
             this.tabConfigXml = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cboLanguage = new System.Windows.Forms.ComboBox();
             this.cboTimeZone = new System.Windows.Forms.ComboBox();
             this.cboCountry = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -180,7 +182,7 @@
             this.gbxConfigXmlValues.Controls.Add(this.tabConfigXml);
             this.gbxConfigXmlValues.Location = new System.Drawing.Point(13, 73);
             this.gbxConfigXmlValues.Name = "gbxConfigXmlValues";
-            this.gbxConfigXmlValues.Size = new System.Drawing.Size(457, 231);
+            this.gbxConfigXmlValues.Size = new System.Drawing.Size(573, 231);
             this.gbxConfigXmlValues.TabIndex = 2;
             this.gbxConfigXmlValues.TabStop = false;
             this.gbxConfigXmlValues.Text = "Configuration XML";
@@ -205,11 +207,13 @@
             this.tabConfigXml.Location = new System.Drawing.Point(9, 19);
             this.tabConfigXml.Name = "tabConfigXml";
             this.tabConfigXml.SelectedIndex = 0;
-            this.tabConfigXml.Size = new System.Drawing.Size(442, 204);
+            this.tabConfigXml.Size = new System.Drawing.Size(558, 204);
             this.tabConfigXml.TabIndex = 1;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label7);
+            this.tabPage1.Controls.Add(this.cboLanguage);
             this.tabPage1.Controls.Add(this.cboTimeZone);
             this.tabPage1.Controls.Add(this.cboCountry);
             this.tabPage1.Controls.Add(this.label3);
@@ -221,10 +225,32 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(434, 178);
+            this.tabPage1.Size = new System.Drawing.Size(550, 178);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Emergency";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(14, 125);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(55, 13);
+            this.label7.TabIndex = 47;
+            this.label7.Text = "Language";
+            // 
+            // cboLanguage
+            // 
+            this.cboLanguage.DropDownHeight = 200;
+            this.cboLanguage.DropDownWidth = 388;
+            this.cboLanguage.Enabled = false;
+            this.cboLanguage.FormattingEnabled = true;
+            this.cboLanguage.IntegralHeight = false;
+            this.cboLanguage.ItemHeight = 13;
+            this.cboLanguage.Location = new System.Drawing.Point(123, 122);
+            this.cboLanguage.Name = "cboLanguage";
+            this.cboLanguage.Size = new System.Drawing.Size(410, 21);
+            this.cboLanguage.TabIndex = 46;
             // 
             // cboTimeZone
             // 
@@ -734,7 +760,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(477, 340);
+            this.ClientSize = new System.Drawing.Size(611, 340);
             this.Controls.Add(this.gbxConfigXmlValues);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
@@ -838,5 +864,7 @@
         private System.Windows.Forms.ErrorProvider eprDisclaimerWarning;
         private System.Windows.Forms.ErrorProvider eprDonorTextWarning;
         private System.Windows.Forms.ErrorProvider eprExportPath;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cboLanguage;
     }
 }

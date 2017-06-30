@@ -521,7 +521,8 @@ namespace MapActionToolbars
                 {"paperymax",       ""},
                 {"paperymin",       ""},
                 //{"kmzfilename",     System.IO.Path.GetFileName(dictFilePaths["kmz"])},
-                {"accessnotes",     tbxImageAccessNotes.Text}
+                {"accessnotes",     tbxImageAccessNotes.Text},
+                {"product-type",    tbxMapbookMode.Enabled ? "atlas" : "mapsheet"}
             };
 
             dict["jpgfilename"] = System.IO.Path.GetFileName(dictFilePaths["jpeg"]);

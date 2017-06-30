@@ -98,6 +98,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LanguageCodeLookup.cs" />
+    <Compile Include="LanguageCode.cs" />
     <Compile Include="CountryConfig.cs" />
     <Compile Include="CountryWithRegionalCodes.cs" />
     <Compile Include="LanguageConfig.cs" />

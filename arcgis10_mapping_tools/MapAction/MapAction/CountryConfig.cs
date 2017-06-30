@@ -5,12 +5,12 @@ using System.Text;
 
 namespace MapAction
 {
-    public enum CountryFields { Name, Alpha2, Alpha3, CountryCode, ISO31662, Region, SubRegion, RegionCode, SubRegionCode };  
+    public enum CountryFields { Name, Alpha2, Alpha3, CountryCode, ISO31662, Region, SubRegion, RegionCode, SubRegionCode };
 
     public class CountryConfig
     {
         public List<CountryWithRegionalCodes> listOfCountryWithRegionalCodes;
- 
+
         public CountryConfig()
         {
             listOfCountryWithRegionalCodes = new List<CountryWithRegionalCodes>();
@@ -22,7 +22,7 @@ namespace MapAction
         }
 
         public string[] countries()
-        {   
+        {
             string[] array = new string[listOfCountryWithRegionalCodes.Count];
 
             for (int i = 0; i < listOfCountryWithRegionalCodes.Count; i++)
@@ -77,7 +77,7 @@ namespace MapAction
                         case CountryFields.SubRegionCode:
                             result = listOfCountryWithRegionalCodes[i].subRegionCode;
                             break;
-                        
+
                         default:
                             break;
                     }
