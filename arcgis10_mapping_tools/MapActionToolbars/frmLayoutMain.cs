@@ -24,6 +24,7 @@ namespace MapActionToolbars
 
         private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
         private List<string> languages;
+        private string _languageIso2;
 
         public frmLayoutMain()
         {
@@ -79,11 +80,17 @@ namespace MapActionToolbars
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            
-            //Check to see if the config file exists, if not abort and send the user a message
-            //string path = MapAction.Properties.Settings.Default.crash_move_folder_path;
-            //string filePath = path + @"\operation_config.xml";
-            
+            // Read the Operation Config file 
+            string path = MapAction.Utilities.getOperationConfigFilePath();
+            if (MapAction.Utilities.detectOperationConfig())
+            {
+                Dictionary<string, string> dictConfig = MapAction.Utilities.getOperationConfigValues(path);
+                if (dictConfig.ContainsKey("language-iso2")) 
+                {
+                    _languageIso2 = dictConfig["language-iso2"]; 
+                }
+            }
+
             //Perform validation checks tab 1
             FormValidationLayout.validateMapTitle(tbxTitle, eprMapTitle);
             FormValidationLayout.validateMapSummary(tbxSummary, eprMapSummary);

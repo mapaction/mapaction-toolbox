@@ -34,6 +34,7 @@ namespace MapActionToolbars
         private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
         
         //create a variable to hold the status of each validation check
+        private string _languageISO2;
         private string _titleValidationResult;
         private string _summaryValidationResult;
         private string _mapDocumentValidationResult;
@@ -60,11 +61,17 @@ namespace MapActionToolbars
         private const string _statusUpdate = "Update";
         private const string _statusCorrection = "Correction";
         private const int _initialVersionNumber = 1;
-        private string _language;
+        private string _labelLanguage;
+        private MapAction.LanguageCodeLookup languageCodeLookup = null;
 
 
         public frmExportMain()
         {
+            string path = MapAction.Utilities.getCrashMoveFolderPath();
+
+            string languageFilePath = path + @"\language_codes.xml";
+            this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
+
             InitializeComponent();
         }
 
@@ -165,16 +172,17 @@ namespace MapActionToolbars
                 tbxMapNumber.Text = _mapNumber;  
             }
 
+            /*
             if (dict.ContainsKey("language_label"))
             {
-                _language = dict["language_label"];
+                _labelLanguage = dict["language_label"];
             }
             else
             {
-                _language = "English";
+                _labelLanguage = "English";
             }
-            tbxLanguage.Text = _language;
-
+            tbxLanguage.Text = _labelLanguage;
+            */
             // Update form values from the config xml
             var dictXML = new Dictionary<string, string>();
             string path = MapAction.Utilities.getCrashMoveFolderPath();
@@ -189,6 +197,11 @@ namespace MapActionToolbars
             if (dictXML.ContainsKey("DefaultJpegResDPI")) { nudJpegResolution.Value = Convert.ToDecimal(dictXML["DefaultJpegResDPI"]); }
             if (dictXML.ContainsKey("DefaultPdfResDPI")) { nudPdfResolution.Value = Convert.ToDecimal(dictXML["DefaultPdfResDPI"]); }
             if (dictXML.ContainsKey("DefaultEmfResDPI")) { nudEmfResolution.Value = Convert.ToDecimal(dictXML["DefaultPdfResDPI"]); }
+            if (dictXML.ContainsKey("language-iso2"))
+            {
+                _languageISO2 = dictXML["language-iso2"];
+                tbxLanguage.Text = this.languageCodeLookup.lookupA2LanguageCode(_languageISO2, LanguageCodeFields.Language); ;
+            }
 
             // Set the status value and the version number from the existing XML if it exists:
             setValuesFromExistingXML();
@@ -522,7 +535,8 @@ namespace MapActionToolbars
                 {"paperymin",       ""},
                 //{"kmzfilename",     System.IO.Path.GetFileName(dictFilePaths["kmz"])},
                 {"accessnotes",     tbxImageAccessNotes.Text},
-                {"product-type",    tbxMapbookMode.Enabled ? "atlas" : "mapsheet"}
+                {"product-type",    tbxMapbookMode.Enabled ? "atlas" : "mapsheet"},
+                {"language-iso2",   _languageISO2}
             };
 
             dict["jpgfilename"] = System.IO.Path.GetFileName(dictFilePaths["jpeg"]);

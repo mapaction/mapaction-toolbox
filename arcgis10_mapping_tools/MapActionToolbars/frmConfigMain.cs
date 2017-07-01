@@ -216,7 +216,7 @@ namespace MapActionToolbars
             dict.Add("Country", cboCountry.Text);
             dict.Add("Alpha3Code", this.countriesConfig.lookup(cboCountry.Text, CountryFields.Alpha3));
             dict.Add("TimeZone", cboTimeZone.Text);
-            dict.Add("LanguageCode", this.languageCodeLookup.lookup(cboLanguage.Text, LanguageCodeFields.Alpha2));
+            dict.Add("language-iso2", this.languageCodeLookup.lookup(cboLanguage.Text, LanguageCodeFields.Alpha2));
             dict.Add("OperationId", tbxOperationId.Text);
             dict.Add("DefaultSourceOrganisation", tbxSourceOrganisation.Text);
             dict.Add("DefaultSourceOrganisationUrl", tbxOrganisationUrl.Text);
@@ -335,7 +335,7 @@ namespace MapActionToolbars
             }
             cboCountry.Text = dict["Country"];
             cboTimeZone.Text = dict["TimeZone"];
-            cboLanguage.Text = this.languageCodeLookup.lookupA2LanguageCode(dict["LanguageCode"], LanguageCodeFields.Language);
+            cboLanguage.Text = this.languageCodeLookup.lookupA2LanguageCode(dict["language-iso2"], LanguageCodeFields.Language);
             tbxOperationId.Text = dict["OperationId"];
             tbxPrimaryEmail.Text = dict["DeploymentPrimaryEmail"];
             tbxSourceOrganisation.Text = dict["DefaultSourceOrganisation"];
