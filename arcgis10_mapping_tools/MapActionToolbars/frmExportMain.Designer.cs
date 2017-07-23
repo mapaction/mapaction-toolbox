@@ -1329,10 +1329,12 @@
             // 
             // tbxCountries
             // 
+            this.tbxCountries.Enabled = false;
             this.tbxCountries.Location = new System.Drawing.Point(84, 330);
             this.tbxCountries.Name = "tbxCountries";
             this.tbxCountries.Size = new System.Drawing.Size(264, 20);
             this.tbxCountries.TabIndex = 1;
+            this.tbxCountries.TextChanged += new System.EventHandler(this.tbxCountries_TextChanged_1);
             // 
             // label20
             // 

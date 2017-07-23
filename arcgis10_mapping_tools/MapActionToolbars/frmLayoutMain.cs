@@ -308,8 +308,10 @@ namespace MapActionToolbars
 
         public static string updateScale()
         {
-            string scale = MapAction.PageLayoutProperties.getScale(ArcMap.Application.Document as IMxDocument, "Main map");
-            string pageSize = MapAction.PageLayoutProperties.getPageSize(ArcMap.Application.Document as IMxDocument, "Main map");
+            //string scale = MapAction.PageLayoutProperties.getScale(ArcMap.Application.Document as IMapDocument, "Main map");
+            string scale = MapAction.Utilities.getScale(ArcMap.Application.Document as IMapDocument, "Main map");
+
+            string pageSize = MapAction.Utilities.getPageSize(ArcMap.Application.Document as IMapDocument, "Main map");
             string scaleString = scale + " (At " + pageSize + ")";
             return scaleString;
         }

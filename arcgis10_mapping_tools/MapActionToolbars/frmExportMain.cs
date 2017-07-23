@@ -179,7 +179,7 @@ namespace MapActionToolbars
             }
             else
             {
-                _labelLanguage = "English";
+                _labelLanguage = "English198
             }
             tbxLanguage.Text = _labelLanguage;
             */
@@ -217,12 +217,12 @@ namespace MapActionToolbars
             var time = System.DateTime.Now.ToString("HH:mm");
             tbxDate.Text = date;
             tbxTime.Text = time;
-            tbxPaperSize.Text = MapAction.PageLayoutProperties.getPageSize(_pMxDoc, _targetMapFrame);
-            tbxScale.Text = MapAction.PageLayoutProperties.getScale(_pMxDoc, _targetMapFrame);
 
             // Check if Data Driven Page and enable dropdown accordingly
             IMapDocument mapDoc;
             mapDoc = (_pMxDoc as MxDocument) as IMapDocument;
+            tbxPaperSize.Text = MapAction.Utilities.getPageSize(mapDoc, _targetMapFrame);
+            tbxScale.Text     = MapAction.Utilities.getScale(mapDoc, _targetMapFrame);
             tbxMapbookMode.Enabled = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
             
         }
@@ -344,10 +344,11 @@ namespace MapActionToolbars
 
             // Create a dictionary to get and store the map frame extents to pass to the output xml
             // TODO: Get extent of dpp index dataset instead of data frame. 
-            Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
 
             IMapDocument mapDoc;
             mapDoc = (pMxDoc as MxDocument) as IMapDocument;
+            Dictionary<string, string> dictFrameExtents = Utilities.getMapFrameWgs84BoundingBox(mapDoc, "Main map");
+
             bool isDDP = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
 
             if (!isDDP) // Need a way to do this - the form elements are all disabled before export - see ^^
@@ -688,8 +689,8 @@ namespace MapActionToolbars
 
         public static string updateScale()
         {
-            string scale = MapAction.PageLayoutProperties.getScale(ArcMap.Application.Document as IMxDocument, "Main map");
-            string pageSize = MapAction.PageLayoutProperties.getPageSize(ArcMap.Application.Document as IMxDocument, "Main map");
+            string scale = MapAction.Utilities.getScale(ArcMap.Application.Document as IMapDocument, "Main map");
+            string pageSize = MapAction.Utilities.getPageSize(ArcMap.Application.Document as IMapDocument, "Main map");
             string scaleString = scale + " (At " + pageSize + ")";
             return scaleString;
         }
@@ -908,6 +909,9 @@ namespace MapActionToolbars
             _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
         }
 
-
+        private void tbxCountries_TextChanged_1(object sender, EventArgs e)
+        {
+            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
+        }
     }
 }

@@ -40,6 +40,10 @@
             this.chkEditConfigXml = new System.Windows.Forms.CheckBox();
             this.tabConfigXml = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.cboCountry3 = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.cboCountry2 = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.cboLanguage = new System.Windows.Forms.ComboBox();
             this.cboTimeZone = new System.Windows.Forms.ComboBox();
@@ -119,20 +123,20 @@
             // btnSave
             // 
             this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(342, 310);
+            this.btnSave.Location = new System.Drawing.Point(342, 361);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 4;
+            this.btnSave.TabIndex = 9;
             this.btnSave.Text = "Create XML";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(261, 310);
+            this.btnCancel.Location = new System.Drawing.Point(261, 361);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 3;
+            this.btnCancel.TabIndex = 8;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -182,7 +186,7 @@
             this.gbxConfigXmlValues.Controls.Add(this.tabConfigXml);
             this.gbxConfigXmlValues.Location = new System.Drawing.Point(13, 73);
             this.gbxConfigXmlValues.Name = "gbxConfigXmlValues";
-            this.gbxConfigXmlValues.Size = new System.Drawing.Size(573, 231);
+            this.gbxConfigXmlValues.Size = new System.Drawing.Size(573, 266);
             this.gbxConfigXmlValues.TabIndex = 2;
             this.gbxConfigXmlValues.TabStop = false;
             this.gbxConfigXmlValues.Text = "Configuration XML";
@@ -207,11 +211,15 @@
             this.tabConfigXml.Location = new System.Drawing.Point(9, 19);
             this.tabConfigXml.Name = "tabConfigXml";
             this.tabConfigXml.SelectedIndex = 0;
-            this.tabConfigXml.Size = new System.Drawing.Size(558, 204);
+            this.tabConfigXml.Size = new System.Drawing.Size(558, 243);
             this.tabConfigXml.TabIndex = 1;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.cboCountry3);
+            this.tabPage1.Controls.Add(this.label14);
+            this.tabPage1.Controls.Add(this.cboCountry2);
+            this.tabPage1.Controls.Add(this.label13);
             this.tabPage1.Controls.Add(this.label7);
             this.tabPage1.Controls.Add(this.cboLanguage);
             this.tabPage1.Controls.Add(this.cboTimeZone);
@@ -225,15 +233,57 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(550, 178);
+            this.tabPage1.Size = new System.Drawing.Size(550, 217);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Emergency";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // cboCountry3
+            // 
+            this.cboCountry3.Enabled = false;
+            this.cboCountry3.FormattingEnabled = true;
+            this.cboCountry3.Location = new System.Drawing.Point(124, 127);
+            this.cboCountry3.Name = "cboCountry3";
+            this.cboCountry3.Size = new System.Drawing.Size(288, 21);
+            this.cboCountry3.TabIndex = 5;
+            this.cboCountry3.SelectedIndexChanged += new System.EventHandler(this.cboCountry3_SelectedIndexChanged);
+            this.cboCountry3.TextChanged += new System.EventHandler(this.cboCountry3_TextChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(14, 131);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(52, 13);
+            this.label14.TabIndex = 51;
+            this.label14.Text = "Country 3";
+            // 
+            // cboCountry2
+            // 
+            this.cboCountry2.Enabled = false;
+            this.cboCountry2.FormattingEnabled = true;
+            this.cboCountry2.Location = new System.Drawing.Point(123, 98);
+            this.cboCountry2.Name = "cboCountry2";
+            this.cboCountry2.Size = new System.Drawing.Size(288, 21);
+            this.cboCountry2.TabIndex = 4;
+            this.cboCountry2.SelectedIndexChanged += new System.EventHandler(this.cboCountry2_SelectedIndexChanged);
+            this.cboCountry2.TextUpdate += new System.EventHandler(this.cboCountry2_TextUpdate);
+            this.cboCountry2.TextChanged += new System.EventHandler(this.cboCountry2_TextChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(14, 102);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(52, 13);
+            this.label13.TabIndex = 49;
+            this.label13.Text = "Country 2";
+            this.label13.Click += new System.EventHandler(this.label13_Click);
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(14, 125);
+            this.label7.Location = new System.Drawing.Point(14, 184);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(55, 13);
             this.label7.TabIndex = 47;
@@ -247,10 +297,10 @@
             this.cboLanguage.FormattingEnabled = true;
             this.cboLanguage.IntegralHeight = false;
             this.cboLanguage.ItemHeight = 13;
-            this.cboLanguage.Location = new System.Drawing.Point(123, 122);
+            this.cboLanguage.Location = new System.Drawing.Point(123, 181);
             this.cboLanguage.Name = "cboLanguage";
             this.cboLanguage.Size = new System.Drawing.Size(410, 21);
-            this.cboLanguage.TabIndex = 46;
+            this.cboLanguage.TabIndex = 7;
             // 
             // cboTimeZone
             // 
@@ -297,10 +347,10 @@
             "UTC+12:45",
             "UTC+13:00",
             "UTC+14:00"});
-            this.cboTimeZone.Location = new System.Drawing.Point(123, 96);
+            this.cboTimeZone.Location = new System.Drawing.Point(123, 155);
             this.cboTimeZone.Name = "cboTimeZone";
             this.cboTimeZone.Size = new System.Drawing.Size(288, 21);
-            this.cboTimeZone.TabIndex = 5;
+            this.cboTimeZone.TabIndex = 6;
             this.cboTimeZone.TextChanged += new System.EventHandler(this.cboTimeZone_TextChanged);
             // 
             // cboCountry
@@ -310,13 +360,15 @@
             this.cboCountry.Location = new System.Drawing.Point(123, 69);
             this.cboCountry.Name = "cboCountry";
             this.cboCountry.Size = new System.Drawing.Size(288, 21);
-            this.cboCountry.TabIndex = 4;
+            this.cboCountry.TabIndex = 3;
+            this.cboCountry.SelectedIndexChanged += new System.EventHandler(this.cboCountry_SelectedIndexChanged);
+            this.cboCountry.TextUpdate += new System.EventHandler(this.cboCountry_TextUpdate);
             this.cboCountry.TextChanged += new System.EventHandler(this.cboCountry_TextChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 99);
+            this.label3.Location = new System.Drawing.Point(14, 158);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 13);
             this.label3.TabIndex = 45;
@@ -380,7 +432,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(434, 178);
+            this.tabPage2.Size = new System.Drawing.Size(550, 217);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Response";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -466,7 +518,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(434, 178);
+            this.tabPage3.Size = new System.Drawing.Size(550, 217);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Credits";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -523,7 +575,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(434, 178);
+            this.tabPage4.Size = new System.Drawing.Size(550, 217);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Settings";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -760,7 +812,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(611, 340);
+            this.ClientSize = new System.Drawing.Size(611, 396);
             this.Controls.Add(this.gbxConfigXmlValues);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
@@ -866,5 +918,9 @@
         private System.Windows.Forms.ErrorProvider eprExportPath;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cboLanguage;
+        private System.Windows.Forms.ComboBox cboCountry3;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox cboCountry2;
+        private System.Windows.Forms.Label label13;
     }
 }

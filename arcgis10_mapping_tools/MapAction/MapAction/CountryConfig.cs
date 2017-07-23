@@ -86,5 +86,62 @@ namespace MapAction
             }
             return result;
         }
+
+        public string lookupIso3CountryCode(string countryIso3, CountryFields field)
+        {
+            string result = "Undefined";
+
+            for (int i = 0; i < listOfCountryWithRegionalCodes.Count; i++)
+            {
+                if (listOfCountryWithRegionalCodes[i].alpha3.ToUpper() == countryIso3.ToUpper())
+                {
+                    switch (field)
+                    {
+                        case CountryFields.Name:
+                            result = listOfCountryWithRegionalCodes[i].name;
+                            break;
+
+                        case CountryFields.Alpha2:
+                            result = listOfCountryWithRegionalCodes[i].alpha2;
+                            break;
+
+                        case CountryFields.Alpha3:
+                            result = listOfCountryWithRegionalCodes[i].alpha3;
+                            break;
+
+                        case CountryFields.CountryCode:
+                            result = listOfCountryWithRegionalCodes[i].countryCode;
+                            break;
+
+                        case CountryFields.ISO31662:
+                            result = listOfCountryWithRegionalCodes[i].iso31662;
+                            break;
+
+                        case CountryFields.Region:
+                            result = listOfCountryWithRegionalCodes[i].region;
+                            break;
+
+                        case CountryFields.SubRegion:
+                            result = listOfCountryWithRegionalCodes[i].subRegion;
+                            break;
+
+                        case CountryFields.RegionCode:
+                            result = listOfCountryWithRegionalCodes[i].regionCode;
+                            break;
+
+                        case CountryFields.SubRegionCode:
+                            result = listOfCountryWithRegionalCodes[i].subRegionCode;
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+                }
+            }
+            return result;
+        }
     }
+
+
 }

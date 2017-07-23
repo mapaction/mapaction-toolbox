@@ -11,6 +11,14 @@ using System.Diagnostics;
 using System.Configuration;
 using MapAction;
 
+
+
+
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Xml.Linq;
+
+
 namespace MapActionToolbars
 {
     public partial class frmConfigMain : Form
@@ -44,6 +52,10 @@ namespace MapActionToolbars
             InitializeComponent();
 
             this.cboCountry.Items.AddRange(this.countriesConfig.countries());
+
+            this.cboCountry2.Items.AddRange(this.countriesConfig.countries());
+
+            this.cboCountry3.Items.AddRange(this.countriesConfig.countries());
 
             this.cboLanguage.Items.AddRange(this.languageCodeLookup.languages());
 
@@ -213,8 +225,22 @@ namespace MapActionToolbars
             Dictionary<string, string> dict = new Dictionary<string, string>();
             dict.Add("OperationName", tbxOperationName.Text);
             dict.Add("GlideNo", tbxGlideNo.Text);
+
+            string countries = "";
+            countries += (cboCountry.Text.Length > 0) ? this.countriesConfig.lookup(cboCountry.Text, CountryFields.Alpha3) : "";
+            countries += (((countries.Length > 0) && (cboCountry2.Text.Length > 0)) ? "|" : "");
+            countries += (cboCountry2.Text.Length > 0) ? this.countriesConfig.lookup(cboCountry2.Text, CountryFields.Alpha3) : "";
+            countries += (((countries.Length > 0) && (cboCountry3.Text.Length > 0)) ? "|" : "");
+            countries += (cboCountry3.Text.Length > 0) ? this.countriesConfig.lookup(cboCountry3.Text, CountryFields.Alpha3) : "";
+
+            string principalCountryIso3 = "";
+            if (countries.Length > 0)
+            {
+                principalCountryIso3 = countries.Split('|')[0];
+            }
+            dict.Add("principal-country-iso3", principalCountryIso3);
+            dict.Add("countries-iso3", countries);
             dict.Add("Country", cboCountry.Text);
-            dict.Add("Alpha3Code", this.countriesConfig.lookup(cboCountry.Text, CountryFields.Alpha3));
             dict.Add("TimeZone", cboTimeZone.Text);
             dict.Add("language-iso2", this.languageCodeLookup.lookup(cboLanguage.Text, LanguageCodeFields.Alpha2));
             dict.Add("OperationId", tbxOperationId.Text);
@@ -312,41 +338,102 @@ namespace MapActionToolbars
                 populateDialogDefaultValues();
                 return false;
             }
-
         }
 
 
         //##alpha method
         public void populateDialogExistingConfigXml(string path = null)
         {
-
-            //Create a dictionary to store the xml values of the current config file
-            Dictionary<string, string> dict = MapAction.Utilities.getOperationConfigValues(path);
             //Populate the text boxes with the values from the dictionary
-            tbxOperationName.Text = dict["OperationName"];
-            tbxGlideNo.Text = dict["GlideNo"];
-
-            if (dict.ContainsKey("Language"))
+            int countryIndex = 0;
+            // Does the xmlPath already exist?
+            if (File.Exists(path))
             {
-                MessageBox.Show("The \"Language\" tag from the " + path + " file is now ignored.\n\nEnsure your MXD has a \"language_label\" element.\n\nUpdating the XML using this Operation Configuration Tool will remove the \"Language\" tag from the " + path + " file and prevent this message being shown.",
-                                "Warning", 
-                                MessageBoxButtons.OK, 
-                                MessageBoxIcon.Warning);
-            }
-            cboCountry.Text = dict["Country"];
-            cboTimeZone.Text = dict["TimeZone"];
-            cboLanguage.Text = this.languageCodeLookup.lookupA2LanguageCode(dict["language-iso2"], LanguageCodeFields.Language);
-            tbxOperationId.Text = dict["OperationId"];
-            tbxPrimaryEmail.Text = dict["DeploymentPrimaryEmail"];
-            tbxSourceOrganisation.Text = dict["DefaultSourceOrganisation"];
-            tbxOrganisationUrl.Text = dict["DefaultSourceOrganisationUrl"];
-            tbxOrganisationUrl.Text = dict["DefaultSourceOrganisationUrl"];
-            tbxDislaimerText.Text = dict["DefaultDisclaimerText"];
-            tbxDonorText.Text = dict["DefaultDonorsText"];
-            numJpegDpi.Value = decimal.Parse(dict["DefaultJpegResDPI"]);
-            numPdfDpi.Value = decimal.Parse(dict["DefaultPdfResDPI"]);
-            tbxExportToolPath.Text = dict["DefaultPathToExportDir"];
+                // If it does, get the values from the current XML.
+                XDocument doc = XDocument.Load(path);
+                foreach (XElement usEle in doc.Root.Descendants())
+                {
+                    if (usEle.Name.ToString().Equals("OperationName"))
+                    {
+                        tbxOperationName.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("GlideNo"))
+                    {
+                        tbxGlideNo.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("TimeZone"))
+                    {
+                        cboTimeZone.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("language-iso2"))
+                    {
+                        cboLanguage.Text = this.languageCodeLookup.lookupA2LanguageCode(usEle.Value.ToString(), LanguageCodeFields.Language);
+                    }
+                    else if (usEle.Name.ToString().Equals("OperationId"))
+                    {
+                        tbxOperationId.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("DeploymentPrimaryEmail"))
+                    {
+                        tbxPrimaryEmail.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("DefaultSourceOrganisation"))
+                    {
+                        tbxSourceOrganisation.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("DefaultSourceOrganisationUrl"))
+                    {
+                        tbxOrganisationUrl.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("DefaultDisclaimerText"))
+                    {
+                        tbxDislaimerText.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("DefaultDonorsText"))
+                    {
+                        tbxDonorText.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("DefaultJpegResDPI"))
+                    {
+                        numJpegDpi.Value = decimal.Parse(usEle.Value.ToString());
+                    }
+                    else if (usEle.Name.ToString().Equals("DefaultPdfResDPI"))
+                    {
+                        numPdfDpi.Value = decimal.Parse(usEle.Value.ToString());
+                    }
+                    else if (usEle.Name.ToString().Equals("DefaultPathToExportDir"))
+                    {
+                        tbxExportToolPath.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("Language"))
+                    {
+                        MessageBox.Show("The \"Language\" tag from the " + path + " file is now ignored.\n\nEnsure your MXD has a \"language_label\" element.\n\nUpdating the XML using this Operation Configuration Tool will remove the \"Language\" tag from the " + path + " file and prevent this message being shown.",
+                                        "Warning",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Warning);
+                    }
+                    // Read in multiple themes
+                    else if (usEle.Name.ToString().Equals("country-iso3"))
+                    {
+                        countryIndex++;
 
+                        switch (countryIndex)
+                        {
+                            case 1:
+                                cboCountry.Text = this.countriesConfig.lookupIso3CountryCode(usEle.Value.ToString(), CountryFields.Name);
+                                break;
+                            case 2:
+                                cboCountry2.Text = this.countriesConfig.lookupIso3CountryCode(usEle.Value.ToString(), CountryFields.Name);
+                                break;
+                            case 3:
+                                cboCountry3.Text = this.countriesConfig.lookupIso3CountryCode(usEle.Value.ToString(), CountryFields.Name);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
         }
 
         //##alpha method
@@ -370,6 +457,20 @@ namespace MapActionToolbars
                 tbxOperationName.Enabled = true;
                 tbxGlideNo.Enabled = true;
                 cboCountry.Enabled = true;
+                if (cboCountry.Text.Length > 0)
+                {
+                    if (chkEditConfigXml.Checked == true)
+                    {
+                        cboCountry2.Enabled = true;
+                    }
+                }
+                if (cboCountry2.Text.Length > 0)
+                {
+                    if (chkEditConfigXml.Checked == true)
+                    {
+                        cboCountry3.Enabled = true;
+                    }
+                }
                 cboTimeZone.Enabled = true;
                 cboLanguage.Enabled = true;
                 tbxOperationId.Enabled = true;
@@ -400,6 +501,8 @@ namespace MapActionToolbars
                 tbxOperationName.Enabled = false;
                 tbxGlideNo.Enabled = false;
                 cboCountry.Enabled = false;
+                cboCountry2.Enabled = false;
+                cboCountry3.Enabled = false;
                 cboTimeZone.Enabled = false;
                 cboLanguage.Enabled = false;
                 tbxOperationId.Enabled = false;
@@ -480,8 +583,32 @@ namespace MapActionToolbars
 
         private void cboCountry_TextChanged(object sender, EventArgs e)
         {
-            FormValidationConfig.validateCountry(cboCountry, eprCountryWarning);
+            if ((cboCountry.Text.Length > 0) && (chkEditConfigXml.Checked == true))
+            {
+                    cboCountry2.Enabled = true;
+                FormValidationConfig.validateCountry(cboCountry, eprCountryWarning);
+            }
+            else
+            {
+                if ((cboCountry2.Text.Length > 0) && (chkEditConfigXml.Checked == true))
+                {
+                    cboCountry2.Enabled = true;
+                }
+                else
+                {
+                    cboCountry2.Enabled = false;
+                }
+                if ((cboCountry3.Text.Length > 0) && (chkEditConfigXml.Checked == true))
+                {
+                    cboCountry3.Enabled = true;
+                }
+                else
+                {
+                    cboCountry3.Enabled = false;
+                }
+            }
         }
+
 
         private void cboTimeZone_TextChanged(object sender, EventArgs e)
         {
@@ -523,6 +650,130 @@ namespace MapActionToolbars
 
         }
 
+        private void label13_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        private void cboCountry_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (chkEditConfigXml.Checked == true)
+            {
+                if (cboCountry.Text.Length > 0)
+                {
+                    cboCountry2.Enabled = true;
+                }
+                else
+                {
+                    cboCountry2.Enabled = false;
+                    cboCountry3.Enabled = false;
+                }
+            }
+        }
+
+        private void cboCountry2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (chkEditConfigXml.Checked == true)
+            {
+                if (cboCountry2.Text.Length > 0)
+                {
+                    cboCountry3.Enabled = true;
+                }
+                else
+                {
+                    cboCountry3.Enabled = false;
+                }
+            }
+        }
+
+        private void cboCountry3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboCountry3.Text.Length > 0)
+            {
+                cboCountry3.Enabled = true;
+            }
+            else
+            {
+                cboCountry3.Enabled = false;
+            }
+        }
+
+        private void cboCountry2_TextChanged(object sender, EventArgs e)
+        {
+            if (cboCountry2.Text.Length > 0)
+            {
+                cboCountry3.Enabled = true;
+                FormValidationConfig.validateCountry(cboCountry2, eprCountryWarning);
+            }
+            else
+            {
+                if (cboCountry3.Text.Length > 0)
+                {
+                    cboCountry3.Enabled = true;
+                }
+                else
+                {
+                    cboCountry3.Enabled = false;
+                }
+            }
+        }
+
+        private void cboCountry3_TextChanged(object sender, EventArgs e)
+        {
+            if (cboCountry3.Text.Length > 0)
+            {
+                FormValidationConfig.validateCountry(cboCountry3, eprCountryWarning);
+            }
+        }
+
+        private void cboCountry_SelectedValueChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void cboCountry2_SelectedValueChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void cboCountry3_SelectedValueChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void cboCountry_TextUpdate(object sender, EventArgs e)
+        {
+            if (cboCountry.Text.Length == 0)
+            {
+                if (cboCountry2.Text.Length > 0)
+                {
+                    cboCountry2.Enabled = true;
+                }
+                else
+                {
+                    cboCountry2.Enabled = false;
+                }
+                if (cboCountry3.Text.Length > 0)
+                {
+                    cboCountry3.Enabled = true;
+                }
+                else
+                {
+                    cboCountry3.Enabled = false;
+                }
+            }
+        }
+
+        private void cboCountry2_TextUpdate(object sender, EventArgs e)
+        {
+            if (cboCountry2.Text.Length == 0)
+            {
+                if (cboCountry3.Text.Length > 0)
+                {
+                    cboCountry3.Enabled = true;
+                }
+                else
+                {
+                    cboCountry3.Enabled = false;
+                }
+            }
+        }
     }
 }

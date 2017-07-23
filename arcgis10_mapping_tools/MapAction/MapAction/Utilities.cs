@@ -47,7 +47,8 @@ namespace MapAction
             //Dictionary<string, string> sDict = usDict;
             Dictionary<string, string> sDict = sDictFromUsDict(usDict);
             
-            String themesStr = "themes";
+            const String themesStr = "themes";
+            const String countriesStr = "countries-iso3";
             //Create and add the root element
             var xml = new XDocument();
             
@@ -71,10 +72,17 @@ namespace MapAction
             }
             try
             {
+/*                <countries-iso3>
+<country-iso3>NPL</country-iso3>
+<country-iso3>IND</country-iso3>
+<country-iso3>CHN</country-iso3>
+</countries-iso3>
+*/
                 //Add each value pair in the passed dictionary as the elements of the xml doc
                 foreach (KeyValuePair<String, String> row in sDict)
                 {
-                    var element = new XElement(row.Key, row.Value);
+                    XElement element  = new XElement(row.Key, row.Value);
+                    
                     if (row.Key.Equals(themesStr) == true)
                     {
                         var themesElem = new XElement(themesStr);
@@ -86,9 +94,23 @@ namespace MapAction
                             themesElem.Add(themeElement);
                         }
                     }
+                    else if (row.Key.Equals(countriesStr) == true)
+                    {
+                        var countriesIso3Elem = new XElement(countriesStr);
+                        rootElem.Add(countriesIso3Elem);
+                        string[] countriesIso3 = row.Value.Split('|');
+                        foreach (string countryIso3 in countriesIso3)
+                        {
+                            var countryIso3Element = new XElement("country-iso3", countryIso3);
+                            countriesIso3Elem.Add(countryIso3Element);
+                        }
+                    }
                     else
                     {
-                        rootElem.Add(element);
+                        if (element != null)
+                        {
+                            rootElem.Add(element);
+                        }
                     }
                 }
             }
@@ -177,6 +199,9 @@ namespace MapAction
         {
             string opCfgFilePath;
             Uri cmfURI;
+            bool readingCountries = false;
+            string pipeSeparatedCountryCodes = "";
+            int countryCount = 0;
             
             //Create a dictionary to store the values from the xml
             Dictionary<string, string> dict = new Dictionary<string, string>();
@@ -210,7 +235,28 @@ namespace MapAction
                         }
                         else
                         {
-                            dict.Add(usEle.Name.ToString(), usEle.Value.ToString());
+                            if (usEle.Name.ToString().Equals("countries-iso3"))
+                            {
+                                readingCountries = true;
+                            }
+                            else if (usEle.Name.ToString().Equals("country-iso3"))
+                            {
+                                if (countryCount > 0)
+                                {
+                                    pipeSeparatedCountryCodes += '|';
+                                }
+                                pipeSeparatedCountryCodes += usEle.Value.ToString();
+                                countryCount++;
+                            }
+                            else
+                            {
+                                if (readingCountries == true)
+                                {
+                                    dict.Add("countries-iso3", pipeSeparatedCountryCodes);
+                                    readingCountries = false;
+                                }
+                                dict.Add(usEle.Name.ToString(), usEle.Value.ToString());
+                            }
                         }
                     }
                 }
@@ -311,6 +357,52 @@ namespace MapAction
         }
         #endregion
 
+        public static string getScale(IMapDocument pMapDoc, string mapFrameName)
+        {
+            string scale;
+            IMap pMap = getMapFrame(pMapDoc, mapFrameName);
+            IActiveView pActiveView = pMap as IActiveView;
+            IEnvelope2 pEnvelope = pActiveView.Extent as IEnvelope2;
+
+            long temp_scale = Convert.ToInt64(pMap.MapScale);
+
+            scale = "1: " + string.Format("{0:n0}", temp_scale);
+
+            return scale;
+        }
+
+        public static string getPageSize(IMapDocument pMapDoc, string mapFrameName)
+        {
+            string pageSize = null;
+            IPageLayout pLayout = pMapDoc.PageLayout;
+            string pageFormId = pLayout.Page.FormID.ToString();
+
+            // Need to translate from ESRI form to readable form
+            Dictionary<string, string> pageSizes = new Dictionary<string, string>();
+            pageSizes.Add("esriPageFormLetter", "Letter");
+            pageSizes.Add("esriPageFormLegal", "Legal");
+            pageSizes.Add("esriPageFormTabloid", "Tabloid");
+            pageSizes.Add("esriPageFormC", "C");
+            pageSizes.Add("esriPageFormD", "D");
+            pageSizes.Add("esriPageFormE", "E");
+            pageSizes.Add("esriPageFormA5", "A5");
+            pageSizes.Add("esriPageFormA4", "A4");
+            pageSizes.Add("esriPageFormA3", "A3");
+            pageSizes.Add("esriPageFormA2", "A2");
+            pageSizes.Add("esriPageFormA1", "A1");
+            pageSizes.Add("esriPageFormA0", "A0");
+            pageSizes.Add("esriPageFormCUSTOM", "Custom");
+            pageSizes.Add("esriPageFormSameAsPrinter", "Same as printer");
+            foreach (var i in pageSizes)
+            {
+                if (pageFormId == i.Key)
+                {
+                    pageSize = i.Value;
+                }
+            }
+            return pageSize;
+        }
+
         #region Public method getMapFrameBoundingBox
         // Get the bounding box of the map frame in wgs84 unprojected
         // ### Not not yet implemented, all returned values are wgs84 -> Return the values either in 'native' i.e. incoming coordinate system or convert them to wgs84
@@ -326,7 +418,7 @@ namespace MapAction
             // If not Geographic / WGS 84, convert it
             var spatialRefDict = getDataFrameSpatialReference(pMapDoc, mapFrameName);
 
-            if (spatialRefDict["type"] != "Geographic" && spatialRefDict["datum"] != "WGS 1984")
+            if (spatialRefDict["type"] != "Geographic" || spatialRefDict["datum"] != "WGS 1984")
             {
            
                 //Convert active view to wgs 84                
@@ -339,12 +431,11 @@ namespace MapAction
                 wgs84.SetFalseOriginAndUnits(-180, -90, 1000000);
                 pEnvelope.Project(wgs84);
             }
+            dict.Add("xMin", Math.Round(pEnvelope.XMin, 2).ToString());
+            dict.Add("yMin", Math.Round(pEnvelope.YMin, 2).ToString());
+            dict.Add("xMax", Math.Round(pEnvelope.XMax, 2).ToString());
+            dict.Add("yMax", Math.Round(pEnvelope.YMax, 2).ToString());
 
-            dict.Add("xMin", pEnvelope.XMin.ToString());
-            dict.Add("yMin", pEnvelope.YMin.ToString());
-            dict.Add("xMax", pEnvelope.XMax.ToString());
-            dict.Add("yMax", pEnvelope.YMax.ToString());
-            
             return dict;
 
         }
