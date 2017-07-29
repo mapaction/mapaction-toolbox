@@ -10,10 +10,6 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Configuration;
 using MapAction;
-
-
-
-
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml.Linq;
@@ -53,11 +49,9 @@ namespace MapActionToolbars
 
             this.cboCountry.Items.AddRange(this.countriesConfig.countries());
 
-            this.cboCountry2.Items.AddRange(this.countriesConfig.countries());
-
-            this.cboCountry3.Items.AddRange(this.countriesConfig.countries());
-
             this.cboLanguage.Items.AddRange(this.languageCodeLookup.languages());
+
+            populateCountries();
 
         }
 
@@ -227,16 +221,39 @@ namespace MapActionToolbars
             dict.Add("GlideNo", tbxGlideNo.Text);
 
             string countries = "";
-            countries += (cboCountry.Text.Length > 0) ? this.countriesConfig.lookup(cboCountry.Text, CountryFields.Alpha3) : "";
-            countries += (((countries.Length > 0) && (cboCountry2.Text.Length > 0)) ? "|" : "");
-            countries += (cboCountry2.Text.Length > 0) ? this.countriesConfig.lookup(cboCountry2.Text, CountryFields.Alpha3) : "";
-            countries += (((countries.Length > 0) && (cboCountry3.Text.Length > 0)) ? "|" : "");
-            countries += (cboCountry3.Text.Length > 0) ? this.countriesConfig.lookup(cboCountry3.Text, CountryFields.Alpha3) : "";
 
+            countries += (cboCountry.Text.Length > 0) ? this.countriesConfig.lookup(cboCountry.Text, CountryFields.Alpha3) : "";
             string principalCountryIso3 = "";
+            string tmpIso3CountryName = "";
             if (countries.Length > 0)
             {
                 principalCountryIso3 = countries.Split('|')[0];
+
+                if ((bool)this.dtEmp.Rows[(this.dtEmp.Rows.Count-1)][1])
+                {
+                    Debug.WriteLine("true)  " + this.dtEmp.Rows[this.dtEmp.Rows.Count - 1][0] + " : " + this.dtEmp.Rows[this.dtEmp.Rows.Count - 1][1].ToString());
+                }
+                else
+                {
+                    Debug.WriteLine("false) " + this.dtEmp.Rows[this.dtEmp.Rows.Count - 1][0] + " : " + this.dtEmp.Rows[this.dtEmp.Rows.Count - 1][1].ToString());
+                }
+                foreach (DataRow c in this.dtEmp.Rows)
+                {
+                    if ((bool)(c.ItemArray[1]) == true)
+                    {
+                        tmpIso3CountryName = this.countriesConfig.lookup(c.ItemArray[0].ToString(), CountryFields.Alpha3);
+                        Debug.WriteLine("1) " + c.ItemArray[0].ToString() + " / " + tmpIso3CountryName + " : " + ((bool)(c.ItemArray[1]) ? "true" : "false"));
+                        if (!(tmpIso3CountryName.Equals(principalCountryIso3)))
+                        {
+                            countries += '|' + tmpIso3CountryName;
+
+                        }
+                    }
+                    else
+                    {
+                        Debug.WriteLine("2) " + c.ItemArray[0].ToString() + " / " + tmpIso3CountryName + " : " + ((bool)(c.ItemArray[1]) ? "true" : "false"));
+                    }
+                }
             }
             dict.Add("principal-country-iso3", principalCountryIso3);
             dict.Add("countries-iso3", countries);
@@ -416,20 +433,26 @@ namespace MapActionToolbars
                     else if (usEle.Name.ToString().Equals("country-iso3"))
                     {
                         countryIndex++;
+                        string countryName = this.countriesConfig.lookupIso3CountryCode(usEle.Value.ToString(), CountryFields.Name);
 
-                        switch (countryIndex)
+                        if (countryIndex == 1)
                         {
-                            case 1:
-                                cboCountry.Text = this.countriesConfig.lookupIso3CountryCode(usEle.Value.ToString(), CountryFields.Name);
-                                break;
-                            case 2:
-                                cboCountry2.Text = this.countriesConfig.lookupIso3CountryCode(usEle.Value.ToString(), CountryFields.Name);
-                                break;
-                            case 3:
-                                cboCountry3.Text = this.countriesConfig.lookupIso3CountryCode(usEle.Value.ToString(), CountryFields.Name);
-                                break;
-                            default:
-                                break;
+                            cboCountry.Text = countryName;
+                        }
+                        else 
+                        {
+                            int rowCount = 0;
+                            // Set the country to selected in the DataGridView  
+                            foreach (DataRow c in this.dtEmp.Rows)
+                            {
+                                if ((c.ItemArray[0]).Equals(countryName))
+                                {
+                                    // Set the 'selected' to true
+                                    this.dtEmp.Rows[rowCount][1] = true;
+                                    break;
+                                }
+                                rowCount++;
+                            }
                         }
                     }
                 }
@@ -454,23 +477,10 @@ namespace MapActionToolbars
             if (chkEditConfigXml.Checked == true)
             {
                 //tabConfigXml.Enabled = true;
-                tbxOperationName.Enabled = true;
-                tbxGlideNo.Enabled = true;
-                cboCountry.Enabled = true;
-                if (cboCountry.Text.Length > 0)
-                {
-                    if (chkEditConfigXml.Checked == true)
-                    {
-                        cboCountry2.Enabled = true;
-                    }
-                }
-                if (cboCountry2.Text.Length > 0)
-                {
-                    if (chkEditConfigXml.Checked == true)
-                    {
-                        cboCountry3.Enabled = true;
-                    }
-                }
+                this.tbxOperationName.Enabled = true;
+                this.tbxGlideNo.Enabled = true;
+                this.cboCountry.Enabled = true;
+                this.dgvCountries.Enabled = true;
                 cboTimeZone.Enabled = true;
                 cboLanguage.Enabled = true;
                 tbxOperationId.Enabled = true;
@@ -500,9 +510,8 @@ namespace MapActionToolbars
             {
                 tbxOperationName.Enabled = false;
                 tbxGlideNo.Enabled = false;
+                this.dgvCountries.Enabled = false;
                 cboCountry.Enabled = false;
-                cboCountry2.Enabled = false;
-                cboCountry3.Enabled = false;
                 cboTimeZone.Enabled = false;
                 cboLanguage.Enabled = false;
                 tbxOperationId.Enabled = false;
@@ -581,35 +590,6 @@ namespace MapActionToolbars
             FormValidationConfig.validatePrimaryEmail(tbxPrimaryEmail, eprPrimaryEmailWarning, eprPrimaryEmailError);
         }
 
-        private void cboCountry_TextChanged(object sender, EventArgs e)
-        {
-            if ((cboCountry.Text.Length > 0) && (chkEditConfigXml.Checked == true))
-            {
-                    cboCountry2.Enabled = true;
-                FormValidationConfig.validateCountry(cboCountry, eprCountryWarning);
-            }
-            else
-            {
-                if ((cboCountry2.Text.Length > 0) && (chkEditConfigXml.Checked == true))
-                {
-                    cboCountry2.Enabled = true;
-                }
-                else
-                {
-                    cboCountry2.Enabled = false;
-                }
-                if ((cboCountry3.Text.Length > 0) && (chkEditConfigXml.Checked == true))
-                {
-                    cboCountry3.Enabled = true;
-                }
-                else
-                {
-                    cboCountry3.Enabled = false;
-                }
-            }
-        }
-
-
         private void cboTimeZone_TextChanged(object sender, EventArgs e)
         {
             FormValidationConfig.validateTimezone(cboTimeZone, eprTimezoneWarning, eprTimezoneError);
@@ -650,130 +630,20 @@ namespace MapActionToolbars
 
         }
 
-        private void label13_Click(object sender, EventArgs e)
+        private void populateCountries()
         {
+            this.dtEmp.Columns.Add("Country", typeof(string));
+            this.dtEmp.Columns.Add("IsSelected", typeof(bool));
 
-        }
-
-        private void cboCountry_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (chkEditConfigXml.Checked == true)
+            foreach (string s in this.countriesConfig.countries())
             {
-                if (cboCountry.Text.Length > 0)
-                {
-                    cboCountry2.Enabled = true;
-                }
-                else
-                {
-                    cboCountry2.Enabled = false;
-                    cboCountry3.Enabled = false;
-                }
+                this.dtEmp.Rows.Add(s, false);
             }
         }
 
-        private void cboCountry2_SelectedIndexChanged(object sender, EventArgs e)
+        private void dgvCountries_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (chkEditConfigXml.Checked == true)
-            {
-                if (cboCountry2.Text.Length > 0)
-                {
-                    cboCountry3.Enabled = true;
-                }
-                else
-                {
-                    cboCountry3.Enabled = false;
-                }
-            }
-        }
-
-        private void cboCountry3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cboCountry3.Text.Length > 0)
-            {
-                cboCountry3.Enabled = true;
-            }
-            else
-            {
-                cboCountry3.Enabled = false;
-            }
-        }
-
-        private void cboCountry2_TextChanged(object sender, EventArgs e)
-        {
-            if (cboCountry2.Text.Length > 0)
-            {
-                cboCountry3.Enabled = true;
-                FormValidationConfig.validateCountry(cboCountry2, eprCountryWarning);
-            }
-            else
-            {
-                if (cboCountry3.Text.Length > 0)
-                {
-                    cboCountry3.Enabled = true;
-                }
-                else
-                {
-                    cboCountry3.Enabled = false;
-                }
-            }
-        }
-
-        private void cboCountry3_TextChanged(object sender, EventArgs e)
-        {
-            if (cboCountry3.Text.Length > 0)
-            {
-                FormValidationConfig.validateCountry(cboCountry3, eprCountryWarning);
-            }
-        }
-
-        private void cboCountry_SelectedValueChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void cboCountry2_SelectedValueChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void cboCountry3_SelectedValueChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void cboCountry_TextUpdate(object sender, EventArgs e)
-        {
-            if (cboCountry.Text.Length == 0)
-            {
-                if (cboCountry2.Text.Length > 0)
-                {
-                    cboCountry2.Enabled = true;
-                }
-                else
-                {
-                    cboCountry2.Enabled = false;
-                }
-                if (cboCountry3.Text.Length > 0)
-                {
-                    cboCountry3.Enabled = true;
-                }
-                else
-                {
-                    cboCountry3.Enabled = false;
-                }
-            }
-        }
-
-        private void cboCountry2_TextUpdate(object sender, EventArgs e)
-        {
-            if (cboCountry2.Text.Length == 0)
-            {
-                if (cboCountry3.Text.Length > 0)
-                {
-                    cboCountry3.Enabled = true;
-                }
-                else
-                {
-                    cboCountry3.Enabled = false;
-                }
-            }
+            dgvCountries.CommitEdit(DataGridViewDataErrorContexts.Commit);
         }
     }
 }

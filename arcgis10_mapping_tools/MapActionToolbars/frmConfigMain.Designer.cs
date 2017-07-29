@@ -29,7 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfigMain));
+            this.dtEmp = new System.Data.DataTable();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.gbxCrashMoveFolder = new System.Windows.Forms.GroupBox();
@@ -40,16 +42,10 @@
             this.chkEditConfigXml = new System.Windows.Forms.CheckBox();
             this.tabConfigXml = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.cboCountry3 = new System.Windows.Forms.ComboBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.cboCountry2 = new System.Windows.Forms.ComboBox();
-            this.label13 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.cboLanguage = new System.Windows.Forms.ComboBox();
             this.cboTimeZone = new System.Windows.Forms.ComboBox();
-            this.cboCountry = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.tbxGlideNo = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.tbxOperationName = new System.Windows.Forms.TextBox();
@@ -78,6 +74,11 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.tabCountries = new System.Windows.Forms.TabPage();
+            this.label13 = new System.Windows.Forms.Label();
+            this.cboCountry = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.dgvCountries = new System.Windows.Forms.DataGridView();
             this.eprOperationNameWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprGlideNoError = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprGlideNoWarning = new System.Windows.Forms.ErrorProvider(this.components);
@@ -93,6 +94,7 @@
             this.eprDisclaimerWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprDonorTextWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprExportPath = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.dtEmp)).BeginInit();
             this.gbxCrashMoveFolder.SuspendLayout();
             this.gbxConfigXmlValues.SuspendLayout();
             this.tabConfigXml.SuspendLayout();
@@ -103,6 +105,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numEmfDpi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPdfDpi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numJpegDpi)).BeginInit();
+            this.tabCountries.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCountries)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprOperationNameWarning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprGlideNoError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprGlideNoWarning)).BeginInit();
@@ -123,7 +127,7 @@
             // btnSave
             // 
             this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(342, 361);
+            this.btnSave.Location = new System.Drawing.Point(342, 310);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 9;
@@ -133,7 +137,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(261, 361);
+            this.btnCancel.Location = new System.Drawing.Point(261, 310);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 8;
@@ -186,7 +190,7 @@
             this.gbxConfigXmlValues.Controls.Add(this.tabConfigXml);
             this.gbxConfigXmlValues.Location = new System.Drawing.Point(13, 73);
             this.gbxConfigXmlValues.Name = "gbxConfigXmlValues";
-            this.gbxConfigXmlValues.Size = new System.Drawing.Size(573, 266);
+            this.gbxConfigXmlValues.Size = new System.Drawing.Size(573, 231);
             this.gbxConfigXmlValues.TabIndex = 2;
             this.gbxConfigXmlValues.TabStop = false;
             this.gbxConfigXmlValues.Text = "Configuration XML";
@@ -208,24 +212,19 @@
             this.tabConfigXml.Controls.Add(this.tabPage2);
             this.tabConfigXml.Controls.Add(this.tabPage3);
             this.tabConfigXml.Controls.Add(this.tabPage4);
+            this.tabConfigXml.Controls.Add(this.tabCountries);
             this.tabConfigXml.Location = new System.Drawing.Point(9, 19);
             this.tabConfigXml.Name = "tabConfigXml";
             this.tabConfigXml.SelectedIndex = 0;
-            this.tabConfigXml.Size = new System.Drawing.Size(558, 243);
+            this.tabConfigXml.Size = new System.Drawing.Size(558, 206);
             this.tabConfigXml.TabIndex = 1;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.cboCountry3);
-            this.tabPage1.Controls.Add(this.label14);
-            this.tabPage1.Controls.Add(this.cboCountry2);
-            this.tabPage1.Controls.Add(this.label13);
             this.tabPage1.Controls.Add(this.label7);
             this.tabPage1.Controls.Add(this.cboLanguage);
             this.tabPage1.Controls.Add(this.cboTimeZone);
-            this.tabPage1.Controls.Add(this.cboCountry);
             this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.tbxGlideNo);
             this.tabPage1.Controls.Add(this.label20);
             this.tabPage1.Controls.Add(this.tbxOperationName);
@@ -233,57 +232,15 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(550, 217);
+            this.tabPage1.Size = new System.Drawing.Size(550, 180);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Emergency";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // cboCountry3
-            // 
-            this.cboCountry3.Enabled = false;
-            this.cboCountry3.FormattingEnabled = true;
-            this.cboCountry3.Location = new System.Drawing.Point(124, 127);
-            this.cboCountry3.Name = "cboCountry3";
-            this.cboCountry3.Size = new System.Drawing.Size(288, 21);
-            this.cboCountry3.TabIndex = 5;
-            this.cboCountry3.SelectedIndexChanged += new System.EventHandler(this.cboCountry3_SelectedIndexChanged);
-            this.cboCountry3.TextChanged += new System.EventHandler(this.cboCountry3_TextChanged);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(14, 131);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(52, 13);
-            this.label14.TabIndex = 51;
-            this.label14.Text = "Country 3";
-            // 
-            // cboCountry2
-            // 
-            this.cboCountry2.Enabled = false;
-            this.cboCountry2.FormattingEnabled = true;
-            this.cboCountry2.Location = new System.Drawing.Point(123, 98);
-            this.cboCountry2.Name = "cboCountry2";
-            this.cboCountry2.Size = new System.Drawing.Size(288, 21);
-            this.cboCountry2.TabIndex = 4;
-            this.cboCountry2.SelectedIndexChanged += new System.EventHandler(this.cboCountry2_SelectedIndexChanged);
-            this.cboCountry2.TextUpdate += new System.EventHandler(this.cboCountry2_TextUpdate);
-            this.cboCountry2.TextChanged += new System.EventHandler(this.cboCountry2_TextChanged);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(14, 102);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(52, 13);
-            this.label13.TabIndex = 49;
-            this.label13.Text = "Country 2";
-            this.label13.Click += new System.EventHandler(this.label13_Click);
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(14, 184);
+            this.label7.Location = new System.Drawing.Point(14, 100);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(55, 13);
             this.label7.TabIndex = 47;
@@ -297,7 +254,7 @@
             this.cboLanguage.FormattingEnabled = true;
             this.cboLanguage.IntegralHeight = false;
             this.cboLanguage.ItemHeight = 13;
-            this.cboLanguage.Location = new System.Drawing.Point(123, 181);
+            this.cboLanguage.Location = new System.Drawing.Point(123, 97);
             this.cboLanguage.Name = "cboLanguage";
             this.cboLanguage.Size = new System.Drawing.Size(410, 21);
             this.cboLanguage.TabIndex = 7;
@@ -347,41 +304,20 @@
             "UTC+12:45",
             "UTC+13:00",
             "UTC+14:00"});
-            this.cboTimeZone.Location = new System.Drawing.Point(123, 155);
+            this.cboTimeZone.Location = new System.Drawing.Point(123, 71);
             this.cboTimeZone.Name = "cboTimeZone";
             this.cboTimeZone.Size = new System.Drawing.Size(288, 21);
             this.cboTimeZone.TabIndex = 6;
             this.cboTimeZone.TextChanged += new System.EventHandler(this.cboTimeZone_TextChanged);
             // 
-            // cboCountry
-            // 
-            this.cboCountry.Enabled = false;
-            this.cboCountry.FormattingEnabled = true;
-            this.cboCountry.Location = new System.Drawing.Point(123, 69);
-            this.cboCountry.Name = "cboCountry";
-            this.cboCountry.Size = new System.Drawing.Size(288, 21);
-            this.cboCountry.TabIndex = 3;
-            this.cboCountry.SelectedIndexChanged += new System.EventHandler(this.cboCountry_SelectedIndexChanged);
-            this.cboCountry.TextUpdate += new System.EventHandler(this.cboCountry_TextUpdate);
-            this.cboCountry.TextChanged += new System.EventHandler(this.cboCountry_TextChanged);
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 158);
+            this.label3.Location = new System.Drawing.Point(14, 74);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 13);
             this.label3.TabIndex = 45;
             this.label3.Text = "Time zone";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(14, 73);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(43, 13);
-            this.label6.TabIndex = 43;
-            this.label6.Text = "Country";
             // 
             // tbxGlideNo
             // 
@@ -432,7 +368,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(550, 217);
+            this.tabPage2.Size = new System.Drawing.Size(550, 180);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Response";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -518,7 +454,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(550, 217);
+            this.tabPage3.Size = new System.Drawing.Size(550, 180);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Credits";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -575,7 +511,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(550, 217);
+            this.tabPage4.Size = new System.Drawing.Size(550, 180);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Settings";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -721,6 +657,79 @@
             this.label11.TabIndex = 41;
             this.label11.Text = "Jpeg dpi";
             // 
+            // tabCountries
+            // 
+            this.tabCountries.AllowDrop = true;
+            this.tabCountries.Controls.Add(this.label13);
+            this.tabCountries.Controls.Add(this.cboCountry);
+            this.tabCountries.Controls.Add(this.label6);
+            this.tabCountries.Controls.Add(this.dgvCountries);
+            this.tabCountries.Location = new System.Drawing.Point(4, 22);
+            this.tabCountries.Name = "tabCountries";
+            this.tabCountries.Size = new System.Drawing.Size(550, 180);
+            this.tabCountries.TabIndex = 4;
+            this.tabCountries.Text = "Countries";
+            this.tabCountries.UseVisualStyleBackColor = true;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(77, 84);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(100, 13);
+            this.label13.TabIndex = 46;
+            this.label13.Text = "Additional Countries";
+            // 
+            // cboCountry
+            // 
+            this.cboCountry.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboCountry.Enabled = false;
+            this.cboCountry.FormattingEnabled = true;
+            this.cboCountry.Location = new System.Drawing.Point(186, 16);
+            this.cboCountry.Name = "cboCountry";
+            this.cboCountry.Size = new System.Drawing.Size(288, 21);
+            this.cboCountry.TabIndex = 44;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(77, 20);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(80, 13);
+            this.label6.TabIndex = 45;
+            this.label6.Text = "Primary Country";
+            // 
+            // dgvCountries
+            // 
+            this.dgvCountries.AllowDrop = true;
+            this.dgvCountries.AllowUserToAddRows = false;
+            this.dgvCountries.AllowUserToDeleteRows = false;
+            this.dgvCountries.AllowUserToResizeColumns = false;
+            this.dgvCountries.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCountries.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvCountries.AutoGenerateColumns = true;
+            this.dgvCountries.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvCountries.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvCountries.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvCountries.CausesValidation = false;
+            this.dgvCountries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCountries.ColumnHeadersVisible = false;
+            this.dgvCountries.DataSource = this.dtEmp;
+            this.dgvCountries.Enabled = false;
+            this.dgvCountries.Location = new System.Drawing.Point(186, 54);
+            this.dgvCountries.MaximumSize = new System.Drawing.Size(292, 100);
+            this.dgvCountries.Name = "dgvCountries";
+            this.dgvCountries.RowHeadersVisible = false;
+            this.dgvCountries.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvCountries.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgvCountries.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCountries.ShowCellErrors = false;
+            this.dgvCountries.Size = new System.Drawing.Size(292, 100);
+            this.dgvCountries.TabIndex = 9;
+            this.dgvCountries.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCountries_CellContentClick);
+            // 
             // eprOperationNameWarning
             // 
             this.eprOperationNameWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
@@ -812,7 +821,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(611, 396);
+            this.ClientSize = new System.Drawing.Size(611, 341);
             this.Controls.Add(this.gbxConfigXmlValues);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
@@ -822,6 +831,7 @@
             this.Name = "frmConfigMain";
             this.Text = "Operation Configuration Tool";
             this.Load += new System.EventHandler(this.frmMain_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dtEmp)).EndInit();
             this.gbxCrashMoveFolder.ResumeLayout(false);
             this.gbxCrashMoveFolder.PerformLayout();
             this.gbxConfigXmlValues.ResumeLayout(false);
@@ -838,6 +848,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numEmfDpi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPdfDpi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numJpegDpi)).EndInit();
+            this.tabCountries.ResumeLayout(false);
+            this.tabCountries.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCountries)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprOperationNameWarning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprGlideNoError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprGlideNoWarning)).EndInit();
@@ -859,6 +872,7 @@
 
         #endregion
 
+        /// </summary>
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.GroupBox gbxCrashMoveFolder;
@@ -876,7 +890,6 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox tbxSourceOrganisation;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbxOperationId;
@@ -892,7 +905,6 @@
         private System.Windows.Forms.NumericUpDown numPdfDpi;
         private System.Windows.Forms.NumericUpDown numJpegDpi;
         private System.Windows.Forms.Button btnSetExportToolPath;
-        private System.Windows.Forms.ComboBox cboCountry;
         private System.Windows.Forms.ComboBox cboTimeZone;
         private System.Windows.Forms.TextBox tbxPrimaryEmail;
         private System.Windows.Forms.Label label18;
@@ -918,9 +930,13 @@
         private System.Windows.Forms.ErrorProvider eprExportPath;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cboLanguage;
-        private System.Windows.Forms.ComboBox cboCountry3;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.ComboBox cboCountry2;
+        private System.Data.DataTable dtEmp;
+        private System.Windows.Forms.TabPage tabCountries;
+        private System.Windows.Forms.DataGridView dgvCountries;
+        private System.Windows.Forms.ComboBox cboCountry;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn countryDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn isSelectedDataGridViewCheckBoxColumn;
         private System.Windows.Forms.Label label13;
     }
 }
