@@ -35,6 +35,7 @@ namespace MapActionToolbars
         
         //create a variable to hold the status of each validation check
         private string _languageISO2;
+        private string _countryISO3;
         private string _titleValidationResult;
         private string _summaryValidationResult;
         private string _mapDocumentValidationResult;
@@ -63,16 +64,23 @@ namespace MapActionToolbars
         private const int _initialVersionNumber = 1;
         private string _labelLanguage;
         private MapAction.LanguageCodeLookup languageCodeLookup = null;
+        private MapAction.CountryConfig countriesConfig = null;
 
 
         public frmExportMain()
         {
             string path = MapAction.Utilities.getCrashMoveFolderPath();
+            string filePath = path + @"\countries_config.xml";
+
+            // Set up Countries lookup
+            this.countriesConfig = MapAction.Utilities.getCountryConfigValues(filePath);
 
             string languageFilePath = path + @"\language_codes.xml";
             this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
 
             InitializeComponent();
+
+            //populateCountries();
         }
 
         private void btnUserRight_Click(object sender, EventArgs e)
@@ -171,18 +179,6 @@ namespace MapActionToolbars
                 _mapNumber = dict["map_no"];
                 tbxMapNumber.Text = _mapNumber;  
             }
-
-            /*
-            if (dict.ContainsKey("language_label"))
-            {
-                _labelLanguage = dict["language_label"];
-            }
-            else
-            {
-                _labelLanguage = "English198
-            }
-            tbxLanguage.Text = _labelLanguage;
-            */
             // Update form values from the config xml
             var dictXML = new Dictionary<string, string>();
             string path = MapAction.Utilities.getCrashMoveFolderPath();
@@ -190,6 +186,27 @@ namespace MapActionToolbars
             dictXML = MapAction.Utilities.getOperationConfigValues(filePath);
             if (dictXML.ContainsKey("GlideNo")) { tbxGlideNo.Text = dictXML["GlideNo"]; }
             if (dictXML.ContainsKey("Country")) { tbxCountries.Text = dictXML["Country"]; }
+            if (dictXML.ContainsKey("countries-iso3"))
+            {
+                _countryISO3 = dictXML["countries-iso3"];
+
+                string[] countriesIso3 = _countryISO3.Split('|');
+                int countryIndex = 0;
+                this.dtEmp.Columns.Add("Country", typeof(string));
+                foreach (string countryIso3 in countriesIso3)
+                { 
+                    string countryName = this.countriesConfig.lookupIso3CountryCode(countryIso3, CountryFields.Name);
+                    countryIndex++;
+                    if (countryIndex == 1)
+                    {
+                        tbxCountries.Text = countryName;
+                    }
+                    else 
+                    {
+                        this.dtEmp.Rows.Add(countryName);
+                    }
+                }
+            }
             string operational_id = dictXML["OperationId"];
             Debug.WriteLine("Op ID: " + operational_id);
             if (dictXML.ContainsKey("OperationId")) { tbxOperationId.Text = dictXML["OperationId"]; }
@@ -501,7 +518,8 @@ namespace MapActionToolbars
                 {"title",           mapTitle1},
                 {"ref",             tbxMapDocument.Text},
                 {"language",        tbxLanguage.Text},
-                {"countries",       tbxCountries.Text},
+                {"principal-country-iso3",  this.countriesConfig.lookup(tbxCountries.Text, CountryFields.Alpha3)},
+                {"countries-iso3",  _countryISO3},
                 {"createdate",      tbxDate.Text},
                 {"createtime",      tbxTime.Text},
                 {"status",          cboStatus.Text},
@@ -881,7 +899,7 @@ namespace MapActionToolbars
 
         private void btnUserLeft_Click_1(object sender, EventArgs e)
         {
-            tabExportTool.SelectedTab = tabPageThemes;
+            tabExportTool.SelectedTab = tabPageCountries;
         }
 
         private void btnUserRight_Click_1(object sender, EventArgs e)
@@ -901,7 +919,7 @@ namespace MapActionToolbars
 
         private void button1_Click(object sender, EventArgs e)
         {
-            tabExportTool.SelectedTab = tabPageLayout;
+            tabExportTool.SelectedTab = tabPageCountries;
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -912,6 +930,36 @@ namespace MapActionToolbars
         private void tbxCountries_TextChanged_1(object sender, EventArgs e)
         {
             _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
+        }
+
+        private void tabPageLayout_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            tabExportTool.SelectedTab = tabPageThemes;            
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            tabExportTool.SelectedTab = tabPageLayout;            
+        }
+
+        private void tbxCountries_TextChanged_2(object sender, EventArgs e)
+        {
+
+        }
+        private void populateCountries()
+        {
+            this.dtEmp.Columns.Add("Country", typeof(string));
+            this.dtEmp.Columns.Add("IsSelected", typeof(bool));
+
+            foreach (string s in this.countriesConfig.countries())
+            {
+                this.dtEmp.Rows.Add(s, false);
+            }
         }
     }
 }

@@ -29,7 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmExportMain));
+            this.dtEmp = new System.Data.DataTable();
             this.btnClose = new System.Windows.Forms.Button();
             this.tabPageExport = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -126,8 +128,15 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.checkedListBoxThemes = new System.Windows.Forms.CheckedListBox();
             this.label27 = new System.Windows.Forms.Label();
+            this.tabPageCountries = new System.Windows.Forms.TabPage();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.label50 = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.dgvCountries = new System.Windows.Forms.DataGridView();
             this.tbxCountries = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.tabPageLayout = new System.Windows.Forms.TabPage();
             this.btnUserRight = new System.Windows.Forms.Button();
             this.btnUserLeft = new System.Windows.Forms.Button();
@@ -189,6 +198,7 @@
             this.eprLanguageWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprLanguageError = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprImageryDate = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.dtEmp)).BeginInit();
             this.tabPageExport.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgLanguageStatus)).BeginInit();
@@ -226,6 +236,9 @@
             this.tabExportTool.SuspendLayout();
             this.tabPageThemes.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.tabPageCountries.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCountries)).BeginInit();
             this.tabPageLayout.SuspendLayout();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapTitleError)).BeginInit();
@@ -266,7 +279,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(325, 513);
+            this.btnClose.Location = new System.Drawing.Point(325, 512);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 2;
@@ -283,7 +296,7 @@
             this.tabPageExport.Location = new System.Drawing.Point(4, 22);
             this.tabPageExport.Name = "tabPageExport";
             this.tabPageExport.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageExport.Size = new System.Drawing.Size(388, 469);
+            this.tabPageExport.Size = new System.Drawing.Size(421, 468);
             this.tabPageExport.TabIndex = 4;
             this.tabPageExport.Text = "Export";
             this.tabPageExport.UseVisualStyleBackColor = true;
@@ -949,7 +962,7 @@
             // btnExportLeft
             // 
             this.btnExportLeft.Image = global::MapActionToolbars.Properties.Resources.left_button_20x20;
-            this.btnExportLeft.Location = new System.Drawing.Point(304, 431);
+            this.btnExportLeft.Location = new System.Drawing.Point(304, 430);
             this.btnExportLeft.Name = "btnExportLeft";
             this.btnExportLeft.Size = new System.Drawing.Size(30, 30);
             this.btnExportLeft.TabIndex = 6;
@@ -965,7 +978,7 @@
             this.tabPageUser.Location = new System.Drawing.Point(4, 22);
             this.tabPageUser.Name = "tabPageUser";
             this.tabPageUser.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageUser.Size = new System.Drawing.Size(388, 469);
+            this.tabPageUser.Size = new System.Drawing.Size(421, 468);
             this.tabPageUser.TabIndex = 0;
             this.tabPageUser.Text = "Map Catalogue";
             this.tabPageUser.UseVisualStyleBackColor = true;
@@ -973,7 +986,7 @@
             // btnLayoutRight
             // 
             this.btnLayoutRight.Image = global::MapActionToolbars.Properties.Resources.right_button_20x20;
-            this.btnLayoutRight.Location = new System.Drawing.Point(341, 431);
+            this.btnLayoutRight.Location = new System.Drawing.Point(341, 430);
             this.btnLayoutRight.Name = "btnLayoutRight";
             this.btnLayoutRight.Size = new System.Drawing.Size(30, 30);
             this.btnLayoutRight.TabIndex = 13;
@@ -1234,12 +1247,13 @@
             // 
             this.tabExportTool.Controls.Add(this.tabPageUser);
             this.tabExportTool.Controls.Add(this.tabPageThemes);
+            this.tabExportTool.Controls.Add(this.tabPageCountries);
             this.tabExportTool.Controls.Add(this.tabPageLayout);
             this.tabExportTool.Controls.Add(this.tabPageExport);
             this.tabExportTool.Location = new System.Drawing.Point(11, 12);
             this.tabExportTool.Name = "tabExportTool";
             this.tabExportTool.SelectedIndex = 0;
-            this.tabExportTool.Size = new System.Drawing.Size(396, 495);
+            this.tabExportTool.Size = new System.Drawing.Size(429, 494);
             this.tabExportTool.TabIndex = 1;
             this.tabExportTool.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabExportTool_Selected);
             // 
@@ -1250,7 +1264,7 @@
             this.tabPageThemes.Controls.Add(this.groupBox2);
             this.tabPageThemes.Location = new System.Drawing.Point(4, 22);
             this.tabPageThemes.Name = "tabPageThemes";
-            this.tabPageThemes.Size = new System.Drawing.Size(388, 469);
+            this.tabPageThemes.Size = new System.Drawing.Size(421, 468);
             this.tabPageThemes.TabIndex = 5;
             this.tabPageThemes.Text = "Themes";
             this.tabPageThemes.UseVisualStyleBackColor = true;
@@ -1258,7 +1272,7 @@
             // button1
             // 
             this.button1.Image = global::MapActionToolbars.Properties.Resources.right_button_20x20;
-            this.button1.Location = new System.Drawing.Point(341, 431);
+            this.button1.Location = new System.Drawing.Point(341, 430);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(30, 30);
             this.button1.TabIndex = 14;
@@ -1268,7 +1282,7 @@
             // button2
             // 
             this.button2.Image = global::MapActionToolbars.Properties.Resources.left_button_20x20;
-            this.button2.Location = new System.Drawing.Point(304, 431);
+            this.button2.Location = new System.Drawing.Point(304, 430);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(30, 30);
             this.button2.TabIndex = 15;
@@ -1279,14 +1293,12 @@
             // 
             this.groupBox2.Controls.Add(this.checkedListBoxThemes);
             this.groupBox2.Controls.Add(this.label27);
-            this.groupBox2.Controls.Add(this.tbxCountries);
-            this.groupBox2.Controls.Add(this.label20);
             this.groupBox2.Location = new System.Drawing.Point(6, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(376, 362);
+            this.groupBox2.Size = new System.Drawing.Size(403, 405);
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Map Theme && Location";
+            this.groupBox2.Text = "Map Themes";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // checkedListBoxThemes
@@ -1312,7 +1324,7 @@
             "Situation and Damage",
             "Water Sanitation and Hygiene",
             "Who-What-Where"});
-            this.checkedListBoxThemes.Location = new System.Drawing.Point(84, 28);
+            this.checkedListBoxThemes.Location = new System.Drawing.Point(84, 20);
             this.checkedListBoxThemes.Name = "checkedListBoxThemes";
             this.checkedListBoxThemes.Size = new System.Drawing.Size(264, 289);
             this.checkedListBoxThemes.TabIndex = 16;
@@ -1321,29 +1333,126 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(6, 32);
+            this.label27.Location = new System.Drawing.Point(6, 24);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(40, 13);
             this.label27.TabIndex = 23;
             this.label27.Text = "Theme";
             // 
+            // tabPageCountries
+            // 
+            this.tabPageCountries.Controls.Add(this.groupBox9);
+            this.tabPageCountries.Controls.Add(this.button3);
+            this.tabPageCountries.Controls.Add(this.button4);
+            this.tabPageCountries.Location = new System.Drawing.Point(4, 22);
+            this.tabPageCountries.Name = "tabPageCountries";
+            this.tabPageCountries.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageCountries.Size = new System.Drawing.Size(421, 468);
+            this.tabPageCountries.TabIndex = 6;
+            this.tabPageCountries.Text = "Countries";
+            this.tabPageCountries.UseVisualStyleBackColor = true;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.label50);
+            this.groupBox9.Controls.Add(this.label49);
+            this.groupBox9.Controls.Add(this.dgvCountries);
+            this.groupBox9.Controls.Add(this.tbxCountries);
+            this.groupBox9.Controls.Add(this.label20);
+            this.groupBox9.Location = new System.Drawing.Point(9, 13);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(403, 397);
+            this.groupBox9.TabIndex = 34;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Map Countries";
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Location = new System.Drawing.Point(15, 80);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(51, 13);
+            this.label50.TabIndex = 36;
+            this.label50.Text = "Countries";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(15, 62);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(53, 13);
+            this.label49.TabIndex = 35;
+            this.label49.Text = "Additional";
+            // 
+            // dgvCountries
+            // 
+            this.dgvCountries.AllowDrop = true;
+            this.dgvCountries.AllowUserToAddRows = false;
+            this.dgvCountries.AllowUserToDeleteRows = false;
+            this.dgvCountries.AllowUserToResizeColumns = false;
+            this.dgvCountries.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCountries.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvCountries.AutoGenerateColumns = true;
+            this.dgvCountries.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvCountries.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvCountries.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvCountries.CausesValidation = false;
+            this.dgvCountries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvCountries.ColumnHeadersVisible = false;
+            this.dgvCountries.DataSource = this.dtEmp;
+            this.dgvCountries.Enabled = true;
+            this.dgvCountries.Location = new System.Drawing.Point(95, 64);
+            this.dgvCountries.MaximumSize = new System.Drawing.Size(292, 300);
+            this.dgvCountries.MinimumSize = new System.Drawing.Size(292, 200);
+            this.dgvCountries.Name = "dgvCountries";
+            this.dgvCountries.ReadOnly = true;
+            this.dgvCountries.RowHeadersVisible = false;
+            this.dgvCountries.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
+            this.dgvCountries.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgvCountries.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCountries.ShowCellErrors = false;
+            this.dgvCountries.Size = new System.Drawing.Size(292, 300);
+            this.dgvCountries.TabIndex = 34;
+            // 
             // tbxCountries
             // 
             this.tbxCountries.Enabled = false;
-            this.tbxCountries.Location = new System.Drawing.Point(84, 330);
+            this.tbxCountries.Location = new System.Drawing.Point(108, 24);
             this.tbxCountries.Name = "tbxCountries";
             this.tbxCountries.Size = new System.Drawing.Size(264, 20);
-            this.tbxCountries.TabIndex = 1;
-            this.tbxCountries.TextChanged += new System.EventHandler(this.tbxCountries_TextChanged_1);
+            this.tbxCountries.TabIndex = 32;
+            this.tbxCountries.TextChanged += new System.EventHandler(this.tbxCountries_TextChanged_2);
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(6, 335);
+            this.label20.Location = new System.Drawing.Point(15, 29);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(51, 13);
-            this.label20.TabIndex = 15;
-            this.label20.Text = "Countries";
+            this.label20.Size = new System.Drawing.Size(80, 13);
+            this.label20.TabIndex = 33;
+            this.label20.Text = "Primary Country";
+            // 
+            // button3
+            // 
+            this.button3.Image = global::MapActionToolbars.Properties.Resources.right_button_20x20;
+            this.button3.Location = new System.Drawing.Point(341, 430);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(30, 30);
+            this.button3.TabIndex = 32;
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Image = global::MapActionToolbars.Properties.Resources.left_button_20x20;
+            this.button4.Location = new System.Drawing.Point(304, 430);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(30, 30);
+            this.button4.TabIndex = 33;
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // tabPageLayout
             // 
@@ -1354,15 +1463,16 @@
             this.tabPageLayout.Location = new System.Drawing.Point(4, 22);
             this.tabPageLayout.Name = "tabPageLayout";
             this.tabPageLayout.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLayout.Size = new System.Drawing.Size(388, 469);
+            this.tabPageLayout.Size = new System.Drawing.Size(421, 468);
             this.tabPageLayout.TabIndex = 1;
             this.tabPageLayout.Text = "Map Information";
             this.tabPageLayout.UseVisualStyleBackColor = true;
+            this.tabPageLayout.Click += new System.EventHandler(this.tabPageLayout_Click);
             // 
             // btnUserRight
             // 
             this.btnUserRight.Image = global::MapActionToolbars.Properties.Resources.right_button_20x20;
-            this.btnUserRight.Location = new System.Drawing.Point(341, 431);
+            this.btnUserRight.Location = new System.Drawing.Point(341, 430);
             this.btnUserRight.Name = "btnUserRight";
             this.btnUserRight.Size = new System.Drawing.Size(30, 30);
             this.btnUserRight.TabIndex = 12;
@@ -1372,7 +1482,7 @@
             // btnUserLeft
             // 
             this.btnUserLeft.Image = global::MapActionToolbars.Properties.Resources.left_button_20x20;
-            this.btnUserLeft.Location = new System.Drawing.Point(304, 431);
+            this.btnUserLeft.Location = new System.Drawing.Point(304, 430);
             this.btnUserLeft.Name = "btnUserLeft";
             this.btnUserLeft.Size = new System.Drawing.Size(30, 30);
             this.btnUserLeft.TabIndex = 13;
@@ -1382,7 +1492,7 @@
             // chkEditAllFields
             // 
             this.chkEditAllFields.AutoSize = true;
-            this.chkEditAllFields.Location = new System.Drawing.Point(12, 436);
+            this.chkEditAllFields.Location = new System.Drawing.Point(12, 434);
             this.chkEditAllFields.Name = "chkEditAllFields";
             this.chkEditAllFields.Size = new System.Drawing.Size(153, 17);
             this.chkEditAllFields.TabIndex = 11;
@@ -1819,7 +1929,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(419, 545);
+            this.ClientSize = new System.Drawing.Size(452, 543);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.tabExportTool);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -1827,6 +1937,7 @@
             this.Name = "frmExportMain";
             this.Text = "Export Tool";
             this.Load += new System.EventHandler(this.frmMain_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dtEmp)).EndInit();
             this.tabPageExport.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
@@ -1871,6 +1982,10 @@
             this.tabPageThemes.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.tabPageCountries.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCountries)).EndInit();
             this.tabPageLayout.ResumeLayout(false);
             this.tabPageLayout.PerformLayout();
             this.groupBox7.ResumeLayout(false);
@@ -2067,12 +2182,20 @@
         private System.Windows.Forms.TabPage tabPageThemes;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.TextBox tbxCountries;
-        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckedListBox checkedListBoxThemes;
         private System.Windows.Forms.Label mapbookModeLabel;
         private System.Windows.Forms.ComboBox tbxMapbookMode;
+        private System.Windows.Forms.TabPage tabPageCountries;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.DataGridView dgvCountries;
+        private System.Windows.Forms.TextBox tbxCountries;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Data.DataTable dtEmp;
     }
 }

@@ -72,12 +72,6 @@ namespace MapAction
             }
             try
             {
-/*                <countries-iso3>
-<country-iso3>NPL</country-iso3>
-<country-iso3>IND</country-iso3>
-<country-iso3>CHN</country-iso3>
-</countries-iso3>
-*/
                 //Add each value pair in the passed dictionary as the elements of the xml doc
                 foreach (KeyValuePair<String, String> row in sDict)
                 {

@@ -429,7 +429,7 @@ namespace MapActionToolbars
                                         MessageBoxButtons.OK,
                                         MessageBoxIcon.Warning);
                     }
-                    // Read in multiple themes
+                    // Read in multiple countries
                     else if (usEle.Name.ToString().Equals("country-iso3"))
                     {
                         countryIndex++;
@@ -639,6 +639,8 @@ namespace MapActionToolbars
             {
                 this.dtEmp.Rows.Add(s, false);
             }
+            //Do not allow user to change country column contents:
+            this.dtEmp.Columns[0].ReadOnly = true;
         }
 
         private void dgvCountries_CellContentClick(object sender, DataGridViewCellEventArgs e)

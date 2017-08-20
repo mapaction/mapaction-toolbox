@@ -79,6 +79,8 @@
             this.cboCountry = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.dgvCountries = new System.Windows.Forms.DataGridView();
+            this.Country = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.eprOperationNameWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprGlideNoError = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprGlideNoWarning = new System.Windows.Forms.ErrorProvider(this.components);
@@ -209,10 +211,10 @@
             // tabConfigXml
             // 
             this.tabConfigXml.Controls.Add(this.tabPage1);
+            this.tabConfigXml.Controls.Add(this.tabCountries);
             this.tabConfigXml.Controls.Add(this.tabPage2);
             this.tabConfigXml.Controls.Add(this.tabPage3);
             this.tabConfigXml.Controls.Add(this.tabPage4);
-            this.tabConfigXml.Controls.Add(this.tabCountries);
             this.tabConfigXml.Location = new System.Drawing.Point(9, 19);
             this.tabConfigXml.Name = "tabConfigXml";
             this.tabConfigXml.SelectedIndex = 0;
@@ -716,19 +718,40 @@
             this.dgvCountries.CausesValidation = false;
             this.dgvCountries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCountries.ColumnHeadersVisible = false;
+            this.dgvCountries.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Country,
+            this.IsSelected});
             this.dgvCountries.DataSource = this.dtEmp;
             this.dgvCountries.Enabled = false;
             this.dgvCountries.Location = new System.Drawing.Point(186, 54);
-            this.dgvCountries.MaximumSize = new System.Drawing.Size(292, 100);
+            this.dgvCountries.MaximumSize = new System.Drawing.Size(310, 100);
             this.dgvCountries.Name = "dgvCountries";
             this.dgvCountries.RowHeadersVisible = false;
             this.dgvCountries.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvCountries.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvCountries.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCountries.ShowCellErrors = false;
-            this.dgvCountries.Size = new System.Drawing.Size(292, 100);
+            this.dgvCountries.Size = new System.Drawing.Size(310, 100);
             this.dgvCountries.TabIndex = 9;
             this.dgvCountries.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCountries_CellContentClick);
+            // 
+            // Country
+            // 
+            this.Country.Frozen = true;
+            this.Country.HeaderText = "Country";
+            this.Country.Name = "Country";
+            this.Country.ReadOnly = true;
+            this.Country.Visible = false;
+            this.Country.Width = 5;
+            // 
+            // IsSelected
+            // 
+            this.IsSelected.Frozen = true;
+            this.IsSelected.HeaderText = "IsSelected";
+            this.IsSelected.Name = "IsSelected";
+            this.IsSelected.ReadOnly = true;
+            this.IsSelected.Visible = false;
+            this.IsSelected.Width = 5;
             // 
             // eprOperationNameWarning
             // 
@@ -938,5 +961,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn countryDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn isSelectedDataGridViewCheckBoxColumn;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Country;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn IsSelected;
     }
 }
