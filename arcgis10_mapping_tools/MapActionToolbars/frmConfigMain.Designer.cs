@@ -42,10 +42,8 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.cboTimeZone = new System.Windows.Forms.ComboBox();
             this.cboCountry = new System.Windows.Forms.ComboBox();
-            this.cboLanguage = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.tbxGlideNo = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.tbxOperationName = new System.Windows.Forms.TextBox();
@@ -226,10 +224,8 @@
             // 
             this.tabPage1.Controls.Add(this.cboTimeZone);
             this.tabPage1.Controls.Add(this.cboCountry);
-            this.tabPage1.Controls.Add(this.cboLanguage);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.label7);
             this.tabPage1.Controls.Add(this.tbxGlideNo);
             this.tabPage1.Controls.Add(this.label20);
             this.tabPage1.Controls.Add(this.tbxOperationName);
@@ -288,8 +284,10 @@
             "UTC+12:45",
             "UTC+13:00",
             "UTC+14:00"});
+
             this.cboTimeZone.Location = new System.Drawing.Point(184, 188);
             this.cboTimeZone.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+
             this.cboTimeZone.Name = "cboTimeZone";
             this.cboTimeZone.Size = new System.Drawing.Size(430, 28);
             this.cboTimeZone.TabIndex = 5;
@@ -549,13 +547,17 @@
             "YEMEN",
             "ZAMBIA",
             "ZIMBABWE"});
+
             this.cboCountry.Location = new System.Drawing.Point(184, 146);
             this.cboCountry.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+
+
             this.cboCountry.Name = "cboCountry";
             this.cboCountry.Size = new System.Drawing.Size(430, 28);
             this.cboCountry.TabIndex = 4;
             this.cboCountry.TextChanged += new System.EventHandler(this.cboCountry_TextChanged);
             // 
+
             // cboLanguage
             // 
             this.cboLanguage.Enabled = false;
@@ -579,6 +581,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(21, 192);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(82, 20);
             this.label3.TabIndex = 45;
@@ -587,13 +590,16 @@
             // label6
             // 
             this.label6.AutoSize = true;
+
             this.label6.Location = new System.Drawing.Point(21, 152);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(64, 20);
             this.label6.TabIndex = 43;
             this.label6.Text = "Country";
             // 
+
             // label7
             // 
             this.label7.AutoSize = true;
@@ -604,6 +610,7 @@
             this.label7.TabIndex = 41;
             this.label7.Text = "Language";
             // 
+
             // tbxGlideNo
             // 
             this.tbxGlideNo.Enabled = false;
@@ -1068,7 +1075,9 @@
             this.Controls.Add(this.gbxCrashMoveFolder);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+
             this.Name = "frmConfigMain";
             this.Text = "Operation Configuration Tool";
             this.Load += new System.EventHandler(this.frmMain_Load);
@@ -1127,7 +1136,6 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tbxSourceOrganisation;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbxOperationId;
@@ -1142,7 +1150,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.NumericUpDown numPdfDpi;
         private System.Windows.Forms.NumericUpDown numJpegDpi;
-        private System.Windows.Forms.ComboBox cboLanguage;
         private System.Windows.Forms.Button btnSetExportToolPath;
         private System.Windows.Forms.ComboBox cboCountry;
         private System.Windows.Forms.ComboBox cboTimeZone;

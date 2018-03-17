@@ -23,10 +23,22 @@ namespace MapActionToolbars
     {
 
         private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
+        private List<string> languages;
 
         public frmLayoutMain()
         {
+            string path = MapAction.Utilities.getCrashMoveFolderPath();
+            string filePath = path + @"\language_config.xml";
+
+            // Set up Language of labels
+            this.languageDictionary = MapAction.Utilities.getLanguageConfigValues(filePath);
+            List<string> languages = new List<string>();
+            for (int i = 0; i < languageDictionary.Count; i++)
+            {
+                languages.Add(languageDictionary[i].getLanguage());
+            }
             InitializeComponent();
+            this.cboLabelLanguage.Items.AddRange(languages.ToArray());
         }
 
 
@@ -166,6 +178,8 @@ namespace MapActionToolbars
             dict.Add("donor_credit", this.tbxDonorCredit.Text);
             dict.Add("disclaimer", this.tbxDisclaimer.Text);
             dict.Add("map_producer", this.tbxMapProducer.Text);
+
+            setLabelLanguage();
 
             setAllElements(dict);
             this.disposeAllErrorProviders();
@@ -387,7 +401,59 @@ namespace MapActionToolbars
             FormValidationLayout.validateTimezone(tbxTimezone, eprTimezoneWarning, eprTimezoneError);
         }
 
+        private void cboLabelLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // _statusValidationResult = FormValidationExport.validateStatus(cboStatus, nudVersionNumber, eprStatusWarning);  
+            Debug.WriteLine("this.cboLabelLanguage.Text = " + this.cboLabelLanguage.Text);
+        }
+        
+        public void setLabelLanguage()
+        {
+            //this.cboLabelLanguage.Text;
+            IPageLayout pLayout = _pMxDoc.PageLayout;
+            IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
+            pGraphics.Reset();
 
+            IElement element = new TextElementClass();
+            IElementProperties2 pElementProp;
+            ITextElement pTextElement;
 
+            Dictionary<string, string> labelLookup = null;
+
+            for (int i = 0; i < this.languageDictionary.Count; i++)
+            {
+                if (this.languageDictionary[i].getLanguage() == this.cboLabelLanguage.Text)
+                {
+                    labelLookup = this.languageDictionary[i].getDictionary();
+                    break;
+                }
+            }
+
+            try
+            {
+                element = (IElement)pGraphics.Next();
+                while (element != null)
+                {
+                    if (element is ITextElement)
+                    {
+                        pTextElement = element as ITextElement;
+                        pElementProp = element as IElementProperties2;
+                        if (labelLookup.ContainsKey(pElementProp.Name) == true)
+                        {
+                            pTextElement.Text = labelLookup[pElementProp.Name];
+                        }
+                    }
+                    element = (IElement)pGraphics.Next();
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Error updating layout elements");
+                System.Diagnostics.Debug.WriteLine(e);
+            }
+
+            IActiveView activeView = _pMxDoc.ActivatedView as IActiveView;
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
     }
 }
