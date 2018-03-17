@@ -55,7 +55,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnCreate = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnCreateNewXmlPath = new System.Windows.Forms.Button();
+            this.btnChooseOperationFolder = new System.Windows.Forms.Button();
             this.tbxNewFileFolder = new System.Windows.Forms.TextBox();
             this.lblCreateNewXml = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
@@ -67,10 +67,11 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Location = new System.Drawing.Point(8, 72);
+            this.tabControl1.Location = new System.Drawing.Point(12, 111);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(356, 340);
+            this.tabControl1.Size = new System.Drawing.Size(534, 523);
             this.tabControl1.TabIndex = 14;
             // 
             // tabPage2
@@ -95,10 +96,11 @@
             this.tabPage2.Controls.Add(this.label21);
             this.tabPage2.Controls.Add(this.tbxOperationName);
             this.tabPage2.Controls.Add(this.label22);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 29);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(348, 314);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPage2.Size = new System.Drawing.Size(526, 490);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Section A";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -106,185 +108,207 @@
             // textBox13
             // 
             this.textBox13.Enabled = false;
-            this.textBox13.Location = new System.Drawing.Point(126, 278);
+            this.textBox13.Location = new System.Drawing.Point(189, 428);
+            this.textBox13.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(200, 20);
+            this.textBox13.Size = new System.Drawing.Size(298, 26);
             this.textBox13.TabIndex = 41;
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(12, 281);
+            this.label13.Location = new System.Drawing.Point(18, 432);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(50, 13);
+            this.label13.Size = new System.Drawing.Size(75, 20);
             this.label13.TabIndex = 40;
             this.label13.Text = "Element j";
             // 
             // textBox14
             // 
             this.textBox14.Enabled = false;
-            this.textBox14.Location = new System.Drawing.Point(126, 249);
+            this.textBox14.Location = new System.Drawing.Point(189, 383);
+            this.textBox14.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(200, 20);
+            this.textBox14.Size = new System.Drawing.Size(298, 26);
             this.textBox14.TabIndex = 39;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(12, 252);
+            this.label14.Location = new System.Drawing.Point(18, 388);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(50, 13);
+            this.label14.Size = new System.Drawing.Size(75, 20);
             this.label14.TabIndex = 38;
             this.label14.Text = "Element i";
             // 
             // textBox15
             // 
             this.textBox15.Enabled = false;
-            this.textBox15.Location = new System.Drawing.Point(126, 191);
+            this.textBox15.Location = new System.Drawing.Point(189, 294);
+            this.textBox15.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBox15.Name = "textBox15";
-            this.textBox15.Size = new System.Drawing.Size(200, 20);
+            this.textBox15.Size = new System.Drawing.Size(298, 26);
             this.textBox15.TabIndex = 37;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(12, 194);
+            this.label15.Location = new System.Drawing.Point(18, 298);
+            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(54, 13);
+            this.label15.Size = new System.Drawing.Size(81, 20);
             this.label15.TabIndex = 36;
             this.label15.Text = "Element g";
             // 
             // textBox16
             // 
             this.textBox16.Enabled = false;
-            this.textBox16.Location = new System.Drawing.Point(126, 162);
+            this.textBox16.Location = new System.Drawing.Point(189, 249);
+            this.textBox16.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBox16.Name = "textBox16";
-            this.textBox16.Size = new System.Drawing.Size(200, 20);
+            this.textBox16.Size = new System.Drawing.Size(298, 26);
             this.textBox16.TabIndex = 35;
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(12, 165);
+            this.label16.Location = new System.Drawing.Point(18, 254);
+            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(51, 13);
+            this.label16.Size = new System.Drawing.Size(77, 20);
             this.label16.TabIndex = 34;
             this.label16.Text = "Element f";
             // 
             // textBox17
             // 
             this.textBox17.Enabled = false;
-            this.textBox17.Location = new System.Drawing.Point(126, 220);
+            this.textBox17.Location = new System.Drawing.Point(189, 338);
+            this.textBox17.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBox17.Name = "textBox17";
-            this.textBox17.Size = new System.Drawing.Size(200, 20);
+            this.textBox17.Size = new System.Drawing.Size(298, 26);
             this.textBox17.TabIndex = 33;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(12, 223);
+            this.label17.Location = new System.Drawing.Point(18, 343);
+            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(54, 13);
+            this.label17.Size = new System.Drawing.Size(81, 20);
             this.label17.TabIndex = 32;
             this.label17.Text = "Element h";
             // 
             // textBox18
             // 
             this.textBox18.Enabled = false;
-            this.textBox18.Location = new System.Drawing.Point(126, 133);
+            this.textBox18.Location = new System.Drawing.Point(189, 205);
+            this.textBox18.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBox18.Name = "textBox18";
-            this.textBox18.Size = new System.Drawing.Size(200, 20);
+            this.textBox18.Size = new System.Drawing.Size(298, 26);
             this.textBox18.TabIndex = 31;
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(12, 136);
+            this.label18.Location = new System.Drawing.Point(18, 209);
+            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(54, 13);
+            this.label18.Size = new System.Drawing.Size(81, 20);
             this.label18.TabIndex = 30;
             this.label18.Text = "Element e";
             // 
             // tbxGlideNo
             // 
-            this.tbxGlideNo.Location = new System.Drawing.Point(126, 75);
+            this.tbxGlideNo.Location = new System.Drawing.Point(189, 115);
+            this.tbxGlideNo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbxGlideNo.Name = "tbxGlideNo";
-            this.tbxGlideNo.Size = new System.Drawing.Size(200, 20);
+            this.tbxGlideNo.Size = new System.Drawing.Size(298, 26);
             this.tbxGlideNo.TabIndex = 29;
             // 
             // lblGlideNo
             // 
             this.lblGlideNo.AutoSize = true;
-            this.lblGlideNo.Location = new System.Drawing.Point(12, 78);
+            this.lblGlideNo.Location = new System.Drawing.Point(18, 120);
+            this.lblGlideNo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblGlideNo.Name = "lblGlideNo";
-            this.lblGlideNo.Size = new System.Drawing.Size(46, 13);
+            this.lblGlideNo.Size = new System.Drawing.Size(68, 20);
             this.lblGlideNo.TabIndex = 28;
             this.lblGlideNo.Text = "Glide no";
             // 
             // tbxOperationID
             // 
-            this.tbxOperationID.Location = new System.Drawing.Point(126, 46);
+            this.tbxOperationID.Location = new System.Drawing.Point(189, 71);
+            this.tbxOperationID.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbxOperationID.Name = "tbxOperationID";
-            this.tbxOperationID.Size = new System.Drawing.Size(200, 20);
+            this.tbxOperationID.Size = new System.Drawing.Size(298, 26);
             this.tbxOperationID.TabIndex = 27;
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(12, 49);
+            this.label20.Location = new System.Drawing.Point(18, 75);
+            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(67, 13);
+            this.label20.Size = new System.Drawing.Size(100, 20);
             this.label20.TabIndex = 26;
             this.label20.Text = "Operation ID";
             // 
             // textBox21
             // 
             this.textBox21.Enabled = false;
-            this.textBox21.Location = new System.Drawing.Point(126, 104);
+            this.textBox21.Location = new System.Drawing.Point(189, 160);
+            this.textBox21.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBox21.Name = "textBox21";
-            this.textBox21.Size = new System.Drawing.Size(200, 20);
+            this.textBox21.Size = new System.Drawing.Size(298, 26);
             this.textBox21.TabIndex = 25;
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(12, 107);
+            this.label21.Location = new System.Drawing.Point(18, 165);
+            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(54, 13);
+            this.label21.Size = new System.Drawing.Size(81, 20);
             this.label21.TabIndex = 24;
             this.label21.Text = "Element d";
             // 
             // tbxOperationName
             // 
-            this.tbxOperationName.Location = new System.Drawing.Point(126, 17);
+            this.tbxOperationName.Location = new System.Drawing.Point(189, 26);
+            this.tbxOperationName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbxOperationName.Name = "tbxOperationName";
-            this.tbxOperationName.Size = new System.Drawing.Size(200, 20);
+            this.tbxOperationName.Size = new System.Drawing.Size(298, 26);
             this.tbxOperationName.TabIndex = 23;
             // 
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(12, 20);
+            this.label22.Location = new System.Drawing.Point(18, 31);
+            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(82, 13);
+            this.label22.Size = new System.Drawing.Size(123, 20);
             this.label22.TabIndex = 22;
             this.label22.Text = "Operation name";
             // 
             // tabPage1
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 29);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(348, 314);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPage1.Size = new System.Drawing.Size(526, 490);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Section B";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(195, 420);
+            this.btnCancel.Location = new System.Drawing.Point(292, 646);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.Size = new System.Drawing.Size(112, 35);
             this.btnCancel.TabIndex = 12;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -292,9 +316,10 @@
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(276, 420);
+            this.btnCreate.Location = new System.Drawing.Point(414, 646);
+            this.btnCreate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(75, 23);
+            this.btnCreate.Size = new System.Drawing.Size(112, 35);
             this.btnCreate.TabIndex = 11;
             this.btnCreate.Text = "Create";
             this.btnCreate.UseVisualStyleBackColor = true;
@@ -302,53 +327,59 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnCreateNewXmlPath);
+            this.groupBox1.Controls.Add(this.btnChooseOperationFolder);
             this.groupBox1.Controls.Add(this.tbxNewFileFolder);
             this.groupBox1.Controls.Add(this.lblCreateNewXml);
-            this.groupBox1.Location = new System.Drawing.Point(8, 12);
+            this.groupBox1.Location = new System.Drawing.Point(12, 18);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(352, 52);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Size = new System.Drawing.Size(528, 80);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Configuration file path";
             // 
-            // btnCreateNewXmlPath
+            // btnChooseOperationFolder
             // 
-            this.btnCreateNewXmlPath.Location = new System.Drawing.Point(312, 16);
-            this.btnCreateNewXmlPath.Name = "btnCreateNewXmlPath";
-            this.btnCreateNewXmlPath.Size = new System.Drawing.Size(33, 23);
-            this.btnCreateNewXmlPath.TabIndex = 1;
-            this.btnCreateNewXmlPath.Text = "...";
-            this.btnCreateNewXmlPath.UseVisualStyleBackColor = true;
-            this.btnCreateNewXmlPath.Click += new System.EventHandler(this.btnCreateNewXmlPath_Click);
+            this.btnChooseOperationFolder.Location = new System.Drawing.Point(468, 25);
+            this.btnChooseOperationFolder.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnChooseOperationFolder.Name = "btnChooseOperationFolder";
+            this.btnChooseOperationFolder.Size = new System.Drawing.Size(50, 35);
+            this.btnChooseOperationFolder.TabIndex = 1;
+            this.btnChooseOperationFolder.Text = "...";
+            this.btnChooseOperationFolder.UseVisualStyleBackColor = true;
+            this.btnChooseOperationFolder.Click += new System.EventHandler(this.btnCreateNewXmlPath_Click);
             // 
             // tbxNewFileFolder
             // 
-            this.tbxNewFileFolder.Location = new System.Drawing.Point(128, 16);
+            this.tbxNewFileFolder.Location = new System.Drawing.Point(192, 25);
+            this.tbxNewFileFolder.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbxNewFileFolder.Name = "tbxNewFileFolder";
-            this.tbxNewFileFolder.Size = new System.Drawing.Size(180, 20);
+            this.tbxNewFileFolder.Size = new System.Drawing.Size(268, 26);
             this.tbxNewFileFolder.TabIndex = 0;
             // 
             // lblCreateNewXml
             // 
             this.lblCreateNewXml.AutoSize = true;
-            this.lblCreateNewXml.Location = new System.Drawing.Point(6, 22);
+            this.lblCreateNewXml.Location = new System.Drawing.Point(9, 34);
+            this.lblCreateNewXml.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCreateNewXml.Name = "lblCreateNewXml";
-            this.lblCreateNewXml.Size = new System.Drawing.Size(66, 13);
+            this.lblCreateNewXml.Size = new System.Drawing.Size(98, 20);
             this.lblCreateNewXml.TabIndex = 8;
             this.lblCreateNewXml.Text = "Select folder";
             // 
             // frmCreateXml
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(373, 452);
+            this.ClientSize = new System.Drawing.Size(560, 695);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmCreateXml";
             this.Text = "Create xml";
             this.Load += new System.EventHandler(this.frmCreateXml_Load);
@@ -389,7 +420,7 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnCreate;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnCreateNewXmlPath;
+        private System.Windows.Forms.Button btnChooseOperationFolder;
         private System.Windows.Forms.TextBox tbxNewFileFolder;
         private System.Windows.Forms.Label lblCreateNewXml;
     }

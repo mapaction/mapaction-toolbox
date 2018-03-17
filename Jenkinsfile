@@ -1,7 +1,9 @@
 #!/usr/bin/env groovy
 
+
 // require an ArcGIS licence to run tests
 node('arcgis102-licence') {
+
     ws ("workspace\\mapaction-toolbox\\${env.BUILD_NUMBER}") {
         
         /*

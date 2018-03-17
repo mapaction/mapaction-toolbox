@@ -310,7 +310,7 @@ namespace MapActionToolbars
             Debug.WriteLine("checks on export complete");
 
             // Get the path and file name to pass to the various functions
-            string exportPathFileName = getExportPathFileName(tbxExportZipPath.Text, tbxMapDocument.Text);
+            string exportPathFileName = getExportPathFileName(tbxExportZipPath.Text, tbxMapDocument.Text, _mapNumber);
 
             // Disable the button after the export checks are complete to prevent multiple clicks
             this.Enabled = false;
@@ -561,7 +561,7 @@ namespace MapActionToolbars
             var dict = new Dictionary<string, string>();
 
             // Get the path and file name to pass to the various functions
-            string exportPathFileName = getExportPathFileName(tbxExportZipPath.Text, tbxMapDocument.Text);
+            string exportPathFileName = getExportPathFileName(tbxExportZipPath.Text, tbxMapDocument.Text, _mapNumber);
 
             //check to see variable exists
             if (!Directory.Exists(@tbxExportZipPath.Text) || tbxMapDocument.Text == "" || tbxMapDocument.Text == string.Empty)
@@ -658,10 +658,15 @@ namespace MapActionToolbars
             }
         }
 
-        private string getExportPathFileName(string path, string documentName)
+        private string getExportPathFileName(string path, string documentName, string mapNumber)
         {
             // Concatenate the 
-            string pathFileName = @path + "\\" + documentName;
+            var m = Regex.Match(mapNumber, "MA\\d+");
+            if (!m.Success){
+                throw new InvalidOperationException("Cannot identify map number!");
+            }
+            var sep = System.IO.Path.DirectorySeparatorChar;
+            string pathFileName = @path + sep + mapNumber + sep + documentName;
             return pathFileName; 
         
         }

@@ -70,6 +70,24 @@ namespace MapActionToolbars
                 tbxPathToCrashMove.Text = dlg.SelectedPath;
                 //reset the edit checkbox to false
                 chkEditConfigXml.Checked = false;
+                var couldBeCMF = isValidCrashMove();
+                if (!couldBeCMF)
+                {
+                    DialogResult yesAnyway = MessageBox.Show("This doesn't look like a Crash Move Folder. \n" +
+                        "You'll have to choose a default Export Path manually. Continue anyway?",
+                        "Please confirm selected folder", MessageBoxButtons.YesNo);
+                    if (yesAnyway == DialogResult.No)
+                    {
+                        return;
+                    }
+                    // we could blank out the export path here as it may make sense to reset it at this point
+                }
+                else
+                {
+                    // this looks like a crash move folder
+                    // We can set the default export path to the correct subfolder of the chosen top level
+                    // Modified populateDialogDefaultValues to do this
+                }
                 //Check if a config file already exists in the directory
                 pathToConfigXml = dlg.SelectedPath + @"\operation_config.xml";
                 //If a config file already exists 1) save it immediately as path, 2) read the values in to the form
@@ -101,7 +119,33 @@ namespace MapActionToolbars
             {
                 return;
             }
-         
+        }
+        private string getDefaultExportPath()
+        {
+            // when selecting a new folder we ought to check whether it looks like a valid crash move folder 
+            // For now we'll just check that the normal output folder exists seeing as that's all this tool
+            // is interested in
+            List<string> drillDown = new List<string>() { "GIS", "3_Mapping", "34_Map_Products_MapAction" };
+            var candidatePath = tbxPathToCrashMove.Text;
+            string testPath = candidatePath;
+            foreach (string dirlevel in drillDown)
+            {
+                testPath = Path.Combine(testPath, dirlevel);
+                if (!Directory.Exists(testPath))
+                {
+                    return "";
+                }
+            }
+            return testPath;
+        }
+
+        private bool isValidCrashMove()
+        {
+            string testPath = getDefaultExportPath();
+            if (testPath == ""){
+                return false;
+            }
+            return true;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -183,12 +227,6 @@ namespace MapActionToolbars
             FormValidationConfig.validateDonor(tbxDonorText, eprDonorTextWarning);
             FormValidationConfig.validateExportPath(tbxExportToolPath, eprExportPath);
         }
-
-        public void setPathToConfig(string path)
-        {
-            tbxPathToCrashMove.Text = path;
-        }
-
 
         //##alpha method
         public Dictionary<string,string> createConfigXmlDict()
@@ -276,28 +314,6 @@ namespace MapActionToolbars
             return createTrueFalse;
         }
 
-
-        //##alpha method
-        public Boolean dlgDefaultValuesOrExistingXml()
-        {
-            //Get the currently set path
-            string crashMovePath = MapAction.Utilities.getCrashMoveFolderPath();
-            string xmlPath = crashMovePath + @"\opertional_config.xml";
-            //Check if the path exists 
-            if (File.Exists(@xmlPath))
-            {
-                populateDialogExistingConfigXml(xmlPath);
-                return true;
-            }
-            else
-            {
-                populateDialogDefaultValues();
-                return false;
-            }
-
-        }
-
-
         //##alpha method
         public void populateDialogExistingConfigXml(string path = null)
         {
@@ -339,8 +355,9 @@ namespace MapActionToolbars
             tbxDonorText.Text = _defaultDonorText;
             numJpegDpi.Value = _defaultJpegDpi;
             numPdfDpi.Value = _defaultPdfDpi;
-            tbxExportToolPath.Text = _defaultExportToolPath;
+           // tbxExportToolPath.Text = _defaultExportToolPath;
 
+            tbxExportToolPath.Text = getDefaultExportPath();
         }
 
         private void chkEditConfigXml_CheckedChanged(object sender, EventArgs e)
@@ -498,6 +515,11 @@ namespace MapActionToolbars
         }
 
         private void numEmfDpi_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbxPathToCrashMove_TextChanged(object sender, EventArgs e)
         {
 
         }

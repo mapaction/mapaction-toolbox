@@ -47,7 +47,7 @@ namespace MapAction
         {
             m_MapDoc = pMapDoc;
 
-            m_ExportDir = System.IO.Path.GetDirectoryName(outputFileBaseName);
+            m_ExportDir = CheckOrCreateExportDir(outputFileBaseName);
             m_ExportBaseFileName = System.IO.Path.GetFileName(outputFileBaseName);
             m_CanExport = true;
             m_IsLayoutExport = false;
@@ -77,6 +77,36 @@ namespace MapAction
             }
         }
 
+        private string CheckOrCreateExportDir(string outputFileBaseName)
+        {
+            // we expect the input to be a filename stub within a folder, and we 
+            // expect the most immediate parent folder to be a MA number.
+            // e.g. c:\path\to\cmf\exports\ma_009\mapfilenamestub
+            // But this isn't necessarily the case and also the folder may not exist.
+            var attempt = System.IO.Path.GetDirectoryName(outputFileBaseName);
+            if (Directory.Exists(attempt))
+            {
+                return attempt;
+            }
+            try
+            {
+                System.IO.Directory.CreateDirectory(attempt);
+                return attempt;
+            }
+            catch (Exception e){
+                // IOException is given if attempt was actually an existing file path
+                // but that shouldn't occur as we've got it from the GetDirectoryName
+                if (e is UnauthorizedAccessException ||
+                    e is PathTooLongException || 
+                    e is DirectoryNotFoundException)
+                {
+                    // no permission, invalid, 
+                    return  CheckOrCreateExportDir(attempt);
+                }
+            }
+            return "";
+            
+        }
         /// <summary>
         /// build the output filename according to the MA export conventions, accounting for the different 
         /// naming of the thumbnail file
@@ -355,7 +385,8 @@ namespace MapAction
         /// Export a map image by specifying the size in pixels that the image should not exceed, in width and/or height.
         /// For example thumbnails, or other situations where the image needs to be of a specific size such as for website uses.
         /// Images below a certain size (currently 200 pixels) will be exported to a larger file which is then resampled down to 
-        /// the requested size, due to the coarse appearance of exports from ArcMap at low resolutions.
+        /// the requested size, due to the coarse appearance of exports from ArcMap at low resolutions. Returns the exported file 
+        /// path as a string.
         /// </summary>
         /// <param name="exportType">Export file type</param>
         /// <param name="maxSize">XYDimensions object specifying the width and/or height that the output image must fit within. 
@@ -411,7 +442,7 @@ namespace MapAction
         /// <summary>
         /// Export a map image by specifying resolution for the export in DPI. The image size will 
         /// vary according to size of the layout / dataframe exported. This is the normal method used by 
-        /// the export tool.
+        /// the export tool. Returns the exported file path as a string.
         /// </summary>
         /// <param name="exportType">The file format to export</param>
         /// <param name="dpi">The resolution in DPI (more relevant for layout exports)</param>
