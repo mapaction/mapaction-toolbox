@@ -176,19 +176,18 @@ namespace MapActionToolbars
             tbxLanguage.Text = _language;
 
             // Update form values from the config xml
-            var dictXML = new Dictionary<string, string>();
             string path = MapAction.Utilities.getCrashMoveFolderPath();
             string filePath = path + @"\operation_config.xml";
-            dictXML = MapAction.Utilities.getOperationConfigValues(filePath);
-            if (dictXML.ContainsKey("GlideNo")) { tbxGlideNo.Text = dictXML["GlideNo"]; }
-            if (dictXML.ContainsKey("Country")) { tbxCountries.Text = dictXML["Country"]; }
-            string operational_id = dictXML["OperationId"];
+            OperationConfig config = MapAction.Utilities.getOperationConfigValues(filePath);
+            tbxGlideNo.Text = config.GlideNo;
+            tbxCountries.Text = config.Country;
+            string operational_id = config.OperationId;
             Debug.WriteLine("Op ID: " + operational_id);
-            if (dictXML.ContainsKey("OperationId")) { tbxOperationId.Text = dictXML["OperationId"]; }
-            if (dictXML.ContainsKey("DefaultPathToExportDir")) { tbxExportZipPath.Text = dictXML["DefaultPathToExportDir"]; }
-            if (dictXML.ContainsKey("DefaultJpegResDPI")) { nudJpegResolution.Value = Convert.ToDecimal(dictXML["DefaultJpegResDPI"]); }
-            if (dictXML.ContainsKey("DefaultPdfResDPI")) { nudPdfResolution.Value = Convert.ToDecimal(dictXML["DefaultPdfResDPI"]); }
-            if (dictXML.ContainsKey("DefaultEmfResDPI")) { nudEmfResolution.Value = Convert.ToDecimal(dictXML["DefaultPdfResDPI"]); }
+            tbxOperationId.Text = config.OperationId;
+            tbxExportZipPath.Text = config.DefaultPathToExportDir;
+            nudJpegResolution.Value = Convert.ToDecimal(config.DefaultJpegResDPI); 
+            nudPdfResolution.Value = Convert.ToDecimal(config.DefaultPdfResDPI); 
+            nudEmfResolution.Value = Convert.ToDecimal(config.DefaultPdfResDPI);
 
             // Set the status value and the version number from the existing XML if it exists:
             setValuesFromExistingXML();
@@ -454,7 +453,7 @@ namespace MapActionToolbars
         private Dictionary<string, string> getExportToolValues(
             Dictionary<string, long> dictImageFileSizes, 
             Dictionary<string, string> dictFilePaths,
-            Dictionary<string, string> dictFrameExtents, 
+            Dictionary<string, string> dictFrameExtents,
             string mxdName)
         {
             
@@ -687,10 +686,9 @@ namespace MapActionToolbars
 
             if (MapAction.Utilities.detectOperationConfig())
             {
-                Dictionary<string, string> dictConfig = MapAction.Utilities.getOperationConfigValues(path);
-                if (dictConfig.ContainsKey("GlideNo")) { GlideNo = dictConfig["GlideNo"]; }
+                OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
+                GlideNo = config.GlideNo;
             }
-
             return GlideNo;
         }
 

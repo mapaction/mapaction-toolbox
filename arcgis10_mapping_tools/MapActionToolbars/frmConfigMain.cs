@@ -24,9 +24,6 @@ namespace MapActionToolbars
 
         private Boolean _configXmlEditState = false;
         private Boolean _configXmlNewFile = false;
-        private Boolean _btnSaveEnalbled = false;
-        private Boolean _configPathHasChanged = false;
-
 
         public frmConfigMain()
         {
@@ -76,7 +73,6 @@ namespace MapActionToolbars
                 if (File.Exists(@pathToConfigXml))
                 {
                     _configXmlEditState = false;
-                    _configPathHasChanged = true;
                     clearAllChildControls(tabConfigXml);
                     populateDialogExistingConfigXml(pathToConfigXml);
                     btnSave.Enabled = true;
@@ -190,30 +186,24 @@ namespace MapActionToolbars
         }
 
 
-        //##alpha method
-        public Dictionary<string,string> createConfigXmlDict()
+        public OperationConfig createOperationConfig()
         {
-            //Create a dictionary to store the form values
-            Dictionary<string, string> dict = new Dictionary<string, string>();
-            dict.Add("OperationName", tbxOperationName.Text);
-            dict.Add("GlideNo", tbxGlideNo.Text);
-            dict.Add("Country", cboCountry.Text);
-            dict.Add("TimeZone", cboTimeZone.Text);
-            dict.Add("OperationId", tbxOperationId.Text);
-            dict.Add("DefaultSourceOrganisation", tbxSourceOrganisation.Text);
-            dict.Add("DefaultSourceOrganisationUrl", tbxOrganisationUrl.Text);
-            dict.Add("DeploymentPrimaryEmail", tbxPrimaryEmail.Text);
-            //check that this line can be removed
-            //dict.Add("DefaultSourceOrganisationUrl", tbxOrganisationUrl.Text);
-            //dict.Add("DeploymentPrimaryEmail", tbxPrimaryEmail.Text);
-            dict.Add("DefaultDisclaimerText", tbxDislaimerText.Text);
-            dict.Add("DefaultDonorsText", tbxDonorText.Text);
-            dict.Add("DefaultJpegResDPI", numJpegDpi.Value.ToString());
-            dict.Add("DefaultPdfResDPI", numPdfDpi.Value.ToString());
-            dict.Add("DefaultEmfResDPI", numPdfDpi.Value.ToString());
-            dict.Add("DefaultPathToExportDir", tbxExportToolPath.Text);
-
-            return dict;
+            OperationConfig config = new OperationConfig { OperationName = tbxOperationName.Text,
+                                                           GlideNo = tbxGlideNo.Text,
+                                                           Country = cboCountry.Text,
+                                                           TimeZone = cboTimeZone.Text,
+                                                           OperationId = tbxOperationId.Text,
+                                                           DefaultSourceOrganisation = tbxSourceOrganisation.Text,
+                                                           DefaultSourceOrganisationUrl = tbxOrganisationUrl.Text,
+                                                           DeploymentPrimaryEmail = tbxPrimaryEmail.Text,
+                                                           DefaultDisclaimerText = tbxDislaimerText.Text,
+                                                           DefaultDonorsText = tbxDonorText.Text,
+                                                           DefaultJpegResDPI = numJpegDpi.Value.ToString(),
+                                                           DefaultPdfResDPI = numPdfDpi.Value.ToString(),
+                                                           DefaultEmfResDPI =numPdfDpi.Value.ToString(),
+                                                           DefaultPathToExportDir = tbxExportToolPath.Text
+                                                         };
+            return config;
         }
 
         //##alpha method
@@ -234,14 +224,11 @@ namespace MapActionToolbars
             }
             else
             {
-
-                //Create a dictionary to store the form values
-                Dictionary<string, string> dict = createConfigXmlDict();
-
+                OperationConfig config = createOperationConfig();
                 //Call the MapAction create xml method on the utilities class
                 try
                 {
-                    savedPath = MapAction.Utilities.createXML(dict, "emergency", path, "operation_config", 1);
+                    savedPath = MapAction.Utilities.createXML(config, path, "operation_config");
                 }
                 catch (Exception error)
                 {
@@ -301,33 +288,31 @@ namespace MapActionToolbars
         //##alpha method
         public void populateDialogExistingConfigXml(string path = null)
         {
+            OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
 
-            //Create a dictionary to store the xml values of the current config file
-            Dictionary<string, string> dict = MapAction.Utilities.getOperationConfigValues(path);
             //Populate the text boxes with the values from the dictionary
-            tbxOperationName.Text = dict["OperationName"];
-            tbxGlideNo.Text = dict["GlideNo"];
+            tbxOperationName.Text = config.OperationName;
+            tbxGlideNo.Text = config.GlideNo;
 
-            if (dict.ContainsKey("Language"))
+            if (!String.IsNullOrEmpty(config.Language))
             {
                 MessageBox.Show("The \"Language\" tag from the " + path + " file is now ignored.\n\nEnsure your MXD has a \"language_label\" element.\n\nUpdating the XML using this Operation Configuration Tool will remove the \"Language\" tag from the " + path + " file and prevent this message being shown.",
                                 "Warning", 
                                 MessageBoxButtons.OK, 
                                 MessageBoxIcon.Warning);
             }
-            cboCountry.Text = dict["Country"];
-            cboTimeZone.Text = dict["TimeZone"];
-            tbxOperationId.Text = dict["OperationId"];
-            tbxPrimaryEmail.Text = dict["DeploymentPrimaryEmail"];
-            tbxSourceOrganisation.Text = dict["DefaultSourceOrganisation"];
-            tbxOrganisationUrl.Text = dict["DefaultSourceOrganisationUrl"];
-            tbxOrganisationUrl.Text = dict["DefaultSourceOrganisationUrl"];
-            tbxDislaimerText.Text = dict["DefaultDisclaimerText"];
-            tbxDonorText.Text = dict["DefaultDonorsText"];
-            numJpegDpi.Value = decimal.Parse(dict["DefaultJpegResDPI"]);
-            numPdfDpi.Value = decimal.Parse(dict["DefaultPdfResDPI"]);
-            tbxExportToolPath.Text = dict["DefaultPathToExportDir"];
-
+            cboCountry.Text = config.Country;
+            cboTimeZone.Text = config.TimeZone;
+            tbxOperationId.Text = config.OperationId;
+            tbxPrimaryEmail.Text = config.DeploymentPrimaryEmail;
+            tbxSourceOrganisation.Text = config.DefaultSourceOrganisation;
+            tbxOrganisationUrl.Text = config.DefaultSourceOrganisationUrl;
+            tbxOrganisationUrl.Text = config.DefaultSourceOrganisationUrl;
+            tbxDislaimerText.Text = config.DefaultDisclaimerText;
+            tbxDonorText.Text = config.DefaultDonorsText;
+            numJpegDpi.Value = decimal.Parse(config.DefaultJpegResDPI);
+            numPdfDpi.Value = decimal.Parse(config.DefaultPdfResDPI);
+            tbxExportToolPath.Text = config.DefaultPathToExportDir;
         }
 
         //##alpha method
@@ -340,7 +325,6 @@ namespace MapActionToolbars
             numJpegDpi.Value = _defaultJpegDpi;
             numPdfDpi.Value = _defaultPdfDpi;
             tbxExportToolPath.Text = _defaultExportToolPath;
-
         }
 
         private void chkEditConfigXml_CheckedChanged(object sender, EventArgs e)
@@ -501,7 +485,5 @@ namespace MapActionToolbars
         {
 
         }
-
-
     }
 }
