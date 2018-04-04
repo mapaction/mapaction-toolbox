@@ -98,6 +98,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CountriesIso3.cs" />
+    <Compile Include="OperationConfig.cs" />
+    <Compile Include="DataFrameProperties.cs" />
     <Compile Include="LanguageConfig.cs" />
     <Compile Include="MapExport.cs" />
     <Compile Include="MapImageExporter.cs" />
