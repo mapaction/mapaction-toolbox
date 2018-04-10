@@ -134,7 +134,7 @@ namespace MapAction.tests
         /// <param name="dataFrameName"></param>
         /// <param name="missingNum"></param>
         /// <param name="duplicateNum"></param>
-        [Ignore("Ignore whilst test is imcomplete")]
+        [Ignore("Ignore whilst test is incomplete")]
         [TestCase(@"testfiles\MA_A3_landscape.mxd", "Main map", 0, 0)]
         [TestCase(@"testfiles\ARCGIS_10_2_MA000_Landscape_Bottom", "Main map", 0, 0)]
         public void TestGetLayoutTextElements(string relativeMXDfilename, string dataFrameName, int missingNum, int duplicateNum)
