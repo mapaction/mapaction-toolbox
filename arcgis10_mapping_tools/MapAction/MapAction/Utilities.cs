@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -103,6 +104,37 @@ namespace MapAction
 
         #endregion
 
+        #region Public method createXML
+        //Creates an xml given a dictionary of tags and values.  Also pass in the root element, file path and filename.
+        public static string createXML(MapAction.OperationConfig operationConfig, string path, string fileName)
+        {
+            //set output path and filename
+            string pathFileName;
+            //check to see if the path is the root of the directory, if so remove additional \
+            string root = System.IO.Path.GetPathRoot(path);
+            if (root != path)
+            {
+                pathFileName = @path + "\\" + fileName + ".xml";
+                Debug.WriteLine(pathFileName);
+            }
+            else
+            {
+                pathFileName = @path + fileName + ".xml";
+                Debug.WriteLine(pathFileName);
+            }
+
+            using (StringWriter stringwriter = new System.IO.StringWriter())
+            {
+                System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(operationConfig.GetType());
+                System.IO.StreamWriter file = new System.IO.StreamWriter(pathFileName);
+                writer.Serialize(file, operationConfig);
+                file.Close();
+            }
+            return pathFileName;
+        }
+
+        #endregion
+
         #region Public method getDataFrameSpatialReference
         //Gets the spatial reference details of a given data frame. Returns a dictionary with the "type", "datum" & "projection".
         //these keys return empty if the dataframe doesn't exist, therefore test "type" != string.empty; on the other end 
@@ -172,12 +204,11 @@ namespace MapAction
         #endregion
 
         #region Public method getOperationConfigValues
-        //Returns a dictionary of the operation_config.xml elements and values
-        public static Dictionary<string, string> getOperationConfigValues(string path = null)
+        public static OperationConfig getOperationConfigValues(string path = null)
         {
             string opCfgFilePath;
             Uri cmfURI;
-            
+            var operationConfig = new OperationConfig();
             //Create a dictionary to store the values from the xml
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
@@ -193,33 +224,21 @@ namespace MapAction
 
             cmfURI = new Uri(System.IO.Path.GetDirectoryName(opCfgFilePath), UriKind.Absolute);
 
-            //If the file exists in the filepath, add each element and value of the xml file 
-            //to the dictionary as key value pairs 
             try
             {
                 if (File.Exists(@opCfgFilePath))
                 {
-                    XDocument doc = XDocument.Load(@opCfgFilePath);
-                    foreach (XElement usEle in doc.Root.Descendants())
-                    {
-                        if (usEle.Name.ToString().Equals("DefaultPathToExportDir", StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            //Uri absExportURI = new Uri(usEle.Value.ToString(), UriKind.Absolute);
-                            //absExportURI.MakeRelativeUri(cmfURI)
-                            dict.Add(usEle.Name.ToString(), absPathFromRel(usEle.Value.ToString()));
-                        }
-                        else
-                        {
-                            dict.Add(usEle.Name.ToString(), usEle.Value.ToString());
-                        }
-                    }
+                    XmlSerializer serializer = new XmlSerializer(typeof(OperationConfig));
+                    System.IO.FileStream fileStream = new System.IO.FileStream(@opCfgFilePath, FileMode.Open);
+                    operationConfig = (OperationConfig)serializer.Deserialize(fileStream);
+                    fileStream.Close();
                 }
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
             }
-            return dict;
+            return operationConfig;
         }
         #endregion
 

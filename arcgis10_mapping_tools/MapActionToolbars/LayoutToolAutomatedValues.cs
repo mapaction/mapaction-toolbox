@@ -21,8 +21,6 @@ namespace MapActionToolbars
 {
     class LayoutToolAutomatedValues
     {
-
-
         /*################################
         Tab 1 automated values
         ##################################*/
@@ -35,15 +33,11 @@ namespace MapActionToolbars
 
             if (MapAction.Utilities.detectOperationConfig())
             {
-                Dictionary<string, string> dictConfig = MapAction.Utilities.getOperationConfigValues(path);
-                if (dictConfig.ContainsKey("GlideNo")) { GlideNo = dictConfig["GlideNo"]; }
+                MapAction.OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
+                GlideNo = config.GlideNo;
             }
-
             return GlideNo;
         }
-
-
-
 
         /*################################
         Tab 2 automated values
@@ -56,10 +50,9 @@ namespace MapActionToolbars
 
             if (MapAction.Utilities.detectOperationConfig())
             {
-                Dictionary<string, string> dictConfig = MapAction.Utilities.getOperationConfigValues(path);
-                if (dictConfig.ContainsKey("DefaultDisclaimerText")) { DefaultDisclaimerText = dictConfig["DefaultDisclaimerText"]; }
+                MapAction.OperationConfig config =  MapAction.Utilities.getOperationConfigValues(path);
+                DefaultDisclaimerText = config.DefaultDisclaimerText;
             }
-
             return DefaultDisclaimerText;
         }
 
@@ -70,10 +63,9 @@ namespace MapActionToolbars
 
             if (MapAction.Utilities.detectOperationConfig())
             {
-                Dictionary<string, string> dictConfig = MapAction.Utilities.getOperationConfigValues(path);
-                if (dictConfig.ContainsKey("DefaultDonorsText")) { DefaultDonorsText = dictConfig["DefaultDonorsText"]; }
+                MapAction.OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
+                DefaultDonorsText = config.DefaultDonorsText;
             }
-
             return DefaultDonorsText;
         }
 
@@ -84,10 +76,9 @@ namespace MapActionToolbars
 
             if (MapAction.Utilities.detectOperationConfig())
             {
-                Dictionary<string, string> dictConfig = MapAction.Utilities.getOperationConfigValues(path);
-                if (dictConfig.ContainsKey("TimeZone")) { DefaultTimeZone = dictConfig["TimeZone"]; }
+                MapAction.OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
+                DefaultTimeZone = config.TimeZone;
             }
-
             return DefaultTimeZone;
         }
 
@@ -102,20 +93,18 @@ namespace MapActionToolbars
 
             if (MapAction.Utilities.detectOperationConfig())
             {
-                Dictionary<string, string> dictConfig = MapAction.Utilities.getOperationConfigValues(path);
-                if (dictConfig.ContainsKey("DefaultSourceOrganisation")) { OrgName = dictConfig["DefaultSourceOrganisation"]; }
-                if (dictConfig.ContainsKey("DefaultSourceOrganisationUrl")) { OrgUrl = dictConfig["DefaultSourceOrganisationUrl"]; }
-                if (dictConfig.ContainsKey("DeploymentPrimaryEmail")) { PrimaryEmail = dictConfig["DeploymentPrimaryEmail"]; }
+                MapAction.OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
+
+                OrgName = config.DefaultSourceOrganisation;
+                OrgUrl = config.DefaultSourceOrganisationUrl;
+                PrimaryEmail = config.DeploymentPrimaryEmail;
                 string OrganisationDetailsText = "Produced by " + OrgName + " " + OrgUrl + Environment.NewLine + PrimaryEmail;
                 return OrganisationDetailsText;
             }
             else
             {
                 return string.Empty;
-            }
-
-            
+            }            
         }
-
     }
 }

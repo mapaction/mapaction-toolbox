@@ -392,11 +392,10 @@ namespace MapActionToolbars
             eprError.SetIconPadding(control, 5);
             string automatedValue = string.Empty;
             
-            var dictXML = new Dictionary<string, string>();
             string path = MapAction.Utilities.getCrashMoveFolderPath();
             string filePath = MapAction.Utilities.getOperationConfigFilePath();
-            dictXML = MapAction.Utilities.getOperationConfigValues(filePath);
-            if (dictXML.ContainsKey("OperationId")) { automatedValue = dictXML["OperationId"]; }
+            MapAction.OperationConfig config = MapAction.Utilities.getOperationConfigValues(filePath);
+            automatedValue = config.OperationId;
 
             if (validateEmptyField(control, eprWarning))
             {

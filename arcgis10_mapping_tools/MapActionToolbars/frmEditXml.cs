@@ -27,11 +27,11 @@ namespace MapActionToolbars
             //Set the textbox to show the path to the file being edited
             tbxEditXmlCurrentPath.Text = configPath;
             //Create a dictionary to store the xml values of the current config file
-            Dictionary<string, string> dict = MapAction.Utilities.getOperationConfigValues();
+            MapAction.OperationConfig config = MapAction.Utilities.getOperationConfigValues();
             //Populate the text boxes with the values from the dictionary
-            tbxOperationName.Text = dict["operation_name"];
-            tbxOperationID.Text = dict["operation_id"];
-            tbxGlideNo.Text = dict["glide_no"];
+            tbxOperationName.Text = config.OperationName;
+            tbxOperationID.Text = config.OperationId;
+            tbxGlideNo.Text = config.GlideNo;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

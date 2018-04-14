@@ -30,8 +30,7 @@ namespace MapActionToolbars
                 MessageBox.Show("Please enter a valid directory in the dialog", "Invalid directory");
             }
             else
-            {
-                
+            {                
                 //Create a dictionary to store the form values
                 Dictionary<string, string> dict = new Dictionary<string, string>();
                 dict.Add("operation_name", tbxOperationName.Text);

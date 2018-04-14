@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OperationConfig>
+  <OperationName>Op_test</OperationName>
+  <GlideNo>XY-2006-123456-PAK</GlideNo>
+  <principal-country-iso3>AND</principal-country-iso3>
+  <countries-iso3>
+    <country-iso3>AND</country-iso3>
+    <country-iso3>AFG</country-iso3>
+    <country-iso3>ALA</country-iso3>
+    <country-iso3>ALB</country-iso3>
+    <country-iso3>MDA</country-iso3>
+    <country-iso3>MCO</country-iso3>
+    <country-iso3>MNG</country-iso3>
+    <country-iso3>MAR</country-iso3>
+    <country-iso3>MOZ</country-iso3>
+    <country-iso3>MMR</country-iso3>
+    <country-iso3>NLD</country-iso3>
+    <country-iso3>NCL</country-iso3>
+    <country-iso3>NZL</country-iso3>
+    <country-iso3>NIC</country-iso3>
+    <country-iso3>YEM</country-iso3>
+  </countries-iso3>
+  <Country>Andorra</Country>
+  <TimeZone>UTC-12:00</TimeZone>
+  <language-iso2>ar</language-iso2>
+  <OperationId>tttths</OperationId>
+  <DefaultSourceOrganisation>MapAction</DefaultSourceOrganisation>
+  <DefaultSourceOrganisationUrl>www.mapaction.org</DefaultSourceOrganisationUrl>
+  <DeploymentPrimaryEmail>info@mapaction.org</DeploymentPrimaryEmail>
+  <DefaultDisclaimerText>The depiction and use of boundaries, names and associated data shown here do not imply endorsement or acceptance by MapAction.</DefaultDisclaimerText>
+  <DefaultDonorsText>Supported by</DefaultDonorsText>
+  <DefaultJpegResDPI>300</DefaultJpegResDPI>
+  <DefaultPdfResDPI>300</DefaultPdfResDPI>
+  <DefaultEmfResDPI>300</DefaultEmfResDPI>
+  <DefaultPathToExportDir>../Data20170414</DefaultPathToExportDir>
+</OperationConfig>

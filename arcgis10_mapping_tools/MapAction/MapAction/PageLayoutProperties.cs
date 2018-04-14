@@ -473,18 +473,7 @@ namespace MapAction
                 {
                     //string input = "OneTwoThree";
                     mapTitle = mapTitle.Substring(0, mapTitle.Length - 4);
-
-
                 }
-                else
-                {
-                    mapTitle = mapTitle;
-
-                }
-
-                
-
-                //mapTitle = mapTitle.Substring(0,mapTitle.Length - 4);
                 System.Diagnostics.Debug.WriteLine(mapTitle);
             }
             catch (Exception e)

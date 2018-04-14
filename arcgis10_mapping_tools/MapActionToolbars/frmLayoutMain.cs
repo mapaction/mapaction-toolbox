@@ -23,8 +23,7 @@ namespace MapActionToolbars
     {
 
         private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
-        private List<string> languages;
-
+ 
         public frmLayoutMain()
         {
             string path = MapAction.Utilities.getCrashMoveFolderPath();
@@ -40,7 +39,6 @@ namespace MapActionToolbars
             InitializeComponent();
             this.cboLabelLanguage.Items.AddRange(languages.ToArray());
         }
-
 
         //Gets the automated values for Tab 1 and populates each textbox
         private void btnUpdateAll_Click(object sender, EventArgs e)
