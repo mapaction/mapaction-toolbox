@@ -95,7 +95,6 @@ namespace RenameLayer
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-
                 }
             }
             catch (Exception e)
@@ -103,7 +102,6 @@ namespace RenameLayer
                 Debug.WriteLine(e.Message);
                 return;
             }    
-
         }
 
         protected override void OnUpdate()
@@ -113,17 +111,13 @@ namespace RenameLayer
 
         public ESRI.ArcGIS.Geodatabase.IFeatureClass GetFeatureClassFromShapefileOnDisk(System.String string_ShapefileDirectory, System.String string_ShapefileName)
         {
-
             System.IO.DirectoryInfo directoryInfo_check = new System.IO.DirectoryInfo(string_ShapefileDirectory);
             if (directoryInfo_check.Exists)
             {
-
                 //We have a valid directory, proceed
-
-                System.IO.FileInfo fileInfo_check = new System.IO.FileInfo(string_ShapefileDirectory + "\\" + string_ShapefileName + ".shp");
+                System.IO.FileInfo fileInfo_check = new System.IO.FileInfo(System.IO.Path.Combine(string_ShapefileDirectory, (string_ShapefileName + ".shp")));
                 if (fileInfo_check.Exists)
                 {
-
                     //We have a valid shapefile, proceed
 
                     ESRI.ArcGIS.Geodatabase.IWorkspaceFactory workspaceFactory = new ESRI.ArcGIS.DataSourcesFile.ShapefileWorkspaceFactoryClass();
@@ -135,23 +129,15 @@ namespace RenameLayer
                 }
                 else
                 {
-
                     //Not valid shapefile
                     return null;
                 }
-
             }
             else
             {
-
                 // Not valid directory
                 return null;
-
             }
-
         }
-
-
     }
-
 }

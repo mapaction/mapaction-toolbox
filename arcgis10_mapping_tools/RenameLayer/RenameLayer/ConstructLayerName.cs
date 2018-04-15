@@ -9,14 +9,10 @@ using System.Windows.Forms;
 using System.Globalization;
 using Microsoft.VisualBasic.FileIO;
 
-
-
-
 namespace RenameLayer
 {
     public class ConstructLayerName
     {
-
         public string LoopThroughNameElements(Array arr)
         {
             string _tempLayerName = string.Empty;
@@ -28,12 +24,10 @@ namespace RenameLayer
                     _tempLayerName += s + "_";
                 }
             }
-
             //trim the final "_" from the string
             _tempLayerName = _tempLayerName.TrimEnd('_');
 
             return _tempLayerName;
-
         }
 
         public static string pathToLookupCSV()
@@ -42,10 +36,8 @@ namespace RenameLayer
             string _path;
 
             // check crash move folder first - if it doesn't exist then look on C drive - PJR 18/08/2016
-            
             _rawPath = MapAction.Utilities.getCrashMoveFolderPath();
             _path = _rawPath + @"\GIS\2_Active_Data\200_data_name_lookup\";
-            
                         
             if (Directory.Exists(_path))
             {
@@ -72,16 +64,10 @@ namespace RenameLayer
                     return _path;
                 }
             }
-            
-            //Debug.WriteLine("returned path: " + _path);
-            
-            //return _path;
-
         }
 
         public static Boolean checkPathToLookupCSV()
         {
-            
             string _path = ConstructLayerName.pathToLookupCSV() + @"\01_geoextent.csv"; //added 01 PJR 18/08/2016
 
             // Checks to see if the 'geoextent.csv' file exist in the config tool directory
@@ -93,16 +79,9 @@ namespace RenameLayer
             {
                 return false;
             }
-
-
-
         }
-            
-
     }
     
-      
-
     public static class RenameLayerToolValues
     {
 
@@ -162,11 +141,8 @@ namespace RenameLayer
                         else
                         {
                             dict.Add(fields[0], fields[1]);
-                        }
-
-                        
-                    }
-                                    
+                        }   
+                    }                           
                 }
             }
             return dict;
@@ -174,7 +150,6 @@ namespace RenameLayer
 
         public static Dictionary<string, string> csvToDictionary(string @path, string @selCategory)
         {
-
             // for theme.csv, need to filter out only values of theme applicable to currently selected value of category
             
             Dictionary<string,string> dict=new Dictionary<string,string>();
@@ -198,14 +173,11 @@ namespace RenameLayer
                         if (!dict.ContainsKey(fields[0]))
                         {
                             desc = string.Format("{0,-50} {1,10}", fields[1], "(" + fields[2] + ")");
-                            dict.Add(fields[0], desc);
-                            
+                            dict.Add(fields[0], desc);       
                         } 
                     }
-
                 }
-            }
-                        
+            }           
             // if dict only has one member (the blank, blank that was initalised here), then change
             // to display suitable warning
 
@@ -213,10 +185,7 @@ namespace RenameLayer
             {
                 dict[""] = "No themes found for selected category - use custom value";
             }
-
             return dict;
-
         }
-
     }
 }

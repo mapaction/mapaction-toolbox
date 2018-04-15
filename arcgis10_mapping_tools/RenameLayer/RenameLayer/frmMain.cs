@@ -27,26 +27,15 @@ namespace RenameLayer
     {
         //Create a local variable to set the path to each of the csv files that store the lookup values
         // added numeric prefixes and changed type to 04_geometry to fit in with revised DNC. PJR 18/08/2016
-        string _extent_path = ConstructLayerName.pathToLookupCSV() + @"\01_geoextent.csv";
-        string _category_path = ConstructLayerName.pathToLookupCSV() + @"\02_category.csv";
-        string _theme_path = ConstructLayerName.pathToLookupCSV() + @"\03_theme.csv";
-        string _type_path = ConstructLayerName.pathToLookupCSV() + @"\04_geometry.csv";
-        string _scale_path = ConstructLayerName.pathToLookupCSV() + @"\05_scale.csv";
-        string _source_path = ConstructLayerName.pathToLookupCSV() + @"\06_source.csv";
-        string _permission_path = ConstructLayerName.pathToLookupCSV() + @"\07_permission.csv";
         
         // new csv to hold metadata on DNC.  PJR 21/10/2016
         // remember to change data as necessary when RenameLayer tool updates or DNC updates
-        string _DNCmetadata_path = ConstructLayerName.pathToLookupCSV() + @"\99_DNCmetadata.csv";
-        string _RenameLayerVersion = "v 1.2";
-        string _RenameLayerDate = "21 Oct 2016";
+        MADataRenameProperties _Properties;
 
-        
-        
         public frmMain()
         {
             InitializeComponent();
-                                   
+            _Properties = new MADataRenameProperties();                       
         }
 
         private void btnRename_Click(object sender, EventArgs e)
@@ -59,15 +48,23 @@ namespace RenameLayer
             IDataset ds = fc as IDataset;
             
             //Construct layer name
-            //ConstructLayerName newLayer = new ConstructLayerName();
-            //string newLayerName = newLayer.LoopThroughNameElements(GetFormElementValues());
             string newLayerName = createNewLayerName();
 
-            //Rename the layer
-            ds.Rename(newLayerName);
+            // Is the directory a crash move folder?   
+            if (HasCrashMoveFolderStructure(root))
+            {
+                // If it is, copy the renamed file(s) to the appropriate directory.
+                ESRI.ArcGIS.Geodatabase.IWorkspaceFactory workspaceFactory = new ESRI.ArcGIS.DataSourcesFile.ShapefileWorkspaceFactoryClass();
+                ESRI.ArcGIS.Geodatabase.IWorkspace workspace = workspaceFactory.OpenFromFile(CategoryPath(root, Category()), 0);
+                ds.Copy(newLayerName, workspace);
+            }
+            else
+            {
+                //Rename the layer
+                ds.Rename(newLayerName);
+            }
             pApp.Refresh(root);
             this.Close();
-
         }
 
         public string createNewLayerName()
@@ -78,12 +75,23 @@ namespace RenameLayer
             return newLayerName;
         }
 
+        public string Category()
+        {
+            string category;
+            if (!chkCategory.Checked) 
+            { 
+                category = cboCategory.SelectedValue.ToString(); 
+            } 
+            else 
+            { 
+                category = tbxCategory.Text; 
+            };
+            return category;
+        }
 
         public string[] GetFormElementValues()
         {
-            
             string _geoExtent;
-            string _category;
             string _theme;
             string _type;
             string _scale;
@@ -92,7 +100,6 @@ namespace RenameLayer
             string _freeText;
 
             if (!chkGeoExtent.Checked) {_geoExtent = cboGeoExtent.SelectedValue.ToString(); } else { _geoExtent = tbxGeoExtent.Text; };
-            if (!chkCategory.Checked) { _category = cboCategory.SelectedValue.ToString(); } else { _category = tbxCategory.Text; };
             if (!chkTheme.Checked) { _theme = cboTheme.SelectedValue.ToString(); } else { _theme = tbxTheme.Text; };
             if (!chkType.Checked) { _type = cboType.SelectedValue.ToString(); } else { _type = tbxType.Text; };
             if (!chkScale.Checked) { _scale = cboScale.SelectedValue.ToString(); } else { _scale = tbxScale.Text; };
@@ -101,7 +108,7 @@ namespace RenameLayer
             _freeText = tbxFreeText.Text;
             
             //Create array of all the above elements
-            string[] arr = { _geoExtent, _category, _theme, _type, _scale, _source, _permission, _freeText };
+            string[] arr = { _geoExtent, Category(), _theme, _type, _scale, _source, _permission, _freeText };
             
             return arr;
         }
@@ -112,15 +119,11 @@ namespace RenameLayer
             System.IO.DirectoryInfo directoryInfo_check = new System.IO.DirectoryInfo(string_ShapefileDirectory);
             if (directoryInfo_check.Exists)
             {
-
                 //We have a valid directory, proceed
-
                 System.IO.FileInfo fileInfo_check = new System.IO.FileInfo(string_ShapefileDirectory + "\\" + string_ShapefileName + ".shp");
                 if (fileInfo_check.Exists)
                 {
-
                     //We have a valid shapefile, proceed
-
                     ESRI.ArcGIS.Geodatabase.IWorkspaceFactory workspaceFactory = new ESRI.ArcGIS.DataSourcesFile.ShapefileWorkspaceFactoryClass();
                     ESRI.ArcGIS.Geodatabase.IWorkspace workspace = workspaceFactory.OpenFromFile(string_ShapefileDirectory, 0);
                     ESRI.ArcGIS.Geodatabase.IFeatureWorkspace featureWorkspace = (ESRI.ArcGIS.Geodatabase.IFeatureWorkspace)workspace; // Explict Cast
@@ -130,32 +133,24 @@ namespace RenameLayer
                 }
                 else
                 {
-
                     //Not valid shapefile
                     return null;
                 }
-
             }
             else
             {
-
                 // Not valid directory
                 return null;
-
             }
-
         }
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-
-
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
-
         }
 
         private void btnPermissionHelp_Click(object sender, EventArgs e)
@@ -170,28 +165,27 @@ namespace RenameLayer
             //MessageBox.Show(this, "frmMain_load_1 entered", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); //PJR 18/082016
 
             // Add metadata/ QA info on this tool and on DNC to form  PJR 21/10/2016
-            this.Text = "MapAction Dataset Rename Tool " + _RenameLayerVersion ;
+            this.Text = "MapAction Dataset Rename Tool " + _Properties.RenameLayerVersion;
             //this.Text = "MapAction Dataset Rename Tool " + _RenameLayerVersion + " of " + _RenameLayerDate;
-            label12.Text = getDNCLabel(_DNCmetadata_path);
+            label12.Text = getDNCLabel(_Properties.DNCmetadataPath);
    
 
             //Populate combo box with value from the CSV files 
-            comboValues(cboGeoExtent, _extent_path);
-            comboValues(cboCategory, _category_path);
-            comboValues(cboTheme, _theme_path);
-            comboValues(cboType, _type_path);
+            comboValues(cboGeoExtent, _Properties.ExtentPath);
+            comboValues(cboCategory, _Properties.CategoryPath);
+            comboValues(cboTheme, _Properties.ThemePath);
+            comboValues(cboType, _Properties.TypePath);
 
             // set geometry type if known   PJR 20/10/2016
             string geomtype = getGeomType();
             if (geomtype != "other") { cboType.SelectedValue = geomtype; }
 
-            comboValues(cboScale, _scale_path);
-            comboValues(cboSource, _source_path);
-            comboValues(cboPermission, _permission_path);
+            comboValues(cboScale, _Properties.ScalePath);
+            comboValues(cboSource, _Properties.SourcePath);
+            comboValues(cboPermission, _Properties.PermissionPath);
 
             // construct and display new file name if geometry type is already set
             if (geomtype != "other") { lblReviewLayerName.Text = createNewLayerName(); }
-
         }
 
         public string getDNCLabel(string DNCpath)
@@ -220,11 +214,10 @@ namespace RenameLayer
                 }
             }
             return label;
-
         }
 
         
-            public string getGeomType()
+        public string getGeomType()
             // queries shapefile that is to be renamed and returns geometry type as string
             // with same values as expected by DNC
         {
@@ -257,30 +250,108 @@ namespace RenameLayer
                         geomtype = "other";
                         break;
                     }
-
             }
             return geomtype;
         }
 
+        public bool HasCrashMoveFolderStructure(System.String string_ShapefileDirectory)
+        {
+            bool result = false;
+            const System.String activeDataDirectory = "2_Active_Data";
+
+            System.String pathRoot = System.IO.Path.GetPathRoot(string_ShapefileDirectory);
+            string testPath = string_ShapefileDirectory;
+            System.IO.Path.GetFullPath(testPath).Equals(System.IO.Path.GetFullPath(pathRoot));
+            System.String activeDataPath = System.IO.Path.Combine(testPath, activeDataDirectory);
+
+            if (System.IO.Directory.Exists(activeDataPath))
+            {
+                result = true;
+            }
+            else
+            {
+                while ((!System.IO.Path.GetFullPath(testPath).Equals(System.IO.Path.GetFullPath(pathRoot))) && result == false)
+                {
+                    testPath = System.IO.Path.Combine(testPath, "..");
+                    activeDataPath = System.IO.Path.Combine(testPath, activeDataDirectory);
+                    // Does path exist?
+                    if (System.IO.Directory.Exists(activeDataPath))
+                    {
+                        result = true;
+                    }
+                }
+            }
+            Console.WriteLine(activeDataPath);
+            return result;
+        }
+
+        public string ActiveDataPath(System.String string_ShapefileDirectory)
+        {
+            bool result = false;
+            const System.String activeDataDirectory = "2_Active_Data";
+
+            System.String pathRoot = System.IO.Path.GetPathRoot(string_ShapefileDirectory);
+            string testPath = string_ShapefileDirectory;
+            System.IO.Path.GetFullPath(testPath).Equals(System.IO.Path.GetFullPath(pathRoot));
+            System.String activeDataPath = System.IO.Path.Combine(testPath, activeDataDirectory);
+
+            if (System.IO.Directory.Exists(activeDataPath))
+            {
+                result = true;
+            }
+            else
+            {
+                while ((!System.IO.Path.GetFullPath(testPath).Equals(System.IO.Path.GetFullPath(pathRoot))) && result == false)
+                {
+                    testPath = System.IO.Path.Combine(testPath, "..");
+                    activeDataPath = System.IO.Path.Combine(testPath, activeDataDirectory);
+                    // Does path exist?
+                    if (System.IO.Directory.Exists(activeDataPath))
+                    {
+                        result = true;
+                    }
+                }
+            }
+            return activeDataPath;
+        }
+
+        public string CategoryPath(System.String string_ShapefileDirectory, string category)
+        {
+            string activeDataPath = ActiveDataPath(string_ShapefileDirectory);
+
+            string[] directories = Directory.GetDirectories(string_ShapefileDirectory);
+
+            string categoryPath = "";
+            try 
+            {
+                string[] dirs = Directory.GetDirectories(activeDataPath, ("*" + category), System.IO.SearchOption.TopDirectoryOnly);
+                foreach (string dir in dirs) 
+                {
+                    categoryPath = dir;
+                    break;
+                }
+            } 
+            catch (Exception e) 
+            {
+                Console.WriteLine("The process failed: {0}", e.ToString());
+            }
+            return categoryPath;
+        }
 
         public void comboValues(ComboBox cbo, string path)
         {
-
             Dictionary<string, string> d = RenameLayerToolValues.csvToDictionary(path);
             cbo.DataSource = new BindingSource(d, null);
             cbo.ValueMember = "Key";
-            cbo.DisplayMember = "Value";
-            
+            cbo.DisplayMember = "Value";           
         }
 
         public void comboValues(ComboBox cbo, string path, string selCategory)
         {
-
             Dictionary<string, string> d = RenameLayerToolValues.csvToDictionary(path,selCategory);
             cbo.DataSource = new BindingSource(d, null);
             cbo.ValueMember = "Key";
             cbo.DisplayMember = "Value";
-
         }
 
         //Change the GUI to reflect a change in the check box status for each input field
@@ -300,9 +371,7 @@ namespace RenameLayer
                 cbo.Text = string.Empty;
                 tbx.Enabled = true;
                 tbx.Focus();
-
             }
-
             lblReviewLayerName.Text = createNewLayerName();
         }
 
@@ -323,15 +392,13 @@ namespace RenameLayer
                 cbo.Text = string.Empty;
                 tbx.Enabled = true;
                 tbx.Focus();
-
             }
-
             lblReviewLayerName.Text = createNewLayerName();
         }
 
         private void chkGeoExtent_CheckedChanged(object sender, EventArgs e)
         {
-            ifCheckBoxChanged(chkGeoExtent, cboGeoExtent, tbxGeoExtent, _extent_path);
+            ifCheckBoxChanged(chkGeoExtent, cboGeoExtent, tbxGeoExtent, _Properties.ExtentPath);
         }
 
         private void cboGeoExtent_DropDownClosed(object sender, EventArgs e)
@@ -350,7 +417,7 @@ namespace RenameLayer
             // regenerate combolist for theme based on selected Category
             string _category;
             if (!chkCategory.Checked) { _category = cboCategory.SelectedValue.ToString(); } else { _category = tbxCategory.Text; };
-            comboValues(cboTheme, _theme_path,_category);
+            comboValues(cboTheme, _Properties.ThemePath,_category);
         }
 
         private void cboTheme_DropDownClosed(object sender, EventArgs e)
@@ -384,7 +451,7 @@ namespace RenameLayer
             // regenerate combolist for theme based on selected Category
             string _category;
             if (!chkCategory.Checked) { _category = cboCategory.SelectedValue.ToString(); } else { _category = tbxCategory.Text; };
-            comboValues(cboTheme, _theme_path, _category);
+            comboValues(cboTheme, _Properties.ThemePath, _category);
         }
 
         private void tbxTheme_TextChanged(object sender, EventArgs e)
@@ -393,7 +460,7 @@ namespace RenameLayer
             // regenerate combolist for theme based on selected Category
             string _category;
             if (!chkCategory.Checked) { _category = cboCategory.SelectedValue.ToString(); } else { _category = tbxCategory.Text; };
-            comboValues(cboTheme, _theme_path, _category);
+            comboValues(cboTheme, _Properties.ThemePath, _category);
         }
 
         private void tbxType_TextChanged(object sender, EventArgs e)
@@ -423,35 +490,35 @@ namespace RenameLayer
 
         private void chkCategory_CheckedChanged(object sender, EventArgs e)
         {
-            ifCheckBoxChanged(chkCategory, cboCategory, tbxCategory, _category_path);
+            ifCheckBoxChanged(chkCategory, cboCategory, tbxCategory, _Properties.CategoryPath);
         }
 
         private void chkTheme_CheckedChanged(object sender, EventArgs e)
         {
             string _category;
             if (!chkCategory.Checked) { _category = cboCategory.SelectedValue.ToString(); } else { _category = tbxCategory.Text; };
-                        
-            ifCheckBoxChanged(chkTheme, cboTheme, tbxTheme, _theme_path, _category);
+
+            ifCheckBoxChanged(chkTheme, cboTheme, tbxTheme, _Properties.ThemePath, _category);
         }
 
         private void chkType_CheckedChanged(object sender, EventArgs e)
         {
-            ifCheckBoxChanged(chkType, cboType, tbxType, _type_path);
+            ifCheckBoxChanged(chkType, cboType, tbxType, _Properties.TypePath);
         }
 
         private void chkScale_CheckedChanged(object sender, EventArgs e)
         {
-            ifCheckBoxChanged(chkScale, cboScale, tbxScale, _scale_path);
+            ifCheckBoxChanged(chkScale, cboScale, tbxScale, _Properties.ScalePath);
         }
 
         private void chkSource_CheckedChanged(object sender, EventArgs e)
         {
-            ifCheckBoxChanged(chkSource, cboSource, tbxSource, _source_path);
+            ifCheckBoxChanged(chkSource, cboSource, tbxSource, _Properties.SourcePath);
         }
 
         private void chkPermission_CheckedChanged(object sender, EventArgs e)
         {
-            ifCheckBoxChanged(chkPermission, cboPermission, tbxPermission, _permission_path);
+            ifCheckBoxChanged(chkPermission, cboPermission, tbxPermission, _Properties.PermissionPath);
         }
 
         private void tbxFreeText_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -474,11 +541,5 @@ namespace RenameLayer
                 e.Handled = true;
             }
         }
-
-        
-
-       
-
-
     }
 }
