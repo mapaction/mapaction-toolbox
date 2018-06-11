@@ -135,6 +135,7 @@
     <Compile Include="frmPermissionsHelp.Designer.cs">
       <DependentUpon>frmPermissionsHelp.cs</DependentUpon>
     </Compile>
+    <Compile Include="MADataRenameProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\layer_name_lookupDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
