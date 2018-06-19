@@ -229,7 +229,7 @@ namespace MapAction
                 if (File.Exists(@opCfgFilePath))
                 {
                     XmlSerializer serializer = new XmlSerializer(typeof(OperationConfig));
-                    System.IO.FileStream fileStream = new System.IO.FileStream(@opCfgFilePath, FileMode.Open);
+                    System.IO.FileStream fileStream = new System.IO.FileStream(@opCfgFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                     operationConfig = (OperationConfig)serializer.Deserialize(fileStream);
                     fileStream.Close();
                 }
