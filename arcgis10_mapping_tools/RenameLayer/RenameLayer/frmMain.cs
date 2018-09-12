@@ -120,7 +120,7 @@ namespace RenameLayer
             if (directoryInfo_check.Exists)
             {
                 //We have a valid directory, proceed
-                System.IO.FileInfo fileInfo_check = new System.IO.FileInfo(string_ShapefileDirectory + "\\" + string_ShapefileName + ".shp");
+                System.IO.FileInfo fileInfo_check = new System.IO.FileInfo(System.IO.Path.Combine(string_ShapefileDirectory, string_ShapefileName + ".shp"));
                 if (fileInfo_check.Exists)
                 {
                     //We have a valid shapefile, proceed

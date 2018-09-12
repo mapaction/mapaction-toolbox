@@ -35,20 +35,20 @@ namespace MapAction
             string root = System.IO.Path.GetPathRoot(path);
             if (root != path)
             {
-                pathFileName = @path + "\\" + fileName + ".xml";
-                Debug.WriteLine(pathFileName);
+                pathFileName = System.IO.Path.Combine(@path, fileName + ".xml");
             }
             else
             {
                 pathFileName = @path + fileName + ".xml";
-                Debug.WriteLine(pathFileName);
             }
+            Debug.WriteLine(pathFileName);
 
             // Check that the dictionary we are writing has valid XML values (ie local paths are converted to URIs etc)
             //Dictionary<string, string> sDict = usDict;
             Dictionary<string, string> sDict = sDictFromUsDict(usDict);
             
-            String themesStr = "themes";
+            const String themesStr = "themes";
+            const String countriesStr = "countries-iso3";
             //Create and add the root element
             var xml = new XDocument();
             
@@ -75,7 +75,8 @@ namespace MapAction
                 //Add each value pair in the passed dictionary as the elements of the xml doc
                 foreach (KeyValuePair<String, String> row in sDict)
                 {
-                    var element = new XElement(row.Key, row.Value);
+                    XElement element  = new XElement(row.Key, row.Value);
+                    
                     if (row.Key.Equals(themesStr) == true)
                     {
                         var themesElem = new XElement(themesStr);
@@ -87,9 +88,23 @@ namespace MapAction
                             themesElem.Add(themeElement);
                         }
                     }
+                    else if (row.Key.Equals(countriesStr) == true)
+                    {
+                        var countriesIso3Elem = new XElement(countriesStr);
+                        rootElem.Add(countriesIso3Elem);
+                        string[] countriesIso3 = row.Value.Split('|');
+                        foreach (string countryIso3 in countriesIso3)
+                        {
+                            var countryIso3Element = new XElement("country-iso3", countryIso3);
+                            countriesIso3Elem.Add(countryIso3Element);
+                        }
+                    }
                     else
                     {
-                        rootElem.Add(element);
+                        if (element != null)
+                        {
+                            rootElem.Add(element);
+                        }
                     }
                 }
             }
@@ -114,14 +129,13 @@ namespace MapAction
             string root = System.IO.Path.GetPathRoot(path);
             if (root != path)
             {
-                pathFileName = @path + "\\" + fileName + ".xml";
-                Debug.WriteLine(pathFileName);
+                pathFileName = System.IO.Path.Combine(@path, fileName + ".xml");
             }
             else
             {
                 pathFileName = @path + fileName + ".xml";
-                Debug.WriteLine(pathFileName);
             }
+            Debug.WriteLine(pathFileName);
 
             using (StringWriter stringwriter = new System.IO.StringWriter())
             {
@@ -204,11 +218,13 @@ namespace MapAction
         #endregion
 
         #region Public method getOperationConfigValues
+        //Returns a dictionary of the operation_config.xml elements and values
         public static OperationConfig getOperationConfigValues(string path = null)
         {
             string opCfgFilePath;
             Uri cmfURI;
             var operationConfig = new OperationConfig();
+            
             //Create a dictionary to store the values from the xml
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
@@ -240,6 +256,7 @@ namespace MapAction
             }
             return operationConfig;
         }
+
         #endregion
 
         #region Public method hasWriteAccessToPath
@@ -286,6 +303,68 @@ namespace MapAction
         }
         #endregion
 
+        public static string getScale(IMapDocument pMapDoc, string mapFrameName)
+        {
+            string scale;
+            IMap pMap = getMapFrame(pMapDoc, mapFrameName);
+            IActiveView pActiveView = pMap as IActiveView;
+            IEnvelope2 pEnvelope = pActiveView.Extent as IEnvelope2;
+
+            long temp_scale = Convert.ToInt64(pMap.MapScale);
+
+            scale = "1: " + string.Format("{0:n0}", temp_scale);
+
+            return scale;
+        }
+
+        public static string getPageSize(IMapDocument pMapDoc, string mapFrameName)
+        {
+            string pageSize = null;
+            IPageLayout pLayout = pMapDoc.PageLayout;
+            string pageFormId = pLayout.Page.FormID.ToString();
+
+            // Need to translate from ESRI form to readable form
+            Dictionary<string, string> pageSizes = new Dictionary<string, string>();
+            pageSizes.Add("esriPageFormLetter", "Letter");
+            pageSizes.Add("esriPageFormLegal", "Legal");
+            pageSizes.Add("esriPageFormTabloid", "Tabloid");
+            pageSizes.Add("esriPageFormC", "C");
+            pageSizes.Add("esriPageFormD", "D");
+            pageSizes.Add("esriPageFormE", "E");
+            pageSizes.Add("esriPageFormA5", "A5");
+            pageSizes.Add("esriPageFormA4", "A4");
+            pageSizes.Add("esriPageFormA3", "A3");
+            pageSizes.Add("esriPageFormA2", "A2");
+            pageSizes.Add("esriPageFormA1", "A1");
+            pageSizes.Add("esriPageFormA0", "A0");
+            pageSizes.Add("esriPageFormCUSTOM", "Custom");
+            pageSizes.Add("esriPageFormSameAsPrinter", "Same as printer");
+            foreach (var i in pageSizes)
+            {
+                if (pageFormId == i.Key)
+                {
+                    pageSize = i.Value;
+                }
+            }
+            return pageSize;
+        }
+
+        public static Dictionary<string, string> getDataframeProperties(IMapDocument pMapDoc, string mapFrameName)
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>(); 
+            IMap pMap = getMapFrame(pMapDoc, mapFrameName);
+            IActiveView pActiveView = pMap as IActiveView;
+            IEnvelope2 pEnvelope = pActiveView.Extent as IEnvelope2;
+
+            dict.Add("xMin", Math.Round(pEnvelope.XMin, 2).ToString());
+            dict.Add("yMin", Math.Round(pEnvelope.YMin, 2).ToString());
+            dict.Add("xMax", Math.Round(pEnvelope.XMax, 2).ToString());
+            dict.Add("yMax", Math.Round(pEnvelope.YMax, 2).ToString());
+
+            return dict;
+        }
+
+
         #region Public method getMapFrame
         // Returns IMap object of the map frame with the specified name in the method call
         public static IMap getMapFrame(IMxDocument pMxDoc, string pMapFrameName)
@@ -329,7 +408,6 @@ namespace MapAction
 
         }
         #endregion
-
         #region Public method getMapFrameBoundingBox
         // Get the bounding box of the map frame in wgs84 unprojected
         // ### Not not yet implemented, all returned values are wgs84 -> Return the values either in 'native' i.e. incoming coordinate system or convert them to wgs84
@@ -345,7 +423,7 @@ namespace MapAction
             // If not Geographic / WGS 84, convert it
             var spatialRefDict = getDataFrameSpatialReference(pMapDoc, mapFrameName);
 
-            if (spatialRefDict["type"] != "Geographic" && spatialRefDict["datum"] != "WGS 1984")
+            if (spatialRefDict["type"] != "Geographic" || spatialRefDict["datum"] != "WGS 1984")
             {
            
                 //Convert active view to wgs 84                
@@ -358,12 +436,11 @@ namespace MapAction
                 wgs84.SetFalseOriginAndUnits(-180, -90, 1000000);
                 pEnvelope.Project(wgs84);
             }
+            dict.Add("xMin", Math.Round(pEnvelope.XMin, 2).ToString());
+            dict.Add("yMin", Math.Round(pEnvelope.YMin, 2).ToString());
+            dict.Add("xMax", Math.Round(pEnvelope.XMax, 2).ToString());
+            dict.Add("yMax", Math.Round(pEnvelope.YMax, 2).ToString());
 
-            dict.Add("xMin", pEnvelope.XMin.ToString());
-            dict.Add("yMin", pEnvelope.YMin.ToString());
-            dict.Add("xMax", pEnvelope.XMax.ToString());
-            dict.Add("yMax", pEnvelope.YMax.ToString());
-            
             return dict;
 
         }
@@ -656,5 +733,130 @@ namespace MapAction
             return languageDictionary;
         }
         #endregion
+
+        #region Public method getCountryConfigValues
+        //Returns a List of the countries_config.xml elements and values
+
+        public static MapAction.CountryConfig getCountryConfigValues(string path = null)
+        {
+            string opCfgFilePath;
+            Uri cmfURI;
+            //Create a dictionary to store the values from the xml
+            if (path == null)
+            {
+                //Get the currently set filepath from the ConfigTool settings file
+                opCfgFilePath = Properties.Settings.Default.crash_move_folder_path;
+            }
+            else
+            {
+                opCfgFilePath = @path;
+            }
+
+            cmfURI = new Uri(System.IO.Path.GetDirectoryName(opCfgFilePath), UriKind.Absolute);
+
+            //If the file exists in the filepath, add each element and value of the xml file 
+            CountryConfig countryConfiguration = new CountryConfig();
+
+            try
+            {
+                if (File.Exists(@opCfgFilePath))
+                {
+                    XmlReader xmlReader = XmlReader.Create(@opCfgFilePath);
+                    while (xmlReader.Read())
+                    {
+                        if (xmlReader.Name == "country")
+                        {
+                            /*
+                            Debug.WriteLine(xmlReader.GetAttribute("name") + " " +
+                                            xmlReader.GetAttribute("alpha-2") + " " +
+                                            xmlReader.GetAttribute("alpha-3") + " " +
+                                            xmlReader.GetAttribute("country-code") + " " +
+                                            xmlReader.GetAttribute("iso_3166-2") + " " +
+                                            xmlReader.GetAttribute("region") + " " +
+                                            xmlReader.GetAttribute("sub-region") + " " +
+                                            xmlReader.GetAttribute("region-code") + " " +
+                                            xmlReader.GetAttribute("sub-region-code"));
+                             */
+                            CountryWithRegionalCodes countryWithRegionalCodes = new CountryWithRegionalCodes(xmlReader.GetAttribute("name"),
+                                                                                                             xmlReader.GetAttribute("alpha-2"),
+                                                                                                             xmlReader.GetAttribute("alpha-3"),
+                                                                                                             xmlReader.GetAttribute("country-code"),
+                                                                                                             xmlReader.GetAttribute("iso_3166-2"),
+                                                                                                             xmlReader.GetAttribute("region"),
+                                                                                                             xmlReader.GetAttribute("sub-region"),
+                                                                                                             xmlReader.GetAttribute("region-code"),
+                                                                                                             xmlReader.GetAttribute("sub-region-code"));
+                            countryConfiguration.add(countryWithRegionalCodes);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return countryConfiguration;
+        }
+        #endregion
+
+
+        #region Public method getLanguageCodeValues
+        //Returns a List of the countries_config.xml elements and values
+
+        public static MapAction.LanguageCodeLookup getLanguageCodeValues(string path = null)
+        {
+            string opCfgFilePath;
+            Uri cmfURI;
+            //Create a dictionary to store the values from the xml
+            if (path == null)
+            {
+                //Get the currently set filepath from the ConfigTool settings file
+                opCfgFilePath = Properties.Settings.Default.crash_move_folder_path;
+            }
+            else
+            {
+                opCfgFilePath = @path;
+            }
+
+            cmfURI = new Uri(System.IO.Path.GetDirectoryName(opCfgFilePath), UriKind.Absolute);
+
+            //If the file exists in the filepath, add each element and value of the xml file 
+            LanguageCodeLookup languageCodeLookup = new LanguageCodeLookup();
+
+            try
+            {
+                if (File.Exists(@opCfgFilePath))
+                {
+                    XmlReader xmlReader = XmlReader.Create(@opCfgFilePath);
+                    while (xmlReader.Read())
+                    {
+                        if (xmlReader.Name == "code")
+                        {
+                            /*
+                            Debug.WriteLine(xmlReader.GetAttribute("a2") + " " +
+                                            xmlReader.GetAttribute("a3b") + " " +
+                                            xmlReader.GetAttribute("a3t") + " " +
+                                            xmlReader.GetAttribute("a3h") + " " +
+                                            xmlReader.GetAttribute("lang"));
+                             */
+                            LanguageCode languageCode = new LanguageCode(xmlReader.GetAttribute("a2"),
+                                                                         xmlReader.GetAttribute("a3b"),
+                                                                         xmlReader.GetAttribute("a3t"),
+                                                                         xmlReader.GetAttribute("a3h"),
+                                                                         xmlReader.GetAttribute("lang"));
+                            languageCodeLookup.add(languageCode);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return languageCodeLookup;
+        }
+        #endregion
+    
+    
     }
 }

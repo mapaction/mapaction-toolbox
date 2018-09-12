@@ -217,8 +217,8 @@ namespace MapActionToolbars
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
-            string automatedValue = MapAction.PageLayoutProperties.getScale(_pMxDoc, targetMapFrame);
-
+            string automatedValue = MapAction.Utilities.getScale(_pMxDoc as IMapDocument, targetMapFrame);
+ 
             if (validateEmptyField(control, eprWarning))
             {
                 if (control.Text.Trim() != automatedValue && control.Text != string.Empty)
@@ -306,7 +306,7 @@ namespace MapActionToolbars
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
-            string automatedValue = MapAction.PageLayoutProperties.getPageSize(_pMxDoc, targetMapFrame);
+            string automatedValue = MapAction.Utilities.getPageSize(_pMxDoc as IMapDocument, targetMapFrame);
 
             if (validateEmptyField(control, eprWarning))
             {

@@ -42,7 +42,5 @@ namespace MapActionToolbars
         {
             MessageBox.Show(m_thisaddin_desc, "About MapAction toolbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
-
     }
 }
