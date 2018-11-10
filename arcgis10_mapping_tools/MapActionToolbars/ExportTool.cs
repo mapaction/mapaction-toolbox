@@ -43,7 +43,7 @@ namespace MapActionToolbars
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (MapAction.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
-            {
+            {   
                 var dlg = new frmExportMain();
                 dlg.ShowDialog();
             }    

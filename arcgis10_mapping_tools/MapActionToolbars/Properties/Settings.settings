@@ -5,5 +5,21 @@
     <Setting Name="crash_move_folder_path" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="ODBC_lookup_ConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Dsn=MS Access Database;dbq=C:\SoftwareDevelopment\desktop\mapaction\layer_rename_tool\layer_name_lookup.accdb;defaultdir=C:\SoftwareDevelopment\desktop\mapaction\layer_rename_tool;driverid=25;fil=MS Access;maxbuffersize=2048;pagetimeout=5;uid=admin&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.Odbc&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Dsn=MS Access Database;dbq=C:\SoftwareDevelopment\desktop\mapaction\layer_rename_tool\layer_name_lookup.accdb;defaultdir=C:\SoftwareDevelopment\desktop\mapaction\layer_rename_tool;driverid=25;fil=MS Access;maxbuffersize=2048;pagetimeout=5;uid=admin</Value>
+    </Setting>
+    <Setting Name="layer_name_lookupConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\Resources\layer_name_lookup.accdb;Persist Security Info=True&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.OleDb&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\Resources\layer_name_lookup.accdb;Persist Security Info=True</Value>
+    </Setting>	
   </Settings>
 </SettingsFile>
