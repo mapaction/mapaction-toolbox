@@ -31,12 +31,23 @@ namespace MapActionToolbars
         // new csv to hold metadata on DNC.  PJR 21/10/2016
         // remember to change data as necessary when RenameLayer tool updates or DNC updates
         MADataRenameProperties _Properties;
-        private string pathFileName; 
+        private string pathFileName;
+        public bool initialised;
 
         public frmRenameMain()
         {
-            InitializeComponent();
-            _Properties = new MADataRenameProperties();                       
+            initialised = false;
+            _Properties = new MADataRenameProperties();
+            if (_Properties.initialised)
+            {
+                InitializeComponent();
+                initialised = true;
+            }
+            else
+            {
+                MessageBox.Show("Can't find DNC lookup CSV files.  If working with crash move folder, then please set the correct path to crash move folder in the config tool. Otherwise, CSV files are expected in folder C:\\MapAction\\200_data_name_lookup", "Error", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnRename_Click(object sender, EventArgs e)
@@ -49,7 +60,7 @@ namespace MapActionToolbars
             //Construct layer name
             string newLayerName = createNewLayerName();
 
-            // Is the directory a crash move folder?   
+            // Is the pe a crash move folder?   
             if (HasCrashMoveFolderStructure(root))
             {
                 // If it is, copy the renamed file(s) to the appropriate directory.

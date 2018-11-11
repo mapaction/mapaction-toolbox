@@ -24,7 +24,10 @@ namespace MapActionToolbars
         protected override void OnClick()
         {
             var dlg = new frmRenameMain();
-            dlg.ShowDialog();
+            if (dlg.initialised)
+            {
+                dlg.ShowDialog();
+            }
         }
         protected override void OnUpdate()
         {
