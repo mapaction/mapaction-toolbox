@@ -491,7 +491,7 @@ namespace MapActionToolbars
             }
         }
 
-        public static string validateCountries(Control control, ErrorProvider epr)
+        public static string validateCountry(Control control, ErrorProvider epr)
         {
             epr.SetIconPadding(control, 5);
             if (validateEmptyField(control, epr))
