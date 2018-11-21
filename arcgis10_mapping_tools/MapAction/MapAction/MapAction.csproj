@@ -98,9 +98,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CountriesIso3.cs" />
-    <Compile Include="CountryConfig.cs" />
-    <Compile Include="CountryWithRegionalCodes.cs" />
     <Compile Include="LanguageCode.cs" />
     <Compile Include="LanguageCodeLookup.cs" />
     <Compile Include="OperationConfig.cs" />
