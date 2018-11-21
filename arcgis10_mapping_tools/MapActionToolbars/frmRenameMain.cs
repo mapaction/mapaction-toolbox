@@ -62,7 +62,7 @@ namespace MapActionToolbars
 
             // Is the pe a crash move folder?   
             if (HasCrashMoveFolderStructure(root))
-            {
+            {   
                 // If it is, copy the renamed file(s) to the appropriate directory.
                 ESRI.ArcGIS.Geodatabase.IWorkspaceFactory workspaceFactory = new ESRI.ArcGIS.DataSourcesFile.ShapefileWorkspaceFactoryClass();
                 ESRI.ArcGIS.Geodatabase.IWorkspace workspace = workspaceFactory.OpenFromFile(CategoryPath(root, Category()), 0);
@@ -173,7 +173,6 @@ namespace MapActionToolbars
             btnRename.Enabled = false;
             // Add metadata/ QA info on this tool and on DNC to form  PJR 21/10/2016
             this.Text = "MapAction Dataset Rename Tool " + _Properties.RenameLayerVersion;
-            //this.Text = "MapAction Dataset Rename Tool " + _RenameLayerVersion + " of " + _RenameLayerDate;
             label12.Text = getDNCLabel(_Properties.DNCmetadataPath);
 
             //Populate combo box with value from the CSV files 
@@ -182,10 +181,6 @@ namespace MapActionToolbars
             comboValues(cboTheme, _Properties.ThemePath);
             comboValues(cboType, _Properties.TypePath);
             
-            // set geometry type if known   PJR 20/10/2016
-            // STEVE string geomtype = getGeomType();
-            // STEVE if (geomtype != "other") { cboType.SelectedValue = geomtype; }
-
             comboValues(cboScale, _Properties.ScalePath);
             comboValues(cboSource, _Properties.SourcePath);
             comboValues(cboPermission, _Properties.PermissionPath);
