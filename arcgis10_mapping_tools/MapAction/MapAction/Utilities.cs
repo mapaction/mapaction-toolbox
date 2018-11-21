@@ -734,72 +734,6 @@ namespace MapAction
         }
         #endregion
 
-        #region Public method getCountryConfigValues
-        //Returns a List of the countries_config.xml elements and values
-
-        public static MapAction.CountryConfig getCountryConfigValues(string path = null)
-        {
-            string opCfgFilePath;
-            Uri cmfURI;
-            //Create a dictionary to store the values from the xml
-            if (path == null)
-            {
-                //Get the currently set filepath from the ConfigTool settings file
-                opCfgFilePath = Properties.Settings.Default.crash_move_folder_path;
-            }
-            else
-            {
-                opCfgFilePath = @path;
-            }
-
-            cmfURI = new Uri(System.IO.Path.GetDirectoryName(opCfgFilePath), UriKind.Absolute);
-
-            //If the file exists in the filepath, add each element and value of the xml file 
-            CountryConfig countryConfiguration = new CountryConfig();
-
-            try
-            {
-                if (File.Exists(@opCfgFilePath))
-                {
-                    XmlReader xmlReader = XmlReader.Create(@opCfgFilePath);
-                    while (xmlReader.Read())
-                    {
-                        if (xmlReader.Name == "country")
-                        {
-                            /*
-                            Debug.WriteLine(xmlReader.GetAttribute("name") + " " +
-                                            xmlReader.GetAttribute("alpha-2") + " " +
-                                            xmlReader.GetAttribute("alpha-3") + " " +
-                                            xmlReader.GetAttribute("country-code") + " " +
-                                            xmlReader.GetAttribute("iso_3166-2") + " " +
-                                            xmlReader.GetAttribute("region") + " " +
-                                            xmlReader.GetAttribute("sub-region") + " " +
-                                            xmlReader.GetAttribute("region-code") + " " +
-                                            xmlReader.GetAttribute("sub-region-code"));
-                             */
-                            CountryWithRegionalCodes countryWithRegionalCodes = new CountryWithRegionalCodes(xmlReader.GetAttribute("name"),
-                                                                                                             xmlReader.GetAttribute("alpha-2"),
-                                                                                                             xmlReader.GetAttribute("alpha-3"),
-                                                                                                             xmlReader.GetAttribute("country-code"),
-                                                                                                             xmlReader.GetAttribute("iso_3166-2"),
-                                                                                                             xmlReader.GetAttribute("region"),
-                                                                                                             xmlReader.GetAttribute("sub-region"),
-                                                                                                             xmlReader.GetAttribute("region-code"),
-                                                                                                             xmlReader.GetAttribute("sub-region-code"));
-                            countryConfiguration.add(countryWithRegionalCodes);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-            }
-            return countryConfiguration;
-        }
-        #endregion
-
-
         #region Public method getLanguageCodeValues
         //Returns a List of the countries_config.xml elements and values
 
@@ -855,8 +789,6 @@ namespace MapAction
             }
             return languageCodeLookup;
         }
-        #endregion
-    
-    
+        #endregion    
     }
 }
