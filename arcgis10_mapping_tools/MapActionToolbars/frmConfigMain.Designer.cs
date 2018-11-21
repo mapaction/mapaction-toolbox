@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfigMain));
             this.dtEmp = new System.Data.DataTable();
             this.btnSave = new System.Windows.Forms.Button();
@@ -42,6 +41,8 @@
             this.chkEditConfigXml = new System.Windows.Forms.CheckBox();
             this.tabConfigXml = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tbxCountry = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.cboLanguage = new System.Windows.Forms.ComboBox();
             this.cboTimeZone = new System.Windows.Forms.ComboBox();
@@ -74,11 +75,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.tabCountries = new System.Windows.Forms.TabPage();
-            this.label13 = new System.Windows.Forms.Label();
-            this.cboCountry = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.dgvCountries = new System.Windows.Forms.DataGridView();
             this.Country = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IsSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.eprOperationNameWarning = new System.Windows.Forms.ErrorProvider(this.components);
@@ -107,8 +103,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numEmfDpi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPdfDpi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numJpegDpi)).BeginInit();
-            this.tabCountries.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCountries)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprOperationNameWarning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprGlideNoError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprGlideNoWarning)).BeginInit();
@@ -124,25 +118,28 @@
             ((System.ComponentModel.ISupportInitialize)(this.eprDisclaimerWarning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprDonorTextWarning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprExportPath)).BeginInit();
+            this.btnPathToExistingXml.Enabled = false;
+            this.tbxPathToCrashMove.Enabled = false;
+
             this.SuspendLayout();
             // 
             // btnSave
             // 
             this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(342, 310);
+            this.btnSave.Location = new System.Drawing.Point(261, 310);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 9;
+            this.btnSave.TabIndex = 8;
             this.btnSave.Text = "Create XML";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(261, 310);
+            this.btnCancel.Location = new System.Drawing.Point(342, 310);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 8;
+            this.btnCancel.TabIndex = 9;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -176,6 +173,7 @@
             this.tbxPathToCrashMove.Name = "tbxPathToCrashMove";
             this.tbxPathToCrashMove.Size = new System.Drawing.Size(293, 20);
             this.tbxPathToCrashMove.TabIndex = 0;
+            this.tbxPathToCrashMove.TextChanged += new System.EventHandler(this.tbxPathToCrashMove_TextChanged);
             // 
             // label1
             // 
@@ -211,7 +209,6 @@
             // tabConfigXml
             // 
             this.tabConfigXml.Controls.Add(this.tabPage1);
-            this.tabConfigXml.Controls.Add(this.tabCountries);
             this.tabConfigXml.Controls.Add(this.tabPage2);
             this.tabConfigXml.Controls.Add(this.tabPage3);
             this.tabConfigXml.Controls.Add(this.tabPage4);
@@ -223,6 +220,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.tbxCountry);
+            this.tabPage1.Controls.Add(this.label14);
             this.tabPage1.Controls.Add(this.label7);
             this.tabPage1.Controls.Add(this.cboLanguage);
             this.tabPage1.Controls.Add(this.cboTimeZone);
@@ -238,6 +237,25 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Emergency";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tbxCountry
+            // 
+            this.tbxCountry.Enabled = false;
+            this.tbxCountry.Location = new System.Drawing.Point(123, 124);
+            this.tbxCountry.Name = "tbxCountry";
+            this.tbxCountry.Size = new System.Drawing.Size(288, 20);
+            this.tbxCountry.TabIndex = 50;
+            this.tbxCountry.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(15, 128);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(43, 13);
+            this.label14.TabIndex = 49;
+            this.label14.Text = "Country";
+            this.label14.Click += new System.EventHandler(this.label14_Click);
             // 
             // label7
             // 
@@ -659,82 +677,6 @@
             this.label11.TabIndex = 41;
             this.label11.Text = "Jpeg dpi";
             // 
-            // tabCountries
-            // 
-            this.tabCountries.AllowDrop = true;
-            this.tabCountries.Controls.Add(this.label13);
-            this.tabCountries.Controls.Add(this.cboCountry);
-            this.tabCountries.Controls.Add(this.label6);
-            this.tabCountries.Controls.Add(this.dgvCountries);
-            this.tabCountries.Location = new System.Drawing.Point(4, 22);
-            this.tabCountries.Name = "tabCountries";
-            this.tabCountries.Size = new System.Drawing.Size(550, 180);
-            this.tabCountries.TabIndex = 4;
-            this.tabCountries.Text = "Countries";
-            this.tabCountries.UseVisualStyleBackColor = true;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(77, 84);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(100, 13);
-            this.label13.TabIndex = 46;
-            this.label13.Text = "Additional Countries";
-            // 
-            // cboCountry
-            // 
-            this.cboCountry.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboCountry.Enabled = false;
-            this.cboCountry.FormattingEnabled = true;
-            this.cboCountry.Location = new System.Drawing.Point(186, 16);
-            this.cboCountry.Name = "cboCountry";
-            this.cboCountry.Size = new System.Drawing.Size(288, 21);
-            this.cboCountry.TabIndex = 44;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(77, 20);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(80, 13);
-            this.label6.TabIndex = 45;
-            this.label6.Text = "Primary Country";
-            // 
-            // dgvCountries
-            // 
-            this.dgvCountries.AllowDrop = true;
-            this.dgvCountries.AllowUserToAddRows = false;
-            this.dgvCountries.AllowUserToDeleteRows = false;
-            this.dgvCountries.AllowUserToResizeColumns = false;
-            this.dgvCountries.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCountries.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvCountries.AutoGenerateColumns = true;
-            this.dgvCountries.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvCountries.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dgvCountries.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvCountries.CausesValidation = false;
-            this.dgvCountries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCountries.ColumnHeadersVisible = false;
-            this.dgvCountries.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Country,
-            this.IsSelected});
-            this.dgvCountries.DataSource = this.dtEmp;
-            this.dgvCountries.Enabled = false;
-            this.dgvCountries.Location = new System.Drawing.Point(186, 54);
-            this.dgvCountries.MaximumSize = new System.Drawing.Size(310, 100);
-            this.dgvCountries.Name = "dgvCountries";
-            this.dgvCountries.RowHeadersVisible = false;
-            this.dgvCountries.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgvCountries.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dgvCountries.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCountries.ShowCellErrors = false;
-            this.dgvCountries.Size = new System.Drawing.Size(310, 100);
-            this.dgvCountries.TabIndex = 9;
-            this.dgvCountries.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCountries_CellContentClick);
-            // 
             // Country
             // 
             this.Country.Frozen = true;
@@ -871,9 +813,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numEmfDpi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPdfDpi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numJpegDpi)).EndInit();
-            this.tabCountries.ResumeLayout(false);
-            this.tabCountries.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCountries)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprOperationNameWarning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprGlideNoError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprGlideNoWarning)).EndInit();
@@ -954,14 +893,9 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cboLanguage;
         private System.Data.DataTable dtEmp;
-        private System.Windows.Forms.TabPage tabCountries;
-        private System.Windows.Forms.DataGridView dgvCountries;
-        private System.Windows.Forms.ComboBox cboCountry;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn countryDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn isSelectedDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.DataGridViewTextBoxColumn Country;
         private System.Windows.Forms.DataGridViewCheckBoxColumn IsSelected;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox tbxCountry;
     }
 }
