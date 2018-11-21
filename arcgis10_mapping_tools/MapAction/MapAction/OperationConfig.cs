@@ -17,12 +17,6 @@ namespace MapAction
         [XmlElement("GlideNo")]
         public string GlideNo { get; set; }
 
-        [XmlElement("principal-country-iso3")]
-        public string PrincipalCountryIso3 { get; set; }
-
-        [XmlElement("countries-iso3")]
-        public CountriesIso3 CountriesIso3 { get; set; }
-
         [XmlElement("Country")]
         public string Country { get; set; }
 
