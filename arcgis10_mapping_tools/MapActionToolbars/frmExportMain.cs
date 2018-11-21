@@ -50,7 +50,7 @@ namespace MapActionToolbars
         private string _glideNumberValidationResult;
         private string _locationValidationResult;
         private string _themeValidationResult;
-        private string _countriesValidationResult;
+        private string _countryValidationResult;
         private string _statusValidationResult;
         private string _accessValidationResult;
         private string _accessNoteValidationResult;
@@ -60,21 +60,15 @@ namespace MapActionToolbars
         private const string _statusNew = "New";
         private const string _statusUpdate = "Update";
         private const string _statusCorrection = "Correction";
-        private const string _countriesConfigXmlFileName = "countries_config.xml";
         private const string _languageCodesXmlFileName = "language_codes.xml";
         private const string _operationConfigXmlFileName = "operation_config.xml";
         private const int _initialVersionNumber = 1;
         private string _labelLanguage;
         private MapAction.LanguageCodeLookup languageCodeLookup = null;
-        private MapAction.CountryConfig countriesConfig = null;
-        private string _pipeDelimitedIso3Countries = null;
 
         public frmExportMain()
         {
             string path = MapAction.Utilities.getCrashMoveFolderPath();
-            string filePath = System.IO.Path.Combine(path, _countriesConfigXmlFileName);
-            // Set up Countries lookup
-            this.countriesConfig = MapAction.Utilities.getCountryConfigValues(filePath);
             string languageFilePath = System.IO.Path.Combine(path, _languageCodesXmlFileName);
             this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
 
@@ -152,7 +146,7 @@ namespace MapActionToolbars
             _glideNumberValidationResult = FormValidationExport.validateGlideNumber(tbxGlideNo, eprGlideNumberWarning, eprGlideNumberError);
             _locationValidationResult = FormValidationExport.validateLocation(tbxImageLocation, eprLocationWarning);
             _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
-            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
+            _countryValidationResult = FormValidationExport.validateCountry(tbxCountry, eprCountryWarning);
             _statusValidationResult = FormValidationExport.validateStatus(cboStatus, eprStatusWarning);
             _accessValidationResult = FormValidationExport.validateAccess(cboAccess, eprAccessWarning);
             _accessNoteValidationResult = FormValidationExport.validateAccessNote(tbxImageAccessNotes, eprAccessNoteWarning);
@@ -189,28 +183,8 @@ namespace MapActionToolbars
             string path = MapAction.Utilities.getCrashMoveFolderPath();
             string filePath = System.IO.Path.Combine(path, _operationConfigXmlFileName);
             OperationConfig config = MapAction.Utilities.getOperationConfigValues(filePath);
-            tbxCountries.Text = this.countriesConfig.lookupIso3CountryCode(config.PrincipalCountryIso3, CountryFields.Name);
             tbxGlideNo.Text = config.GlideNo;
-            //tbxCountries.Text = config.;
-            if (config.CountriesIso3 != null)
-            {
-                this.dtEmp.Columns.Add("Country", typeof(string));
-                int countryIndex = 0;
-                foreach (string countryIso3 in config.CountriesIso3.CountryIso3)
-                {
-                    string countryName = this.countriesConfig.lookupIso3CountryCode(countryIso3, CountryFields.Name);
-                    countryIndex++;
-                    if (countryIndex == 1)
-                    {
-                        this._pipeDelimitedIso3Countries = countryIso3;
-                    }
-                    else
-                    {
-                        this._pipeDelimitedIso3Countries += "|" + countryIso3;
-                    }
-                    this.dtEmp.Rows.Add(countryName);
-                }
-            }
+            tbxCountry.Text = config.Country;
 
             string operational_id = config.OperationId;
             Debug.WriteLine("Op ID: " + operational_id);
@@ -519,8 +493,7 @@ namespace MapActionToolbars
                 {"title",           mapTitle1},
                 {"ref",             tbxMapDocument.Text},
                 {"language",        tbxLanguage.Text},
-                {"principal-country-iso3",  this.countriesConfig.lookup(tbxCountries.Text, CountryFields.Alpha3)},
-                {"countries-iso3",  this._pipeDelimitedIso3Countries},
+                {"countries",       tbxCountry.Text},
                 {"createdate",      tbxDate.Text},
                 {"createtime",      tbxTime.Text},
                 {"status",          cboStatus.Text},
@@ -822,11 +795,6 @@ namespace MapActionToolbars
             _locationValidationResult = FormValidationExport.validateLocation(tbxImageLocation, eprLocationWarning);
         }
 
-        private void tbxCountries_TextChanged(object sender, EventArgs e)
-        {
-            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
-        }
-
         private void cboStatus_TextChanged(object sender, EventArgs e)
         {
             _statusValidationResult = FormValidationExport.validateStatus(cboStatus, eprStatusWarning);
@@ -869,7 +837,7 @@ namespace MapActionToolbars
             FormValidationExport.validationCheck(_glideNumberValidationResult, imgGlideNumberStatus);
             FormValidationExport.validationCheck(_locationValidationResult, imgLocationStatus);
             FormValidationExport.validationCheck(_themeValidationResult, imgThemeStatus);
-            FormValidationExport.validationCheck(_countriesValidationResult, imgCountriesStatus);
+            FormValidationExport.validationCheck(_countryValidationResult, imgCountriesStatus);
             FormValidationExport.validationCheck(_statusValidationResult, imgStatusStatus);
             FormValidationExport.validationCheck(_accessValidationResult, imgAccessStatus);
             FormValidationExport.validationCheck(_accessNoteValidationResult, imgAccessNoteStatus);
@@ -896,7 +864,7 @@ namespace MapActionToolbars
 
         private void btnUserLeft_Click_1(object sender, EventArgs e)
         {
-            tabExportTool.SelectedTab = tabPageCountries;
+            tabExportTool.SelectedTab = tabPageThemes;
         }
 
         private void btnUserRight_Click_1(object sender, EventArgs e)
@@ -916,7 +884,7 @@ namespace MapActionToolbars
 
         private void button1_Click(object sender, EventArgs e)
         {
-            tabExportTool.SelectedTab = tabPageCountries;
+            tabExportTool.SelectedTab = tabPageLayout;
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -924,13 +892,10 @@ namespace MapActionToolbars
             _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
         }
 
-        private void tbxCountries_TextChanged_1(object sender, EventArgs e)
-        {
-            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
-        }
         private void tabPageLayout_Click(object sender, EventArgs e)
         {
         }
+
         private void button4_Click(object sender, EventArgs e)
         {
             tabExportTool.SelectedTab = tabPageThemes;
@@ -938,19 +903,6 @@ namespace MapActionToolbars
         private void button3_Click(object sender, EventArgs e)
         {
             tabExportTool.SelectedTab = tabPageLayout;
-        }
-        private void tbxCountries_TextChanged_2(object sender, EventArgs e)
-        {
-        }
-
-        private void populateCountries()
-        {
-            this.dtEmp.Columns.Add("Country", typeof(string));
-            this.dtEmp.Columns.Add("IsSelected", typeof(bool));
-            foreach (string s in this.countriesConfig.countries())
-            {
-                this.dtEmp.Rows.Add(s, false);
-            }
         }
     }
 }
