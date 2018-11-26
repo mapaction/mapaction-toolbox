@@ -79,7 +79,7 @@
             // btnRename
             // 
             this.btnRename.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRename.Location = new System.Drawing.Point(257, 405);
+            this.btnRename.Location = new System.Drawing.Point(257, 423);
             this.btnRename.Name = "btnRename";
             this.btnRename.Size = new System.Drawing.Size(75, 24);
             this.btnRename.TabIndex = 1;
@@ -119,7 +119,7 @@
             // btnCancel
             // 
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(574, 405);
+            this.btnCancel.Location = new System.Drawing.Point(574, 423);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 24);
             this.btnCancel.TabIndex = 0;
@@ -370,7 +370,7 @@
             this.groupBox1.Controls.Add(this.chkCategory);
             this.groupBox1.Location = new System.Drawing.Point(12, 99);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(671, 300);
+            this.groupBox1.Size = new System.Drawing.Size(671, 315);
             this.groupBox1.TabIndex = 38;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Name elements";
@@ -378,7 +378,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(15, 260);
+            this.label11.Location = new System.Drawing.Point(15, 286);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(108, 13);
             this.label11.TabIndex = 48;
@@ -408,7 +408,7 @@
             // 
             this.lblReviewLayerName.AutoSize = true;
             this.lblReviewLayerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblReviewLayerName.Location = new System.Drawing.Point(129, 256);
+            this.lblReviewLayerName.Location = new System.Drawing.Point(129, 286);
             this.lblReviewLayerName.Name = "lblReviewLayerName";
             this.lblReviewLayerName.Size = new System.Drawing.Size(0, 13);
             this.lblReviewLayerName.TabIndex = 45;
@@ -492,7 +492,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(27, 340);
+            this.label12.Location = new System.Drawing.Point(27, 360);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(0, 13);
             this.label12.TabIndex = 39;
@@ -540,7 +540,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(711, 440);
+            this.ClientSize = new System.Drawing.Size(696, 456);
             this.Controls.Add(this.gbxCrashMoveFolder);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.groupBox1);

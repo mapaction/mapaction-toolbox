@@ -210,10 +210,6 @@ namespace MapActionToolbars
             cboPermission.Enabled = false;
             chkPermission.Enabled = false;
             tbxFreeText.Enabled = false;
-
-
-            // construct and display new file name if geometry type is already set
-            // STEVE if (geomtype != "other") { lblReviewLayerName.Text = createNewLayerName(); }
         }
 
         public string getDNCLabel(string DNCpath)
@@ -577,7 +573,6 @@ namespace MapActionToolbars
 
         private void btnNavigateToShapeFile_Click(object sender, EventArgs e)
         {
-            //var fileContent = string.Empty;
             var filePath = string.Empty;
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
