@@ -52,7 +52,12 @@ namespace MapActionToolbars
 
         private void btnRename_Click(object sender, EventArgs e)
         {
+            const string renameAction = "Renamed"; 
+            const string copyAction = "Copied"; 
+            string message = "";
             string root = System.IO.Path.GetDirectoryName(this.pathFileName);
+            
+            string fileExtension = System.IO.Path.GetExtension(this.pathFileName);
             string filename = System.IO.Path.GetFileNameWithoutExtension(this.pathFileName);
             IFeatureClass fc = GetFeatureClassFromShapefileOnDisk(root, filename);
             IDataset ds = fc as IDataset;
@@ -60,20 +65,25 @@ namespace MapActionToolbars
             //Construct layer name
             string newLayerName = createNewLayerName();
 
-            // Is the pe a crash move folder?   
+            // Is the path a crash move folder?   
             if (HasCrashMoveFolderStructure(root))
             {   
                 // If it is, copy the renamed file(s) to the appropriate directory.
                 ESRI.ArcGIS.Geodatabase.IWorkspaceFactory workspaceFactory = new ESRI.ArcGIS.DataSourcesFile.ShapefileWorkspaceFactoryClass();
                 ESRI.ArcGIS.Geodatabase.IWorkspace workspace = workspaceFactory.OpenFromFile(CategoryPath(root, Category()), 0);
+
                 ds.Copy(newLayerName, workspace);
+                message = copyAction + " " + System.IO.Path.Combine(root, filename + fileExtension) + " to " + System.IO.Path.Combine(workspace.PathName, (newLayerName + fileExtension));
             }
             else
             {
                 //Rename the layer
                 ds.Rename(newLayerName);
+                message = renameAction + " " + System.IO.Path.Combine(root, filename + fileExtension) + " to " + System.IO.Path.Combine(root, newLayerName + fileExtension);
             }
             this.Close();
+
+            MessageBox.Show(message, "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public string createNewLayerName()
@@ -346,6 +356,13 @@ namespace MapActionToolbars
                     categoryPath = dir;
                     break;
                 }
+
+                // If no category path detected, create one.
+                if (categoryPath.Length == 0)
+                {
+                    categoryPath = System.IO.Path.Combine(activeDataPath, category);
+                    Directory.CreateDirectory(categoryPath);
+                }
             } 
             catch (Exception e) 
             {
@@ -558,14 +575,14 @@ namespace MapActionToolbars
             }
         }
 
-        private void btnPathToExistingXml_Click(object sender, EventArgs e)
+        private void btnNavigateToShapeFile_Click(object sender, EventArgs e)
         {
-            var fileContent = string.Empty;
+            //var fileContent = string.Empty;
             var filePath = string.Empty;
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.InitialDirectory = RenameLayerToolValues.initialDirectory;
                 openFileDialog.Filter = "shp files (*.shp)|*.shp";
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
@@ -574,19 +591,18 @@ namespace MapActionToolbars
                 {
                     //Get the path of specified file
                     filePath = openFileDialog.FileName;
+                    RenameLayerToolValues.initialDirectory = new FileInfo(filePath).Directory.FullName;
 
-                    //Read the contents of the file into a stream
-                    var fileStream = openFileDialog.OpenFile();
-            
-                    using (StreamReader reader = new StreamReader(fileStream))
-                    {
-                        fileContent = reader.ReadToEnd();
-                    }
                     tbxPathToShapeFile.Text = filePath;
                     this.pathFileName = filePath;
                     string root = System.IO.Path.GetDirectoryName(filePath);
                     string filename = System.IO.Path.GetFileNameWithoutExtension(filePath);
-                    string geomtype = getGeomType();
+                    string geomtype = "other";
+                    if (System.IO.Path.GetExtension(filePath).ToLower() == ".shp")
+                    {
+                        geomtype = getGeomType();
+                    }
+
                     if (geomtype != "other") { cboType.SelectedValue = geomtype; }
                     btnRename.Enabled = true;
                     cboGeoExtent.Enabled = true;
@@ -610,10 +626,5 @@ namespace MapActionToolbars
                 }
             }
         }
-
-//        private void cboType_SelectedIndexChanged(object sender, EventArgs e)
-//        {
-
-//        }
     }
 }

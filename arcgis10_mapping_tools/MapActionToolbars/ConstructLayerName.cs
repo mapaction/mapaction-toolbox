@@ -84,6 +84,7 @@ namespace MapActionToolbars
     
     public static class RenameLayerToolValues
     {
+        public static string initialDirectory {get; set;}
 
         public static Dictionary<string, string> csvToDictionary(string @path)
         {

@@ -525,7 +525,7 @@
             this.btnNavigateToShapeFile.TabIndex = 18;
             this.btnNavigateToShapeFile.Text = "...";
             this.btnNavigateToShapeFile.UseVisualStyleBackColor = true;
-            this.btnNavigateToShapeFile.Click += new System.EventHandler(this.btnPathToExistingXml_Click);
+            this.btnNavigateToShapeFile.Click += new System.EventHandler(this.btnNavigateToShapeFile_Click);
             // 
             // label13
             // 
