@@ -32,7 +32,14 @@ namespace MapActionToolbars
         // remember to change data as necessary when RenameLayer tool updates or DNC updates
         MADataRenameProperties _Properties;
         private string pathFileName;
+        private string latestValidText;
         public bool initialised;
+        private const string invalidCharacters = @"\/:*?""<>|#&_ ";
+        private static bool ContainsInvalidCharacters(string input)
+        {
+            bool result = input.IndexOfAny(invalidCharacters.ToCharArray()) != -1;
+            return result;
+        }
 
         public frmRenameMain()
         {
@@ -435,8 +442,24 @@ namespace MapActionToolbars
             lblReviewLayerName.Text = createNewLayerName();
         }
 
+        private void checkForInvalidCharacters(object sender, EventArgs e)
+        {
+            TextBox target = sender as TextBox;
+            if (ContainsInvalidCharacters(target.Text))
+            {
+                // display alert and reset text
+                MessageBox.Show(String.Format("The text may not contain characters: {0}", invalidCharacters));
+                target.Text = latestValidText;
+            }
+            else
+            {
+                latestValidText = target.Text;
+            }
+        }
+
         private void tbxGeoExtent_TextChanged(object sender, EventArgs e)
         {
+            checkForInvalidCharacters(sender, e);
             lblReviewLayerName.Text = createNewLayerName();
         }
 
@@ -476,7 +499,9 @@ namespace MapActionToolbars
 
         private void tbxCategory_TextChanged(object sender, EventArgs e)
         {
+            checkForInvalidCharacters(sender, e);
             lblReviewLayerName.Text = createNewLayerName();
+
             // regenerate combolist for theme based on selected Category
             string _category;
             if (!chkCategory.Checked) { _category = cboCategory.SelectedValue.ToString(); } else { _category = tbxCategory.Text; };
@@ -485,6 +510,7 @@ namespace MapActionToolbars
 
         private void tbxTheme_TextChanged(object sender, EventArgs e)
         {
+            checkForInvalidCharacters(sender, e);
             lblReviewLayerName.Text = createNewLayerName();
             // regenerate combolist for theme based on selected Category
             string _category;
@@ -494,26 +520,31 @@ namespace MapActionToolbars
 
         private void tbxType_TextChanged(object sender, EventArgs e)
         {
+            checkForInvalidCharacters(sender, e);
             lblReviewLayerName.Text = createNewLayerName();
         }
 
         private void tbxScale_TextChanged(object sender, EventArgs e)
         {
+            checkForInvalidCharacters(sender, e);
             lblReviewLayerName.Text = createNewLayerName();
         }
 
         private void tbxSource_TextChanged(object sender, EventArgs e)
         {
+            checkForInvalidCharacters(sender, e);
             lblReviewLayerName.Text = createNewLayerName();
         }
 
         private void tbxPermission_TextChanged(object sender, EventArgs e)
         {
+            checkForInvalidCharacters(sender, e);
             lblReviewLayerName.Text = createNewLayerName();
         }
 
         private void tbxFreeText_TextChanged(object sender, EventArgs e)
         {
+            checkForInvalidCharacters(sender, e);
             lblReviewLayerName.Text = createNewLayerName();
         }
 
