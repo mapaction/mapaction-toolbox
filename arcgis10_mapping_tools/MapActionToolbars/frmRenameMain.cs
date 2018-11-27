@@ -33,8 +33,14 @@ namespace MapActionToolbars
         MADataRenameProperties _Properties;
         private string pathFileName;
         private string latestValidText;
-        public bool initialised;
+        private const int MAX_PATH_LENGTH = 260;
         private const string invalidCharacters = @"\/:*?""<>|#&_ ";
+        private const string renameAction = "Renamed";
+        private const string copyAction = "Copied";
+        private const string dialogBoxTitleOperationFailed = "Operation failed";
+        private const string dialogBoxTitleOperationSuccessful = "Operation successful";
+        public bool initialised;
+
         private static bool ContainsInvalidCharacters(string input)
         {
             bool result = input.IndexOfAny(invalidCharacters.ToCharArray()) != -1;
@@ -59,16 +65,20 @@ namespace MapActionToolbars
 
         private void btnRename_Click(object sender, EventArgs e)
         {
-            const string renameAction = "Renamed"; 
-            const string copyAction = "Copied"; 
-            string message = "";
-            string root = System.IO.Path.GetDirectoryName(this.pathFileName);
-            
+            string newPath = "";
+            string root = System.IO.Path.GetDirectoryName(this.pathFileName);           
             string fileExtension = System.IO.Path.GetExtension(this.pathFileName);
             string filename = System.IO.Path.GetFileNameWithoutExtension(this.pathFileName);
+            bool operationSuccessful = false;
             IFeatureClass fc = GetFeatureClassFromShapefileOnDisk(root, filename);
             IDataset ds = fc as IDataset;
             
+            // Message box contents
+            MessageBoxIcon icon = MessageBoxIcon.Information;
+            string dialogBoxTitle = dialogBoxTitleOperationSuccessful;
+            string message = "";
+
+
             //Construct layer name
             string newLayerName = createNewLayerName();
 
@@ -79,18 +89,42 @@ namespace MapActionToolbars
                 ESRI.ArcGIS.Geodatabase.IWorkspaceFactory workspaceFactory = new ESRI.ArcGIS.DataSourcesFile.ShapefileWorkspaceFactoryClass();
                 ESRI.ArcGIS.Geodatabase.IWorkspace workspace = workspaceFactory.OpenFromFile(CategoryPath(root, Category()), 0);
 
-                ds.Copy(newLayerName, workspace);
-                message = copyAction + " " + System.IO.Path.Combine(root, filename + fileExtension) + " to " + System.IO.Path.Combine(workspace.PathName, (newLayerName + fileExtension));
+                newPath = System.IO.Path.Combine(workspace.PathName, (newLayerName + fileExtension));
+                if (newPath.Length > MAX_PATH_LENGTH)
+                {
+                    dialogBoxTitle = dialogBoxTitleOperationFailed;
+                    icon = MessageBoxIcon.Error;
+                    message = String.Format("Target path exceeds maximum permitted length of {0} characters", MAX_PATH_LENGTH);
+                }
+                else
+                {
+                    ds.Copy(newLayerName, workspace);
+                    message = copyAction + " " + System.IO.Path.Combine(root, filename + fileExtension) + " to " + System.IO.Path.Combine(workspace.PathName, (newLayerName + fileExtension));
+                    operationSuccessful = true;
+                }
             }
             else
             {
-                //Rename the layer
-                ds.Rename(newLayerName);
-                message = renameAction + " " + System.IO.Path.Combine(root, filename + fileExtension) + " to " + System.IO.Path.Combine(root, newLayerName + fileExtension);
+                newPath = System.IO.Path.Combine(root, newLayerName + fileExtension);
+                if (newPath.Length > MAX_PATH_LENGTH)
+                {
+                    dialogBoxTitle = dialogBoxTitleOperationFailed;
+                    icon = MessageBoxIcon.Error;
+                    message = String.Format("Target path exceeds maximum permitted length of {0} characters", MAX_PATH_LENGTH);
+                }
+                else
+                {
+                    message = renameAction + " " + System.IO.Path.Combine(root, filename + fileExtension) + " to " + newPath;
+                    //Rename the layer
+                    ds.Rename(newLayerName);
+                    operationSuccessful = true;
+                }
             }
-            this.Close();
-
-            MessageBox.Show(message, "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(message, dialogBoxTitle, MessageBoxButtons.OK, icon);
+            if (operationSuccessful)
+            {
+                this.Close();
+            }
         }
 
         public string createNewLayerName()
