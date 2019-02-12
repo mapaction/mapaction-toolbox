@@ -246,7 +246,7 @@ namespace MapAction
         /// <returns></returns>
         private bool RunExport(IExport docExport, tagRECT expSize)
         {
-            IEnvelope envelope = new EnvelopeClass();
+            IEnvelope envelope = new Envelope() as IEnvelope;
             envelope.PutCoords(expSize.left, expSize.top, expSize.right, expSize.bottom);
             docExport.PixelBounds = envelope;
 
@@ -282,47 +282,47 @@ namespace MapAction
             // The Export*Class() type initializes a new export class of the desired type.
             if (exportType == MapActionExportTypes.pdf)
             { // Set PDF Export options
-                docExport = new ExportPDFClass();
+                docExport = new ExportPDF() as IExport;
                 IExportPDF iPDF_export = (IExportPDF)docExport;
                 iPDF_export.EmbedFonts = true;
                 docExport = (IExport)iPDF_export;
             }
             else if (exportType == MapActionExportTypes.eps)
             {
-                docExport = new ExportPSClass();
+                docExport = new ExportPS() as IExport;
             }
             else if (exportType == MapActionExportTypes.ai)
             {
-                docExport = new ExportAIClass();
+                docExport = new ExportAI() as IExport;
             }
             else if (exportType == MapActionExportTypes.bmp)
             {
-                docExport = new ExportBMPClass();
+                docExport = new ExportBMP() as IExport;
             }
             else if (exportType == MapActionExportTypes.tiff)
             {
-                docExport = new ExportTIFFClass();
+                docExport = new ExportTIFF() as IExport;
             }
             else if (exportType == MapActionExportTypes.svg)
             {
-                docExport = new ExportSVGClass();
+                docExport = new ExportSVG() as IExport;
             }
             else if (exportType == MapActionExportTypes.png)
             {
-                docExport = new ExportPNGClass();
+                docExport = new ExportPNG() as IExport;
             }
             else if (exportType == MapActionExportTypes.gif)
             {
-                docExport = new ExportGIFClass();
+                docExport = new ExportGIF() as IExport;
             }
             else if (exportType == MapActionExportTypes.emf)
             {
-                docExport = new ExportEMFClass();
+                docExport = new ExportEMF() as IExport;
             }
             else if (exportType == MapActionExportTypes.jpeg)
             {
                 IExportJPEG m_export;
-                docExport = new ExportJPEGClass();
+                docExport = new ExportJPEG() as IExport;
                 if (docExport is IExportJPEG)
                 {
                     m_export = (IExportJPEG)docExport;
@@ -335,7 +335,7 @@ namespace MapAction
                 exportType == MapActionExportTypes.png_thumbnail_zip 
                 || exportType == MapActionExportTypes.png_thumbnail_local)
             {
-                docExport = new ExportPNGClass();
+                docExport = new ExportPNG() as IExport;
             }
             else if (exportType == MapActionExportTypes.kmz)
             {
@@ -404,7 +404,7 @@ namespace MapAction
                     return outFileName;
                 }
             }
-          
+
             return null;
         }
 
@@ -423,7 +423,6 @@ namespace MapAction
                 return null;
             }
             string outFileName = GetExportFilename(exportType, dpi);
-
             IExport docExport = InitializeExporter(exportType);
             docExport.ExportFileName = outFileName;
             docExport.Resolution = dpi;
@@ -476,9 +475,9 @@ namespace MapAction
             else
             {
                 string multiplePageParameter = isMultipleFiles ? "PDF_MULTIPLE_FILES_PAGE_NAME" : "PDF_SINGLE_FILE";
-                IGeoProcessor2 gp = new GeoProcessorClass();
+                IGeoProcessor2 gp = new GeoProcessor() as IGeoProcessor2;
                 gp.AddToolbox(Utilities.getExportGPToolboxPath());
-                IVariantArray parameters = new VarArrayClass();
+                IVariantArray parameters = new VarArray();
 
                 parameters.Add(this.m_MapDoc.DocumentFilename);
                 parameters.Add(this.m_ExportDir);

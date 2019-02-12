@@ -211,9 +211,13 @@ namespace MapAction
 
             // get MXD file path in case it is needed for error reporting later
             string mxdPath = String.Empty;
-            try{
+            try
+            {
                 mxdPath = (pMxDoc as IMapDocument).DocumentFilename;
-            } catch (InvalidCastException ice){
+            }
+            catch (InvalidCastException ice)
+            {
+
             }
             
             // APS: Why is this check necessary? 
@@ -225,7 +229,7 @@ namespace MapAction
                 IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
                 pGraphics.Reset();
 
-                IElement element = new TextElementClass();
+                IElement element = new TextElement();
                 IElementProperties2 pElementProp;
                 ITextElement pTextElement;
                 string debugElementName = "";
@@ -233,7 +237,7 @@ namespace MapAction
                 try
                 {
                     ITextParser formattingTextParser = new SimpleTextParser();
-                    formattingTextParser.TextSymbol = new TextSymbolClass();
+                    formattingTextParser.TextSymbol = new TextSymbol();
 
                     element = pGraphics.Next();
                     while (element != null)
@@ -276,21 +280,21 @@ namespace MapAction
                 string exceptionMsg = String.Format("Unable to detect MapFrame {0} in current map document", pFrameName);
                 throw new MapActionMapTemplateException(exceptionMsg, mxdPath, true);
             }
-        }
-#endregion
+            }
+            #endregion
 
-        /// <summary>
-        /// Removes all valid ESRI Label formating tags from the input string.
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns>A new string without any of the formating tags present in input.</returns>
-        public static string stripESRILabelMarkup(string input)
+            /// <summary>
+            /// Removes all valid ESRI Label formating tags from the input string.
+            /// </summary>
+            /// <param name="input"></param>
+            /// <returns>A new string without any of the formating tags present in input.</returns>
+            public static string stripESRILabelMarkup(string input)
         {
             ITextParser formattingTextParser = new SimpleTextParser();
-            formattingTextParser.TextSymbol = new TextSymbolClass();
+            formattingTextParser.TextSymbol = new TextSymbol();
             bool parsingRequired = false;
             string output;
-
+ 
             // If the string assigned to formattingTextParser.Text which include malformed
             // markup then a COMException is thrown.
             try
@@ -351,8 +355,7 @@ namespace MapAction
                 IPageLayout pLayout = pMxDoc.PageLayout;
                 IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
                 pGraphics.Reset();
-
-                IElement element = new TextElementClass();
+                IElement element = new TextElement();
                 IElementProperties2 pElementProp;
                 ITextElement pTextElement;
 
@@ -454,7 +457,7 @@ namespace MapAction
             IPrintAndExport docPrintExport;
             int pageCnt;
 
-            docPrintExport = new PrintAndExportClass();
+            docPrintExport = new PrintAndExport();
             pageCnt = docPrintExport.get_PageCount((IActiveView) pMapDoc.PageLayout);
             System.Console.WriteLine(String.Format("page count {0}", pageCnt));
 
@@ -463,6 +466,7 @@ namespace MapAction
             // Therefore if get_PageCount==1 then we conclude that DDP 
             // *is* enabled.
             return (pageCnt > 0);
+            return false;
         }
         #endregion
 

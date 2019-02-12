@@ -10,7 +10,6 @@ using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Desktop;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
-using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Output;
 using ESRI.ArcGIS.Geoprocessing;
@@ -119,13 +118,15 @@ namespace MapActionToolbars
                 if (fileInfo_check.Exists)
                 {
                     //We have a valid shapefile, proceed
+                    /* STEVE
+                                        ESRI.ArcGIS.Geodatabase.IWorkspaceFactory workspaceFactory = new ESRI.ArcGIS.DataSourcesFile.ShapefileWorkspaceFactoryClass();
+                                        ESRI.ArcGIS.Geodatabase.IWorkspace workspace = workspaceFactory.OpenFromFile(string_ShapefileDirectory, 0);
+                                        ESRI.ArcGIS.Geodatabase.IFeatureWorkspace featureWorkspace = (ESRI.ArcGIS.Geodatabase.IFeatureWorkspace)workspace; // Explict Cast
+                                        ESRI.ArcGIS.Geodatabase.IFeatureClass featureClass = featureWorkspace.OpenFeatureClass(string_ShapefileName);
 
-                    ESRI.ArcGIS.Geodatabase.IWorkspaceFactory workspaceFactory = new ESRI.ArcGIS.DataSourcesFile.ShapefileWorkspaceFactoryClass();
-                    ESRI.ArcGIS.Geodatabase.IWorkspace workspace = workspaceFactory.OpenFromFile(string_ShapefileDirectory, 0);
-                    ESRI.ArcGIS.Geodatabase.IFeatureWorkspace featureWorkspace = (ESRI.ArcGIS.Geodatabase.IFeatureWorkspace)workspace; // Explict Cast
-                    ESRI.ArcGIS.Geodatabase.IFeatureClass featureClass = featureWorkspace.OpenFeatureClass(string_ShapefileName);
-
-                    return featureClass;
+                                        return featureClass;
+                                        */
+                    return null; // STEVE
                 }
                 else
                 {

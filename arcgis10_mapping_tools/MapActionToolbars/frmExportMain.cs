@@ -20,7 +20,6 @@ using ESRI.ArcGIS.Geoprocessing;
 using ESRI.ArcGIS.Desktop;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
-using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using MapAction;
 
@@ -193,7 +192,7 @@ namespace MapActionToolbars
             nudJpegResolution.Value = Convert.ToDecimal(config.DefaultJpegResDPI); 
             nudPdfResolution.Value = Convert.ToDecimal(config.DefaultPdfResDPI); 
             nudEmfResolution.Value = Convert.ToDecimal(config.DefaultPdfResDPI);
-            _languageISO2 = config.LanguageIso2;
+            _languageISO2 = config.LanguageIso2 == null ? "en" : config.LanguageIso2;
             tbxLanguage.Text = this.languageCodeLookup.lookupA2LanguageCode(_languageISO2, LanguageCodeFields.Language); ;
             
             // Set the status value and the version number from the existing XML if it exists:

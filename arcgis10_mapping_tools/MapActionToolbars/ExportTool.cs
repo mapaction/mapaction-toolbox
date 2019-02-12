@@ -10,7 +10,6 @@ using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Desktop;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
-using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 
 namespace MapActionToolbars
@@ -47,7 +46,6 @@ namespace MapActionToolbars
                 var dlg = new frmExportMain();
                 dlg.ShowDialog();
             }    
-
         }
 
         protected override void OnUpdate()
@@ -55,5 +53,4 @@ namespace MapActionToolbars
             Enabled = ArcMap.Application != null;
         }
     }
-
 }

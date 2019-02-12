@@ -6,11 +6,11 @@
   <Image>Images\MapActionToolbars.png</Image>
   <Author>Software Development Group</Author>
   <Company>MapAction</Company>
-  <Date>09/11/2018</Date>
+  <Date>06/01/2019</Date>
   <Targets>
-    <Target name="Desktop" version="10.2" />
+    <Target name="Desktop" version="10.6" />
   </Targets>
-  <AddIn language="CLR4.0" library="MapActionToolbars.dll" namespace="MapActionToolbars">
+  <AddIn language="CLR" library="MapActionToolbars.dll" namespace="MapActionToolbars">
     <ArcMap>
       <Toolbars>
         <Toolbar id="MapActionToolbars_MapAction" caption="MapAction Toolbar" showInitially="true">

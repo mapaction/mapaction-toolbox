@@ -10,15 +10,11 @@ using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Desktop;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
-using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
-using ESRI.ArcGIS.Output;
 using ESRI.ArcGIS.Geoprocessing;
 using ESRI.ArcGIS.DataSourcesFile;
 using ESRI.ArcGIS.Geodatabase;
 using System.Diagnostics;
-using ESRI.ArcGIS.CatalogUI;
-using ESRI.ArcGIS.Catalog;
 using Microsoft.VisualBasic.FileIO;
 
 namespace MapActionToolbars
@@ -86,7 +82,7 @@ namespace MapActionToolbars
             if (HasCrashMoveFolderStructure(root))
             {   
                 // If it is, copy the renamed file(s) to the appropriate directory.
-                ESRI.ArcGIS.Geodatabase.IWorkspaceFactory workspaceFactory = new ESRI.ArcGIS.DataSourcesFile.ShapefileWorkspaceFactoryClass();
+                ESRI.ArcGIS.Geodatabase.IWorkspaceFactory workspaceFactory = new ESRI.ArcGIS.DataSourcesFile.ShapefileWorkspaceFactory();
                 ESRI.ArcGIS.Geodatabase.IWorkspace workspace = workspaceFactory.OpenFromFile(CategoryPath(root, Category()), 0);
 
                 newPath = System.IO.Path.Combine(workspace.PathName, (newLayerName + fileExtension));
@@ -184,7 +180,7 @@ namespace MapActionToolbars
                 if (fileInfo_check.Exists)
                 {
                     //We have a valid shapefile, proceed
-                    ESRI.ArcGIS.Geodatabase.IWorkspaceFactory workspaceFactory = new ESRI.ArcGIS.DataSourcesFile.ShapefileWorkspaceFactoryClass();
+                    ESRI.ArcGIS.Geodatabase.IWorkspaceFactory workspaceFactory = new ESRI.ArcGIS.DataSourcesFile.ShapefileWorkspaceFactory();
                     ESRI.ArcGIS.Geodatabase.IWorkspace workspace = workspaceFactory.OpenFromFile(string_ShapefileDirectory, 0);
                     ESRI.ArcGIS.Geodatabase.IFeatureWorkspace featureWorkspace = (ESRI.ArcGIS.Geodatabase.IFeatureWorkspace)workspace; // Explict Cast
                     ESRI.ArcGIS.Geodatabase.IFeatureClass featureClass = featureWorkspace.OpenFeatureClass(string_ShapefileName);

@@ -417,6 +417,7 @@ namespace MapAction
             Dictionary<string, string> dict = new Dictionary<string, string>(); 
             IMap pMap = getMapFrame(pMapDoc, mapFrameName);
             IActiveView pActiveView = pMap as IActiveView;
+
             IEnvelope2 pEnvelope = pActiveView.Extent as IEnvelope2;
 
             // Get the spatial reference of the map frame
@@ -428,7 +429,7 @@ namespace MapAction
            
                 //Convert active view to wgs 84                
                 Debug.WriteLine("Reprojecting to wgs84");
-                ISpatialReferenceFactory srFactory = new SpatialReferenceEnvironmentClass();
+                ISpatialReferenceFactory srFactory = new SpatialReferenceEnvironment();
                 ISpatialReference wgs84;
                 //GCS to project from 
                 IGeographicCoordinateSystem gcs = srFactory.CreateGeographicCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);

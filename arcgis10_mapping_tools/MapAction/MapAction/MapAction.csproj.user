@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <StartAction>Program</StartAction>
-    <StartProgram>C:\Program Files (x86)\ArcGIS\Desktop10.2\bin\ArcMap.exe</StartProgram>
-    <StartArguments>C:\MapAction\ARCGIS_10_2_MA000_Landscape_Bottom.mxd</StartArguments>
+    <StartProgram>C:\Program Files (x86)\ArcGIS\Desktop10.6\bin\ArcMap.exe</StartProgram>
+    <StartArguments>C:\January2019\GIS\03_Mapping\33_MXD_Maps\MA010_3wCountryByRegion_v1_A3.mxd</StartArguments>
   </PropertyGroup>
 </Project>
