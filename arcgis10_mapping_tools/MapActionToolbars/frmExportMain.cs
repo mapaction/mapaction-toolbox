@@ -244,6 +244,22 @@ namespace MapActionToolbars
                     {
                         cboStatus.Text = usEle.Value.ToString();
                     }
+                    else if (usEle.Name.ToString().Equals("access"))
+                    {
+                        cboAccess.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("qclevel"))
+                    {
+                        cboQualityControl.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("location"))
+                    {
+                        tbxImageLocation.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("accessnotes"))
+                    {
+                        tbxImageAccessNotes.Text = usEle.Value.ToString();
+                    }
                     // In "older" XML, only a single theme was possible.  Read it in:
                     else if (usEle.Name.ToString().Equals("theme"))
                     {
@@ -902,6 +918,11 @@ namespace MapActionToolbars
         private void button3_Click(object sender, EventArgs e)
         {
             tabExportTool.SelectedTab = tabPageLayout;
+        }
+
+        private void cboStatus_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.KeyChar = (char)Keys.None;
         }
     }
 }
