@@ -523,9 +523,9 @@ namespace MapActionToolbars
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void tbxCountry_TextChanged(object sender, EventArgs e)
         {
-
+            FormValidationConfig.validateCountry(tbxCountry, eprCountryWarning);
         }
 
         private void tbxPathToCrashMove_TextChanged(object sender, EventArgs e)

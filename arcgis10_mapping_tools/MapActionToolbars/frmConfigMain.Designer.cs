@@ -118,9 +118,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.eprDisclaimerWarning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprDonorTextWarning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprExportPath)).BeginInit();
-            this.btnPathToExistingXml.Enabled = false;
-            this.tbxPathToCrashMove.Enabled = false;
-
             this.SuspendLayout();
             // 
             // btnSave
@@ -158,6 +155,7 @@
             // 
             // btnPathToExistingXml
             // 
+            this.btnPathToExistingXml.Enabled = false;
             this.btnPathToExistingXml.Location = new System.Drawing.Point(395, 20);
             this.btnPathToExistingXml.Name = "btnPathToExistingXml";
             this.btnPathToExistingXml.Size = new System.Drawing.Size(33, 23);
@@ -245,7 +243,7 @@
             this.tbxCountry.Name = "tbxCountry";
             this.tbxCountry.Size = new System.Drawing.Size(288, 20);
             this.tbxCountry.TabIndex = 50;
-            this.tbxCountry.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.tbxCountry.TextChanged += new System.EventHandler(this.tbxCountry_TextChanged);
             // 
             // label14
             // 
