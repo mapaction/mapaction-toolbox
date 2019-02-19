@@ -92,8 +92,11 @@ namespace MapActionToolbars
                 imgTimezoneStatus.Image = Properties.Resources.tick_17px;
             }
 
+            if (dict.ContainsKey("language_label"))
+            {
+                imgLanguageStatus.Image = Properties.Resources.tick_17px;
+            }
+
         }
-
-
     }
 }
