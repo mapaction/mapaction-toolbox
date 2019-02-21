@@ -358,7 +358,6 @@ namespace MapActionToolbars
             if (chkEditConfigXml.Checked == true)
             {
                 this.btnPathToExistingXml.Enabled = true;
-                this.tbxPathToCrashMove.Enabled = true;
                 tabConfigXml.Enabled = true;
                 this.tbxOperationName.Enabled = true;
                 this.tbxGlideNo.Enabled = true;

@@ -155,7 +155,6 @@
             // 
             // btnPathToExistingXml
             // 
-            this.btnPathToExistingXml.Enabled = false;
             this.btnPathToExistingXml.Location = new System.Drawing.Point(395, 20);
             this.btnPathToExistingXml.Name = "btnPathToExistingXml";
             this.btnPathToExistingXml.Size = new System.Drawing.Size(33, 23);
