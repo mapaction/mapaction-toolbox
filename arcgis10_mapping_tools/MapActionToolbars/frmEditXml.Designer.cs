@@ -274,7 +274,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(344, 357);
+            this.tabPage1.Size = new System.Drawing.Size(344, 318);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Section B";
             this.tabPage1.UseVisualStyleBackColor = true;

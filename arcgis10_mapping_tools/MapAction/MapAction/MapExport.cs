@@ -21,23 +21,19 @@ using ESRI.ArcGIS.Geodatabase;
 
 namespace MapAction
 {
-    
-
     public static class MapExport
     {
-               
-
         #region Public method exportMapFrameKmlAsRaster
         // Export map frame kml as raster
         public static void exportMapFrameKmlAsRaster(IMapDocument pMapDoc, string dataFrame, string filePathName, string scale, string kmlresolutiondpi)
-        {          
-            IGeoProcessor2 gp = new GeoProcessorClass();
-            IVariantArray parameters = new VarArrayClass();
+        {
+            IGeoProcessor2 gp = new GeoProcessor() as IGeoProcessor2;
+            IVariantArray parameters = new VarArray();
             bool oldAddSetting = gp.AddOutputsToMap;
             gp.AddOutputsToMap = false;
             // Get the mxd path to pass as the first variable
             string path = pMapDoc.DocumentFilename;
-
+            
             // Get the bounding box of the map frame
             //############### This function needs to be updated to incorporate projected map frames, it currently only works if the frame is wgs84 #############
             var dict = Utilities.getMapFrameWgs84BoundingBox(pMapDoc, dataFrame);
@@ -79,7 +75,6 @@ namespace MapAction
                     message = results.GetMessage(i);
                     System.Console.WriteLine(String.Format("ErrorCode: {0}\t  Type: {1}\t  Description: {2}", message.ErrorCode, message.Type, message.Description));
                 }
-
                 System.Console.WriteLine("Finished KML output");
             }
             catch (Exception e)
@@ -212,11 +207,7 @@ namespace MapAction
                 System.Diagnostics.Debug.WriteLine("Cannot open export folder in explorer");
                 System.Diagnostics.Debug.WriteLine(e.Message);
             }
-
         }
         #endregion
-
     }
-    
-   
 }

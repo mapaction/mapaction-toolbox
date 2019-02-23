@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MapActionToolbars</RootNamespace>
     <AssemblyName>MapActionToolbars</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -27,6 +27,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,6 +36,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ESRI.ArcGIS.ArcMap, Version=10.1.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
@@ -44,10 +46,20 @@
     <Reference Include="ESRI.ArcGIS.ArcMapUI, Version=10.1.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Carto, Version=10.1.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Catalog, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.CatalogUI, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.DataSourcesFile, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
       <Private>False</Private>
@@ -57,6 +69,10 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.DisplayUI, Version=10.1.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Editor, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
@@ -78,11 +94,16 @@
     <Reference Include="ESRI.ArcGIS.Geoprocessor, Version=10.2.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="ESRI.ArcGIS.System">
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="ESRI.ArcGIS.Output, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.System, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -99,6 +120,7 @@
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
     <Compile Include="ConfigTool.cs" />
+    <Compile Include="ConstructLayerName.cs" />
     <Compile Include="CreateAndUpdateXml.cs" />
     <Compile Include="Export.cs" />
     <Compile Include="ExportTool.cs" />
@@ -142,8 +164,21 @@
     <Compile Include="frmLayoutMain.Designer.cs">
       <DependentUpon>frmLayoutMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmPermissionsHelp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPermissionsHelp.Designer.cs">
+      <DependentUpon>frmPermissionsHelp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmRenameMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRenameMain.Designer.cs">
+      <DependentUpon>frmRenameMain.cs</DependentUpon>
+    </Compile>
     <Compile Include="LayoutTool.cs" />
     <Compile Include="LayoutToolAutomatedValues.cs" />
+    <Compile Include="MADataRenameProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -154,6 +189,13 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="RenameLayer.cs" />
+    <Compile Include="RenameTool.cs" />
+    <Compile Include="Resources\layer_name_lookupDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>layer_name_lookupDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
   </ItemGroup>
@@ -196,6 +238,14 @@
       <DependentUpon>frmLayoutMain.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmPermissionsHelp.resx">
+      <DependentUpon>frmPermissionsHelp.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRenameMain.resx">
+      <DependentUpon>frmRenameMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -227,7 +277,25 @@
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Images\ExportTool.png" />
+    <AddInContent Include="Images\rename_icon.png" />
+    <Content Include="Images\ma_globe.png" />
+    <Content Include="Images\ma_globe2.png" />
     <Content Include="Resources\clear-icon.png" />
+    <AddInContent Include="Resources\rename_icon.png" />
+    <Content Include="Sample\countries_config.xml" />
+    <Content Include="Sample\language_codes.xml" />
+    <Content Include="Sample\language_config.xml" />
+    <None Include="Resources\layer_name_lookupDataSet.xsc">
+      <DependentUpon>layer_name_lookupDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Resources\layer_name_lookupDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>layer_name_lookupDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\layer_name_lookupDataSet.xss">
+      <DependentUpon>layer_name_lookupDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Resources\warning_17x17px.png" />
     <None Include="Resources\right_button_20x20.png" />
     <None Include="Resources\left_button_20x20.png" />

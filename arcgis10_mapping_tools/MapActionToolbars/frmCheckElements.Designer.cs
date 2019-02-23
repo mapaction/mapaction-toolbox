@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCheckElements));
             this.btnClose = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblLanguageStatus = new System.Windows.Forms.TextBox();
+            this.imgLanguageStatus = new System.Windows.Forms.PictureBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -56,6 +58,7 @@
             this.imgSpatialRefStatus = new System.Windows.Forms.PictureBox();
             this.imgMxdNameStatus = new System.Windows.Forms.PictureBox();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgLanguageStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgTimezoneStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgProducedByStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgDonorCreditStatus)).BeginInit();
@@ -72,7 +75,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(56, 310);
+            this.btnClose.Location = new System.Drawing.Point(56, 331);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(46, 23);
             this.btnClose.TabIndex = 6;
@@ -82,6 +85,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.lblLanguageStatus);
+            this.groupBox2.Controls.Add(this.imgLanguageStatus);
             this.groupBox2.Controls.Add(this.textBox1);
             this.groupBox2.Controls.Add(this.textBox2);
             this.groupBox2.Controls.Add(this.textBox3);
@@ -108,10 +113,29 @@
             this.groupBox2.Controls.Add(this.imgMxdNameStatus);
             this.groupBox2.Location = new System.Drawing.Point(8, 8);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(148, 298);
+            this.groupBox2.Size = new System.Drawing.Size(148, 317);
             this.groupBox2.TabIndex = 28;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Text elements";
+            // 
+            // lblLanguageStatus
+            // 
+            this.lblLanguageStatus.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lblLanguageStatus.Location = new System.Drawing.Point(12, 296);
+            this.lblLanguageStatus.Name = "lblLanguageStatus";
+            this.lblLanguageStatus.ReadOnly = true;
+            this.lblLanguageStatus.Size = new System.Drawing.Size(100, 13);
+            this.lblLanguageStatus.TabIndex = 43;
+            this.lblLanguageStatus.Text = "language_label";
+            // 
+            // imgLanguageStatus
+            // 
+            this.imgLanguageStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
+            this.imgLanguageStatus.Location = new System.Drawing.Point(117, 296);
+            this.imgLanguageStatus.Name = "imgLanguageStatus";
+            this.imgLanguageStatus.Size = new System.Drawing.Size(20, 20);
+            this.imgLanguageStatus.TabIndex = 42;
+            this.imgLanguageStatus.TabStop = false;
             // 
             // textBox1
             // 
@@ -345,7 +369,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(165, 336);
+            this.ClientSize = new System.Drawing.Size(165, 360);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnClose);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -359,6 +383,7 @@
             this.Load += new System.EventHandler(this.frmCheckElements_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgLanguageStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgTimezoneStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgProducedByStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgDonorCreditStatus)).EndInit();
@@ -403,6 +428,7 @@
         private System.Windows.Forms.PictureBox imgProducedByStatus;
         private System.Windows.Forms.PictureBox imgDonorCreditStatus;
         private System.Windows.Forms.PictureBox imgDisclaimerStatus;
-
+        private System.Windows.Forms.TextBox lblLanguageStatus;
+        private System.Windows.Forms.PictureBox imgLanguageStatus;
     }
 }

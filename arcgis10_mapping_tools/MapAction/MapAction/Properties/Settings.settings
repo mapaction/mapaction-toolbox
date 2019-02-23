@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="crash_move_folder_path" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">C:\Data20170414</Value>
     </Setting>
     <Setting Name="thumbnail_width_px" Type="System.UInt16" Scope="User">
       <Value Profile="(Default)">140</Value>

@@ -124,46 +124,6 @@ namespace MapAction
 
     public static class PageLayoutProperties
     {
-        #region public method getDataframeProperties
-        //Return the scale, spatial reference system and extent properties of a given data frame
-        public static Dictionary<string, string> getDataframeProperties(IMxDocument pMxDoc, string pFrameName)
-        {
-
-            // Create and initialise variables 
-            IPageLayout pLayout = pMxDoc.PageLayout;
-            IMap pMap = Utilities.getMapFrame(pMxDoc, pFrameName);
-            IActiveView pActiveView = pMap as IActiveView;
-            Dictionary<string, string> dict = new Dictionary<string, string>();
-            string scale = null;
-            string page_size = null;
-            double xMax = 0;
-            double yMax = 0;
-            double xMin = 0;
-            double yMin = 0;
-            
-            //Get the scale, page size and bounding coordinates of the dataframe
-            long tempScale = Convert.ToInt64(pMap.MapScale);
-            scale = tempScale.ToString();
-            Debug.WriteLine(scale);
-            page_size = pLayout.Page.FormID.ToString();
-            xMax = pActiveView.Extent.XMax; 
-            yMax = pActiveView.Extent.YMax;
-            xMin = pActiveView.Extent.XMin;
-            yMin = pActiveView.Extent.YMin;
-
-            //Add all properties to the dictionary
-            dict.Add("scale", scale);
-            dict.Add("page_size", page_size);
-            dict.Add("xMax", Math.Round(xMax, 2).ToString());
-            dict.Add("yMax", Math.Round(yMax, 2).ToString());
-            dict.Add("xMin", Math.Round(xMin, 2).ToString());
-            dict.Add("yMin", Math.Round(yMin, 2).ToString());
-
-            //Return the dictionary - blank if the the exception handling was invoked.
-            return dict;
-        }
-        #endregion
-
 
         #region Public method detectMapFrame
         // Determines if a given map frame exists given a name and IMapDocument reference.
@@ -251,9 +211,13 @@ namespace MapAction
 
             // get MXD file path in case it is needed for error reporting later
             string mxdPath = String.Empty;
-            try{
+            try
+            {
                 mxdPath = (pMxDoc as IMapDocument).DocumentFilename;
-            } catch (InvalidCastException ice){
+            }
+            catch (InvalidCastException ice)
+            {
+
             }
             
             // APS: Why is this check necessary? 
@@ -265,7 +229,7 @@ namespace MapAction
                 IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
                 pGraphics.Reset();
 
-                IElement element = new TextElementClass();
+                IElement element = new TextElement();
                 IElementProperties2 pElementProp;
                 ITextElement pTextElement;
                 string debugElementName = "";
@@ -273,7 +237,7 @@ namespace MapAction
                 try
                 {
                     ITextParser formattingTextParser = new SimpleTextParser();
-                    formattingTextParser.TextSymbol = new TextSymbolClass();
+                    formattingTextParser.TextSymbol = new TextSymbol();
 
                     element = pGraphics.Next();
                     while (element != null)
@@ -316,21 +280,21 @@ namespace MapAction
                 string exceptionMsg = String.Format("Unable to detect MapFrame {0} in current map document", pFrameName);
                 throw new MapActionMapTemplateException(exceptionMsg, mxdPath, true);
             }
-        }
-#endregion
+            }
+            #endregion
 
-        /// <summary>
-        /// Removes all valid ESRI Label formating tags from the input string.
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns>A new string without any of the formating tags present in input.</returns>
-        public static string stripESRILabelMarkup(string input)
+            /// <summary>
+            /// Removes all valid ESRI Label formating tags from the input string.
+            /// </summary>
+            /// <param name="input"></param>
+            /// <returns>A new string without any of the formating tags present in input.</returns>
+            public static string stripESRILabelMarkup(string input)
         {
             ITextParser formattingTextParser = new SimpleTextParser();
-            formattingTextParser.TextSymbol = new TextSymbolClass();
+            formattingTextParser.TextSymbol = new TextSymbol();
             bool parsingRequired = false;
             string output;
-
+ 
             // If the string assigned to formattingTextParser.Text which include malformed
             // markup then a COMException is thrown.
             try
@@ -391,8 +355,7 @@ namespace MapAction
                 IPageLayout pLayout = pMxDoc.PageLayout;
                 IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
                 pGraphics.Reset();
-
-                IElement element = new TextElementClass();
+                IElement element = new TextElement();
                 IElementProperties2 pElementProp;
                 ITextElement pTextElement;
 
@@ -486,62 +449,6 @@ namespace MapAction
         }
         #endregion
 
-        #region Public method getPageSize
-        //Returns the map title as string given the IApplciation variable of the current mxd
-        public static string getPageSize(IMxDocument pMxDoc, string pFrameName)
-        {
-            string pageSize = null;
-            Dictionary<string, string> mapProps = PageLayoutProperties.getDataframeProperties(pMxDoc, pFrameName);
-            string pageFormId = mapProps["page_size"];
-
-            Dictionary<string, string> pageSizes = new Dictionary<string, string>();
-
-            pageSizes.Add("esriPageFormLetter", "Letter");
-            pageSizes.Add("esriPageFormLegal", "Legal");
-            pageSizes.Add("esriPageFormTabloid", "Tabloid");
-            pageSizes.Add("esriPageFormC", "C");
-            pageSizes.Add("esriPageFormD", "D");
-            pageSizes.Add("esriPageFormE", "E");
-            pageSizes.Add("esriPageFormA5", "A5");
-            pageSizes.Add("esriPageFormA4", "A4");
-            pageSizes.Add("esriPageFormA3", "A3");
-            pageSizes.Add("esriPageFormA2", "A2");
-            pageSizes.Add("esriPageFormA1", "A1");
-            pageSizes.Add("esriPageFormA0", "A0");
-            pageSizes.Add("esriPageFormCUSTOM", "Custom");
-            pageSizes.Add("esriPageFormSameAsPrinter", "Same as printer");
-
-            foreach (var i in pageSizes)
-            {
-                if (pageFormId == i.Key)
-                {
-                    pageSize = i.Value;
-                }
-            }
-            return pageSize;
-        }
-        #endregion
-
-        #region Public method getScale
-        //Returns the map title as string given the IApplciation variable of the current mxd
-        public static string getScale(IMxDocument pMxDoc, string pMapFrameName)
-        {
-            string scale;
-
-            if (detectMapFrame(pMxDoc, pMapFrameName))
-            {
-                Dictionary<string, string> mapProps = PageLayoutProperties.getDataframeProperties(pMxDoc, pMapFrameName);
-                long temp_scale = Convert.ToInt64(mapProps["scale"]);
-                scale = "1: " + string.Format("{0:n0}", temp_scale);
-                return scale;
-            }
-            else
-            {
-                return "Map frame not found";
-            }
-                
-        }
-        #endregion
 
         #region Public method isDataDrivenPagesEnabled
         //Returns true is DataDrivenPages is Enabled, false otherwise.
@@ -550,7 +457,7 @@ namespace MapAction
             IPrintAndExport docPrintExport;
             int pageCnt;
 
-            docPrintExport = new PrintAndExportClass();
+            docPrintExport = new PrintAndExport();
             pageCnt = docPrintExport.get_PageCount((IActiveView) pMapDoc.PageLayout);
             System.Console.WriteLine(String.Format("page count {0}", pageCnt));
 
@@ -559,6 +466,7 @@ namespace MapAction
             // Therefore if get_PageCount==1 then we conclude that DDP 
             // *is* enabled.
             return (pageCnt > 0);
+            return false;
         }
         #endregion
 

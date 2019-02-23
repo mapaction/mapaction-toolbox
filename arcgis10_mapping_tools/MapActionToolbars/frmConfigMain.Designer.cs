@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfigMain));
+            this.dtEmp = new System.Data.DataTable();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.gbxCrashMoveFolder = new System.Windows.Forms.GroupBox();
@@ -40,10 +41,12 @@
             this.chkEditConfigXml = new System.Windows.Forms.CheckBox();
             this.tabConfigXml = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tbxCountry = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cboLanguage = new System.Windows.Forms.ComboBox();
             this.cboTimeZone = new System.Windows.Forms.ComboBox();
-            this.cboCountry = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.tbxGlideNo = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.tbxOperationName = new System.Windows.Forms.TextBox();
@@ -72,6 +75,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.Country = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.eprOperationNameWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprGlideNoError = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprGlideNoWarning = new System.Windows.Forms.ErrorProvider(this.components);
@@ -87,6 +92,7 @@
             this.eprDisclaimerWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprDonorTextWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprExportPath = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.dtEmp)).BeginInit();
             this.gbxCrashMoveFolder.SuspendLayout();
             this.gbxConfigXmlValues.SuspendLayout();
             this.tabConfigXml.SuspendLayout();
@@ -117,20 +123,20 @@
             // btnSave
             // 
             this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(342, 310);
+            this.btnSave.Location = new System.Drawing.Point(261, 310);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 4;
+            this.btnSave.TabIndex = 8;
             this.btnSave.Text = "Create XML";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(261, 310);
+            this.btnCancel.Location = new System.Drawing.Point(342, 310);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 3;
+            this.btnCancel.TabIndex = 9;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -164,6 +170,7 @@
             this.tbxPathToCrashMove.Name = "tbxPathToCrashMove";
             this.tbxPathToCrashMove.Size = new System.Drawing.Size(293, 20);
             this.tbxPathToCrashMove.TabIndex = 0;
+            this.tbxPathToCrashMove.TextChanged += new System.EventHandler(this.tbxPathToCrashMove_TextChanged);
             // 
             // label1
             // 
@@ -180,7 +187,7 @@
             this.gbxConfigXmlValues.Controls.Add(this.tabConfigXml);
             this.gbxConfigXmlValues.Location = new System.Drawing.Point(13, 73);
             this.gbxConfigXmlValues.Name = "gbxConfigXmlValues";
-            this.gbxConfigXmlValues.Size = new System.Drawing.Size(457, 231);
+            this.gbxConfigXmlValues.Size = new System.Drawing.Size(573, 231);
             this.gbxConfigXmlValues.TabIndex = 2;
             this.gbxConfigXmlValues.TabStop = false;
             this.gbxConfigXmlValues.Text = "Configuration XML";
@@ -205,15 +212,17 @@
             this.tabConfigXml.Location = new System.Drawing.Point(9, 19);
             this.tabConfigXml.Name = "tabConfigXml";
             this.tabConfigXml.SelectedIndex = 0;
-            this.tabConfigXml.Size = new System.Drawing.Size(442, 204);
+            this.tabConfigXml.Size = new System.Drawing.Size(558, 206);
             this.tabConfigXml.TabIndex = 1;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.tbxCountry);
+            this.tabPage1.Controls.Add(this.label14);
+            this.tabPage1.Controls.Add(this.label7);
+            this.tabPage1.Controls.Add(this.cboLanguage);
             this.tabPage1.Controls.Add(this.cboTimeZone);
-            this.tabPage1.Controls.Add(this.cboCountry);
             this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.tbxGlideNo);
             this.tabPage1.Controls.Add(this.label20);
             this.tabPage1.Controls.Add(this.tbxOperationName);
@@ -221,10 +230,51 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(434, 178);
+            this.tabPage1.Size = new System.Drawing.Size(550, 180);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Emergency";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tbxCountry
+            // 
+            this.tbxCountry.Enabled = false;
+            this.tbxCountry.Location = new System.Drawing.Point(123, 124);
+            this.tbxCountry.Name = "tbxCountry";
+            this.tbxCountry.Size = new System.Drawing.Size(288, 20);
+            this.tbxCountry.TabIndex = 50;
+            this.tbxCountry.TextChanged += new System.EventHandler(this.tbxCountry_TextChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(15, 128);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(43, 13);
+            this.label14.TabIndex = 49;
+            this.label14.Text = "Country";
+            this.label14.Click += new System.EventHandler(this.label14_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(14, 100);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(55, 13);
+            this.label7.TabIndex = 47;
+            this.label7.Text = "Language";
+            // 
+            // cboLanguage
+            // 
+            this.cboLanguage.DropDownHeight = 200;
+            this.cboLanguage.DropDownWidth = 388;
+            this.cboLanguage.Enabled = false;
+            this.cboLanguage.FormattingEnabled = true;
+            this.cboLanguage.IntegralHeight = false;
+            this.cboLanguage.ItemHeight = 13;
+            this.cboLanguage.Location = new System.Drawing.Point(123, 97);
+            this.cboLanguage.Name = "cboLanguage";
+            this.cboLanguage.Size = new System.Drawing.Size(410, 21);
+            this.cboLanguage.TabIndex = 7;
             // 
             // cboTimeZone
             // 
@@ -271,289 +321,20 @@
             "UTC+12:45",
             "UTC+13:00",
             "UTC+14:00"});
-            this.cboTimeZone.Location = new System.Drawing.Point(123, 96);
+            this.cboTimeZone.Location = new System.Drawing.Point(123, 71);
             this.cboTimeZone.Name = "cboTimeZone";
             this.cboTimeZone.Size = new System.Drawing.Size(288, 21);
-            this.cboTimeZone.TabIndex = 5;
+            this.cboTimeZone.TabIndex = 6;
             this.cboTimeZone.TextChanged += new System.EventHandler(this.cboTimeZone_TextChanged);
-            // 
-            // cboCountry
-            // 
-            this.cboCountry.Enabled = false;
-            this.cboCountry.FormattingEnabled = true;
-            this.cboCountry.Items.AddRange(new object[] {
-            "AFGHANISTAN",
-            "ÅLAND ISLANDS",
-            "ALBANIA",
-            "ALGERIA",
-            "AMERICAN SAMOA",
-            "ANDORRA",
-            "ANGOLA",
-            "ANGUILLA",
-            "ANTARCTICA",
-            "ANTIGUA AND BARBUDA",
-            "ARGENTINA",
-            "ARMENIA",
-            "ARUBA",
-            "AUSTRALIA",
-            "AUSTRIA",
-            "AZERBAIJAN",
-            "BAHAMAS",
-            "BAHRAIN",
-            "BANGLADESH",
-            "BARBADOS",
-            "BELARUS",
-            "BELGIUM",
-            "BELIZE",
-            "BENIN",
-            "BERMUDA",
-            "BHUTAN",
-            "BOLIVIA, PLURINATIONAL STATE OF",
-            "BONAIRE, SINT EUSTATIUS AND SABA",
-            "BOSNIA AND HERZEGOVINA",
-            "BOTSWANA",
-            "BOUVET ISLAND",
-            "BRAZIL",
-            "BRITISH INDIAN OCEAN TERRITORY",
-            "BRUNEI DARUSSALAM",
-            "BULGARIA",
-            "BURKINA FASO",
-            "BURUNDI",
-            "CAMBODIA",
-            "CAMEROON",
-            "CANADA",
-            "CAPE VERDE",
-            "CAYMAN ISLANDS",
-            "CENTRAL AFRICAN REPUBLIC",
-            "CHAD",
-            "CHILE",
-            "CHINA",
-            "CHRISTMAS ISLAND",
-            "COCOS (KEELING) ISLANDS",
-            "COLOMBIA",
-            "COMOROS",
-            "CONGO",
-            "CONGO, THE DEMOCRATIC REPUBLIC OF THE",
-            "COOK ISLANDS",
-            "COSTA RICA",
-            "CÔTE D\'IVOIRE",
-            "CROATIA",
-            "CUBA",
-            "CURAÇAO",
-            "CYPRUS",
-            "CZECH REPUBLIC",
-            "DENMARK",
-            "DJIBOUTI",
-            "DOMINICA",
-            "DOMINICAN REPUBLIC",
-            "ECUADOR",
-            "EGYPT",
-            "EL SALVADOR",
-            "EQUATORIAL GUINEA",
-            "ERITREA",
-            "ESTONIA",
-            "ETHIOPIA",
-            "FALKLAND ISLANDS (MALVINAS)",
-            "FAROE ISLANDS",
-            "FIJI",
-            "FINLAND",
-            "FRANCE",
-            "FRENCH GUIANA",
-            "FRENCH POLYNESIA",
-            "FRENCH SOUTHERN TERRITORIES",
-            "GABON",
-            "GAMBIA",
-            "GEORGIA",
-            "GERMANY",
-            "GHANA",
-            "GIBRALTAR",
-            "GREECE",
-            "GREENLAND",
-            "GRENADA",
-            "GUADELOUPE",
-            "GUAM",
-            "GUATEMALA",
-            "GUERNSEY",
-            "GUINEA",
-            "GUINEA-BISSAU",
-            "GUYANA",
-            "HAITI",
-            "HEARD ISLAND AND MCDONALD ISLANDS",
-            "HOLY SEE (VATICAN CITY STATE)",
-            "HONDURAS",
-            "HONG KONG",
-            "HUNGARY",
-            "ICELAND",
-            "INDIA",
-            "INDONESIA",
-            "IRAN, ISLAMIC REPUBLIC OF",
-            "IRAQ",
-            "IRELAND",
-            "ISLE OF MAN",
-            "ISRAEL",
-            "ITALY",
-            "JAMAICA",
-            "JAPAN",
-            "JERSEY",
-            "JORDAN",
-            "KAZAKHSTAN",
-            "KENYA",
-            "KIRIBATI",
-            "KOREA, DEMOCRATIC PEOPLE\'S REPUBLIC OF",
-            "KOREA, REPUBLIC OF",
-            "KUWAIT",
-            "KYRGYZSTAN",
-            "LAO PEOPLE\'S DEMOCRATIC REPUBLIC",
-            "LATVIA",
-            "LEBANON",
-            "LESOTHO",
-            "LIBERIA",
-            "LIBYA",
-            "LIECHTENSTEIN",
-            "LITHUANIA",
-            "LUXEMBOURG",
-            "MACAO",
-            "MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF",
-            "MADAGASCAR",
-            "MALAWI",
-            "MALAYSIA",
-            "MALDIVES",
-            "MALI",
-            "MALTA",
-            "MARSHALL ISLANDS",
-            "MARTINIQUE",
-            "MAURITANIA",
-            "MAURITIUS",
-            "MAYOTTE",
-            "MEXICO",
-            "MICRONESIA, FEDERATED STATES OF",
-            "MOLDOVA, REPUBLIC OF",
-            "MONACO",
-            "MONGOLIA",
-            "MONTENEGRO",
-            "MONTSERRAT",
-            "MOROCCO",
-            "MOZAMBIQUE",
-            "MYANMAR",
-            "NAMIBIA",
-            "NAURU",
-            "NEPAL",
-            "NETHERLANDS",
-            "NEW CALEDONIA",
-            "NEW ZEALAND",
-            "NICARAGUA",
-            "NIGER",
-            "NIGERIA",
-            "NIUE",
-            "NORFOLK ISLAND",
-            "NORTHERN MARIANA ISLANDS",
-            "NORWAY",
-            "OMAN",
-            "PAKISTAN",
-            "PALAU",
-            "PALESTINIAN TERRITORY, OCCUPIED",
-            "PANAMA",
-            "PAPUA NEW GUINEA",
-            "PARAGUAY",
-            "PERU",
-            "PHILIPPINES",
-            "PITCAIRN",
-            "POLAND",
-            "PORTUGAL",
-            "PUERTO RICO",
-            "QATAR",
-            "RÉUNION",
-            "ROMANIA",
-            "RUSSIAN FEDERATION",
-            "RWANDA",
-            "SAINT BARTHÉLEMY",
-            "SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA",
-            "SAINT KITTS AND NEVIS",
-            "SAINT LUCIA",
-            "SAINT MARTIN (FRENCH PART)",
-            "SAINT PIERRE AND MIQUELON",
-            "SAINT VINCENT AND THE GRENADINES",
-            "SAMOA",
-            "SAN MARINO",
-            "SAO TOME AND PRINCIPE",
-            "SAUDI ARABIA",
-            "SENEGAL",
-            "SERBIA",
-            "SEYCHELLES",
-            "SIERRA LEONE",
-            "SINGAPORE",
-            "SINT MAARTEN (DUTCH PART)",
-            "SLOVAKIA",
-            "SLOVENIA",
-            "SOLOMON ISLANDS",
-            "SOMALIA",
-            "SOUTH AFRICA",
-            "SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS",
-            "SOUTH SUDAN",
-            "SPAIN",
-            "SRI LANKA",
-            "SUDAN",
-            "SURINAME",
-            "SVALBARD AND JAN MAYEN",
-            "SWAZILAND",
-            "SWEDEN",
-            "SWITZERLAND",
-            "SYRIAN ARAB REPUBLIC",
-            "TAIWAN, PROVINCE OF CHINA",
-            "TAJIKISTAN",
-            "TANZANIA, UNITED REPUBLIC OF",
-            "THAILAND",
-            "TIMOR-LESTE",
-            "TOGO",
-            "TOKELAU",
-            "TONGA",
-            "TRINIDAD AND TOBAGO",
-            "TUNISIA",
-            "TURKEY",
-            "TURKMENISTAN",
-            "TURKS AND CAICOS ISLANDS",
-            "TUVALU",
-            "UGANDA",
-            "UKRAINE",
-            "UNITED ARAB EMIRATES",
-            "UNITED KINGDOM",
-            "UNITED STATES",
-            "UNITED STATES MINOR OUTLYING ISLANDS",
-            "URUGUAY",
-            "UZBEKISTAN",
-            "VANUATU",
-            "VENEZUELA, BOLIVARIAN REPUBLIC OF",
-            "VIET NAM",
-            "VIRGIN ISLANDS, BRITISH",
-            "VIRGIN ISLANDS, U.S.",
-            "WALLIS AND FUTUNA",
-            "WESTERN SAHARA",
-            "YEMEN",
-            "ZAMBIA",
-            "ZIMBABWE"});
-            this.cboCountry.Location = new System.Drawing.Point(123, 69);
-            this.cboCountry.Name = "cboCountry";
-            this.cboCountry.Size = new System.Drawing.Size(288, 21);
-            this.cboCountry.TabIndex = 4;
-            this.cboCountry.TextChanged += new System.EventHandler(this.cboCountry_TextChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 99);
+            this.label3.Location = new System.Drawing.Point(14, 74);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 13);
             this.label3.TabIndex = 45;
             this.label3.Text = "Time zone";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(14, 73);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(43, 13);
-            this.label6.TabIndex = 43;
-            this.label6.Text = "Country";
             // 
             // tbxGlideNo
             // 
@@ -604,7 +385,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(434, 178);
+            this.tabPage2.Size = new System.Drawing.Size(550, 180);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Response";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -690,7 +471,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(434, 178);
+            this.tabPage3.Size = new System.Drawing.Size(550, 180);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Credits";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -747,7 +528,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(434, 178);
+            this.tabPage4.Size = new System.Drawing.Size(550, 180);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Settings";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -893,6 +674,24 @@
             this.label11.TabIndex = 41;
             this.label11.Text = "Jpeg dpi";
             // 
+            // Country
+            // 
+            this.Country.Frozen = true;
+            this.Country.HeaderText = "Country";
+            this.Country.Name = "Country";
+            this.Country.ReadOnly = true;
+            this.Country.Visible = false;
+            this.Country.Width = 5;
+            // 
+            // IsSelected
+            // 
+            this.IsSelected.Frozen = true;
+            this.IsSelected.HeaderText = "IsSelected";
+            this.IsSelected.Name = "IsSelected";
+            this.IsSelected.ReadOnly = true;
+            this.IsSelected.Visible = false;
+            this.IsSelected.Width = 5;
+            // 
             // eprOperationNameWarning
             // 
             this.eprOperationNameWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
@@ -984,7 +783,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(477, 340);
+            this.ClientSize = new System.Drawing.Size(611, 341);
             this.Controls.Add(this.gbxConfigXmlValues);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
@@ -994,6 +793,7 @@
             this.Name = "frmConfigMain";
             this.Text = "Operation Configuration Tool";
             this.Load += new System.EventHandler(this.frmMain_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dtEmp)).EndInit();
             this.gbxCrashMoveFolder.ResumeLayout(false);
             this.gbxCrashMoveFolder.PerformLayout();
             this.gbxConfigXmlValues.ResumeLayout(false);
@@ -1031,6 +831,7 @@
 
         #endregion
 
+        /// </summary>
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.GroupBox gbxCrashMoveFolder;
@@ -1048,7 +849,6 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox tbxSourceOrganisation;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbxOperationId;
@@ -1064,7 +864,6 @@
         private System.Windows.Forms.NumericUpDown numPdfDpi;
         private System.Windows.Forms.NumericUpDown numJpegDpi;
         private System.Windows.Forms.Button btnSetExportToolPath;
-        private System.Windows.Forms.ComboBox cboCountry;
         private System.Windows.Forms.ComboBox cboTimeZone;
         private System.Windows.Forms.TextBox tbxPrimaryEmail;
         private System.Windows.Forms.Label label18;
@@ -1088,5 +887,12 @@
         private System.Windows.Forms.ErrorProvider eprDisclaimerWarning;
         private System.Windows.Forms.ErrorProvider eprDonorTextWarning;
         private System.Windows.Forms.ErrorProvider eprExportPath;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cboLanguage;
+        private System.Data.DataTable dtEmp;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Country;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn IsSelected;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox tbxCountry;
     }
 }

@@ -82,6 +82,8 @@ namespace MapActionToolbars
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cboLabelLanguage = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.btnUpdateTimezone = new System.Windows.Forms.Button();
             this.tbxTimezone = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -104,8 +106,6 @@ namespace MapActionToolbars
             this.eprTimezoneWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprProducedByError = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprTimezoneError = new System.Windows.Forms.ErrorProvider(this.components);
-            this.cboLabelLanguage = new System.Windows.Forms.ComboBox();
-            this.label12 = new System.Windows.Forms.Label();
             this.gbxAutomated.SuspendLayout();
             this.gbxManual.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -289,20 +289,20 @@ namespace MapActionToolbars
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(218, 515);
+            this.btnCancel.Location = new System.Drawing.Point(299, 515);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 14;
+            this.btnCancel.TabIndex = 15;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(299, 515);
+            this.btnSave.Location = new System.Drawing.Point(218, 515);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 15;
+            this.btnSave.TabIndex = 14;
             this.btnSave.Text = "Update";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -567,6 +567,25 @@ namespace MapActionToolbars
             this.groupBox1.TabIndex = 41;
             this.groupBox1.TabStop = false;
             // 
+            // cboLabelLanguage
+            // 
+            this.cboLabelLanguage.AccessibleDescription = "";
+            this.cboLabelLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLabelLanguage.Location = new System.Drawing.Point(94, 273);
+            this.cboLabelLanguage.Name = "cboLabelLanguage";
+            this.cboLabelLanguage.Size = new System.Drawing.Size(201, 21);
+            this.cboLabelLanguage.TabIndex = 114;
+            this.cboLabelLanguage.SelectedIndexChanged += new System.EventHandler(this.cboLabelLanguage_SelectedIndexChanged);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(7, 277);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(84, 13);
+            this.label12.TabIndex = 113;
+            this.label12.Text = "Label Language";
+            // 
             // btnUpdateTimezone
             // 
             this.btnUpdateTimezone.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateTimezone.Image")));
@@ -744,25 +763,6 @@ namespace MapActionToolbars
             // 
             this.eprTimezoneError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.eprTimezoneError.ContainerControl = this;
-            // 
-            // cboLabelLanguage
-            // 
-            this.cboLabelLanguage.AccessibleDescription = "";
-            this.cboLabelLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboLabelLanguage.Location = new System.Drawing.Point(94, 273);
-            this.cboLabelLanguage.Name = "cboLabelLanguage";
-            this.cboLabelLanguage.Size = new System.Drawing.Size(201, 21);
-            this.cboLabelLanguage.TabIndex = 114;
-            this.cboLabelLanguage.SelectedIndexChanged += new System.EventHandler(this.cboLabelLanguage_SelectedIndexChanged);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(7, 277);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(84, 13);
-            this.label12.TabIndex = 113;
-            this.label12.Text = "Label Language";
             // 
             // frmLayoutMain
             // 

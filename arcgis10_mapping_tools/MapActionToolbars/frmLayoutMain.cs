@@ -13,25 +13,28 @@ using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Desktop;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
-using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using System.Diagnostics;
+using MapAction;
 
 namespace MapActionToolbars
 {
     public partial class frmLayoutMain : Form
     {
-
         private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
- 
+        private List<string> languages;
+        private string _languageIso2;
+        private const string languageConfigXmlFileName = "language_config.xml";
+        private const string elementLanguageLabel = "language_label";
+
         public frmLayoutMain()
         {
             string path = MapAction.Utilities.getCrashMoveFolderPath();
-            string filePath = path + @"\language_config.xml";
+            string filePath = System.IO.Path.Combine(path, languageConfigXmlFileName);
 
             // Set up Language of labels
             this.languageDictionary = MapAction.Utilities.getLanguageConfigValues(filePath);
-            List<string> languages = new List<string>();
+            this.languages = new List<string>();
             for (int i = 0; i < languageDictionary.Count; i++)
             {
                 languages.Add(languageDictionary[i].getLanguage());
@@ -39,6 +42,7 @@ namespace MapActionToolbars
             InitializeComponent();
             this.cboLabelLanguage.Items.AddRange(languages.ToArray());
         }
+
 
         //Gets the automated values for Tab 1 and populates each textbox
         private void btnUpdateAll_Click(object sender, EventArgs e)
@@ -48,11 +52,10 @@ namespace MapActionToolbars
             //IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
             Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, "Main map");
             
-                tbxScale.Text = tbxScale.Text = updateScale();
-                tbxSpatialReference.Text = getSpatialReference();
-                tbxMapDocument.Text = tbxMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
-                tbxGlideNumber.Text = LayoutToolAutomatedValues.getGlideNo();
-
+            tbxScale.Text = tbxScale.Text = updateScale();
+            tbxSpatialReference.Text = getSpatialReference();
+            tbxMapDocument.Text = tbxMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
+            tbxGlideNumber.Text = LayoutToolAutomatedValues.getGlideNo();
         }
 
         private void btnMapDocument_Click(object sender, EventArgs e)
@@ -77,11 +80,14 @@ namespace MapActionToolbars
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            
-            //Check to see if the config file exists, if not abort and send the user a message
-            //string path = MapAction.Properties.Settings.Default.crash_move_folder_path;
-            //string filePath = path + @"\operation_config.xml";
-            
+            // Read the Operation Config file 
+            string path = MapAction.Utilities.getOperationConfigFilePath();
+            if (MapAction.Utilities.detectOperationConfig())
+            {
+                OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
+                _languageIso2 = config.LanguageIso2; 
+            }
+
             //Perform validation checks tab 1
             FormValidationLayout.validateMapTitle(tbxTitle, eprMapTitle);
             FormValidationLayout.validateMapSummary(tbxSummary, eprMapSummary);
@@ -108,7 +114,6 @@ namespace MapActionToolbars
             {
                 btnUpdateAll.Enabled = false;
             }
-
             if (dict.ContainsKey("title") == true) { tbxTitle.Text = dict["title"]; } else { tbxTitle.Text = "Element not present"; tbxTitle.ReadOnly = true; };
             if (dict.ContainsKey("summary") == true) { tbxSummary.Text = dict["summary"]; } else { tbxSummary.Text = "Element not present"; tbxSummary.ReadOnly = true; };
             if (dict.ContainsKey("data_sources") == true) { tbxDataSources.Text = dict["data_sources"]; } else { tbxDataSources.Text = "Element not present"; tbxDataSources.ReadOnly = true; };
@@ -122,6 +127,25 @@ namespace MapActionToolbars
             if (dict.ContainsKey("donor_credit") == true) { tbxDonorCredit.Text = dict["donor_credit"]; } else { tbxDonorCredit.Text = "Element not present"; tbxDonorCredit.ReadOnly = true; btnUpdateDonorCredits.Enabled = false; };
             if (dict.ContainsKey("timezone") == true) { tbxTimezone.Text = dict["timezone"]; } else { tbxTimezone.Text = "Element not present"; tbxTimezone.ReadOnly = true; btnUpdateTimezone.Enabled = false; };
             if (dict.ContainsKey("disclaimer") == true) { tbxDisclaimer.Text = dict["disclaimer"]; } else { tbxDisclaimer.Text = "Element not present"; tbxDisclaimer.ReadOnly = true; btnUpdateDisclaimer.Enabled = false; };
+
+            if (dict.ContainsKey(elementLanguageLabel) == true) 
+            {
+                if (this.languages.Contains(dict[elementLanguageLabel]))
+                {
+                    for (int i = 0; i < this.languages.Count; i++)
+                    {
+                        if (this.languages[i] == dict[elementLanguageLabel])
+                        {
+                            this.cboLabelLanguage.SelectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    this.cboLabelLanguage.SelectedIndex = 0;
+                }         
+            } 
         }
 
         private void tspBtnClearForm_Click(object sender, EventArgs e)
@@ -211,8 +235,6 @@ namespace MapActionToolbars
             return stringSpatialRef;
         }
 
-
-
         public static void setAllElements(Dictionary<string, string> dict)
         {
             IPageLayout pLayout = _pMxDoc.PageLayout;
@@ -293,14 +315,14 @@ namespace MapActionToolbars
 
             IActiveView activeView = _pMxDoc.ActivatedView as IActiveView;
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
-
         }
-
 
         public static string updateScale()
         {
-            string scale = MapAction.PageLayoutProperties.getScale(ArcMap.Application.Document as IMxDocument, "Main map");
-            string pageSize = MapAction.PageLayoutProperties.getPageSize(ArcMap.Application.Document as IMxDocument, "Main map");
+            //string scale = MapAction.PageLayoutProperties.getScale(ArcMap.Application.Document as IMapDocument, "Main map");
+            string scale = MapAction.Utilities.getScale(ArcMap.Application.Document as IMapDocument, "Main map");
+
+            string pageSize = MapAction.Utilities.getPageSize(ArcMap.Application.Document as IMapDocument, "Main map");
             string scaleString = scale + " (At " + pageSize + ")";
             return scaleString;
         }
@@ -378,7 +400,7 @@ namespace MapActionToolbars
         {
             tbxDonorCredit.Text = LayoutToolAutomatedValues.getConfigDonorText();
         }
-
+        
         private void tbxDisclaimer_TextChanged(object sender, EventArgs e)
         {
             FormValidationLayout.validateDisclaimer(tbxDisclaimer, eprDisclaimerWarning, eprDisclaimerError);
@@ -401,7 +423,6 @@ namespace MapActionToolbars
 
         private void cboLabelLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // _statusValidationResult = FormValidationExport.validateStatus(cboStatus, nudVersionNumber, eprStatusWarning);  
             Debug.WriteLine("this.cboLabelLanguage.Text = " + this.cboLabelLanguage.Text);
         }
         
@@ -417,7 +438,6 @@ namespace MapActionToolbars
             ITextElement pTextElement;
 
             Dictionary<string, string> labelLookup = null;
-
             for (int i = 0; i < this.languageDictionary.Count; i++)
             {
                 if (this.languageDictionary[i].getLanguage() == this.cboLabelLanguage.Text)

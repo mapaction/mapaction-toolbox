@@ -48,8 +48,6 @@ namespace MapActionToolbars
         protected override void OnUpdate()
         {
             Enabled = ArcMap.Application != null;
-        }
-        
+        }        
     }
-
 }

@@ -17,7 +17,6 @@ namespace MapAction.tests
 
         private readonly string expectedOperationName= "Op_test";
         private readonly string expectedGlideNo= "XY-2006-123456-PAK";
-        private readonly string expectedPrincipalCountryIso3= "AND";
         private readonly string expectedCountry= "Andorra";
         private readonly string expectedTimeZone= "UTC-12:00";
         private readonly string expectedLanguageIso2= "ar";
@@ -31,14 +30,11 @@ namespace MapAction.tests
         private readonly string expectedDefaultPdfResDPI= "300";
         private readonly string expectedDefaultEmfResDPI= "300";
         private readonly string expectedDefaultPathToExportDir= "../Data20170414";
-        private readonly Int32 expectedCountryCount = 15;
-        private List<string> expectedCountries; 
 
         // Default constructor, which is called just once.
         public OperationConfigTests()
         {
             this.testRootDir = TestUtilities.GetTestsRootDir();
-            this.expectedCountries = new List<string> { "AND", "AFG", "ALA", "ALB", "MDA", "MCO", "MNG", "MAR", "MOZ", "MMR", "NLD", "NCL", "NZL", "NIC", "YEM" }; 
         }
 
         [SetUp]
@@ -81,7 +77,6 @@ namespace MapAction.tests
             Assert.AreEqual(expectedDefaultDisclaimerText, operationConfig.DefaultDisclaimerText);
             Assert.AreEqual(expectedOperationName, operationConfig.OperationName);
             Assert.AreEqual(expectedGlideNo, operationConfig.GlideNo);
-            Assert.AreEqual(expectedPrincipalCountryIso3, operationConfig.PrincipalCountryIso3);
             Assert.AreEqual(expectedCountry, operationConfig.Country);
             Assert.AreEqual(expectedTimeZone, operationConfig.TimeZone);
             Assert.AreEqual(expectedLanguageIso2, operationConfig.LanguageIso2);
@@ -95,8 +90,6 @@ namespace MapAction.tests
             Assert.AreEqual(expectedDefaultPdfResDPI, operationConfig.DefaultPdfResDPI);
             Assert.AreEqual(expectedDefaultEmfResDPI, operationConfig.DefaultEmfResDPI);
             Assert.AreEqual(expectedDefaultPathToExportDir, operationConfig.DefaultPathToExportDir);
-            Assert.AreEqual(Convert.ToInt32(expectedCountryCount), operationConfig.CountriesIso3.CountryIso3.Count);
-            CollectionAssert.AreEqual(this.expectedCountries, operationConfig.CountriesIso3.CountryIso3);
         }
     }
 }

@@ -12,7 +12,6 @@ namespace MapActionToolbars
 {
     class Export
     {
-
         public static void openExplorerDirectory(string path)
         {
             try
@@ -31,9 +30,6 @@ namespace MapActionToolbars
                 System.Diagnostics.Debug.WriteLine("Cannot open export folder in explorer");
                 System.Diagnostics.Debug.WriteLine(e.Message);
             }
-
         }
-
-
     }
 }

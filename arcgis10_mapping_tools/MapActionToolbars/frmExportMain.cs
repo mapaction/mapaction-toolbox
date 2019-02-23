@@ -20,7 +20,6 @@ using ESRI.ArcGIS.Geoprocessing;
 using ESRI.ArcGIS.Desktop;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
-using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using MapAction;
 
@@ -34,6 +33,7 @@ namespace MapActionToolbars
         private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
         
         //create a variable to hold the status of each validation check
+        private string _languageISO2;
         private string _titleValidationResult;
         private string _summaryValidationResult;
         private string _mapDocumentValidationResult;
@@ -49,7 +49,7 @@ namespace MapActionToolbars
         private string _glideNumberValidationResult;
         private string _locationValidationResult;
         private string _themeValidationResult;
-        private string _countriesValidationResult;
+        private string _countryValidationResult;
         private string _statusValidationResult;
         private string _accessValidationResult;
         private string _accessNoteValidationResult;
@@ -59,12 +59,18 @@ namespace MapActionToolbars
         private const string _statusNew = "New";
         private const string _statusUpdate = "Update";
         private const string _statusCorrection = "Correction";
+        private const string _languageCodesXmlFileName = "language_codes.xml";
+        private const string _operationConfigXmlFileName = "operation_config.xml";
         private const int _initialVersionNumber = 1;
-        private string _language;
-
+        private string _labelLanguage;
+        private MapAction.LanguageCodeLookup languageCodeLookup = null;
 
         public frmExportMain()
         {
+            string path = MapAction.Utilities.getCrashMoveFolderPath();
+            string languageFilePath = System.IO.Path.Combine(path, _languageCodesXmlFileName);
+            this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
+
             InitializeComponent();
         }
 
@@ -106,8 +112,6 @@ namespace MapActionToolbars
                 dlg.SelectedPath = @"C:\";
             }
 
-
-
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 tbxExportZipPath.Text = dlg.SelectedPath;
@@ -116,9 +120,7 @@ namespace MapActionToolbars
             {
                 return;
             }
-        }
-
-       
+        }       
 
         private void btnClose_Click(object sender, EventArgs e)
         {
@@ -143,7 +145,7 @@ namespace MapActionToolbars
             _glideNumberValidationResult = FormValidationExport.validateGlideNumber(tbxGlideNo, eprGlideNumberWarning, eprGlideNumberError);
             _locationValidationResult = FormValidationExport.validateLocation(tbxImageLocation, eprLocationWarning);
             _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
-            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
+            _countryValidationResult = FormValidationExport.validateCountry(tbxCountry, eprCountryWarning);
             _statusValidationResult = FormValidationExport.validateStatus(cboStatus, eprStatusWarning);
             _accessValidationResult = FormValidationExport.validateAccess(cboAccess, eprAccessWarning);
             _accessNoteValidationResult = FormValidationExport.validateAccessNote(tbxImageAccessNotes, eprAccessNoteWarning);
@@ -160,27 +162,29 @@ namespace MapActionToolbars
             if (dict.ContainsKey("mxd_name")) { tbxMapDocument.Text = dict["mxd_name"]; }
             if (dict.ContainsKey("data_sources")) { tbxDataSources.Text = dict["data_sources"]; }
             if (dict.ContainsKey("map_no")) 
-            { 
+            {
                 _mapNumber = dict["map_no"];
                 tbxMapNumber.Text = _mapNumber;  
             }
 
             if (dict.ContainsKey("language_label"))
             {
-                _language = dict["language_label"];
+                _labelLanguage = dict["language_label"];
             }
             else
             {
-                _language = "English";
+                _labelLanguage = "English";
             }
-            tbxLanguage.Text = _language;
+
+            tbxLanguage.Text = _labelLanguage;
 
             // Update form values from the config xml
             string path = MapAction.Utilities.getCrashMoveFolderPath();
-            string filePath = path + @"\operation_config.xml";
+            string filePath = System.IO.Path.Combine(path, _operationConfigXmlFileName);
             OperationConfig config = MapAction.Utilities.getOperationConfigValues(filePath);
             tbxGlideNo.Text = config.GlideNo;
-            tbxCountries.Text = config.Country;
+            tbxCountry.Text = config.Country;
+
             string operational_id = config.OperationId;
             Debug.WriteLine("Op ID: " + operational_id);
             tbxOperationId.Text = config.OperationId;
@@ -188,7 +192,9 @@ namespace MapActionToolbars
             nudJpegResolution.Value = Convert.ToDecimal(config.DefaultJpegResDPI); 
             nudPdfResolution.Value = Convert.ToDecimal(config.DefaultPdfResDPI); 
             nudEmfResolution.Value = Convert.ToDecimal(config.DefaultPdfResDPI);
-
+            _languageISO2 = config.LanguageIso2 == null ? "en" : config.LanguageIso2;
+            tbxLanguage.Text = this.languageCodeLookup.lookupA2LanguageCode(_languageISO2, LanguageCodeFields.Language); ;
+            
             // Set the status value and the version number from the existing XML if it exists:
             setValuesFromExistingXML();
 
@@ -203,14 +209,14 @@ namespace MapActionToolbars
             var time = System.DateTime.Now.ToString("HH:mm");
             tbxDate.Text = date;
             tbxTime.Text = time;
-            tbxPaperSize.Text = MapAction.PageLayoutProperties.getPageSize(_pMxDoc, _targetMapFrame);
-            tbxScale.Text = MapAction.PageLayoutProperties.getScale(_pMxDoc, _targetMapFrame);
+
+            tbxPaperSize.Text = MapAction.Utilities.getPageSize(_pMxDoc as IMapDocument, _targetMapFrame);
+            tbxScale.Text = MapAction.Utilities.getScale(_pMxDoc as IMapDocument, _targetMapFrame);
 
             // Check if Data Driven Page and enable dropdown accordingly
             IMapDocument mapDoc;
             mapDoc = (_pMxDoc as MxDocument) as IMapDocument;
             tbxMapbookMode.Enabled = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
-            
         }
 
         // Set the "Status" value and the VersionNumber:
@@ -221,7 +227,7 @@ namespace MapActionToolbars
             nudVersionNumber.Value = _initialVersionNumber;
             cboStatus.Text = _statusNew;
 
-            string xmlPath = tbxExportZipPath.Text + "\\" + tbxMapDocument.Text + ".xml";
+            string xmlPath = System.IO.Path.Combine(tbxExportZipPath.Text,tbxMapDocument.Text + ".xml");
 
             // Does the xmlPath already exist?
             if (File.Exists(xmlPath))
@@ -237,6 +243,22 @@ namespace MapActionToolbars
                     else if (usEle.Name.ToString().Equals("status"))
                     {
                         cboStatus.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("access"))
+                    {
+                        cboAccess.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("qclevel"))
+                    {
+                        cboQualityControl.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("location"))
+                    {
+                        tbxImageLocation.Text = usEle.Value.ToString();
+                    }
+                    else if (usEle.Name.ToString().Equals("accessnotes"))
+                    {
+                        tbxImageAccessNotes.Text = usEle.Value.ToString();
                     }
                     // In "older" XML, only a single theme was possible.  Read it in:
                     else if (usEle.Name.ToString().Equals("theme"))
@@ -329,12 +351,12 @@ namespace MapActionToolbars
             Dictionary<string, long> dictImageFileSizes = new Dictionary<string, long>();
 
             // Create a dictionary to get and store the map frame extents to pass to the output xml
-            // TODO: Get extent of dpp index dataset instead of data frame. 
-            Dictionary<string, string> dictFrameExtents = MapAction.PageLayoutProperties.getDataframeProperties(pMxDoc, "Main map");
+
 
             IMapDocument mapDoc;
             mapDoc = (pMxDoc as MxDocument) as IMapDocument;
             bool isDDP = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
+            Dictionary<string, string> dictFrameExtents = Utilities.getMapFrameWgs84BoundingBox(mapDoc, "Main map");
 
             if (!isDDP) // Need a way to do this - the form elements are all disabled before export - see ^^
             {
@@ -486,7 +508,7 @@ namespace MapActionToolbars
                 {"title",           mapTitle1},
                 {"ref",             tbxMapDocument.Text},
                 {"language",        tbxLanguage.Text},
-                {"countries",       tbxCountries.Text},
+                {"countries",       tbxCountry.Text},
                 {"createdate",      tbxDate.Text},
                 {"createtime",      tbxTime.Text},
                 {"status",          cboStatus.Text},
@@ -520,7 +542,9 @@ namespace MapActionToolbars
                 {"paperymax",       ""},
                 {"paperymin",       ""},
                 //{"kmzfilename",     System.IO.Path.GetFileName(dictFilePaths["kmz"])},
-                {"accessnotes",     tbxImageAccessNotes.Text}
+                {"accessnotes",     tbxImageAccessNotes.Text},
+                {"product-type",    tbxMapbookMode.Enabled ? "atlas" : "mapsheet"},
+                {"language-iso2",   _languageISO2}
             };
 
             dict["jpgfilename"] = System.IO.Path.GetFileName(dictFilePaths["jpeg"]);
@@ -660,20 +684,17 @@ namespace MapActionToolbars
         private string getExportPathFileName(string path, string documentName)
         {
             // Concatenate the 
-            string pathFileName = @path + "\\" + documentName;
-            return pathFileName; 
-        
+            return System.IO.Path.Combine(@path, documentName);
         }
-
-
 
         //### Methods to work with form validation #### Copied directly from the Alpha export tool
         //### At a later time they should be consolidated in the MapAction class library ###
 
         public static string updateScale()
+        
         {
-            string scale = MapAction.PageLayoutProperties.getScale(ArcMap.Application.Document as IMxDocument, "Main map");
-            string pageSize = MapAction.PageLayoutProperties.getPageSize(ArcMap.Application.Document as IMxDocument, "Main map");
+            string pageSize = MapAction.Utilities.getPageSize(_pMxDoc as IMapDocument, "Main map");
+            string scale = MapAction.Utilities.getScale(_pMxDoc as IMapDocument, "Main map");
             string scaleString = scale + " (At " + pageSize + ")";
             return scaleString;
         }
@@ -789,11 +810,6 @@ namespace MapActionToolbars
             _locationValidationResult = FormValidationExport.validateLocation(tbxImageLocation, eprLocationWarning);
         }
 
-        private void tbxCountries_TextChanged(object sender, EventArgs e)
-        {
-            _countriesValidationResult = FormValidationExport.validateCountries(tbxCountries, eprCountriesWarning);
-        }
-
         private void cboStatus_TextChanged(object sender, EventArgs e)
         {
             _statusValidationResult = FormValidationExport.validateStatus(cboStatus, eprStatusWarning);
@@ -836,7 +852,7 @@ namespace MapActionToolbars
             FormValidationExport.validationCheck(_glideNumberValidationResult, imgGlideNumberStatus);
             FormValidationExport.validationCheck(_locationValidationResult, imgLocationStatus);
             FormValidationExport.validationCheck(_themeValidationResult, imgThemeStatus);
-            FormValidationExport.validationCheck(_countriesValidationResult, imgCountriesStatus);
+            FormValidationExport.validationCheck(_countryValidationResult, imgCountriesStatus);
             FormValidationExport.validationCheck(_statusValidationResult, imgStatusStatus);
             FormValidationExport.validationCheck(_accessValidationResult, imgAccessStatus);
             FormValidationExport.validationCheck(_accessNoteValidationResult, imgAccessNoteStatus);
@@ -891,6 +907,22 @@ namespace MapActionToolbars
             _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
         }
 
+        private void tabPageLayout_Click(object sender, EventArgs e)
+        {
+        }
 
+        private void button4_Click(object sender, EventArgs e)
+        {
+            tabExportTool.SelectedTab = tabPageThemes;
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            tabExportTool.SelectedTab = tabPageLayout;
+        }
+
+        private void cboStatus_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.KeyChar = (char)Keys.None;
+        }
     }
 }

@@ -10,6 +10,10 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Configuration;
 using MapAction;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Xml.Linq;
+
 
 namespace MapActionToolbars
 {
@@ -21,13 +25,24 @@ namespace MapActionToolbars
         private const decimal _defaultJpegDpi = 300;
         private const decimal _defaultPdfDpi = 300;
         private const string _defaultExportToolPath = "";
+        private const string languageCodesXMLFileName = "language_codes.xml";
 
         private Boolean _configXmlEditState = false;
         private Boolean _configXmlNewFile = false;
+        private MapAction.LanguageCodeLookup languageCodeLookup = null;
+
 
         public frmConfigMain()
         {
+            string path = MapAction.Utilities.getCrashMoveFolderPath();
+
+            // Create languages lookup
+            string languageFilePath = System.IO.Path.Combine(path, languageCodesXMLFileName);
+            this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
+
             InitializeComponent();
+
+            this.cboLanguage.Items.AddRange(this.languageCodeLookup.languages());
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -61,10 +76,22 @@ namespace MapActionToolbars
                 }
             }
 
-
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 tbxPathToCrashMove.Text = dlg.SelectedPath;
+
+                if (tbxPathToCrashMove.Text.Length == 0)
+                {
+                    if (Directory.Exists(Path.Combine(tbxPathToCrashMove.Text, "GIS\\3_Mapping\\34_Map_Products_MapAction")))
+                    {
+                        tbxExportToolPath.Text = Path.Combine(tbxPathToCrashMove.Text, "GIS\\3_Mapping\\34_Map_Products_MapAction");
+                    }
+                    else
+                    {
+                        tbxExportToolPath.Text = tbxPathToCrashMove.Text;
+                    }
+                }
+
                 //reset the edit checkbox to false
                 chkEditConfigXml.Checked = false;
                 //Check if a config file already exists in the directory
@@ -72,7 +99,7 @@ namespace MapActionToolbars
                 //If a config file already exists 1) save it immediately as path, 2) read the values in to the form
                 if (File.Exists(@pathToConfigXml))
                 {
-                    _configXmlEditState = false;
+                    _configXmlEditState = false; 
                     clearAllChildControls(tabConfigXml);
                     populateDialogExistingConfigXml(pathToConfigXml);
                     btnSave.Enabled = true;
@@ -91,13 +118,11 @@ namespace MapActionToolbars
                     btnSave.Enabled = true;
                     btnSave.Text = "Create XML";
                 }
-
             }
             else
             {
                 return;
             }
-         
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -129,7 +154,6 @@ namespace MapActionToolbars
                     MessageBox.Show("Config file path successfully updated.", "Config file path",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                
                 this.Close();
             }
         }
@@ -169,7 +193,7 @@ namespace MapActionToolbars
             //Perform validation checks
             FormValidationConfig.validateOperationName(tbxOperationName, eprOperationNameWarning);
             FormValidationConfig.validateGlideNumber(tbxGlideNo, eprGlideNoWarning, eprGlideNoError);
-            FormValidationConfig.validateCountry(cboCountry, eprCountryWarning);
+            FormValidationConfig.validateCountry(tbxCountry, eprCountryWarning);
             FormValidationConfig.validateTimezone(cboTimeZone, eprTimezoneWarning, eprTimezoneError);
             FormValidationConfig.validateOperationID(tbxOperationId, eprOperationIdWarning);
             FormValidationConfig.validateOrganisation(tbxSourceOrganisation, eprOrganisationWarning);
@@ -185,12 +209,11 @@ namespace MapActionToolbars
             tbxPathToCrashMove.Text = path;
         }
 
-
         public OperationConfig createOperationConfig()
         {
             OperationConfig config = new OperationConfig { OperationName = tbxOperationName.Text,
                                                            GlideNo = tbxGlideNo.Text,
-                                                           Country = cboCountry.Text,
+                                                           Country = tbxCountry.Text,
                                                            TimeZone = cboTimeZone.Text,
                                                            OperationId = tbxOperationId.Text,
                                                            DefaultSourceOrganisation = tbxSourceOrganisation.Text,
@@ -201,8 +224,10 @@ namespace MapActionToolbars
                                                            DefaultJpegResDPI = numJpegDpi.Value.ToString(),
                                                            DefaultPdfResDPI = numPdfDpi.Value.ToString(),
                                                            DefaultEmfResDPI =numPdfDpi.Value.ToString(),
-                                                           DefaultPathToExportDir = tbxExportToolPath.Text
-                                                         };
+                                                           DefaultPathToExportDir = tbxExportToolPath.Text,
+                                                           LanguageIso2 = this.languageCodeLookup.lookup(cboLanguage.Text, LanguageCodeFields.Alpha2),
+                                                           // Language = cboLanguage.Text - Language no longer used  
+            };
             return config;
         }
 
@@ -225,10 +250,11 @@ namespace MapActionToolbars
             else
             {
                 OperationConfig config = createOperationConfig();
+
                 //Call the MapAction create xml method on the utilities class
                 try
                 {
-                    savedPath = MapAction.Utilities.createXML(config, path, "operation_config");
+                    savedPath = MapAction.Utilities.createXML(config, path, "operation_config");					
                 }
                 catch (Exception error)
                 {
@@ -281,38 +307,38 @@ namespace MapActionToolbars
                 populateDialogDefaultValues();
                 return false;
             }
-
         }
 
 
         //##alpha method
         public void populateDialogExistingConfigXml(string path = null)
         {
-            OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
+            OperationConfig newConfig = MapAction.Utilities.getOperationConfigValues(path);
 
             //Populate the text boxes with the values from the dictionary
-            tbxOperationName.Text = config.OperationName;
-            tbxGlideNo.Text = config.GlideNo;
+            tbxOperationName.Text = newConfig.OperationName;
+            tbxGlideNo.Text = newConfig.GlideNo;
+            cboTimeZone.Text = newConfig.TimeZone;
+            cboLanguage.Text = this.languageCodeLookup.lookupA2LanguageCode(newConfig.LanguageIso2, LanguageCodeFields.Language);
+            tbxOperationId.Text = newConfig.OperationId;
+            tbxPrimaryEmail.Text = newConfig.DeploymentPrimaryEmail;
+            tbxSourceOrganisation.Text = newConfig.DefaultSourceOrganisation;
+            tbxOrganisationUrl.Text = newConfig.DefaultSourceOrganisationUrl;
+            tbxDislaimerText.Text = newConfig.DefaultDisclaimerText;
+            tbxDonorText.Text = newConfig.DefaultDonorsText;
+            numJpegDpi.Value = decimal.Parse(newConfig.DefaultJpegResDPI);
+            numPdfDpi.Value = decimal.Parse(newConfig.DefaultPdfResDPI);
+            tbxExportToolPath.Text = newConfig.DefaultPathToExportDir;
 
-            if (!String.IsNullOrEmpty(config.Language))
+            if (newConfig.Language != null)
             {
                 MessageBox.Show("The \"Language\" tag from the " + path + " file is now ignored.\n\nEnsure your MXD has a \"language_label\" element.\n\nUpdating the XML using this Operation Configuration Tool will remove the \"Language\" tag from the " + path + " file and prevent this message being shown.",
-                                "Warning", 
-                                MessageBoxButtons.OK, 
+                                "Warning",
+                                MessageBoxButtons.OK,
                                 MessageBoxIcon.Warning);
             }
-            cboCountry.Text = config.Country;
-            cboTimeZone.Text = config.TimeZone;
-            tbxOperationId.Text = config.OperationId;
-            tbxPrimaryEmail.Text = config.DeploymentPrimaryEmail;
-            tbxSourceOrganisation.Text = config.DefaultSourceOrganisation;
-            tbxOrganisationUrl.Text = config.DefaultSourceOrganisationUrl;
-            tbxOrganisationUrl.Text = config.DefaultSourceOrganisationUrl;
-            tbxDislaimerText.Text = config.DefaultDisclaimerText;
-            tbxDonorText.Text = config.DefaultDonorsText;
-            numJpegDpi.Value = decimal.Parse(config.DefaultJpegResDPI);
-            numPdfDpi.Value = decimal.Parse(config.DefaultPdfResDPI);
-            tbxExportToolPath.Text = config.DefaultPathToExportDir;
+            cboLanguage.Text = this.languageCodeLookup.lookupA2LanguageCode(newConfig.LanguageIso2, LanguageCodeFields.Language);
+            tbxCountry.Text = newConfig.Country;
         }
 
         //##alpha method
@@ -331,11 +357,13 @@ namespace MapActionToolbars
         {
             if (chkEditConfigXml.Checked == true)
             {
-                //tabConfigXml.Enabled = true;
-                tbxOperationName.Enabled = true;
-                tbxGlideNo.Enabled = true;
-                cboCountry.Enabled = true;
+                this.btnPathToExistingXml.Enabled = true;
+                tabConfigXml.Enabled = true;
+                this.tbxOperationName.Enabled = true;
+                this.tbxGlideNo.Enabled = true;
+                this.tbxCountry.Enabled = true;
                 cboTimeZone.Enabled = true;
+                cboLanguage.Enabled = true;
                 tbxOperationId.Enabled = true;
                 tbxSourceOrganisation.Enabled = true;
                 tbxOrganisationUrl.Enabled = true;
@@ -361,10 +389,13 @@ namespace MapActionToolbars
             }
             else
             {
+                this.btnPathToExistingXml.Enabled = false;
+                this.tbxPathToCrashMove.Enabled = false;
                 tbxOperationName.Enabled = false;
                 tbxGlideNo.Enabled = false;
-                cboCountry.Enabled = false;
+                tbxCountry.Enabled = false;
                 cboTimeZone.Enabled = false;
+                cboLanguage.Enabled = false;
                 tbxOperationId.Enabled = false;
                 tbxSourceOrganisation.Enabled = false;
                 tbxOrganisationUrl.Enabled = false;
@@ -443,7 +474,7 @@ namespace MapActionToolbars
 
         private void cboCountry_TextChanged(object sender, EventArgs e)
         {
-            FormValidationConfig.validateCountry(cboCountry, eprCountryWarning);
+            FormValidationConfig.validateCountry(tbxCountry, eprCountryWarning);
         }
 
         private void cboTimeZone_TextChanged(object sender, EventArgs e)
@@ -482,6 +513,21 @@ namespace MapActionToolbars
         }
 
         private void numEmfDpi_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbxCountry_TextChanged(object sender, EventArgs e)
+        {
+            FormValidationConfig.validateCountry(tbxCountry, eprCountryWarning);
+        }
+
+        private void tbxPathToCrashMove_TextChanged(object sender, EventArgs e)
         {
 
         }

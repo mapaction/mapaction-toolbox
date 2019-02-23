@@ -12,7 +12,6 @@ using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Desktop;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
-using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 
 namespace MapActionToolbars
@@ -217,8 +216,8 @@ namespace MapActionToolbars
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
-            string automatedValue = MapAction.PageLayoutProperties.getScale(_pMxDoc, targetMapFrame);
-
+            string automatedValue = MapAction.Utilities.getScale(_pMxDoc as IMapDocument, targetMapFrame);
+ 
             if (validateEmptyField(control, eprWarning))
             {
                 if (control.Text.Trim() != automatedValue && control.Text != string.Empty)
@@ -306,7 +305,7 @@ namespace MapActionToolbars
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
-            string automatedValue = MapAction.PageLayoutProperties.getPageSize(_pMxDoc, targetMapFrame);
+            string automatedValue = MapAction.Utilities.getPageSize(_pMxDoc as IMapDocument, targetMapFrame);
 
             if (validateEmptyField(control, eprWarning))
             {
@@ -491,7 +490,7 @@ namespace MapActionToolbars
             }
         }
 
-        public static string validateCountries(Control control, ErrorProvider epr)
+        public static string validateCountry(Control control, ErrorProvider epr)
         {
             epr.SetIconPadding(control, 5);
             if (validateEmptyField(control, epr))
