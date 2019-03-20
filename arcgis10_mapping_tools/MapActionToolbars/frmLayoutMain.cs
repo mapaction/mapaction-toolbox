@@ -24,6 +24,8 @@ namespace MapActionToolbars
         private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
         private List<string> languages;
         private string _languageIso2;
+        private static string _operationId;
+        private const string mapLocation = "https://maps.mapaction.org/dataset/";
         private const string languageConfigXmlFileName = "language_config.xml";
         private const string elementLanguageLabel = "language_label";
 
@@ -49,7 +51,6 @@ namespace MapActionToolbars
         {
             //Call the MapAction class library and the getLayoutElements function that returns a dictionare of the key value
             //pairs of each text element in the layout
-            //IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
             Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, "Main map");
             
             tbxScale.Text = tbxScale.Text = updateScale();
@@ -85,7 +86,8 @@ namespace MapActionToolbars
             if (MapAction.Utilities.detectOperationConfig())
             {
                 OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
-                _languageIso2 = config.LanguageIso2; 
+                _languageIso2 = config.LanguageIso2;
+                _operationId = config.OperationId;
             }
 
             //Perform validation checks tab 1
@@ -244,7 +246,7 @@ namespace MapActionToolbars
             IElement element = new TextElementClass();
             IElementProperties2 pElementProp;
             ITextElement pTextElement;
-
+            IPictureElement pPictureElement;
             try
             {
                 element = (IElement)pGraphics.Next();
@@ -302,7 +304,18 @@ namespace MapActionToolbars
                         {
                             pTextElement.Text = dict["timezone"];
                         }
-
+                    }
+                    else if (element is IPictureElement)
+                    {
+                        pPictureElement = element as IPictureElement;
+                        pElementProp = element as IElementProperties2;
+                        if (pElementProp.Name == "qr_code")
+                        {
+                            // Now update the QR Code
+                            Console.WriteLine(pElementProp.Name);
+                            string qrCodeImagePath = Utilities.GenerateQRCode(mapLocation + _operationId + "-" + dict["map_no"].ToLower());
+                            pPictureElement.ImportPictureFromFile(qrCodeImagePath);
+                        }
                     }
                     element = (IElement)pGraphics.Next();
                 }

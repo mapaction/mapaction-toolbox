@@ -112,6 +112,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="mapbook_export_tool\generate_qrcode.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="mapbook_export_tool\mapbook_export_tools.tbx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

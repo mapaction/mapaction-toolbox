@@ -19,6 +19,7 @@ using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using ESRI.ArcGIS.Geoprocessing;
 
 namespace MapAction
 {
@@ -697,7 +698,7 @@ namespace MapAction
                             for (int n = 0; n < rootNode.ChildNodes.Count; n++)
                             {
                                 languageDict.Add(rootNode.ChildNodes[n].Name.ToString(), rootNode.ChildNodes[n].InnerText.ToString());
-                                Debug.WriteLine(rootNode.ChildNodes[n].Name + " = " + rootNode.ChildNodes[n].InnerText); // This is the content of the labels ("Created", etc).
+                                //Debug.WriteLine(rootNode.ChildNodes[n].Name + " = " + rootNode.ChildNodes[n].InnerText); // This is the content of the labels ("Created", etc).
                             }
                         }
                         if (languageDictionaryInitialised == false)
@@ -733,6 +734,35 @@ namespace MapAction
             }
             return languageDictionary;
         }
+
+        public static string GenerateQRCode(string url)
+        {
+            string qrPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), Guid.NewGuid().ToString() + ".png");
+            IGeoProcessor2 gp = new GeoProcessor() as IGeoProcessor2;
+            gp.AddToolbox(Utilities.getExportGPToolboxPath());
+            gp.OverwriteOutput = true;
+            gp.AddOutputsToMap = true;
+
+            IVariantArray parameters = new VarArray();
+            parameters.Add(url);
+            parameters.Add(qrPath);
+
+            object sev = null;
+            IGeoProcessorResult2 pyResult = null;
+            try
+            {
+                pyResult = (IGeoProcessorResult2)gp.Execute("generateQRCode", parameters, null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                string errorMsgs = gp.GetMessages(ref sev);
+                Console.WriteLine(errorMsgs);
+                throw;
+            }
+            return qrPath;
+        }
+
         #endregion
 
         #region Public method getLanguageCodeValues
