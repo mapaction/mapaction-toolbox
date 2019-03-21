@@ -46,5 +46,17 @@ namespace MapAction.Properties {
                 this["thumbnail_width_px"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://maps.mapaction.org/dataset/")]
+        public string mdr_url_root {
+            get {
+                return ((string)(this["mdr_url_root"]));
+            }
+            set {
+                this["mdr_url_root"] = value;
+            }
+        }
     }
 }

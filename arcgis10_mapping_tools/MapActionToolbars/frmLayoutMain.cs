@@ -25,7 +25,6 @@ namespace MapActionToolbars
         private List<string> languages;
         private string _languageIso2;
         private static string _operationId;
-        private const string mapLocation = "https://maps.mapaction.org/dataset/";
         private const string languageConfigXmlFileName = "language_config.xml";
         private const string elementLanguageLabel = "language_label";
 
@@ -312,7 +311,7 @@ namespace MapActionToolbars
                         if (pElementProp.Name == "qr_code")
                         {
                             // Now update the QR Code
-                            string qrCodeImagePath = Utilities.GenerateQRCode(mapLocation + _operationId.ToLower() + "-" + dict["map_no"].ToLower());
+                            string qrCodeImagePath = Utilities.GenerateQRCode(MapAction.Utilities.getMDRUrlRoot() +_operationId.ToLower() + "-" + dict["map_no"].ToLower());
                             pPictureElement.ImportPictureFromFile(qrCodeImagePath);
                         }
                     }

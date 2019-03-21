@@ -474,6 +474,12 @@ namespace MapAction
             return Properties.Settings.Default.crash_move_folder_path;
         }
 
+        // Map Data Repository (MDR URL Root)
+        public static string getMDRUrlRoot()
+        {
+            return Properties.Settings.Default.mdr_url_root;
+        }
+
         #endregion
 
         #region Public method setCrashMoveFolderPath()
