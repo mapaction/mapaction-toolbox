@@ -312,8 +312,7 @@ namespace MapActionToolbars
                         if (pElementProp.Name == "qr_code")
                         {
                             // Now update the QR Code
-                            Console.WriteLine(pElementProp.Name);
-                            string qrCodeImagePath = Utilities.GenerateQRCode(mapLocation + _operationId + "-" + dict["map_no"].ToLower());
+                            string qrCodeImagePath = Utilities.GenerateQRCode(mapLocation + _operationId.ToLower() + "-" + dict["map_no"].ToLower());
                             pPictureElement.ImportPictureFromFile(qrCodeImagePath);
                         }
                     }
