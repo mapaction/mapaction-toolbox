@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
@@ -7,7 +8,6 @@ using System.Xml.Serialization;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
-using System.IO;
 using ESRI.ArcGIS.ArcMap;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
@@ -557,12 +557,8 @@ namespace MapAction
          */
         public static string relPathFromAbs(string absPath)
         {
-            //MessageBox.Show("crash_move_folder_path = " + Properties.Settings.Default.crash_move_folder_path);
             Uri cmfURI = new Uri(@Properties.Settings.Default.crash_move_folder_path + @"\", UriKind.Absolute);
             Uri absURI = new Uri(@absPath, UriKind.Absolute);
-            //MessageBox.Show("cmfURI = " + cmfURI.ToString());
-            //MessageBox.Show("absURI = " + absURI.ToString());
-
             return cmfURI.MakeRelativeUri(absURI).ToString();
         }
 
@@ -693,18 +689,15 @@ namespace MapAction
                     {
                         Dictionary<string, string> languageDict = new Dictionary<string, string>();
                         XmlNode rootNode = languages[i];
-                        //Debug.WriteLine(languages[i].Name.ToString()); // "language"
                         for (int a = 0; a < rootNode.Attributes.Count; a++)
                         {
                             languageName = rootNode.Attributes[a].Value.ToString();
-                            //Debug.WriteLine(rootNode.Attributes[a].Value.ToString()); // English
                         }
                         if (rootNode.HasChildNodes)
                         {
                             for (int n = 0; n < rootNode.ChildNodes.Count; n++)
                             {
                                 languageDict.Add(rootNode.ChildNodes[n].Name.ToString(), rootNode.ChildNodes[n].InnerText.ToString());
-                                //Debug.WriteLine(rootNode.ChildNodes[n].Name + " = " + rootNode.ChildNodes[n].InnerText); // This is the content of the labels ("Created", etc).
                             }
                         }
                         if (languageDictionaryInitialised == false)
@@ -743,7 +736,7 @@ namespace MapAction
 
         public static string GenerateQRCode(string url)
         {
-            string qrPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), Guid.NewGuid().ToString() + ".png");
+            string qrPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid().ToString() + ".png");
             IGeoProcessor2 gp = new GeoProcessor() as IGeoProcessor2;
             gp.AddToolbox(Utilities.getExportGPToolboxPath());
             gp.OverwriteOutput = true;
