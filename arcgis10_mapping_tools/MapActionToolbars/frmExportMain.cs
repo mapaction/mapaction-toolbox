@@ -358,6 +358,9 @@ namespace MapActionToolbars
             bool isDDP = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
             Dictionary<string, string> dictFrameExtents = Utilities.getMapFrameWgs84BoundingBox(mapDoc, "Main map");
 
+            // Update QR Code
+            updateQRCode();
+
             if (!isDDP) // Need a way to do this - the form elements are all disabled before export - see ^^
             {
                 // Call to export the images and return a dictionary of the file names
@@ -470,6 +473,45 @@ namespace MapActionToolbars
             string timeTaken = Math.Round((sw.Elapsed.TotalMilliseconds / 1000),2).ToString();
             Debug.WriteLine("Time taken: ", timeTaken);
 
+        }
+
+        private bool updateQRCode()
+        {
+            bool qrCodeUpdated = false;
+            // Update QR Code
+            IPageLayout pLayout = _pMxDoc.PageLayout;
+            IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
+            pGraphics.Reset();
+
+            IElement element = new TextElementClass();
+            IElementProperties2 pElementProp;
+            IPictureElement pPictureElement;
+            try
+            {
+                element = (IElement)pGraphics.Next();
+                while (element != null)
+                {
+                    if (element is IPictureElement)
+                    {
+                        pPictureElement = element as IPictureElement;
+                        pElementProp = element as IElementProperties2;
+                        if (pElementProp.Name == "qr_code")
+                        {
+                            // Now update the QR Code
+                            string qrCodeImagePath = Utilities.GenerateQRCode(MapAction.Utilities.getMDRUrlRoot() + tbxOperationId.Text.ToLower() + "-" + tbxMapNumber.Text.ToLower());
+                            pPictureElement.ImportPictureFromFile(qrCodeImagePath);
+                            qrCodeUpdated = true;
+                        }
+                    }
+                    element = (IElement)pGraphics.Next();
+                }
+            }
+            catch (Exception eh)
+            {
+                System.Diagnostics.Debug.WriteLine("Error updating layout elements");
+                System.Diagnostics.Debug.WriteLine(eh);
+            }
+            return qrCodeUpdated;
         }
 
         private Dictionary<string, string> getExportToolValues(
