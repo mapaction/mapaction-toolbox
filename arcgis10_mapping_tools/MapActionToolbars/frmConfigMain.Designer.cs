@@ -1,4 +1,6 @@
-﻿namespace MapActionToolbars
+﻿using System.Windows.Forms;
+
+namespace MapActionToolbars
 {
     partial class frmConfigMain
     {
@@ -59,6 +61,8 @@
             this.tbxSourceOrganisation = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tbxOperationId = new System.Windows.Forms.TextBox();
+            this.tbxOperationId.CharacterCasing = CharacterCasing.Lower;
+
             this.label19 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tbxDonorText = new System.Windows.Forms.TextBox();

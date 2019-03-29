@@ -30,7 +30,7 @@ namespace MapActionToolbars
             MapAction.OperationConfig config = MapAction.Utilities.getOperationConfigValues();
             //Populate the text boxes with the values from the dictionary
             tbxOperationName.Text = config.OperationName;
-            tbxOperationID.Text = config.OperationId;
+            tbxOperationID.Text = config.OperationId.ToLower();
             tbxGlideNo.Text = config.GlideNo;
         }
 

@@ -126,7 +126,9 @@ namespace MapActionToolbars
         }
 
         private void btnSave_Click(object sender, EventArgs e)
-        {            
+        {
+            tbxOperationId.Text = tbxOperationId.Text.ToLower();
+
             //Set the application configuration file setting 'opXmlConfig' to the textbox path
             if (tbxPathToCrashMove.Text == "")
             {
@@ -215,7 +217,7 @@ namespace MapActionToolbars
                                                            GlideNo = tbxGlideNo.Text,
                                                            Country = tbxCountry.Text,
                                                            TimeZone = cboTimeZone.Text,
-                                                           OperationId = tbxOperationId.Text,
+                                                           OperationId = tbxOperationId.Text.ToLower(),
                                                            DefaultSourceOrganisation = tbxSourceOrganisation.Text,
                                                            DefaultSourceOrganisationUrl = tbxOrganisationUrl.Text,
                                                            DeploymentPrimaryEmail = tbxPrimaryEmail.Text,
@@ -320,7 +322,7 @@ namespace MapActionToolbars
             tbxGlideNo.Text = newConfig.GlideNo;
             cboTimeZone.Text = newConfig.TimeZone;
             cboLanguage.Text = this.languageCodeLookup.lookupA2LanguageCode(newConfig.LanguageIso2, LanguageCodeFields.Language);
-            tbxOperationId.Text = newConfig.OperationId;
+            tbxOperationId.Text = newConfig.OperationId.ToLower();
             tbxPrimaryEmail.Text = newConfig.DeploymentPrimaryEmail;
             tbxSourceOrganisation.Text = newConfig.DefaultSourceOrganisation;
             tbxOrganisationUrl.Text = newConfig.DefaultSourceOrganisationUrl;

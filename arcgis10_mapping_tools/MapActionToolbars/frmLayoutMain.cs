@@ -86,7 +86,7 @@ namespace MapActionToolbars
             {
                 OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
                 _languageIso2 = config.LanguageIso2;
-                _operationId = config.OperationId;
+                _operationId = config.OperationId.ToLower();
             }
 
             //Perform validation checks tab 1

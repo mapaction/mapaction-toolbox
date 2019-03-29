@@ -185,9 +185,9 @@ namespace MapActionToolbars
             tbxGlideNo.Text = config.GlideNo;
             tbxCountry.Text = config.Country;
 
-            string operational_id = config.OperationId;
+            string operational_id = config.OperationId.ToLower();
             Debug.WriteLine("Op ID: " + operational_id);
-            tbxOperationId.Text = config.OperationId;
+            tbxOperationId.Text = config.OperationId.ToLower();
             tbxExportZipPath.Text = config.DefaultPathToExportDir;
             nudJpegResolution.Value = Convert.ToDecimal(config.DefaultJpegResDPI); 
             nudPdfResolution.Value = Convert.ToDecimal(config.DefaultPdfResDPI); 

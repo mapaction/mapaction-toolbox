@@ -394,7 +394,7 @@ namespace MapActionToolbars
             string path = MapAction.Utilities.getCrashMoveFolderPath();
             string filePath = MapAction.Utilities.getOperationConfigFilePath();
             MapAction.OperationConfig config = MapAction.Utilities.getOperationConfigValues(filePath);
-            automatedValue = config.OperationId;
+            automatedValue = config.OperationId.ToLower();
 
             if (validateEmptyField(control, eprWarning))
             {
