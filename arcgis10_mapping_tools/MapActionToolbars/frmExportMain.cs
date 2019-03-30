@@ -508,7 +508,7 @@ namespace MapActionToolbars
             }
             catch (Exception eh)
             {
-                System.Diagnostics.Debug.WriteLine("Error updating layout elements");
+                System.Diagnostics.Debug.WriteLine("Error updating qr_code element");
                 System.Diagnostics.Debug.WriteLine(eh);
             }
             return qrCodeUpdated;

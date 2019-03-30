@@ -57,6 +57,9 @@
             this.imgMapNoStatus = new System.Windows.Forms.PictureBox();
             this.imgSpatialRefStatus = new System.Windows.Forms.PictureBox();
             this.imgMxdNameStatus = new System.Windows.Forms.PictureBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblQRCodeStatus = new System.Windows.Forms.TextBox();
+            this.imgQRCodeStatus = new System.Windows.Forms.PictureBox();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgLanguageStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgTimezoneStatus)).BeginInit();
@@ -71,11 +74,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.imgMapNoStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgSpatialRefStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMxdNameStatus)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgQRCodeStatus)).BeginInit();
             this.SuspendLayout();
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(56, 331);
+            this.btnClose.Location = new System.Drawing.Point(56, 402);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(46, 23);
             this.btnClose.TabIndex = 6;
@@ -365,11 +370,42 @@
             this.imgMxdNameStatus.TabIndex = 15;
             this.imgMxdNameStatus.TabStop = false;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.lblQRCodeStatus);
+            this.groupBox1.Controls.Add(this.imgQRCodeStatus);
+            this.groupBox1.Location = new System.Drawing.Point(10, 334);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(148, 60);
+            this.groupBox1.TabIndex = 29;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Picture elements";
+            // 
+            // lblQRCodeStatus
+            // 
+            this.lblQRCodeStatus.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lblQRCodeStatus.Location = new System.Drawing.Point(10, 29);
+            this.lblQRCodeStatus.Name = "lblQRCodeStatus";
+            this.lblQRCodeStatus.ReadOnly = true;
+            this.lblQRCodeStatus.Size = new System.Drawing.Size(100, 13);
+            this.lblQRCodeStatus.TabIndex = 25;
+            this.lblQRCodeStatus.Text = "qr_code";
+            // 
+            // imgQRCodeStatus
+            // 
+            this.imgQRCodeStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
+            this.imgQRCodeStatus.Location = new System.Drawing.Point(116, 22);
+            this.imgQRCodeStatus.Name = "imgQRCodeStatus";
+            this.imgQRCodeStatus.Size = new System.Drawing.Size(20, 20);
+            this.imgQRCodeStatus.TabIndex = 5;
+            this.imgQRCodeStatus.TabStop = false;
+            // 
             // frmCheckElements
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(165, 360);
+            this.ClientSize = new System.Drawing.Size(156, 430);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnClose);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -396,6 +432,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.imgMapNoStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgSpatialRefStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMxdNameStatus)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgQRCodeStatus)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -430,5 +469,8 @@
         private System.Windows.Forms.PictureBox imgDisclaimerStatus;
         private System.Windows.Forms.TextBox lblLanguageStatus;
         private System.Windows.Forms.PictureBox imgLanguageStatus;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox lblQRCodeStatus;
+        private System.Windows.Forms.PictureBox imgQRCodeStatus;
     }
 }
