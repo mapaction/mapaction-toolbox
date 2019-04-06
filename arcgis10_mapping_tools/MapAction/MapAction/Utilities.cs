@@ -796,13 +796,6 @@ namespace MapAction
                     {
                         if (xmlReader.Name == "code")
                         {
-                            /*
-                            Debug.WriteLine(xmlReader.GetAttribute("a2") + " " +
-                                            xmlReader.GetAttribute("a3b") + " " +
-                                            xmlReader.GetAttribute("a3t") + " " +
-                                            xmlReader.GetAttribute("a3h") + " " +
-                                            xmlReader.GetAttribute("lang"));
-                             */
                             LanguageCode languageCode = new LanguageCode(xmlReader.GetAttribute("a2"),
                                                                          xmlReader.GetAttribute("a3b"),
                                                                          xmlReader.GetAttribute("a3t"),
@@ -820,5 +813,45 @@ namespace MapAction
             return languageCodeLookup;
         }
         #endregion    
+
+
+        #region Public method getToolboxConfig
+        //Returns a the MapAction Toolbar Configuration object
+
+        public static MapActionToolbarConfig getToolboxConfig(string path = null)
+        {
+            MapActionToolbarConfig mapActionToolbarConfig = new MapActionToolbarConfig();
+
+            string mapActionToolboxConfigPath;
+            Uri cmfURI;
+            if (path == null)
+            {
+                //Get the currently set filepath from the ConfigTool settings file
+                mapActionToolboxConfigPath = Properties.Settings.Default.crash_move_folder_path;
+            }
+            else
+            {
+                mapActionToolboxConfigPath = @path;
+            }
+
+            cmfURI = new Uri(System.IO.Path.GetDirectoryName(mapActionToolboxConfigPath), UriKind.Absolute);
+
+            try
+            {
+                if (File.Exists(System.IO.Path.Combine(mapActionToolboxConfigPath, "MapActionToolbarsConfig.xml"))) 
+                {
+                    System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(MapActionToolbarConfig));
+                    System.IO.StreamReader file = new System.IO.StreamReader(System.IO.Path.Combine(mapActionToolboxConfigPath, "MapActionToolbarsConfig.xml"));
+                    mapActionToolbarConfig = (MapActionToolbarConfig)reader.Deserialize(file);
+                    file.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return mapActionToolbarConfig;
+        }
+        #endregion
     }
 }

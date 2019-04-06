@@ -27,11 +27,13 @@ namespace MapActionToolbars
         private static string _operationId;
         private const string languageConfigXmlFileName = "language_config.xml";
         private const string elementLanguageLabel = "language_label";
+        private static string _organisationURL = "";
 
         public frmLayoutMain()
         {
             string path = MapAction.Utilities.getCrashMoveFolderPath();
             string filePath = System.IO.Path.Combine(path, languageConfigXmlFileName);
+            _organisationURL = MapAction.Utilities.getMDRUrlRoot();
 
             // Set up Language of labels
             this.languageDictionary = MapAction.Utilities.getLanguageConfigValues(filePath);
@@ -87,6 +89,11 @@ namespace MapActionToolbars
                 OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
                 _languageIso2 = config.LanguageIso2;
                 _operationId = config.OperationId.ToLower();
+                _organisationURL = config.DefaultSourceOrganisationUrl;
+                if (_organisationURL.Length == 0)
+                {
+                    _organisationURL = MapAction.Utilities.getMDRUrlRoot();
+                }
             }
 
             //Perform validation checks tab 1
@@ -242,6 +249,10 @@ namespace MapActionToolbars
             IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
             pGraphics.Reset();
 
+            IMapDocument mapDoc;
+            mapDoc = (_pMxDoc as MxDocument) as IMapDocument;
+    
+            // Update QR Code
             IElement element = new TextElementClass();
             IElementProperties2 pElementProp;
             ITextElement pTextElement;
@@ -311,7 +322,10 @@ namespace MapActionToolbars
                         if (pElementProp.Name == "qr_code")
                         {
                             // Now update the QR Code
-                            string qrCodeImagePath = Utilities.GenerateQRCode(MapAction.Utilities.getMDRUrlRoot() +_operationId.ToLower() + "-" + dict["map_no"].ToLower());
+                            string qrCodeImagePath = Utilities.GenerateQRCode(_organisationURL + _operationId.ToLower() + "-" + dict["map_no"].ToLower()
+                                                                              + "?utm_source=qr%20code&utm_medium=map%20product&utm_campaign="
+                                                                              + _operationId.ToLower() + "&utm_content=" + dict["map_no"] + "_"
+                                                                              + ArcMap.Application.Document.Title);
                             pPictureElement.ImportPictureFromFile(qrCodeImagePath);
                         }
                     }
@@ -434,12 +448,10 @@ namespace MapActionToolbars
 
         private void cboLabelLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Debug.WriteLine("this.cboLabelLanguage.Text = " + this.cboLabelLanguage.Text);
         }
         
         public void setLabelLanguage()
         {
-            //this.cboLabelLanguage.Text;
             IPageLayout pLayout = _pMxDoc.PageLayout;
             IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
             pGraphics.Reset();

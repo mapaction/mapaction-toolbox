@@ -54,15 +54,12 @@ namespace MapActionToolbars
             this.tbxOperationName = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tbxOrganisationUrl = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.tbxPrimaryEmail = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.tbxSourceOrganisation = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tbxOperationId = new System.Windows.Forms.TextBox();
-            this.tbxOperationId.CharacterCasing = CharacterCasing.Lower;
-
             this.label19 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tbxDonorText = new System.Windows.Forms.TextBox();
@@ -96,6 +93,7 @@ namespace MapActionToolbars
             this.eprDisclaimerWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprDonorTextWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprExportPath = new System.Windows.Forms.ErrorProvider(this.components);
+            this.cboOrganisationUrl = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dtEmp)).BeginInit();
             this.gbxCrashMoveFolder.SuspendLayout();
             this.gbxConfigXmlValues.SuspendLayout();
@@ -378,7 +376,7 @@ namespace MapActionToolbars
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.tbxOrganisationUrl);
+            this.tabPage2.Controls.Add(this.cboOrganisationUrl);
             this.tabPage2.Controls.Add(this.label12);
             this.tabPage2.Controls.Add(this.tbxPrimaryEmail);
             this.tabPage2.Controls.Add(this.label18);
@@ -393,15 +391,6 @@ namespace MapActionToolbars
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Response";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // tbxOrganisationUrl
-            // 
-            this.tbxOrganisationUrl.Enabled = false;
-            this.tbxOrganisationUrl.Location = new System.Drawing.Point(123, 69);
-            this.tbxOrganisationUrl.Name = "tbxOrganisationUrl";
-            this.tbxOrganisationUrl.Size = new System.Drawing.Size(288, 20);
-            this.tbxOrganisationUrl.TabIndex = 3;
-            this.tbxOrganisationUrl.TextChanged += new System.EventHandler(this.tbxOrganisationUrl_TextChanged);
             // 
             // label12
             // 
@@ -450,6 +439,7 @@ namespace MapActionToolbars
             // 
             // tbxOperationId
             // 
+            this.tbxOperationId.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
             this.tbxOperationId.Enabled = false;
             this.tbxOperationId.Location = new System.Drawing.Point(123, 17);
             this.tbxOperationId.Name = "tbxOperationId";
@@ -783,6 +773,17 @@ namespace MapActionToolbars
             this.eprExportPath.ContainerControl = this;
             this.eprExportPath.Icon = ((System.Drawing.Icon)(resources.GetObject("eprExportPath.Icon")));
             // 
+            // cboOrganisationUrl
+            // 
+            this.cboOrganisationUrl.FormattingEnabled = true;
+            this.cboOrganisationUrl.Location = new System.Drawing.Point(123, 69);
+            this.cboOrganisationUrl.Name = "cboOrganisationUrl";
+            this.cboOrganisationUrl.Size = new System.Drawing.Size(288, 20);
+            this.cboOrganisationUrl.TabIndex = 3;
+            this.cboOrganisationUrl.Enabled = false;
+            this.cboOrganisationUrl.AccessibleDescription = "";
+            this.cboOrganisationUrl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            // 
             // frmConfigMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -874,7 +875,6 @@ namespace MapActionToolbars
         private System.Windows.Forms.CheckBox chkEditConfigXml;
         private System.Windows.Forms.NumericUpDown numEmfDpi;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbxOrganisationUrl;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ErrorProvider eprOperationNameWarning;
         private System.Windows.Forms.ErrorProvider eprGlideNoError;
@@ -898,5 +898,6 @@ namespace MapActionToolbars
         private System.Windows.Forms.DataGridViewCheckBoxColumn IsSelected;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox tbxCountry;
+        private System.Windows.Forms.ComboBox cboOrganisationUrl;
     }
 }

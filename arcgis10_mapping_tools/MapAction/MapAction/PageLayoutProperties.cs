@@ -535,7 +535,6 @@ namespace MapAction
             // Therefore if get_PageCount==1 then we conclude that DDP 
             // *is* enabled.
             return (pageCnt > 0);
-            return false;
         }
         #endregion
 

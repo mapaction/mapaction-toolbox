@@ -1476,26 +1476,6 @@
             // checkedListBoxThemes
             // 
             this.checkedListBoxThemes.FormattingEnabled = true;
-            this.checkedListBoxThemes.Items.AddRange(new object[] {
-            "Affected Population",
-            "Agriculture",
-            "Appeals",
-            "Camp Coordination / Management",
-            "Early Recovery",
-            "Education",
-            "Emergency Shelter",
-            "Emergency Telecommunications",
-            "Environmental Aspects",
-            "Health",
-            "Logistics",
-            "Nutrition",
-            "Orientation and Reference",
-            "Population Baseline",
-            "Search and Rescue / Evacuation Planning",
-            "Security, Safety and Protection",
-            "Situation and Damage",
-            "Water Sanitation and Hygiene",
-            "Who-What-Where"});
             this.checkedListBoxThemes.Location = new System.Drawing.Point(84, 20);
             this.checkedListBoxThemes.Name = "checkedListBoxThemes";
             this.checkedListBoxThemes.Size = new System.Drawing.Size(264, 289);

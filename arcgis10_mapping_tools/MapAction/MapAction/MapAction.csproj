@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="LanguageCode.cs" />
     <Compile Include="LanguageCodeLookup.cs" />
+    <Compile Include="MapActionToolbarsConfig.cs" />
     <Compile Include="OperationConfig.cs" />
     <Compile Include="DataFrameProperties.cs" />
     <Compile Include="LanguageConfig.cs" />

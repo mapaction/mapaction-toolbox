@@ -30,7 +30,7 @@ namespace MapActionToolbars
         private Boolean _configXmlEditState = false;
         private Boolean _configXmlNewFile = false;
         private MapAction.LanguageCodeLookup languageCodeLookup = null;
-
+        private MapActionToolbarConfig mapActionToolbarConfig = null;
 
         public frmConfigMain()
         {
@@ -39,9 +39,10 @@ namespace MapActionToolbars
             // Create languages lookup
             string languageFilePath = System.IO.Path.Combine(path, languageCodesXMLFileName);
             this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
+            this.mapActionToolbarConfig = MapAction.Utilities.getToolboxConfig();
 
             InitializeComponent();
-
+            this.cboOrganisationUrl.Items.AddRange(this.mapActionToolbarConfig.OrganisationURLs().ToArray());
             this.cboLanguage.Items.AddRange(this.languageCodeLookup.languages());
         }
 
@@ -199,7 +200,7 @@ namespace MapActionToolbars
             FormValidationConfig.validateTimezone(cboTimeZone, eprTimezoneWarning, eprTimezoneError);
             FormValidationConfig.validateOperationID(tbxOperationId, eprOperationIdWarning);
             FormValidationConfig.validateOrganisation(tbxSourceOrganisation, eprOrganisationWarning);
-            FormValidationConfig.validateUrl(tbxOrganisationUrl, eprUrlWarning);
+            FormValidationConfig.validateUrl(cboOrganisationUrl, eprUrlWarning);
             FormValidationConfig.validatePrimaryEmail(tbxPrimaryEmail, eprPrimaryEmailWarning, eprPrimaryEmailError);
             FormValidationConfig.validateDisclaimer(tbxDislaimerText, eprDisclaimerWarning);
             FormValidationConfig.validateDonor(tbxDonorText, eprDonorTextWarning);
@@ -219,7 +220,7 @@ namespace MapActionToolbars
                                                            TimeZone = cboTimeZone.Text,
                                                            OperationId = tbxOperationId.Text.ToLower(),
                                                            DefaultSourceOrganisation = tbxSourceOrganisation.Text,
-                                                           DefaultSourceOrganisationUrl = tbxOrganisationUrl.Text,
+                                                           DefaultSourceOrganisationUrl = cboOrganisationUrl.Text,
                                                            DeploymentPrimaryEmail = tbxPrimaryEmail.Text,
                                                            DefaultDisclaimerText = tbxDislaimerText.Text,
                                                            DefaultDonorsText = tbxDonorText.Text,
@@ -325,7 +326,7 @@ namespace MapActionToolbars
             tbxOperationId.Text = newConfig.OperationId.ToLower();
             tbxPrimaryEmail.Text = newConfig.DeploymentPrimaryEmail;
             tbxSourceOrganisation.Text = newConfig.DefaultSourceOrganisation;
-            tbxOrganisationUrl.Text = newConfig.DefaultSourceOrganisationUrl;
+            cboOrganisationUrl.Text = newConfig.DefaultSourceOrganisationUrl;
             tbxDislaimerText.Text = newConfig.DefaultDisclaimerText;
             tbxDonorText.Text = newConfig.DefaultDonorsText;
             numJpegDpi.Value = decimal.Parse(newConfig.DefaultJpegResDPI);
@@ -368,7 +369,7 @@ namespace MapActionToolbars
                 cboLanguage.Enabled = true;
                 tbxOperationId.Enabled = true;
                 tbxSourceOrganisation.Enabled = true;
-                tbxOrganisationUrl.Enabled = true;
+                cboOrganisationUrl.Enabled = true;
                 tbxPrimaryEmail.Enabled = true;
                 tbxDislaimerText.Enabled = true;
                 tbxDonorText.Enabled = true;
@@ -400,7 +401,7 @@ namespace MapActionToolbars
                 cboLanguage.Enabled = false;
                 tbxOperationId.Enabled = false;
                 tbxSourceOrganisation.Enabled = false;
-                tbxOrganisationUrl.Enabled = false;
+                cboOrganisationUrl.Enabled = false;
                 tbxPrimaryEmail.Enabled = false;
                 tbxDislaimerText.Enabled = false;
                 tbxDonorText.Enabled = false;
@@ -496,7 +497,7 @@ namespace MapActionToolbars
 
         private void tbxOrganisationUrl_TextChanged(object sender, EventArgs e)
         {
-            FormValidationConfig.validateUrl(tbxOrganisationUrl, eprUrlWarning);
+            FormValidationConfig.validateUrl(cboOrganisationUrl, eprUrlWarning);
         }
 
         private void tbxDislaimerText_TextChanged(object sender, EventArgs e)

@@ -63,15 +63,19 @@ namespace MapActionToolbars
         private const string _operationConfigXmlFileName = "operation_config.xml";
         private const int _initialVersionNumber = 1;
         private string _labelLanguage;
+        private string _organisationURL = "";
         private MapAction.LanguageCodeLookup languageCodeLookup = null;
+        private MapActionToolbarConfig mapActionToolbarConfig = null;
 
         public frmExportMain()
         {
             string path = MapAction.Utilities.getCrashMoveFolderPath();
             string languageFilePath = System.IO.Path.Combine(path, _languageCodesXmlFileName);
             this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
+            this.mapActionToolbarConfig = MapAction.Utilities.getToolboxConfig();
 
             InitializeComponent();
+            this.checkedListBoxThemes.Items.AddRange(this.mapActionToolbarConfig.Themes().ToArray());
         }
 
         private void btnUserRight_Click(object sender, EventArgs e)
@@ -184,9 +188,13 @@ namespace MapActionToolbars
             OperationConfig config = MapAction.Utilities.getOperationConfigValues(filePath);
             tbxGlideNo.Text = config.GlideNo;
             tbxCountry.Text = config.Country;
+            this._organisationURL = config.DefaultSourceOrganisationUrl;
+            if (this._organisationURL.Length == 0)
+            {
+                this._organisationURL = MapAction.Utilities.getMDRUrlRoot();
+            }
 
             string operational_id = config.OperationId.ToLower();
-            Debug.WriteLine("Op ID: " + operational_id);
             tbxOperationId.Text = config.OperationId.ToLower();
             tbxExportZipPath.Text = config.DefaultPathToExportDir;
             nudJpegResolution.Value = Convert.ToDecimal(config.DefaultJpegResDPI); 
@@ -359,7 +367,7 @@ namespace MapActionToolbars
             Dictionary<string, string> dictFrameExtents = Utilities.getMapFrameWgs84BoundingBox(mapDoc, "Main map");
 
             // Update QR Code
-            updateQRCode();
+            updateQRCode(ArcMap.Application.Document.Title);
 
             if (!isDDP) // Need a way to do this - the form elements are all disabled before export - see ^^
             {
@@ -452,10 +460,6 @@ namespace MapActionToolbars
                     throw;
                 }
             }
-            // close the wait dialog
-            // dlg.lblWaitMainMessage.Text = "Export complete";
-            // int milliseconds = 1250;
-            // Thread.Sleep(milliseconds);
             this.Close();
 
             // the output filepath
@@ -475,7 +479,7 @@ namespace MapActionToolbars
 
         }
 
-        private bool updateQRCode()
+        private bool updateQRCode(string mxdName)
         {
             bool qrCodeUpdated = false;
             // Update QR Code
@@ -498,7 +502,11 @@ namespace MapActionToolbars
                         if (pElementProp.Name == "qr_code")
                         {
                             // Now update the QR Code
-                            string qrCodeImagePath = Utilities.GenerateQRCode(MapAction.Utilities.getMDRUrlRoot() + tbxOperationId.Text.ToLower() + "-" + tbxMapNumber.Text.ToLower());
+                            string qrCodeImagePath = Utilities.GenerateQRCode(this._organisationURL + tbxOperationId.Text.ToLower() + 
+                                                                              "-" + tbxMapNumber.Text.ToLower()
+                                                                              + "?utm_source=qr%20code&utm_medium=map%20product&utm_campaign="
+                                                                              + tbxOperationId.Text.ToLower() + "&utm_content=" + tbxMapNumber.Text + "_"
+                                                                              + mxdName);
                             pPictureElement.ImportPictureFromFile(qrCodeImagePath);
                             qrCodeUpdated = true;
                         }
