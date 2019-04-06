@@ -190,7 +190,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="RenameLayer.cs" />
     <Compile Include="RenameTool.cs" />
     <Compile Include="Resources\layer_name_lookupDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
