@@ -44,6 +44,22 @@ namespace MapAction
             }
             return organisationURLs;
         }
+
+        public string TextBoxItem(string toolName, string componentName)
+        {
+            string textBoxItemValue = "";
+
+            var tool = Tools.Find(i => i.ToolName == toolName);
+            if (tool != null)
+            {
+                var component = tool.Components.Find(i => i.ComponentName == componentName);
+                if (component != null)
+                {
+                    textBoxItemValue = component.TextBoxItem.TextBoxItemValue;
+                }
+            }
+            return textBoxItemValue;
+        }
     }
 
     public class Tool
@@ -62,16 +78,24 @@ namespace MapAction
         public string ComponentName;
         public List<CheckBoxItem> CheckBoxItems;
         public List<ComboBoxItem> ComboBoxItems;
+        public TextBoxItem TextBoxItem; 
     }
+
 
     public class CheckBoxItem
     {
         public string CheckBoxItemName;
     }
 
-
     public class ComboBoxItem
     {
         public string ComboBoxItemValue;
     }
+
+    public class TextBoxItem
+    {
+        public string TextBoxItemValue;
+    }
+
+
 }

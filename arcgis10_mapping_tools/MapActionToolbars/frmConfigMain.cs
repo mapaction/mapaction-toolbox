@@ -19,9 +19,13 @@ namespace MapActionToolbars
 {
     public partial class frmConfigMain : Form
     {
-        private const string _defaultSourceOrganisation = "MapAction";
-        private const string _defaultDisclaimerText = "The depiction and use of boundaries, names and associated data shown here do not imply endorsement or acceptance by MapAction.";
-        private const string _defaultDonorText = "Supported by";
+        private const string ToolName = "Operation Config Tool";
+        private const string OrganisationComponentName = "Organisation";
+        private const string DisclaimerTextComponentName = "Disclaimer Text";
+        private const string DonorTextComponentName = "Donor Text";
+        private string _defaultSourceOrganisation = "";
+        private string _defaultDisclaimerText = "";
+        private string _defaultDonorText = "";
         private const decimal _defaultJpegDpi = 300;
         private const decimal _defaultPdfDpi = 300;
         private const string _defaultExportToolPath = "";
@@ -40,7 +44,9 @@ namespace MapActionToolbars
             string languageFilePath = System.IO.Path.Combine(path, languageCodesXMLFileName);
             this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
             this.mapActionToolbarConfig = MapAction.Utilities.getToolboxConfig();
-
+            this._defaultSourceOrganisation = this.mapActionToolbarConfig.TextBoxItem(ToolName, OrganisationComponentName);
+            this._defaultDisclaimerText = this.mapActionToolbarConfig.TextBoxItem(ToolName, DisclaimerTextComponentName);
+            this._defaultDonorText = this.mapActionToolbarConfig.TextBoxItem(ToolName, DonorTextComponentName);
             InitializeComponent();
             this.cboOrganisationUrl.Items.AddRange(this.mapActionToolbarConfig.OrganisationURLs().ToArray());
             this.cboLanguage.Items.AddRange(this.languageCodeLookup.languages());
@@ -174,11 +180,13 @@ namespace MapActionToolbars
             {
                 //If not, set the dialog to empty
                 tbxPathToCrashMove.Text = "< File moved or deleted: " + path + " >";
+                populateDialogDefaultValues();
             }
             else if (!MapAction.Utilities.detectOperationConfig())
             {
                 //If the path is set and file exists, set the textbox to the path
                 tbxPathToCrashMove.Text = string.Empty;
+                populateDialogDefaultValues();
             }
             else if (File.Exists(@filepath))
             {

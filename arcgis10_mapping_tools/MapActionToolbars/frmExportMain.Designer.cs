@@ -1721,6 +1721,9 @@
             this.cboAccess.Size = new System.Drawing.Size(265, 21);
             this.cboAccess.TabIndex = 7;
             this.cboAccess.TextChanged += new System.EventHandler(this.cboAccess_TextChanged);
+            this.cboAccess.AccessibleDescription = "";
+            this.cboAccess.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+
             // 
             // tbxImageAccessNotes
             // 
@@ -1743,6 +1746,9 @@
             this.cboQualityControl.Size = new System.Drawing.Size(265, 21);
             this.cboQualityControl.TabIndex = 9;
             this.cboQualityControl.TextChanged += new System.EventHandler(this.cboQualityControl_TextChanged);
+            this.cboQualityControl.AccessibleDescription = "";
+            this.cboQualityControl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+
             // 
             // cboStatus
             // 
@@ -1756,6 +1762,9 @@
             this.cboStatus.Size = new System.Drawing.Size(265, 21);
             this.cboStatus.TabIndex = 6;
             this.cboStatus.TextChanged += new System.EventHandler(this.cboStatus_TextChanged);
+            this.cboStatus.AccessibleDescription = "";
+            this.cboStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+
             // 
             // label19
             // 

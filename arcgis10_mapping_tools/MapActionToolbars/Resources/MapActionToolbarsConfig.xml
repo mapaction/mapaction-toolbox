@@ -7,14 +7,30 @@
           <ComponentName>Organisation Url</ComponentName>
           <ComboBoxItems>
             <ComboBoxItem>
-              <ComboBoxItemName>Production</ComboBoxItemName>
               <ComboBoxItemValue>https://maps.mapaction.org/dataset/</ComboBoxItemValue>
             </ComboBoxItem>
             <ComboBoxItem>
-              <ComboBoxItemName>Staging</ComboBoxItemName>
               <ComboBoxItemValue>https://maps-staging.mapaction.org/dataset/</ComboBoxItemValue>
             </ComboBoxItem>
           </ComboBoxItems>
+        </Component>
+        <Component>
+          <ComponentName>Organisation</ComponentName>
+          <TextBoxItem>
+            <TextBoxItemValue>MapAction</TextBoxItemValue>
+          </TextBoxItem>
+        </Component>
+        <Component>
+          <ComponentName>Disclaimer Text</ComponentName>
+          <TextBoxItem>
+            <TextBoxItemValue>The depiction and use of boundaries, names and associated data shown here do not imply endorsement or acceptance by MapAction</TextBoxItemValue>
+          </TextBoxItem>
+        </Component>
+        <Component>
+          <ComponentName>Donor Text</ComponentName>
+          <TextBoxItem>
+            <TextBoxItemValue>Supported by</TextBoxItemValue>
+          </TextBoxItem>
         </Component>
       </Components>
     </Tool>
