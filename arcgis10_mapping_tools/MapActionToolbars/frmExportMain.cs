@@ -218,6 +218,10 @@ namespace MapActionToolbars
             tbxDate.Text = date;
             tbxTime.Text = time;
 
+            // Disable these by default
+            this.nudEmfResolution.Enabled = false;
+            this.nudKmlResolution.Enabled = false;
+
             tbxPaperSize.Text = MapAction.Utilities.getPageSize(_pMxDoc as IMapDocument, _targetMapFrame);
             tbxScale.Text = MapAction.Utilities.getScale(_pMxDoc as IMapDocument, _targetMapFrame);
 
@@ -360,7 +364,6 @@ namespace MapActionToolbars
 
             // Create a dictionary to get and store the map frame extents to pass to the output xml
 
-
             IMapDocument mapDoc;
             mapDoc = (pMxDoc as MxDocument) as IMapDocument;
             bool isDDP = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
@@ -381,18 +384,22 @@ namespace MapActionToolbars
                 {
                     dictImageFileSizes[kvp.Key] = MapAction.Utilities.getFileSize(kvp.Value);
                 }
-                System.Windows.Forms.Application.DoEvents();
+                    if (checkBoxKml.Checked)
+                {
+                    System.Windows.Forms.Application.DoEvents();
 
-                // Export KML
-                IMapDocument pMapDoc = (IMapDocument)pMxDoc;            
-                string kmzPathFileName = exportPathFileName + ".kmz";
-                string kmzScale;
-                if (dictFrameExtents.ContainsKey("scale")) {kmzScale = dictFrameExtents["scale"];} else {kmzScale = null;};
-            
-                // TODO move this to the MapImageExporter class too, for now it is still in the static MapExport class
-                MapAction.MapExport.exportMapFrameKmlAsRaster(pMapDoc, "Main map", @kmzPathFileName, kmzScale, nudKmlResolution.Value.ToString());
-                // Add the xml path to the dictFilePaths, which is the input into the creatZip method
-                dictFilePaths["kmz"] = kmzPathFileName;
+                    // Export KML
+                    IMapDocument pMapDoc = (IMapDocument)pMxDoc;
+                    string kmzPathFileName = exportPathFileName + ".kmz";
+                    string kmzScale;
+
+                    if (dictFrameExtents.ContainsKey("scale")) { kmzScale = dictFrameExtents["scale"]; } else { kmzScale = null; };
+
+                    // TODO move this to the MapImageExporter class too, for now it is still in the static MapExport class
+                    MapAction.MapExport.exportMapFrameKmlAsRaster(pMapDoc, "Main map", @kmzPathFileName, kmzScale, nudKmlResolution.Value.ToString());
+                    // Add the xml path to the dictFilePaths, which is the input into the creatZip method
+                    dictFilePaths["kmz"] = kmzPathFileName;
+                }
             }
             else
             {
@@ -472,11 +479,9 @@ namespace MapActionToolbars
             {
                 MapAction.MapExport.openExplorerDirectory(tbxExportZipPath.Text);
             }
-
             sw.Stop();
             string timeTaken = Math.Round((sw.Elapsed.TotalMilliseconds / 1000),2).ToString();
             Debug.WriteLine("Time taken: ", timeTaken);
-
         }
 
         private bool updateQRCode(string mxdName)
@@ -601,8 +606,11 @@ namespace MapActionToolbars
             dict["pdffilename"] = System.IO.Path.GetFileName(dictFilePaths["pdf"]);
             dict["jpgfilesize"] = dictImageFileSizes["jpeg"].ToString();
             dict["pdffilesize"] = dictImageFileSizes["pdf"].ToString();
-            dict["kmzfilename"] = System.IO.Path.GetFileName(dictFilePaths["kmz"]);
 
+            if (checkBoxKml.Checked == true)
+            {
+                dict["kmzfilename"] = System.IO.Path.GetFileName(dictFilePaths["kmz"]);
+            }
             return dict;
             //string filename = Path.GetFileName(path);
         }
@@ -642,7 +650,6 @@ namespace MapActionToolbars
                 Debug.WriteLine("Image export variables not valid.");
                 return dict;
             }
-
             else
             {
                 // refactored export code into non-static class which handles thumbnail filename and pixel size limits 
@@ -652,8 +659,11 @@ namespace MapActionToolbars
                     layoutexporter.exportImage(MapActionExportTypes.pdf, Convert.ToUInt16(nudPdfResolution.Value));
                 dict[MapActionExportTypes.jpeg.ToString()] =  
                     layoutexporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudJpegResolution.Value));
-                dict[MapActionExportTypes.emf.ToString()] =  
-                    layoutexporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
+                if (checkBoxEmf.Checked == true)
+                {
+                    dict[MapActionExportTypes.emf.ToString()] =
+                        layoutexporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
+                }
                 // export the thumbnail, using the new functionality of specifying a pixel size rather than a dpi
                 XYDimensions thumbSize = new XYDimensions()
                     {
@@ -669,20 +679,11 @@ namespace MapActionToolbars
 
                 // What are these for? we don't zip them.
                 MapImageExporter dfExporter = new MapImageExporter(pMapDoc, exportPathFileName, "Main map");
-                dfExporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
-                dfExporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudEmfResolution.Value));
-               
-                //Output 3 image formats pdf, jpeg & emf
-                //dict.Add("pdf", 
-                //    MapAction.MapExport.exportImage(pMapDoc, "pdf", nudPdfResolution.Value.ToString(), exportPathFileName, null));
-                //dict.Add("jpeg", 
-                //    MapAction.MapExport.exportImage(pMapDoc, "jpeg", nudJpegResolution.Value.ToString(), exportPathFileName, null));
-                //dict.Add("emf", 
-                //    MapAction.MapExport.exportImage(pMapDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, null));
-                //// what are these for?
-                //MapAction.MapExport.exportImage(pMapDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
-                //MapAction.MapExport.exportImage(pMapDoc, "jpeg", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
-
+                if (checkBoxEmf.Checked == true)
+                {
+                    dfExporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
+                }
+                dfExporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudJpegResolution.Value));
             }
             return dict;
         }
@@ -973,6 +974,40 @@ namespace MapActionToolbars
         private void cboStatus_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.KeyChar = (char)Keys.None;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBoxEmf_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxEmf.Checked == true)
+            {
+                this.nudEmfResolution.Enabled = true;
+            }
+            else
+            {
+                this.nudEmfResolution.Enabled = false;
+            }
+        }
+
+        private void checkBoxKml_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxKml.Checked == true)
+            {
+                this.nudKmlResolution.Enabled = true;
+            }
+            else
+            {
+                this.nudKmlResolution.Enabled = false;
+            }
         }
     }
 }

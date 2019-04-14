@@ -120,14 +120,10 @@
             this.btnExportZipPath = new System.Windows.Forms.Button();
             this.tbxExportZipPath = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label47 = new System.Windows.Forms.Label();
             this.nudKmlResolution = new System.Windows.Forms.NumericUpDown();
             this.nudEmfResolution = new System.Windows.Forms.NumericUpDown();
-            this.label28 = new System.Windows.Forms.Label();
             this.nudJpegResolution = new System.Windows.Forms.NumericUpDown();
             this.nudPdfResolution = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.btnExportLeft = new System.Windows.Forms.Button();
             this.tabPageLayout = new System.Windows.Forms.TabPage();
             this.btnUserRight = new System.Windows.Forms.Button();
@@ -190,6 +186,10 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.tabExportTool = new System.Windows.Forms.TabControl();
+            this.checkBoxEmf = new System.Windows.Forms.CheckBox();
+            this.checkBoxKml = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dtEmp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapTitleError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMaptitleWarning)).BeginInit();
@@ -985,14 +985,14 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.label47);
-            this.groupBox4.Controls.Add(this.nudKmlResolution);
-            this.groupBox4.Controls.Add(this.nudEmfResolution);
-            this.groupBox4.Controls.Add(this.label28);
-            this.groupBox4.Controls.Add(this.nudJpegResolution);
-            this.groupBox4.Controls.Add(this.nudPdfResolution);
             this.groupBox4.Controls.Add(this.label3);
             this.groupBox4.Controls.Add(this.label2);
+            this.groupBox4.Controls.Add(this.checkBoxKml);
+            this.groupBox4.Controls.Add(this.checkBoxEmf);
+            this.groupBox4.Controls.Add(this.nudKmlResolution);
+            this.groupBox4.Controls.Add(this.nudEmfResolution);
+            this.groupBox4.Controls.Add(this.nudJpegResolution);
+            this.groupBox4.Controls.Add(this.nudPdfResolution);
             this.groupBox4.Location = new System.Drawing.Point(6, 6);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(371, 93);
@@ -1000,18 +1000,9 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Image Resolution (dpi)";
             // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(159, 56);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(29, 13);
-            this.label47.TabIndex = 14;
-            this.label47.Text = "KML";
-            // 
             // nudKmlResolution
             // 
-            this.nudKmlResolution.Location = new System.Drawing.Point(201, 55);
+            this.nudKmlResolution.Location = new System.Drawing.Point(251, 55);
             this.nudKmlResolution.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -1038,7 +1029,7 @@
             0,
             0,
             0});
-            this.nudEmfResolution.Location = new System.Drawing.Point(201, 28);
+            this.nudEmfResolution.Location = new System.Drawing.Point(251, 28);
             this.nudEmfResolution.Maximum = new decimal(new int[] {
             1200,
             0,
@@ -1057,15 +1048,6 @@
             0,
             0,
             0});
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(156, 30);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(29, 13);
-            this.label28.TabIndex = 12;
-            this.label28.Text = "EMF";
             // 
             // nudJpegResolution
             // 
@@ -1120,24 +1102,6 @@
             0,
             0,
             0});
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 30);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(34, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "JPEG";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 56);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(28, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "PDF";
             // 
             // btnExportLeft
             // 
@@ -1711,6 +1675,8 @@
             // 
             // cboAccess
             // 
+            this.cboAccess.AccessibleDescription = "";
+            this.cboAccess.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboAccess.FormattingEnabled = true;
             this.cboAccess.Items.AddRange(new object[] {
             "Public",
@@ -1721,9 +1687,6 @@
             this.cboAccess.Size = new System.Drawing.Size(265, 21);
             this.cboAccess.TabIndex = 7;
             this.cboAccess.TextChanged += new System.EventHandler(this.cboAccess_TextChanged);
-            this.cboAccess.AccessibleDescription = "";
-            this.cboAccess.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-
             // 
             // tbxImageAccessNotes
             // 
@@ -1737,6 +1700,8 @@
             // 
             // cboQualityControl
             // 
+            this.cboQualityControl.AccessibleDescription = "";
+            this.cboQualityControl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboQualityControl.FormattingEnabled = true;
             this.cboQualityControl.Items.AddRange(new object[] {
             "Local",
@@ -1746,12 +1711,11 @@
             this.cboQualityControl.Size = new System.Drawing.Size(265, 21);
             this.cboQualityControl.TabIndex = 9;
             this.cboQualityControl.TextChanged += new System.EventHandler(this.cboQualityControl_TextChanged);
-            this.cboQualityControl.AccessibleDescription = "";
-            this.cboQualityControl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-
             // 
             // cboStatus
             // 
+            this.cboStatus.AccessibleDescription = "";
+            this.cboStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboStatus.FormattingEnabled = true;
             this.cboStatus.Items.AddRange(new object[] {
             "New",
@@ -1762,9 +1726,6 @@
             this.cboStatus.Size = new System.Drawing.Size(265, 21);
             this.cboStatus.TabIndex = 6;
             this.cboStatus.TextChanged += new System.EventHandler(this.cboStatus_TextChanged);
-            this.cboStatus.AccessibleDescription = "";
-            this.cboStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-
             // 
             // label19
             // 
@@ -1805,6 +1766,47 @@
             this.tabExportTool.Size = new System.Drawing.Size(429, 494);
             this.tabExportTool.TabIndex = 1;
             this.tabExportTool.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabExportTool_Selected);
+            // 
+            // checkBoxEmf
+            // 
+            this.checkBoxEmf.AutoSize = true;
+            this.checkBoxEmf.Location = new System.Drawing.Point(189, 30);
+            this.checkBoxEmf.Name = "checkBoxEmf";
+            this.checkBoxEmf.Size = new System.Drawing.Size(48, 17);
+            this.checkBoxEmf.TabIndex = 17;
+            this.checkBoxEmf.Text = "EMF";
+            this.checkBoxEmf.UseVisualStyleBackColor = true;
+            this.checkBoxEmf.CheckedChanged += new System.EventHandler(this.checkBoxEmf_CheckedChanged);
+            // 
+            // checkBoxKml
+            // 
+            this.checkBoxKml.AutoSize = true;
+            this.checkBoxKml.Location = new System.Drawing.Point(189, 56);
+            this.checkBoxKml.Name = "checkBoxKml";
+            this.checkBoxKml.Size = new System.Drawing.Size(48, 17);
+            this.checkBoxKml.TabIndex = 18;
+            this.checkBoxKml.Text = "KML";
+            this.checkBoxKml.UseVisualStyleBackColor = true;
+            this.checkBoxKml.CheckedChanged += new System.EventHandler(this.checkBoxKml_CheckedChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 30);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(34, 13);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "JPEG";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(7, 56);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(28, 13);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "PDF";
             // 
             // frmExportMain
             // 
@@ -2058,14 +2060,14 @@
         private System.Windows.Forms.Button btnExportZipPath;
         private System.Windows.Forms.TextBox tbxExportZipPath;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label label47;
         private System.Windows.Forms.NumericUpDown nudKmlResolution;
         private System.Windows.Forms.NumericUpDown nudEmfResolution;
-        private System.Windows.Forms.Label label28;
         private System.Windows.Forms.NumericUpDown nudJpegResolution;
         private System.Windows.Forms.NumericUpDown nudPdfResolution;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnExportLeft;
+        private System.Windows.Forms.CheckBox checkBoxKml;
+        private System.Windows.Forms.CheckBox checkBoxEmf;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
