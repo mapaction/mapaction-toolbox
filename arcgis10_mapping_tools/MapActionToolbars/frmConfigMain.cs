@@ -44,12 +44,19 @@ namespace MapActionToolbars
             string languageFilePath = System.IO.Path.Combine(path, languageCodesXMLFileName);
             this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
             this.mapActionToolbarConfig = MapAction.Utilities.getToolboxConfig();
-            this._defaultSourceOrganisation = this.mapActionToolbarConfig.TextBoxItem(ToolName, OrganisationComponentName);
-            this._defaultDisclaimerText = this.mapActionToolbarConfig.TextBoxItem(ToolName, DisclaimerTextComponentName);
-            this._defaultDonorText = this.mapActionToolbarConfig.TextBoxItem(ToolName, DonorTextComponentName);
-            InitializeComponent();
-            this.cboOrganisationUrl.Items.AddRange(this.mapActionToolbarConfig.OrganisationURLs().ToArray());
-            this.cboLanguage.Items.AddRange(this.languageCodeLookup.languages());
+            if (this.mapActionToolbarConfig.Tools.Count == 0)
+            {
+                this.Close();
+            }
+            else
+            {
+                this._defaultSourceOrganisation = this.mapActionToolbarConfig.TextBoxItem(ToolName, OrganisationComponentName);
+                this._defaultDisclaimerText = this.mapActionToolbarConfig.TextBoxItem(ToolName, DisclaimerTextComponentName);
+                this._defaultDonorText = this.mapActionToolbarConfig.TextBoxItem(ToolName, DonorTextComponentName);
+                InitializeComponent();
+                this.cboOrganisationUrl.Items.AddRange(this.mapActionToolbarConfig.OrganisationURLs().ToArray());
+                this.cboLanguage.Items.AddRange(this.languageCodeLookup.languages());
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

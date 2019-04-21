@@ -15,8 +15,10 @@ namespace MapActionToolbars
         protected override void OnClick()
         {
             frmConfigMain form = new frmConfigMain();
-            form.ShowDialog();
-
+            if (form.Text.Length > 0)
+            {
+                form.ShowDialog();
+            }
         }
         protected override void OnUpdate()
         {

@@ -25,7 +25,6 @@ namespace MapAction
 {
     public class Utilities
     {
-
         #region Public method createXML
         //Creates an xml given a dictionary of tags and values.  Also pass in the root element, file path and filename.
         public static string createXML(Dictionary<string, string> usDict, string rootElement, string path, string fileName, int numRootElements)
@@ -820,10 +819,11 @@ namespace MapAction
 
         public static MapActionToolbarConfig getToolboxConfig(string path = null)
         {
+            const string MapActionToolbarsConfigFileName = "MapActionToolbarsConfig.xml";
+
             MapActionToolbarConfig mapActionToolbarConfig = new MapActionToolbarConfig();
 
             string mapActionToolboxConfigPath;
-            Uri cmfURI;
             if (path == null)
             {
                 //Get the currently set filepath from the ConfigTool settings file
@@ -833,17 +833,18 @@ namespace MapAction
             {
                 mapActionToolboxConfigPath = @path;
             }
-
-            cmfURI = new Uri(System.IO.Path.GetDirectoryName(mapActionToolboxConfigPath), UriKind.Absolute);
-
             try
             {
-                if (File.Exists(System.IO.Path.Combine(mapActionToolboxConfigPath, "MapActionToolbarsConfig.xml"))) 
+                if (File.Exists(System.IO.Path.Combine(mapActionToolboxConfigPath, MapActionToolbarsConfigFileName))) 
                 {
                     System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(MapActionToolbarConfig));
-                    System.IO.StreamReader file = new System.IO.StreamReader(System.IO.Path.Combine(mapActionToolboxConfigPath, "MapActionToolbarsConfig.xml"));
+                    System.IO.StreamReader file = new System.IO.StreamReader(System.IO.Path.Combine(mapActionToolboxConfigPath, MapActionToolbarsConfigFileName));
                     mapActionToolbarConfig = (MapActionToolbarConfig)reader.Deserialize(file);
                     file.Close();
+                }
+                else
+                {
+                    MessageBox.Show($"Cannot access {System.IO.Path.Combine(mapActionToolboxConfigPath, MapActionToolbarsConfigFileName)}", "No such config file", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception e)

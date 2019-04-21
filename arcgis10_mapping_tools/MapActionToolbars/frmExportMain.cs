@@ -74,8 +74,15 @@ namespace MapActionToolbars
             this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
             this.mapActionToolbarConfig = MapAction.Utilities.getToolboxConfig();
 
-            InitializeComponent();
-            this.checkedListBoxThemes.Items.AddRange(this.mapActionToolbarConfig.Themes().ToArray());
+            if (this.mapActionToolbarConfig.Tools.Count > 0)
+            {
+                InitializeComponent();
+                this.checkedListBoxThemes.Items.AddRange(this.mapActionToolbarConfig.Themes().ToArray());
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         private void btnUserRight_Click(object sender, EventArgs e)
@@ -340,10 +347,16 @@ namespace MapActionToolbars
                 tbxExportZipPath.Focus();
                 return;
             }
+
+            // Check for MapNumber + "_" + VersionNumber
+
+            path = System.IO.Path.Combine(path, this.tbxMapNumber.Text + "_" + this.nudVersionNumber.Value);
+
+            System.IO.Directory.CreateDirectory(path);
             Debug.WriteLine("checks on export complete");
 
             // Get the path and file name to pass to the various functions
-            string exportPathFileName = getExportPathFileName(tbxExportZipPath.Text, tbxMapDocument.Text);
+            string exportPathFileName = getExportPathFileName(path, tbxMapDocument.Text);
 
             // Disable the button after the export checks are complete to prevent multiple clicks
             this.Enabled = false;
@@ -384,7 +397,7 @@ namespace MapActionToolbars
                 {
                     dictImageFileSizes[kvp.Key] = MapAction.Utilities.getFileSize(kvp.Value);
                 }
-                    if (checkBoxKml.Checked)
+                if (checkBoxKml.Checked)
                 {
                     System.Windows.Forms.Application.DoEvents();
 
@@ -636,11 +649,12 @@ namespace MapActionToolbars
             //IActiveView pActiveView = pMxDoc.ActiveView;
             var dict = new Dictionary<string, string>();
 
+            string path = System.IO.Path.Combine(tbxExportZipPath.Text, this.tbxMapNumber.Text + "_" + this.nudVersionNumber.Value);
             // Get the path and file name to pass to the various functions
-            string exportPathFileName = getExportPathFileName(tbxExportZipPath.Text, tbxMapDocument.Text);
+            string exportPathFileName = getExportPathFileName(path, tbxMapDocument.Text);
 
             //check to see variable exists
-            if (!Directory.Exists(@tbxExportZipPath.Text) || tbxMapDocument.Text == "" || tbxMapDocument.Text == string.Empty)
+            if (!Directory.Exists(@path) || tbxMapDocument.Text == "" || tbxMapDocument.Text == string.Empty)
             {
                 Debug.WriteLine("Image export variables not valid.");
                 return dict;

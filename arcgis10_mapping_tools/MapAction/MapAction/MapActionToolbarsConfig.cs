@@ -15,6 +15,11 @@ namespace MapAction
         [XmlArray("Tools"), XmlArrayItem(typeof(Tool), ElementName = "Tool")]
         public List<Tool> Tools { get; set; }
 
+        public MapActionToolbarConfig()
+        {
+            Tools = new List<Tool>();
+        }
+
         public List<string> Themes()
         {
             List<string> themes = new List<string>();
@@ -69,6 +74,11 @@ namespace MapAction
 
         public string ToolName { get; set; }
         public List<Component> Components { get; set; }
+
+        public Tool()
+        {
+            Components = new List<Component>();
+        }
     }
 
     public class Component
@@ -79,8 +89,13 @@ namespace MapAction
         public List<CheckBoxItem> CheckBoxItems;
         public List<ComboBoxItem> ComboBoxItems;
         public TextBoxItem TextBoxItem; 
-    }
 
+        public Component()
+        {
+            CheckBoxItems = new List<CheckBoxItem>();
+            ComboBoxItems = new List<ComboBoxItem>();
+        }
+    }
 
     public class CheckBoxItem
     {
@@ -96,6 +111,4 @@ namespace MapAction
     {
         public string TextBoxItemValue;
     }
-
-
 }
