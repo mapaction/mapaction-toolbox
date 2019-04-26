@@ -496,8 +496,7 @@ namespace MapAction
             else
             {
                 return string.Empty;
-            }
-            
+            }       
         }
 
         #endregion
@@ -515,8 +514,7 @@ namespace MapAction
             else
             {
                 return string.Empty;
-            }
-            
+            }           
         }
 
         #endregion
@@ -535,13 +533,6 @@ namespace MapAction
             {
                 if (dirtyRow.Key.Equals("DefaultPathToExportDir", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    //Uri absURI = new Uri(@dirtyRow.Value, UriKind.Absolute);
-                    //cleanURLsdict.Add(dirtyRow.Key, absURI.AbsoluteUri);
-
-                    //Uri absExportURI = new Uri(usEle.Value.ToString(), UriKind.Absolute);
-                    ////absExportURI.MakeRelativeUri(cmfURI)
-                    //dict.Add(usEle.Name.ToString(), cmfURI.MakeRelativeUri(absExportURI).ToString());
-
                     cleanURLsdict.Add(dirtyRow.Key, relPathFromAbs(dirtyRow.Value));
                 }
                 else
@@ -601,137 +592,13 @@ namespace MapAction
         public static String getExportGPToolboxPath()
         {
             String assemblyPath, assemblyDir;
-            String tbxStub = @"mapbook_export_tool\mapbook_export_tools.tbx";
+            const String tbxStub = @"mapbook_export_tool\mapbook_export_tools.tbx";
             String tbxPath;
 
             assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             assemblyDir = System.IO.Path.GetDirectoryName(assemblyPath);
             tbxPath = System.IO.Path.Combine(assemblyDir, tbxStub);
-            System.Console.WriteLine(tbxPath);
             return tbxPath;
-        }
-
-        #region Public method getLanguageConfigFilePath()
-
-        public static string getLanguageConfigFilePath()
-        {
-            string fullPath;
-            if (detectLanguageConfig())
-            {
-                fullPath = Properties.Settings.Default.crash_move_folder_path + @"\language_config.xml";
-                return fullPath;
-            }
-            else
-            {
-                return string.Empty;
-            }
-
-        }
-
-        #endregion
-
-        #region Public method detectLanguageConfig
-        //Returns a dictionary of the operation_config.xml elements and values
-        public static Boolean detectLanguageConfig()
-        {
-            string path = Properties.Settings.Default.crash_move_folder_path;
-            string filepath = path + @"\language_config.xml";
-            //If the file exists in the filepath, add each element and value of the xml file 
-            //to the dictionary as key value pairs 
-            if (File.Exists(@filepath))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        #endregion
-
-        #region Public method getLanguageConfigValues
-        //Returns a List of the language_config.xml elements and values
-        public static List<MapAction.LanguageConfig> getLanguageConfigValues(string path = null)
-        {
-            bool languageDictionaryInitialised = false;
-            string opCfgFilePath;
-            Uri cmfURI;
-
-            List<MapAction.LanguageConfig> languageDictionary = new List<MapAction.LanguageConfig>();
-
-            //Create a dictionary to store the values from the xml
-            if (path == null)
-            {
-                //Get the currently set filepath from the ConfigTool settings file
-                opCfgFilePath = Properties.Settings.Default.crash_move_folder_path;
-            }
-            else
-            {
-                opCfgFilePath = @path;
-            }
-
-            cmfURI = new Uri(System.IO.Path.GetDirectoryName(opCfgFilePath), UriKind.Absolute);
-
-            //If the file exists in the filepath, add each element and value of the xml file 
-            //to the dictionary as key value pairs 
-
-            try
-            {
-                if (File.Exists(@opCfgFilePath))
-                {
-                    XmlDocument doc = new XmlDocument();
-
-                    doc.Load(@opCfgFilePath);
-
-                    XmlNodeList languages = doc.GetElementsByTagName("language");
-                    string languageName = "";
-                    for (int i = 0; i < languages.Count; i++)
-                    {
-                        Dictionary<string, string> languageDict = new Dictionary<string, string>();
-                        XmlNode rootNode = languages[i];
-                        for (int a = 0; a < rootNode.Attributes.Count; a++)
-                        {
-                            languageName = rootNode.Attributes[a].Value.ToString();
-                        }
-                        if (rootNode.HasChildNodes)
-                        {
-                            for (int n = 0; n < rootNode.ChildNodes.Count; n++)
-                            {
-                                languageDict.Add(rootNode.ChildNodes[n].Name.ToString(), rootNode.ChildNodes[n].InnerText.ToString());
-                            }
-                        }
-                        if (languageDictionaryInitialised == false)
-                        {
-                            languageDictionaryInitialised = true;
-                        }
-                        LanguageConfig languageConfig = new LanguageConfig(languageName, languageDict);
-                        languageDictionary.Add(languageConfig);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-            }
-            if (languageDictionaryInitialised == false)
-            {
-                string defaultLanguageName = "English";
-                Dictionary<string, string> defaultLanguageDict = new Dictionary<string, string>
-                {
-                     { "create_date_time_label",  "Created" },
-                     { "data_sources_label",      "<bol>Data Sources</bol>" },
-                     { "mxd_name_label",          "Map Document" },
-                     { "spatial_reference_label", "Projection & Datum" },
-                     { "glide_no_label",          "GLIDE Number" },
-                     { "map_producer",            "Produced by MapAction - www.mapaction.org\n<ita>country@mapaction.org</ita>" },
-                     { "donor_credit",            "Supported by <bol>UK Department for International Development</bol> and the <bol>Ministry of Foreign Affairs of the Netherlands</bol>" },
-                     { "disclaimer",              "The depiction and use of boundaries, names and associated data shown here do not imply endorsement or acceptance by MapAction." }
-
-                };
-                LanguageConfig languageConfig = new LanguageConfig(defaultLanguageName, defaultLanguageDict);
-                languageDictionary.Add(languageConfig);
-            }
-            return languageDictionary;
         }
 
         public static string GenerateQRCode(string url)
@@ -761,8 +628,6 @@ namespace MapAction
             }
             return qrPath;
         }
-
-        #endregion
 
         #region Public method getLanguageCodeValues
         //Returns a List of the countries_config.xml elements and values
@@ -847,7 +712,7 @@ namespace MapAction
                 {
                     // Use default from resource in code-base 
                     System.Reflection.Assembly assembly = Assembly.GetExecutingAssembly();
-                    using (Stream stream = assembly.GetManifestResourceStream("MapAction.Resources.MapActionToolbarsConfig.xml"))
+                    using (Stream stream = assembly.GetManifestResourceStream(assembly.GetName().Name + ".Resources." + MapActionToolbarsConfigFileName))
                     using (StreamReader file = new StreamReader(stream))
                     {
                         System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(MapActionToolbarConfig));
@@ -860,6 +725,97 @@ namespace MapAction
                 Debug.WriteLine(e.Message);
             }
             return mapActionToolbarConfig;
+        }
+        #endregion
+
+        #region Public method getLanguageConfigValues
+        //Returns the Language Configuration
+
+        public static List<MapAction.LanguageConfig> getLanguageConfigValues(string path = null)
+        {
+            const string LanguageConfigFileName = "language_config.xml";
+            List<MapAction.LanguageConfig> languageDictionary = new List<MapAction.LanguageConfig>();
+            string configPath;
+            if (path == null)
+            {
+                //Get the currently set filepath from the ConfigTool settings file
+                configPath = Properties.Settings.Default.crash_move_folder_path;
+            }
+            else
+            {
+                configPath = @path;
+            }
+            try
+            {
+                if (File.Exists(System.IO.Path.Combine(configPath, LanguageConfigFileName)))
+                {
+                    System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(MapActionToolbarConfig));
+                    System.IO.StreamReader file = new System.IO.StreamReader(System.IO.Path.Combine(configPath, LanguageConfigFileName));
+
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(file);
+
+                    XmlNodeList languages = doc.GetElementsByTagName("language");
+                    string languageName = "";
+                    for (int i = 0; i < languages.Count; i++)
+                    {
+                        Dictionary<string, string> languageDict = new Dictionary<string, string>();
+                        XmlNode rootNode = languages[i];
+                        for (int a = 0; a < rootNode.Attributes.Count; a++)
+                        {
+                            languageName = rootNode.Attributes[a].Value.ToString();
+                        }
+                        if (rootNode.HasChildNodes)
+                        {
+                            for (int n = 0; n < rootNode.ChildNodes.Count; n++)
+                            {
+                                languageDict.Add(rootNode.ChildNodes[n].Name.ToString(), rootNode.ChildNodes[n].InnerText.ToString());
+                            }
+                        }
+                        LanguageConfig languageConfig = new LanguageConfig(languageName, languageDict);
+                        languageDictionary.Add(languageConfig);
+                    }
+                    file.Close();
+                }
+                else
+                {
+                    // Use default from resource in code-base 
+                    System.Reflection.Assembly assembly = Assembly.GetExecutingAssembly();
+                    using (Stream stream = assembly.GetManifestResourceStream(assembly.GetName().Name + ".Resources." + LanguageConfigFileName))
+                    using (StreamReader file = new StreamReader(stream))
+                    {
+                        XmlDocument doc = new XmlDocument();
+                        doc.Load(file);
+
+                        XmlNodeList languages = doc.GetElementsByTagName("language");
+                        string languageName = "";
+                        for (int i = 0; i < languages.Count; i++)
+                        {
+                            Dictionary<string, string> languageDict = new Dictionary<string, string>();
+                            XmlNode rootNode = languages[i];
+                            for (int a = 0; a < rootNode.Attributes.Count; a++)
+                            {
+                                languageName = rootNode.Attributes[a].Value.ToString();
+                            }
+                            if (rootNode.HasChildNodes)
+                            {
+                                for (int n = 0; n < rootNode.ChildNodes.Count; n++)
+                                {
+                                    languageDict.Add(rootNode.ChildNodes[n].Name.ToString(), rootNode.ChildNodes[n].InnerText.ToString());
+                                }
+                            }
+                            LanguageConfig languageConfig = new LanguageConfig(languageName, languageDict);
+                            languageDictionary.Add(languageConfig);
+                        }
+                        file.Close();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return languageDictionary;
         }
         #endregion
     }

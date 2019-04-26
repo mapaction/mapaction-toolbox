@@ -61,7 +61,38 @@ namespace MapAction.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
+        ///&lt;languageSettings&gt;
+        ///   &lt;language name=&quot;English&quot;&gt;
+        ///      &lt;language_label&gt;English&lt;/language_label&gt;   
+        ///      &lt;create_date_time_label&gt;Created&lt;/create_date_time_label&gt;
+        ///      &lt;data_sources_label&gt;&amp;lt;bol&amp;gt;Data Sources&amp;lt;/bol&amp;gt;&lt;/data_sources_label&gt;
+        ///      &lt;mxd_name_label&gt;Map Document&lt;/mxd_name_label&gt;
+        ///      &lt;spatial_reference_label&gt;Projection &amp;amp; Datum&lt;/spatial_reference_label&gt;
+        ///      &lt;glide_no_label&gt;GLIDE Number&lt;/glide_no_label&gt;
+        ///	  &lt;map_producer&gt;Produced by MapAct [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string language_config {
+            get {
+                return ResourceManager.GetString("language_config", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;MapActionToolbarConfig&gt;
+        ///  &lt;Tools&gt;
+        ///    &lt;Tool&gt;
+        ///      &lt;ToolName&gt;Operation Config Tool&lt;/ToolName&gt;
+        ///      &lt;Components&gt;
+        ///        &lt;Component&gt;
+        ///          &lt;ComponentName&gt;Organisation Url&lt;/ComponentName&gt;
+        ///          &lt;ComboBoxItems&gt;
+        ///            &lt;ComboBoxItem&gt;
+        ///              &lt;ComboBoxItemValue&gt;https://maps.mapaction.org/dataset/&lt;/ComboBoxItemValue&gt;
+        ///            &lt;/ComboBoxItem&gt;
+        ///            &lt;ComboBoxItem&gt;
+        ///              &lt;ComboBoxItemValue&gt;https://maps-staging.mapaction.org/dataset/&lt;/ComboBoxItemValue&gt;
+        ///            &lt; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MapActionToolbarsConfig {
             get {
