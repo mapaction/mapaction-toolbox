@@ -20,6 +20,7 @@ using ESRI.ArcGIS.Framework;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using ESRI.ArcGIS.Geoprocessing;
+using System.Reflection;
 
 namespace MapAction
 {
@@ -844,7 +845,14 @@ namespace MapAction
                 }
                 else
                 {
-                    MessageBox.Show($"Cannot access {System.IO.Path.Combine(mapActionToolboxConfigPath, MapActionToolbarsConfigFileName)}", "No such config file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // Use default from resource in code-base 
+                    System.Reflection.Assembly assembly = Assembly.GetExecutingAssembly();
+                    using (Stream stream = assembly.GetManifestResourceStream("MapAction.Resources.MapActionToolbarsConfig.xml"))
+                    using (StreamReader file = new StreamReader(stream))
+                    {
+                        System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(MapActionToolbarConfig));
+                        mapActionToolbarConfig = (MapActionToolbarConfig)reader.Deserialize(file);
+                    }
                 }
             }
             catch (Exception e)

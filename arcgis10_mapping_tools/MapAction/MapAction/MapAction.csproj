@@ -110,6 +110,7 @@
     <Compile Include="UtilityClasses.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\MapActionToolbarsConfig.xml" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
