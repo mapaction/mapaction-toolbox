@@ -2,11 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
+
 namespace MapAction
 {
     public enum LanguageCodeFields { Alpha2, Alpha3b, Alpha3t, Alpha3h, Language };
+
+    [Serializable]
+    [XmlRoot("codes")]
     public class LanguageCodeLookup
     {
+        [XmlArray("code"), XmlArrayItem(typeof(LanguageCode), ElementName = "code")]
+
         public List<LanguageCode> listOfLanguageCodes;
         public LanguageCodeLookup()
         {

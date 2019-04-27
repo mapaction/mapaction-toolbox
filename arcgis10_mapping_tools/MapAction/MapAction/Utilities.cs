@@ -634,27 +634,24 @@ namespace MapAction
 
         public static MapAction.LanguageCodeLookup getLanguageCodeValues(string path = null)
         {
-            string opCfgFilePath;
-            Uri cmfURI;
-            //Create a dictionary to store the values from the xml
+            const string LanguageCodesConfigFileName = "language_codes.xml";
+
+            LanguageCodeLookup languageCodeLookup = new LanguageCodeLookup();
+
+            string configPath;
             if (path == null)
             {
                 //Get the currently set filepath from the ConfigTool settings file
-                opCfgFilePath = Properties.Settings.Default.crash_move_folder_path;
+                configPath = Properties.Settings.Default.crash_move_folder_path;
             }
             else
             {
-                opCfgFilePath = @path;
+                configPath = System.IO.Path.GetDirectoryName(path);
             }
-
-            cmfURI = new Uri(System.IO.Path.GetDirectoryName(opCfgFilePath), UriKind.Absolute);
-
-            //If the file exists in the filepath, add each element and value of the xml file 
-            LanguageCodeLookup languageCodeLookup = new LanguageCodeLookup();
-
             try
             {
-                if (File.Exists(@opCfgFilePath))
+                var @opCfgFilePath = System.IO.Path.Combine(configPath, LanguageCodesConfigFileName);
+                if (File.Exists(System.IO.Path.Combine(configPath, LanguageCodesConfigFileName)))
                 {
                     XmlReader xmlReader = XmlReader.Create(@opCfgFilePath);
                     while (xmlReader.Read())
@@ -667,6 +664,28 @@ namespace MapAction
                                                                          xmlReader.GetAttribute("a3h"),
                                                                          xmlReader.GetAttribute("lang"));
                             languageCodeLookup.add(languageCode);
+                        }
+                    }
+                }
+                else
+                {
+                    // Use default from resource in code-base 
+                    System.Reflection.Assembly assembly = Assembly.GetExecutingAssembly();
+                    using (Stream stream = assembly.GetManifestResourceStream(assembly.GetName().Name + ".Resources." + LanguageCodesConfigFileName))
+                    using (StreamReader file = new StreamReader(stream))
+                    using (XmlReader xmlReader =  XmlReader.Create(file))
+                    {
+                        while (xmlReader.Read())
+                        {
+                            if (xmlReader.Name == "code")
+                            {
+                                LanguageCode languageCode = new LanguageCode(xmlReader.GetAttribute("a2"),
+                                                                             xmlReader.GetAttribute("a3b"),
+                                                                             xmlReader.GetAttribute("a3t"),
+                                                                             xmlReader.GetAttribute("a3h"),
+                                                                             xmlReader.GetAttribute("lang"));
+                                languageCodeLookup.add(languageCode);
+                            }
                         }
                     }
                 }
