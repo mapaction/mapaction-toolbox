@@ -27,13 +27,13 @@ namespace MapActionToolbars
         private static string _operationId;
         private const string languageConfigXmlFileName = "language_config.xml";
         private const string elementLanguageLabel = "language_label";
-        private static string _organisationURL = "";
+        private static string _mapRootURL = "";
 
         public frmLayoutMain()
         {
             string path = MapAction.Utilities.getCrashMoveFolderPath();
             string filePath = System.IO.Path.Combine(path, languageConfigXmlFileName);
-            _organisationURL = MapAction.Utilities.getMDRUrlRoot();
+            _mapRootURL = MapAction.Utilities.getMDRUrlRoot();
 
             // Set up Language of labels
             this.languageDictionary = MapAction.Utilities.getLanguageConfigValues(filePath);
@@ -89,10 +89,10 @@ namespace MapActionToolbars
                 OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
                 _languageIso2 = config.LanguageIso2;
                 _operationId = config.OperationId.ToLower();
-                _organisationURL = config.DefaultSourceOrganisationUrl;
-                if (_organisationURL.Length == 0)
+                _mapRootURL = config.DefaultSourceOrganisationUrl;
+                if (_mapRootURL.Length == 0)
                 {
-                    _organisationURL = MapAction.Utilities.getMDRUrlRoot();
+                    _mapRootURL = MapAction.Utilities.getMDRUrlRoot();
                 }
             }
 
@@ -322,10 +322,10 @@ namespace MapActionToolbars
                         if (pElementProp.Name == "qr_code")
                         {
                             // Now update the QR Code
-                            string qrCodeImagePath = Utilities.GenerateQRCode(_organisationURL + _operationId.ToLower() + "-" + dict["map_no"].ToLower()
+                            string qrCodeImagePath = Utilities.GenerateQRCode(_mapRootURL + _operationId.ToLower() + "-" + dict["map_no"].ToLower()
                                                                               + "?utm_source=qr%20code&utm_medium=map%20product&utm_campaign="
-                                                                              + _operationId.ToLower() + "&utm_content=" + dict["map_no"] + "_"
-                                                                              + ArcMap.Application.Document.Title);
+                                                                              + _operationId.ToLower() + "&utm_content=" + dict["map_no"]);
+
                             pPictureElement.ImportPictureFromFile(qrCodeImagePath);
                         }
                     }

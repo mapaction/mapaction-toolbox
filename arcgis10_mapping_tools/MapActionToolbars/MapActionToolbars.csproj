@@ -281,7 +281,6 @@
     <Content Include="Images\ma_globe2.png" />
     <Content Include="Resources\clear-icon.png" />
     <AddInContent Include="Resources\rename_icon.png" />
-    <Content Include="Resources\MapActionToolbarsConfig.xml" />
     <Content Include="Sample\countries_config.xml" />
     <Content Include="Sample\language_codes.xml" />
     <Content Include="Sample\language_config.xml" />

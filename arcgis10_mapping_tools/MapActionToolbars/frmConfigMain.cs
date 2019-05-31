@@ -22,10 +22,13 @@ namespace MapActionToolbars
         private const string ToolName = "Operation Config Tool";
         private const string OrganisationComponentName = "Organisation";
         private const string DisclaimerTextComponentName = "Disclaimer Text";
+        private const string OrganisationUrlComponentName = "Organisation Url";
         private const string DonorTextComponentName = "Donor Text";
         private string _defaultSourceOrganisation = "";
         private string _defaultDisclaimerText = "";
         private string _defaultDonorText = "";
+        private string _defaultMapRootUrl = "https://maps.mapaction.org/dataset";
+        private string _defaultSourceOrganisationUrl = "https://mapaction.org";
         private const decimal _defaultJpegDpi = 300;
         private const decimal _defaultPdfDpi = 300;
         private const string _defaultExportToolPath = "";
@@ -54,7 +57,8 @@ namespace MapActionToolbars
                 this._defaultDisclaimerText = this.mapActionToolbarConfig.TextBoxItem(ToolName, DisclaimerTextComponentName);
                 this._defaultDonorText = this.mapActionToolbarConfig.TextBoxItem(ToolName, DonorTextComponentName);
                 InitializeComponent();
-                this.cboOrganisationUrl.Items.AddRange(this.mapActionToolbarConfig.OrganisationURLs().ToArray());
+                this.cboMapRootUrl.Items.AddRange(this.mapActionToolbarConfig.MapRootURLs().ToArray());
+                this._defaultSourceOrganisationUrl = this.mapActionToolbarConfig.TextBoxItem(ToolName, OrganisationUrlComponentName);
                 this.cboLanguage.Items.AddRange(this.languageCodeLookup.languages());
             }
         }
@@ -215,7 +219,8 @@ namespace MapActionToolbars
             FormValidationConfig.validateTimezone(cboTimeZone, eprTimezoneWarning, eprTimezoneError);
             FormValidationConfig.validateOperationID(tbxOperationId, eprOperationIdWarning);
             FormValidationConfig.validateOrganisation(tbxSourceOrganisation, eprOrganisationWarning);
-            FormValidationConfig.validateUrl(cboOrganisationUrl, eprUrlWarning);
+            FormValidationConfig.validateUrl(tbxOrganisationUrl, eprUrlWarning);
+            FormValidationConfig.validateUrl(cboMapRootUrl, eprUrlWarning);
             FormValidationConfig.validatePrimaryEmail(tbxPrimaryEmail, eprPrimaryEmailWarning, eprPrimaryEmailError);
             FormValidationConfig.validateDisclaimer(tbxDislaimerText, eprDisclaimerWarning);
             FormValidationConfig.validateDonor(tbxDonorText, eprDonorTextWarning);
@@ -235,7 +240,8 @@ namespace MapActionToolbars
                                                            TimeZone = cboTimeZone.Text,
                                                            OperationId = tbxOperationId.Text.ToLower(),
                                                            DefaultSourceOrganisation = tbxSourceOrganisation.Text,
-                                                           DefaultSourceOrganisationUrl = cboOrganisationUrl.Text,
+                                                           DefaultSourceOrganisationUrl = tbxOrganisationUrl.Text,
+                                                           DefaultMapRootUrl = cboMapRootUrl.Text,
                                                            DeploymentPrimaryEmail = tbxPrimaryEmail.Text,
                                                            DefaultDisclaimerText = tbxDislaimerText.Text,
                                                            DefaultDonorsText = tbxDonorText.Text,
@@ -244,7 +250,6 @@ namespace MapActionToolbars
                                                            DefaultEmfResDPI =numPdfDpi.Value.ToString(),
                                                            DefaultPathToExportDir = tbxExportToolPath.Text,
                                                            LanguageIso2 = this.languageCodeLookup.lookup(cboLanguage.Text, LanguageCodeFields.Alpha2),
-                                                           // Language = cboLanguage.Text - Language no longer used  
             };
             return config;
         }
@@ -341,7 +346,8 @@ namespace MapActionToolbars
             tbxOperationId.Text = newConfig.OperationId.ToLower();
             tbxPrimaryEmail.Text = newConfig.DeploymentPrimaryEmail;
             tbxSourceOrganisation.Text = newConfig.DefaultSourceOrganisation;
-            cboOrganisationUrl.Text = newConfig.DefaultSourceOrganisationUrl;
+            tbxOrganisationUrl.Text = newConfig.DefaultSourceOrganisationUrl;
+            cboMapRootUrl.Text = newConfig.DefaultMapRootUrl;
             tbxDislaimerText.Text = newConfig.DefaultDisclaimerText;
             tbxDonorText.Text = newConfig.DefaultDonorsText;
             numJpegDpi.Value = decimal.Parse(newConfig.DefaultJpegResDPI);
@@ -366,6 +372,8 @@ namespace MapActionToolbars
             tbxSourceOrganisation.Text = _defaultSourceOrganisation;
             tbxDislaimerText.Text = _defaultDisclaimerText;
             tbxDonorText.Text = _defaultDonorText;
+            tbxOrganisationUrl.Text = _defaultSourceOrganisationUrl;
+            cboMapRootUrl.Text = _defaultMapRootUrl;
             numJpegDpi.Value = _defaultJpegDpi;
             numPdfDpi.Value = _defaultPdfDpi;
             tbxExportToolPath.Text = _defaultExportToolPath;
@@ -384,7 +392,8 @@ namespace MapActionToolbars
                 cboLanguage.Enabled = true;
                 tbxOperationId.Enabled = true;
                 tbxSourceOrganisation.Enabled = true;
-                cboOrganisationUrl.Enabled = true;
+                cboMapRootUrl.Enabled = true;
+                tbxOrganisationUrl.Enabled = true;
                 tbxPrimaryEmail.Enabled = true;
                 tbxDislaimerText.Enabled = true;
                 tbxDonorText.Enabled = true;
@@ -416,9 +425,10 @@ namespace MapActionToolbars
                 cboLanguage.Enabled = false;
                 tbxOperationId.Enabled = false;
                 tbxSourceOrganisation.Enabled = false;
-                cboOrganisationUrl.Enabled = false;
+                cboMapRootUrl.Enabled = false;
                 tbxPrimaryEmail.Enabled = false;
                 tbxDislaimerText.Enabled = false;
+                tbxOrganisationUrl.Enabled = false;
                 tbxDonorText.Enabled = false;
                 numJpegDpi.Enabled = false;
                 numPdfDpi.Enabled = false;
@@ -512,7 +522,7 @@ namespace MapActionToolbars
 
         private void tbxOrganisationUrl_TextChanged(object sender, EventArgs e)
         {
-            FormValidationConfig.validateUrl(cboOrganisationUrl, eprUrlWarning);
+            FormValidationConfig.validateUrl(tbxOrganisationUrl, eprUrlWarning);
         }
 
         private void tbxDislaimerText_TextChanged(object sender, EventArgs e)

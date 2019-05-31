@@ -63,7 +63,7 @@ namespace MapActionToolbars
         private const string _operationConfigXmlFileName = "operation_config.xml";
         private const int _initialVersionNumber = 1;
         private string _labelLanguage;
-        private string _organisationURL = "";
+        private string _mapRootURL = "";
         private MapAction.LanguageCodeLookup languageCodeLookup = null;
         private MapActionToolbarConfig mapActionToolbarConfig = null;
 
@@ -195,10 +195,10 @@ namespace MapActionToolbars
             OperationConfig config = MapAction.Utilities.getOperationConfigValues(filePath);
             tbxGlideNo.Text = config.GlideNo;
             tbxCountry.Text = config.Country;
-            this._organisationURL = config.DefaultSourceOrganisationUrl;
-            if (this._organisationURL.Length == 0)
+            this._mapRootURL = config.DefaultMapRootUrl;
+            if (this._mapRootURL.Length == 0)
             {
-                this._organisationURL = MapAction.Utilities.getMDRUrlRoot();
+                this._mapRootURL = MapAction.Utilities.getMDRUrlRoot();
             }
 
             string operational_id = config.OperationId.ToLower();
@@ -520,11 +520,11 @@ namespace MapActionToolbars
                         if (pElementProp.Name == "qr_code")
                         {
                             // Now update the QR Code
-                            string qrCodeImagePath = Utilities.GenerateQRCode(this._organisationURL + tbxOperationId.Text.ToLower() + 
+                            string qrCodeImagePath = Utilities.GenerateQRCode(this._mapRootURL + tbxOperationId.Text.ToLower() +
                                                                               "-" + tbxMapNumber.Text.ToLower()
-                                                                              + "?utm_source=qr%20code&utm_medium=map%20product&utm_campaign="
-                                                                              + tbxOperationId.Text.ToLower() + "&utm_content=" + tbxMapNumber.Text + "_"
-                                                                              + mxdName);
+                                                                              + "?utm_source=qr_code&utm_medium=mapsheet&utm_campaign="
+                                                                              + tbxOperationId.Text.ToLower() + "&utm_content=" + tbxMapNumber.Text.ToLower() + "-v"
+                                                                              + nudVersionNumber.Value.ToString());
                             pPictureElement.ImportPictureFromFile(qrCodeImagePath);
                             qrCodeUpdated = true;
                         }

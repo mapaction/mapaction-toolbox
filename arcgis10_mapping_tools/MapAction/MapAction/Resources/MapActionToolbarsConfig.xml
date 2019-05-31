@@ -5,6 +5,12 @@
       <Components>
         <Component>
           <ComponentName>Organisation Url</ComponentName>
+          <TextBoxItem>
+            <TextBoxItemValue>https://mapaction.org</TextBoxItemValue>
+          </TextBoxItem>
+        </Component>
+        <Component>
+          <ComponentName>Map Root Url</ComponentName>
           <ComboBoxItems>
             <ComboBoxItem>
               <ComboBoxItemValue>https://maps.mapaction.org/dataset/</ComboBoxItemValue>

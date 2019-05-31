@@ -35,19 +35,22 @@ namespace MapAction
             return themes;
         }
 
-        public List<string> OrganisationURLs()
+        public List<string> MapRootURLs()
         {
-            List<string> organisationURLs = new List<string>();
+            List<string> mapRootURLs = new List<string>();
 
             var exportTool = Tools.Find(i => i.ToolName == Tool.OperationConfigToolName);
 
-            var organisationURLComponent = exportTool.Components.Find(i => i.ComponentName == Component.OrganisationUrlComponentName);
+            var mapRootURLComponent = exportTool.Components.Find(i => i.ComponentName == Component.MapRootUrlComponentName);
 
-            foreach (ComboBoxItem comboBoxItem in organisationURLComponent.ComboBoxItems)
+            if (mapRootURLComponent != null)
             {
-                organisationURLs.Add(comboBoxItem.ComboBoxItemValue);
+                foreach (ComboBoxItem comboBoxItem in mapRootURLComponent.ComboBoxItems)
+                {
+                    mapRootURLs.Add(comboBoxItem.ComboBoxItemValue);
+                }
             }
-            return organisationURLs;
+            return mapRootURLs;
         }
 
         public string TextBoxItem(string toolName, string componentName)
@@ -60,7 +63,10 @@ namespace MapAction
                 var component = tool.Components.Find(i => i.ComponentName == componentName);
                 if (component != null)
                 {
-                    textBoxItemValue = component.TextBoxItem.TextBoxItemValue;
+                    if (component.TextBoxItem != null)
+                    {
+                        textBoxItemValue = component.TextBoxItem.TextBoxItemValue;
+                    }
                 }
             }
             return textBoxItemValue;
@@ -85,6 +91,7 @@ namespace MapAction
     {
         public static readonly string ThemeComponentName = "Themes";
         public static readonly string OrganisationUrlComponentName = "Organisation Url";
+        public static readonly string MapRootUrlComponentName = "Map Root Url";
         public string ComponentName;
         public List<CheckBoxItem> CheckBoxItems;
         public List<ComboBoxItem> ComboBoxItems;
