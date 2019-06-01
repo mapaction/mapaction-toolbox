@@ -27,7 +27,7 @@ namespace MapActionToolbars
         private static string _operationId;
         private const string languageConfigXmlFileName = "language_config.xml";
         private const string elementLanguageLabel = "language_label";
-        private static string _mapRootURL = "";
+        private static string _mapRootURL = "https://maps.mapaction.org/dataset";
 
         public frmLayoutMain()
         {
@@ -89,7 +89,7 @@ namespace MapActionToolbars
                 OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
                 _languageIso2 = config.LanguageIso2;
                 _operationId = config.OperationId.ToLower();
-                _mapRootURL = config.DefaultSourceOrganisationUrl;
+                _mapRootURL = config.DefaultMapRootUrl;
                 if (_mapRootURL.Length == 0)
                 {
                     _mapRootURL = MapAction.Utilities.getMDRUrlRoot();
@@ -322,9 +322,11 @@ namespace MapActionToolbars
                         if (pElementProp.Name == "qr_code")
                         {
                             // Now update the QR Code
-                            string qrCodeImagePath = Utilities.GenerateQRCode(_mapRootURL + _operationId.ToLower() + "-" + dict["map_no"].ToLower()
-                                                                              + "?utm_source=qr%20code&utm_medium=map%20product&utm_campaign="
-                                                                              + _operationId.ToLower() + "&utm_content=" + dict["map_no"]);
+                            string qrCodeImagePath = Utilities.GenerateQRCode(_mapRootURL + _operationId.ToLower() +
+                                                                              "-" + dict["map_no"].ToLower()
+                                                                              + "?utm_source=qr_code&utm_medium=mapsheet&utm_campaign="
+                                                                              + _operationId.ToLower() + "&utm_content=" + dict["map_no"].ToLower());
+
 
                             pPictureElement.ImportPictureFromFile(qrCodeImagePath);
                         }
