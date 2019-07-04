@@ -61,7 +61,8 @@ namespace MapActionToolbars
         private const string _statusCorrection = "Correction";
         private const string _languageCodesXmlFileName = "language_codes.xml";
         private const string _operationConfigXmlFileName = "operation_config.xml";
-        private const int _initialVersionNumber = 1;
+        private const string _initialVersionNumber = "1";
+        private const string _initialMapNumber = "MA001";
         private string _labelLanguage;
         private string _mapRootURL = "";
         private MapAction.LanguageCodeLookup languageCodeLookup = null;
@@ -174,10 +175,8 @@ namespace MapActionToolbars
             if (dict.ContainsKey("data_sources")) { tbxDataSources.Text = dict["data_sources"]; }
             if (dict.ContainsKey("map_no")) 
             {
-                _mapNumber = dict["map_no"];
-                tbxMapNumber.Text = _mapNumber;  
+                setMapNumberAndVersion(dict["map_no"]);
             }
-
             if (dict.ContainsKey("language_label"))
             {
                 _labelLanguage = dict["language_label"];
@@ -238,15 +237,48 @@ namespace MapActionToolbars
             tbxMapbookMode.Enabled = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
         }
 
-        // Set the "Status" value and the VersionNumber:
+        private void setMapNumberAndVersion(string mapNumberAndVersion)
+        {
+            string mapNumber = _initialMapNumber;
+            string mapVersion = _initialVersionNumber;
 
+            string[] words = mapNumberAndVersion.Split(' ');
+            int i = 1;
+            for (i = 0; i < words.Length; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        if (words[i].Length > 0)
+                        {
+                            mapNumber = words[i];
+                        }
+                        break;
+
+                    case 1:
+                        Regex digitsOnly = new Regex(@"[^\d]");
+                        string part2 = digitsOnly.Replace(words[i], "");
+                        if (part2.Length > 0)
+                        {
+                            mapVersion = part2;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            this.tbxMapNumber.Text = mapNumber;
+            this.tbxVersionNumber.Text = mapVersion;
+        }
+
+        // Set the "Status" value and the VersionNumber:
         private void setValuesFromExistingXML()
         {
             // Presume Initial Version
-            nudVersionNumber.Value = _initialVersionNumber;
             cboStatus.Text = _statusNew;
 
-            string xmlPath = System.IO.Path.Combine(tbxExportZipPath.Text,tbxMapDocument.Text + ".xml");
+            string xmlPath = System.IO.Path.Combine(tbxExportZipPath.Text, this.tbxMapNumber.Text, tbxMapDocument.Text + ".xml");
 
             // Does the xmlPath already exist?
             if (File.Exists(xmlPath))
@@ -255,11 +287,7 @@ namespace MapActionToolbars
                 XDocument doc = XDocument.Load(xmlPath);
                 foreach (XElement usEle in doc.Root.Descendants())
                 {
-                    if (usEle.Name.ToString().Equals("versionNumber"))
-                    {
-                        nudVersionNumber.Value = Convert.ToDecimal(usEle.Value.ToString());
-                    }
-                    else if (usEle.Name.ToString().Equals("status"))
+                    if (usEle.Name.ToString().Equals("status"))
                     {
                         cboStatus.Text = usEle.Value.ToString();
                     }
@@ -303,7 +331,7 @@ namespace MapActionToolbars
                     }
                 }
             }
-            if (nudVersionNumber.Value == _initialVersionNumber)
+            if (tbxVersionNumber.Text == _initialVersionNumber)
             {
                 cboStatus.Text = _statusNew;
             }
@@ -347,10 +375,7 @@ namespace MapActionToolbars
                 tbxExportZipPath.Focus();
                 return;
             }
-
-            // Check for MapNumber + "_" + VersionNumber
-
-            path = System.IO.Path.Combine(path, this.tbxMapNumber.Text + "_" + this.nudVersionNumber.Value);
+            path = System.IO.Path.Combine(path, this.tbxMapNumber.Text);
 
             System.IO.Directory.CreateDirectory(path);
             Debug.WriteLine("checks on export complete");
@@ -524,7 +549,7 @@ namespace MapActionToolbars
                                                                               "-" + tbxMapNumber.Text.ToLower()
                                                                               + "?utm_source=qr_code&utm_medium=mapsheet&utm_campaign="
                                                                               + tbxOperationId.Text.ToLower() + "&utm_content=" + tbxMapNumber.Text.ToLower() + "-v"
-                                                                              + nudVersionNumber.Value.ToString());
+                                                                              + tbxVersionNumber.Text);
                             pPictureElement.ImportPictureFromFile(qrCodeImagePath);
                             qrCodeUpdated = true;
                         }
@@ -569,7 +594,7 @@ namespace MapActionToolbars
             // Create a dictionary and add values from Export form
             var dict = new Dictionary<string, string>()
             {
-                {"versionNumber",   nudVersionNumber.Value.ToString()},
+                {"versionNumber",   tbxVersionNumber.Text},
                 {"mapNumber",       tbxMapNumber.Text},
                 {"operationID",     tbxOperationId.Text},
                 {"sourceorg",       "MapAction"}, //this is hard coded in the existing applicaton
@@ -649,7 +674,7 @@ namespace MapActionToolbars
             //IActiveView pActiveView = pMxDoc.ActiveView;
             var dict = new Dictionary<string, string>();
 
-            string path = System.IO.Path.Combine(tbxExportZipPath.Text, this.tbxMapNumber.Text + "_" + this.nudVersionNumber.Value);
+            string path = System.IO.Path.Combine(tbxExportZipPath.Text, this.tbxMapNumber.Text);
             // Get the path and file name to pass to the various functions
             string exportPathFileName = getExportPathFileName(path, tbxMapDocument.Text);
 
@@ -759,7 +784,6 @@ namespace MapActionToolbars
             return scaleString;
         }
 
-
         public static string getGlideNo()
         {
             string GlideNo = string.Empty;
@@ -791,7 +815,6 @@ namespace MapActionToolbars
             {
                 stringSpatialRef = "Unknown";
             }
-
             return stringSpatialRef;
         }
 
@@ -918,18 +941,6 @@ namespace MapActionToolbars
             FormValidationExport.validationCheck(_accessNoteValidationResult, imgAccessNoteStatus);
             FormValidationExport.validationCheck(_qualityControlValidationResult, imgQualityControlStatus);
             FormValidationExport.validationCheck(_languageValidationResult, imgLanguageStatus);
-        }
-
-        private void nudVersionNumber_ValueChanged(object sender, EventArgs e)
-        {
-            if (nudVersionNumber.Value == 1)
-            {
-                cboStatus.Text = "New";
-            }
-            else
-            {
-                cboStatus.Text = "Updated";
-            }
         }
 
         private void btnLayoutRight_Click_1(object sender, EventArgs e)

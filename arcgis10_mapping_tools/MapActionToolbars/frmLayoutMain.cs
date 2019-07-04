@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -28,6 +29,8 @@ namespace MapActionToolbars
         private const string languageConfigXmlFileName = "language_config.xml";
         private const string elementLanguageLabel = "language_label";
         private static string _mapRootURL = "https://maps.mapaction.org/dataset";
+        private const string defaultMapNumber = "MA001";
+        private const string defaultMapVersion = "1";
 
         public frmLayoutMain()
         {
@@ -116,7 +119,7 @@ namespace MapActionToolbars
             //IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
             Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, "Main map");
             
-            //Check if the various elements existist that automated update, if not disable the automation buttons.
+            //Check if the various elements exist that automated update, if not disable the automation buttons.
             //If they are present then update the text boxes with the value from the dictionary 
             if (!dict.ContainsKey("mxd_name") || !dict.ContainsKey("scale") || !dict.ContainsKey("scale") || !dict.ContainsKey("spatial_reference"))
             {
@@ -125,7 +128,17 @@ namespace MapActionToolbars
             if (dict.ContainsKey("title") == true) { tbxTitle.Text = dict["title"]; } else { tbxTitle.Text = "Element not present"; tbxTitle.ReadOnly = true; };
             if (dict.ContainsKey("summary") == true) { tbxSummary.Text = dict["summary"]; } else { tbxSummary.Text = "Element not present"; tbxSummary.ReadOnly = true; };
             if (dict.ContainsKey("data_sources") == true) { tbxDataSources.Text = dict["data_sources"]; } else { tbxDataSources.Text = "Element not present"; tbxDataSources.ReadOnly = true; };
-            if (dict.ContainsKey("map_no") == true) { tbxMapNumber.Text = dict["map_no"]; } else { tbxMapNumber.Text = "Element not present"; tbxMapNumber.ReadOnly = true; };
+            if (dict.ContainsKey("map_no") == true)
+            {
+                setMapNumberAndVersion(dict["map_no"]);
+                dict["map_no"] = tbxMapNumber.Text;
+                dict["map_version"] = nudVersionNumber.Text;
+            }
+            else
+            {
+                tbxMapNumber.Text = "Element not present";
+                tbxMapNumber.ReadOnly = true;
+            }
             if (dict.ContainsKey("mxd_name") == true) { tbxMapDocument.Text = dict["mxd_name"]; } else { tbxMapDocument.Text = "Element not present"; tbxMapDocument.ReadOnly = true; btnMapDocument.Enabled = false; };
             if (dict.ContainsKey("scale") == true) { tbxScale.Text = dict["scale"]; } else { tbxScale.Text = "Element not present"; tbxScale.ReadOnly = true; btnUpdateScale.Enabled = false; };
             if (dict.ContainsKey("spatial_reference") == true) { tbxSpatialReference.Text = dict["spatial_reference"]; } else { tbxSpatialReference.Text = "Element not present"; tbxSpatialReference.ReadOnly = true; btnSpatialReference.Enabled = false; };
@@ -163,6 +176,7 @@ namespace MapActionToolbars
             this.tbxSummary.Text = string.Empty;
             this.tbxDataSources.Text = string.Empty;
             this.tbxMapNumber.Text = string.Empty;
+            this.nudVersionNumber.Text = string.Empty;
             this.tbxMapDocument.Text = string.Empty;
             this.tbxScale.Text = string.Empty;
             this.tbxSpatialReference.Text = string.Empty;
@@ -200,6 +214,7 @@ namespace MapActionToolbars
             dict.Add("summary", this.tbxSummary.Text);
             dict.Add("data_sources", this.tbxDataSources.Text);
             dict.Add("map_no", this.tbxMapNumber.Text);
+            dict.Add("map_version", this.nudVersionNumber.Text);
             dict.Add("mxd_name", this.tbxMapDocument.Text);
             dict.Add("scale", this.tbxScale.Text);
             dict.Add("spatial_reference", this.tbxSpatialReference.Text);
@@ -214,6 +229,41 @@ namespace MapActionToolbars
             setAllElements(dict);
             this.disposeAllErrorProviders();
             this.Close();
+        }
+
+        private void setMapNumberAndVersion(string mapNumberAndVersion)
+        {
+            string mapNumber = defaultMapNumber;
+            string mapVersion = defaultMapVersion;
+
+            string[] words = mapNumberAndVersion.Split(' ');
+            int i = 1;
+            for (i = 0; i < words.Length; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        if (words[i].Length > 0)
+                        {
+                            mapNumber = words[i];
+                        }
+                        break;
+
+                    case 1:
+                        Regex digitsOnly = new Regex(@"[^\d]");
+                        string part2 = digitsOnly.Replace(words[i], "");
+                        if (part2.Length > 0)
+                        {
+                            mapVersion = part2;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            this.tbxMapNumber.Text = mapNumber;
+            this.nudVersionNumber.Text = mapVersion;
         }
 
         private void tspBtnCheckElements_Click(object sender, EventArgs e)
@@ -280,7 +330,7 @@ namespace MapActionToolbars
                         }
                         else if (pElementProp.Name == "map_no")
                         {
-                            pTextElement.Text = dict["map_no"];
+                            pTextElement.Text = dict["map_no"] + " v" + dict["map_version"];
                         }
                         else if (pElementProp.Name == "mxd_name")
                         {
@@ -325,8 +375,8 @@ namespace MapActionToolbars
                             string qrCodeImagePath = Utilities.GenerateQRCode(_mapRootURL + _operationId.ToLower() +
                                                                               "-" + dict["map_no"].ToLower()
                                                                               + "?utm_source=qr_code&utm_medium=mapsheet&utm_campaign="
-                                                                              + _operationId.ToLower() + "&utm_content=" + dict["map_no"].ToLower());
-
+                                                                              + _operationId.ToLower() + "&utm_content=" + dict["map_no"].ToLower() + "-v"
+                                                                              + dict["map_version"]);
 
                             pPictureElement.ImportPictureFromFile(qrCodeImagePath);
                         }

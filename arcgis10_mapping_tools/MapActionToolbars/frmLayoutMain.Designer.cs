@@ -53,6 +53,8 @@ namespace MapActionToolbars
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.gbxManual = new System.Windows.Forms.GroupBox();
+            this.nudVersionNumber = new System.Windows.Forms.NumericUpDown();
+            this.labelVersionNumber = new System.Windows.Forms.Label();
             this.tbxDataSources = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tbxMapNumber = new System.Windows.Forms.TextBox();
@@ -108,6 +110,7 @@ namespace MapActionToolbars
             this.eprTimezoneError = new System.Windows.Forms.ErrorProvider(this.components);
             this.gbxAutomated.SuspendLayout();
             this.gbxManual.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVersionNumber)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapNumberError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapTitle)).BeginInit();
@@ -309,6 +312,8 @@ namespace MapActionToolbars
             // 
             // gbxManual
             // 
+            this.gbxManual.Controls.Add(this.nudVersionNumber);
+            this.gbxManual.Controls.Add(this.labelVersionNumber);
             this.gbxManual.Controls.Add(this.tbxDataSources);
             this.gbxManual.Controls.Add(this.label5);
             this.gbxManual.Controls.Add(this.tbxMapNumber);
@@ -323,6 +328,37 @@ namespace MapActionToolbars
             this.gbxManual.TabIndex = 40;
             this.gbxManual.TabStop = false;
             this.gbxManual.Text = "Manually set elements";
+            // 
+            // nudVersionNumber
+            // 
+            this.nudVersionNumber.Location = new System.Drawing.Point(263, 213);
+            this.nudVersionNumber.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nudVersionNumber.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudVersionNumber.Name = "nudVersionNumber";
+            this.nudVersionNumber.Size = new System.Drawing.Size(64, 20);
+            this.nudVersionNumber.TabIndex = 31;
+            this.nudVersionNumber.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // labelVersionNumber
+            // 
+            this.labelVersionNumber.AutoSize = true;
+            this.labelVersionNumber.Location = new System.Drawing.Point(216, 215);
+            this.labelVersionNumber.Name = "labelVersionNumber";
+            this.labelVersionNumber.Size = new System.Drawing.Size(42, 13);
+            this.labelVersionNumber.TabIndex = 32;
+            this.labelVersionNumber.Text = "Version";
             // 
             // tbxDataSources
             // 
@@ -347,7 +383,7 @@ namespace MapActionToolbars
             // 
             this.tbxMapNumber.Location = new System.Drawing.Point(103, 213);
             this.tbxMapNumber.Name = "tbxMapNumber";
-            this.tbxMapNumber.Size = new System.Drawing.Size(224, 20);
+            this.tbxMapNumber.Size = new System.Drawing.Size(107, 20);
             this.tbxMapNumber.TabIndex = 4;
             this.tbxMapNumber.TextChanged += new System.EventHandler(this.tbxMapNumber_TextChanged);
             // 
@@ -782,6 +818,7 @@ namespace MapActionToolbars
             this.gbxAutomated.PerformLayout();
             this.gbxManual.ResumeLayout(false);
             this.gbxManual.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVersionNumber)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapNumberError)).EndInit();
@@ -888,5 +925,7 @@ namespace MapActionToolbars
         private System.Windows.Forms.ErrorProvider eprTimezoneError;
         private System.Windows.Forms.ComboBox cboLabelLanguage;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.NumericUpDown nudVersionNumber;
+        private System.Windows.Forms.Label labelVersionNumber;
     }
 }
