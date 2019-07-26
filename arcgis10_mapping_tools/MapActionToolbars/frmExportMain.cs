@@ -61,17 +61,29 @@ namespace MapActionToolbars
         private const string _statusCorrection = "Correction";
         private const string _languageCodesXmlFileName = "language_codes.xml";
         private const string _operationConfigXmlFileName = "operation_config.xml";
-        private const int _initialVersionNumber = 1;
+        private const string _initialVersionNumber = "1";
+        private const string _initialMapNumber = "MA001";
         private string _labelLanguage;
+        private string _mapRootURL = "";
         private MapAction.LanguageCodeLookup languageCodeLookup = null;
+        private MapActionToolbarConfig mapActionToolbarConfig = null;
 
         public frmExportMain()
         {
             string path = MapAction.Utilities.getCrashMoveFolderPath();
             string languageFilePath = System.IO.Path.Combine(path, _languageCodesXmlFileName);
             this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
+            this.mapActionToolbarConfig = MapAction.Utilities.getToolboxConfig();
 
-            InitializeComponent();
+            if (this.mapActionToolbarConfig.Tools.Count > 0)
+            {
+                InitializeComponent();
+                this.checkedListBoxThemes.Items.AddRange(this.mapActionToolbarConfig.Themes().ToArray());
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         private void btnUserRight_Click(object sender, EventArgs e)
@@ -163,10 +175,8 @@ namespace MapActionToolbars
             if (dict.ContainsKey("data_sources")) { tbxDataSources.Text = dict["data_sources"]; }
             if (dict.ContainsKey("map_no")) 
             {
-                _mapNumber = dict["map_no"];
-                tbxMapNumber.Text = _mapNumber;  
+                setMapNumberAndVersion(dict["map_no"]);
             }
-
             if (dict.ContainsKey("language_label"))
             {
                 _labelLanguage = dict["language_label"];
@@ -184,10 +194,14 @@ namespace MapActionToolbars
             OperationConfig config = MapAction.Utilities.getOperationConfigValues(filePath);
             tbxGlideNo.Text = config.GlideNo;
             tbxCountry.Text = config.Country;
+            this._mapRootURL = config.DefaultMapRootUrl;
+            if (this._mapRootURL.Length == 0)
+            {
+                this._mapRootURL = MapAction.Utilities.getMDRUrlRoot();
+            }
 
-            string operational_id = config.OperationId;
-            Debug.WriteLine("Op ID: " + operational_id);
-            tbxOperationId.Text = config.OperationId;
+            string operational_id = config.OperationId.ToLower();
+            tbxOperationId.Text = config.OperationId.ToLower();
             tbxExportZipPath.Text = config.DefaultPathToExportDir;
             nudJpegResolution.Value = Convert.ToDecimal(config.DefaultJpegResDPI); 
             nudPdfResolution.Value = Convert.ToDecimal(config.DefaultPdfResDPI); 
@@ -210,6 +224,10 @@ namespace MapActionToolbars
             tbxDate.Text = date;
             tbxTime.Text = time;
 
+            // Disable these by default
+            this.nudEmfResolution.Enabled = false;
+            this.nudKmlResolution.Enabled = false;
+
             tbxPaperSize.Text = MapAction.Utilities.getPageSize(_pMxDoc as IMapDocument, _targetMapFrame);
             tbxScale.Text = MapAction.Utilities.getScale(_pMxDoc as IMapDocument, _targetMapFrame);
 
@@ -219,15 +237,48 @@ namespace MapActionToolbars
             tbxMapbookMode.Enabled = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
         }
 
-        // Set the "Status" value and the VersionNumber:
+        private void setMapNumberAndVersion(string mapNumberAndVersion)
+        {
+            string mapNumber = _initialMapNumber;
+            string mapVersion = _initialVersionNumber;
 
+            string[] words = mapNumberAndVersion.Split(' ');
+            int i = 1;
+            for (i = 0; i < words.Length; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        if (words[i].Length > 0)
+                        {
+                            mapNumber = words[i];
+                        }
+                        break;
+
+                    case 1:
+                        Regex digitsOnly = new Regex(@"[^\d]");
+                        string part2 = digitsOnly.Replace(words[i], "");
+                        if (part2.Length > 0)
+                        {
+                            mapVersion = part2;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            this.tbxMapNumber.Text = mapNumber;
+            this.tbxVersionNumber.Text = mapVersion;
+        }
+
+        // Set the "Status" value and the VersionNumber:
         private void setValuesFromExistingXML()
         {
             // Presume Initial Version
-            nudVersionNumber.Value = _initialVersionNumber;
             cboStatus.Text = _statusNew;
 
-            string xmlPath = System.IO.Path.Combine(tbxExportZipPath.Text,tbxMapDocument.Text + ".xml");
+            string xmlPath = System.IO.Path.Combine(tbxExportZipPath.Text, this.tbxMapNumber.Text, tbxMapDocument.Text + ".xml");
 
             // Does the xmlPath already exist?
             if (File.Exists(xmlPath))
@@ -236,11 +287,7 @@ namespace MapActionToolbars
                 XDocument doc = XDocument.Load(xmlPath);
                 foreach (XElement usEle in doc.Root.Descendants())
                 {
-                    if (usEle.Name.ToString().Equals("versionNumber"))
-                    {
-                        nudVersionNumber.Value = Convert.ToDecimal(usEle.Value.ToString());
-                    }
-                    else if (usEle.Name.ToString().Equals("status"))
+                    if (usEle.Name.ToString().Equals("status"))
                     {
                         cboStatus.Text = usEle.Value.ToString();
                     }
@@ -284,7 +331,7 @@ namespace MapActionToolbars
                     }
                 }
             }
-            if (nudVersionNumber.Value == _initialVersionNumber)
+            if (tbxVersionNumber.Text == _initialVersionNumber)
             {
                 cboStatus.Text = _statusNew;
             }
@@ -328,10 +375,13 @@ namespace MapActionToolbars
                 tbxExportZipPath.Focus();
                 return;
             }
+            path = System.IO.Path.Combine(path, this.tbxMapNumber.Text);
+
+            System.IO.Directory.CreateDirectory(path);
             Debug.WriteLine("checks on export complete");
 
             // Get the path and file name to pass to the various functions
-            string exportPathFileName = getExportPathFileName(tbxExportZipPath.Text, tbxMapDocument.Text);
+            string exportPathFileName = getExportPathFileName(path, tbxMapDocument.Text);
 
             // Disable the button after the export checks are complete to prevent multiple clicks
             this.Enabled = false;
@@ -352,11 +402,13 @@ namespace MapActionToolbars
 
             // Create a dictionary to get and store the map frame extents to pass to the output xml
 
-
             IMapDocument mapDoc;
             mapDoc = (pMxDoc as MxDocument) as IMapDocument;
             bool isDDP = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
             Dictionary<string, string> dictFrameExtents = Utilities.getMapFrameWgs84BoundingBox(mapDoc, "Main map");
+
+            // Update QR Code
+            updateQRCode(ArcMap.Application.Document.Title);
 
             if (!isDDP) // Need a way to do this - the form elements are all disabled before export - see ^^
             {
@@ -370,18 +422,22 @@ namespace MapActionToolbars
                 {
                     dictImageFileSizes[kvp.Key] = MapAction.Utilities.getFileSize(kvp.Value);
                 }
-                System.Windows.Forms.Application.DoEvents();
+                if (checkBoxKml.Checked)
+                {
+                    System.Windows.Forms.Application.DoEvents();
 
-                // Export KML
-                IMapDocument pMapDoc = (IMapDocument)pMxDoc;            
-                string kmzPathFileName = exportPathFileName + ".kmz";
-                string kmzScale;
-                if (dictFrameExtents.ContainsKey("scale")) {kmzScale = dictFrameExtents["scale"];} else {kmzScale = null;};
-            
-                // TODO move this to the MapImageExporter class too, for now it is still in the static MapExport class
-                MapAction.MapExport.exportMapFrameKmlAsRaster(pMapDoc, "Main map", @kmzPathFileName, kmzScale, nudKmlResolution.Value.ToString());
-                // Add the xml path to the dictFilePaths, which is the input into the creatZip method
-                dictFilePaths["kmz"] = kmzPathFileName;
+                    // Export KML
+                    IMapDocument pMapDoc = (IMapDocument)pMxDoc;
+                    string kmzPathFileName = exportPathFileName + ".kmz";
+                    string kmzScale;
+
+                    if (dictFrameExtents.ContainsKey("scale")) { kmzScale = dictFrameExtents["scale"]; } else { kmzScale = null; };
+
+                    // TODO move this to the MapImageExporter class too, for now it is still in the static MapExport class
+                    MapAction.MapExport.exportMapFrameKmlAsRaster(pMapDoc, "Main map", @kmzPathFileName, kmzScale, nudKmlResolution.Value.ToString());
+                    // Add the xml path to the dictFilePaths, which is the input into the creatZip method
+                    dictFilePaths["kmz"] = kmzPathFileName;
+                }
             }
             else
             {
@@ -449,10 +505,6 @@ namespace MapActionToolbars
                     throw;
                 }
             }
-            // close the wait dialog
-            // dlg.lblWaitMainMessage.Text = "Export complete";
-            // int milliseconds = 1250;
-            // Thread.Sleep(milliseconds);
             this.Close();
 
             // the output filepath
@@ -465,11 +517,52 @@ namespace MapActionToolbars
             {
                 MapAction.MapExport.openExplorerDirectory(tbxExportZipPath.Text);
             }
-
             sw.Stop();
             string timeTaken = Math.Round((sw.Elapsed.TotalMilliseconds / 1000),2).ToString();
             Debug.WriteLine("Time taken: ", timeTaken);
+        }
 
+        private bool updateQRCode(string mxdName)
+        {
+            bool qrCodeUpdated = false;
+            // Update QR Code
+            IPageLayout pLayout = _pMxDoc.PageLayout;
+            IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
+            pGraphics.Reset();
+
+            IElement element = new TextElementClass();
+            IElementProperties2 pElementProp;
+            IPictureElement pPictureElement;
+            try
+            {
+                element = (IElement)pGraphics.Next();
+                while (element != null)
+                {
+                    if (element is IPictureElement)
+                    {
+                        pPictureElement = element as IPictureElement;
+                        pElementProp = element as IElementProperties2;
+                        if (pElementProp.Name == "qr_code")
+                        {
+                            // Now update the QR Code
+                            string qrCodeImagePath = Utilities.GenerateQRCode(this._mapRootURL + tbxOperationId.Text.ToLower() +
+                                                                              "-" + tbxMapNumber.Text.ToLower()
+                                                                              + "?utm_source=qr_code&utm_medium=mapsheet&utm_campaign="
+                                                                              + tbxOperationId.Text.ToLower() + "&utm_content=" + tbxMapNumber.Text.ToLower() + "-v"
+                                                                              + tbxVersionNumber.Text);
+                            pPictureElement.ImportPictureFromFile(qrCodeImagePath);
+                            qrCodeUpdated = true;
+                        }
+                    }
+                    element = (IElement)pGraphics.Next();
+                }
+            }
+            catch (Exception eh)
+            {
+                System.Diagnostics.Debug.WriteLine("Error updating qr_code element");
+                System.Diagnostics.Debug.WriteLine(eh);
+            }
+            return qrCodeUpdated;
         }
 
         private Dictionary<string, string> getExportToolValues(
@@ -501,7 +594,7 @@ namespace MapActionToolbars
             // Create a dictionary and add values from Export form
             var dict = new Dictionary<string, string>()
             {
-                {"versionNumber",   nudVersionNumber.Value.ToString()},
+                {"versionNumber",   tbxVersionNumber.Text},
                 {"mapNumber",       tbxMapNumber.Text},
                 {"operationID",     tbxOperationId.Text},
                 {"sourceorg",       "MapAction"}, //this is hard coded in the existing applicaton
@@ -518,8 +611,6 @@ namespace MapActionToolbars
                 {"ymin",            dictFrameExtents["yMin"]},
                 {"proj",            tbxProjection.Text},
                 {"datum",           tbxDatum.Text},
-                //{"jpgfilename",     System.IO.Path.GetFileName(dictFilePaths["jpeg"])},
-                //{"pdffilename",     System.IO.Path.GetFileName(dictFilePaths["pdf"])},
                 {"qclevel",         cboQualityControl.Text},
                 {"qcname",          ""},
                 {"access",          cboAccess.Text},
@@ -531,9 +622,7 @@ namespace MapActionToolbars
                 {"themes",          themes.ToString()},
                 {"scale",           tbxScale.Text},
                 {"papersize",       tbxPaperSize.Text},
-                //{"jpgfilesize",     dictImageFileSizes["jpeg"].ToString()},
                 {"jpgresolutiondpi",nudJpegResolution.Value.ToString()},
-                //{"pdffilesize",     dictImageFileSizes["pdf"].ToString()},
                 {"pdfresolutiondpi",nudPdfResolution.Value.ToString()},
                 {"kmlresolutiondpi",nudKmlResolution.Value.ToString()},
                 {"mxdfilename",     mxdName},
@@ -541,7 +630,6 @@ namespace MapActionToolbars
                 {"paperxmin",       ""},
                 {"paperymax",       ""},
                 {"paperymin",       ""},
-                //{"kmzfilename",     System.IO.Path.GetFileName(dictFilePaths["kmz"])},
                 {"accessnotes",     tbxImageAccessNotes.Text},
                 {"product-type",    tbxMapbookMode.Enabled ? "atlas" : "mapsheet"},
                 {"language-iso2",   _languageISO2}
@@ -551,8 +639,11 @@ namespace MapActionToolbars
             dict["pdffilename"] = System.IO.Path.GetFileName(dictFilePaths["pdf"]);
             dict["jpgfilesize"] = dictImageFileSizes["jpeg"].ToString();
             dict["pdffilesize"] = dictImageFileSizes["pdf"].ToString();
-            dict["kmzfilename"] = System.IO.Path.GetFileName(dictFilePaths["kmz"]);
 
+            if (checkBoxKml.Checked == true)
+            {
+                dict["kmzfilename"] = System.IO.Path.GetFileName(dictFilePaths["kmz"]);
+            }
             return dict;
             //string filename = Path.GetFileName(path);
         }
@@ -583,16 +674,16 @@ namespace MapActionToolbars
             //IActiveView pActiveView = pMxDoc.ActiveView;
             var dict = new Dictionary<string, string>();
 
+            string path = System.IO.Path.Combine(tbxExportZipPath.Text, this.tbxMapNumber.Text);
             // Get the path and file name to pass to the various functions
-            string exportPathFileName = getExportPathFileName(tbxExportZipPath.Text, tbxMapDocument.Text);
+            string exportPathFileName = getExportPathFileName(path, tbxMapDocument.Text);
 
             //check to see variable exists
-            if (!Directory.Exists(@tbxExportZipPath.Text) || tbxMapDocument.Text == "" || tbxMapDocument.Text == string.Empty)
+            if (!Directory.Exists(@path) || tbxMapDocument.Text == "" || tbxMapDocument.Text == string.Empty)
             {
                 Debug.WriteLine("Image export variables not valid.");
                 return dict;
             }
-
             else
             {
                 // refactored export code into non-static class which handles thumbnail filename and pixel size limits 
@@ -602,8 +693,11 @@ namespace MapActionToolbars
                     layoutexporter.exportImage(MapActionExportTypes.pdf, Convert.ToUInt16(nudPdfResolution.Value));
                 dict[MapActionExportTypes.jpeg.ToString()] =  
                     layoutexporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudJpegResolution.Value));
-                dict[MapActionExportTypes.emf.ToString()] =  
-                    layoutexporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
+                if (checkBoxEmf.Checked == true)
+                {
+                    dict[MapActionExportTypes.emf.ToString()] =
+                        layoutexporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
+                }
                 // export the thumbnail, using the new functionality of specifying a pixel size rather than a dpi
                 XYDimensions thumbSize = new XYDimensions()
                     {
@@ -619,20 +713,11 @@ namespace MapActionToolbars
 
                 // What are these for? we don't zip them.
                 MapImageExporter dfExporter = new MapImageExporter(pMapDoc, exportPathFileName, "Main map");
-                dfExporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
-                dfExporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudEmfResolution.Value));
-               
-                //Output 3 image formats pdf, jpeg & emf
-                //dict.Add("pdf", 
-                //    MapAction.MapExport.exportImage(pMapDoc, "pdf", nudPdfResolution.Value.ToString(), exportPathFileName, null));
-                //dict.Add("jpeg", 
-                //    MapAction.MapExport.exportImage(pMapDoc, "jpeg", nudJpegResolution.Value.ToString(), exportPathFileName, null));
-                //dict.Add("emf", 
-                //    MapAction.MapExport.exportImage(pMapDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, null));
-                //// what are these for?
-                //MapAction.MapExport.exportImage(pMapDoc, "emf", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
-                //MapAction.MapExport.exportImage(pMapDoc, "jpeg", nudEmfResolution.Value.ToString(), exportPathFileName, "Main map");
-
+                if (checkBoxEmf.Checked == true)
+                {
+                    dfExporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
+                }
+                dfExporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudJpegResolution.Value));
             }
             return dict;
         }
@@ -699,7 +784,6 @@ namespace MapActionToolbars
             return scaleString;
         }
 
-
         public static string getGlideNo()
         {
             string GlideNo = string.Empty;
@@ -731,7 +815,6 @@ namespace MapActionToolbars
             {
                 stringSpatialRef = "Unknown";
             }
-
             return stringSpatialRef;
         }
 
@@ -860,18 +943,6 @@ namespace MapActionToolbars
             FormValidationExport.validationCheck(_languageValidationResult, imgLanguageStatus);
         }
 
-        private void nudVersionNumber_ValueChanged(object sender, EventArgs e)
-        {
-            if (nudVersionNumber.Value == 1)
-            {
-                cboStatus.Text = "New";
-            }
-            else
-            {
-                cboStatus.Text = "Updated";
-            }
-        }
-
         private void btnLayoutRight_Click_1(object sender, EventArgs e)
         {
             tabExportTool.SelectedTab = tabPageThemes;
@@ -923,6 +994,40 @@ namespace MapActionToolbars
         private void cboStatus_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.KeyChar = (char)Keys.None;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBoxEmf_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxEmf.Checked == true)
+            {
+                this.nudEmfResolution.Enabled = true;
+            }
+            else
+            {
+                this.nudEmfResolution.Enabled = false;
+            }
+        }
+
+        private void checkBoxKml_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxKml.Checked == true)
+            {
+                this.nudKmlResolution.Enabled = true;
+            }
+            else
+            {
+                this.nudKmlResolution.Enabled = false;
+            }
         }
     }
 }

@@ -206,7 +206,7 @@ namespace MapAction
         /// <returns>returns a dictionary with key value pairs of these element / values</returns>
         public static Dictionary<string, string> getLayoutTextElements(IMxDocument pMxDoc, string pFrameName, bool stripESRIMarkup=false)
         {
-            //create dictionary to story element values
+            //create dictionary to store element values
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
             // get MXD file path in case it is needed for error reporting later
@@ -281,14 +281,83 @@ namespace MapAction
                 throw new MapActionMapTemplateException(exceptionMsg, mxdPath, true);
             }
             }
-            #endregion
+        #endregion
 
-            /// <summary>
-            /// Removes all valid ESRI Label formating tags from the input string.
-            /// </summary>
-            /// <param name="input"></param>
-            /// <returns>A new string without any of the formating tags present in input.</returns>
-            public static string stripESRILabelMarkup(string input)
+
+        #region Public method getLayoutPictureElements
+        /// <summary>
+        /// Gets all the picture elements and their values from a map frame.
+        /// </summary>
+        /// <param name="pMxDoc"></param>
+        /// <param name="pFrameName"></param>
+        /// <returns>returns a list of graphic element names</returns>
+        public static List<string> getLayoutPictureElements(IMxDocument pMxDoc, string pFrameName)
+        {
+            //create list to store element names
+            List<string> graphicElements = new List<string>();
+
+            // get MXD file path in case it is needed for error reporting later
+            string mxdPath = String.Empty;
+            try
+            {
+                mxdPath = (pMxDoc as IMapDocument).DocumentFilename;
+            }
+            catch (InvalidCastException ice)
+            {
+
+            }
+
+            // APS: Why is this check necessary? 
+            //check if the frame passed exists in the map document
+            if (PageLayoutProperties.detectMapFrame(pMxDoc, pFrameName))
+            {
+                IPageLayout pLayout = pMxDoc.PageLayout;
+                IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
+                pGraphics.Reset();
+    
+                IElement element = new TextElement();
+                IElementProperties2 pElementProp;
+                IPictureElement pPictureElement;
+                try
+                {
+                    //loop through the pictures elements in the frame
+                    element = (IElement)pGraphics.Next();
+                    while (element != null)
+                    {
+                        if (element is IPictureElement)
+                        {
+                            pPictureElement = element as IPictureElement;
+                            pElementProp = element as IElementProperties2;
+                            System.Diagnostics.Debug.WriteLine(pElementProp.Name);
+                            if (pElementProp.Name != "")
+                            {
+                                graphicElements.Add(pElementProp.Name);
+                            }
+                        }
+                        element = (IElement)pGraphics.Next();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Error finding Graphic elements");
+                    System.Diagnostics.Debug.WriteLine(ex);
+                }
+            }
+            else
+            {
+                string exceptionMsg = String.Format("Unable to detect MapFrame {0} in current map document", pFrameName);
+                throw new MapActionMapTemplateException(exceptionMsg, mxdPath, true);
+            }
+            return graphicElements;
+        }
+        #endregion
+
+        /// <summary>
+        /// Removes all valid ESRI Label formating tags from the input string.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>A new string without any of the formating tags present in input.</returns>
+        public static string stripESRILabelMarkup(string input)
         {
             ITextParser formattingTextParser = new SimpleTextParser();
             formattingTextParser.TextSymbol = new TextSymbol();
@@ -466,7 +535,6 @@ namespace MapAction
             // Therefore if get_PageCount==1 then we conclude that DDP 
             // *is* enabled.
             return (pageCnt > 0);
-            return false;
         }
         #endregion
 

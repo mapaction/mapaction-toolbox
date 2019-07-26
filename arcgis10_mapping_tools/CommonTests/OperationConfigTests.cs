@@ -80,7 +80,7 @@ namespace MapAction.tests
             Assert.AreEqual(expectedCountry, operationConfig.Country);
             Assert.AreEqual(expectedTimeZone, operationConfig.TimeZone);
             Assert.AreEqual(expectedLanguageIso2, operationConfig.LanguageIso2);
-            Assert.AreEqual(expectedOperationId, operationConfig.OperationId);
+            Assert.AreEqual(expectedOperationId, operationConfig.OperationId.ToLower());
             Assert.AreEqual(expectedDefaultSourceOrganisation, operationConfig.DefaultSourceOrganisation);
             Assert.AreEqual(expectedDefaultSourceOrganisationUrl, operationConfig.DefaultSourceOrganisationUrl);
             Assert.AreEqual(expectedDeploymentPrimaryEmail, operationConfig.DeploymentPrimaryEmail);

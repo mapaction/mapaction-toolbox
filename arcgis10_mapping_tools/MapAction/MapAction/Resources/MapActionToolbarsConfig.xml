@@ -1,0 +1,108 @@
+<MapActionToolbarConfig>
+  <Tools>
+    <Tool>
+      <ToolName>Operation Config Tool</ToolName>
+      <Components>
+        <Component>
+          <ComponentName>Organisation Url</ComponentName>
+          <TextBoxItem>
+            <TextBoxItemValue>https://mapaction.org</TextBoxItemValue>
+          </TextBoxItem>
+        </Component>
+        <Component>
+          <ComponentName>Map Root Url</ComponentName>
+          <ComboBoxItems>
+            <ComboBoxItem>
+              <ComboBoxItemValue>https://maps.mapaction.org/dataset/</ComboBoxItemValue>
+            </ComboBoxItem>
+            <ComboBoxItem>
+              <ComboBoxItemValue>https://maps-staging.mapaction.org/dataset/</ComboBoxItemValue>
+            </ComboBoxItem>
+          </ComboBoxItems>
+        </Component>
+        <Component>
+          <ComponentName>Organisation</ComponentName>
+          <TextBoxItem>
+            <TextBoxItemValue>MapAction</TextBoxItemValue>
+          </TextBoxItem>
+        </Component>
+        <Component>
+          <ComponentName>Disclaimer Text</ComponentName>
+          <TextBoxItem>
+            <TextBoxItemValue>The depiction and use of boundaries, names and associated data shown here do not imply endorsement or acceptance by MapAction</TextBoxItemValue>
+          </TextBoxItem>
+        </Component>
+        <Component>
+          <ComponentName>Donor Text</ComponentName>
+          <TextBoxItem>
+            <TextBoxItemValue>Supported by</TextBoxItemValue>
+          </TextBoxItem>
+        </Component>
+      </Components>
+    </Tool>
+    <Tool>
+      <ToolName>Export Tool</ToolName>
+      <Components>
+        <Component>
+          <ComponentName>Themes</ComponentName>
+          <CheckBoxItems>
+            <CheckBoxItem>
+              <CheckBoxItemName>Affected Population</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Agriculture</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Appeals</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Camp Coordination / Management</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Early Recovery</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Education</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Emergency Shelter</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Emergency Telecommunications</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Environmental Aspects</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Health</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Logistics</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Nutrition</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Orientation and Reference</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Population Baseline</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Search and Rescue / Evacuation Planning</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Security, Safety and Protection</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Situation and Damage</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Water Sanitation and Hygiene</CheckBoxItemName>
+            </CheckBoxItem>
+          </CheckBoxItems>
+        </Component>
+      </Components>
+    </Tool>
+  </Tools>
+</MapActionToolbarConfig>

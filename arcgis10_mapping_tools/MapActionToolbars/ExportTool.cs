@@ -44,7 +44,11 @@ namespace MapActionToolbars
             else if (MapAction.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
             {   
                 var dlg = new frmExportMain();
-                dlg.ShowDialog();
+
+                if (dlg.Text.Length > 0)
+                {
+                    dlg.ShowDialog();
+                }
             }    
         }
 

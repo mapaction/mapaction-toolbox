@@ -8,5 +8,8 @@
     <Setting Name="thumbnail_width_px" Type="System.UInt16" Scope="User">
       <Value Profile="(Default)">140</Value>
     </Setting>
+    <Setting Name="mdr_url_root" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://maps.mapaction.org/dataset/</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

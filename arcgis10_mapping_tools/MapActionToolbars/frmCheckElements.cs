@@ -97,6 +97,11 @@ namespace MapActionToolbars
                 imgLanguageStatus.Image = Properties.Resources.tick_17px;
             }
 
+            List<string> pictureElements = MapAction.PageLayoutProperties.getLayoutPictureElements(_pMxDoc, "Main map");
+            if (pictureElements.Contains("qr_code"))
+            {
+                imgQRCodeStatus.Image = Properties.Resources.tick_17px;
+            }
         }
     }
 }

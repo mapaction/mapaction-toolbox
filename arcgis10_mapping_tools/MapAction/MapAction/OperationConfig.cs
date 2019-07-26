@@ -35,6 +35,9 @@ namespace MapAction
         [XmlElement("DefaultSourceOrganisationUrl")]
         public string DefaultSourceOrganisationUrl { get; set; }
 
+        [XmlElement("DefaultMapRootUrl")]
+        public string DefaultMapRootUrl { get; set; }
+
         [XmlElement("DeploymentPrimaryEmail")]
         public string DeploymentPrimaryEmail { get; set; }
 

@@ -19,9 +19,16 @@ namespace MapActionToolbars
 {
     public partial class frmConfigMain : Form
     {
-        private const string _defaultSourceOrganisation = "MapAction";
-        private const string _defaultDisclaimerText = "The depiction and use of boundaries, names and associated data shown here do not imply endorsement or acceptance by MapAction.";
-        private const string _defaultDonorText = "Supported by";
+        private const string ToolName = "Operation Config Tool";
+        private const string OrganisationComponentName = "Organisation";
+        private const string DisclaimerTextComponentName = "Disclaimer Text";
+        private const string OrganisationUrlComponentName = "Organisation Url";
+        private const string DonorTextComponentName = "Donor Text";
+        private string _defaultSourceOrganisation = "";
+        private string _defaultDisclaimerText = "";
+        private string _defaultDonorText = "";
+        private string _defaultMapRootUrl = "https://maps.mapaction.org/dataset";
+        private string _defaultSourceOrganisationUrl = "https://mapaction.org";
         private const decimal _defaultJpegDpi = 300;
         private const decimal _defaultPdfDpi = 300;
         private const string _defaultExportToolPath = "";
@@ -30,7 +37,7 @@ namespace MapActionToolbars
         private Boolean _configXmlEditState = false;
         private Boolean _configXmlNewFile = false;
         private MapAction.LanguageCodeLookup languageCodeLookup = null;
-
+        private MapActionToolbarConfig mapActionToolbarConfig = null;
 
         public frmConfigMain()
         {
@@ -39,10 +46,21 @@ namespace MapActionToolbars
             // Create languages lookup
             string languageFilePath = System.IO.Path.Combine(path, languageCodesXMLFileName);
             this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
-
-            InitializeComponent();
-
-            this.cboLanguage.Items.AddRange(this.languageCodeLookup.languages());
+            this.mapActionToolbarConfig = MapAction.Utilities.getToolboxConfig();
+            if (this.mapActionToolbarConfig.Tools.Count == 0)
+            {
+                this.Close();
+            }
+            else
+            {
+                this._defaultSourceOrganisation = this.mapActionToolbarConfig.TextBoxItem(ToolName, OrganisationComponentName);
+                this._defaultDisclaimerText = this.mapActionToolbarConfig.TextBoxItem(ToolName, DisclaimerTextComponentName);
+                this._defaultDonorText = this.mapActionToolbarConfig.TextBoxItem(ToolName, DonorTextComponentName);
+                InitializeComponent();
+                this.cboMapRootUrl.Items.AddRange(this.mapActionToolbarConfig.MapRootURLs().ToArray());
+                this._defaultSourceOrganisationUrl = this.mapActionToolbarConfig.TextBoxItem(ToolName, OrganisationUrlComponentName);
+                this.cboLanguage.Items.AddRange(this.languageCodeLookup.languages());
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -126,7 +144,9 @@ namespace MapActionToolbars
         }
 
         private void btnSave_Click(object sender, EventArgs e)
-        {            
+        {
+            tbxOperationId.Text = tbxOperationId.Text.ToLower();
+
             //Set the application configuration file setting 'opXmlConfig' to the textbox path
             if (tbxPathToCrashMove.Text == "")
             {
@@ -171,11 +191,13 @@ namespace MapActionToolbars
             {
                 //If not, set the dialog to empty
                 tbxPathToCrashMove.Text = "< File moved or deleted: " + path + " >";
+                populateDialogDefaultValues();
             }
             else if (!MapAction.Utilities.detectOperationConfig())
             {
                 //If the path is set and file exists, set the textbox to the path
                 tbxPathToCrashMove.Text = string.Empty;
+                populateDialogDefaultValues();
             }
             else if (File.Exists(@filepath))
             {
@@ -198,6 +220,7 @@ namespace MapActionToolbars
             FormValidationConfig.validateOperationID(tbxOperationId, eprOperationIdWarning);
             FormValidationConfig.validateOrganisation(tbxSourceOrganisation, eprOrganisationWarning);
             FormValidationConfig.validateUrl(tbxOrganisationUrl, eprUrlWarning);
+            FormValidationConfig.validateUrl(cboMapRootUrl, eprUrlWarning);
             FormValidationConfig.validatePrimaryEmail(tbxPrimaryEmail, eprPrimaryEmailWarning, eprPrimaryEmailError);
             FormValidationConfig.validateDisclaimer(tbxDislaimerText, eprDisclaimerWarning);
             FormValidationConfig.validateDonor(tbxDonorText, eprDonorTextWarning);
@@ -215,9 +238,10 @@ namespace MapActionToolbars
                                                            GlideNo = tbxGlideNo.Text,
                                                            Country = tbxCountry.Text,
                                                            TimeZone = cboTimeZone.Text,
-                                                           OperationId = tbxOperationId.Text,
+                                                           OperationId = tbxOperationId.Text.ToLower(),
                                                            DefaultSourceOrganisation = tbxSourceOrganisation.Text,
                                                            DefaultSourceOrganisationUrl = tbxOrganisationUrl.Text,
+                                                           DefaultMapRootUrl = cboMapRootUrl.Text,
                                                            DeploymentPrimaryEmail = tbxPrimaryEmail.Text,
                                                            DefaultDisclaimerText = tbxDislaimerText.Text,
                                                            DefaultDonorsText = tbxDonorText.Text,
@@ -226,7 +250,6 @@ namespace MapActionToolbars
                                                            DefaultEmfResDPI =numPdfDpi.Value.ToString(),
                                                            DefaultPathToExportDir = tbxExportToolPath.Text,
                                                            LanguageIso2 = this.languageCodeLookup.lookup(cboLanguage.Text, LanguageCodeFields.Alpha2),
-                                                           // Language = cboLanguage.Text - Language no longer used  
             };
             return config;
         }
@@ -320,10 +343,11 @@ namespace MapActionToolbars
             tbxGlideNo.Text = newConfig.GlideNo;
             cboTimeZone.Text = newConfig.TimeZone;
             cboLanguage.Text = this.languageCodeLookup.lookupA2LanguageCode(newConfig.LanguageIso2, LanguageCodeFields.Language);
-            tbxOperationId.Text = newConfig.OperationId;
+            tbxOperationId.Text = newConfig.OperationId.ToLower();
             tbxPrimaryEmail.Text = newConfig.DeploymentPrimaryEmail;
             tbxSourceOrganisation.Text = newConfig.DefaultSourceOrganisation;
             tbxOrganisationUrl.Text = newConfig.DefaultSourceOrganisationUrl;
+            cboMapRootUrl.Text = newConfig.DefaultMapRootUrl;
             tbxDislaimerText.Text = newConfig.DefaultDisclaimerText;
             tbxDonorText.Text = newConfig.DefaultDonorsText;
             numJpegDpi.Value = decimal.Parse(newConfig.DefaultJpegResDPI);
@@ -348,6 +372,8 @@ namespace MapActionToolbars
             tbxSourceOrganisation.Text = _defaultSourceOrganisation;
             tbxDislaimerText.Text = _defaultDisclaimerText;
             tbxDonorText.Text = _defaultDonorText;
+            tbxOrganisationUrl.Text = _defaultSourceOrganisationUrl;
+            cboMapRootUrl.Text = _defaultMapRootUrl;
             numJpegDpi.Value = _defaultJpegDpi;
             numPdfDpi.Value = _defaultPdfDpi;
             tbxExportToolPath.Text = _defaultExportToolPath;
@@ -366,6 +392,7 @@ namespace MapActionToolbars
                 cboLanguage.Enabled = true;
                 tbxOperationId.Enabled = true;
                 tbxSourceOrganisation.Enabled = true;
+                cboMapRootUrl.Enabled = true;
                 tbxOrganisationUrl.Enabled = true;
                 tbxPrimaryEmail.Enabled = true;
                 tbxDislaimerText.Enabled = true;
@@ -398,9 +425,10 @@ namespace MapActionToolbars
                 cboLanguage.Enabled = false;
                 tbxOperationId.Enabled = false;
                 tbxSourceOrganisation.Enabled = false;
-                tbxOrganisationUrl.Enabled = false;
+                cboMapRootUrl.Enabled = false;
                 tbxPrimaryEmail.Enabled = false;
                 tbxDislaimerText.Enabled = false;
+                tbxOrganisationUrl.Enabled = false;
                 tbxDonorText.Enabled = false;
                 numJpegDpi.Enabled = false;
                 numPdfDpi.Enabled = false;

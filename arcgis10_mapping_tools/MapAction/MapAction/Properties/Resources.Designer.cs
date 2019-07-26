@@ -59,5 +59,63 @@ namespace MapAction.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        ///&lt;codes&gt;
+        ///&lt;code a2=&quot;aa&quot; a3b=&quot;aar&quot; a3t=&quot;&quot; a3h=&quot;aar&quot; lang=&quot;Afar&quot;/&gt;
+        ///&lt;code a2=&quot;ab&quot; a3b=&quot;abk&quot; a3t=&quot;&quot; a3h=&quot;abk&quot; lang=&quot;Abkhazian&quot;/&gt;
+        ///&lt;code a2=&quot;af&quot; a3b=&quot;afr&quot; a3t=&quot;&quot; a3h=&quot;afr&quot; lang=&quot;Afrikaans&quot;/&gt;
+        ///&lt;code a2=&quot;ak&quot; a3b=&quot;aka&quot; a3t=&quot;&quot; a3h=&quot;aka&quot; lang=&quot;Akan&quot;/&gt;
+        ///&lt;code a2=&quot;sq&quot; a3b=&quot;alb&quot; a3t=&quot;sqi&quot; a3h=&quot;sqi&quot; lang=&quot;Albanian&quot;/&gt;
+        ///&lt;code a2=&quot;am&quot; a3b=&quot;amh&quot; a3t=&quot;&quot; a3h=&quot;amh&quot; lang=&quot;Amharic&quot;/&gt;
+        ///&lt;code a2=&quot;ar&quot; a3b=&quot;ara&quot; a3t=&quot;&quot; a3h=&quot;ara&quot; lang=&quot;Arabic&quot;/&gt;
+        ///&lt;code a2=&quot;an&quot; a3b=&quot;arg&quot; a3t=&quot;&quot; a3h=&quot;arg&quot; lang=&quot;Ar [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string language_codes {
+            get {
+                return ResourceManager.GetString("language_codes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
+        ///&lt;languageSettings&gt;
+        ///   &lt;language name=&quot;English&quot;&gt;
+        ///      &lt;language_label&gt;English&lt;/language_label&gt;   
+        ///      &lt;create_date_time_label&gt;Created&lt;/create_date_time_label&gt;
+        ///      &lt;data_sources_label&gt;&amp;lt;bol&amp;gt;Data Sources&amp;lt;/bol&amp;gt;&lt;/data_sources_label&gt;
+        ///      &lt;mxd_name_label&gt;Map Document&lt;/mxd_name_label&gt;
+        ///      &lt;spatial_reference_label&gt;Projection &amp;amp; Datum&lt;/spatial_reference_label&gt;
+        ///      &lt;glide_no_label&gt;GLIDE Number&lt;/glide_no_label&gt;
+        ///	  &lt;map_producer&gt;Produced by MapAct [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string language_config {
+            get {
+                return ResourceManager.GetString("language_config", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;MapActionToolbarConfig&gt;
+        ///  &lt;Tools&gt;
+        ///    &lt;Tool&gt;
+        ///      &lt;ToolName&gt;Operation Config Tool&lt;/ToolName&gt;
+        ///      &lt;Components&gt;
+        ///        &lt;Component&gt;
+        ///          &lt;ComponentName&gt;Organisation Url&lt;/ComponentName&gt;
+        ///          &lt;ComboBoxItems&gt;
+        ///            &lt;ComboBoxItem&gt;
+        ///              &lt;ComboBoxItemValue&gt;https://maps.mapaction.org/dataset/&lt;/ComboBoxItemValue&gt;
+        ///            &lt;/ComboBoxItem&gt;
+        ///            &lt;ComboBoxItem&gt;
+        ///              &lt;ComboBoxItemValue&gt;https://maps-staging.mapaction.org/dataset/&lt;/ComboBoxItemValue&gt;
+        ///            &lt; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string MapActionToolbarsConfig {
+            get {
+                return ResourceManager.GetString("MapActionToolbarsConfig", resourceCulture);
+            }
+        }
     }
 }

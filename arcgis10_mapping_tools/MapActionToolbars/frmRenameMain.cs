@@ -74,52 +74,61 @@ namespace MapActionToolbars
             string dialogBoxTitle = dialogBoxTitleOperationSuccessful;
             string message = "";
 
-
             //Construct layer name
             string newLayerName = createNewLayerName();
 
-            // Is the path a crash move folder?   
-            if (HasCrashMoveFolderStructure(root))
-            {   
-                // If it is, copy the renamed file(s) to the appropriate directory.
-                ESRI.ArcGIS.Geodatabase.IWorkspaceFactory workspaceFactory = new ESRI.ArcGIS.DataSourcesFile.ShapefileWorkspaceFactory();
-                ESRI.ArcGIS.Geodatabase.IWorkspace workspace = workspaceFactory.OpenFromFile(CategoryPath(root, Category()), 0);
-
-                newPath = System.IO.Path.Combine(workspace.PathName, (newLayerName + fileExtension));
-                if (newPath.Length > MAX_PATH_LENGTH)
+            if (ds != null)
+            {
+                // Is the path a crash move folder?   
+                if (HasCrashMoveFolderStructure(root))
                 {
-                    dialogBoxTitle = dialogBoxTitleOperationFailed;
-                    icon = MessageBoxIcon.Error;
-                    message = String.Format("Target path exceeds maximum permitted length of {0} characters", MAX_PATH_LENGTH);
+                    // If it is, copy the renamed file(s) to the appropriate directory.
+                    ESRI.ArcGIS.Geodatabase.IWorkspaceFactory workspaceFactory = new ESRI.ArcGIS.DataSourcesFile.ShapefileWorkspaceFactory();
+                    ESRI.ArcGIS.Geodatabase.IWorkspace workspace = workspaceFactory.OpenFromFile(CategoryPath(root, Category()), 0);
+
+                    newPath = System.IO.Path.Combine(workspace.PathName, (newLayerName + fileExtension));
+                    if (newPath.Length > MAX_PATH_LENGTH)
+                    {
+                        dialogBoxTitle = dialogBoxTitleOperationFailed;
+                        icon = MessageBoxIcon.Error;
+                        message = String.Format("Target path exceeds maximum permitted length of {0} characters", MAX_PATH_LENGTH);
+                    }
+                    else
+                    {
+                        ds.Copy(newLayerName, workspace);
+                        message = copyAction + " " + System.IO.Path.Combine(root, filename + fileExtension) + " to " + System.IO.Path.Combine(workspace.PathName, (newLayerName + fileExtension));
+                        operationSuccessful = true;
+                    }
                 }
                 else
                 {
-                    ds.Copy(newLayerName, workspace);
-                    message = copyAction + " " + System.IO.Path.Combine(root, filename + fileExtension) + " to " + System.IO.Path.Combine(workspace.PathName, (newLayerName + fileExtension));
-                    operationSuccessful = true;
+                    newPath = System.IO.Path.Combine(root, newLayerName + fileExtension);
+                    if (newPath.Length > MAX_PATH_LENGTH)
+                    {
+                        dialogBoxTitle = dialogBoxTitleOperationFailed;
+                        icon = MessageBoxIcon.Error;
+                        message = String.Format("Target path exceeds maximum permitted length of {0} characters", MAX_PATH_LENGTH);
+                    }
+                    else
+                    {
+                        message = renameAction + " " + System.IO.Path.Combine(root, filename + fileExtension) + " to " + newPath;
+                        //Rename the layer
+                        ds.Rename(newLayerName);
+                        operationSuccessful = true;
+                    }
+                }
+                MessageBox.Show(message, dialogBoxTitle, MessageBoxButtons.OK, icon);
+                if (operationSuccessful)
+                {
+                    this.Close();
                 }
             }
             else
             {
-                newPath = System.IO.Path.Combine(root, newLayerName + fileExtension);
-                if (newPath.Length > MAX_PATH_LENGTH)
-                {
-                    dialogBoxTitle = dialogBoxTitleOperationFailed;
-                    icon = MessageBoxIcon.Error;
-                    message = String.Format("Target path exceeds maximum permitted length of {0} characters", MAX_PATH_LENGTH);
-                }
-                else
-                {
-                    message = renameAction + " " + System.IO.Path.Combine(root, filename + fileExtension) + " to " + newPath;
-                    //Rename the layer
-                    ds.Rename(newLayerName);
-                    operationSuccessful = true;
-                }
-            }
-            MessageBox.Show(message, dialogBoxTitle, MessageBoxButtons.OK, icon);
-            if (operationSuccessful)
-            {
-                this.Close();
+                dialogBoxTitle = dialogBoxTitleOperationFailed;
+                icon = MessageBoxIcon.Error;
+                message = "Could not rename " + System.IO.Path.Combine(root, filename + fileExtension) + " to " +  (newLayerName + fileExtension) + " - Invalid file.";
+                MessageBox.Show(message, dialogBoxTitle, MessageBoxButtons.OK, icon);
             }
         }
 

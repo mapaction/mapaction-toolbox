@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="LanguageCode.cs" />
     <Compile Include="LanguageCodeLookup.cs" />
+    <Compile Include="MapActionToolbarsConfig.cs" />
     <Compile Include="OperationConfig.cs" />
     <Compile Include="DataFrameProperties.cs" />
     <Compile Include="LanguageConfig.cs" />
@@ -109,9 +110,15 @@
     <Compile Include="UtilityClasses.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\language_codes.xml" />
+    <EmbeddedResource Include="Resources\language_config.xml" />
+    <EmbeddedResource Include="Resources\MapActionToolbarsConfig.xml" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="mapbook_export_tool\generate_qrcode.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="mapbook_export_tool\mapbook_export_tools.tbx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
