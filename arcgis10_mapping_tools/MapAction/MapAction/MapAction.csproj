@@ -72,6 +72,9 @@
     <Reference Include="ESRI.ArcGIS.System, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -116,6 +119,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="mapbook_export_tool\generate_product.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="mapbook_export_tool\generate_qrcode.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -125,6 +131,7 @@
     <Content Include="mapbook_export_tool\readme.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -55,7 +55,6 @@ namespace MapActionToolbars
         private string _accessNoteValidationResult;
         private string _qualityControlValidationResult;
         private string _languageValidationResult;
-        private string _mapNumber;
         private const string _statusNew = "New";
         private const string _statusUpdate = "Update";
         private const string _statusCorrection = "Correction";

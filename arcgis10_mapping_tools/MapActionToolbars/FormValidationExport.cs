@@ -575,10 +575,6 @@ namespace MapActionToolbars
             {
                 pbox.Image = Properties.Resources.tick_17px;
             }
-
         }
-
-
     }
-
 }
