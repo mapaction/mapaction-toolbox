@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.Configuration;
-using MapAction;
-using System.Text.RegularExpressions;
-using System.Threading;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using ESRI.ArcGIS.ArcMap;
 using ESRI.ArcGIS.ArcMapUI;
@@ -27,26 +21,13 @@ using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Output;
+using MapAction;
+
 
 namespace MapActionToolbars
 {
-    public class Cookbook
-    {
-        public List<Product> recipes;
-    }
-
-    public class Product
-    {
-        public string product;
-        public List<string> layers;
-    }
-
-
     public partial class frmGenerationTool : Form
     {
-        // private static string targetMapFrame = "Main map";
-        private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
-
         private readonly string cookbookFileName = "mapCookbook.json";
         private readonly string layerPropertiesFileName = "layerProperties.json";
         private readonly string automationDirectory = "GIS\\3_Mapping\\31_Resources\\316_Automation";
@@ -57,7 +38,9 @@ namespace MapActionToolbars
         private string cookbookFullPath = "";
         private string layerPropertiesFullPath = "";
         private string layerDirectory = "";
-
+        private Cookbook cookbook = null;
+        private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
+        
         public frmGenerationTool()
         {
             InitializeComponent();
@@ -65,24 +48,45 @@ namespace MapActionToolbars
             this.cookbookFullPath = System.IO.Path.Combine(this.crashMoveFolder, this.automationDirectory, this.cookbookFileName);
             this.layerPropertiesFullPath = System.IO.Path.Combine(this.crashMoveFolder, this.automationDirectory, this.layerPropertiesFileName);
             this.layerDirectory = System.IO.Path.Combine(this.crashMoveFolder, layerDirectorySubPath);
+
         }
 
-        private void gbxCrashMoveFolder_Enter(object sender, EventArgs e)
+        private void label3_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void frmGenerationTool_Load(object sender, EventArgs e)
         {
+            string path = MapAction.Utilities.getCrashMoveFolderPath();
+            string filePath = System.IO.Path.Combine(path, _operationConfigXmlFileName);
+            OperationConfig config = MapAction.Utilities.getOperationConfigValues(filePath);
+            tbxGeoExtent.Text = config.Country;
 
+            cookbook = new Cookbook(this.cookbookFullPath);
+
+            if (cookbook != null)
+            {
+                List<string> classificationDict = new List<string>();
+
+                foreach (var c in cookbook.classifications)
+                {
+                    classificationDict.Add(c.ToString());
+                }
+
+                cboClassification.DataSource = null;
+                cboClassification.Items.Clear();
+                cboClassification.DataSource = new BindingSource(classificationDict, null);
+                refreshProductTypes();
+            }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void Cancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -115,55 +119,33 @@ namespace MapActionToolbars
                 Console.WriteLine(errorMsgs);
                 throw;
             }
-            /*
-            for (int i = 0; i < pyResult.MessageCount; i++)
-            {
-                string msg = pyResult.GetMessage(i);
-                Console.WriteLine(pyResult.GetMessage(i));
-            }
-
-            for (int i = 0; i < pyResult.OutputCount; i++)
-            {
-                var op = pyResult.GetOutput(i);
-                    //.getOutput(i);
-                Console.WriteLine(pyResult.GetMessage(i));
-            }
-
-            var banana = pyResult.GetResultMessages();
-            string oi = "..";
-            */
             MessageBox.Show("Product \"" + cboProductType.Text + "\" generated.", "Map Action Automation", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
-        }
-        
-        private void frmGenerationTool_Load(object sender, EventArgs e)
-        {
-            string path = MapAction.Utilities.getCrashMoveFolderPath();
-            string filePath = System.IO.Path.Combine(path, _operationConfigXmlFileName);
-            OperationConfig config = MapAction.Utilities.getOperationConfigValues(filePath);
-            tbxGeoExtent.Text = config.Country;
 
-            if (File.Exists(this.cookbookFullPath))
+        }
+
+        private void cbxClassification_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            refreshProductTypes();
+        }
+
+        private void cbxProductType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void refreshProductTypes()
+        {
+            var cb = cookbook.recipeByClassification(cboClassification.Text);
+            List<string> d = new List<string>();
+
+            foreach (var r in cb)
             {
-                Dictionary<string, string> d = new Dictionary<string, string>();
-                string json = File.ReadAllText(this.cookbookFullPath);
-
-                var cookbook = JsonConvert.DeserializeObject<Cookbook>(json);
-
-                foreach (var r in cookbook.recipes)
-                {
-                    Console.WriteLine("{0}\n", r.product);
-                    d.Add(r.product, r.product);
-                }
-                cboProductType.DataSource = new BindingSource(d, null);
-                cboProductType.ValueMember = "Key";
-                cboProductType.DisplayMember = "Value";
+                d.Add(r.product);
             }
-        }
-
-        private void cboProductType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Console.WriteLine(cboProductType.SelectedIndex);
+            cboProductType.DataSource = null;
+            cboProductType.Items.Clear();
+            cboProductType.DataSource = new BindingSource(d, null);
         }
     }
 }

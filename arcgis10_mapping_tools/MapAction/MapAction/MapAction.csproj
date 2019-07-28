@@ -86,6 +86,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cookbook.cs" />
     <Compile Include="LanguageCode.cs" />
     <Compile Include="LanguageCodeLookup.cs" />
     <Compile Include="MapActionToolbarsConfig.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="PageLayoutProperties.cs" />
     <Compile Include="MapFrameProperties.cs" />
     <Compile Include="MxdDocumentProperties.cs" />
+    <Compile Include="Product.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

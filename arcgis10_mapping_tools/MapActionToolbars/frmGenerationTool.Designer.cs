@@ -28,52 +28,71 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGenerationTool));
-            this.gbxCrashMoveFolder = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.chkGeoExtent = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblProductClassification = new System.Windows.Forms.Label();
+            this.cboClassification = new System.Windows.Forms.ComboBox();
             this.tbxGeoExtent = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.chkGeoExtent = new System.Windows.Forms.CheckBox();
             this.cboProductType = new System.Windows.Forms.ComboBox();
-            this.btnCancel = new System.Windows.Forms.Button();
             this.btnGenerate = new System.Windows.Forms.Button();
-            this.gbxCrashMoveFolder.SuspendLayout();
+            this.Cancel = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // gbxCrashMoveFolder
+            // groupBox1
             // 
-            this.gbxCrashMoveFolder.Controls.Add(this.label2);
-            this.gbxCrashMoveFolder.Controls.Add(this.chkGeoExtent);
-            this.gbxCrashMoveFolder.Controls.Add(this.label1);
-            this.gbxCrashMoveFolder.Controls.Add(this.tbxGeoExtent);
-            this.gbxCrashMoveFolder.Controls.Add(this.label13);
-            this.gbxCrashMoveFolder.Location = new System.Drawing.Point(18, 19);
-            this.gbxCrashMoveFolder.Name = "gbxCrashMoveFolder";
-            this.gbxCrashMoveFolder.Size = new System.Drawing.Size(537, 99);
-            this.gbxCrashMoveFolder.TabIndex = 41;
-            this.gbxCrashMoveFolder.TabStop = false;
-            this.gbxCrashMoveFolder.Text = "Generate";
-            this.gbxCrashMoveFolder.Enter += new System.EventHandler(this.gbxCrashMoveFolder_Enter);
+            this.groupBox1.Controls.Add(this.lblProductClassification);
+            this.groupBox1.Controls.Add(this.cboClassification);
+            this.groupBox1.Controls.Add(this.tbxGeoExtent);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.chkGeoExtent);
+            this.groupBox1.Controls.Add(this.cboProductType);
+            this.groupBox1.Location = new System.Drawing.Point(18, 19);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(562, 147);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Generate";
+            // 
+            // lblProductClassification
+            // 
+            this.lblProductClassification.AutoSize = true;
+            this.lblProductClassification.Location = new System.Drawing.Point(30, 69);
+            this.lblProductClassification.Name = "lblProductClassification";
+            this.lblProductClassification.Size = new System.Drawing.Size(68, 13);
+            this.lblProductClassification.TabIndex = 7;
+            this.lblProductClassification.Text = "Classification";
+            this.lblProductClassification.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // cboClassification
+            // 
+            this.cboClassification.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboClassification.FormattingEnabled = true;
+            this.cboClassification.Location = new System.Drawing.Point(125, 65);
+            this.cboClassification.Name = "cboClassification";
+            this.cboClassification.Size = new System.Drawing.Size(405, 21);
+            this.cboClassification.TabIndex = 6;
+            this.cboClassification.SelectedIndexChanged += new System.EventHandler(this.cbxClassification_SelectedIndexChanged);
+            // 
+            // tbxGeoExtent
+            // 
+            this.tbxGeoExtent.Location = new System.Drawing.Point(125, 27);
+            this.tbxGeoExtent.Name = "tbxGeoExtent";
+            this.tbxGeoExtent.ReadOnly = true;
+            this.tbxGeoExtent.Size = new System.Drawing.Size(222, 20);
+            this.tbxGeoExtent.TabIndex = 5;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(394, 32);
+            this.label2.Location = new System.Drawing.Point(30, 105);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(70, 13);
-            this.label2.TabIndex = 23;
-            this.label2.Text = "Refresh Data";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
-            // 
-            // chkGeoExtent
-            // 
-            this.chkGeoExtent.AutoSize = true;
-            this.chkGeoExtent.Location = new System.Drawing.Point(474, 31);
-            this.chkGeoExtent.Name = "chkGeoExtent";
-            this.chkGeoExtent.Size = new System.Drawing.Size(15, 14);
-            this.chkGeoExtent.TabIndex = 22;
-            this.chkGeoExtent.UseVisualStyleBackColor = true;
+            this.label2.Size = new System.Drawing.Size(71, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Product Type";
             // 
             // label1
             // 
@@ -81,89 +100,77 @@
             this.label1.Location = new System.Drawing.Point(31, 31);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(43, 13);
-            this.label1.TabIndex = 21;
+            this.label1.TabIndex = 3;
             this.label1.Text = "Country";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // tbxGeoExtent
+            // chkGeoExtent
             // 
-            this.tbxGeoExtent.Enabled = false;
-            this.tbxGeoExtent.Location = new System.Drawing.Point(107, 28);
-            this.tbxGeoExtent.Name = "tbxGeoExtent";
-            this.tbxGeoExtent.Size = new System.Drawing.Size(195, 20);
-            this.tbxGeoExtent.TabIndex = 20;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(30, 63);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(71, 13);
-            this.label13.TabIndex = 19;
-            this.label13.Text = "Product Type";
+            this.chkGeoExtent.AutoSize = true;
+            this.chkGeoExtent.Location = new System.Drawing.Point(442, 31);
+            this.chkGeoExtent.Name = "chkGeoExtent";
+            this.chkGeoExtent.Size = new System.Drawing.Size(89, 17);
+            this.chkGeoExtent.TabIndex = 2;
+            this.chkGeoExtent.Text = "Refresh Data";
+            this.chkGeoExtent.UseVisualStyleBackColor = true;
             // 
             // cboProductType
             // 
             this.cboProductType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboProductType.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboProductType.FormattingEnabled = true;
-            this.cboProductType.Location = new System.Drawing.Point(125, 77);
+            this.cboProductType.Location = new System.Drawing.Point(125, 101);
             this.cboProductType.Name = "cboProductType";
             this.cboProductType.Size = new System.Drawing.Size(405, 21);
-            this.cboProductType.TabIndex = 42;
-            this.cboProductType.SelectedIndexChanged += new System.EventHandler(this.cboProductType_SelectedIndexChanged);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(348, 130);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 24);
-            this.btnCancel.TabIndex = 43;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.cboProductType.TabIndex = 0;
+            this.cboProductType.SelectedIndexChanged += new System.EventHandler(this.cbxProductType_SelectedIndexChanged);
             // 
             // btnGenerate
             // 
-            this.btnGenerate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGenerate.Location = new System.Drawing.Point(152, 130);
+            this.btnGenerate.Location = new System.Drawing.Point(167, 175);
             this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(85, 24);
-            this.btnGenerate.TabIndex = 44;
+            this.btnGenerate.Size = new System.Drawing.Size(75, 23);
+            this.btnGenerate.TabIndex = 1;
             this.btnGenerate.Text = "Generate";
             this.btnGenerate.UseVisualStyleBackColor = true;
             this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
+            // 
+            // Cancel
+            // 
+            this.Cancel.Location = new System.Drawing.Point(345, 175);
+            this.Cancel.Name = "Cancel";
+            this.Cancel.Size = new System.Drawing.Size(75, 23);
+            this.Cancel.TabIndex = 2;
+            this.Cancel.Text = "Cancel";
+            this.Cancel.UseVisualStyleBackColor = true;
+            this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
             // frmGenerationTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(572, 165);
-            this.Controls.Add(this.btnCancel);
+            this.ClientSize = new System.Drawing.Size(599, 220);
+            this.Controls.Add(this.Cancel);
             this.Controls.Add(this.btnGenerate);
-            this.Controls.Add(this.cboProductType);
-            this.Controls.Add(this.gbxCrashMoveFolder);
-            //this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Controls.Add(this.groupBox1);
             this.Name = "frmGenerationTool";
-            this.Text = "Map Generation Tool";
+            this.Text = "Map Automation Tool";
             this.Load += new System.EventHandler(this.frmGenerationTool_Load);
-            this.gbxCrashMoveFolder.ResumeLayout(false);
-            this.gbxCrashMoveFolder.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox gbxCrashMoveFolder;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox cboProductType;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnGenerate;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tbxGeoExtent;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox chkGeoExtent;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox tbxGeoExtent;
+        private System.Windows.Forms.Label lblProductClassification;
+        private System.Windows.Forms.ComboBox cboClassification;
+        private System.Windows.Forms.Button btnGenerate;
+        private System.Windows.Forms.Button Cancel;
     }
 }

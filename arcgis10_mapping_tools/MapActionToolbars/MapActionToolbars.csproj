@@ -163,7 +163,9 @@
     <Compile Include="frmExportMain.Designer.cs">
       <DependentUpon>frmExportMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmGenerationTool.cs" />
+    <Compile Include="frmGenerationTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmGenerationTool.Designer.cs">
       <DependentUpon>frmGenerationTool.cs</DependentUpon>
     </Compile>
