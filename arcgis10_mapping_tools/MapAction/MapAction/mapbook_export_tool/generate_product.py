@@ -94,16 +94,15 @@ class MapChef:
         return layerProperties
 
     def removeLayers(self):
-        #print ("Removing existing layers")
         for df in arcpy.mapping.ListDataFrames(self.mxd):
             for lyr in arcpy.mapping.ListLayers(self.mxd, "", df):
                 arcpy.mapping.RemoveLayer(df, lyr)
         self.mxd.save()
 
-    def cook(self, productName):
+    def cook(self, productName, countryName):
+        arcpy.env.addOutputsToMap = False
         self.removeLayers()
         for layer in self.cookbook.layers(productName):
-            #print ("Get data source for layer \'" + layer + "\'")
             properties = self.layerProperties.get(layer)
             if (properties is not None):             
                 layerFilePath = self.layerDirectory + os.path.sep + properties.layerName + ".lyr"
@@ -113,9 +112,6 @@ class MapChef:
                     #if (layerToAdd.isFeatureLayer == True):
                     #    if (len(layerToAdd.definitionQuery) > 0):
                     #        print (layerToAdd.definitionQuery)                        
-                    #STEVE arcpy.RefreshTOC()
-                    #STEVEarcpy.RefreshActiveView()
-                    #STEVEself.mxd.save()
                     dataFilePath= self.root + "/GIS/2_Active_Data/" +  properties.sourceFolder
                     if (os.path.isdir(dataFilePath)):
                         if ("/" not in properties.regExp):
@@ -124,7 +120,7 @@ class MapChef:
                                 if re.match(properties.regExp, fileName):
                                     self.dataFrame = arcpy.mapping.ListDataFrames(self.mxd, properties.mapFrame)[0]
                                     dataFile = dataFilePath + "/" + fileName
-                                    self.addToLayer(self.dataFrame, dataFile, layerToAdd, properties.definitionQuery, properties.display)
+                                    self.addToLayer(self.dataFrame, dataFile, layerToAdd, properties.definitionQuery, properties.display, countryName)
                         else:
                             parts = properties.regExp.split("/")
                             for root, dirs, files in os.walk(dataFilePath):
@@ -140,6 +136,7 @@ class MapChef:
                                                self.addRasterToLayer(self.dataFrame, rasterFile, layerToAdd, raster, properties.display)    
         arcpy.RefreshTOC()
         arcpy.RefreshActiveView()
+        arcpy.env.addOutputsToMap = True
         self.mxd.save()
 
     def addRasterToLayer(self, dataFrame, rasterFile, layer, raster, display):
@@ -151,11 +148,8 @@ class MapChef:
             else:
                 lyr.visible = False 
             arcpy.mapping.AddLayer(dataFrame, lyr, "BOTTOM")            
-        #STEVE arcpy.RefreshActiveView()
-        #STEVE arcpy.RefreshTOC()
-        #STEVE self.mxd.save()
 
-    def addToLayer(self, dataFrame, dataFile, layer, definitionQuery, display):
+    def addToLayer(self, dataFrame, dataFile, layer, definitionQuery, display, countryName):
         dataDirectory = os.path.dirname(os.path.realpath(dataFile))
         #print ("Layer[" + layer.name + "] - Adding \"" + dataFile + "\"")
         for lyr in arcpy.mapping.ListLayers(layer):
@@ -167,6 +161,7 @@ class MapChef:
             if (extension.upper() == ".TIF"):
                 lyr.replaceDataSource(dataDirectory, "RASTER_WORKSPACE", os.path.splitext(base)[0])  
             if (definitionQuery):
+                definitionQuery = definitionQuery.replace('{COUNTRY_NAME}', countryName)
                # https://gis.stackexchange.com/questions/90736/setting-definition-query-on-arcpy-layer-from-shapefile
                 lyr.definitionQuery = definitionQuery
                 arcpy.SelectLayerByAttribute_management(lyr, "SUBSET_SELECTION", definitionQuery)
@@ -175,9 +170,6 @@ class MapChef:
             else:
                 lyr.visible = False
             arcpy.mapping.AddLayer(dataFrame, lyr, "BOTTOM")
-        #STEVE arcpy.RefreshTOC()
-        #STEVE arcpy.RefreshActiveView()
-        #STEVE self.mxd.save()
 
 # Parameters:
 #  0. product name
@@ -191,14 +183,15 @@ class ProductGenerator(object):
     def initialise_params(self): 
         self.map_doc = arcpy.mapping.MapDocument("current")
         self.productName = arcpy.GetParameterAsText(0)
-        self.cookbookJsonFile = arcpy.GetParameterAsText(1)
-        self.layerPropertiesJsonFile = arcpy.GetParameterAsText(2)
-        self.crashMoveFolder = arcpy.GetParameterAsText(3)
-        self.layerDirectory = arcpy.GetParameterAsText(4)
+        self.countryName = arcpy.GetParameterAsText(1)
+        self.cookbookJsonFile = arcpy.GetParameterAsText(2)
+        self.layerPropertiesJsonFile = arcpy.GetParameterAsText(3)
+        self.crashMoveFolder = arcpy.GetParameterAsText(4)
+        self.layerDirectory = arcpy.GetParameterAsText(5)
         self.chef = MapChef(self.map_doc, self.cookbookJsonFile, self.layerPropertiesJsonFile, self.crashMoveFolder, self.layerDirectory)
 
     def generate(self):
-        self.chef.cook(self.productName)
+        self.chef.cook(self.productName, self.countryName)
 
 if __name__ == '__main__':
     gen = ProductGenerator()

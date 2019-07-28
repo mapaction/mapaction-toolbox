@@ -51,6 +51,8 @@ namespace MapActionToolbars
         private readonly string layerPropertiesFileName = "layerProperties.json";
         private readonly string automationDirectory = "GIS\\3_Mapping\\31_Resources\\316_Automation";
         private readonly string layerDirectorySubPath = "GIS\\3_Mapping\\38_Initial_Maps_Layer_Files\\All";
+        private const string _operationConfigXmlFileName = "operation_config.xml";
+
         private string crashMoveFolder = "";
         private string cookbookFullPath = "";
         private string layerPropertiesFullPath = "";
@@ -93,11 +95,12 @@ namespace MapActionToolbars
             gp.AddOutputsToMap = true;
 
             IVariantArray parameters = new VarArray();
-            parameters.Add(cboProductType.Text);
-            parameters.Add(this.cookbookFullPath);
-            parameters.Add(this.layerPropertiesFullPath);
-            parameters.Add(this.crashMoveFolder);
-            parameters.Add(this.layerDirectory);
+            parameters.Add(cboProductType.Text);          // Parameter 0
+            parameters.Add(tbxGeoExtent.Text);            // Parameter 1
+            parameters.Add(this.cookbookFullPath);        // Parameter 2
+            parameters.Add(this.layerPropertiesFullPath); // Parameter 3
+            parameters.Add(this.crashMoveFolder);         // Parameter 4
+            parameters.Add(this.layerDirectory);          // Parameter 5
 
             object sev = null;
             IGeoProcessorResult2 pyResult = null;
@@ -132,9 +135,13 @@ namespace MapActionToolbars
             MessageBox.Show("Product \"" + cboProductType.Text + "\" generated.", "Map Action Automation", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }
-
+        
         private void frmGenerationTool_Load(object sender, EventArgs e)
         {
+            string path = MapAction.Utilities.getCrashMoveFolderPath();
+            string filePath = System.IO.Path.Combine(path, _operationConfigXmlFileName);
+            OperationConfig config = MapAction.Utilities.getOperationConfigValues(filePath);
+            tbxGeoExtent.Text = config.Country;
 
             if (File.Exists(this.cookbookFullPath))
             {

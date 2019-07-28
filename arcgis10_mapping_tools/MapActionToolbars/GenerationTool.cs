@@ -23,7 +23,6 @@ namespace MapActionToolbars
         protected override void OnClick()
         {
             //Check if 'Main map' frame exists.  If not show a message box telling the user so. Don't open GUI.
-            //if (!PageLayoutProperties.detectMainMapFrame())
             string duplicates = "";
             IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
             if (!MapAction.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
