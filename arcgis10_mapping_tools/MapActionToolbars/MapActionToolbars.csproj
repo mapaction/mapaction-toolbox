@@ -294,7 +294,6 @@
     <AddInContent Include="Images\ExportTool.png" />
     <AddInContent Include="Images\rename_icon.png" />
     <Content Include="Images\ma_globe.png" />
-    <Content Include="Images\ma_globe2.png" />
     <Content Include="Images\ma_mapgenerator.png" />
     <AddInContent Include="Images\generate_icon.png" />
     <Content Include="Resources\clear-icon.png" />
