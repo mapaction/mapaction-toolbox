@@ -123,6 +123,36 @@ namespace MapActionToolbars.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap gen_result_cross_50 {
+            get {
+                object obj = ResourceManager.GetObject("gen_result_cross_50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gen_result_tick_50 {
+            get {
+                object obj = ResourceManager.GetObject("gen_result_tick_50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gen_result_warning_50 {
+            get {
+                object obj = ResourceManager.GetObject("gen_result_warning_50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap import20x20px {
             get {
                 object obj = ResourceManager.GetObject("import20x20px", resourceCulture);

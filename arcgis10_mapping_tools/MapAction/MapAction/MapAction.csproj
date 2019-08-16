@@ -86,6 +86,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutomationResult.cs" />
     <Compile Include="Cookbook.cs" />
     <Compile Include="LanguageCode.cs" />
     <Compile Include="LanguageCodeLookup.cs" />
@@ -109,6 +110,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="AutomationReport.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

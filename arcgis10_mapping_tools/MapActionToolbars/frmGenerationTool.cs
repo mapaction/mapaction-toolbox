@@ -119,9 +119,19 @@ namespace MapActionToolbars
                 Console.WriteLine(errorMsgs);
                 throw;
             }
-            MessageBox.Show("Product \"" + cboProductType.Text + "\" generated.", "Map Action Automation", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Close();
+            //MessageBox.Show("Product \"" + cboProductType.Text + "\" generated.", "Map Action Automation", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+
+            string rawJson = "{ \"result\": \"Success\", \"summary\": \"Map generation complete\", \"productName\": \"Country Overview\", \"classfication\": \"Core\", \"results\": [ { \"layerName\": \"Settlements - Places\", \"dateStamp\": \"01-08-2019 20:45:12\", \"dataSource\": \"D:/MapAction/2019-06-25 - Automation - El Salvador/GIS/2_Active_Data/229_stle/slv_stle_stl_pt_s0_osm_pp_places.shp\", \"added\": true, \"message\": \"Layer added successfully\" },	{ \"layerName\": \"Transport - Airports\", \"dateStamp\": \"01-08-2019 20:45:19\", \"dataSource\": \"D:/MapAction/2019-06-25 - Automation - El Salvador/GIS/2_Active_Data/232_tran/wrl_tran_air_pt_s0_ouairports_pp_airports.shp\", \"added\": true, \"message\": \"Layer added successfully\" } ] }";
+            AutomationReport automationResult = JsonConvert.DeserializeObject<AutomationReport>(rawJson);
+            var dlg = new frmAutomationResult();
+            dlg.SetContent(automationResult);
+
+            if (dlg.Text.Length > 0)
+            {
+                dlg.ShowDialog();
+            }
+            this.Close();
         }
 
         private void cbxClassification_SelectedIndexChanged(object sender, EventArgs e)
