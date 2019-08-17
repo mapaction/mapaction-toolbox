@@ -12,13 +12,13 @@ import re
 from mapactionpy_arcmap import MapChef
 
 # Parameters:
-#  1. Product name
-#  2. Country name
-#  3. Cookboook Json File
-#  4. Layer Properties Json File
-#  5. Crash Move Folder
-#  6. Layer directory
-#  7. Return - String result
+#  0. Product name
+#  1. Country name
+#  2. Cookboook Json File
+#  3. Layer Properties Json File
+#  4. Crash Move Folder
+#  5. Layer directory
+#  6. Return - String result
 
 if __name__ == '__main__':
     map_doc = arcpy.mapping.MapDocument("current")
@@ -30,4 +30,4 @@ if __name__ == '__main__':
     layerDirectory = arcpy.GetParameterAsText(5)
     chef = MapChef(map_doc, cookbookJsonFile, layerPropertiesJsonFile, crashMoveFolder, layerDirectory)
     chef.cook(productName, countryName)
-
+    arcpy.SetParameter(6, chef.report())
