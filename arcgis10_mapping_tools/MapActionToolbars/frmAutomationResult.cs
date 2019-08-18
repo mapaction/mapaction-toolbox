@@ -25,6 +25,10 @@ namespace MapActionToolbars
             {
                 this.pictureBox1.Image = global::MapActionToolbars.Properties.Resources.gen_result_tick_50;
             }
+            else if (report.result == "Failure")
+            {
+                this.pictureBox1.Image = global::MapActionToolbars.Properties.Resources.gen_result_cross_50;
+            }
             else
             {
                 this.pictureBox1.Image = global::MapActionToolbars.Properties.Resources.gen_result_warning_50;
