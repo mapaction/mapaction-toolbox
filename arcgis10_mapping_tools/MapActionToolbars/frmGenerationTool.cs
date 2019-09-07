@@ -48,7 +48,6 @@ namespace MapActionToolbars
             this.cookbookFullPath = System.IO.Path.Combine(this.crashMoveFolder, this.automationDirectory, this.cookbookFileName);
             this.layerPropertiesFullPath = System.IO.Path.Combine(this.crashMoveFolder, this.automationDirectory, this.layerPropertiesFileName);
             this.layerDirectory = System.IO.Path.Combine(this.crashMoveFolder, layerDirectorySubPath);
-
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -78,7 +77,6 @@ namespace MapActionToolbars
                 {
                     classificationDict.Add(c.ToString());
                 }
-
                 cboClassification.DataSource = null;
                 cboClassification.Items.Clear();
                 cboClassification.DataSource = new BindingSource(classificationDict, null);
@@ -93,46 +91,79 @@ namespace MapActionToolbars
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
+            bool prerequisites = true;
             IGeoProcessor2 gp = new GeoProcessor() as IGeoProcessor2;
             gp.AddToolbox(Utilities.getExportGPToolboxPath());
             gp.OverwriteOutput = true;
             gp.AddOutputsToMap = true;
 
-            IVariantArray parameters = new VarArray();
-            parameters.Add(cboProductType.Text);          // Parameter 0
-            parameters.Add(tbxGeoExtent.Text);            // Parameter 1
-            parameters.Add(this.cookbookFullPath);        // Parameter 2
-            parameters.Add(this.layerPropertiesFullPath); // Parameter 3
-            parameters.Add(this.crashMoveFolder);         // Parameter 4
-            parameters.Add(this.layerDirectory);          // Parameter 5
+            string[] expectedDirectories = { this.crashMoveFolder, this.layerDirectory };
+            string[] expectedFiles = { this.cookbookFullPath, this.layerPropertiesFullPath };
+            string errorMessage = "Could not execute automation.  The following paths are required:\n";
 
-            object sev = null;
-            IGeoProcessorResult2 pyResult = null;
-            try
+            foreach (string directoryName in expectedDirectories)
             {
-                pyResult = (IGeoProcessorResult2)gp.Execute("generateProduct", parameters, null);
+                if (!Directory.Exists(directoryName))
+                {
+                    errorMessage = errorMessage + "\n" + directoryName;
+                    prerequisites = false;
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                string errorMsgs = gp.GetMessages(ref sev);
-                Console.WriteLine(errorMsgs);
-                throw;
-            }
-            string rawJson = "";
-            for (int o = 0; o < pyResult.OutputCount; o++)
-            {
-                var opMsg = pyResult.GetOutput(o);
-                rawJson = opMsg.GetAsText();
-            }
-            
-            AutomationReport automationResult = JsonConvert.DeserializeObject<AutomationReport>(rawJson);
-            var dlg = new frmAutomationResult();
-            dlg.SetContent(automationResult);
 
-            if (dlg.Text.Length > 0)
+            foreach (string fileName in expectedFiles)
             {
-                dlg.ShowDialog();
+                if (!File.Exists(fileName))
+                {
+                    errorMessage = errorMessage + "\n" + fileName;
+                    prerequisites = false;
+                }
+            }
+
+            if (prerequisites)
+            {
+                IVariantArray parameters = new VarArray();
+                parameters.Add(cboProductType.Text);          // Parameter 0
+                parameters.Add(tbxGeoExtent.Text);            // Parameter 1
+                parameters.Add(this.cookbookFullPath);        // Parameter 2
+                parameters.Add(this.layerPropertiesFullPath); // Parameter 3
+                parameters.Add(this.crashMoveFolder);         // Parameter 4
+                parameters.Add(this.layerDirectory);          // Parameter 5
+
+                object sev = null;
+                IGeoProcessorResult2 pyResult = null;
+                try
+                {
+                    pyResult = (IGeoProcessorResult2)gp.Execute("generateProduct", parameters, null);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    string errorMsgs = gp.GetMessages(ref sev);
+                    Console.WriteLine(errorMsgs);
+                    throw;
+                }
+                string rawJson = "";
+                for (int o = 0; o < pyResult.OutputCount; o++)
+                {
+                    var opMsg = pyResult.GetOutput(o);
+                    rawJson = opMsg.GetAsText();
+                }
+
+                AutomationReport automationResult = JsonConvert.DeserializeObject<AutomationReport>(rawJson);
+                var dlg = new frmAutomationResult();
+                dlg.SetContent(automationResult);
+
+                if (dlg.Text.Length > 0)
+                {
+                    dlg.ShowDialog();
+                }
+            }
+            else
+            {
+                MessageBox.Show(errorMessage,
+                    "Automation Failure",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
             this.Close();
         }
