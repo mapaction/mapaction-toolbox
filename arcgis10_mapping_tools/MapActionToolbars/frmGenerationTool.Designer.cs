@@ -35,7 +35,6 @@
             this.tbxGeoExtent = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.chkGeoExtent = new System.Windows.Forms.CheckBox();
             this.cboProductType = new System.Windows.Forms.ComboBox();
             this.btnGenerate = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
@@ -49,7 +48,6 @@
             this.groupBox1.Controls.Add(this.tbxGeoExtent);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.chkGeoExtent);
             this.groupBox1.Controls.Add(this.cboProductType);
             this.groupBox1.Location = new System.Drawing.Point(18, 19);
             this.groupBox1.Name = "groupBox1";
@@ -104,16 +102,6 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Country";
             // 
-            // chkGeoExtent
-            // 
-            this.chkGeoExtent.AutoSize = true;
-            this.chkGeoExtent.Location = new System.Drawing.Point(442, 31);
-            this.chkGeoExtent.Name = "chkGeoExtent";
-            this.chkGeoExtent.Size = new System.Drawing.Size(89, 17);
-            this.chkGeoExtent.TabIndex = 2;
-            this.chkGeoExtent.Text = "Refresh Data";
-            this.chkGeoExtent.UseVisualStyleBackColor = true;
-            // 
             // cboProductType
             // 
             this.cboProductType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -166,7 +154,6 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox cboProductType;
-        private System.Windows.Forms.CheckBox chkGeoExtent;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbxGeoExtent;
