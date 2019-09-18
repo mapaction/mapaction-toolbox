@@ -30,8 +30,8 @@ namespace MapActionToolbars
     {
         private readonly string cookbookFileName = "mapCookbook.json";
         private readonly string layerPropertiesFileName = "layerProperties.json";
-        private readonly string automationDirectory = "GIS\\3_Mapping\\31_Resources\\316_Automation";
-        private readonly string layerDirectorySubPath = "GIS\\3_Mapping\\38_Initial_Maps_Layer_Files\\All";
+        private readonly string automationDirectory = "GIS\\3_Mapping\\31_Resources\\31A_Automation";
+        private readonly string layerDirectorySubPath = "GIS\\3_Mapping\\31_Resources\\312_Layer_files";
         private const string _operationConfigXmlFileName = "operation_config.xml";
 
         private string crashMoveFolder = "";
