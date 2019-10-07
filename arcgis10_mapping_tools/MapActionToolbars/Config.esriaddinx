@@ -18,7 +18,8 @@
             <Button refID="MapAction_ConfigTool" />
             <Button refID="MapAction_LayoutTool" />
             <Button refID="MapAction_ExportTool" />
-            <Button refID="MapAction_RenameTool" />			
+            <Button refID="MapAction_RenameTool" />
+            <Button refID="MapAction_GenerationTool" />
             <Button refID="MapAction_About_Box" />
           </Items>
         </Toolbar>
@@ -29,6 +30,7 @@
         <Button id="MapAction_LayoutTool" class="LayoutTool" message="Improves the speed and accuracy of completing the MapAction map layout elements" caption="Layout Tool" tip="Update layout elements" category="MapAction Mapping Tools" image="Images\LayoutTool.png" />
         <Button id="MapAction_ExportTool" class="ExportTool" message="Exports the map layout to an image (pdf, jpeg, emf) and creates the map metadata xml ready to be uploaded to the MapAction website" caption="Export Tool" tip="Export layout" category="MapAction Mapping Tools" image="Images\ExportTool.png" />
         <Button id="MapAction_RenameTool" class="RenameTool" message="Renames files to standard naming convention" caption="Rename Tool" tip="Data Rename Tool" category="MapAction Mapping Tools" image="Images\rename_icon.png" />
+        <Button id="MapAction_GenerationTool" class="GenerationTool" message="Generates a map using a map 'recipe'" caption="Map Generation Tool" tip="Map Generation Tool" category="MapAction Mapping Tools" image="Images\generate_icon.png" />
       </Commands>
     </ArcMap>
   </AddIn>

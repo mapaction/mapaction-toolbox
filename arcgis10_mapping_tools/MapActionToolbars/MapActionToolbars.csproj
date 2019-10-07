@@ -75,6 +75,7 @@
     <Reference Include="ESRI.ArcGIS.Editor, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Framework">
       <Private>False</Private>
@@ -102,8 +103,12 @@
     <Reference Include="ESRI.ArcGIS.System, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -128,6 +133,12 @@
     <Compile Include="FormValidationConfig.cs" />
     <Compile Include="FormValidationExport.cs" />
     <Compile Include="FormValidationLayout.cs" />
+    <Compile Include="frmAutomationResult.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAutomationResult.Designer.cs">
+      <DependentUpon>frmAutomationResult.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCheckElements.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,6 +169,12 @@
     <Compile Include="frmExportMain.Designer.cs">
       <DependentUpon>frmExportMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmGenerationTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGenerationTool.Designer.cs">
+      <DependentUpon>frmGenerationTool.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmLayoutMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -176,6 +193,7 @@
     <Compile Include="frmRenameMain.Designer.cs">
       <DependentUpon>frmRenameMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="GenerationTool.cs" />
     <Compile Include="LayoutTool.cs" />
     <Compile Include="LayoutToolAutomatedValues.cs" />
     <Compile Include="MADataRenameProperties.cs" />
@@ -197,6 +215,7 @@
       <DependentUpon>layer_name_lookupDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="ShowAutomationResults.cs" />
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Config.esriaddinx">
@@ -216,6 +235,9 @@
     <AddInContent Include="Images\ma_logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmAutomationResult.resx">
+      <DependentUpon>frmAutomationResult.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmCheckElements.resx">
       <DependentUpon>frmCheckElements.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -233,6 +255,9 @@
       <DependentUpon>frmExportMain.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmGenerationTool.resx">
+      <DependentUpon>frmGenerationTool.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmLayoutMain.resx">
       <DependentUpon>frmLayoutMain.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -248,6 +273,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -260,6 +286,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -277,10 +304,20 @@
   <ItemGroup>
     <AddInContent Include="Images\ExportTool.png" />
     <AddInContent Include="Images\rename_icon.png" />
+    <Content Include="Images\cross.png" />
     <Content Include="Images\ma_globe.png" />
-    <Content Include="Images\ma_globe2.png" />
+    <Content Include="Images\ma_mapgenerator.png" />
+    <AddInContent Include="Images\generate_icon.png" />
+    <Content Include="Images\tick.png" />
+    <Content Include="Images\warning.png" />
     <Content Include="Resources\clear-icon.png" />
     <AddInContent Include="Resources\rename_icon.png" />
+    <None Include="Resources\gen_result_cross.png" />
+    <None Include="Resources\gen_result_tick.png" />
+    <None Include="Resources\gen_result_warning.png" />
+    <None Include="Resources\gen_result_cross_50.png" />
+    <None Include="Resources\gen_result_tick_50.png" />
+    <None Include="Resources\gen_result_warning_50.png" />
     <Content Include="Sample\countries_config.xml" />
     <Content Include="Sample\language_codes.xml" />
     <Content Include="Sample\language_config.xml" />
@@ -307,6 +344,9 @@
     <None Include="Resources\cross_30px.png" />
     <None Include="Resources\cross_17px.png" />
     <None Include="Resources\clear-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
