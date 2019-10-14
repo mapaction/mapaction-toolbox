@@ -8,14 +8,16 @@ namespace MapAction
 {
     public class Product
     {
+        public string mapNumber;
         public string product;
-        public string classification;
+        public string category;
         public List<string> layers;
 
-        public Product(string product, string classification, List<string> layers)
+        public Product(string product, string category, string mapNumber, List<string> layers)
         {
+            this.mapNumber = mapNumber;
             this.product = product;
-            this.classification = classification;
+            this.category = category;
             this.layers = layers;
         }
     }

@@ -30,8 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGenerationTool));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lblProductClassification = new System.Windows.Forms.Label();
-            this.cboClassification = new System.Windows.Forms.ComboBox();
+            this.lblProductCategory = new System.Windows.Forms.Label();
+            this.cboCategory = new System.Windows.Forms.ComboBox();
             this.tbxGeoExtent = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -43,8 +43,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.lblProductClassification);
-            this.groupBox1.Controls.Add(this.cboClassification);
+            this.groupBox1.Controls.Add(this.lblProductCategory);
+            this.groupBox1.Controls.Add(this.cboCategory);
             this.groupBox1.Controls.Add(this.tbxGeoExtent);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
@@ -56,25 +56,25 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Generate";
             // 
-            // lblProductClassification
+            // lblProductCategory
             // 
-            this.lblProductClassification.AutoSize = true;
-            this.lblProductClassification.Location = new System.Drawing.Point(30, 69);
-            this.lblProductClassification.Name = "lblProductClassification";
-            this.lblProductClassification.Size = new System.Drawing.Size(68, 13);
-            this.lblProductClassification.TabIndex = 7;
-            this.lblProductClassification.Text = "Classification";
-            this.lblProductClassification.Click += new System.EventHandler(this.label3_Click);
+            this.lblProductCategory.AutoSize = true;
+            this.lblProductCategory.Location = new System.Drawing.Point(30, 69);
+            this.lblProductCategory.Name = "lblProductCategory";
+            this.lblProductCategory.Size = new System.Drawing.Size(49, 13);
+            this.lblProductCategory.TabIndex = 7;
+            this.lblProductCategory.Text = "Category";
+            this.lblProductCategory.Click += new System.EventHandler(this.label3_Click);
             // 
-            // cboClassification
+            // cboCategory
             // 
-            this.cboClassification.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboClassification.FormattingEnabled = true;
-            this.cboClassification.Location = new System.Drawing.Point(125, 65);
-            this.cboClassification.Name = "cboClassification";
-            this.cboClassification.Size = new System.Drawing.Size(482, 21);
-            this.cboClassification.TabIndex = 6;
-            this.cboClassification.SelectedIndexChanged += new System.EventHandler(this.cbxClassification_SelectedIndexChanged);
+            this.cboCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboCategory.FormattingEnabled = true;
+            this.cboCategory.Location = new System.Drawing.Point(125, 65);
+            this.cboCategory.Name = "cboCategory";
+            this.cboCategory.Size = new System.Drawing.Size(482, 21);
+            this.cboCategory.TabIndex = 6;
+            this.cboCategory.SelectedIndexChanged += new System.EventHandler(this.cbxClassification_SelectedIndexChanged);
             // 
             // tbxGeoExtent
             // 
@@ -157,8 +157,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbxGeoExtent;
-        private System.Windows.Forms.Label lblProductClassification;
-        private System.Windows.Forms.ComboBox cboClassification;
+        private System.Windows.Forms.Label lblProductCategory;
+        private System.Windows.Forms.ComboBox cboCategory;
         private System.Windows.Forms.Button btnGenerate;
         private System.Windows.Forms.Button Cancel;
     }

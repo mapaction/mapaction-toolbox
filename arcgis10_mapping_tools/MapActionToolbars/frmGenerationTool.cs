@@ -71,15 +71,15 @@ namespace MapActionToolbars
 
             if (cookbook != null)
             {
-                List<string> classificationDict = new List<string>();
+                List<string> categoryDict = new List<string>();
 
-                foreach (var c in cookbook.classifications)
+                foreach (var c in cookbook.categories)
                 {
-                    classificationDict.Add(c.ToString());
+                    categoryDict.Add(c.ToString());
                 }
-                cboClassification.DataSource = null;
-                cboClassification.Items.Clear();
-                cboClassification.DataSource = new BindingSource(classificationDict, null);
+                cboCategory.DataSource = null;
+                cboCategory.Items.Clear();
+                cboCategory.DataSource = new BindingSource(categoryDict, null);
                 refreshProductTypes();
             }
         }
@@ -180,7 +180,7 @@ namespace MapActionToolbars
 
         private void refreshProductTypes()
         {
-            var cb = cookbook.recipeByClassification(cboClassification.Text);
+            var cb = cookbook.recipeByCategory(cboCategory.Text);
             List<string> d = new List<string>();
 
             foreach (var r in cb)

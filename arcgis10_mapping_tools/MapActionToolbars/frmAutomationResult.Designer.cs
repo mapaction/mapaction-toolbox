@@ -59,7 +59,6 @@
             this.automationResultGridView.AllowUserToResizeRows = false;
             this.automationResultGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.automationResultGridView.Location = new System.Drawing.Point(18, 24);
-            this.automationResultGridView.MultiSelect = false;
             this.automationResultGridView.Name = "automationResultGridView";
             this.automationResultGridView.ReadOnly = true;
             this.automationResultGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -67,6 +66,7 @@
             this.automationResultGridView.ShowEditingIcon = false;
             this.automationResultGridView.Size = new System.Drawing.Size(1282, 150);
             this.automationResultGridView.TabIndex = 0;
+            this.automationResultGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.automationResultGridView_CellContentClick);
             // 
             // closeButton
             // 
