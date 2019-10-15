@@ -72,5 +72,10 @@ namespace MapActionToolbars
         {
             this.Close();
         }
+
+        private void automationResultGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

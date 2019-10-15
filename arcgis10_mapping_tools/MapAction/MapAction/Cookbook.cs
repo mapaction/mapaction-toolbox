@@ -12,12 +12,12 @@ namespace MapAction
     {
         public List<Product> recipes;
 
-        public HashSet<string> classifications;
+        public HashSet<string> categories;
 
         public Cookbook(string filePath)
         {
             recipes = new List<Product>();
-            classifications = new HashSet<string>();
+            categories = new HashSet<string>();
 
             if (File.Exists(filePath))
             {
@@ -26,20 +26,19 @@ namespace MapAction
 
                 foreach (var r in cookbook.recipes)
                 {
-                    //Console.WriteLine("{0} {1)\n", r.classification, r.product);
-                    recipes.Add(new Product(r.product, r.classification, r.layers));
-                    classifications.Add(r.classification);
+                    recipes.Add(new Product(r.product, r.category, r.mapNumber, r.layers));
+                    categories.Add(r.category);
                 }
             }
         }
 
-        public List<Product> recipeByClassification(string classification)
+        public List<Product> recipeByCategory(string category)
         {
             List<Product> result = new List<Product>();
 
             foreach (var recipe in recipes)
             {
-                if (recipe.classification == classification)
+                if (recipe.category == category)
                 {
                     result.Add(recipe);
                 }
