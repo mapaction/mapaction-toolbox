@@ -28,12 +28,7 @@ namespace MapActionToolbars
 {
     public partial class frmGenerationTool : Form
     {
-        private readonly string cookbookFileName = "mapCookbook.json";
-        private readonly string layerPropertiesFileName = "layerProperties.json";
-        private readonly string automationDirectory = "GIS\\3_Mapping\\31_Resources\\31A_Automation";
-        private readonly string layerDirectorySubPath = "GIS\\3_Mapping\\31_Resources\\312_Layer_files";
-        private const string _operationConfigXmlFileName = "operation_config.xml";
-
+        private string _eventConfigJsonFileName = "";
         private string crashMoveFolder = "";
         private string cookbookFullPath = "";
         private string layerPropertiesFullPath = "";
@@ -43,16 +38,24 @@ namespace MapActionToolbars
         
         public frmGenerationTool()
         {
-            InitializeComponent();
             this.crashMoveFolder = Utilities.getCrashMoveFolderPath();
-            this.cookbookFullPath = System.IO.Path.Combine(this.crashMoveFolder, this.automationDirectory, this.cookbookFileName);
-            this.layerPropertiesFullPath = System.IO.Path.Combine(this.crashMoveFolder, this.automationDirectory, this.layerPropertiesFileName);
-            this.layerDirectory = System.IO.Path.Combine(this.crashMoveFolder, layerDirectorySubPath);
-        }
+            if (MapAction.Utilities.detectCrashMoveFolderConfig())
+            {
+                InitializeComponent();                
+                string path = MapAction.Utilities.getCrashMoveFolderConfigFilePath();
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
+                CrashMoveFolderConfig config = MapAction.Utilities.getCrashMoveFolderConfigValues(path);
+                this._eventConfigJsonFileName = config.EventDescriptionFile;
+                this.cookbookFullPath = System.IO.Path.Combine(this.crashMoveFolder, config.MapDefinitions);
+                this.layerPropertiesFullPath = System.IO.Path.Combine(this.crashMoveFolder, config.LayerProperties);
+                this.layerDirectory = System.IO.Path.Combine(this.crashMoveFolder, config.LayerRendering);
+            }
+            else
+            {
+                MessageBox.Show("Crash Move Folder must contain valid cmf_description.json file.",
+                                "Configuration file required",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -63,9 +66,9 @@ namespace MapActionToolbars
         private void frmGenerationTool_Load(object sender, EventArgs e)
         {
             string path = MapAction.Utilities.getCrashMoveFolderPath();
-            string filePath = System.IO.Path.Combine(path, _operationConfigXmlFileName);
-            OperationConfig config = MapAction.Utilities.getOperationConfigValues(filePath);
-            tbxGeoExtent.Text = config.Country;
+            string filePath = System.IO.Path.Combine(path, _eventConfigJsonFileName);
+            EventConfig config = MapAction.Utilities.getEventConfigValues(filePath);
+            tbxGeoExtent.Text = MapAction.Utilities.getCountries().nameFromAlpha3Code(config.AffectedCountryIso3);
 
             cookbook = new Cookbook(this.cookbookFullPath);
 

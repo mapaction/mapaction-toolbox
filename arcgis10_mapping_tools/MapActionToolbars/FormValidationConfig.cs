@@ -169,8 +169,16 @@ namespace MapActionToolbars
 
         public static void validatePrimaryEmail(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
-            string varRegex = @"^[A-Za-z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$";
-            Match match = Regex.Match(control.Text, @varRegex);
+            bool validEmail = false;
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(control.Text);
+                validEmail = true;
+            }
+            catch
+            {
+                validEmail = false;
+            }
             eprWarning.SetIconPadding(control, 3);
             eprError.SetIconPadding(control, 3);
 
@@ -178,7 +186,7 @@ namespace MapActionToolbars
             if (validateEmptyField(control, eprWarning))
             {
                 // Here we check the regex match
-                if (!match.Success)
+                if (!validEmail)
                 {
                     eprError.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
                     eprError.SetError(control, "Does not appear to be a valid email address");
@@ -193,8 +201,6 @@ namespace MapActionToolbars
                 eprError.SetError(control, "");
                 validateEmptyField(control, eprWarning);
             }
-
         }
- 
     }
 }

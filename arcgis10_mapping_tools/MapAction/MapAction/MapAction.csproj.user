@@ -3,6 +3,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <StartAction>Program</StartAction>
     <StartProgram>C:\Program Files (x86)\ArcGIS\Desktop10.6\bin\ArcMap.exe</StartProgram>
-    <StartArguments>C:\MapAction\ARCGIS_10_2_MA000_Landscape_Bottom.mxd</StartArguments>
+    <StartArguments>C:\MapAction\MA001_country-overview-with-admin-1-boundaries-p-codes.mxd</StartArguments>
   </PropertyGroup>
 </Project>

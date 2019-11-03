@@ -124,9 +124,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
-    <Compile Include="ConfigTool.cs" />
+    <Compile Include="EventTool.cs" />
     <Compile Include="ConstructLayerName.cs" />
-    <Compile Include="CreateAndUpdateXml.cs" />
     <Compile Include="Export.cs" />
     <Compile Include="ExportTool.cs" />
     <Compile Include="export_validation.cs" />
@@ -145,23 +144,11 @@
     <Compile Include="frmCheckElements.Designer.cs">
       <DependentUpon>frmCheckElements.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmConfigMain.cs">
+    <Compile Include="frmEvent.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmConfigMain.designer.cs">
-      <DependentUpon>frmConfigMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmCreateXml.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmCreateXml.designer.cs">
-      <DependentUpon>frmCreateXml.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmEditXml.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmEditXml.designer.cs">
-      <DependentUpon>frmEditXml.cs</DependentUpon>
+    <Compile Include="frmEvent.Designer.cs">
+      <DependentUpon>frmEvent.cs</DependentUpon>
     </Compile>
     <Compile Include="frmExportMain.cs">
       <SubType>Form</SubType>
@@ -242,14 +229,8 @@
       <DependentUpon>frmCheckElements.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmConfigMain.resx">
-      <DependentUpon>frmConfigMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmCreateXml.resx">
-      <DependentUpon>frmCreateXml.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmEditXml.resx">
-      <DependentUpon>frmEditXml.cs</DependentUpon>
+    <EmbeddedResource Include="frmEvent.resx">
+      <DependentUpon>frmEvent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmExportMain.resx">
       <DependentUpon>frmExportMain.cs</DependentUpon>

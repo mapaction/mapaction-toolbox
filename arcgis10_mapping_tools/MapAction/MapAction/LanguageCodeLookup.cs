@@ -37,29 +37,34 @@ namespace MapAction
             string result = "Undetermined";
             for (int i = 0; i < listOfLanguageCodes.Count; i++)
             {
-                if (listOfLanguageCodes[i].lang.ToUpper() == language.ToUpper())
-                {
-                    switch (field)
+                string[] languages = listOfLanguageCodes[i].lang.Split(';').Select(sValue => sValue.Trim()).ToArray();
+
+                foreach (var lang in languages)
+                { 
+                    if (lang.ToUpper() == language.ToUpper())
                     {
-                        case LanguageCodeFields.Alpha2:
-                            result = listOfLanguageCodes[i].a2;
-                            break;
-                        case LanguageCodeFields.Alpha3b:
-                            result = listOfLanguageCodes[i].a3b;
-                            break;
-                        case LanguageCodeFields.Alpha3h:
-                            result = listOfLanguageCodes[i].a3h;
-                            break;
-                        case LanguageCodeFields.Alpha3t:
-                            result = listOfLanguageCodes[i].a3t;
-                            break;
-                        case LanguageCodeFields.Language:
-                            result = listOfLanguageCodes[i].lang;
-                            break;
-                        default:
-                            break;
+                        switch (field)
+                        {
+                            case LanguageCodeFields.Alpha2:
+                                result = listOfLanguageCodes[i].a2;
+                                break;
+                            case LanguageCodeFields.Alpha3b:
+                                result = listOfLanguageCodes[i].a3b;
+                                break;
+                            case LanguageCodeFields.Alpha3h:
+                                result = listOfLanguageCodes[i].a3h;
+                                break;
+                            case LanguageCodeFields.Alpha3t:
+                                result = listOfLanguageCodes[i].a3t;
+                                break;
+                            case LanguageCodeFields.Language:
+                                result = listOfLanguageCodes[i].lang;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
                     }
-                    break;
                 }
             }
             return result;
@@ -67,31 +72,35 @@ namespace MapAction
         public string lookupA2LanguageCode(string languageCode, LanguageCodeFields field)
         {
             string result = "Undetermined";
-            for (int i = 0; i < listOfLanguageCodes.Count; i++)
+
+            if (languageCode != null && languageCode != String.Empty)
             {
-                if (listOfLanguageCodes[i].a2.ToUpper() == languageCode.ToUpper())
+                for (int i = 0; i < listOfLanguageCodes.Count; i++)
                 {
-                    switch (field)
+                    if (listOfLanguageCodes[i].a2.ToUpper() == languageCode.ToUpper())
                     {
-                        case LanguageCodeFields.Alpha2:
-                            result = listOfLanguageCodes[i].a2;
-                            break;
-                        case LanguageCodeFields.Alpha3b:
-                            result = listOfLanguageCodes[i].a3b;
-                            break;
-                        case LanguageCodeFields.Alpha3h:
-                            result = listOfLanguageCodes[i].a3h;
-                            break;
-                        case LanguageCodeFields.Alpha3t:
-                            result = listOfLanguageCodes[i].a3t;
-                            break;
-                        case LanguageCodeFields.Language:
-                            result = listOfLanguageCodes[i].lang;
-                            break;
-                        default:
-                            break;
+                        switch (field)
+                        {
+                            case LanguageCodeFields.Alpha2:
+                                result = listOfLanguageCodes[i].a2;
+                                break;
+                            case LanguageCodeFields.Alpha3b:
+                                result = listOfLanguageCodes[i].a3b;
+                                break;
+                            case LanguageCodeFields.Alpha3h:
+                                result = listOfLanguageCodes[i].a3h;
+                                break;
+                            case LanguageCodeFields.Alpha3t:
+                                result = listOfLanguageCodes[i].a3t;
+                                break;
+                            case LanguageCodeFields.Language:
+                                result = listOfLanguageCodes[i].lang;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
                     }
-                    break;
                 }
             }
             return result;

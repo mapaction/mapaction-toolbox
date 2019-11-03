@@ -24,16 +24,16 @@ namespace MapActionToolbars
         Tab 1 automated values
         ##################################*/
 
-        //Returns the automated value for the glide number from the operation config file
+        //Returns the automated value for the glide number from the event config file
         public static string getGlideNo()
         {
             string GlideNo = string.Empty;
-            string path = MapAction.Utilities.getOperationConfigFilePath();
+            string path = MapAction.Utilities.getEventConfigFilePath();
 
-            if (MapAction.Utilities.detectOperationConfig())
+            if (MapAction.Utilities.detectEventConfig())
             {
-                MapAction.OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
-                GlideNo = config.GlideNo;
+                MapAction.EventConfig config = MapAction.Utilities.getEventConfigValues(path);
+                GlideNo = config.GlideNumber;
             }
             return GlideNo;
         }
@@ -45,11 +45,11 @@ namespace MapActionToolbars
         public static string getConfigDisclaimer()
         {
             string DefaultDisclaimerText = string.Empty;
-            string path = MapAction.Utilities.getOperationConfigFilePath();
+            string path = MapAction.Utilities.getEventConfigFilePath();
 
-            if (MapAction.Utilities.detectOperationConfig())
+            if (MapAction.Utilities.detectEventConfig())
             {
-                MapAction.OperationConfig config =  MapAction.Utilities.getOperationConfigValues(path);
+                MapAction.EventConfig config =  MapAction.Utilities.getEventConfigValues(path);
                 DefaultDisclaimerText = config.DefaultDisclaimerText;
             }
             return DefaultDisclaimerText;
@@ -58,12 +58,12 @@ namespace MapActionToolbars
         public static string getConfigDonorText()
         {
             string DefaultDonorsText = string.Empty;
-            string path = MapAction.Utilities.getOperationConfigFilePath();
+            string path = MapAction.Utilities.getEventConfigFilePath();
 
-            if (MapAction.Utilities.detectOperationConfig())
+            if (MapAction.Utilities.detectEventConfig())
             {
-                MapAction.OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
-                DefaultDonorsText = config.DefaultDonorsText;
+                MapAction.EventConfig config = MapAction.Utilities.getEventConfigValues(path);
+                DefaultDonorsText = config.DefaultDonorCredits;
             }
             return DefaultDonorsText;
         }
@@ -71,11 +71,11 @@ namespace MapActionToolbars
         public static string getConfigTimezone()
         {
             string DefaultTimeZone = string.Empty;
-            string path = MapAction.Utilities.getOperationConfigFilePath();
+            string path = MapAction.Utilities.getEventConfigFilePath();
 
-            if (MapAction.Utilities.detectOperationConfig())
+            if (MapAction.Utilities.detectEventConfig())
             {
-                MapAction.OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
+                MapAction.EventConfig config = MapAction.Utilities.getEventConfigValues(path);
                 DefaultTimeZone = config.TimeZone;
             }
             return DefaultTimeZone;
@@ -83,16 +83,15 @@ namespace MapActionToolbars
 
         public static string getProducedByText()
         {
-            //string OrganisationDetailsText = string.Empty;
             string OrgName = string.Empty;
             string OrgUrl = string.Empty;
             string PrimaryEmail = string.Empty;
             
-            string path = MapAction.Utilities.getOperationConfigFilePath();
+            string path = MapAction.Utilities.getEventConfigFilePath();
 
-            if (MapAction.Utilities.detectOperationConfig())
+            if (MapAction.Utilities.detectEventConfig())
             {
-                MapAction.OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
+                MapAction.EventConfig config = MapAction.Utilities.getEventConfigValues(path);
 
                 OrgName = config.DefaultSourceOrganisation;
                 OrgUrl = config.DefaultSourceOrganisationUrl;

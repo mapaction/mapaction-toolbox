@@ -35,13 +35,28 @@ namespace MapAction
             return themes;
         }
 
+        public List<string> Donors()
+        {
+            List<string> donors = new List<string>();
+
+            var eventConfigurationTool = Tools.Find(i => i.ToolName == Tool.EventConfigurationToolName);
+
+            var donorsComponent = eventConfigurationTool.Components.Find(i => i.ComponentName == Component.DonorsComponentName);
+
+            foreach (CheckBoxItem checkBoxItem in donorsComponent.CheckBoxItems)
+            {
+                donors.Add(checkBoxItem.CheckBoxItemName);
+            }
+            return donors;
+        }
+
         public List<string> MapRootURLs()
         {
             List<string> mapRootURLs = new List<string>();
 
-            var exportTool = Tools.Find(i => i.ToolName == Tool.OperationConfigToolName);
+            var eventTool = Tools.Find(i => i.ToolName == Tool.EventConfigurationToolName);
 
-            var mapRootURLComponent = exportTool.Components.Find(i => i.ComponentName == Component.MapRootUrlComponentName);
+            var mapRootURLComponent = eventTool.Components.Find(i => i.ComponentName == Component.MapRootUrlComponentName);
 
             if (mapRootURLComponent != null)
             {
@@ -76,7 +91,7 @@ namespace MapAction
     public class Tool
     {
         public static readonly string ExportToolName = "Export Tool";
-        public static readonly string OperationConfigToolName = "Operation Config Tool";
+        public static readonly string EventConfigurationToolName = "Event Configuration Tool";
 
         public string ToolName { get; set; }
         public List<Component> Components { get; set; }
@@ -89,6 +104,7 @@ namespace MapAction
 
     public class Component
     {
+        public static readonly string DonorsComponentName = "Donors";
         public static readonly string ThemeComponentName = "Themes";
         public static readonly string OrganisationUrlComponentName = "Organisation Url";
         public static readonly string MapRootUrlComponentName = "Map Root Url";

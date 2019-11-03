@@ -104,17 +104,29 @@ namespace MapAction.Properties {
         ///      &lt;Components&gt;
         ///        &lt;Component&gt;
         ///          &lt;ComponentName&gt;Organisation Url&lt;/ComponentName&gt;
+        ///          &lt;TextBoxItem&gt;
+        ///            &lt;TextBoxItemValue&gt;https://mapaction.org&lt;/TextBoxItemValue&gt;
+        ///          &lt;/TextBoxItem&gt;
+        ///        &lt;/Component&gt;
+        ///        &lt;Component&gt;
+        ///          &lt;ComponentName&gt;Map Root Url&lt;/ComponentName&gt;
         ///          &lt;ComboBoxItems&gt;
         ///            &lt;ComboBoxItem&gt;
-        ///              &lt;ComboBoxItemValue&gt;https://maps.mapaction.org/dataset/&lt;/ComboBoxItemValue&gt;
-        ///            &lt;/ComboBoxItem&gt;
-        ///            &lt;ComboBoxItem&gt;
-        ///              &lt;ComboBoxItemValue&gt;https://maps-staging.mapaction.org/dataset/&lt;/ComboBoxItemValue&gt;
-        ///            &lt; [rest of string was truncated]&quot;;.
+        ///              &lt;ComboBoxItemValue&gt;http [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MapActionToolbarsConfig {
             get {
                 return ResourceManager.GetString("MapActionToolbarsConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] restcountries {
+            get {
+                object obj = ResourceManager.GetObject("restcountries", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }
