@@ -244,6 +244,7 @@ namespace MapActionToolbars
             EventConfig newConfig = MapAction.Utilities.getEventConfigValues(path);
 
             //Populate the text boxes with the values from the dictionary
+            tbxPathToCrashMove.Text = newConfig.CrashMoveFolderDescriptorPath;
             tbxOperationName.Text = newConfig.OperationName;
             tbxGlideNo.Text = newConfig.GlideNumber;
             cboTimeZone.Text = newConfig.TimeZone;
@@ -351,6 +352,7 @@ namespace MapActionToolbars
         {
             EventConfig config = new EventConfig
             {
+                CrashMoveFolderDescriptorPath = tbxPathToCrashMove.Text.Replace("\\", "/"),
                 OperationName = tbxOperationName.Text,
                 GlideNumber = tbxGlideNo.Text,
                 AffectedCountryIso3 = countries.alpha3Code(cboCountry.Text),

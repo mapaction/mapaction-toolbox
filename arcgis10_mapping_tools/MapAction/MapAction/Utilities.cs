@@ -121,7 +121,7 @@ namespace MapAction
 
         #endregion
         #region Public method createEventConfig
-        //Creates an xml given a dictionary of tags and values.  Also pass in the root element, file path and filename.
+        //Creates a json given a dictionary of tags and values.  Also pass in the root element, file path and filename.
         public static string createEventConfig(MapAction.EventConfig eventConfig, string path, string fileName)
         {
             //set output path and filename

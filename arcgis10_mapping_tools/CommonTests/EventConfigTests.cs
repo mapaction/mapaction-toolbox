@@ -15,6 +15,7 @@ namespace MapAction.tests
         protected string testRootDir;
         protected MapAction.EventConfig config;
 
+        private readonly string expectedCrashMoveFolderDescriptorPath = "C:/Temp";
         private readonly string expectedOperationName= "Op_test";
         private readonly string expectedGlideNo= "XY-2006-123456-PAK";
         private readonly string expectedCountry= "AND";

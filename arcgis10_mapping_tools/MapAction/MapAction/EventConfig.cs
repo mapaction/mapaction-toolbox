@@ -14,6 +14,9 @@ namespace MapAction
             Donors = new List<string>();
         }
 
+        [JsonProperty("cmf_descriptor_path")]
+        public string CrashMoveFolderDescriptorPath { get; set; }
+
         [JsonProperty("operation_name")]
         public string OperationName { get; set; }
 
