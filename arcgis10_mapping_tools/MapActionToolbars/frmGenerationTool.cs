@@ -124,6 +124,7 @@ namespace MapActionToolbars
 
             if (prerequisites)
             {
+                btnGenerate.Enabled = false;
                 IVariantArray parameters = new VarArray();
                 parameters.Add(cboProductType.Text);          // Parameter 0
                 parameters.Add(tbxGeoExtent.Text);            // Parameter 1
