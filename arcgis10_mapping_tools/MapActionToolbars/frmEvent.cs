@@ -27,6 +27,7 @@ namespace MapActionToolbars
         private string _defaultSourceOrganisationUrl = "https://mapaction.org";
         private const decimal _defaultJpegDpi = 300;
         private const decimal _defaultPdfDpi = 300;
+        private const decimal _defaultEmfDpi = 300;
         private const string _defaultExportToolPath = "";
         private const string languageCodesXMLFileName = "language_codes.xml";
 
@@ -93,7 +94,6 @@ namespace MapActionToolbars
             {
                 if (_configJsonEditState != false)
                 {
-                    MapAction.Utilities.setCrashMovePathTest(tbxPathToCrashMove.Text);
                     MapAction.Utilities.setCrashMovePathTest(tbxPathToCrashMove.Text);
                     createConfigJson(_configJsonNewFile);
                 }
@@ -257,6 +257,7 @@ namespace MapActionToolbars
             tbxDonorText.Text = newConfig.DefaultDonorCredits;
             numJpegDpi.Value = decimal.Parse(newConfig.DefaultJpegResDPI);
             numPdfDpi.Value = decimal.Parse(newConfig.DefaultPdfResDPI);
+            numEmfDpi.Value = decimal.Parse(newConfig.DefaultEmfResDPI);
             //tbxExportToolPath.Text = newConfig.DefaultPathToExportDir;
             cboLanguage.Text = this.languageCodeLookup.lookupA2LanguageCode(newConfig.LanguageIso2, LanguageCodeFields.Language);
             cboCountry.Text = countries.nameFromAlpha3Code(newConfig.AffectedCountryIso3);
@@ -284,6 +285,7 @@ namespace MapActionToolbars
             cboMapRootUrl.Text = _defaultMapRootUrl;
             numJpegDpi.Value = _defaultJpegDpi;
             numPdfDpi.Value = _defaultPdfDpi;
+            numEmfDpi.Value = _defaultEmfDpi;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -366,7 +368,7 @@ namespace MapActionToolbars
                 DefaultDonorCredits = tbxDonorText.Text,
                 DefaultJpegResDPI = numJpegDpi.Value.ToString(),
                 DefaultPdfResDPI = numPdfDpi.Value.ToString(),
-                DefaultEmfResDPI = numPdfDpi.Value.ToString(),
+                DefaultEmfResDPI = numEmfDpi.Value.ToString(),
                 LanguageIso2 = this.languageCodeLookup.lookup(cboLanguage.Text, LanguageCodeFields.Alpha2),
                 Donors = checkedListBoxDonors.CheckedItems.OfType<string>().ToList()
             };
