@@ -100,8 +100,8 @@ namespace MapActionToolbars
             gp.OverwriteOutput = true;
             gp.AddOutputsToMap = true;
 
-            string[] expectedDirectories = { this.crashMoveFolder, this.layerDirectory };
-            string[] expectedFiles = { this.cookbookFullPath, this.layerPropertiesFullPath };
+            string[] expectedDirectories = { this.crashMoveFolder};
+            string[] expectedFiles = { this.cookbookFullPath };
             string errorMessage = "Could not execute automation.  The following paths are required:\n";
 
             foreach (string directoryName in expectedDirectories)
@@ -127,11 +127,7 @@ namespace MapActionToolbars
                 btnGenerate.Enabled = false;
                 IVariantArray parameters = new VarArray();
                 parameters.Add(cboProductType.Text);          // Parameter 0
-                parameters.Add(tbxGeoExtent.Text);            // Parameter 1
-                parameters.Add(this.cookbookFullPath);        // Parameter 2
-                parameters.Add(this.layerPropertiesFullPath); // Parameter 3
-                parameters.Add(this.crashMoveFolder);         // Parameter 4
-                parameters.Add(this.layerDirectory);          // Parameter 5
+                parameters.Add(this.crashMoveFolder);         // Parameter 1
 
                 object sev = null;
                 IGeoProcessorResult2 pyResult = null;

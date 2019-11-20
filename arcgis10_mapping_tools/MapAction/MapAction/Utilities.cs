@@ -223,7 +223,6 @@ namespace MapAction
         public static CrashMoveFolderConfig getCrashMoveFolderConfigValues(string path = null)
         {
             string crashMoveFolderConfigFilePath;
-            Uri cmfURI;
             var crashMoveFolderConfig = new CrashMoveFolderConfig();
 
             if (path == null)
