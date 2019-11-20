@@ -88,16 +88,17 @@
   <ItemGroup>
     <Compile Include="AutomationResult.cs" />
     <Compile Include="Cookbook.cs" />
+    <Compile Include="Countries.cs" />
+    <Compile Include="CrashMoveFolderConfig.cs" />
     <Compile Include="LanguageCode.cs" />
     <Compile Include="LanguageCodeLookup.cs" />
     <Compile Include="MapActionToolbarsConfig.cs" />
-    <Compile Include="OperationConfig.cs" />
+    <Compile Include="EventConfig.cs" />
     <Compile Include="DataFrameProperties.cs" />
     <Compile Include="LanguageConfig.cs" />
     <Compile Include="MapExport.cs" />
     <Compile Include="MapImageExporter.cs" />
     <Compile Include="PageLayoutProperties.cs" />
-    <Compile Include="MapFrameProperties.cs" />
     <Compile Include="MxdDocumentProperties.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -140,11 +141,13 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <EmbeddedResource Include="Resources\restcountries.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

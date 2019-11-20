@@ -21,6 +21,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using ESRI.ArcGIS.Geoprocessing;
 using System.Reflection;
+using Newtonsoft.Json;
+using Formatting = Newtonsoft.Json.Formatting;
 
 namespace MapAction
 {
@@ -45,7 +47,6 @@ namespace MapAction
             Debug.WriteLine(pathFileName);
 
             // Check that the dictionary we are writing has valid XML values (ie local paths are converted to URIs etc)
-            //Dictionary<string, string> sDict = usDict;
             Dictionary<string, string> sDict = sDictFromUsDict(usDict);
             
             const String themesStr = "themes";
@@ -119,10 +120,9 @@ namespace MapAction
         }
 
         #endregion
-
-        #region Public method createXML
-        //Creates an xml given a dictionary of tags and values.  Also pass in the root element, file path and filename.
-        public static string createXML(MapAction.OperationConfig operationConfig, string path, string fileName)
+        #region Public method createEventConfig
+        //Creates a json given a dictionary of tags and values.  Also pass in the root element, file path and filename.
+        public static string createEventConfig(MapAction.EventConfig eventConfig, string path, string fileName)
         {
             //set output path and filename
             string pathFileName;
@@ -130,19 +130,20 @@ namespace MapAction
             string root = System.IO.Path.GetPathRoot(path);
             if (root != path)
             {
-                pathFileName = System.IO.Path.Combine(@path, fileName + ".xml");
+                pathFileName = System.IO.Path.Combine(@path, fileName + ".json");
             }
             else
             {
-                pathFileName = @path + fileName + ".xml";
+                pathFileName = @path + fileName + ".json";
             }
             Debug.WriteLine(pathFileName);
 
-            using (StringWriter stringwriter = new System.IO.StringWriter())
+            // serialize JSON directly to a file
+            using (StreamWriter file = File.CreateText(@pathFileName))
             {
-                System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(operationConfig.GetType());
-                System.IO.StreamWriter file = new System.IO.StreamWriter(pathFileName);
-                writer.Serialize(file, operationConfig);
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, eventConfig);
                 file.Close();
             }
             return pathFileName;
@@ -217,71 +218,38 @@ namespace MapAction
         }
 
         #endregion
-
-        #region Public method getOperationConfigValues
-        //Returns a dictionary of the operation_config.xml elements and values
-        public static OperationConfig getOperationConfigValues(string path = null)
+        #region Public method getCrashMoveFolderConfigValues
+        //Returns the crash move folder structure from the cmd_descriptin.json elements and values
+        public static CrashMoveFolderConfig getCrashMoveFolderConfigValues(string path = null)
         {
-            string opCfgFilePath;
-            Uri cmfURI;
-            var operationConfig = new OperationConfig();
-            
-            //Create a dictionary to store the values from the xml
-            Dictionary<string, string> dict = new Dictionary<string, string>();
+            string crashMoveFolderConfigFilePath;
+            var crashMoveFolderConfig = new CrashMoveFolderConfig();
 
             if (path == null)
             {
                 //Get the currently set filepath from the ConfigTool settings file
-                opCfgFilePath = Properties.Settings.Default.crash_move_folder_path;
+                crashMoveFolderConfigFilePath = Properties.Settings.Default.crash_move_folder_path;
             }
             else
             {
-                opCfgFilePath = @path;
+                crashMoveFolderConfigFilePath = @path;
             }
-
-            cmfURI = new Uri(System.IO.Path.GetDirectoryName(opCfgFilePath), UriKind.Absolute);
-
             try
             {
-                if (File.Exists(@opCfgFilePath))
+                if (File.Exists(crashMoveFolderConfigFilePath))
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof(OperationConfig));
-                    System.IO.FileStream fileStream = new System.IO.FileStream(@opCfgFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    operationConfig = (OperationConfig)serializer.Deserialize(fileStream);
-                    fileStream.Close();
+                    using (StreamReader file = File.OpenText(crashMoveFolderConfigFilePath))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        crashMoveFolderConfig = (CrashMoveFolderConfig)serializer.Deserialize(file, typeof(CrashMoveFolderConfig));
+                    }
                 }
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
             }
-            return operationConfig;
-        }
-
-        #endregion
-
-        #region Public method hasWriteAccessToPath
-        //Returns a dictionary of the operation_config.xml elements and values
-        /// <summary>
-        /// ###This method does not correctly check access permissions.  Not sure how best to approach this.###
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static bool detectWriteAccessToPath(string path)
-        {
-            try
-            {
-                // Attempt to get a list of security permissions from the folder. 
-                // This will raise an exception if the path is read only or do not have access to view the permissions. 
-                System.Security.AccessControl.DirectorySecurity ds = Directory.GetAccessControl(@path);
-                Debug.WriteLine("Access to path granted.");
-                return true;
-            }
-            catch (UnauthorizedAccessException)
-            {
-                Debug.WriteLine("Access to path denied.");
-                return false;    
-            }
+            return crashMoveFolderConfig;
         }
         #endregion
 
@@ -448,13 +416,32 @@ namespace MapAction
         }
         #endregion
 
-        #region Public method detectOperationConfig
-        //Returns a dictionary of the operation_config.xml elements and values
-        public static Boolean detectOperationConfig()
+        #region Public method detectEventConfig
+        //Returns a dictionary of the event_description.json elements and values
+        public static Boolean detectEventConfig()
         {
             string path = Properties.Settings.Default.crash_move_folder_path;
-            string filepath = path + @"\operation_config.xml";
-            //If the file exists in the filepath, add each element and value of the xml file 
+            string filepath = path + @"\event_description.json";
+            //If the file exists in the filepath, add each element and value of the json file 
+            //to the dictionary as key value pairs 
+            if (File.Exists(@filepath))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region Public method detectCrashMoveFolderConfig
+        //Returns a dictionary of the event_description.json elements and values
+        public static Boolean detectCrashMoveFolderConfig()
+        {
+            string path = Properties.Settings.Default.crash_move_folder_path;
+            string filepath = path + @"\cmf_description.json";
+            //If the file exists in the filepath, add each element and value of the json file 
             //to the dictionary as key value pairs 
             if (File.Exists(@filepath))
             {
@@ -468,7 +455,6 @@ namespace MapAction
         #endregion
 
         #region Public method getCrashMoveFolderPath()
-
         public static string getCrashMoveFolderPath()
         {
             return Properties.Settings.Default.crash_move_folder_path;
@@ -498,23 +484,40 @@ namespace MapAction
                 return string.Empty;
             }       
         }
-
         #endregion
 
-        #region Public method getOperationConfigFilePath()
+        #region Public method getEventConfigFilePath()
 
-        public static string getOperationConfigFilePath()
+        public static string getEventConfigFilePath()
         {
             string fullPath;
-            if (detectOperationConfig())
+            if (detectEventConfig())
             {
-                fullPath = Properties.Settings.Default.crash_move_folder_path + @"\operation_config.xml";
+                fullPath = Properties.Settings.Default.crash_move_folder_path + @"\event_description.json";
                 return fullPath;
             }
             else
             {
                 return string.Empty;
-            }           
+            }
+        }
+
+        #endregion
+
+        #region Public method getCrashMoveFolderConfigFilePath()
+
+        public static string getCrashMoveFolderConfigFilePath()
+        {
+            string fullPath;
+            if (detectCrashMoveFolderConfig())
+            {
+                fullPath = Properties.Settings.Default.crash_move_folder_path + @"\cmf_description.json";
+                return fullPath;
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         #endregion
@@ -544,7 +547,7 @@ namespace MapAction
         }
 
         /*
-         * Returns a URI path relative to getOperationConfigFilePath() 
+         * Returns a URI path relative to getEventConfigFilePath() 
          */
         public static string relPathFromAbs(string absPath)
         {
@@ -554,7 +557,7 @@ namespace MapAction
         }
 
         /*
-        * Returns an absolute URI path by prefixing getOperationConfigFilePath() to the argument
+        * Returns an absolute URI path by prefixing getEventConfigFilePath() to the argument
         */
         public static string absPathFromRel(string relPath)
         {
@@ -799,6 +802,7 @@ namespace MapAction
                 else
                 {
                     // Use default from resource in code-base 
+
                     System.Reflection.Assembly assembly = Assembly.GetExecutingAssembly();
                     using (Stream stream = assembly.GetManifestResourceStream(assembly.GetName().Name + ".Resources." + LanguageConfigFileName))
                     using (StreamReader file = new StreamReader(stream))
@@ -835,6 +839,79 @@ namespace MapAction
                 Debug.WriteLine(e.Message);
             }
             return languageDictionary;
+        }
+        #endregion
+
+        #region Public method getEventConfigValues
+        //Returns a Event Config object
+        public static EventConfig getEventConfigValues(string path = null)
+        {
+            string eventCfgFilePath;
+            Uri cmfURI;
+            var eventConfig = new EventConfig();
+
+            if (path == null)
+            {
+                //Get the currently set filepath from the ConfigTool settings file
+                eventCfgFilePath = Properties.Settings.Default.crash_move_folder_path;
+            }
+            else
+            {
+                eventCfgFilePath = @path;
+            }
+
+            cmfURI = new Uri(System.IO.Path.GetDirectoryName(eventCfgFilePath), UriKind.Absolute);
+
+            try
+            {
+                if (File.Exists(eventCfgFilePath))
+                {
+                    using (StreamReader file = File.OpenText(eventCfgFilePath))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        eventConfig = (EventConfig)serializer.Deserialize(file, typeof(EventConfig));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return eventConfig;
+        }
+        #endregion
+
+        #region Public method getCountries
+        //Returns a the MapAction Toolbar Configuration object
+
+        public static Countries getCountries()
+        {
+            const string CountriesJsonFile = "restcountries.json";
+            Countries countries = new Countries();
+            try
+            {
+                // Use default from resource in code-base 
+                System.Reflection.Assembly assembly = Assembly.GetExecutingAssembly();
+
+                JsonSerializerSettings settings = new JsonSerializerSettings()
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    MissingMemberHandling = MissingMemberHandling.Ignore
+                };
+
+                using (Stream stream = assembly.GetManifestResourceStream(assembly.GetName().Name + ".Resources." + CountriesJsonFile))
+                using (StreamReader file = new StreamReader(stream))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    var listOfCountries = JsonConvert.DeserializeObject<List<Country>>(file.ReadToEnd(), settings);
+                    countries.set(listOfCountries);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return countries;
         }
         #endregion
     }

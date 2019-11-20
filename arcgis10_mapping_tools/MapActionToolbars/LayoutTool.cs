@@ -20,7 +20,7 @@ namespace MapActionToolbars
             //Check to see if the operational config file exists
              //Check to see if the config file exists, if not abort and send the user a message
             string path = MapAction.Utilities.getCrashMoveFolderPath();
-            string filePath = MapAction.Utilities.getOperationConfigFilePath();
+            string filePath = MapAction.Utilities.getEventConfigFilePath();
             string duplicateString = "";
             IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
             if (!MapAction.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))

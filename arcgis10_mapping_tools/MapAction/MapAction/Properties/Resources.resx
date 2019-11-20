@@ -127,4 +127,7 @@
   <data name="language_codes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\language_codes.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="restcountries" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\restcountries.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

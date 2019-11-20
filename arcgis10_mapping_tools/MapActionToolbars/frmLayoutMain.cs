@@ -86,13 +86,13 @@ namespace MapActionToolbars
         private void frmMain_Load(object sender, EventArgs e)
         {
             // Read the Operation Config file 
-            string path = MapAction.Utilities.getOperationConfigFilePath();
-            if (MapAction.Utilities.detectOperationConfig())
+            string path = MapAction.Utilities.getEventConfigFilePath();
+            if (MapAction.Utilities.detectEventConfig())
             {
-                OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
+                EventConfig config = MapAction.Utilities.getEventConfigValues(path);
                 _languageIso2 = config.LanguageIso2;
                 _operationId = config.OperationId.ToLower();
-                _mapRootURL = config.DefaultMapRootUrl;
+                _mapRootURL = config.DefaultPublishingBaseUrl;
                 if (_mapRootURL.Length == 0)
                 {
                     _mapRootURL = MapAction.Utilities.getMDRUrlRoot();

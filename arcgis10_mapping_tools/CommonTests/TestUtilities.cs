@@ -72,6 +72,5 @@ namespace MapAction.tests
             Directory.CreateDirectory(tempDirectory);
             return tempDirectory;
         }
-
     }
 }

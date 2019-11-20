@@ -392,8 +392,8 @@ namespace MapActionToolbars
             string automatedValue = string.Empty;
             
             string path = MapAction.Utilities.getCrashMoveFolderPath();
-            string filePath = MapAction.Utilities.getOperationConfigFilePath();
-            MapAction.OperationConfig config = MapAction.Utilities.getOperationConfigValues(filePath);
+            string filePath = MapAction.Utilities.getEventConfigFilePath();
+            MapAction.EventConfig config = MapAction.Utilities.getEventConfigValues(filePath);
             automatedValue = config.OperationId.ToLower();
 
             if (validateEmptyField(control, eprWarning))
@@ -401,7 +401,7 @@ namespace MapActionToolbars
                 if (control.Text.Trim() != automatedValue && control.Text != string.Empty)
                 {
                     eprError.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
-                    eprError.SetError(control, "Text differs from the operation_config.xml value");
+                    eprError.SetError(control, "Text differs from the event_description.json value");
                     return "Error";
                 }
                 else
@@ -446,7 +446,7 @@ namespace MapActionToolbars
                     eprError.SetError(control, "");
                     eprError.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
                     eprError.SetError(control,
-                        "The page layout and the operation_config.xml value don't match. Use the Layout Tool to resolve this.");
+                        "The page layout and the event_description.json value don't match. Use the Layout Tool to resolve this.");
                     return "Error";
                 }
                 else

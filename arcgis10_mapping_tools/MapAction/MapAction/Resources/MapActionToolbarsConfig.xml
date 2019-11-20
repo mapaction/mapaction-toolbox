@@ -1,7 +1,7 @@
 <MapActionToolbarConfig>
   <Tools>
     <Tool>
-      <ToolName>Operation Config Tool</ToolName>
+      <ToolName>Event Configuration Tool</ToolName>
       <Components>
         <Component>
           <ComponentName>Organisation Url</ComponentName>
@@ -29,7 +29,7 @@
         <Component>
           <ComponentName>Disclaimer Text</ComponentName>
           <TextBoxItem>
-            <TextBoxItemValue>The depiction and use of boundaries, names and associated data shown here do not imply endorsement or acceptance by MapAction</TextBoxItemValue>
+            <TextBoxItemValue>The depiction and use of boundaries, names and associated data shown here do not imply endorsement or acceptance by MapAction.</TextBoxItemValue>
           </TextBoxItem>
         </Component>
         <Component>
@@ -37,6 +37,41 @@
           <TextBoxItem>
             <TextBoxItemValue>Supported by</TextBoxItemValue>
           </TextBoxItem>
+        </Component>
+        <Component>
+          <ComponentName>Donors</ComponentName>
+          <CheckBoxItems>
+            <CheckBoxItem>
+              <CheckBoxItemName>the Bernard Sunley Charitable Foundation</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>DFID</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>the Dulverton Trust</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>the Hans K Rausing Trust</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>the Hedley Foundation</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>the Indigo Trust</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>the Linbury Trust</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>the Ministry of Foreign Affairs of the Netherlands</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>Ordnance Survey</CheckBoxItemName>
+            </CheckBoxItem>
+            <CheckBoxItem>
+              <CheckBoxItemName>USAID</CheckBoxItemName>
+            </CheckBoxItem>
+          </CheckBoxItems>
         </Component>
       </Components>
     </Tool>

@@ -30,9 +30,9 @@ namespace MapActionToolbars
                 MessageBox.Show("This tool only works with the MapAction mapping templates.  The 'Main map' map frame could not be detected. Please load a MapAction template and try again.", "Invalid map template",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            else if (!MapAction.Utilities.detectOperationConfig())
+            else if (!MapAction.Utilities.detectEventConfig())
             {
-                MessageBox.Show("The operation configuration file is required for this tool.  It cannot be located.",
+                MessageBox.Show("The event configuration file is required for this tool.  It cannot be located.",
                     "Configuration file required", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else if (MapAction.PageLayoutProperties.checkLayoutTextElementsForDuplicates(pMxDoc, "Main map", out duplicates))

@@ -59,29 +59,43 @@ namespace MapActionToolbars
         private const string _statusUpdate = "Update";
         private const string _statusCorrection = "Correction";
         private const string _languageCodesXmlFileName = "language_codes.xml";
-        private const string _operationConfigXmlFileName = "operation_config.xml";
+        private string _eventConfigJsonFileName = "";
         private const string _initialVersionNumber = "1";
         private const string _initialMapNumber = "MA001";
         private string _labelLanguage;
         private string _mapRootURL = "";
         private MapAction.LanguageCodeLookup languageCodeLookup = null;
         private MapActionToolbarConfig mapActionToolbarConfig = null;
+        private CrashMoveFolderConfig crashMoveFolder = null;
 
         public frmExportMain()
         {
-            string path = MapAction.Utilities.getCrashMoveFolderPath();
-            string languageFilePath = System.IO.Path.Combine(path, _languageCodesXmlFileName);
-            this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
-            this.mapActionToolbarConfig = MapAction.Utilities.getToolboxConfig();
+            string path = MapAction.Utilities.getCrashMoveFolderConfigFilePath();
 
-            if (this.mapActionToolbarConfig.Tools.Count > 0)
+            if (MapAction.Utilities.detectCrashMoveFolderConfig())
             {
-                InitializeComponent();
-                this.checkedListBoxThemes.Items.AddRange(this.mapActionToolbarConfig.Themes().ToArray());
+                string languageFilePath = System.IO.Path.Combine(path, _languageCodesXmlFileName);
+                this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
+                this.mapActionToolbarConfig = MapAction.Utilities.getToolboxConfig();
+
+                this.crashMoveFolder = MapAction.Utilities.getCrashMoveFolderConfigValues(path);
+                _eventConfigJsonFileName = this.crashMoveFolder.EventDescriptionFile;
+
+                if (this.mapActionToolbarConfig.Tools.Count > 0)
+                {
+                    InitializeComponent();
+                    this.checkedListBoxThemes.Items.AddRange(this.mapActionToolbarConfig.Themes().ToArray());
+                }
+                else
+                {
+                    this.Close();
+                }
             }
             else
             {
-                this.Close();
+                MessageBox.Show("Crash Move Folder must contain valid cmf_description.json file.",
+                                "Configuration file required",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -189,11 +203,12 @@ namespace MapActionToolbars
 
             // Update form values from the config xml
             string path = MapAction.Utilities.getCrashMoveFolderPath();
-            string filePath = System.IO.Path.Combine(path, _operationConfigXmlFileName);
-            OperationConfig config = MapAction.Utilities.getOperationConfigValues(filePath);
-            tbxGlideNo.Text = config.GlideNo;
-            tbxCountry.Text = config.Country;
-            this._mapRootURL = config.DefaultMapRootUrl;
+            string filePath = System.IO.Path.Combine(path, _eventConfigJsonFileName);
+            EventConfig config = MapAction.Utilities.getEventConfigValues(filePath);
+            tbxGlideNo.Text = config.GlideNumber;
+            tbxCountry.Text = MapAction.Utilities.getCountries().nameFromAlpha3Code(config.AffectedCountryIso3);
+
+            this._mapRootURL = config.DefaultPublishingBaseUrl;
             if (this._mapRootURL.Length == 0)
             {
                 this._mapRootURL = MapAction.Utilities.getMDRUrlRoot();
@@ -201,7 +216,7 @@ namespace MapActionToolbars
 
             string operational_id = config.OperationId.ToLower();
             tbxOperationId.Text = config.OperationId.ToLower();
-            tbxExportZipPath.Text = config.DefaultPathToExportDir;
+            tbxExportZipPath.Text = getExportDirectory();
             nudJpegResolution.Value = Convert.ToDecimal(config.DefaultJpegResDPI); 
             nudPdfResolution.Value = Convert.ToDecimal(config.DefaultPdfResDPI); 
             nudEmfResolution.Value = Convert.ToDecimal(config.DefaultPdfResDPI);
@@ -644,17 +659,6 @@ namespace MapActionToolbars
                 dict["kmzfilename"] = System.IO.Path.GetFileName(dictFilePaths["kmz"]);
             }
             return dict;
-            //string filename = Path.GetFileName(path);
-        }
-
-        private void btnValidate_Click(object sender, EventArgs e)
-        {
-            // Start validation procedures
-            // List<string> lstEmptyFields = validation.getEmptyRequiredFieldList(getExportToolValues());
-
-            //lblEmptyXmlFieldCount.Text = lstEmptyFields.Count.ToString();
-            //string returnString = string.Join(Environment.NewLine, lstEmptyFields.ToArray());
-            //lblEmptyFields.Text = returnString;
         }
         
         /// <summary>
@@ -786,14 +790,29 @@ namespace MapActionToolbars
         public static string getGlideNo()
         {
             string GlideNo = string.Empty;
-            string path = MapAction.Utilities.getOperationConfigFilePath();
+            string path = MapAction.Utilities.getEventConfigFilePath();
 
-            if (MapAction.Utilities.detectOperationConfig())
+            if (MapAction.Utilities.detectEventConfig())
             {
-                OperationConfig config = MapAction.Utilities.getOperationConfigValues(path);
-                GlideNo = config.GlideNo;
+                EventConfig config = MapAction.Utilities.getEventConfigValues(path);
+                GlideNo = config.GlideNumber;
             }
             return GlideNo;
+        }
+
+
+        public static string getExportDirectory()
+        {
+            string exportDirectory = string.Empty;
+            string path = MapAction.Utilities.getCrashMoveFolderConfigFilePath();
+
+            if (MapAction.Utilities.detectCrashMoveFolderConfig())
+            {
+                CrashMoveFolderConfig config = MapAction.Utilities.getCrashMoveFolderConfigValues(path);
+                
+                exportDirectory = System.IO.Path.Combine(MapAction.Utilities.getCrashMoveFolderPath(), config.ExportDirectory);           
+            }
+            return exportDirectory;
         }
 
 

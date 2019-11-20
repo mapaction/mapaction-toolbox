@@ -64,7 +64,6 @@
             this.lblProductCategory.Size = new System.Drawing.Size(49, 13);
             this.lblProductCategory.TabIndex = 7;
             this.lblProductCategory.Text = "Category";
-            this.lblProductCategory.Click += new System.EventHandler(this.label3_Click);
             // 
             // cboCategory
             // 
