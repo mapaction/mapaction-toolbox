@@ -127,8 +127,11 @@ namespace MapActionToolbars
                 btnGenerate.Enabled = false;
                 IVariantArray parameters = new VarArray();
                 parameters.Add(cboProductType.Text);          // Parameter 0
-                parameters.Add(this.crashMoveFolder);         // Parameter 1
-
+                parameters.Add(tbxGeoExtent.Text);            // Parameter 1
+                parameters.Add(this.cookbookFullPath);        // Parameter 2
+                parameters.Add(this.layerPropertiesFullPath); // Parameter 3
+                parameters.Add(this.crashMoveFolder);         // Parameter 4
+                parameters.Add(this.layerDirectory);          // Parameter 5
                 object sev = null;
                 IGeoProcessorResult2 pyResult = null;
                 try
