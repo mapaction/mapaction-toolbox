@@ -13,10 +13,6 @@ namespace MapAction
         {
             Categories = new List<string>();
         }
-
-        [JsonProperty("event_description_file")]
-        public string EventDescriptionFile { get; set; }
-
         [JsonProperty("original_data")]
         public string OriginalData { get; set; }
 

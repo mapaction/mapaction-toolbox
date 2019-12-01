@@ -59,7 +59,7 @@ namespace MapActionToolbars
         private const string _statusUpdate = "Update";
         private const string _statusCorrection = "Correction";
         private const string _languageCodesXmlFileName = "language_codes.xml";
-        private string _eventConfigJsonFileName = "";
+        private const string _eventConfigJsonFileName = "event_description.json";
         private const string _initialVersionNumber = "1";
         private const string _initialMapNumber = "MA001";
         private string _labelLanguage;
@@ -79,7 +79,6 @@ namespace MapActionToolbars
                 this.mapActionToolbarConfig = MapAction.Utilities.getToolboxConfig();
 
                 this.crashMoveFolder = MapAction.Utilities.getCrashMoveFolderConfigValues(path);
-                _eventConfigJsonFileName = this.crashMoveFolder.EventDescriptionFile;
 
                 if (this.mapActionToolbarConfig.Tools.Count > 0)
                 {
