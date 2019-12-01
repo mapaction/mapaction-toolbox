@@ -28,7 +28,7 @@ namespace MapActionToolbars
 {
     public partial class frmGenerationTool : Form
     {
-        private string _eventConfigJsonFileName = "";
+        private const string _eventConfigJsonFileName = "event_description.json";
         private string crashMoveFolder = "";
         private string cookbookFullPath = "";
         private string layerPropertiesFullPath = "";
@@ -45,7 +45,6 @@ namespace MapActionToolbars
                 string path = MapAction.Utilities.getCrashMoveFolderConfigFilePath();
 
                 CrashMoveFolderConfig config = MapAction.Utilities.getCrashMoveFolderConfigValues(path);
-                this._eventConfigJsonFileName = config.EventDescriptionFile;
                 this.cookbookFullPath = System.IO.Path.Combine(this.crashMoveFolder, config.MapDefinitions);
                 this.layerPropertiesFullPath = System.IO.Path.Combine(this.crashMoveFolder, config.LayerProperties);
                 this.layerDirectory = System.IO.Path.Combine(this.crashMoveFolder, config.LayerRendering);
