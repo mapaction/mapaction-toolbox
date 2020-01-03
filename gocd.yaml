@@ -1,0 +1,56 @@
+format_version: 9
+common:
+
+  build_stage: &build_stage
+    - stage-build:
+        resources:
+          - msbuild
+        tasks:
+          - exec:
+              command: "cmd.exe"
+              arguments:
+              - "/c"
+              - make.cmd
+          - exec:
+              command: "cmd.exe"
+              arguments:
+              - "/c"
+              - arcgis10_mapping_tools/arcaddins_for_testing/post_build_copy_addins.cmd
+
+  testing_stage: &testing_stage
+    - stage-test:
+        resources:
+          - msbuild
+        tasks:
+          - exec:
+              command: "cmd.exe"
+              arguments:
+              - "/c"
+              - arcgis10_mapping_tools/run-unittests.cmd
+
+pipelines:
+  test-all-prs:
+    group: MapAction-Toolbox
+    label_template: ${COUNT}
+    lock_behavior: unlockWhenFinished
+    materials:
+      toolbox:
+        scm: 232f5f9c-a656-49b3-b172-d6242cb1a3bc
+        destination: toolbox
+    stages:
+      - *build_stage
+      - *testing_stage
+  deploy-master:
+    group: MapAction-Toolbox
+    label_template: ${COUNT}
+    lock_behavior: unlockWhenFinished
+    materials:
+      toolbox:
+        git: https://github.com/mapaction/mapaction-toolbox.git
+        destination: toolbox
+        branch: master
+        username: mapaction-ci-servers
+        encrypted_password : AES:/tL+kSfanw1Vz+YhfX+C7g==:3UFicQJU9iJAH7ITgi/0MsBRs0Al81OIIkwq9Qru0NPsuXsTT+tFOtKAf4JhZXI7
+    stages:
+      - *build_stage
+      - *testing_stage
