@@ -1,33 +1,32 @@
 format_version: 9
 common:
-
   build_stage: &build_stage
     - stage-build:
-        resources:
-          - msbuild
-        tasks:
-          - exec:
-              command: "cmd.exe"
-              arguments:
-              - "/c"
-              - make.cmd
-          - exec:
-              command: "cmd.exe"
-              arguments:
-              - "/c"
-              - arcgis10_mapping_tools/arcaddins_for_testing/post_build_copy_addins.cmd
-
+        jobs:
+          job-build:
+            resources:
+              - msbuild
+            tasks:
+              - exec:
+                  command: "cmd.exe"
+                  arguments:
+                  - "/c"
+                  - make.cmd
+              - exec:
+                  command: "cmd.exe"
+                  arguments:
+                  - "/c"
+                  - arcgis10_mapping_tools/arcaddins_for_testing/post_build_copy_addins.cmd
   testing_stage: &testing_stage
     - stage-test:
-        resources:
-          - msbuild
-        tasks:
-          - exec:
-              command: "cmd.exe"
-              arguments:
-              - "/c"
-              - arcgis10_mapping_tools/run-unittests.cmd
-
+        jobs:
+          job-test:
+            tasks:
+              - exec:
+                  command: "cmd.exe"
+                  arguments:
+                  - "/c"
+                  - arcgis10_mapping_tools/run-unittests.cmd
 pipelines:
   test-all-prs:
     group: MapAction-Toolbox
