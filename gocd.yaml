@@ -11,12 +11,12 @@ common:
                   command: "cmd.exe"
                   arguments:
                   - "/c"
-                  - toolbox/make.cmd
+                  - toolbox\\make.cmd
               - exec:
                   command: "cmd.exe"
                   arguments:
                   - "/c"
-                  - toolbox/arcgis10_mapping_tools/arcaddins_for_testing/post_build_copy_addins.cmd
+                  - toolbox\\arcgis10_mapping_tools\\arcaddins_for_testing\\post_build_copy_addins.cmd
   testing_stage: &testing_stage
     - stage-test:
         jobs:
@@ -26,7 +26,7 @@ common:
                   command: "cmd.exe"
                   arguments:
                   - "/c"
-                  - toolbox/arcgis10_mapping_tools/run-unittests.cmd
+                  - toolbox\\arcgis10_mapping_tools\\run-unittests.cmd
 pipelines:
   test-all-prs:
     group: MapAction-Toolbox
