@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.960
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapAction", "MapAction\MapAction\MapAction.csproj", "{8B7ABA1A-C659-4D80-A2EF-13D953577643}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{185C9A74-2001-4B24-843F-C7D00B7EB474}"
@@ -22,10 +24,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{837E9B
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapActionToolbarExtension", "MapActionToolbarExtension\MapActionToolbarExtension.csproj", "{7B617336-DC71-4653-AD35-56DDF5E7062D}"
+EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = MapAction-toolbox.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -43,8 +44,18 @@ Global
 		{EFAA6DBF-A7AF-467F-810F-75044A5EAC9F}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{EFAA6DBF-A7AF-467F-810F-75044A5EAC9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFAA6DBF-A7AF-467F-810F-75044A5EAC9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B617336-DC71-4653-AD35-56DDF5E7062D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B617336-DC71-4653-AD35-56DDF5E7062D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B617336-DC71-4653-AD35-56DDF5E7062D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B617336-DC71-4653-AD35-56DDF5E7062D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CF73C2F1-243E-4AF4-BE98-00BAD330B4A6}
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = MapAction-toolbox.vsmdi
 	EndGlobalSection
 EndGlobal
