@@ -30,7 +30,8 @@ namespace MapActionToolbars
         //Set the dataframe that you are searching for in the layouts.  This is used in many methods below.
         //Need a better solution for sorting this out
         private static string _targetMapFrame = "Main map";
-        private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
+        //private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
+        private static IApplication _pMxApplication;
         
         //create a variable to hold the status of each validation check
         private string _languageISO2;
@@ -69,8 +70,17 @@ namespace MapActionToolbars
         private MapActionToolbarConfig mapActionToolbarConfig = null;
         private CrashMoveFolderConfig crashMoveFolder = null;
 
-        public frmExportMain()
+        // parameterless constructor which is called by the addin framework button as before,
+        // if this is called then we assume ArcMap.Application is defined, which it will be 
+        // when running as an addin
+        public frmExportMain() : this(ArcMap.Application)
         {
+        }
+
+        // new constructor which takes a reference to the IApplication the form should be associated with
+        public frmExportMain(IApplication arcMapApp)
+        {
+            _pMxApplication = arcMapApp;
             string path = MapAction.Utilities.getCrashMoveFolderConfigFilePath();
 
             if (MapAction.Utilities.detectCrashMoveFolderConfig())
@@ -179,7 +189,8 @@ namespace MapActionToolbars
 
             var dict = new Dictionary<string, string>();
             // added extra parameter to say that in this case all of the ESRI markup should be stripped from the label values
-            dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, _targetMapFrame, true);
+            IMxDocument doc = _pMxApplication.Document as IMxDocument;
+            dict = MapAction.PageLayoutProperties.getLayoutTextElements(doc, _targetMapFrame, true);
 
             //Update form text boxes with values from the map
             if (dict.ContainsKey("title")) { tbxMapTitle.Text = dict["title"]; }
@@ -228,7 +239,7 @@ namespace MapActionToolbars
 
             // Set the spatial reference information on load
             var dictSpatialRef = new Dictionary<string, string>();
-            dictSpatialRef  = MapAction.Utilities.getDataFrameSpatialReference(_pMxDoc, _targetMapFrame);
+            dictSpatialRef  = MapAction.Utilities.getDataFrameSpatialReference(doc, _targetMapFrame);
             tbxDatum.Text = dictSpatialRef["datum"];
             tbxProjection.Text = dictSpatialRef["projection"];
 
@@ -242,12 +253,12 @@ namespace MapActionToolbars
             this.nudEmfResolution.Enabled = false;
             this.nudKmlResolution.Enabled = false;
 
-            tbxPaperSize.Text = MapAction.Utilities.getPageSize(_pMxDoc as IMapDocument, _targetMapFrame);
-            tbxScale.Text = MapAction.Utilities.getScale(_pMxDoc as IMapDocument, _targetMapFrame);
+            tbxPaperSize.Text = MapAction.Utilities.getPageSize(doc as IMapDocument, _targetMapFrame);
+            tbxScale.Text = MapAction.Utilities.getScale(doc as IMapDocument, _targetMapFrame);
 
             // Check if Data Driven Page and enable dropdown accordingly
             IMapDocument mapDoc;
-            mapDoc = (_pMxDoc as MxDocument) as IMapDocument;
+            mapDoc = (doc as MxDocument) as IMapDocument;
             tbxMapbookMode.Enabled = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
         }
 
@@ -406,9 +417,12 @@ namespace MapActionToolbars
             // TODO:
             // APS Is there a good reasons for retreving the reference to the IMxDocument
             // via the ArcMap Application? Why not use the `frmExportMain._pMxDoc` member instead?
-            // Alternatively is the `frmExportMain._pMxDoc` member used or required?
-            IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
-            IActiveView pActiveView = pMxDoc.ActiveView;
+            // HSG: this has been changed now, in that the application is stored as a member 
+            // not the document (because when not running as an addin we don't have the 
+            // automatically set reference to the application so we make our own), and we 
+            // retrieve the document each time we need it. 
+            IMxDocument doc = _pMxApplication.Document as IMxDocument;
+            IActiveView pActiveView = doc.ActiveView;
             // Ssetup dictionaries for metadata XML
             Dictionary<string, string> dictFilePaths;
             // Create a dictionary to store the image file sizes to add to the output xml
@@ -417,7 +431,7 @@ namespace MapActionToolbars
             // Create a dictionary to get and store the map frame extents to pass to the output xml
 
             IMapDocument mapDoc;
-            mapDoc = (pMxDoc as MxDocument) as IMapDocument;
+            mapDoc = (doc as MxDocument) as IMapDocument;
             bool isDDP = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
             Dictionary<string, string> dictFrameExtents = Utilities.getMapFrameWgs84BoundingBox(mapDoc, "Main map");
 
@@ -441,7 +455,7 @@ namespace MapActionToolbars
                     System.Windows.Forms.Application.DoEvents();
 
                     // Export KML
-                    IMapDocument pMapDoc = (IMapDocument)pMxDoc;
+                    IMapDocument pMapDoc = (IMapDocument)doc;
                     string kmzPathFileName = exportPathFileName + ".kmz";
                     string kmzScale;
 
@@ -456,7 +470,7 @@ namespace MapActionToolbars
             else
             {
                 //// Data driven pages
-                IMapDocument pMapDoc = (IMapDocument)pMxDoc;
+                IMapDocument pMapDoc = (IMapDocument)doc;
                 MapImageExporter mie = new MapImageExporter(pMapDoc, exportPathFileName, "Main map");
                 // if exact match do a multifile export, else default to single file.
                 bool isMultiplePage = (tbxMapbookMode.Text == "Multiple PDF Files");
@@ -540,7 +554,8 @@ namespace MapActionToolbars
         {
             bool qrCodeUpdated = false;
             // Update QR Code
-            IPageLayout pLayout = _pMxDoc.PageLayout;
+            IMxDocument doc = _pMxApplication.Document as IMxDocument;
+            IPageLayout pLayout = doc.PageLayout;
             IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
             pGraphics.Reset();
 
@@ -673,7 +688,8 @@ namespace MapActionToolbars
         /// </remarks
         private Dictionary<string, string> exportAllImages()
         {
-            IMapDocument pMapDoc = ArcMap.Application.Document as IMapDocument;
+            IMxDocument doc = _pMxApplication.Document as IMxDocument;
+            IMapDocument pMapDoc = doc as IMapDocument;
             //IActiveView pActiveView = pMxDoc.ActiveView;
             var dict = new Dictionary<string, string>();
 
@@ -781,8 +797,9 @@ namespace MapActionToolbars
         public static string updateScale()
         
         {
-            string pageSize = MapAction.Utilities.getPageSize(_pMxDoc as IMapDocument, "Main map");
-            string scale = MapAction.Utilities.getScale(_pMxDoc as IMapDocument, "Main map");
+            IMapDocument doc = _pMxApplication.Document as IMapDocument;
+            string pageSize = MapAction.Utilities.getPageSize(doc, "Main map");
+            string scale = MapAction.Utilities.getScale(doc, "Main map");
             string scaleString = scale + " (At " + pageSize + ")";
             return scaleString;
         }
