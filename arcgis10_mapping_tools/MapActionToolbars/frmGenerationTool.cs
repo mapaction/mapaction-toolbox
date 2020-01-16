@@ -34,10 +34,16 @@ namespace MapActionToolbars
         private string layerPropertiesFullPath = "";
         private string layerDirectory = "";
         private Cookbook cookbook = null;
-        private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
-        
-        public frmGenerationTool()
+        //private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
+        private static IApplication _mApplication;
+
+        public frmGenerationTool() : this(ArcMap.Application)
         {
+        }
+
+        public frmGenerationTool(IApplication arcMapApp)
+        {
+            _mApplication = arcMapApp;
             this.crashMoveFolder = Utilities.getCrashMoveFolderPath();
             if (MapAction.Utilities.detectCrashMoveFolderConfig())
             {
