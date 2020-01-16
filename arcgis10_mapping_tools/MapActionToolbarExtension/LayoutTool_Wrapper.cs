@@ -12,8 +12,8 @@ using ESRI.ArcGIS.ArcMapUI;
 namespace MapActionToolbarExtension
 {
     /// <summary>
-    /// Summary description for LayoutTool_Wrapper.
-    /// </summary>
+    /// A COM-visible ArcObjects BaseCommand (button) for ArcMap, calling the existing Layout Tool form on click.
+/// </summary>
     [Guid("c4d98af7-01c0-4264-8ca1-013605c81019")]
     [ClassInterface(ClassInterfaceType.None)]
     [ProgId("MapActionToolbarExtension.LayoutTool_Wrapper")]
@@ -72,9 +72,7 @@ namespace MapActionToolbarExtension
         private IApplication m_application;
         public LayoutTool_Wrapper()
         {
-            //
-            // TODO: Define values for the public properties
-            //
+            // TODO: Remove "(AO)" from strings, currently here to distinguish from addin-generated button in testing
             base.m_category = "MapAction Mapping Tools (AO)"; //localizable text
             base.m_caption = "Layout Tool (AO)";  //localizable text
             base.m_message = "Improves the speed and accuracy of completing the MapAction map layout elements (AO)";  //localizable text 
@@ -83,9 +81,7 @@ namespace MapActionToolbarExtension
 
             try
             {
-                //
-                // TODO: change bitmap name if necessary
-                //
+                // TODO: change bitmap name
                 string bitmapResourceName = GetType().Name + ".bmp";
                 base.m_bitmap = new Bitmap(GetType(), bitmapResourceName);
             }

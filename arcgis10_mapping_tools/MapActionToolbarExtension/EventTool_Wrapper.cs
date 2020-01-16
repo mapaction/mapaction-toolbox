@@ -9,7 +9,7 @@ using ESRI.ArcGIS.ArcMapUI;
 namespace MapActionToolbarExtension
 {
     /// <summary>
-    /// Summary description for EventTool_Wrapper.
+    /// /// A COM-visible ArcObjects BaseCommand (button) for ArcMap, calling the existing Event (op-config) Tool form on click.
     /// </summary>
     [Guid("6fb20e0f-b837-4034-b633-97aab31216e0")]
     [ClassInterface(ClassInterfaceType.None)]
@@ -69,9 +69,7 @@ namespace MapActionToolbarExtension
         private IApplication m_application;
         public EventTool_Wrapper()
         {
-            //
-            // TODO: Define values for the public properties
-            //
+            // TODO: Remove (AO) from strings, currently here to distinguish this from addin-generated button
             base.m_category = "MapAction Mapping Tools (AO)"; //localizable text
             base.m_caption = "Event Tool (AO)";  //localizable text
             base.m_message = "Create or edit the event configuration file which is used by the MapAction layour and export tools (AO)";  //localizable text 
@@ -80,9 +78,7 @@ namespace MapActionToolbarExtension
 
             try
             {
-                //
-                // TODO: change bitmap name if necessary
-                //
+                // TODO: change bitmap name 
                 string bitmapResourceName = GetType().Name + ".bmp";
                 base.m_bitmap = new Bitmap(GetType(), bitmapResourceName);
             }
@@ -119,7 +115,6 @@ namespace MapActionToolbarExtension
         /// </summary>
         public override void OnClick()
         {
-            // TODO: Add EventTool_Wrapper.OnClick implementation
             MapActionToolbars.frmEvent form = new MapActionToolbars.frmEvent();
             if (form.Text.Length > 0)
             {

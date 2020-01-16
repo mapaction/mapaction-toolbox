@@ -10,7 +10,7 @@ using ESRI.ArcGIS.ArcMapUI;
 namespace MapActionToolbarExtension
 {
     /// <summary>
-    /// Summary description for ExportTool_Wrapper.
+    /// A COM-visible ArcObjects BaseCommand (button) for ArcMap, calling the existing Export Tool form on click.
     /// </summary>
     [Guid("d498ed1a-3e7c-49eb-bd5d-aa529ce0fd5c")]
     [ClassInterface(ClassInterfaceType.None)]
@@ -70,9 +70,7 @@ namespace MapActionToolbarExtension
         private IApplication m_application;
         public ExportTool_Wrapper()
         {
-            //
-            // TODO: Define values for the public properties
-            //
+            // TODO: remove (AO) from the strings, this is here to highlight difference between addin and installed version during testing
             base.m_category = "MapAction Mapping Tools (AO)"; //localizable text
             base.m_caption = "Export Tool (AO)";  //localizable text
             base.m_message = "Exports the map layout to an image (pdf, jpeg, emf) and creates the map metadata xml ready to be uploaded to the MapAction website (AO)";  //localizable text 
@@ -83,8 +81,7 @@ namespace MapActionToolbarExtension
             try
             {
                 //
-                // TODO: change bitmap name if necessary
-                //
+                // TODO: change bitmap name 
                 string bitmapResourceName = GetType().Name + ".bmp";
                 base.m_bitmap = new Bitmap(GetType(), bitmapResourceName);
             }
