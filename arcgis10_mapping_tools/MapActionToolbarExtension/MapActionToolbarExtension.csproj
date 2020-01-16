@@ -79,10 +79,12 @@
     <Compile Include="Class1.cs" />
     <Compile Include="EventTool_Wrapper.cs" />
     <Compile Include="ExportTool_Wrapper.cs" />
+    <Compile Include="GenerationTool_Wrapper.cs" />
     <Compile Include="LayoutTool_Wrapper.cs" />
     <Compile Include="MapActionToolbarExtensionMain.cs" />
     <Compile Include="MapActionToolbarExtension_Toolbar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RenameTool_Wrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="LayoutTool_Wrapper.bmp" />
@@ -105,6 +107,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ExportTool_Wrapper.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GenerationTool_Wrapper.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="RenameTool_Wrapper.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -77,6 +77,10 @@ namespace MapActionToolbarExtension
             AddItem("MapActionToolbarExtension.LayoutTool_Wrapper");
             BeginGroup();
             AddItem("MapActionToolbarExtension.ExportTool_Wrapper");
+            BeginGroup();
+            AddItem("MapActionToolbarExtension.GenerationTool_Wrapper");
+            BeginGroup();
+            AddItem("MapActionToolbarExtension.RenameTool_Wrapper");
         }
 
         public override string Caption
