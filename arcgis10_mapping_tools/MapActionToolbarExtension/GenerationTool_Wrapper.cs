@@ -5,6 +5,7 @@ using ESRI.ArcGIS.ADF.BaseClasses;
 using ESRI.ArcGIS.ADF.CATIDs;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.ArcMapUI;
+using System.Windows.Forms;
 
 namespace MapActionToolbarExtension
 {
@@ -119,7 +120,33 @@ namespace MapActionToolbarExtension
         /// </summary>
         public override void OnClick()
         {
-            // TODO: Add GenerationTool_Wrapper.OnClick implementation
+            //Check if 'Main map' frame exists.  If not show a message box telling the user so. Don't open GUI.
+            string duplicates = "";
+            IMxDocument pMxDoc = m_application.Document as IMxDocument;
+            if (!MapAction.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
+            {
+                MessageBox.Show("This tool only works with the MapAction mapping templates.  The 'Main map' map frame could not be detected. Please load a MapAction template and try again.", "Invalid map template",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (!MapAction.Utilities.detectEventConfig())
+            {
+                MessageBox.Show("The event configuration file is required for this tool.  It cannot be located.",
+                    "Configuration file required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (MapAction.PageLayoutProperties.checkLayoutTextElementsForDuplicates(pMxDoc, "Main map", out duplicates))
+            {
+                MessageBox.Show("Duplicate named elements have been identified in the layout. Please remove duplicate element names \"" + duplicates + "\" before trying again.", "Invalid map template",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (MapAction.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
+            {
+                var dlg = new MapActionToolbars.frmGenerationTool(m_application);
+
+                if (dlg.Text.Length > 0)
+                {
+                    dlg.ShowDialog();
+                }
+            }
         }
 
         #endregion
