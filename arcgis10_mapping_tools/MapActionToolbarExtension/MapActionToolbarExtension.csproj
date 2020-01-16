@@ -87,12 +87,6 @@
     <Compile Include="RenameTool_Wrapper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="LayoutTool_Wrapper.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="AboutBox_Wrapper.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\MapActionToolbars\MapActionToolbars.csproj">
       <Project>{5388b0f1-b5e9-45b2-810c-49f019300aca}</Project>
       <Name>MapActionToolbars</Name>
@@ -103,16 +97,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="EventTool_Wrapper.bmp" />
+    <EmbeddedResource Include="EventTool_Wrapper.png" />
+    <EmbeddedResource Include="ExportTool_Wrapper.png" />
+    <EmbeddedResource Include="GenerationTool_Wrapper.png" />
+    <EmbeddedResource Include="LayoutTool_Wrapper.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ExportTool_Wrapper.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="GenerationTool_Wrapper.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="RenameTool_Wrapper.bmp" />
+    <EmbeddedResource Include="RenameTool_Wrapper.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

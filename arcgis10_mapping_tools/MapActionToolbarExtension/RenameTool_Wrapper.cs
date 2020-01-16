@@ -83,7 +83,7 @@ namespace MapActionToolbarExtension
                 //
                 // TODO: change bitmap name if necessary
                 //
-                string bitmapResourceName = GetType().Name + ".bmp";
+                string bitmapResourceName = GetType().Name + ".png";
                 base.m_bitmap = new Bitmap(GetType(), bitmapResourceName);
             }
             catch (Exception ex)
