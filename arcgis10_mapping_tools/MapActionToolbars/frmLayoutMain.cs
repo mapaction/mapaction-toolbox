@@ -119,7 +119,7 @@ namespace MapActionToolbars
             FormValidationLayout.validateMapSummary(tbxSummary, eprMapSummary);
             FormValidationLayout.validateDataSources(tbxDataSources, eprDataSources);
             FormValidationLayout.validateMapNumber(tbxMapNumber, eprMapNumberWarning, eprMapNumberError);
-            FormValidationLayout.validateMapDocument(tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
+            FormValidationLayout.validateMapDocument(_pMxApplication as IMxApplication, tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
             FormValidationLayout.validateSpatialReference(tbxSpatialReference, eprSpatialReferenceWarning, eprSpatialReferenceError);
             FormValidationLayout.validateScaleText(tbxScale, eprScaleTextWarning, eprScaleTextError);
             FormValidationLayout.validateGlideNumber(tbxGlideNumber, eprGlideNumberWarning, eprSpatialReferenceError);
@@ -451,7 +451,7 @@ namespace MapActionToolbars
 
         private void tbxMapDocument_TextChanged(object sender, EventArgs e)
         {
-            FormValidationLayout.validateMapDocument(tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
+            FormValidationLayout.validateMapDocument(_pMxApplication as IMxApplication, tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
         }
 
         private void tbxScale_TextChanged(object sender, EventArgs e)

@@ -165,19 +165,20 @@ namespace MapActionToolbars
         private void frmMain_Load(object sender, EventArgs e)
         {
             //Form validation methods
-            _titleValidationResult = FormValidationExport.validateMapTitle(tbxMapTitle, eprMaptitleWarning, eprMapTitleError);
-            _summaryValidationResult = FormValidationExport.validateMapSummary(tbxMapSummary, eprMapSummaryWarning, eprMapSummaryError);
-            _mapDocumentValidationResult = FormValidationExport.validateMapDocument(tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
-            _datumValidationResult = FormValidationExport.validateDatum(tbxDatum, eprDatumWarning, eprDatumError);
-            _projectionValidationResult = FormValidationExport.validateProjection(tbxProjection, eprProjectionWarning, eprProjectionError);
-            _scaleValidationResult = FormValidationExport.validateScale(tbxScale, eprScaleWarning, eprScaleError);
+            IMxDocument mxDoc = _pMxApplication.Document as IMxDocument;
+            _titleValidationResult = FormValidationExport.validateMapTitle(mxDoc, tbxMapTitle, eprMaptitleWarning, eprMapTitleError);
+            _summaryValidationResult = FormValidationExport.validateMapSummary(mxDoc, tbxMapSummary, eprMapSummaryWarning, eprMapSummaryError);
+            _mapDocumentValidationResult = FormValidationExport.validateMapDocument(_pMxApplication, tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
+            _datumValidationResult = FormValidationExport.validateDatum(mxDoc, tbxDatum, eprDatumWarning, eprDatumError);
+            _projectionValidationResult = FormValidationExport.validateProjection(mxDoc, tbxProjection, eprProjectionWarning, eprProjectionError);
+            _scaleValidationResult = FormValidationExport.validateScale(mxDoc, tbxScale, eprScaleWarning, eprScaleError);
             _dateValidationResult = FormValidationExport.validateDate(tbxDate, eprDateWarning, eprDateError);
             _timeValidationResult = FormValidationExport.validateTime(tbxTime, eprTimeWarning, eprTimeError);
-            _paperSizeValidationResult = FormValidationExport.validatePaperSize(tbxPaperSize, eprPaperWarning, eprPaperError);
+            _paperSizeValidationResult = FormValidationExport.validatePaperSize(mxDoc, tbxPaperSize, eprPaperWarning, eprPaperError);
             _imageryDateValidationResult = FormValidationExport.validateImageryDate(tbxImageDate, eprImageryDate);
-            _dataSourcesValidationResult = FormValidationExport.validateDataSources(tbxDataSources, eprDataSourcesWarning, eprDataSourcesError);
+            _dataSourcesValidationResult = FormValidationExport.validateDataSources(mxDoc, tbxDataSources, eprDataSourcesWarning, eprDataSourcesError);
             _operationIdValidationResult = FormValidationExport.validateOperationId(tbxOperationId, eprOperationIdWarning, eprOperationIdError);
-            _glideNumberValidationResult = FormValidationExport.validateGlideNumber(tbxGlideNo, eprGlideNumberWarning, eprGlideNumberError);
+            _glideNumberValidationResult = FormValidationExport.validateGlideNumber(mxDoc, tbxGlideNo, eprGlideNumberWarning, eprGlideNumberError);
             _locationValidationResult = FormValidationExport.validateLocation(tbxImageLocation, eprLocationWarning);
             _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
             _countryValidationResult = FormValidationExport.validateCountry(tbxCountry, eprCountryWarning);
@@ -860,12 +861,14 @@ namespace MapActionToolbars
 
         private void tbxMapTitle_TextChanged(object sender, EventArgs e)
         {
-            _titleValidationResult = FormValidationExport.validateMapTitle(tbxMapTitle, eprMaptitleWarning, eprMapTitleError);
+            _titleValidationResult = FormValidationExport.validateMapTitle(_pMxApplication.Document as IMxDocument, 
+                tbxMapTitle, eprMaptitleWarning, eprMapTitleError);
         }
 
         private void tbxMapSummary_TextChanged(object sender, EventArgs e)
         {
-            _summaryValidationResult = FormValidationExport.validateMapSummary(tbxMapSummary, eprMapSummaryWarning, eprMapSummaryError);
+            _summaryValidationResult = FormValidationExport.validateMapSummary(_pMxApplication.Document as IMxDocument, 
+                tbxMapSummary, eprMapSummaryWarning, eprMapSummaryError);
         }
 
         private void tbxImageDate_TextChanged(object sender, EventArgs e)
@@ -875,12 +878,14 @@ namespace MapActionToolbars
 
         private void tbxDataSources_TextChanged(object sender, EventArgs e)
         {
-            _dataSourcesValidationResult = FormValidationExport.validateDataSources(tbxDataSources, eprDataSourcesWarning, eprDataSourcesError);
+            _dataSourcesValidationResult = FormValidationExport.validateDataSources(_pMxApplication.Document as IMxDocument, 
+                tbxDataSources, eprDataSourcesWarning, eprDataSourcesError);
         }
 
         private void tbxPaperSize_TextChanged(object sender, EventArgs e)
         {
-            _paperSizeValidationResult = FormValidationExport.validatePaperSize(tbxPaperSize, eprPaperWarning, eprPaperError);
+            _paperSizeValidationResult = FormValidationExport.validatePaperSize(_pMxApplication.Document as IMxDocument, 
+                tbxPaperSize, eprPaperWarning, eprPaperError);
         }
 
         private void tbxTime_TextChanged(object sender, EventArgs e)
@@ -895,22 +900,26 @@ namespace MapActionToolbars
 
         private void tbxScale_TextChanged(object sender, EventArgs e)
         {
-            _scaleValidationResult = FormValidationExport.validateScale(tbxScale, eprScaleWarning, eprScaleError);
+            _scaleValidationResult = FormValidationExport.validateScale(_pMxApplication.Document as IMxDocument, 
+                tbxScale, eprScaleWarning, eprScaleError);
         }
 
         private void tbxProjection_TextChanged(object sender, EventArgs e)
         {
-            _projectionValidationResult = FormValidationExport.validateProjection(tbxProjection, eprProjectionWarning, eprProjectionError);
+            _projectionValidationResult = FormValidationExport.validateProjection(_pMxApplication.Document as IMxDocument, 
+                tbxProjection, eprProjectionWarning, eprProjectionError);
         }
 
         private void tbxDatum_TextChanged(object sender, EventArgs e)
         {
-            _datumValidationResult = FormValidationExport.validateDatum(tbxDatum, eprDatumWarning, eprDatumError);
+            _datumValidationResult = FormValidationExport.validateDatum(_pMxApplication.Document as IMxDocument, 
+                tbxDatum, eprDatumWarning, eprDatumError);
         }
 
         private void tbxMapDocument_TextChanged(object sender, EventArgs e)
         {
-            _mapDocumentValidationResult = FormValidationExport.validateMapDocument(tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
+            _mapDocumentValidationResult = FormValidationExport.validateMapDocument(_pMxApplication, 
+                tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
         }
 
         private void tbxOperationId_TextChanged(object sender, EventArgs e)
@@ -920,7 +929,8 @@ namespace MapActionToolbars
 
         private void tbxGlideNo_TextChanged(object sender, EventArgs e)
         {
-            _glideNumberValidationResult = FormValidationExport.validateGlideNumber(tbxGlideNo, eprGlideNumberWarning, eprGlideNumberError);
+            _glideNumberValidationResult = FormValidationExport.validateGlideNumber(_pMxApplication.Document as IMxDocument, 
+                tbxGlideNo, eprGlideNumberWarning, eprGlideNumberError);
         }
 
         private void tbxImageLocation_TextChanged(object sender, EventArgs e)

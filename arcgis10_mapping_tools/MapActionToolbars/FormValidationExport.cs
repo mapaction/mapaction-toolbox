@@ -19,8 +19,12 @@ namespace MapActionToolbars
     public static class FormValidationExport
     {
         private static string targetMapFrame = "Main map";
-        private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
-        
+
+        //private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
+        // No longer suitable as we do not have ArcMap.Application outside of addin framework,
+        // and because this class has been written as static for some reason we do not have a 
+        // constructor in which to initiate a member field passed in from the caller. To be fixed sometime.
+
         //Clear error providers (primarily on form close)
         public static void disposeErrorProvider(ErrorProvider epr)
         {
@@ -45,11 +49,15 @@ namespace MapActionToolbars
 
         }
 
-        //Validate individual form elements
-        public static string validateMapTitle(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
+        #region  Validate individual form elements
+        // For running outside of addin framework (as an installable extension) we have to provide the IMxDocument as we 
+        // don't have access to the ArcMap IApplication provided by a framework. This highlights how much of a mess this code 
+        // is with all the static methods meaning that for a quick fix now we are just providing the IMxDocument to every method,
+        // clearly the right answer will be to write a non-static validation class.
+        public static string validateMapTitle(IMxDocument mxDoc, Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
             string layoutMapTitle = string.Empty;
-            Dictionary<string, string> dictMapValues = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, targetMapFrame);
+            Dictionary<string, string> dictMapValues = MapAction.PageLayoutProperties.getLayoutTextElements(mxDoc, targetMapFrame);
             if (dictMapValues.ContainsKey("title")) { layoutMapTitle = dictMapValues["title"]; }
             
             eprWarning.SetIconPadding(control, 5);
@@ -78,10 +86,10 @@ namespace MapActionToolbars
 
         }
 
-        public static string validateMapSummary(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
+        public static string validateMapSummary(IMxDocument mxDoc, Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
             string layoutMapSummary = string.Empty;
-            Dictionary<string, string> dictMapValues = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, targetMapFrame);
+            Dictionary<string, string> dictMapValues = MapAction.PageLayoutProperties.getLayoutTextElements(mxDoc, targetMapFrame);
             if (dictMapValues.ContainsKey("summary")) { layoutMapSummary = dictMapValues["summary"]; }
 
             eprWarning.SetIconPadding(control, 5);
@@ -110,17 +118,17 @@ namespace MapActionToolbars
 
         }
 
-        public static string validateMapDocument(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
+        public static string validateMapDocument(IApplication mxApp, Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
 
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
             string mapValue = string.Empty;
-            string automatedValue = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
-
+            string automatedValue = MapAction.PageLayoutProperties.getMxdTitle(mxApp);
+            IMxDocument mxDoc = mxApp.Document as IMxDocument;
             //Get and set the map value
             var dict = new Dictionary<string, string>();
-            dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, targetMapFrame);
+            dict = MapAction.PageLayoutProperties.getLayoutTextElements(mxDoc, targetMapFrame);
             //Update form text boxes with values from the map
             if (dict.ContainsKey("title")) {  mapValue = dict["title"]; }
 
@@ -146,13 +154,13 @@ namespace MapActionToolbars
             }
         }
 
-        public static string validateDatum(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
+        public static string validateDatum(IMxDocument mxDoc, Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
             // Set the spatial reference information on load
             var dictSpatialRef = new Dictionary<string, string>();
-            dictSpatialRef = MapAction.Utilities.getDataFrameSpatialReference(_pMxDoc, targetMapFrame);
+            dictSpatialRef = MapAction.Utilities.getDataFrameSpatialReference(mxDoc, targetMapFrame);
             string automatedValue = string.Empty;
             if (dictSpatialRef.ContainsKey("datum")) { automatedValue = dictSpatialRef["datum"]; }
 
@@ -179,13 +187,13 @@ namespace MapActionToolbars
 
         }
 
-        public static string validateProjection(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
+        public static string validateProjection(IMxDocument mxDoc, Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
             // Set the spatial reference information on load
             var dictSpatialRef = new Dictionary<string, string>();
-            dictSpatialRef = MapAction.Utilities.getDataFrameSpatialReference(_pMxDoc, targetMapFrame);
+            dictSpatialRef = MapAction.Utilities.getDataFrameSpatialReference(mxDoc, targetMapFrame);
             string automatedValue = string.Empty;
             if (dictSpatialRef.ContainsKey("projection")) { automatedValue = dictSpatialRef["projection"]; }
 
@@ -212,11 +220,11 @@ namespace MapActionToolbars
 
         }
 
-        public static string validateScale(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
+        public static string validateScale(IMxDocument mxDoc, Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
-            string automatedValue = MapAction.Utilities.getScale(_pMxDoc as IMapDocument, targetMapFrame);
+            string automatedValue = MapAction.Utilities.getScale(mxDoc as IMapDocument, targetMapFrame);
  
             if (validateEmptyField(control, eprWarning))
             {
@@ -301,11 +309,11 @@ namespace MapActionToolbars
             
         }
 
-        public static string validatePaperSize(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
+        public static string validatePaperSize(IMxDocument mxDoc, Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
-            string automatedValue = MapAction.Utilities.getPageSize(_pMxDoc as IMapDocument, targetMapFrame);
+            string automatedValue = MapAction.Utilities.getPageSize(mxDoc as IMapDocument, targetMapFrame);
 
             if (validateEmptyField(control, eprWarning))
             {
@@ -343,7 +351,7 @@ namespace MapActionToolbars
             }
         }
 
-        public static string validateDataSources(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
+        public static string validateDataSources(IMxDocument mxDoc, Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
@@ -351,7 +359,7 @@ namespace MapActionToolbars
 
             //Get and set the map value
             var dict = new Dictionary<string, string>();
-            dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, targetMapFrame);
+            dict = MapAction.PageLayoutProperties.getLayoutTextElements(mxDoc, targetMapFrame);
             //Update form text boxes with values from the map
             if (!dict.ContainsKey("data_sources"))
             {
@@ -419,7 +427,7 @@ namespace MapActionToolbars
 
         }
 
-        public static string validateGlideNumber(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
+        public static string validateGlideNumber(IMxDocument mxDoc, Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
@@ -428,7 +436,7 @@ namespace MapActionToolbars
 
             //Get and set the map value
             var dict = new Dictionary<string, string>();
-            dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, targetMapFrame);
+            dict = MapAction.PageLayoutProperties.getLayoutTextElements(mxDoc, targetMapFrame);
             //Update form text boxes with values from the map
             if (dict.ContainsKey("glide_no")) {  mapValue = dict["glide_no"]; }
 
@@ -560,6 +568,7 @@ namespace MapActionToolbars
             // Since using language_config.xml, this will always be valid.
             return "Valid";
         }
+        #endregion
 
         public static void validationCheck(string result, PictureBox pbox)
         {
