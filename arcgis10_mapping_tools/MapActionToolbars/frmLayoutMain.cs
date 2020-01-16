@@ -22,7 +22,7 @@ namespace MapActionToolbars
 {
     public partial class frmLayoutMain : Form
     {
-        private static IApplication _pMxApplication;  // initialisation moved to  constructor for flexibility
+        private static IApplication _mApplication;  // initialisation moved to  constructor for flexibility
         private List<string> languages;
         private string _languageIso2;
         private static string _operationId;
@@ -48,7 +48,7 @@ namespace MapActionToolbars
         /// <param name="arcMapApp"></param>
         public frmLayoutMain(IApplication arcMapApp)
         {
-            _pMxApplication = arcMapApp;//
+            _mApplication = arcMapApp;//
             string path = MapAction.Utilities.getCrashMoveFolderPath();
             string filePath = System.IO.Path.Combine(path, languageConfigXmlFileName);
             _mapRootURL = MapAction.Utilities.getMDRUrlRoot();
@@ -69,18 +69,18 @@ namespace MapActionToolbars
         {
             //Call the MapAction class library and the getLayoutElements function that returns a dictionare of the key value
             //pairs of each text element in the layout
-            IMxDocument doc = _pMxApplication.Document as IMxDocument;
+            IMxDocument doc = _mApplication.Document as IMxDocument;
             Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(doc, "Main map");
             
             tbxScale.Text = tbxScale.Text = updateScale();
             tbxSpatialReference.Text = getSpatialReference();
-            tbxMapDocument.Text = tbxMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(_pMxApplication);
+            tbxMapDocument.Text = tbxMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(_mApplication);
             tbxGlideNumber.Text = LayoutToolAutomatedValues.getGlideNo();
         }
 
         private void btnMapDocument_Click(object sender, EventArgs e)
         {
-            tbxMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(_pMxApplication);
+            tbxMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(_mApplication);
         }
 
         private void btnSpatialReference_Click(object sender, EventArgs e)
@@ -119,7 +119,7 @@ namespace MapActionToolbars
             FormValidationLayout.validateMapSummary(tbxSummary, eprMapSummary);
             FormValidationLayout.validateDataSources(tbxDataSources, eprDataSources);
             FormValidationLayout.validateMapNumber(tbxMapNumber, eprMapNumberWarning, eprMapNumberError);
-            FormValidationLayout.validateMapDocument(_pMxApplication as IMxApplication, tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
+            FormValidationLayout.validateMapDocument(_mApplication as IMxApplication, tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
             FormValidationLayout.validateSpatialReference(tbxSpatialReference, eprSpatialReferenceWarning, eprSpatialReferenceError);
             FormValidationLayout.validateScaleText(tbxScale, eprScaleTextWarning, eprScaleTextError);
             FormValidationLayout.validateGlideNumber(tbxGlideNumber, eprGlideNumberWarning, eprSpatialReferenceError);
@@ -131,7 +131,7 @@ namespace MapActionToolbars
 
             //Call the MapAction class library and the getLayoutElements function that returns a dictionare of the key value
             //pairs of each text element in the layout
-            IMxDocument doc = _pMxApplication.Document as IMxDocument;
+            IMxDocument doc = _mApplication.Document as IMxDocument;
             Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(doc, "Main map");
             
             //Check if the various elements exist that automated update, if not disable the automation buttons.
@@ -289,7 +289,7 @@ namespace MapActionToolbars
 
         public static string getSpatialReference()
         {
-            IMxDocument doc = _pMxApplication.Document as IMxDocument;
+            IMxDocument doc = _mApplication.Document as IMxDocument;
             Dictionary<string, string> dictSpatialRef = MapAction.Utilities.getDataFrameSpatialReference(doc as IMxDocument, "Main map");
             string stringSpatialRef;
 
@@ -311,7 +311,7 @@ namespace MapActionToolbars
 
         public static void setAllElements(Dictionary<string, string> dict)
         {
-            IMxDocument doc = _pMxApplication.Document as IMxDocument;
+            IMxDocument doc = _mApplication.Document as IMxDocument;
             IPageLayout pLayout = doc.PageLayout;
             IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
             pGraphics.Reset();
@@ -414,7 +414,7 @@ namespace MapActionToolbars
         public static string updateScale()
         {
             //string scale = MapAction.PageLayoutProperties.getScale(ArcMap.Application.Document as IMapDocument, "Main map");
-            IMapDocument doc = _pMxApplication.Document as IMapDocument;
+            IMapDocument doc = _mApplication.Document as IMapDocument;
 
             string scale = MapAction.Utilities.getScale(doc, "Main map");
 
@@ -451,7 +451,7 @@ namespace MapActionToolbars
 
         private void tbxMapDocument_TextChanged(object sender, EventArgs e)
         {
-            FormValidationLayout.validateMapDocument(_pMxApplication as IMxApplication, tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
+            FormValidationLayout.validateMapDocument(_mApplication as IMxApplication, tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
         }
 
         private void tbxScale_TextChanged(object sender, EventArgs e)
@@ -469,7 +469,7 @@ namespace MapActionToolbars
         //Gets the automated values for Tab 2 and populates each textbox
         private void btnUpdateAllTab2_Click(object sender, EventArgs e)
         {
-            IMxDocument doc = _pMxApplication.Document as IMxDocument;
+            IMxDocument doc = _mApplication.Document as IMxDocument;
             Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(doc, "Main map");
             //If the elements are present in the map, update the values
             if (dict.ContainsKey("donor_credit") == true) { tbxDonorCredit.Text = LayoutToolAutomatedValues.getConfigDonorText(); } 
@@ -524,7 +524,7 @@ namespace MapActionToolbars
         
         public void setLabelLanguage()
         {
-            IMxDocument doc = _pMxApplication.Document as IMxDocument;
+            IMxDocument doc = _mApplication.Document as IMxDocument;
             IPageLayout pLayout = doc.PageLayout;
             IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
             pGraphics.Reset();
