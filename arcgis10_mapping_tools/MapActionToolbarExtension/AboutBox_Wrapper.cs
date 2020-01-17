@@ -5,6 +5,8 @@ using ESRI.ArcGIS.ADF.BaseClasses;
 using ESRI.ArcGIS.ADF.CATIDs;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.ArcMapUI;
+using System.Reflection;
+using System.Windows.Forms;
 
 namespace MapActionToolbarExtension
 {
@@ -67,23 +69,25 @@ namespace MapActionToolbarExtension
         #endregion
 
         private IApplication m_application;
+        private string m_thisCompilation_desc;
+
         public AboutBox_Wrapper()
         {
             //
             // TODO: Define values for the public properties
             //
-            base.m_category = ""; //localizable text
-            base.m_caption = "About MapAction Toolbar Extension";  //localizable text
-            base.m_message = "";  //localizable text 
-            base.m_toolTip = "Shows the version number of the MapAction Addins";  //localizable text 
-            base.m_name = "";   //unique id, non-localizable (e.g. "MyCategory_ArcMapCommand")
+            base.m_category = "MapAction Mapping Tools (AO)"; //localizable text
+            base.m_caption = "About MapAction Toolbar (installed version)";  //localizable text
+            base.m_message = "About MapAction Toolbar (installed version)";  //localizable text 
+            base.m_toolTip = "Shows the version number of the installed MapAction Tools";  //localizable text 
+            base.m_name = "MapactionMappingTools_About";   //unique id, non-localizable (e.g. "MyCategory_ArcMapCommand")
 
             try
             {
                 //
                 // TODO: change bitmap name if necessary
                 //
-                string bitmapResourceName = GetType().Name + ".bmp";
+                string bitmapResourceName = GetType().Name + ".png";
                 base.m_bitmap = new Bitmap(GetType(), bitmapResourceName);
             }
             catch (Exception ex)
@@ -112,6 +116,15 @@ namespace MapActionToolbarExtension
                 base.m_enabled = false;
 
             // TODO:  Add other initialization code
+            AssemblyName an;
+            an = Assembly.GetExecutingAssembly().GetName();
+
+            String version_string = an.Version.ToString();
+            DateTime compile_date = new DateTime(2000, 1, 1);
+            compile_date = compile_date.AddDays(an.Version.Build);
+            compile_date = compile_date.AddSeconds(2 * an.Version.Revision);
+
+            m_thisCompilation_desc = String.Format("Version {0}\n\n Compiled {1} {2}", version_string, compile_date.ToShortDateString(), compile_date.ToShortTimeString());
         }
 
         /// <summary>
@@ -120,6 +133,12 @@ namespace MapActionToolbarExtension
         public override void OnClick()
         {
             // TODO: Add AboutBox_Wrapper.OnClick implementation
+            showDialog();
+        }
+
+        private void showDialog()
+        {
+            MessageBox.Show(m_thisCompilation_desc, "About MapAction toolbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         #endregion
