@@ -1,6 +1,6 @@
-﻿namespace MapActionToolbarExtension
+﻿namespace InvokeESRIRegAsm
 {
-    partial class MA_Toolbar_Installer
+    partial class EsriRegisterer
     {
         /// <summary>
         /// Required designer variable.

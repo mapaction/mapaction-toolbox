@@ -85,12 +85,6 @@
     <Compile Include="LayoutTool_Wrapper.cs" />
     <Compile Include="MapActionToolbarExtensionMain.cs" />
     <Compile Include="MapActionToolbarExtension_Toolbar.cs" />
-    <Compile Include="MA_Toolbar_Installer.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="MA_Toolbar_Installer.Designer.cs">
-      <DependentUpon>MA_Toolbar_Installer.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenameTool_Wrapper.cs" />
   </ItemGroup>
