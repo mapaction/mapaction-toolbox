@@ -88,7 +88,8 @@ namespace MapActionToolbar_COMTools
                 // TODO: change bitmap name if necessary
                 //
                 string bitmapResourceName = GetType().Name + ".png";
-                base.m_bitmap = new Bitmap(GetType(), bitmapResourceName);
+                base.m_bitmap = new Bitmap("AboutBox_COM.png");
+                //base.m_bitmap = new Bitmap(GetType(), bitmapResourceName);
             }
             catch (Exception ex)
             {
