@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace MapAction
+namespace MapActionToolbar_Core
 {
     public enum LanguageCodeFields { Alpha2, Alpha3b, Alpha3t, Alpha3h, Language };
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
 
-namespace MapAction
+namespace MapActionToolbar_Core
 {
     /// <summary>
     /// The different types that can be exported by the MapImageExporter

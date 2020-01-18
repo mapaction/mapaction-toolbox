@@ -61,7 +61,7 @@ namespace MapActionToolbars
 
             eprWarning.SetIconPadding(control, 33);
             eprError.SetIconPadding(control, 33);
-            string automatedValue = MapAction.PageLayoutProperties.getMxdTitle(mxApp as IApplication);
+            string automatedValue = MapActionToolbar_Core.PageLayoutProperties.getMxdTitle(mxApp as IApplication);
 
             if (validateEmptyField(control, eprWarning))
             {

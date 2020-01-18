@@ -10,7 +10,7 @@ using ESRI.ArcGIS.Carto;
 /**
  * Various static functions that are useful for setting up and tearing down tests for the MapActionToolbox Addins
  */
-namespace MapAction.tests
+namespace MapActionToolbar_Core.tests
 {
     class TestUtilities
     {

@@ -24,7 +24,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Formatting = Newtonsoft.Json.Formatting;
 
-namespace MapAction
+namespace MapActionToolbar_Core
 {
     public class Utilities
     {
@@ -122,7 +122,7 @@ namespace MapAction
         #endregion
         #region Public method createEventConfig
         //Creates a json given a dictionary of tags and values.  Also pass in the root element, file path and filename.
-        public static string createEventConfig(MapAction.EventConfig eventConfig, string path, string fileName)
+        public static string createEventConfig(MapActionToolbar_Core.EventConfig eventConfig, string path, string fileName)
         {
             //set output path and filename
             string pathFileName;
@@ -475,7 +475,7 @@ namespace MapAction
 
             if (Directory.Exists(path))
             {
-                MapAction.Properties.Settings.Default.crash_move_folder_path = path;
+                MapActionToolbar_Core.Properties.Settings.Default.crash_move_folder_path = path;
                 Properties.Settings.Default.Save();
                 return Properties.Settings.Default.crash_move_folder_path;
             }
@@ -635,7 +635,7 @@ namespace MapAction
         #region Public method getLanguageCodeValues
         //Returns a List of the countries_config.xml elements and values
 
-        public static MapAction.LanguageCodeLookup getLanguageCodeValues(string path = null)
+        public static MapActionToolbar_Core.LanguageCodeLookup getLanguageCodeValues(string path = null)
         {
             const string LanguageCodesConfigFileName = "language_codes.xml";
 
@@ -753,10 +753,10 @@ namespace MapAction
         #region Public method getLanguageConfigValues
         //Returns the Language Configuration
 
-        public static List<MapAction.LanguageConfig> getLanguageConfigValues(string path = null)
+        public static List<MapActionToolbar_Core.LanguageConfig> getLanguageConfigValues(string path = null)
         {
             const string LanguageConfigFileName = "language_config.xml";
-            List<MapAction.LanguageConfig> languageDictionary = new List<MapAction.LanguageConfig>();
+            List<MapActionToolbar_Core.LanguageConfig> languageDictionary = new List<MapActionToolbar_Core.LanguageConfig>();
             string configPath;
             if (path == null)
             {

@@ -39,7 +39,7 @@ namespace MapActionToolbars
             //pairs of each text element in the layout
 
             IMxDocument _mxDoc = _mApplication.Document as IMxDocument;
-            Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(_mxDoc, "Main map");
+            Dictionary<string, string> dict = MapActionToolbar_Core.PageLayoutProperties.getLayoutTextElements(_mxDoc, "Main map");
             
             //Check for the presence of text element items in the layout, if present change image to tick
             if (dict.ContainsKey("title"))
@@ -107,7 +107,7 @@ namespace MapActionToolbars
                 imgLanguageStatus.Image = Properties.Resources.tick_17px;
             }
 
-            List<string> pictureElements = MapAction.PageLayoutProperties.getLayoutPictureElements(_mxDoc, "Main map");
+            List<string> pictureElements = MapActionToolbar_Core.PageLayoutProperties.getLayoutPictureElements(_mxDoc, "Main map");
             if (pictureElements.Contains("qr_code"))
             {
                 imgQRCodeStatus.Image = Properties.Resources.tick_17px;

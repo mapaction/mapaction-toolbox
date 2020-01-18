@@ -6,15 +6,15 @@ using ESRI.ArcGIS.ADF.CATIDs;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.ArcMapUI;
 
-namespace MapActionToolbarExtension
+namespace MapActionToolbar_COMTools
 {
     /// <summary>
-    /// Summary description for RenameTool_Wrapper.
+    /// /// A COM-visible ArcObjects BaseCommand (button) for ArcMap, calling the existing Event (op-config) Tool form on click.
     /// </summary>
-    [Guid("62782cf1-6134-4f34-8f0b-3f1b8a092ca0")]
+    [Guid("6fb20e0f-b837-4034-b633-97aab31216e0")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("MapActionToolbarExtension.RenameTool_Wrapper")]
-    public sealed class RenameTool_Wrapper : BaseCommand
+    [ProgId("MapActionToolbar_COMTools.EventTool_COM")]
+    public sealed class EventTool_COM : BaseCommand
     {
         #region COM Registration Function(s)
         [ComRegisterFunction()]
@@ -67,22 +67,18 @@ namespace MapActionToolbarExtension
         #endregion
 
         private IApplication m_application;
-        public RenameTool_Wrapper()
+        public EventTool_COM()
         {
-            //
-            // TODO: Define values for the public properties
-            //
+            // TODO: Remove (AO) from strings, currently here to distinguish this from addin-generated button
             base.m_category = "MapAction Mapping Tools (AO)"; //localizable text
-            base.m_caption = "Rename Tool";  //localizable text
-            base.m_message = "Renames shapefiles to standard naming convention";  //localizable text 
-            base.m_toolTip = "Data Rename Tool";  //localizable text 
-            base.m_name = "MapactionMappingTools_RenameTool";   //unique id, non-localizable (e.g. "MyCategory_ArcMapCommand")
+            base.m_caption = "Event Tool (AO)";  //localizable text
+            base.m_message = "Create or edit the event configuration file which is used by the MapAction layour and export tools (AO)";  //localizable text 
+            base.m_toolTip = "Update Event Configuration (AO)";  //localizable text 
+            base.m_name = "MapactionMappingTools_EventTool";   //unique id, non-localizable (e.g. "MyCategory_ArcMapCommand")
 
             try
             {
-                //
-                // TODO: change bitmap name if necessary
-                //
+                // TODO: change bitmap name 
                 string bitmapResourceName = GetType().Name + ".png";
                 base.m_bitmap = new Bitmap(GetType(), bitmapResourceName);
             }
@@ -119,10 +115,10 @@ namespace MapActionToolbarExtension
         /// </summary>
         public override void OnClick()
         {
-            var dlg = new MapActionToolbars.frmRenameMain();
-            if (dlg.initialised)
+            MapActionToolbars.frmEvent form = new MapActionToolbars.frmEvent();
+            if (form.Text.Length > 0)
             {
-                dlg.ShowDialog();
+                form.ShowDialog();
             }
         }
 

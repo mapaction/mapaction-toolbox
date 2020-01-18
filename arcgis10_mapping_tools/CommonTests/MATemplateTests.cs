@@ -6,10 +6,10 @@ using System.Reflection;
 using System.Text;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
-using MapAction;
+using MapActionToolbar_Core;
 using NUnit.Framework;
 
-namespace MapAction.tests
+namespace MapActionToolbar_Core.tests
 {
     /// <summary>
     /// The tests in this case are focused on the testing that code dealing with the MapAction specific MXDs work correctly

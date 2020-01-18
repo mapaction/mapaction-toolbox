@@ -57,7 +57,7 @@ namespace MapActionToolbars
         public static string validateMapTitle(IMxDocument mxDoc, Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
             string layoutMapTitle = string.Empty;
-            Dictionary<string, string> dictMapValues = MapAction.PageLayoutProperties.getLayoutTextElements(mxDoc, targetMapFrame);
+            Dictionary<string, string> dictMapValues = MapActionToolbar_Core.PageLayoutProperties.getLayoutTextElements(mxDoc, targetMapFrame);
             if (dictMapValues.ContainsKey("title")) { layoutMapTitle = dictMapValues["title"]; }
             
             eprWarning.SetIconPadding(control, 5);
@@ -89,7 +89,7 @@ namespace MapActionToolbars
         public static string validateMapSummary(IMxDocument mxDoc, Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
             string layoutMapSummary = string.Empty;
-            Dictionary<string, string> dictMapValues = MapAction.PageLayoutProperties.getLayoutTextElements(mxDoc, targetMapFrame);
+            Dictionary<string, string> dictMapValues = MapActionToolbar_Core.PageLayoutProperties.getLayoutTextElements(mxDoc, targetMapFrame);
             if (dictMapValues.ContainsKey("summary")) { layoutMapSummary = dictMapValues["summary"]; }
 
             eprWarning.SetIconPadding(control, 5);
@@ -124,11 +124,11 @@ namespace MapActionToolbars
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
             string mapValue = string.Empty;
-            string automatedValue = MapAction.PageLayoutProperties.getMxdTitle(mxApp);
+            string automatedValue = MapActionToolbar_Core.PageLayoutProperties.getMxdTitle(mxApp);
             IMxDocument mxDoc = mxApp.Document as IMxDocument;
             //Get and set the map value
             var dict = new Dictionary<string, string>();
-            dict = MapAction.PageLayoutProperties.getLayoutTextElements(mxDoc, targetMapFrame);
+            dict = MapActionToolbar_Core.PageLayoutProperties.getLayoutTextElements(mxDoc, targetMapFrame);
             //Update form text boxes with values from the map
             if (dict.ContainsKey("title")) {  mapValue = dict["title"]; }
 
@@ -160,7 +160,7 @@ namespace MapActionToolbars
             eprError.SetIconPadding(control, 5);
             // Set the spatial reference information on load
             var dictSpatialRef = new Dictionary<string, string>();
-            dictSpatialRef = MapAction.Utilities.getDataFrameSpatialReference(mxDoc, targetMapFrame);
+            dictSpatialRef = MapActionToolbar_Core.Utilities.getDataFrameSpatialReference(mxDoc, targetMapFrame);
             string automatedValue = string.Empty;
             if (dictSpatialRef.ContainsKey("datum")) { automatedValue = dictSpatialRef["datum"]; }
 
@@ -193,7 +193,7 @@ namespace MapActionToolbars
             eprError.SetIconPadding(control, 5);
             // Set the spatial reference information on load
             var dictSpatialRef = new Dictionary<string, string>();
-            dictSpatialRef = MapAction.Utilities.getDataFrameSpatialReference(mxDoc, targetMapFrame);
+            dictSpatialRef = MapActionToolbar_Core.Utilities.getDataFrameSpatialReference(mxDoc, targetMapFrame);
             string automatedValue = string.Empty;
             if (dictSpatialRef.ContainsKey("projection")) { automatedValue = dictSpatialRef["projection"]; }
 
@@ -224,7 +224,7 @@ namespace MapActionToolbars
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
-            string automatedValue = MapAction.Utilities.getScale(mxDoc as IMapDocument, targetMapFrame);
+            string automatedValue = MapActionToolbar_Core.Utilities.getScale(mxDoc as IMapDocument, targetMapFrame);
  
             if (validateEmptyField(control, eprWarning))
             {
@@ -313,7 +313,7 @@ namespace MapActionToolbars
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
-            string automatedValue = MapAction.Utilities.getPageSize(mxDoc as IMapDocument, targetMapFrame);
+            string automatedValue = MapActionToolbar_Core.Utilities.getPageSize(mxDoc as IMapDocument, targetMapFrame);
 
             if (validateEmptyField(control, eprWarning))
             {
@@ -359,7 +359,7 @@ namespace MapActionToolbars
 
             //Get and set the map value
             var dict = new Dictionary<string, string>();
-            dict = MapAction.PageLayoutProperties.getLayoutTextElements(mxDoc, targetMapFrame);
+            dict = MapActionToolbar_Core.PageLayoutProperties.getLayoutTextElements(mxDoc, targetMapFrame);
             //Update form text boxes with values from the map
             if (!dict.ContainsKey("data_sources"))
             {
@@ -399,9 +399,9 @@ namespace MapActionToolbars
             eprError.SetIconPadding(control, 5);
             string automatedValue = string.Empty;
             
-            string path = MapAction.Utilities.getCrashMoveFolderPath();
-            string filePath = MapAction.Utilities.getEventConfigFilePath();
-            MapAction.EventConfig config = MapAction.Utilities.getEventConfigValues(filePath);
+            string path = MapActionToolbar_Core.Utilities.getCrashMoveFolderPath();
+            string filePath = MapActionToolbar_Core.Utilities.getEventConfigFilePath();
+            MapActionToolbar_Core.EventConfig config = MapActionToolbar_Core.Utilities.getEventConfigValues(filePath);
             automatedValue = config.OperationId.ToLower();
 
             if (validateEmptyField(control, eprWarning))
@@ -436,7 +436,7 @@ namespace MapActionToolbars
 
             //Get and set the map value
             var dict = new Dictionary<string, string>();
-            dict = MapAction.PageLayoutProperties.getLayoutTextElements(mxDoc, targetMapFrame);
+            dict = MapActionToolbar_Core.PageLayoutProperties.getLayoutTextElements(mxDoc, targetMapFrame);
             //Update form text boxes with values from the map
             if (dict.ContainsKey("glide_no")) {  mapValue = dict["glide_no"]; }
 

@@ -1,21 +1,20 @@
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using ESRI.ArcGIS.ADF.BaseClasses;
 using ESRI.ArcGIS.ADF.CATIDs;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.ArcMapUI;
 
-namespace MapActionToolbarExtension
+namespace MapActionToolbar_COMTools
 {
     /// <summary>
-    /// A COM-visible ArcObjects BaseCommand (button) for ArcMap, calling the existing Export Tool form on click.
+    /// Summary description for RenameTool_Wrapper.
     /// </summary>
-    [Guid("d498ed1a-3e7c-49eb-bd5d-aa529ce0fd5c")]
+    [Guid("62782cf1-6134-4f34-8f0b-3f1b8a092ca0")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("MapActionToolbarExtension.ExportTool_Wrapper")]
-    public sealed class ExportTool_Wrapper : BaseCommand
+    [ProgId("MapActionToolbar_COMTools.RenameTool_COM")]
+    public sealed class RenameTool_COM : BaseCommand
     {
         #region COM Registration Function(s)
         [ComRegisterFunction()]
@@ -68,20 +67,22 @@ namespace MapActionToolbarExtension
         #endregion
 
         private IApplication m_application;
-        public ExportTool_Wrapper()
+        public RenameTool_COM()
         {
-            // TODO: remove (AO) from the strings, this is here to highlight difference between addin and installed version during testing
+            //
+            // TODO: Define values for the public properties
+            //
             base.m_category = "MapAction Mapping Tools (AO)"; //localizable text
-            base.m_caption = "Export Tool (AO)";  //localizable text
-            base.m_message = "Exports the map layout to an image (pdf, jpeg, emf) and creates the map metadata xml ready to be uploaded to the MapAction website (AO)";  //localizable text 
-            base.m_toolTip = "Export Layout(AO)";  //localizable text 
-            base.m_name = "MapactionMappingTools_ExportTool";   //unique id, non-localizable (e.g. "MyCategory_ArcMapCommand")
-
+            base.m_caption = "Rename Tool";  //localizable text
+            base.m_message = "Renames shapefiles to standard naming convention";  //localizable text 
+            base.m_toolTip = "Data Rename Tool";  //localizable text 
+            base.m_name = "MapactionMappingTools_RenameTool";   //unique id, non-localizable (e.g. "MyCategory_ArcMapCommand")
 
             try
             {
                 //
-                // TODO: change bitmap name 
+                // TODO: change bitmap name if necessary
+                //
                 string bitmapResourceName = GetType().Name + ".png";
                 base.m_bitmap = new Bitmap(GetType(), bitmapResourceName);
             }
@@ -118,35 +119,13 @@ namespace MapActionToolbarExtension
         /// </summary>
         public override void OnClick()
         {
-            //Check if 'Main map' frame exists.  If not show a message box telling the user so. Don't open GUI.
-            //if (!PageLayoutProperties.detectMainMapFrame())
-            string duplicates = "";
-            IMxDocument pMxDoc = m_application.Document as IMxDocument;
-            if (!MapAction.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
+            var dlg = new MapActionToolbars.frmRenameMain();
+            if (dlg.initialised)
             {
-                MessageBox.Show("This tool only works with the MapAction mapping templates.  The 'Main map' map frame could not be detected. Please load a MapAction template and try again.", "Invalid map template",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            else if (!MapAction.Utilities.detectEventConfig())
-            {
-                MessageBox.Show("The event configuration file is required for this tool.  It cannot be located.",
-                    "Configuration file required", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else if (MapAction.PageLayoutProperties.checkLayoutTextElementsForDuplicates(pMxDoc, "Main map", out duplicates))
-            {
-                MessageBox.Show("Duplicate named elements have been identified in the layout. Please remove duplicate element names \"" + duplicates + "\" before trying again.", "Invalid map template",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            else if (MapAction.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
-            {
-                var dlg = new MapActionToolbars.frmExportMain();
-
-                if (dlg.Text.Length > 0)
-                {
-                    dlg.ShowDialog();
-                }
+                dlg.ShowDialog();
             }
         }
+
         #endregion
     }
 }

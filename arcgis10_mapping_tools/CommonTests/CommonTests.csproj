@@ -89,9 +89,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MapAction\MapAction\MapAction.csproj">
+    <ProjectReference Include="..\MapAction\MapAction\MapActionToolbar_Core.csproj">
       <Project>{8B7ABA1A-C659-4D80-A2EF-13D953577643}</Project>
-      <Name>MapAction</Name>
+      <Name>MapActionToolbar_Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

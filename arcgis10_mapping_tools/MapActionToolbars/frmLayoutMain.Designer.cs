@@ -23,7 +23,7 @@ namespace MapActionToolbars
             }
             base.Dispose(disposing);
         }
-        private List<MapAction.LanguageConfig> languageDictionary;
+        private List<MapActionToolbar_Core.LanguageConfig> languageDictionary;
 
         #region Windows Form Designer generated code
 

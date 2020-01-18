@@ -9,7 +9,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Configuration;
-using MapAction;
+using MapActionToolbar_Core;
 
 namespace MapActionToolbars
 {
@@ -33,13 +33,13 @@ namespace MapActionToolbars
 
         private Boolean _configJsonEditState = false;
         private Boolean _configJsonNewFile = false;
-        private MapAction.LanguageCodeLookup languageCodeLookup = null;
-        private MapAction.Countries countries = null;
+        private MapActionToolbar_Core.LanguageCodeLookup languageCodeLookup = null;
+        private MapActionToolbar_Core.Countries countries = null;
         private MapActionToolbarConfig mapActionToolbarConfig = null;
 
         public frmEvent()
         {
-            this.mapActionToolbarConfig = MapAction.Utilities.getToolboxConfig();
+            this.mapActionToolbarConfig = MapActionToolbar_Core.Utilities.getToolboxConfig();
 
             if (this.mapActionToolbarConfig.Tools.Count == 0)
             {
@@ -47,15 +47,15 @@ namespace MapActionToolbars
             }
             else
             {
-                countries = MapAction.Utilities.getCountries();
+                countries = MapActionToolbar_Core.Utilities.getCountries();
 
-                string path = MapAction.Utilities.getCrashMoveFolderPath();
+                string path = MapActionToolbar_Core.Utilities.getCrashMoveFolderPath();
 
                 string languageFilePath = System.IO.Path.Combine(path, languageCodesXMLFileName);
-                this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
+                this.languageCodeLookup = MapActionToolbar_Core.Utilities.getLanguageCodeValues(languageFilePath);
                 this._defaultSourceOrganisation = this.mapActionToolbarConfig.TextBoxItem(ToolName, OrganisationComponentName);
                 this._defaultDisclaimerText = this.mapActionToolbarConfig.TextBoxItem(ToolName, DisclaimerTextComponentName);
-                this._defaultMapRootUrl = MapAction.Utilities.getMDRUrlRoot();
+                this._defaultMapRootUrl = MapActionToolbar_Core.Utilities.getMDRUrlRoot();
                 this._defaultSourceOrganisationUrl = this.mapActionToolbarConfig.TextBoxItem(ToolName, OrganisationUrlComponentName);
 
                 InitializeComponent();
@@ -94,13 +94,13 @@ namespace MapActionToolbars
             {
                 if (_configJsonEditState != false)
                 {
-                    MapAction.Utilities.setCrashMovePathTest(tbxPathToCrashMove.Text);
+                    MapActionToolbar_Core.Utilities.setCrashMovePathTest(tbxPathToCrashMove.Text);
                     createConfigJson(_configJsonNewFile);
                 }
                 else if (_configJsonEditState != true)
                 {
                     //Save the path of the config file to the applicaton settings file
-                    MapAction.Utilities.setCrashMovePathTest(tbxPathToCrashMove.Text);
+                    MapActionToolbar_Core.Utilities.setCrashMovePathTest(tbxPathToCrashMove.Text);
                     MessageBox.Show("Config file path successfully updated.", "Config file path",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -111,16 +111,16 @@ namespace MapActionToolbars
         private void frmEvent_Load(object sender, EventArgs e)
         {
             //get the preset path from the configuration file
-            string path = MapAction.Utilities.getCrashMoveFolderPath();
-            string filepath = MapAction.Utilities.getEventConfigFilePath();
+            string path = MapActionToolbar_Core.Utilities.getCrashMoveFolderPath();
+            string filepath = MapActionToolbar_Core.Utilities.getEventConfigFilePath();
             //Check if the config file has been set and if it exists
-            if (@path != "" && !MapAction.Utilities.detectEventConfig())
+            if (@path != "" && !MapActionToolbar_Core.Utilities.detectEventConfig())
             {
                 //If not, set the dialog to empty
                 tbxPathToCrashMove.Text = "< File moved or deleted: " + path + " >";
                 populateDialogDefaultValues();
             }
-            else if (!MapAction.Utilities.detectEventConfig())
+            else if (!MapActionToolbar_Core.Utilities.detectEventConfig())
             {
                 //If the path is set and file exists, set the textbox to the path
                 tbxPathToCrashMove.Text = string.Empty;
@@ -241,7 +241,7 @@ namespace MapActionToolbars
         //##alpha method
         public void populateDialogExistingConfigJson(string path = null)
         {
-            EventConfig newConfig = MapAction.Utilities.getEventConfigValues(path);
+            EventConfig newConfig = MapActionToolbar_Core.Utilities.getEventConfigValues(path);
 
             //Populate the text boxes with the values from the dictionary
             tbxPathToCrashMove.Text = newConfig.CrashMoveFolderDescriptorPath;
@@ -315,7 +315,7 @@ namespace MapActionToolbars
                 //Call the MapAction create event config method on the utilities class
                 try
                 {
-                    savedPath = MapAction.Utilities.createEventConfig(config, path, "event_description");
+                    savedPath = MapActionToolbar_Core.Utilities.createEventConfig(config, path, "event_description");
                 }
                 catch (Exception error)
                 {

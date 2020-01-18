@@ -1,4 +1,4 @@
-﻿namespace MapAction.Properties {
+﻿namespace MapActionToolbar_Core.Properties {
     
     
     // This class allows you to handle specific events on the settings class:

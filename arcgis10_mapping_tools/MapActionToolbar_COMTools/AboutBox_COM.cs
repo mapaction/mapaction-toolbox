@@ -5,16 +5,18 @@ using ESRI.ArcGIS.ADF.BaseClasses;
 using ESRI.ArcGIS.ADF.CATIDs;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.ArcMapUI;
+using System.Reflection;
+using System.Windows.Forms;
 
-namespace MapActionToolbarExtension
+namespace MapActionToolbar_COMTools
 {
     /// <summary>
-    /// /// A COM-visible ArcObjects BaseCommand (button) for ArcMap, calling the existing Event (op-config) Tool form on click.
+    /// Summary description for AboutBox_Wrapper.
     /// </summary>
-    [Guid("6fb20e0f-b837-4034-b633-97aab31216e0")]
+    [Guid("0e75c31f-334d-4e98-a351-ba2e9d89d0b9")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("MapActionToolbarExtension.EventTool_Wrapper")]
-    public sealed class EventTool_Wrapper : BaseCommand
+    [ProgId("MapActionToolbar_COMTools.AboutBox_COM")]
+    public sealed class AboutBox_COM : BaseCommand
     {
         #region COM Registration Function(s)
         [ComRegisterFunction()]
@@ -67,18 +69,24 @@ namespace MapActionToolbarExtension
         #endregion
 
         private IApplication m_application;
-        public EventTool_Wrapper()
+        private string m_thisCompilation_desc;
+
+        public AboutBox_COM()
         {
-            // TODO: Remove (AO) from strings, currently here to distinguish this from addin-generated button
+            //
+            // TODO: Define values for the public properties
+            //
             base.m_category = "MapAction Mapping Tools (AO)"; //localizable text
-            base.m_caption = "Event Tool (AO)";  //localizable text
-            base.m_message = "Create or edit the event configuration file which is used by the MapAction layour and export tools (AO)";  //localizable text 
-            base.m_toolTip = "Update Event Configuration (AO)";  //localizable text 
-            base.m_name = "MapactionMappingTools_EventTool";   //unique id, non-localizable (e.g. "MyCategory_ArcMapCommand")
+            base.m_caption = "About MapAction Toolbar (installed version)";  //localizable text
+            base.m_message = "About MapAction Toolbar (installed version)";  //localizable text 
+            base.m_toolTip = "Shows the version number of the installed MapAction Tools";  //localizable text 
+            base.m_name = "MapactionMappingTools_About";   //unique id, non-localizable (e.g. "MyCategory_ArcMapCommand")
 
             try
             {
-                // TODO: change bitmap name 
+                //
+                // TODO: change bitmap name if necessary
+                //
                 string bitmapResourceName = GetType().Name + ".png";
                 base.m_bitmap = new Bitmap(GetType(), bitmapResourceName);
             }
@@ -108,6 +116,15 @@ namespace MapActionToolbarExtension
                 base.m_enabled = false;
 
             // TODO:  Add other initialization code
+            AssemblyName an;
+            an = Assembly.GetExecutingAssembly().GetName();
+
+            String version_string = an.Version.ToString();
+            DateTime compile_date = new DateTime(2000, 1, 1);
+            compile_date = compile_date.AddDays(an.Version.Build);
+            compile_date = compile_date.AddSeconds(2 * an.Version.Revision);
+
+            m_thisCompilation_desc = String.Format("Version {0}\n\n Compiled {1} {2}", version_string, compile_date.ToShortDateString(), compile_date.ToShortTimeString());
         }
 
         /// <summary>
@@ -115,11 +132,13 @@ namespace MapActionToolbarExtension
         /// </summary>
         public override void OnClick()
         {
-            MapActionToolbars.frmEvent form = new MapActionToolbars.frmEvent();
-            if (form.Text.Length > 0)
-            {
-                form.ShowDialog();
-            }
+            // TODO: Add AboutBox_Wrapper.OnClick implementation
+            showDialog();
+        }
+
+        private void showDialog()
+        {
+            MessageBox.Show(m_thisCompilation_desc, "About MapAction toolbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         #endregion

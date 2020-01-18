@@ -8,10 +8,10 @@ using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Framework;
 using NUnit.Framework;
-using MapAction;
+using MapActionToolbar_Core;
 
 
-namespace MapAction.tests
+namespace MapActionToolbar_Core.tests
 {
     //[Ignore("Ignore Exports whilst fixing PageLayoutElements")]
     [TestFixture]
@@ -88,12 +88,12 @@ namespace MapAction.tests
                 string outDir = this.exportPath;// just for clarity...
 
                 exportFileName = Path.Combine(outDir, "thumbnail.png");
-                width = MapAction.Properties.Settings.Default.thumbnail_width_px;
+                width = MapActionToolbar_Core.Properties.Settings.Default.thumbnail_width_px;
             }
             else
             {
                 // at present the sized export still uses dpi to build the filename, using screen resolution
-                int dpi = MapAction.MapImageExporter.SCREEN_RES_DPI;
+                int dpi = MapActionToolbar_Core.MapImageExporter.SCREEN_RES_DPI;
 
                 width = 1024;
                 if (dataFrameName == null)

@@ -77,38 +77,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutBox_Wrapper.cs" />
-    <Compile Include="Class1.cs" />
-    <Compile Include="EventTool_Wrapper.cs" />
-    <Compile Include="ExportTool_Wrapper.cs" />
-    <Compile Include="GenerationTool_Wrapper.cs" />
-    <Compile Include="LayoutTool_Wrapper.cs" />
-    <Compile Include="MapActionToolbarExtensionMain.cs" />
+    <Compile Include="AboutBox_COM.cs" />
+    <Compile Include="EventTool_COM.cs" />
+    <Compile Include="ExportTool_COM.cs" />
+    <Compile Include="GenerationTool_COM.cs" />
+    <Compile Include="LayoutTool_COM.cs" />
     <Compile Include="MapActionToolbarExtension_Toolbar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RenameTool_Wrapper.cs" />
+    <Compile Include="RenameTool_COM.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MapActionToolbars\MapActionToolbars.csproj">
+    <ProjectReference Include="..\MapActionToolbars\MapActionToolbar_Forms.csproj">
       <Project>{5388b0f1-b5e9-45b2-810c-49f019300aca}</Project>
-      <Name>MapActionToolbars</Name>
+      <Name>MapActionToolbar_Forms</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MapAction\MapAction\MapAction.csproj">
+    <ProjectReference Include="..\MapAction\MapAction\MapActionToolbar_Core.csproj">
       <Project>{8b7aba1a-c659-4d80-a2ef-13d953577643}</Project>
-      <Name>MapAction</Name>
+      <Name>MapActionToolbar_Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="EventTool_Wrapper.png" />
-    <EmbeddedResource Include="ExportTool_Wrapper.png" />
-    <EmbeddedResource Include="GenerationTool_Wrapper.png" />
-    <EmbeddedResource Include="LayoutTool_Wrapper.png" />
+    <EmbeddedResource Include="EventTool_COM.png" />
+    <EmbeddedResource Include="ExportTool_COM.png" />
+    <EmbeddedResource Include="GenerationTool_COM.png" />
+    <EmbeddedResource Include="LayoutTool_COM.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="RenameTool_Wrapper.png" />
+    <EmbeddedResource Include="RenameTool_COM.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AboutBox_Wrapper.png" />
+    <EmbeddedResource Include="AboutBox_COM.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

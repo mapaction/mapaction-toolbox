@@ -4,7 +4,7 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Addin
 {
     public class EventTool : ESRI.ArcGIS.Desktop.AddIns.Button
     {

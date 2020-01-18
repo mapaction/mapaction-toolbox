@@ -28,11 +28,11 @@ namespace MapActionToolbars
         public static string getGlideNo()
         {
             string GlideNo = string.Empty;
-            string path = MapAction.Utilities.getEventConfigFilePath();
+            string path = MapActionToolbar_Core.Utilities.getEventConfigFilePath();
 
-            if (MapAction.Utilities.detectEventConfig())
+            if (MapActionToolbar_Core.Utilities.detectEventConfig())
             {
-                MapAction.EventConfig config = MapAction.Utilities.getEventConfigValues(path);
+                MapActionToolbar_Core.EventConfig config = MapActionToolbar_Core.Utilities.getEventConfigValues(path);
                 GlideNo = config.GlideNumber;
             }
             return GlideNo;
@@ -45,11 +45,11 @@ namespace MapActionToolbars
         public static string getConfigDisclaimer()
         {
             string DefaultDisclaimerText = string.Empty;
-            string path = MapAction.Utilities.getEventConfigFilePath();
+            string path = MapActionToolbar_Core.Utilities.getEventConfigFilePath();
 
-            if (MapAction.Utilities.detectEventConfig())
+            if (MapActionToolbar_Core.Utilities.detectEventConfig())
             {
-                MapAction.EventConfig config =  MapAction.Utilities.getEventConfigValues(path);
+                MapActionToolbar_Core.EventConfig config =  MapActionToolbar_Core.Utilities.getEventConfigValues(path);
                 DefaultDisclaimerText = config.DefaultDisclaimerText;
             }
             return DefaultDisclaimerText;
@@ -58,11 +58,11 @@ namespace MapActionToolbars
         public static string getConfigDonorText()
         {
             string DefaultDonorsText = string.Empty;
-            string path = MapAction.Utilities.getEventConfigFilePath();
+            string path = MapActionToolbar_Core.Utilities.getEventConfigFilePath();
 
-            if (MapAction.Utilities.detectEventConfig())
+            if (MapActionToolbar_Core.Utilities.detectEventConfig())
             {
-                MapAction.EventConfig config = MapAction.Utilities.getEventConfigValues(path);
+                MapActionToolbar_Core.EventConfig config = MapActionToolbar_Core.Utilities.getEventConfigValues(path);
                 DefaultDonorsText = config.DefaultDonorCredits;
             }
             return DefaultDonorsText;
@@ -71,11 +71,11 @@ namespace MapActionToolbars
         public static string getConfigTimezone()
         {
             string DefaultTimeZone = string.Empty;
-            string path = MapAction.Utilities.getEventConfigFilePath();
+            string path = MapActionToolbar_Core.Utilities.getEventConfigFilePath();
 
-            if (MapAction.Utilities.detectEventConfig())
+            if (MapActionToolbar_Core.Utilities.detectEventConfig())
             {
-                MapAction.EventConfig config = MapAction.Utilities.getEventConfigValues(path);
+                MapActionToolbar_Core.EventConfig config = MapActionToolbar_Core.Utilities.getEventConfigValues(path);
                 DefaultTimeZone = config.TimeZone;
             }
             return DefaultTimeZone;
@@ -87,11 +87,11 @@ namespace MapActionToolbars
             string OrgUrl = string.Empty;
             string PrimaryEmail = string.Empty;
             
-            string path = MapAction.Utilities.getEventConfigFilePath();
+            string path = MapActionToolbar_Core.Utilities.getEventConfigFilePath();
 
-            if (MapAction.Utilities.detectEventConfig())
+            if (MapActionToolbar_Core.Utilities.detectEventConfig())
             {
-                MapAction.EventConfig config = MapAction.Utilities.getEventConfigValues(path);
+                MapActionToolbar_Core.EventConfig config = MapActionToolbar_Core.Utilities.getEventConfigValues(path);
 
                 OrgName = config.DefaultSourceOrganisation;
                 OrgUrl = config.DefaultSourceOrganisationUrl;

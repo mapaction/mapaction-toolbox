@@ -7,10 +7,10 @@ using System.Text;
 using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.ArcMapUI;
 using NUnit.Framework;
-using MapAction;
+using MapActionToolbar_Core;
 
 
-namespace MapAction.tests
+namespace MapActionToolbar_Core.tests
 {
     /// <summary>
     /// The tests in this case are focused on code dealing exporting MapAction specific MXDs which have DataDrivenPages enabled.

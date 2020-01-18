@@ -1,22 +1,23 @@
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.IO;
+using System.Windows.Forms;
 using ESRI.ArcGIS.ADF.BaseClasses;
 using ESRI.ArcGIS.ADF.CATIDs;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.ArcMapUI;
-using System.Reflection;
-using System.Windows.Forms;
 
-namespace MapActionToolbarExtension
+
+namespace MapActionToolbar_COMTools
 {
     /// <summary>
-    /// Summary description for AboutBox_Wrapper.
-    /// </summary>
-    [Guid("0e75c31f-334d-4e98-a351-ba2e9d89d0b9")]
+    /// A COM-visible ArcObjects BaseCommand (button) for ArcMap, calling the existing Layout Tool form on click.
+/// </summary>
+    [Guid("c4d98af7-01c0-4264-8ca1-013605c81019")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("MapActionToolbarExtension.AboutBox_Wrapper")]
-    public sealed class AboutBox_Wrapper : BaseCommand
+    [ProgId("MapActionToolbar_COMTools.LayoutTool_COM")]
+    public sealed class LayoutTool_COM : BaseCommand
     {
         #region COM Registration Function(s)
         [ComRegisterFunction()]
@@ -69,24 +70,18 @@ namespace MapActionToolbarExtension
         #endregion
 
         private IApplication m_application;
-        private string m_thisCompilation_desc;
-
-        public AboutBox_Wrapper()
+        public LayoutTool_COM()
         {
-            //
-            // TODO: Define values for the public properties
-            //
+            // TODO: Remove "(AO)" from strings, currently here to distinguish from addin-generated button in testing
             base.m_category = "MapAction Mapping Tools (AO)"; //localizable text
-            base.m_caption = "About MapAction Toolbar (installed version)";  //localizable text
-            base.m_message = "About MapAction Toolbar (installed version)";  //localizable text 
-            base.m_toolTip = "Shows the version number of the installed MapAction Tools";  //localizable text 
-            base.m_name = "MapactionMappingTools_About";   //unique id, non-localizable (e.g. "MyCategory_ArcMapCommand")
+            base.m_caption = "Layout Tool (AO)";  //localizable text
+            base.m_message = "Improves the speed and accuracy of completing the MapAction map layout elements (AO)";  //localizable text 
+            base.m_toolTip = "Update Layout Elements (AO)";  //localizable text 
+            base.m_name = "MapactionMappingTools_LayoutTool";   //unique id, non-localizable (e.g. "MyCategory_ArcMapCommand")
 
             try
             {
-                //
-                // TODO: change bitmap name if necessary
-                //
+                // TODO: change bitmap name
                 string bitmapResourceName = GetType().Name + ".png";
                 base.m_bitmap = new Bitmap(GetType(), bitmapResourceName);
             }
@@ -116,15 +111,6 @@ namespace MapActionToolbarExtension
                 base.m_enabled = false;
 
             // TODO:  Add other initialization code
-            AssemblyName an;
-            an = Assembly.GetExecutingAssembly().GetName();
-
-            String version_string = an.Version.ToString();
-            DateTime compile_date = new DateTime(2000, 1, 1);
-            compile_date = compile_date.AddDays(an.Version.Build);
-            compile_date = compile_date.AddSeconds(2 * an.Version.Revision);
-
-            m_thisCompilation_desc = String.Format("Version {0}\n\n Compiled {1} {2}", version_string, compile_date.ToShortDateString(), compile_date.ToShortTimeString());
         }
 
         /// <summary>
@@ -132,13 +118,34 @@ namespace MapActionToolbarExtension
         /// </summary>
         public override void OnClick()
         {
-            // TODO: Add AboutBox_Wrapper.OnClick implementation
-            showDialog();
-        }
-
-        private void showDialog()
-        {
-            MessageBox.Show(m_thisCompilation_desc, "About MapAction toolbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //Check if 'Main map' frame exists.  If not show a message box telling the user so. Don't open GUI.
+            //Check to see if element name duplicates exist
+            //Check to see if the operational config file exists
+            //Check to see if the config file exists, if not abort and send the user a message
+            string path = MapActionToolbar_Core.Utilities.getCrashMoveFolderPath();
+            string filePath = MapActionToolbar_Core.Utilities.getEventConfigFilePath();
+            string duplicateString = "";
+            IMxDocument pMxDoc = m_application.Document as IMxDocument;
+            if (!MapActionToolbar_Core.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
+            {
+                MessageBox.Show("This tool only works with the MapAction mapping templates.  The 'Main map' map frame could not be detected. Please load a MapAction template and try again.", "Invalid map template",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (MapActionToolbar_Core.PageLayoutProperties.checkLayoutTextElementsForDuplicates(pMxDoc, "Main map", out duplicateString))
+            {
+                MessageBox.Show("Duplicate named elements have been identified in the layout. Please remove duplicate element names \"" + duplicateString + "\" before trying again.", "Invalid map template",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (!File.Exists(@filePath))
+            {
+                MessageBox.Show("The operation configuration file is required for this tool.  It cannot be located.",
+                    "Configuration file required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (MapActionToolbar_Core.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
+            {
+                MapActionToolbars.frmLayoutMain form = new MapActionToolbars.frmLayoutMain(m_application);
+                form.ShowDialog();
+            }
         }
 
         #endregion

@@ -4,16 +4,16 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using MapAction;
+using MapActionToolbar_Core;
 
-namespace MapAction.tests
+namespace MapActionToolbar_Core.tests
 {
     [TestFixture]
     public class EventConfigTests
     {
         // Class properties 
         protected string testRootDir;
-        protected MapAction.EventConfig config;
+        protected MapActionToolbar_Core.EventConfig config;
 
         private readonly string expectedCrashMoveFolderDescriptorPath = "C:/Temp";
         private readonly string expectedOperationName= "Op_test";
@@ -42,7 +42,7 @@ namespace MapAction.tests
         public void Setup()
         {
             string filePath = Path.Combine(this.testRootDir, @"testfiles\event_description.json");
-            config = MapAction.Utilities.getEventConfigValues(filePath);
+            config = MapActionToolbar_Core.Utilities.getEventConfigValues(filePath);
         }
 
         [TestCase]

@@ -5,15 +5,15 @@ using System.Runtime.InteropServices;
 using ESRI.ArcGIS.ADF.CATIDs;
 using ESRI.ArcGIS.ADF.BaseClasses;
 
-namespace MapActionToolbarExtension
+namespace MapActionToolbar_COMTools
 {
     /// <summary>
     /// Summary description for MapActionToolbarExtension_Toolbar.
     /// </summary>
     [Guid("cce9ef42-818e-4a90-8d81-e36e0d970a2a")]
     [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("MapActionToolbarExtension.MapActionToolbarExtension_Toolbar")]
-    public sealed class MapActionToolbarExtension_Toolbar : BaseToolbar
+    [ProgId("MapActionToolbar_COMTools.MapActionToolbar_COM")]
+    public sealed class MapActionToolbar_COM : BaseToolbar
     {
         #region COM Registration Function(s)
         [ComRegisterFunction()]
@@ -63,7 +63,7 @@ namespace MapActionToolbarExtension
         #endregion
         #endregion
 
-        public MapActionToolbarExtension_Toolbar()
+        public MapActionToolbar_COM()
         {
             //
             // TODO: Define your toolbar here by adding items
@@ -72,17 +72,17 @@ namespace MapActionToolbarExtension
             //BeginGroup(); //Separator
             //AddItem("{FBF8C3FB-0480-11D2-8D21-080009EE4E51}", 1); //undo command
             //AddItem(new Guid("FBF8C3FB-0480-11D2-8D21-080009EE4E51"), 2); //redo command
-            AddItem("MapActionToolbarExtension.EventTool_Wrapper");
+            AddItem("MapActionToolbar_COMTools.EventTool_COM");
             BeginGroup();
-            AddItem("MapActionToolbarExtension.LayoutTool_Wrapper");
+            AddItem("MapActionToolbar_COMTools.LayoutTool_COM");
             BeginGroup();
-            AddItem("MapActionToolbarExtension.ExportTool_Wrapper");
+            AddItem("MapActionToolbar_COMTools.ExportTool_COM");
             BeginGroup();
-            AddItem("MapActionToolbarExtension.GenerationTool_Wrapper");
+            AddItem("MapActionToolbar_COMTools.GenerationTool_COM");
             BeginGroup();
-            AddItem("MapActionToolbarExtension.RenameTool_Wrapper");
+            AddItem("MapActionToolbar_COMTools.RenameTool_COM");
             BeginGroup();
-            AddItem("MapActionToolbarExtension.AboutBox_Wrapper");
+            AddItem("MapActionToolbar_COMTools.AboutBox_COM");
         }
 
         public override string Caption
@@ -90,7 +90,7 @@ namespace MapActionToolbarExtension
             get
             {
                 //TODO: Replace bar caption
-                return "MapAction Toolbar (ext)";
+                return "MapAction Toolbar (COM)";
             }
         }
         public override string Name
@@ -98,7 +98,7 @@ namespace MapActionToolbarExtension
             get
             {
                 //TODO: Replace bar ID
-                return "MapActionToolbarExtension_Toolbar";
+                return "MapActionToolbar_COM";
             }
         }
     }

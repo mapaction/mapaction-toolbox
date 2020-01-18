@@ -16,7 +16,7 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.Framework;
 using System.Diagnostics;
-using MapAction;
+using MapActionToolbar_Core;
 
 namespace MapActionToolbars
 {
@@ -49,12 +49,12 @@ namespace MapActionToolbars
         public frmLayoutMain(IApplication arcMapApp)
         {
             _mApplication = arcMapApp;//
-            string path = MapAction.Utilities.getCrashMoveFolderPath();
+            string path = MapActionToolbar_Core.Utilities.getCrashMoveFolderPath();
             string filePath = System.IO.Path.Combine(path, languageConfigXmlFileName);
-            _mapRootURL = MapAction.Utilities.getMDRUrlRoot();
+            _mapRootURL = MapActionToolbar_Core.Utilities.getMDRUrlRoot();
 
             // Set up Language of labels
-            this.languageDictionary = MapAction.Utilities.getLanguageConfigValues(filePath);
+            this.languageDictionary = MapActionToolbar_Core.Utilities.getLanguageConfigValues(filePath);
             this.languages = new List<string>();
             for (int i = 0; i < languageDictionary.Count; i++)
             {
@@ -70,17 +70,17 @@ namespace MapActionToolbars
             //Call the MapAction class library and the getLayoutElements function that returns a dictionare of the key value
             //pairs of each text element in the layout
             IMxDocument doc = _mApplication.Document as IMxDocument;
-            Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(doc, "Main map");
+            Dictionary<string, string> dict = MapActionToolbar_Core.PageLayoutProperties.getLayoutTextElements(doc, "Main map");
             
             tbxScale.Text = tbxScale.Text = updateScale();
             tbxSpatialReference.Text = getSpatialReference();
-            tbxMapDocument.Text = tbxMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(_mApplication);
+            tbxMapDocument.Text = tbxMapDocument.Text = MapActionToolbar_Core.PageLayoutProperties.getMxdTitle(_mApplication);
             tbxGlideNumber.Text = LayoutToolAutomatedValues.getGlideNo();
         }
 
         private void btnMapDocument_Click(object sender, EventArgs e)
         {
-            tbxMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(_mApplication);
+            tbxMapDocument.Text = MapActionToolbar_Core.PageLayoutProperties.getMxdTitle(_mApplication);
         }
 
         private void btnSpatialReference_Click(object sender, EventArgs e)
@@ -101,16 +101,16 @@ namespace MapActionToolbars
         private void frmMain_Load(object sender, EventArgs e)
         {
             // Read the Operation Config file 
-            string path = MapAction.Utilities.getEventConfigFilePath();
-            if (MapAction.Utilities.detectEventConfig())
+            string path = MapActionToolbar_Core.Utilities.getEventConfigFilePath();
+            if (MapActionToolbar_Core.Utilities.detectEventConfig())
             {
-                EventConfig config = MapAction.Utilities.getEventConfigValues(path);
+                EventConfig config = MapActionToolbar_Core.Utilities.getEventConfigValues(path);
                 _languageIso2 = config.LanguageIso2;
                 _operationId = config.OperationId.ToLower();
                 _mapRootURL = config.DefaultPublishingBaseUrl;
                 if (_mapRootURL.Length == 0)
                 {
-                    _mapRootURL = MapAction.Utilities.getMDRUrlRoot();
+                    _mapRootURL = MapActionToolbar_Core.Utilities.getMDRUrlRoot();
                 }
             }
 
@@ -132,7 +132,7 @@ namespace MapActionToolbars
             //Call the MapAction class library and the getLayoutElements function that returns a dictionare of the key value
             //pairs of each text element in the layout
             IMxDocument doc = _mApplication.Document as IMxDocument;
-            Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(doc, "Main map");
+            Dictionary<string, string> dict = MapActionToolbar_Core.PageLayoutProperties.getLayoutTextElements(doc, "Main map");
             
             //Check if the various elements exist that automated update, if not disable the automation buttons.
             //If they are present then update the text boxes with the value from the dictionary 
@@ -290,7 +290,7 @@ namespace MapActionToolbars
         public static string getSpatialReference()
         {
             IMxDocument doc = _mApplication.Document as IMxDocument;
-            Dictionary<string, string> dictSpatialRef = MapAction.Utilities.getDataFrameSpatialReference(doc as IMxDocument, "Main map");
+            Dictionary<string, string> dictSpatialRef = MapActionToolbar_Core.Utilities.getDataFrameSpatialReference(doc as IMxDocument, "Main map");
             string stringSpatialRef;
 
             if (dictSpatialRef["type"] == "Geographic")
@@ -416,9 +416,9 @@ namespace MapActionToolbars
             //string scale = MapAction.PageLayoutProperties.getScale(ArcMap.Application.Document as IMapDocument, "Main map");
             IMapDocument doc = _mApplication.Document as IMapDocument;
 
-            string scale = MapAction.Utilities.getScale(doc, "Main map");
+            string scale = MapActionToolbar_Core.Utilities.getScale(doc, "Main map");
 
-            string pageSize = MapAction.Utilities.getPageSize(doc, "Main map");
+            string pageSize = MapActionToolbar_Core.Utilities.getPageSize(doc, "Main map");
             string scaleString = scale + " (At " + pageSize + ")";
             return scaleString;
         }
@@ -470,7 +470,7 @@ namespace MapActionToolbars
         private void btnUpdateAllTab2_Click(object sender, EventArgs e)
         {
             IMxDocument doc = _mApplication.Document as IMxDocument;
-            Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(doc, "Main map");
+            Dictionary<string, string> dict = MapActionToolbar_Core.PageLayoutProperties.getLayoutTextElements(doc, "Main map");
             //If the elements are present in the map, update the values
             if (dict.ContainsKey("donor_credit") == true) { tbxDonorCredit.Text = LayoutToolAutomatedValues.getConfigDonorText(); } 
             if (dict.ContainsKey("timezone") == true) { tbxTimezone.Text = LayoutToolAutomatedValues.getConfigTimezone(); } 

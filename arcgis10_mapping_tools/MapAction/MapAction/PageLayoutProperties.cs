@@ -17,7 +17,7 @@ using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 
-namespace MapAction
+namespace MapActionToolbar_Core
 {
     /// <summary>
     /// This is a equiv of enum for strings.
