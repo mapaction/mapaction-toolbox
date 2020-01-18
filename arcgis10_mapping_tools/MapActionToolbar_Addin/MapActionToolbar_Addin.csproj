@@ -119,7 +119,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\ConfigTool.png" />
+    <AddInContent Include="Images\ConfigTool.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MapActionToolbars\MapActionToolbar_Forms.csproj">
@@ -130,6 +130,12 @@
       <Project>{8b7aba1a-c659-4d80-a2ef-13d953577643}</Project>
       <Name>MapActionToolbar_Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\ExportTool.png" />
+    <AddInContent Include="Images\generate_icon.png" />
+    <AddInContent Include="Images\LayoutTool.png" />
+    <AddInContent Include="Images\rename_icon.png" />
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
