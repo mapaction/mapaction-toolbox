@@ -37,7 +37,7 @@ namespace InvokeESRIRegAsm
 
             //Add the appropriate command line switches when invoking the ESRIRegAsm utility.
             //In this case: /p:Desktop = means the ArcGIS Desktop product, /s = means a silent install.
-            string part2 = " /p:Desktop";
+            string part2 = " /p:Desktop /s";
 
             //It is important to embed the part1 in quotes in case there are any spaces in the path.
             string cmd2 = "\"" + part1 + "\"" + part2;
@@ -66,7 +66,7 @@ namespace InvokeESRIRegAsm
 
             //Add the appropriate command line switches when invoking the ESRIRegAsm utility.
             //In this case: /p:Desktop = means the ArcGIS Desktop product, /u = means unregister the Custom Component, /s = means a silent install.
-            string part2 = " /p:Desktop /u";
+            string part2 = " /p:Desktop /u /s";
 
             //It is important to embed the part1 in quotes in case there are any spaces in the path.
             string cmd2 = "\"" + part1 + "\"" + part2;
