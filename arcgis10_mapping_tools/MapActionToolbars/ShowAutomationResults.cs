@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MapActionToolbar_Core;
 using Newtonsoft.Json;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     public static class ShowAutomationResults
     {

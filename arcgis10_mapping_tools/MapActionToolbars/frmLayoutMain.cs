@@ -18,7 +18,7 @@ using ESRI.ArcGIS.Framework;
 using System.Diagnostics;
 using MapActionToolbar_Core;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     public partial class frmLayoutMain : Form
     {
@@ -32,13 +32,7 @@ namespace MapActionToolbars
         private const string defaultMapNumber = "MA001";
         private const string defaultMapVersion = "1";
 
-        /// <summary>
-        /// parameterless constructor which is called by the addin framework button as before
-        /// </summary>
-        public frmLayoutMain() : this(ArcMap.Application)
-        {
-        }
-
+        
         /// <summary>
         /// constructor taking a reference to the IApplication the form should be associated with
         /// </summary>
@@ -283,7 +277,7 @@ namespace MapActionToolbars
 
         private void tspBtnCheckElements_Click(object sender, EventArgs e)
         {
-            frmCheckElements dlg = new frmCheckElements();
+            frmCheckElements dlg = new frmCheckElements(_mApplication);
             dlg.ShowDialog();
         }
 

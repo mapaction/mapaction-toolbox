@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace MapActionToolbars.Resources {
+namespace MapActionToolbar_Forms.Resources {
     
     
     /// <summary>
@@ -3059,7 +3059,7 @@ namespace MapActionToolbars.Resources {
         }
     }
 }
-namespace MapActionToolbars.Resources.layer_name_lookupDataSetTableAdapters {
+namespace MapActionToolbar_Forms.Resources.layer_name_lookupDataSetTableAdapters {
     
     
     /// <summary>
@@ -3198,7 +3198,7 @@ namespace MapActionToolbars.Resources.layer_name_lookupDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.OleDb.OleDbConnection();
-            this._connection.ConnectionString = global::MapActionToolbars.Properties.Settings.Default.layer_name_lookupConnectionString;
+            this._connection.ConnectionString = global::MapActionToolbar_Forms.Properties.Settings.Default.layer_name_lookupConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3434,7 +3434,7 @@ namespace MapActionToolbars.Resources.layer_name_lookupDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.OleDb.OleDbConnection();
-            this._connection.ConnectionString = global::MapActionToolbars.Properties.Settings.Default.layer_name_lookupConnectionString;
+            this._connection.ConnectionString = global::MapActionToolbar_Forms.Properties.Settings.Default.layer_name_lookupConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3670,7 +3670,7 @@ namespace MapActionToolbars.Resources.layer_name_lookupDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.OleDb.OleDbConnection();
-            this._connection.ConnectionString = global::MapActionToolbars.Properties.Settings.Default.layer_name_lookupConnectionString;
+            this._connection.ConnectionString = global::MapActionToolbar_Forms.Properties.Settings.Default.layer_name_lookupConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3906,7 +3906,7 @@ namespace MapActionToolbars.Resources.layer_name_lookupDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.OleDb.OleDbConnection();
-            this._connection.ConnectionString = global::MapActionToolbars.Properties.Settings.Default.layer_name_lookupConnectionString;
+            this._connection.ConnectionString = global::MapActionToolbar_Forms.Properties.Settings.Default.layer_name_lookupConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4142,7 +4142,7 @@ namespace MapActionToolbars.Resources.layer_name_lookupDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.OleDb.OleDbConnection();
-            this._connection.ConnectionString = global::MapActionToolbars.Properties.Settings.Default.layer_name_lookupConnectionString;
+            this._connection.ConnectionString = global::MapActionToolbar_Forms.Properties.Settings.Default.layer_name_lookupConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4378,7 +4378,7 @@ namespace MapActionToolbars.Resources.layer_name_lookupDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.OleDb.OleDbConnection();
-            this._connection.ConnectionString = global::MapActionToolbars.Properties.Settings.Default.layer_name_lookupConnectionString;
+            this._connection.ConnectionString = global::MapActionToolbar_Forms.Properties.Settings.Default.layer_name_lookupConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4614,7 +4614,7 @@ namespace MapActionToolbars.Resources.layer_name_lookupDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.OleDb.OleDbConnection();
-            this._connection.ConnectionString = global::MapActionToolbars.Properties.Settings.Default.layer_name_lookupConnectionString;
+            this._connection.ConnectionString = global::MapActionToolbar_Forms.Properties.Settings.Default.layer_name_lookupConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

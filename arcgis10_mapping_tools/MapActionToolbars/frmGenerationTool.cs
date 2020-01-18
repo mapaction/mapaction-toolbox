@@ -24,7 +24,7 @@ using ESRI.ArcGIS.Output;
 using MapActionToolbar_Core;
 
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     public partial class frmGenerationTool : Form
     {
@@ -36,10 +36,6 @@ namespace MapActionToolbars
         private Cookbook cookbook = null;
         //private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
         private static IApplication _mApplication;
-
-        public frmGenerationTool() : this(ArcMap.Application)
-        {
-        }
 
         public frmGenerationTool(IApplication arcMapApp)
         {

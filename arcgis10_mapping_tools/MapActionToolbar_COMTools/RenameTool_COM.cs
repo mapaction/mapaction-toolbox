@@ -119,7 +119,7 @@ namespace MapActionToolbar_COMTools
         /// </summary>
         public override void OnClick()
         {
-            var dlg = new MapActionToolbars.frmRenameMain();
+            var dlg = new MapActionToolbar_Forms.frmRenameMain();
             if (dlg.initialised)
             {
                 dlg.ShowDialog();

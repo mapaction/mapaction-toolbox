@@ -16,7 +16,7 @@ using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.Framework;
 using System.Diagnostics;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     class LayoutToolAutomatedValues
     {

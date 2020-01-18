@@ -143,7 +143,7 @@ namespace MapActionToolbar_COMTools
             }
             else if (MapActionToolbar_Core.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
             {
-                MapActionToolbars.frmLayoutMain form = new MapActionToolbars.frmLayoutMain(m_application);
+                MapActionToolbar_Forms.frmLayoutMain form = new MapActionToolbar_Forms.frmLayoutMain(m_application);
                 form.ShowDialog();
             }
         }

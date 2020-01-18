@@ -11,7 +11,7 @@ using System.Diagnostics;
 using System.Configuration;
 using MapActionToolbar_Core;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     public partial class frmEvent : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace MapActionToolbars
+﻿namespace MapActionToolbar_Forms
 {
     partial class frmCheckElements
     {
@@ -135,7 +135,7 @@
             // 
             // imgLanguageStatus
             // 
-            this.imgLanguageStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
+            this.imgLanguageStatus.Image = global::MapActionToolbar_Forms.Properties.Resources.cross_17px;
             this.imgLanguageStatus.Location = new System.Drawing.Point(117, 296);
             this.imgLanguageStatus.Name = "imgLanguageStatus";
             this.imgLanguageStatus.Size = new System.Drawing.Size(20, 20);
@@ -184,7 +184,7 @@
             // 
             // imgTimezoneStatus
             // 
-            this.imgTimezoneStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
+            this.imgTimezoneStatus.Image = global::MapActionToolbar_Forms.Properties.Resources.cross_17px;
             this.imgTimezoneStatus.Location = new System.Drawing.Point(117, 273);
             this.imgTimezoneStatus.Name = "imgTimezoneStatus";
             this.imgTimezoneStatus.Size = new System.Drawing.Size(20, 20);
@@ -193,7 +193,7 @@
             // 
             // imgProducedByStatus
             // 
-            this.imgProducedByStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
+            this.imgProducedByStatus.Image = global::MapActionToolbar_Forms.Properties.Resources.cross_17px;
             this.imgProducedByStatus.Location = new System.Drawing.Point(117, 250);
             this.imgProducedByStatus.Name = "imgProducedByStatus";
             this.imgProducedByStatus.Size = new System.Drawing.Size(20, 20);
@@ -202,7 +202,7 @@
             // 
             // imgDonorCreditStatus
             // 
-            this.imgDonorCreditStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
+            this.imgDonorCreditStatus.Image = global::MapActionToolbar_Forms.Properties.Resources.cross_17px;
             this.imgDonorCreditStatus.Location = new System.Drawing.Point(117, 227);
             this.imgDonorCreditStatus.Name = "imgDonorCreditStatus";
             this.imgDonorCreditStatus.Size = new System.Drawing.Size(20, 20);
@@ -211,7 +211,7 @@
             // 
             // imgDisclaimerStatus
             // 
-            this.imgDisclaimerStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
+            this.imgDisclaimerStatus.Image = global::MapActionToolbar_Forms.Properties.Resources.cross_17px;
             this.imgDisclaimerStatus.Location = new System.Drawing.Point(117, 204);
             this.imgDisclaimerStatus.Name = "imgDisclaimerStatus";
             this.imgDisclaimerStatus.Size = new System.Drawing.Size(20, 20);
@@ -230,7 +230,7 @@
             // 
             // imgDataSources
             // 
-            this.imgDataSources.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
+            this.imgDataSources.Image = global::MapActionToolbar_Forms.Properties.Resources.cross_17px;
             this.imgDataSources.Location = new System.Drawing.Point(116, 69);
             this.imgDataSources.Name = "imgDataSources";
             this.imgDataSources.Size = new System.Drawing.Size(20, 20);
@@ -309,7 +309,7 @@
             // 
             // imgTitleStatus
             // 
-            this.imgTitleStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
+            this.imgTitleStatus.Image = global::MapActionToolbar_Forms.Properties.Resources.cross_17px;
             this.imgTitleStatus.Location = new System.Drawing.Point(116, 22);
             this.imgTitleStatus.Name = "imgTitleStatus";
             this.imgTitleStatus.Size = new System.Drawing.Size(20, 20);
@@ -318,7 +318,7 @@
             // 
             // imgGlideNoStatus
             // 
-            this.imgGlideNoStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
+            this.imgGlideNoStatus.Image = global::MapActionToolbar_Forms.Properties.Resources.cross_17px;
             this.imgGlideNoStatus.Location = new System.Drawing.Point(116, 180);
             this.imgGlideNoStatus.Name = "imgGlideNoStatus";
             this.imgGlideNoStatus.Size = new System.Drawing.Size(20, 20);
@@ -327,7 +327,7 @@
             // 
             // imgSummaryStatus
             // 
-            this.imgSummaryStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
+            this.imgSummaryStatus.Image = global::MapActionToolbar_Forms.Properties.Resources.cross_17px;
             this.imgSummaryStatus.Location = new System.Drawing.Point(116, 45);
             this.imgSummaryStatus.Name = "imgSummaryStatus";
             this.imgSummaryStatus.Size = new System.Drawing.Size(20, 20);
@@ -336,7 +336,7 @@
             // 
             // imgScaleStatus
             // 
-            this.imgScaleStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
+            this.imgScaleStatus.Image = global::MapActionToolbar_Forms.Properties.Resources.cross_17px;
             this.imgScaleStatus.Location = new System.Drawing.Point(116, 157);
             this.imgScaleStatus.Name = "imgScaleStatus";
             this.imgScaleStatus.Size = new System.Drawing.Size(20, 20);
@@ -345,7 +345,7 @@
             // 
             // imgMapNoStatus
             // 
-            this.imgMapNoStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
+            this.imgMapNoStatus.Image = global::MapActionToolbar_Forms.Properties.Resources.cross_17px;
             this.imgMapNoStatus.Location = new System.Drawing.Point(116, 88);
             this.imgMapNoStatus.Name = "imgMapNoStatus";
             this.imgMapNoStatus.Size = new System.Drawing.Size(20, 20);
@@ -354,7 +354,7 @@
             // 
             // imgSpatialRefStatus
             // 
-            this.imgSpatialRefStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
+            this.imgSpatialRefStatus.Image = global::MapActionToolbar_Forms.Properties.Resources.cross_17px;
             this.imgSpatialRefStatus.Location = new System.Drawing.Point(116, 134);
             this.imgSpatialRefStatus.Name = "imgSpatialRefStatus";
             this.imgSpatialRefStatus.Size = new System.Drawing.Size(20, 20);
@@ -363,7 +363,7 @@
             // 
             // imgMxdNameStatus
             // 
-            this.imgMxdNameStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
+            this.imgMxdNameStatus.Image = global::MapActionToolbar_Forms.Properties.Resources.cross_17px;
             this.imgMxdNameStatus.Location = new System.Drawing.Point(116, 111);
             this.imgMxdNameStatus.Name = "imgMxdNameStatus";
             this.imgMxdNameStatus.Size = new System.Drawing.Size(20, 20);
@@ -393,7 +393,7 @@
             // 
             // imgQRCodeStatus
             // 
-            this.imgQRCodeStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
+            this.imgQRCodeStatus.Image = global::MapActionToolbar_Forms.Properties.Resources.cross_17px;
             this.imgQRCodeStatus.Location = new System.Drawing.Point(116, 22);
             this.imgQRCodeStatus.Name = "imgQRCodeStatus";
             this.imgQRCodeStatus.Size = new System.Drawing.Size(20, 20);

@@ -1,4 +1,4 @@
-﻿namespace MapActionToolbars
+﻿namespace MapActionToolbar_Forms
 {
     partial class frmGenerationTool
     {

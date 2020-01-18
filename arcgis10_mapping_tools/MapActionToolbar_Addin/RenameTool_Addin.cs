@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using MapActionToolbar_Forms;
 
 namespace MapActionToolbar_Addin
 {
-    public class EventTool : ESRI.ArcGIS.Desktop.AddIns.Button
+    public class RenameTool_Addin : ESRI.ArcGIS.Desktop.AddIns.Button
     {
-        public EventTool()
+        public RenameTool_Addin()
         {
         }
 
         protected override void OnClick()
         {
-            frmEvent form = new frmEvent();
-            if (form.Text.Length > 0)
+            var dlg = new frmRenameMain();
+            if (dlg.initialised)
             {
-                form.ShowDialog();
+                dlg.ShowDialog();
             }
         }
         protected override void OnUpdate()
         {
-            Enabled = MapActionToolbars.ArcMap.Application != null;
+            Enabled = ArcMap.Application != null;
         }
     }
-
 }

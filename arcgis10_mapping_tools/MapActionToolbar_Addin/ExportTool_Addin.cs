@@ -4,20 +4,20 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using ESRI.ArcGIS.ArcMapUI;
-using ESRI.ArcGIS.Desktop;
-using ESRI.ArcGIS.Framework;
+using MapActionToolbar_Forms;
 
 namespace MapActionToolbar_Addin
 {
-    public class GenerationTool : ESRI.ArcGIS.Desktop.AddIns.Button
+    public class ExportTool_Addin : ESRI.ArcGIS.Desktop.AddIns.Button
     {
-        public GenerationTool()
+        public ExportTool_Addin()
         {
         }
 
         protected override void OnClick()
         {
             //Check if 'Main map' frame exists.  If not show a message box telling the user so. Don't open GUI.
+            //if (!PageLayoutProperties.detectMainMapFrame())
             string duplicates = "";
             IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
             if (!MapActionToolbar_Core.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
@@ -36,14 +36,14 @@ namespace MapActionToolbar_Addin
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (MapActionToolbar_Core.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
-            {
-                var dlg = new frmGenerationTool();
+            {   
+                var dlg = new frmExportMain(ArcMap.Application);
 
                 if (dlg.Text.Length > 0)
                 {
                     dlg.ShowDialog();
                 }
-            }
+            }    
         }
 
         protected override void OnUpdate()

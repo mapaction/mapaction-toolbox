@@ -23,7 +23,7 @@ using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.Framework;
 using MapActionToolbar_Core;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     public partial class frmExportMain : Form
     {
@@ -69,13 +69,6 @@ namespace MapActionToolbars
         private MapActionToolbar_Core.LanguageCodeLookup languageCodeLookup = null;
         private MapActionToolbarConfig mapActionToolbarConfig = null;
         private CrashMoveFolderConfig crashMoveFolder = null;
-
-        // parameterless constructor which is called by the addin framework button as before,
-        // if this is called then we assume ArcMap.Application is defined, which it will be 
-        // when running as an addin
-        public frmExportMain() : this(ArcMap.Application)
-        {
-        }
 
         // new constructor which takes a reference to the IApplication the form should be associated with
         public frmExportMain(IApplication arcMapApp)

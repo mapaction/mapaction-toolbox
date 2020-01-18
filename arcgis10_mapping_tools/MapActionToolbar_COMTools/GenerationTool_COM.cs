@@ -140,7 +140,7 @@ namespace MapActionToolbar_COMTools
             }
             else if (MapActionToolbar_Core.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
             {
-                var dlg = new MapActionToolbars.frmGenerationTool(m_application);
+                var dlg = new MapActionToolbar_Forms.frmGenerationTool(m_application);
 
                 if (dlg.Text.Length > 0)
                 {

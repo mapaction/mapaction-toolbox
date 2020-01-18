@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using MapActionToolbar_Forms;
 
 namespace MapActionToolbar_Addin
 {
-    public class RenameTool : ESRI.ArcGIS.Desktop.AddIns.Button
+    public class EventTool_Addin : ESRI.ArcGIS.Desktop.AddIns.Button
     {
-        public RenameTool()
+        public EventTool_Addin()
         {
         }
 
         protected override void OnClick()
         {
-            var dlg = new frmRenameMain();
-            if (dlg.initialised)
+            frmEvent form = new frmEvent();
+            if (form.Text.Length > 0)
             {
-                dlg.ShowDialog();
+                form.ShowDialog();
             }
         }
         protected override void OnUpdate()
@@ -25,4 +26,5 @@ namespace MapActionToolbar_Addin
             Enabled = ArcMap.Application != null;
         }
     }
+
 }

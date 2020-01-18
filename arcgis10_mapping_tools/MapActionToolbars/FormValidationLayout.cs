@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Framework;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     public static class FormValidationLayout
     {

@@ -4,12 +4,13 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using ESRI.ArcGIS.ArcMapUI;
+using MapActionToolbar_Forms;
 
 namespace MapActionToolbar_Addin
 {
-    public class LayoutTool : ESRI.ArcGIS.Desktop.AddIns.Button
+    public class LayoutTool_Addin : ESRI.ArcGIS.Desktop.AddIns.Button
     {
-        public LayoutTool()
+        public LayoutTool_Addin()
         {
         }
 
@@ -40,7 +41,7 @@ namespace MapActionToolbar_Addin
             }
             else if (MapActionToolbar_Core.PageLayoutProperties.detectMapFrame(pMxDoc, "Main map"))
             {
-                frmLayoutMain form = new frmLayoutMain();
+                frmLayoutMain form = new frmLayoutMain(ArcMap.Application);
                 form.ShowDialog();
             }
         }

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.Globalization;
 using Microsoft.VisualBasic.FileIO;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     public class ConstructLayerName
     {

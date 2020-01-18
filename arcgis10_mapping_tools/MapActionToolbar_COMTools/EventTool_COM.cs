@@ -115,7 +115,7 @@ namespace MapActionToolbar_COMTools
         /// </summary>
         public override void OnClick()
         {
-            MapActionToolbars.frmEvent form = new MapActionToolbars.frmEvent();
+            MapActionToolbar_Forms.frmEvent form = new MapActionToolbar_Forms.frmEvent();
             if (form.Text.Length > 0)
             {
                 form.ShowDialog();
