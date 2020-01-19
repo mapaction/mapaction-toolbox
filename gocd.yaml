@@ -21,12 +21,19 @@ common:
     - stage-test:
         jobs:
           job-test:
+            artifacts:
+              - test:
+                  source: toolbox\\arcgis10_mapping_tools\\TestResult.xml
+            tabs:
+              unit-tests: toolbox\\arcgis10_mapping_tools\\TestResult.xml
+              coverage: toolbox\\arcgis10_mapping_tools\\coverage\\index.htm
             tasks:
               - exec:
                   command: "cmd.exe"
                   arguments:
                   - "/c"
-                  - toolbox\\arcgis10_mapping_tools\\run-unittests.cmd
+                  - toolbox\\arcgis10_mapping_tools\\get_coverage.cmd
+
 pipelines:
   test-all-prs:
     group: MapAction-Toolbox
