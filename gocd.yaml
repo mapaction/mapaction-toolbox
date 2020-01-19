@@ -6,6 +6,10 @@ common:
           job-build:
             resources:
               - msbuild
+            artifacts:
+              - test:
+                  source: toolbox\\arcgis10_mapping_tools\\MapActionToolbars\bin\Release\MapActionToolbars.esriAddIn
+                  destination: toolbox\\arcgis10_mapping_tools\\arcaddins_for_testing
             tasks:
               - exec:
                   command: "cmd.exe"
@@ -27,8 +31,8 @@ common:
               - test:
                   source: toolbox\\arcgis10_mapping_tools\\TestResult.xml
             tabs:
-              unit-tests: toolbox\\arcgis10_mapping_tools\\TestResult.xml
-              coverage: toolbox\\arcgis10_mapping_tools\\coverage\\index.htm
+              Unit-Tests: toolbox\\arcgis10_mapping_tools\\TestResult.xml
+              Coverage: toolbox\\arcgis10_mapping_tools\\coverage\\index.htm
             tasks:
               - exec:
                   command: "cmd.exe"
