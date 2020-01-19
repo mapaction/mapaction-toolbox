@@ -8,8 +8,8 @@
     <ProjectGuid>{7B617336-DC71-4653-AD35-56DDF5E7062D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MapActionToolbarExtension</RootNamespace>
-    <AssemblyName>MapActionToolbarExtension</AssemblyName>
+    <RootNamespace>MapActionToolbar_COMTools</RootNamespace>
+    <AssemblyName>MapActionToolbar_COMTools</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -97,16 +97,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AboutBox_COM.png" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="EventTool_COM.png" />
     <EmbeddedResource Include="ExportTool_COM.png" />
     <EmbeddedResource Include="GenerationTool_COM.png" />
     <EmbeddedResource Include="LayoutTool_COM.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="RenameTool_COM.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="AboutBox_COM.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
