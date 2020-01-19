@@ -21,6 +21,8 @@ common:
     - stage-test:
         jobs:
           job-test:
+            resources:
+              - msbuild
             artifacts:
               - test:
                   source: toolbox\\arcgis10_mapping_tools\\TestResult.xml
