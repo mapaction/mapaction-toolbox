@@ -8,11 +8,11 @@ common:
               - msbuild
             artifacts:
               - test:
-                  source: toolbox\\arcgis10_mapping_tools\\MapActionToolbars\bin\Release\MapActionToolbars.esriAddIn
+                  source: toolbox\\arcgis10_mapping_tools\\arcaddins_for_testing
               - test:
-                  source: toolbox\\arcgis10_mapping_tools\\TestResult.xml
+                  source: toolbox\\arcgis10_mapping_tools\\unittestresults
             tabs:
-              Unit-Tests: toolbox\\arcgis10_mapping_tools\\TestResult.xml
+              Unit-Tests: toolbox\\arcgis10_mapping_tools\\unittestresults\\TestResult.xml
               Coverage: toolbox\\arcgis10_mapping_tools\\coverage\\index.htm
             tasks:
               - exec:
