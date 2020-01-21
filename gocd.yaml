@@ -9,6 +9,11 @@ common:
             artifacts:
               - test:
                   source: toolbox\\arcgis10_mapping_tools\\MapActionToolbars\bin\Release\MapActionToolbars.esriAddIn
+              - test:
+                  source: toolbox\\arcgis10_mapping_tools\\TestResult.xml
+            tabs:
+              Unit-Tests: toolbox\\arcgis10_mapping_tools\\TestResult.xml
+              Coverage: toolbox\\arcgis10_mapping_tools\\coverage\\index.htm
             tasks:
               - exec:
                   command: "cmd.exe"
@@ -20,6 +25,12 @@ common:
                   arguments:
                   - "/c"
                   - toolbox\\arcgis10_mapping_tools\\arcaddins_for_testing\\post_build_copy_addins.cmd
+              - exec:
+                  command: "cmd.exe"
+                  arguments:
+                  - "/c"
+                  - toolbox\\arcgis10_mapping_tools\\get_coverage.cmd
+
   testing_stage: &testing_stage
     - stage-test:
         jobs:
@@ -50,7 +61,6 @@ pipelines:
         destination: toolbox
     stages:
       - *build_stage
-      - *testing_stage
   deploy-master:
     group: MapAction-Toolbox
     label_template: ${COUNT}
