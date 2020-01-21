@@ -17,7 +17,7 @@ common:
                   source: toolbox/arcgis10_mapping_tools/coverage
                   destination: coverage
             tabs:
-              Coverage: coverage/index.htm
+              Coverage: coverage/coverage/index.htm
             tasks:
               - exec:
                   command: "cmd.exe"
