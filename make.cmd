@@ -1,5 +1,5 @@
 echo Getting dependancies
-C:\nuget\nuget.exe install "%~dp0arcgis10_mapping_tools\.nuget\packages.config" -NoCache -Source https://api.nuget.org/v3/index.json
+C:\nuget\nuget.exe install "%~dp0arcgis10_mapping_tools\.nuget\packages.config" -NoCache -Source https://api.nuget.org/v3/index.json -OutputDirectory "%~dp0arcgis10_mapping_tools\packages"
 C:\nuget\nuget.exe install "%~dp0arcgis10_mapping_tools\MapAction\MapAction\packages.config" -NoCache
 C:\nuget\nuget.exe install nunit
 
