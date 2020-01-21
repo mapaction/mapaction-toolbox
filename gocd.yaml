@@ -8,16 +8,16 @@ common:
               - msbuild
             artifacts:
               - build:
-                  source: toolbox\\arcgis10_mapping_tools\\arcaddins_for_testing
+                  source: toolbox/arcgis10_mapping_tools/arcaddins_for_testing
                   destination: addins
               - test:
-                  source: toolbox\\arcgis10_mapping_tools\\unittestresults\\TestResult.xml
+                  source: toolbox/arcgis10_mapping_tools/unittestresults/TestResult.xml
                   destination: unittests
               - build:
-                  source: toolbox\\arcgis10_mapping_tools\\coverage
+                  source: toolbox/arcgis10_mapping_tools/coverage
                   destination: coverage
             tabs:
-              Coverage: coverage\\index.htm
+              Coverage: coverage/index.htm
             tasks:
               - exec:
                   command: "cmd.exe"
