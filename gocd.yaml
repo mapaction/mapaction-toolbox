@@ -9,7 +9,6 @@ common:
             artifacts:
               - test:
                   source: toolbox\\arcgis10_mapping_tools\\MapActionToolbars\bin\Release\MapActionToolbars.esriAddIn
-                  destination: toolbox\\arcgis10_mapping_tools\\arcaddins_for_testing
             tasks:
               - exec:
                   command: "cmd.exe"
