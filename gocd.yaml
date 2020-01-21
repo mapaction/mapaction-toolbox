@@ -12,7 +12,6 @@ common:
                   destination: addins
               - test:
                   source: toolbox/arcgis10_mapping_tools/unittestresults/TestResult.xml
-                  destination: unittests
               - build:
                   source: toolbox/arcgis10_mapping_tools/coverage
                   destination: coverage
