@@ -7,17 +7,16 @@ common:
             resources:
               - msbuild
             artifacts:
-              - test:
+              - build:
                   source: toolbox\\arcgis10_mapping_tools\\arcaddins_for_testing
                   destination: addins
               - test:
-                  source: toolbox\\arcgis10_mapping_tools\\unittestresults
+                  source: toolbox\\arcgis10_mapping_tools\\unittestresults\\TestResult.xml
                   destination: unittests
-              - test:
+              - build:
                   source: toolbox\\arcgis10_mapping_tools\\coverage
                   destination: coverage
             tabs:
-              Unit-Tests: unittests\\TestResult.xml
               Coverage: coverage\\index.htm
             tasks:
               - exec:
