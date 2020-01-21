@@ -1,6 +1,6 @@
 echo Getting dependancies
-C:\nuget\nuget.exe install %~dp0arcgis10_mapping_tools\.nuget\packages.config"
-C:\nuget\nuget.exe install %~dp0arcgis10_mapping_tools\MapAction\MapAction\packages.config"
+C:\nuget\nuget.exe install "%~dp0arcgis10_mapping_tools\.nuget\packages.config" -NoCache
+C:\nuget\nuget.exe install "%~dp0arcgis10_mapping_tools\MapAction\MapAction\packages.config" -NoCache
 C:\nuget\nuget.exe install nunit
 
 echo Building...

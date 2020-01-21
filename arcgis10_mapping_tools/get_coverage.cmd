@@ -1,4 +1,4 @@
-C:\nuget\nuget.exe install %~dp0arcgis10_mapping_tools\.nuget\packages.config"
+C:\nuget\nuget.exe install "%~dp0arcgis10_mapping_tools\.nuget\packages.config"
 
 %~dp0packages\OpenCover.4.7.922\tools\OpenCover.Console.exe -register:user -returntargetcode "-filter:+[MapAction]* +[MapActionToolbars]* -[*Test]*" "-target:%~dp0run-unittests.cmd" "-output:%~dp0opencover-results.xml"
 
