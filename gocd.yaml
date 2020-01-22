@@ -11,7 +11,7 @@ common:
                   source: toolbox/arcgis10_mapping_tools/arcaddins_for_testing
                   destination: addins
               - test:
-                  source: toolbox/arcgis10_mapping_tools/unittestresults/TestResult.xml
+                  source: toolbox/arcgis10_mapping_tools/unittestresults
               - build:
                   source: toolbox/arcgis10_mapping_tools/coverage
                   destination: coverage
