@@ -16,7 +16,7 @@ common:
                   source: toolbox/arcgis10_mapping_tools/coverage
                   destination: coverage
             tabs:
-              esriAddIn: addins/MapActionToolbars.esriAddIn
+              esriAddIn: addins/arcaddins_for_testing/MapActionToolbars.esriAddIn
               Coverage: coverage/coverage/index.htm
             tasks:
               - exec:
