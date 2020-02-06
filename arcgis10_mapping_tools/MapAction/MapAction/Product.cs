@@ -11,14 +11,20 @@ namespace MapAction
         public string mapNumber;
         public string product;
         public string category;
-        public List<string> layers;
+        public List<ProductLayer> layers;
+        public string summary;
 
-        public Product(string product, string category, string mapNumber, List<string> layers)
+        public Product(string product, 
+                       string category, 
+                       string mapNumber, 
+                       List<ProductLayer> layers, 
+                       string summary)
         {
             this.mapNumber = mapNumber;
             this.product = product;
             this.category = category;
             this.layers = layers;
+            this.summary = summary;
         }
     }
 }
