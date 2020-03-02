@@ -6,6 +6,7 @@ common:
           job-build:
             resources:
               - msbuild
+              - arcmap10-6
             artifacts:
               - build:
                   source: toolbox/arcgis10_mapping_tools/arcaddins_for_testing
