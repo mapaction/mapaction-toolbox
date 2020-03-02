@@ -100,6 +100,7 @@
     <Compile Include="MapImageExporter.cs" />
     <Compile Include="PageLayoutProperties.cs" />
     <Compile Include="MxdDocumentProperties.cs" />
+    <Compile Include="ProductLayer.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
