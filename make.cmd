@@ -10,8 +10,9 @@ C:\nuget\nuget.exe install "%~dp0arcgis10_mapping_tools\CommonTests\packages.con
 ::C:\nuget\nuget.exe install nunit
 
 echo Building...
-"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe" %~dp0arcgis10_mapping_tools/MapAction-toolbox.sln /t:build /p:PlatformTarget=x86 /p:Configuration=Release /maxcpucount
-
+REM "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe" %~dp0arcgis10_mapping_tools/MapAction-toolbox.sln /t:build /p:PlatformTarget=x86 /p:Configuration=Release /maxcpucount
+call %~dp0DevEnv-EnableOutOfProcBuild.cmd
+"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv" "%~dp0arcgis10_mapping_tools\MapAction-toolbox.sln" /build "Release|Any Cpu"
 :: echo Copying...
 :: call %~dp0arcgis10_mapping_tools\arcaddins_for_testing\post_build_copy_addins.cmd
 
