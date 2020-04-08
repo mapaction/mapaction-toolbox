@@ -10,4 +10,4 @@ REM working name for the addin version of the tools, renames to distinguish from
 xcopy /y "%~dp0..\MapActionToolbar_Addin\bin\Release\MapActionToolbar_Addin.esriAddIn" "%~dp0"
 REM also copy the installer version to the same output folder (despite its inappropriate name)
 REM this fails as I believe GOCD cannot build installer (.vdproj) projects, it's here for a dreamed-of future
-REM xcopy /y "%~dp0..\MapActionToolbarInstaller\Release\MapActionToolbarInstaller.msi" "%~dp0"
+xcopy /y "%~dp0..\MapActionToolbarInstaller\Release\MapActionToolbarInstaller.msi" "%~dp0"
