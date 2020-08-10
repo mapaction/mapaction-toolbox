@@ -42,7 +42,7 @@
           <ComponentName>Donors</ComponentName>
           <CheckBoxItems>
             <CheckBoxItem>
-              <CheckBoxItemName>DFID</CheckBoxItemName>
+              <CheckBoxItemName>UK Department for International Development</CheckBoxItemName>
             </CheckBoxItem>
             <CheckBoxItem>
               <CheckBoxItemName>the Ministry of Foreign Affairs of the Netherlands</CheckBoxItemName>
