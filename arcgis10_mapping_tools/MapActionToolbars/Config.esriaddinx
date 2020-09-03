@@ -19,7 +19,7 @@
             <Button refID="MapAction_LayoutTool" />
             <Button refID="MapAction_ExportTool" />
             <Button refID="MapAction_RenameTool" />
-            <Button refID="MapAction_GenerationTool" />
+            <!--<Button refID="MapAction_GenerationTool" /> -->
             <Button refID="MapAction_About_Box" />
           </Items>
         </Toolbar>

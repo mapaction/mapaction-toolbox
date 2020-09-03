@@ -26,7 +26,7 @@ namespace MapAction
 
                 foreach (var r in cookbook.recipes)
                 {
-                    recipes.Add(new Product(r.product, r.category, r.mapNumber, r.layers));
+                    recipes.Add(new Product(r.product, r.category, r.mapNumber, r.layers, r.summary));
                     categories.Add(r.category);
                 }
             }
