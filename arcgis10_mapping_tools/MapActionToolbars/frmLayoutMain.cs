@@ -57,7 +57,6 @@ namespace MapActionToolbars
             //pairs of each text element in the layout
             Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, "Main map");
             
-            tbxScale.Text = tbxScale.Text = updateScale();
             tbxSpatialReference.Text = getSpatialReference();
             tbxMapDocument.Text = tbxMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
             tbxGlideNumber.Text = LayoutToolAutomatedValues.getGlideNo();
@@ -73,11 +72,7 @@ namespace MapActionToolbars
             tbxSpatialReference.Text = getSpatialReference();
         }
 
-        private void btnUpdateScale_Click(object sender, EventArgs e)
-        {
-            tbxScale.Text = updateScale();
-        }
-
+        
         private void btnGlideNo_Click(object sender, EventArgs e)
         {
             tbxGlideNumber.Text = LayoutToolAutomatedValues.getGlideNo();
@@ -106,7 +101,6 @@ namespace MapActionToolbars
             FormValidationLayout.validateMapNumber(tbxMapNumber, eprMapNumberWarning, eprMapNumberError);
             FormValidationLayout.validateMapDocument(tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
             FormValidationLayout.validateSpatialReference(tbxSpatialReference, eprSpatialReferenceWarning, eprSpatialReferenceError);
-            FormValidationLayout.validateScaleText(tbxScale, eprScaleTextWarning, eprScaleTextError);
             FormValidationLayout.validateGlideNumber(tbxGlideNumber, eprGlideNumberWarning, eprSpatialReferenceError);
             //Perform validation checks tab 2
             FormValidationLayout.validateDisclaimer(tbxDisclaimer, eprDisclaimerWarning, eprDisclaimerError);
@@ -121,7 +115,7 @@ namespace MapActionToolbars
             
             //Check if the various elements exist that automated update, if not disable the automation buttons.
             //If they are present then update the text boxes with the value from the dictionary 
-            if (!dict.ContainsKey("mxd_name") || !dict.ContainsKey("scale") || !dict.ContainsKey("scale") || !dict.ContainsKey("spatial_reference"))
+            if (!dict.ContainsKey("mxd_name") || !dict.ContainsKey("spatial_reference"))
             {
                 btnUpdateAll.Enabled = false;
             }
@@ -140,7 +134,6 @@ namespace MapActionToolbars
                 tbxMapNumber.ReadOnly = true;
             }
             if (dict.ContainsKey("mxd_name") == true) { tbxMapDocument.Text = dict["mxd_name"]; } else { tbxMapDocument.Text = "Element not present"; tbxMapDocument.ReadOnly = true; btnMapDocument.Enabled = false; };
-            if (dict.ContainsKey("scale") == true) { tbxScale.Text = dict["scale"]; } else { tbxScale.Text = "Element not present"; tbxScale.ReadOnly = true; btnUpdateScale.Enabled = false; };
             if (dict.ContainsKey("spatial_reference") == true) { tbxSpatialReference.Text = dict["spatial_reference"]; } else { tbxSpatialReference.Text = "Element not present"; tbxSpatialReference.ReadOnly = true; btnSpatialReference.Enabled = false; };
             if (dict.ContainsKey("glide_no") == true) { tbxGlideNumber.Text = dict["glide_no"]; } else { tbxGlideNumber.Text = "Element not present"; tbxGlideNumber.ReadOnly = true; btnGlideNo.Enabled = false; };
             //Tab 2 - Standard elements
@@ -178,7 +171,6 @@ namespace MapActionToolbars
             this.tbxMapNumber.Text = string.Empty;
             this.nudVersionNumber.Text = string.Empty;
             this.tbxMapDocument.Text = string.Empty;
-            this.tbxScale.Text = string.Empty;
             this.tbxSpatialReference.Text = string.Empty;
             this.tbxGlideNumber.Text = string.Empty;
             //Clear tab 2
@@ -196,7 +188,6 @@ namespace MapActionToolbars
             FormValidationLayout.disposeErrorProvider(eprMapNumberError);
             FormValidationLayout.disposeErrorProvider(eprMapSummary);
             FormValidationLayout.disposeErrorProvider(eprMapTitle);
-            FormValidationLayout.disposeErrorProvider(eprScaleTextError);
             FormValidationLayout.disposeErrorProvider(eprSpatialReferenceWarning);
         }
 
@@ -216,7 +207,6 @@ namespace MapActionToolbars
             dict.Add("map_no", this.tbxMapNumber.Text);
             dict.Add("map_version", this.nudVersionNumber.Text);
             dict.Add("mxd_name", this.tbxMapDocument.Text);
-            dict.Add("scale", this.tbxScale.Text);
             dict.Add("spatial_reference", this.tbxSpatialReference.Text);
             dict.Add("glide_no", this.tbxGlideNumber.Text);
             dict.Add("timezone", this.tbxTimezone.Text);
@@ -336,10 +326,6 @@ namespace MapActionToolbars
                         {
                             pTextElement.Text = dict["mxd_name"];
                         }
-                        else if (pElementProp.Name == "scale")
-                        {
-                            pTextElement.Text = dict["scale"];
-                        }
                         else if (pElementProp.Name == "spatial_reference")
                         {
                             pTextElement.Text = dict["spatial_reference"];
@@ -394,16 +380,6 @@ namespace MapActionToolbars
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
-        public static string updateScale()
-        {
-            //string scale = MapAction.PageLayoutProperties.getScale(ArcMap.Application.Document as IMapDocument, "Main map");
-            string scale = MapAction.Utilities.getScale(ArcMap.Application.Document as IMapDocument, "Main map");
-
-            string pageSize = MapAction.Utilities.getPageSize(ArcMap.Application.Document as IMapDocument, "Main map");
-            string scaleString = scale + " (At " + pageSize + ")";
-            return scaleString;
-        }
-
         //Perform validation checks on text change in each form element
         private void tbxMapNumber_TextChanged(object sender, EventArgs e)
         {
@@ -433,11 +409,6 @@ namespace MapActionToolbars
         private void tbxMapDocument_TextChanged(object sender, EventArgs e)
         {
             FormValidationLayout.validateMapDocument(tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
-        }
-
-        private void tbxScale_TextChanged(object sender, EventArgs e)
-        {
-            FormValidationLayout.validateScaleText(tbxScale, eprScaleTextWarning, eprScaleTextError);
         }
 
         private void tbxGlideNumber_TextChanged(object sender, EventArgs e)

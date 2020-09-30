@@ -249,7 +249,7 @@ namespace MapActionToolbars
             this.nudKmlResolution.Enabled = false;
 
             tbxPaperSize.Text = MapAction.Utilities.getPageSize(_pMxDoc as IMapDocument, _targetMapFrame);
-            tbxScale.Text = MapAction.Utilities.getScale(_pMxDoc as IMapDocument, _targetMapFrame);
+            tbxScale.Text = MapAction.Utilities.getActualScale(_pMxDoc as IMapDocument, _targetMapFrame);
 
             // Check if Data Driven Page and enable dropdown accordingly
             IMapDocument mapDoc;
@@ -735,8 +735,11 @@ namespace MapActionToolbars
         {
             if (chkEditAllFields.Checked)
             {
-                DialogResult dialogResult = MessageBox.Show("Changing these values will create a discrepancy between the page layout and the metadata xml file. Do you want to continue?", 
+                DialogResult dialogResult = MessageBox.Show("Changing these values will create a discrepancy between the page layout and the metadata xml file. " +
+                    "Values you change on this form will be reflected in the XML (and thus online in the MDR) but not on the map itself." +
+                    "Do you want to continue?", 
                     "Edit values?", MessageBoxButtons.YesNo);
+                
                 if (dialogResult == DialogResult.Yes)
                 {
                     tbxMapTitle.ReadOnly = false;
@@ -784,11 +787,11 @@ namespace MapActionToolbars
         //### Methods to work with form validation #### Copied directly from the Alpha export tool
         //### At a later time they should be consolidated in the MapAction class library ###
 
-        public static string updateScale()
+        public static string getScaleTextLabel()
         
         {
             string pageSize = MapAction.Utilities.getPageSize(_pMxDoc as IMapDocument, "Main map");
-            string scale = MapAction.Utilities.getScale(_pMxDoc as IMapDocument, "Main map");
+            string scale = MapAction.Utilities.getActualScale(_pMxDoc as IMapDocument, "Main map");
             string scaleString = scale + " (At " + pageSize + ")";
             return scaleString;
         }

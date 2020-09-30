@@ -134,32 +134,7 @@ namespace MapActionToolbars
 
         }
 
-        public static void validateScaleText(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
-        {
-            eprWarning.SetIconPadding(control, 33);
-            eprError.SetIconPadding(control, 33);
-            string automatedValue = frmLayoutMain.updateScale();
-
-            if (validateEmptyField(control, eprWarning))
-            {
-                if (control.Text.Trim() != automatedValue && control.Text != string.Empty)
-                {
-                    eprError.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
-                    eprError.SetError(control, "Text differs from automated value");
-                }
-                else
-                {
-                    eprError.SetError(control, "");
-                }
-            }
-            else
-            {
-                eprError.SetError(control, "");
-                validateEmptyField(control, eprWarning);
-            }
-
-        }
-
+        
         public static void validateGlideNumber(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
             eprWarning.SetIconPadding(control, 33);

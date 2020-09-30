@@ -39,15 +39,12 @@ namespace MapActionToolbars
             this.label1 = new System.Windows.Forms.Label();
             this.btnUpdateAll = new System.Windows.Forms.Button();
             this.btnMapDocument = new System.Windows.Forms.Button();
-            this.btnUpdateScale = new System.Windows.Forms.Button();
             this.btnGlideNo = new System.Windows.Forms.Button();
             this.btnSpatialReference = new System.Windows.Forms.Button();
             this.tbxGlideNumber = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.tbxSpatialReference = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.tbxScale = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.tbxMapDocument = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -73,7 +70,6 @@ namespace MapActionToolbars
             this.eprMapSummary = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprDataSources = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprSpatialReferenceWarning = new System.Windows.Forms.ErrorProvider(this.components);
-            this.eprScaleTextError = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprGlideNumberWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprMapNumberWarning = new System.Windows.Forms.ErrorProvider(this.components);
             this.eprGlideNumberError = new System.Windows.Forms.ErrorProvider(this.components);
@@ -118,7 +114,6 @@ namespace MapActionToolbars
             ((System.ComponentModel.ISupportInitialize)(this.eprMapSummary)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprDataSources)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprSpatialReferenceWarning)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eprScaleTextError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprGlideNumberWarning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapNumberWarning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprGlideNumberError)).BeginInit();
@@ -144,15 +139,12 @@ namespace MapActionToolbars
             this.gbxAutomated.Controls.Add(this.label1);
             this.gbxAutomated.Controls.Add(this.btnUpdateAll);
             this.gbxAutomated.Controls.Add(this.btnMapDocument);
-            this.gbxAutomated.Controls.Add(this.btnUpdateScale);
             this.gbxAutomated.Controls.Add(this.btnGlideNo);
             this.gbxAutomated.Controls.Add(this.btnSpatialReference);
             this.gbxAutomated.Controls.Add(this.tbxGlideNumber);
             this.gbxAutomated.Controls.Add(this.label9);
             this.gbxAutomated.Controls.Add(this.tbxSpatialReference);
             this.gbxAutomated.Controls.Add(this.label7);
-            this.gbxAutomated.Controls.Add(this.tbxScale);
-            this.gbxAutomated.Controls.Add(this.label4);
             this.gbxAutomated.Controls.Add(this.tbxMapDocument);
             this.gbxAutomated.Controls.Add(this.label2);
             this.gbxAutomated.Location = new System.Drawing.Point(6, 266);
@@ -191,16 +183,6 @@ namespace MapActionToolbars
             this.btnMapDocument.TabIndex = 7;
             this.btnMapDocument.UseVisualStyleBackColor = true;
             this.btnMapDocument.Click += new System.EventHandler(this.btnMapDocument_Click);
-            // 
-            // btnUpdateScale
-            // 
-            this.btnUpdateScale.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateScale.Image")));
-            this.btnUpdateScale.Location = new System.Drawing.Point(304, 113);
-            this.btnUpdateScale.Name = "btnUpdateScale";
-            this.btnUpdateScale.Size = new System.Drawing.Size(23, 23);
-            this.btnUpdateScale.TabIndex = 11;
-            this.btnUpdateScale.UseVisualStyleBackColor = true;
-            this.btnUpdateScale.Click += new System.EventHandler(this.btnUpdateScale_Click);
             // 
             // btnGlideNo
             // 
@@ -255,23 +237,6 @@ namespace MapActionToolbars
             this.label7.Size = new System.Drawing.Size(87, 13);
             this.label7.TabIndex = 38;
             this.label7.Text = "Spatial reference";
-            // 
-            // tbxScale
-            // 
-            this.tbxScale.Location = new System.Drawing.Point(103, 115);
-            this.tbxScale.Name = "tbxScale";
-            this.tbxScale.Size = new System.Drawing.Size(195, 20);
-            this.tbxScale.TabIndex = 10;
-            this.tbxScale.TextChanged += new System.EventHandler(this.tbxScale_TextChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 118);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(54, 13);
-            this.label4.TabIndex = 35;
-            this.label4.Text = "Scale text";
             // 
             // tbxMapDocument
             // 
@@ -507,11 +472,6 @@ namespace MapActionToolbars
             this.eprSpatialReferenceWarning.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.eprSpatialReferenceWarning.ContainerControl = this;
             this.eprSpatialReferenceWarning.Icon = ((System.Drawing.Icon)(resources.GetObject("eprSpatialReferenceWarning.Icon")));
-            // 
-            // eprScaleTextError
-            // 
-            this.eprScaleTextError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.eprScaleTextError.ContainerControl = this;
             // 
             // eprGlideNumberWarning
             // 
@@ -827,7 +787,6 @@ namespace MapActionToolbars
             ((System.ComponentModel.ISupportInitialize)(this.eprMapSummary)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprDataSources)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprSpatialReferenceWarning)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eprScaleTextError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprGlideNumberWarning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapNumberWarning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprGlideNumberError)).EndInit();
@@ -858,15 +817,12 @@ namespace MapActionToolbars
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnUpdateAll;
         private System.Windows.Forms.Button btnMapDocument;
-        private System.Windows.Forms.Button btnUpdateScale;
         private System.Windows.Forms.Button btnGlideNo;
         private System.Windows.Forms.Button btnSpatialReference;
         private System.Windows.Forms.TextBox tbxGlideNumber;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tbxSpatialReference;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox tbxScale;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbxMapDocument;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnCancel;
@@ -890,7 +846,6 @@ namespace MapActionToolbars
         private System.Windows.Forms.ErrorProvider eprMapSummary;
         private System.Windows.Forms.ErrorProvider eprDataSources;
         private System.Windows.Forms.ErrorProvider eprSpatialReferenceWarning;
-        private System.Windows.Forms.ErrorProvider eprScaleTextError;
         private System.Windows.Forms.ErrorProvider eprGlideNumberWarning;
         private System.Windows.Forms.ErrorProvider eprMapNumberWarning;
         private System.Windows.Forms.ErrorProvider eprGlideNumberError;

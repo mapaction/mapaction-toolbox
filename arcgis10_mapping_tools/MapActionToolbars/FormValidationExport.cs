@@ -216,7 +216,7 @@ namespace MapActionToolbars
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
-            string automatedValue = MapAction.Utilities.getScale(_pMxDoc as IMapDocument, targetMapFrame);
+            string automatedValue = MapAction.Utilities.getActualScale(_pMxDoc as IMapDocument, targetMapFrame);
  
             if (validateEmptyField(control, eprWarning))
             {

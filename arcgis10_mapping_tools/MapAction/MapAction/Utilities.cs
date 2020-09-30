@@ -272,7 +272,7 @@ namespace MapAction
         }
         #endregion
 
-        public static string getScale(IMapDocument pMapDoc, string mapFrameName)
+        public static string getActualScale(IMapDocument pMapDoc, string mapFrameName)
         {
             string scale;
             IMap pMap = getMapFrame(pMapDoc, mapFrameName);
