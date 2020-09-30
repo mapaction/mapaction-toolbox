@@ -44,7 +44,6 @@
             this.lblDataSources = new System.Windows.Forms.TextBox();
             this.imgDataSources = new System.Windows.Forms.PictureBox();
             this.lblGlideNoStatus = new System.Windows.Forms.TextBox();
-            this.lbsScaleStatus = new System.Windows.Forms.TextBox();
             this.lblSpatialRefStatus = new System.Windows.Forms.TextBox();
             this.lblMxdNameStatus = new System.Windows.Forms.TextBox();
             this.lblMapNoStatus = new System.Windows.Forms.TextBox();
@@ -53,7 +52,6 @@
             this.imgTitleStatus = new System.Windows.Forms.PictureBox();
             this.imgGlideNoStatus = new System.Windows.Forms.PictureBox();
             this.imgSummaryStatus = new System.Windows.Forms.PictureBox();
-            this.imgScaleStatus = new System.Windows.Forms.PictureBox();
             this.imgMapNoStatus = new System.Windows.Forms.PictureBox();
             this.imgSpatialRefStatus = new System.Windows.Forms.PictureBox();
             this.imgMxdNameStatus = new System.Windows.Forms.PictureBox();
@@ -70,7 +68,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.imgTitleStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgGlideNoStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgSummaryStatus)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imgScaleStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMapNoStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgSpatialRefStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMxdNameStatus)).BeginInit();
@@ -103,7 +100,6 @@
             this.groupBox2.Controls.Add(this.lblDataSources);
             this.groupBox2.Controls.Add(this.imgDataSources);
             this.groupBox2.Controls.Add(this.lblGlideNoStatus);
-            this.groupBox2.Controls.Add(this.lbsScaleStatus);
             this.groupBox2.Controls.Add(this.lblSpatialRefStatus);
             this.groupBox2.Controls.Add(this.lblMxdNameStatus);
             this.groupBox2.Controls.Add(this.lblMapNoStatus);
@@ -112,7 +108,6 @@
             this.groupBox2.Controls.Add(this.imgTitleStatus);
             this.groupBox2.Controls.Add(this.imgGlideNoStatus);
             this.groupBox2.Controls.Add(this.imgSummaryStatus);
-            this.groupBox2.Controls.Add(this.imgScaleStatus);
             this.groupBox2.Controls.Add(this.imgMapNoStatus);
             this.groupBox2.Controls.Add(this.imgSpatialRefStatus);
             this.groupBox2.Controls.Add(this.imgMxdNameStatus);
@@ -126,7 +121,7 @@
             // lblLanguageStatus
             // 
             this.lblLanguageStatus.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblLanguageStatus.Location = new System.Drawing.Point(12, 296);
+            this.lblLanguageStatus.Location = new System.Drawing.Point(12, 274);
             this.lblLanguageStatus.Name = "lblLanguageStatus";
             this.lblLanguageStatus.ReadOnly = true;
             this.lblLanguageStatus.Size = new System.Drawing.Size(100, 13);
@@ -136,7 +131,7 @@
             // imgLanguageStatus
             // 
             this.imgLanguageStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
-            this.imgLanguageStatus.Location = new System.Drawing.Point(117, 296);
+            this.imgLanguageStatus.Location = new System.Drawing.Point(117, 274);
             this.imgLanguageStatus.Name = "imgLanguageStatus";
             this.imgLanguageStatus.Size = new System.Drawing.Size(20, 20);
             this.imgLanguageStatus.TabIndex = 42;
@@ -145,7 +140,7 @@
             // textBox1
             // 
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Location = new System.Drawing.Point(12, 273);
+            this.textBox1.Location = new System.Drawing.Point(12, 251);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(100, 13);
@@ -155,7 +150,7 @@
             // textBox2
             // 
             this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox2.Location = new System.Drawing.Point(12, 250);
+            this.textBox2.Location = new System.Drawing.Point(12, 228);
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(100, 13);
@@ -165,7 +160,7 @@
             // textBox3
             // 
             this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox3.Location = new System.Drawing.Point(12, 227);
+            this.textBox3.Location = new System.Drawing.Point(12, 205);
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(100, 13);
@@ -175,7 +170,7 @@
             // lblDisclaimer
             // 
             this.lblDisclaimer.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblDisclaimer.Location = new System.Drawing.Point(12, 204);
+            this.lblDisclaimer.Location = new System.Drawing.Point(12, 182);
             this.lblDisclaimer.Name = "lblDisclaimer";
             this.lblDisclaimer.ReadOnly = true;
             this.lblDisclaimer.Size = new System.Drawing.Size(100, 13);
@@ -185,7 +180,7 @@
             // imgTimezoneStatus
             // 
             this.imgTimezoneStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
-            this.imgTimezoneStatus.Location = new System.Drawing.Point(117, 273);
+            this.imgTimezoneStatus.Location = new System.Drawing.Point(117, 251);
             this.imgTimezoneStatus.Name = "imgTimezoneStatus";
             this.imgTimezoneStatus.Size = new System.Drawing.Size(20, 20);
             this.imgTimezoneStatus.TabIndex = 37;
@@ -194,7 +189,7 @@
             // imgProducedByStatus
             // 
             this.imgProducedByStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
-            this.imgProducedByStatus.Location = new System.Drawing.Point(117, 250);
+            this.imgProducedByStatus.Location = new System.Drawing.Point(117, 228);
             this.imgProducedByStatus.Name = "imgProducedByStatus";
             this.imgProducedByStatus.Size = new System.Drawing.Size(20, 20);
             this.imgProducedByStatus.TabIndex = 36;
@@ -203,7 +198,7 @@
             // imgDonorCreditStatus
             // 
             this.imgDonorCreditStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
-            this.imgDonorCreditStatus.Location = new System.Drawing.Point(117, 227);
+            this.imgDonorCreditStatus.Location = new System.Drawing.Point(117, 205);
             this.imgDonorCreditStatus.Name = "imgDonorCreditStatus";
             this.imgDonorCreditStatus.Size = new System.Drawing.Size(20, 20);
             this.imgDonorCreditStatus.TabIndex = 35;
@@ -212,7 +207,7 @@
             // imgDisclaimerStatus
             // 
             this.imgDisclaimerStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
-            this.imgDisclaimerStatus.Location = new System.Drawing.Point(117, 204);
+            this.imgDisclaimerStatus.Location = new System.Drawing.Point(117, 182);
             this.imgDisclaimerStatus.Name = "imgDisclaimerStatus";
             this.imgDisclaimerStatus.Size = new System.Drawing.Size(20, 20);
             this.imgDisclaimerStatus.TabIndex = 34;
@@ -240,22 +235,12 @@
             // lblGlideNoStatus
             // 
             this.lblGlideNoStatus.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblGlideNoStatus.Location = new System.Drawing.Point(11, 180);
+            this.lblGlideNoStatus.Location = new System.Drawing.Point(11, 158);
             this.lblGlideNoStatus.Name = "lblGlideNoStatus";
             this.lblGlideNoStatus.ReadOnly = true;
             this.lblGlideNoStatus.Size = new System.Drawing.Size(100, 13);
             this.lblGlideNoStatus.TabIndex = 31;
             this.lblGlideNoStatus.Text = "glide_no";
-            // 
-            // lbsScaleStatus
-            // 
-            this.lbsScaleStatus.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lbsScaleStatus.Location = new System.Drawing.Point(11, 157);
-            this.lbsScaleStatus.Name = "lbsScaleStatus";
-            this.lbsScaleStatus.ReadOnly = true;
-            this.lbsScaleStatus.Size = new System.Drawing.Size(100, 13);
-            this.lbsScaleStatus.TabIndex = 30;
-            this.lbsScaleStatus.Text = "scale";
             // 
             // lblSpatialRefStatus
             // 
@@ -319,7 +304,7 @@
             // imgGlideNoStatus
             // 
             this.imgGlideNoStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
-            this.imgGlideNoStatus.Location = new System.Drawing.Point(116, 180);
+            this.imgGlideNoStatus.Location = new System.Drawing.Point(116, 158);
             this.imgGlideNoStatus.Name = "imgGlideNoStatus";
             this.imgGlideNoStatus.Size = new System.Drawing.Size(20, 20);
             this.imgGlideNoStatus.TabIndex = 24;
@@ -333,15 +318,6 @@
             this.imgSummaryStatus.Size = new System.Drawing.Size(20, 20);
             this.imgSummaryStatus.TabIndex = 9;
             this.imgSummaryStatus.TabStop = false;
-            // 
-            // imgScaleStatus
-            // 
-            this.imgScaleStatus.Image = global::MapActionToolbars.Properties.Resources.cross_17px;
-            this.imgScaleStatus.Location = new System.Drawing.Point(116, 157);
-            this.imgScaleStatus.Name = "imgScaleStatus";
-            this.imgScaleStatus.Size = new System.Drawing.Size(20, 20);
-            this.imgScaleStatus.TabIndex = 21;
-            this.imgScaleStatus.TabStop = false;
             // 
             // imgMapNoStatus
             // 
@@ -428,7 +404,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.imgTitleStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgGlideNoStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgSummaryStatus)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imgScaleStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMapNoStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgSpatialRefStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMxdNameStatus)).EndInit();
@@ -446,13 +421,11 @@
         private System.Windows.Forms.PictureBox imgTitleStatus;
         private System.Windows.Forms.PictureBox imgGlideNoStatus;
         private System.Windows.Forms.PictureBox imgSummaryStatus;
-        private System.Windows.Forms.PictureBox imgScaleStatus;
         private System.Windows.Forms.PictureBox imgMapNoStatus;
         private System.Windows.Forms.PictureBox imgSpatialRefStatus;
         private System.Windows.Forms.PictureBox imgMxdNameStatus;
         private System.Windows.Forms.TextBox lblTitleStatus;
         private System.Windows.Forms.TextBox lblGlideNoStatus;
-        private System.Windows.Forms.TextBox lbsScaleStatus;
         private System.Windows.Forms.TextBox lblSpatialRefStatus;
         private System.Windows.Forms.TextBox lblMxdNameStatus;
         private System.Windows.Forms.TextBox lblMapNoStatus;

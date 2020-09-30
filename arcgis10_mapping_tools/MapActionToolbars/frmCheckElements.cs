@@ -62,11 +62,6 @@ namespace MapActionToolbars
                 imgSpatialRefStatus.Image = Properties.Resources.tick_17px;
             }
             
-            if (dict.ContainsKey("scale"))
-            {
-                imgScaleStatus.Image = Properties.Resources.tick_17px;
-            }
-            
             if (dict.ContainsKey("glide_no"))
             {
                 imgGlideNoStatus.Image = Properties.Resources.tick_17px;

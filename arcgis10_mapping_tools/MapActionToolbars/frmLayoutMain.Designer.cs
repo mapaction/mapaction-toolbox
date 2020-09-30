@@ -187,7 +187,7 @@ namespace MapActionToolbars
             // btnGlideNo
             // 
             this.btnGlideNo.Image = ((System.Drawing.Image)(resources.GetObject("btnGlideNo.Image")));
-            this.btnGlideNo.Location = new System.Drawing.Point(304, 143);
+            this.btnGlideNo.Location = new System.Drawing.Point(304, 112);
             this.btnGlideNo.Name = "btnGlideNo";
             this.btnGlideNo.Size = new System.Drawing.Size(23, 23);
             this.btnGlideNo.TabIndex = 13;
@@ -206,7 +206,7 @@ namespace MapActionToolbars
             // 
             // tbxGlideNumber
             // 
-            this.tbxGlideNumber.Location = new System.Drawing.Point(103, 145);
+            this.tbxGlideNumber.Location = new System.Drawing.Point(103, 114);
             this.tbxGlideNumber.Name = "tbxGlideNumber";
             this.tbxGlideNumber.Size = new System.Drawing.Size(195, 20);
             this.tbxGlideNumber.TabIndex = 12;
@@ -215,7 +215,7 @@ namespace MapActionToolbars
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 149);
+            this.label9.Location = new System.Drawing.Point(6, 118);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(69, 13);
             this.label9.TabIndex = 42;
