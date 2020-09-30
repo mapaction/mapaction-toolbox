@@ -191,10 +191,16 @@ namespace MapActionToolbar_Forms
             if (dict.ContainsKey("summary")) { tbxMapSummary.Text = dict["summary"]; }
             if (dict.ContainsKey("mxd_name")) { tbxMapDocument.Text = dict["mxd_name"]; }
             if (dict.ContainsKey("data_sources")) { tbxDataSources.Text = dict["data_sources"]; }
-            if (dict.ContainsKey("map_no")) 
+            if (dict.ContainsKey("map_no") && (!dict.ContainsKey("map_version")))
             {
                 setMapNumberAndVersion(dict["map_no"]);
             }
+            if (dict.ContainsKey("map_no") && (dict.ContainsKey("map_version")))
+            {
+                this.tbxMapNumber.Text = dict["map_no"];
+                this.tbxVersionNumber.Text = dict["map_version"];
+            }
+
             if (dict.ContainsKey("language_label"))
             {
                 _labelLanguage = dict["language_label"];
@@ -372,7 +378,7 @@ namespace MapActionToolbar_Forms
             //### Remove at a later time ###
             Stopwatch sw = Stopwatch.StartNew();
 
-            // Start checks before running the the acutal create elements
+            // Start checks before running the the actual create elements
             if (tbxMapDocument.Text == string.Empty)
             {
                 MessageBox.Show("A document name is required. It is used as a part of the output file names.",
@@ -400,7 +406,7 @@ namespace MapActionToolbar_Forms
             Debug.WriteLine("checks on export complete");
 
             // Get the path and file name to pass to the various functions
-            string exportPathFileName = getExportPathFileName(path, tbxMapDocument.Text);
+            string exportPathFileName = getExportPathFileName(path, System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text));
 
             // Disable the button after the export checks are complete to prevent multiple clicks
             this.Enabled = false;
@@ -493,7 +499,7 @@ namespace MapActionToolbar_Forms
             try
             {
                 Dictionary<string, string> dict = getExportToolValues(dictImageFileSizes, dictFilePaths, dictFrameExtents, mxdName);
-                xmlPath = MapActionToolbar_Core.Utilities.createXML(dict, "mapdata", path, tbxMapDocument.Text, 2);
+                xmlPath = MapActionToolbar_Core.Utilities.createXML(dict, "mapdata", path, System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text), 2);
             }
             catch (Exception xml_e)
             {
@@ -689,7 +695,7 @@ namespace MapActionToolbar_Forms
 
             string path = System.IO.Path.Combine(tbxExportZipPath.Text, this.tbxMapNumber.Text);
             // Get the path and file name to pass to the various functions
-            string exportPathFileName = getExportPathFileName(path, tbxMapDocument.Text);
+            string exportPathFileName = getExportPathFileName(path, System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text));
 
             //check to see variable exists
             if (!Directory.Exists(@path) || tbxMapDocument.Text == "" || tbxMapDocument.Text == string.Empty)
@@ -823,6 +829,7 @@ namespace MapActionToolbar_Forms
                 
                 exportDirectory = System.IO.Path.Combine(MapActionToolbar_Core.Utilities.getCrashMoveFolderPath(), config.ExportDirectory);           
             }
+            exportDirectory = exportDirectory.Replace('/', '\\');
             return exportDirectory;
         }
 
