@@ -5,8 +5,10 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Framework;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     public static class FormValidationLayout
     {
@@ -54,12 +56,12 @@ namespace MapActionToolbars
             validateEmptyField(control, epr);
         }
 
-        public static void validateMapDocument(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
+        public static void validateMapDocument(IMxApplication mxApp, Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
 
             eprWarning.SetIconPadding(control, 33);
             eprError.SetIconPadding(control, 33);
-            string automatedValue = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
+            string automatedValue = MapActionToolbar_Core.PageLayoutProperties.getMxdTitle(mxApp as IApplication);
 
             if (validateEmptyField(control, eprWarning))
             {

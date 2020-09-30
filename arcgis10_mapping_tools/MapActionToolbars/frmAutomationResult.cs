@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MapAction;
+using MapActionToolbar_Core;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     public partial class frmAutomationResult : Form
     {
@@ -23,15 +23,15 @@ namespace MapActionToolbars
             // Populate Summary box:
             if (report.result == "Success")
             {
-                this.pictureBox1.Image = global::MapActionToolbars.Properties.Resources.gen_result_tick_50;
+                this.pictureBox1.Image = global::MapActionToolbar_Forms.Properties.Resources.gen_result_tick_50;
             }
             else if (report.result == "Failure")
             {
-                this.pictureBox1.Image = global::MapActionToolbars.Properties.Resources.gen_result_cross_50;
+                this.pictureBox1.Image = global::MapActionToolbar_Forms.Properties.Resources.gen_result_cross_50;
             }
             else
             {
-                this.pictureBox1.Image = global::MapActionToolbars.Properties.Resources.gen_result_warning_50;
+                this.pictureBox1.Image = global::MapActionToolbar_Forms.Properties.Resources.gen_result_warning_50;
             }
             this.textBox1.Text = report.summary;
 

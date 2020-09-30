@@ -21,10 +21,10 @@ using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Output;
-using MapAction;
+using MapActionToolbar_Core;
 
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     public partial class frmGenerationTool : Form
     {
@@ -34,17 +34,19 @@ namespace MapActionToolbars
         private string layerPropertiesFullPath = "";
         private string layerDirectory = "";
         private Cookbook cookbook = null;
-        private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
-        
-        public frmGenerationTool()
+        //private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
+        private static IApplication _mApplication;
+
+        public frmGenerationTool(IApplication arcMapApp)
         {
+            _mApplication = arcMapApp;
             this.crashMoveFolder = Utilities.getCrashMoveFolderPath();
-            if (MapAction.Utilities.detectCrashMoveFolderConfig())
+            if (MapActionToolbar_Core.Utilities.detectCrashMoveFolderConfig())
             {
                 InitializeComponent();                
-                string path = MapAction.Utilities.getCrashMoveFolderConfigFilePath();
+                string path = MapActionToolbar_Core.Utilities.getCrashMoveFolderConfigFilePath();
 
-                CrashMoveFolderConfig config = MapAction.Utilities.getCrashMoveFolderConfigValues(path);
+                CrashMoveFolderConfig config = MapActionToolbar_Core.Utilities.getCrashMoveFolderConfigValues(path);
                 this.cookbookFullPath = System.IO.Path.Combine(this.crashMoveFolder, config.MapDefinitions);
                 this.layerPropertiesFullPath = System.IO.Path.Combine(this.crashMoveFolder, config.LayerProperties);
                 this.layerDirectory = System.IO.Path.Combine(this.crashMoveFolder, config.LayerRendering);
@@ -64,10 +66,10 @@ namespace MapActionToolbars
 
         private void frmGenerationTool_Load(object sender, EventArgs e)
         {
-            string path = MapAction.Utilities.getCrashMoveFolderPath();
+            string path = MapActionToolbar_Core.Utilities.getCrashMoveFolderPath();
             string filePath = System.IO.Path.Combine(path, _eventConfigJsonFileName);
-            EventConfig config = MapAction.Utilities.getEventConfigValues(filePath);
-            tbxGeoExtent.Text = MapAction.Utilities.getCountries().nameFromAlpha3Code(config.AffectedCountryIso3);
+            EventConfig config = MapActionToolbar_Core.Utilities.getEventConfigValues(filePath);
+            tbxGeoExtent.Text = MapActionToolbar_Core.Utilities.getCountries().nameFromAlpha3Code(config.AffectedCountryIso3);
 
             cookbook = new Cookbook(this.cookbookFullPath);
 

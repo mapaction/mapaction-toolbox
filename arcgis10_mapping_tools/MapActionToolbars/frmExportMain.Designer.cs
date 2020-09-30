@@ -1,4 +1,4 @@
-﻿namespace MapActionToolbars
+﻿namespace MapActionToolbar_Forms
 {
     partial class frmExportMain
     {
@@ -1145,7 +1145,7 @@
             // 
             // btnExportLeft
             // 
-            this.btnExportLeft.Image = global::MapActionToolbars.Properties.Resources.left_button_20x20;
+            this.btnExportLeft.Image = global::MapActionToolbar_Forms.Properties.Resources.left_button_20x20;
             this.btnExportLeft.Location = new System.Drawing.Point(304, 430);
             this.btnExportLeft.Name = "btnExportLeft";
             this.btnExportLeft.Size = new System.Drawing.Size(30, 30);
@@ -1170,7 +1170,7 @@
             // 
             // btnUserRight
             // 
-            this.btnUserRight.Image = global::MapActionToolbars.Properties.Resources.right_button_20x20;
+            this.btnUserRight.Image = global::MapActionToolbar_Forms.Properties.Resources.right_button_20x20;
             this.btnUserRight.Location = new System.Drawing.Point(341, 430);
             this.btnUserRight.Name = "btnUserRight";
             this.btnUserRight.Size = new System.Drawing.Size(30, 30);
@@ -1180,7 +1180,7 @@
             // 
             // btnUserLeft
             // 
-            this.btnUserLeft.Image = global::MapActionToolbars.Properties.Resources.left_button_20x20;
+            this.btnUserLeft.Image = global::MapActionToolbar_Forms.Properties.Resources.left_button_20x20;
             this.btnUserLeft.Location = new System.Drawing.Point(304, 430);
             this.btnUserLeft.Name = "btnUserLeft";
             this.btnUserLeft.Size = new System.Drawing.Size(30, 30);
@@ -1447,7 +1447,7 @@
             // 
             // button1
             // 
-            this.button1.Image = global::MapActionToolbars.Properties.Resources.right_button_20x20;
+            this.button1.Image = global::MapActionToolbar_Forms.Properties.Resources.right_button_20x20;
             this.button1.Location = new System.Drawing.Point(341, 430);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(30, 30);
@@ -1457,7 +1457,7 @@
             // 
             // button2
             // 
-            this.button2.Image = global::MapActionToolbars.Properties.Resources.left_button_20x20;
+            this.button2.Image = global::MapActionToolbar_Forms.Properties.Resources.left_button_20x20;
             this.button2.Location = new System.Drawing.Point(304, 430);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(30, 30);
@@ -1511,7 +1511,7 @@
             // 
             // btnLayoutRight
             // 
-            this.btnLayoutRight.Image = global::MapActionToolbars.Properties.Resources.right_button_20x20;
+            this.btnLayoutRight.Image = global::MapActionToolbar_Forms.Properties.Resources.right_button_20x20;
             this.btnLayoutRight.Location = new System.Drawing.Point(341, 430);
             this.btnLayoutRight.Name = "btnLayoutRight";
             this.btnLayoutRight.Size = new System.Drawing.Size(30, 30);

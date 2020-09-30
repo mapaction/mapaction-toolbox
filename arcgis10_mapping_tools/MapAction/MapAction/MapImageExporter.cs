@@ -19,7 +19,7 @@ using ESRI.ArcGIS.Geoprocessing;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geoprocessor;
 
-namespace MapAction
+namespace MapActionToolbar_Core
 {
     /// <summary>
     /// This is a non-static type for exporting map images such as (but not limited to) within the Mapaction Export Tool.

@@ -21,16 +21,17 @@ using ESRI.ArcGIS.Desktop;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.Framework;
-using MapAction;
+using MapActionToolbar_Core;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     public partial class frmExportMain : Form
     {
         //Set the dataframe that you are searching for in the layouts.  This is used in many methods below.
         //Need a better solution for sorting this out
         private static string _targetMapFrame = "Main map";
-        private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
+        //private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
+        private static IApplication _mApplication;
         
         //create a variable to hold the status of each validation check
         private string _languageISO2;
@@ -65,21 +66,23 @@ namespace MapActionToolbars
 
         private string _labelLanguage;
         private string _mapRootURL = "";
-        private MapAction.LanguageCodeLookup languageCodeLookup = null;
+        private MapActionToolbar_Core.LanguageCodeLookup languageCodeLookup = null;
         private MapActionToolbarConfig mapActionToolbarConfig = null;
         private CrashMoveFolderConfig crashMoveFolder = null;
 
-        public frmExportMain()
+        // new constructor which takes a reference to the IApplication the form should be associated with
+        public frmExportMain(IApplication arcMapApp)
         {
-            string path = MapAction.Utilities.getCrashMoveFolderConfigFilePath();
+            _mApplication = arcMapApp;
+            string path = MapActionToolbar_Core.Utilities.getCrashMoveFolderConfigFilePath();
 
-            if (MapAction.Utilities.detectCrashMoveFolderConfig())
+            if (MapActionToolbar_Core.Utilities.detectCrashMoveFolderConfig())
             {
                 string languageFilePath = System.IO.Path.Combine(path, _languageCodesXmlFileName);
-                this.languageCodeLookup = MapAction.Utilities.getLanguageCodeValues(languageFilePath);
-                this.mapActionToolbarConfig = MapAction.Utilities.getToolboxConfig();
+                this.languageCodeLookup = MapActionToolbar_Core.Utilities.getLanguageCodeValues(languageFilePath);
+                this.mapActionToolbarConfig = MapActionToolbar_Core.Utilities.getToolboxConfig();
 
-                this.crashMoveFolder = MapAction.Utilities.getCrashMoveFolderConfigValues(path);
+                this.crashMoveFolder = MapActionToolbar_Core.Utilities.getCrashMoveFolderConfigValues(path);
                 
                 if (this.mapActionToolbarConfig.Tools.Count > 0)
                 {
@@ -128,9 +131,9 @@ namespace MapActionToolbars
             {
                 dlg.SelectedPath = @tbxExportZipPath.Text;
             }
-            else if (Directory.Exists(@MapAction.Utilities.getCrashMoveFolderPath()))
+            else if (Directory.Exists(MapActionToolbar_Core.Utilities.getCrashMoveFolderPath()))
             {
-                dlg.SelectedPath = @MapAction.Utilities.getCrashMoveFolderPath();
+                dlg.SelectedPath = MapActionToolbar_Core.Utilities.getCrashMoveFolderPath();
             }
             else
             {
@@ -155,19 +158,20 @@ namespace MapActionToolbars
         private void frmMain_Load(object sender, EventArgs e)
         {
             //Form validation methods
-            _titleValidationResult = FormValidationExport.validateMapTitle(tbxMapTitle, eprMaptitleWarning, eprMapTitleError);
-            _summaryValidationResult = FormValidationExport.validateMapSummary(tbxMapSummary, eprMapSummaryWarning, eprMapSummaryError);
-            _mapDocumentValidationResult = FormValidationExport.validateMapDocument(tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
-            _datumValidationResult = FormValidationExport.validateDatum(tbxDatum, eprDatumWarning, eprDatumError);
-            _projectionValidationResult = FormValidationExport.validateProjection(tbxProjection, eprProjectionWarning, eprProjectionError);
-            _scaleValidationResult = FormValidationExport.validateScale(tbxScale, eprScaleWarning, eprScaleError);
+            IMxDocument mxDoc = _mApplication.Document as IMxDocument;
+            _titleValidationResult = FormValidationExport.validateMapTitle(mxDoc, tbxMapTitle, eprMaptitleWarning, eprMapTitleError);
+            _summaryValidationResult = FormValidationExport.validateMapSummary(mxDoc, tbxMapSummary, eprMapSummaryWarning, eprMapSummaryError);
+            _mapDocumentValidationResult = FormValidationExport.validateMapDocument(_mApplication, tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
+            _datumValidationResult = FormValidationExport.validateDatum(mxDoc, tbxDatum, eprDatumWarning, eprDatumError);
+            _projectionValidationResult = FormValidationExport.validateProjection(mxDoc, tbxProjection, eprProjectionWarning, eprProjectionError);
+            _scaleValidationResult = FormValidationExport.validateScale(mxDoc, tbxScale, eprScaleWarning, eprScaleError);
             _dateValidationResult = FormValidationExport.validateDate(tbxDate, eprDateWarning, eprDateError);
             _timeValidationResult = FormValidationExport.validateTime(tbxTime, eprTimeWarning, eprTimeError);
-            _paperSizeValidationResult = FormValidationExport.validatePaperSize(tbxPaperSize, eprPaperWarning, eprPaperError);
+            _paperSizeValidationResult = FormValidationExport.validatePaperSize(mxDoc, tbxPaperSize, eprPaperWarning, eprPaperError);
             _imageryDateValidationResult = FormValidationExport.validateImageryDate(tbxImageDate, eprImageryDate);
-            _dataSourcesValidationResult = FormValidationExport.validateDataSources(tbxDataSources, eprDataSourcesWarning, eprDataSourcesError);
+            _dataSourcesValidationResult = FormValidationExport.validateDataSources(mxDoc, tbxDataSources, eprDataSourcesWarning, eprDataSourcesError);
             _operationIdValidationResult = FormValidationExport.validateOperationId(tbxOperationId, eprOperationIdWarning, eprOperationIdError);
-            _glideNumberValidationResult = FormValidationExport.validateGlideNumber(tbxGlideNo, eprGlideNumberWarning, eprGlideNumberError);
+            _glideNumberValidationResult = FormValidationExport.validateGlideNumber(mxDoc, tbxGlideNo, eprGlideNumberWarning, eprGlideNumberError);
             _locationValidationResult = FormValidationExport.validateLocation(tbxImageLocation, eprLocationWarning);
             _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
             _countryValidationResult = FormValidationExport.validateCountry(tbxCountry, eprCountryWarning);
@@ -179,7 +183,8 @@ namespace MapActionToolbars
 
             var dict = new Dictionary<string, string>();
             // added extra parameter to say that in this case all of the ESRI markup should be stripped from the label values
-            dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, _targetMapFrame, true);
+            IMxDocument doc = _mApplication.Document as IMxDocument;
+            dict = MapActionToolbar_Core.PageLayoutProperties.getLayoutTextElements(doc, _targetMapFrame, true);
 
             //Update form text boxes with values from the map
             if (dict.ContainsKey("title")) { tbxMapTitle.Text = dict["title"]; }
@@ -208,16 +213,16 @@ namespace MapActionToolbars
             tbxLanguage.Text = _labelLanguage;
 
             // Update form values from the config xml
-            string path = MapAction.Utilities.getCrashMoveFolderPath();
+            string path = MapActionToolbar_Core.Utilities.getCrashMoveFolderPath();
             string filePath = System.IO.Path.Combine(path, _eventConfigJsonFileName);
-            EventConfig config = MapAction.Utilities.getEventConfigValues(filePath);
+            EventConfig config = MapActionToolbar_Core.Utilities.getEventConfigValues(filePath);
             tbxGlideNo.Text = config.GlideNumber;
-            tbxCountry.Text = MapAction.Utilities.getCountries().nameFromAlpha3Code(config.AffectedCountryIso3);
+            tbxCountry.Text = MapActionToolbar_Core.Utilities.getCountries().nameFromAlpha3Code(config.AffectedCountryIso3);
 
             this._mapRootURL = config.DefaultPublishingBaseUrl;
             if (this._mapRootURL.Length == 0)
             {
-                this._mapRootURL = MapAction.Utilities.getMDRUrlRoot();
+                this._mapRootURL = MapActionToolbar_Core.Utilities.getMDRUrlRoot();
             }
 
             string operational_id = config.OperationId.ToLower();
@@ -234,7 +239,7 @@ namespace MapActionToolbars
 
             // Set the spatial reference information on load
             var dictSpatialRef = new Dictionary<string, string>();
-            dictSpatialRef  = MapAction.Utilities.getDataFrameSpatialReference(_pMxDoc, _targetMapFrame);
+            dictSpatialRef  = MapActionToolbar_Core.Utilities.getDataFrameSpatialReference(doc, _targetMapFrame);
             tbxDatum.Text = dictSpatialRef["datum"];
             tbxProjection.Text = dictSpatialRef["projection"];
 
@@ -248,12 +253,12 @@ namespace MapActionToolbars
             this.nudEmfResolution.Enabled = false;
             this.nudKmlResolution.Enabled = false;
 
-            tbxPaperSize.Text = MapAction.Utilities.getPageSize(_pMxDoc as IMapDocument, _targetMapFrame);
-            tbxScale.Text = MapAction.Utilities.getScale(_pMxDoc as IMapDocument, _targetMapFrame);
+            tbxPaperSize.Text = MapActionToolbar_Core.Utilities.getPageSize(doc as IMapDocument, _targetMapFrame);
+            tbxScale.Text = MapActionToolbar_Core.Utilities.getScale(doc as IMapDocument, _targetMapFrame);
 
             // Check if Data Driven Page and enable dropdown accordingly
             IMapDocument mapDoc;
-            mapDoc = (_pMxDoc as MxDocument) as IMapDocument;
+            mapDoc = (doc as MxDocument) as IMapDocument;
             tbxMapbookMode.Enabled = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
         }
 
@@ -412,9 +417,12 @@ namespace MapActionToolbars
             // TODO:
             // APS Is there a good reasons for retreving the reference to the IMxDocument
             // via the ArcMap Application? Why not use the `frmExportMain._pMxDoc` member instead?
-            // Alternatively is the `frmExportMain._pMxDoc` member used or required?
-            IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
-            IActiveView pActiveView = pMxDoc.ActiveView;
+            // HSG: this has been changed now, in that the application is stored as a member 
+            // not the document (because when not running as an addin we don't have the 
+            // automatically set reference to the application so we make our own), and we 
+            // retrieve the document each time we need it. 
+            IMxDocument doc = _mApplication.Document as IMxDocument;
+            IActiveView pActiveView = doc.ActiveView;
             // Ssetup dictionaries for metadata XML
             Dictionary<string, string> dictFilePaths;
             // Create a dictionary to store the image file sizes to add to the output xml
@@ -423,12 +431,12 @@ namespace MapActionToolbars
             // Create a dictionary to get and store the map frame extents to pass to the output xml
 
             IMapDocument mapDoc;
-            mapDoc = (pMxDoc as MxDocument) as IMapDocument;
+            mapDoc = doc as IMapDocument;
             bool isDDP = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
             Dictionary<string, string> dictFrameExtents = Utilities.getMapFrameWgs84BoundingBox(mapDoc, "Main map");
 
             // Update QR Code
-            updateQRCode(ArcMap.Application.Document.Title);
+            updateQRCode((doc as IDocument).Title);
 
             if (!isDDP) // Need a way to do this - the form elements are all disabled before export - see ^^
             {
@@ -440,21 +448,21 @@ namespace MapActionToolbars
                 // values, and b) if we accidentally call it twice with same key we get an exception
                 foreach (var kvp in dictFilePaths)
                 {
-                    dictImageFileSizes[kvp.Key] = MapAction.Utilities.getFileSize(kvp.Value);
+                    dictImageFileSizes[kvp.Key] = MapActionToolbar_Core.Utilities.getFileSize(kvp.Value);
                 }
                 if (checkBoxKml.Checked)
                 {
                     System.Windows.Forms.Application.DoEvents();
 
                     // Export KML
-                    IMapDocument pMapDoc = (IMapDocument)pMxDoc;
+                    IMapDocument pMapDoc = (IMapDocument)doc;
                     string kmzPathFileName = exportPathFileName + ".kmz";
                     string kmzScale;
 
                     if (dictFrameExtents.ContainsKey("scale")) { kmzScale = dictFrameExtents["scale"]; } else { kmzScale = null; };
 
                     // TODO move this to the MapImageExporter class too, for now it is still in the static MapExport class
-                    MapAction.MapExport.exportMapFrameKmlAsRaster(pMapDoc, "Main map", @kmzPathFileName, kmzScale, nudKmlResolution.Value.ToString());
+                    MapActionToolbar_Core.MapExport.exportMapFrameKmlAsRaster(pMapDoc, "Main map", @kmzPathFileName, kmzScale, nudKmlResolution.Value.ToString());
                     // Add the xml path to the dictFilePaths, which is the input into the creatZip method
                     dictFilePaths["kmz"] = kmzPathFileName;
                 }
@@ -462,7 +470,7 @@ namespace MapActionToolbars
             else
             {
                 //// Data driven pages
-                IMapDocument pMapDoc = (IMapDocument)pMxDoc;
+                IMapDocument pMapDoc = (IMapDocument)doc;
                 MapImageExporter mie = new MapImageExporter(pMapDoc, exportPathFileName, "Main map");
                 // if exact match do a multifile export, else default to single file.
                 bool isMultiplePage = (tbxMapbookMode.Text == "Multiple PDF Files");
@@ -484,14 +492,14 @@ namespace MapActionToolbars
                 dictImageFileSizes["kmz"] = 0;
             }
             // Get the mxd filename
-            string mxdName = ArcMap.Application.Document.Title;
+            string mxdName = (doc as IDocument).Title;
             System.Windows.Forms.Application.DoEvents();
             // Create the output xml file & return the xml path           
             string xmlPath = string.Empty;
             try
             {
                 Dictionary<string, string> dict = getExportToolValues(dictImageFileSizes, dictFilePaths, dictFrameExtents, mxdName);
-                xmlPath = MapAction.Utilities.createXML(dict, "mapdata", path, System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text), 2);
+                xmlPath = MapActionToolbar_Core.Utilities.createXML(dict, "mapdata", path, System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text), 2);
             }
             catch (Exception xml_e)
             {
@@ -506,7 +514,7 @@ namespace MapActionToolbars
             // Create zip
             // TODO Note that currently the createZip will zip the xml, jpeg, and pdf. Not the emf! 
             // So why are we making it??
-            MapAction.MapExport.createZip(dictFilePaths);
+            MapActionToolbar_Core.MapExport.createZip(dictFilePaths);
             
             try
             {
@@ -535,7 +543,7 @@ namespace MapActionToolbars
             // If open explorer checkbox is ticked, open windows explorer to the directory 
             if (chkOpenExplorer.Checked)
             {
-                MapAction.MapExport.openExplorerDirectory(tbxExportZipPath.Text);
+                MapActionToolbar_Core.MapExport.openExplorerDirectory(tbxExportZipPath.Text);
             }
             sw.Stop();
             string timeTaken = Math.Round((sw.Elapsed.TotalMilliseconds / 1000),2).ToString();
@@ -546,7 +554,8 @@ namespace MapActionToolbars
         {
             bool qrCodeUpdated = false;
             // Update QR Code
-            IPageLayout pLayout = _pMxDoc.PageLayout;
+            IMxDocument doc = _mApplication.Document as IMxDocument;
+            IPageLayout pLayout = doc.PageLayout;
             IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
             pGraphics.Reset();
 
@@ -679,7 +688,8 @@ namespace MapActionToolbars
         /// </remarks
         private Dictionary<string, string> exportAllImages()
         {
-            IMapDocument pMapDoc = ArcMap.Application.Document as IMapDocument;
+            IMxDocument doc = _mApplication.Document as IMxDocument;
+            IMapDocument pMapDoc = doc as IMapDocument;
             //IActiveView pActiveView = pMxDoc.ActiveView;
             var dict = new Dictionary<string, string>();
 
@@ -710,7 +720,7 @@ namespace MapActionToolbars
                 // export the thumbnail, using the new functionality of specifying a pixel size rather than a dpi
                 XYDimensions thumbSize = new XYDimensions()
                     {
-                        Width = MapAction.Properties.Settings.Default.thumbnail_width_px,
+                        Width = MapActionToolbar_Core.Properties.Settings.Default.thumbnail_width_px,
                         Height = null // export will be constrained by width only
                     };
                 dict[MapActionExportTypes.png_thumbnail_zip.ToString()] =  
@@ -787,8 +797,9 @@ namespace MapActionToolbars
         public static string updateScale()
         
         {
-            string pageSize = MapAction.Utilities.getPageSize(_pMxDoc as IMapDocument, "Main map");
-            string scale = MapAction.Utilities.getScale(_pMxDoc as IMapDocument, "Main map");
+            IMapDocument doc = _mApplication.Document as IMapDocument;
+            string pageSize = MapActionToolbar_Core.Utilities.getPageSize(doc, "Main map");
+            string scale = MapActionToolbar_Core.Utilities.getScale(doc, "Main map");
             string scaleString = scale + " (At " + pageSize + ")";
             return scaleString;
         }
@@ -796,11 +807,11 @@ namespace MapActionToolbars
         public static string getGlideNo()
         {
             string GlideNo = string.Empty;
-            string path = MapAction.Utilities.getEventConfigFilePath();
+            string path = MapActionToolbar_Core.Utilities.getEventConfigFilePath();
 
-            if (MapAction.Utilities.detectEventConfig())
+            if (MapActionToolbar_Core.Utilities.detectEventConfig())
             {
-                EventConfig config = MapAction.Utilities.getEventConfigValues(path);
+                EventConfig config = MapActionToolbar_Core.Utilities.getEventConfigValues(path);
                 GlideNo = config.GlideNumber;
             }
             return GlideNo;
@@ -810,13 +821,13 @@ namespace MapActionToolbars
         public static string getExportDirectory()
         {
             string exportDirectory = string.Empty;
-            string path = MapAction.Utilities.getCrashMoveFolderConfigFilePath();
+            string path = MapActionToolbar_Core.Utilities.getCrashMoveFolderConfigFilePath();
 
-            if (MapAction.Utilities.detectCrashMoveFolderConfig())
+            if (MapActionToolbar_Core.Utilities.detectCrashMoveFolderConfig())
             {
-                CrashMoveFolderConfig config = MapAction.Utilities.getCrashMoveFolderConfigValues(path);
+                CrashMoveFolderConfig config = MapActionToolbar_Core.Utilities.getCrashMoveFolderConfigValues(path);
                 
-                exportDirectory = System.IO.Path.Combine(MapAction.Utilities.getCrashMoveFolderPath(), config.ExportDirectory);           
+                exportDirectory = System.IO.Path.Combine(MapActionToolbar_Core.Utilities.getCrashMoveFolderPath(), config.ExportDirectory);           
             }
             exportDirectory = exportDirectory.Replace('/', '\\');
             return exportDirectory;
@@ -825,7 +836,7 @@ namespace MapActionToolbars
 
         public static string getSpatialReference()
         {
-            Dictionary<string, string> dictSpatialRef = MapAction.Utilities.getDataFrameSpatialReference(ArcMap.Application.Document as IMxDocument, "Main map");
+            Dictionary<string, string> dictSpatialRef = MapActionToolbar_Core.Utilities.getDataFrameSpatialReference(_mApplication.Document as IMxDocument, "Main map");
             string stringSpatialRef;
 
             if (dictSpatialRef["type"] == "Geographic")
@@ -850,12 +861,14 @@ namespace MapActionToolbars
 
         private void tbxMapTitle_TextChanged(object sender, EventArgs e)
         {
-            _titleValidationResult = FormValidationExport.validateMapTitle(tbxMapTitle, eprMaptitleWarning, eprMapTitleError);
+            _titleValidationResult = FormValidationExport.validateMapTitle(_mApplication.Document as IMxDocument, 
+                tbxMapTitle, eprMaptitleWarning, eprMapTitleError);
         }
 
         private void tbxMapSummary_TextChanged(object sender, EventArgs e)
         {
-            _summaryValidationResult = FormValidationExport.validateMapSummary(tbxMapSummary, eprMapSummaryWarning, eprMapSummaryError);
+            _summaryValidationResult = FormValidationExport.validateMapSummary(_mApplication.Document as IMxDocument, 
+                tbxMapSummary, eprMapSummaryWarning, eprMapSummaryError);
         }
 
         private void tbxImageDate_TextChanged(object sender, EventArgs e)
@@ -865,12 +878,14 @@ namespace MapActionToolbars
 
         private void tbxDataSources_TextChanged(object sender, EventArgs e)
         {
-            _dataSourcesValidationResult = FormValidationExport.validateDataSources(tbxDataSources, eprDataSourcesWarning, eprDataSourcesError);
+            _dataSourcesValidationResult = FormValidationExport.validateDataSources(_mApplication.Document as IMxDocument, 
+                tbxDataSources, eprDataSourcesWarning, eprDataSourcesError);
         }
 
         private void tbxPaperSize_TextChanged(object sender, EventArgs e)
         {
-            _paperSizeValidationResult = FormValidationExport.validatePaperSize(tbxPaperSize, eprPaperWarning, eprPaperError);
+            _paperSizeValidationResult = FormValidationExport.validatePaperSize(_mApplication.Document as IMxDocument, 
+                tbxPaperSize, eprPaperWarning, eprPaperError);
         }
 
         private void tbxTime_TextChanged(object sender, EventArgs e)
@@ -885,22 +900,26 @@ namespace MapActionToolbars
 
         private void tbxScale_TextChanged(object sender, EventArgs e)
         {
-            _scaleValidationResult = FormValidationExport.validateScale(tbxScale, eprScaleWarning, eprScaleError);
+            _scaleValidationResult = FormValidationExport.validateScale(_mApplication.Document as IMxDocument, 
+                tbxScale, eprScaleWarning, eprScaleError);
         }
 
         private void tbxProjection_TextChanged(object sender, EventArgs e)
         {
-            _projectionValidationResult = FormValidationExport.validateProjection(tbxProjection, eprProjectionWarning, eprProjectionError);
+            _projectionValidationResult = FormValidationExport.validateProjection(_mApplication.Document as IMxDocument, 
+                tbxProjection, eprProjectionWarning, eprProjectionError);
         }
 
         private void tbxDatum_TextChanged(object sender, EventArgs e)
         {
-            _datumValidationResult = FormValidationExport.validateDatum(tbxDatum, eprDatumWarning, eprDatumError);
+            _datumValidationResult = FormValidationExport.validateDatum(_mApplication.Document as IMxDocument, 
+                tbxDatum, eprDatumWarning, eprDatumError);
         }
 
         private void tbxMapDocument_TextChanged(object sender, EventArgs e)
         {
-            _mapDocumentValidationResult = FormValidationExport.validateMapDocument(tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
+            _mapDocumentValidationResult = FormValidationExport.validateMapDocument(_mApplication, 
+                tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
         }
 
         private void tbxOperationId_TextChanged(object sender, EventArgs e)
@@ -910,7 +929,8 @@ namespace MapActionToolbars
 
         private void tbxGlideNo_TextChanged(object sender, EventArgs e)
         {
-            _glideNumberValidationResult = FormValidationExport.validateGlideNumber(tbxGlideNo, eprGlideNumberWarning, eprGlideNumberError);
+            _glideNumberValidationResult = FormValidationExport.validateGlideNumber(_mApplication.Document as IMxDocument, 
+                tbxGlideNo, eprGlideNumberWarning, eprGlideNumberError);
         }
 
         private void tbxImageLocation_TextChanged(object sender, EventArgs e)

@@ -19,7 +19,7 @@ using ESRI.ArcGIS.Output;
 using ESRI.ArcGIS.Geoprocessing;
 using ESRI.ArcGIS.Geodatabase;
 
-namespace MapAction
+namespace MapActionToolbar_Core
 {
     public static class MapExport
     {

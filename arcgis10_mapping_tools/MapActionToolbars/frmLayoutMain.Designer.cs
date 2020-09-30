@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     partial class frmLayoutMain
     {
@@ -23,7 +23,7 @@ namespace MapActionToolbars
             }
             base.Dispose(disposing);
         }
-        private List<MapAction.LanguageConfig> languageDictionary;
+        private List<MapActionToolbar_Core.LanguageConfig> languageDictionary;
 
         #region Windows Form Designer generated code
 
@@ -174,7 +174,7 @@ namespace MapActionToolbars
             // btnUpdateAll
             // 
             this.btnUpdateAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdateAll.Image = global::MapActionToolbars.Properties.Resources.import20x20px;
+            this.btnUpdateAll.Image = global::MapActionToolbar_Forms.Properties.Resources.import20x20px;
             this.btnUpdateAll.Location = new System.Drawing.Point(120, 24);
             this.btnUpdateAll.Name = "btnUpdateAll";
             this.btnUpdateAll.Size = new System.Drawing.Size(34, 23);
@@ -184,7 +184,7 @@ namespace MapActionToolbars
             // 
             // btnMapDocument
             // 
-            this.btnMapDocument.Image = global::MapActionToolbars.Properties.Resources.refresh17x17px;
+            this.btnMapDocument.Image = global::MapActionToolbar_Forms.Properties.Resources.refresh17x17px;
             this.btnMapDocument.Location = new System.Drawing.Point(304, 53);
             this.btnMapDocument.Name = "btnMapDocument";
             this.btnMapDocument.Size = new System.Drawing.Size(23, 23);
@@ -214,7 +214,7 @@ namespace MapActionToolbars
             // 
             // btnSpatialReference
             // 
-            this.btnSpatialReference.Image = global::MapActionToolbars.Properties.Resources.refresh17x17px;
+            this.btnSpatialReference.Image = global::MapActionToolbar_Forms.Properties.Resources.refresh17x17px;
             this.btnSpatialReference.Location = new System.Drawing.Point(304, 82);
             this.btnSpatialReference.Name = "btnSpatialReference";
             this.btnSpatialReference.Size = new System.Drawing.Size(23, 23);
@@ -450,7 +450,7 @@ namespace MapActionToolbars
             // tspBtnCheckElements
             // 
             this.tspBtnCheckElements.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tspBtnCheckElements.Image = global::MapActionToolbars.Properties.Resources.gear_icon;
+            this.tspBtnCheckElements.Image = global::MapActionToolbar_Forms.Properties.Resources.gear_icon;
             this.tspBtnCheckElements.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tspBtnCheckElements.Name = "tspBtnCheckElements";
             this.tspBtnCheckElements.Size = new System.Drawing.Size(23, 22);
@@ -465,7 +465,7 @@ namespace MapActionToolbars
             // tspBtnClearForm
             // 
             this.tspBtnClearForm.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tspBtnClearForm.Image = global::MapActionToolbars.Properties.Resources.clear_form_icon;
+            this.tspBtnClearForm.Image = global::MapActionToolbar_Forms.Properties.Resources.clear_form_icon;
             this.tspBtnClearForm.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tspBtnClearForm.Name = "tspBtnClearForm";
             this.tspBtnClearForm.Size = new System.Drawing.Size(23, 22);
@@ -661,7 +661,7 @@ namespace MapActionToolbars
             // btnUpdateAllTab2
             // 
             this.btnUpdateAllTab2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdateAllTab2.Image = global::MapActionToolbars.Properties.Resources.import20x20px;
+            this.btnUpdateAllTab2.Image = global::MapActionToolbar_Forms.Properties.Resources.import20x20px;
             this.btnUpdateAllTab2.Location = new System.Drawing.Point(120, 19);
             this.btnUpdateAllTab2.Name = "btnUpdateAllTab2";
             this.btnUpdateAllTab2.Size = new System.Drawing.Size(34, 23);
@@ -671,7 +671,7 @@ namespace MapActionToolbars
             // 
             // btnUpdateDisclaimer
             // 
-            this.btnUpdateDisclaimer.Image = global::MapActionToolbars.Properties.Resources.refresh17x17px;
+            this.btnUpdateDisclaimer.Image = global::MapActionToolbar_Forms.Properties.Resources.refresh17x17px;
             this.btnUpdateDisclaimer.Location = new System.Drawing.Point(304, 67);
             this.btnUpdateDisclaimer.Name = "btnUpdateDisclaimer";
             this.btnUpdateDisclaimer.Size = new System.Drawing.Size(23, 23);
@@ -691,7 +691,7 @@ namespace MapActionToolbars
             // 
             // btnUpdateDonorCredits
             // 
-            this.btnUpdateDonorCredits.Image = global::MapActionToolbars.Properties.Resources.refresh17x17px;
+            this.btnUpdateDonorCredits.Image = global::MapActionToolbar_Forms.Properties.Resources.refresh17x17px;
             this.btnUpdateDonorCredits.Location = new System.Drawing.Point(304, 131);
             this.btnUpdateDonorCredits.Name = "btnUpdateDonorCredits";
             this.btnUpdateDonorCredits.Size = new System.Drawing.Size(23, 23);

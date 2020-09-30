@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MapActionToolbars.Properties {
+namespace MapActionToolbar_Forms.Properties {
     using System;
     
     

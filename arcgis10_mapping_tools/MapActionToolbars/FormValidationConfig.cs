@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Text.RegularExpressions;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     public static class FormValidationConfig
     {

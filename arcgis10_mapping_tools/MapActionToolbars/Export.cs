@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.IO;
 
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     class Export
     {

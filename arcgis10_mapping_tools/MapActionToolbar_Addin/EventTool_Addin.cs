@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using MapActionToolbar_Forms;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Addin
 {
-    public class EventTool : ESRI.ArcGIS.Desktop.AddIns.Button
+    public class EventTool_Addin : ESRI.ArcGIS.Desktop.AddIns.Button
     {
-        public EventTool()
+        public EventTool_Addin()
         {
         }
 
@@ -22,7 +23,7 @@ namespace MapActionToolbars
         }
         protected override void OnUpdate()
         {
-            Enabled = MapActionToolbars.ArcMap.Application != null;
+            Enabled = ArcMap.Application != null;
         }
     }
 

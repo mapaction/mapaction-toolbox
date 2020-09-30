@@ -16,13 +16,13 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.DisplayUI;
 using ESRI.ArcGIS.Framework;
 using System.Diagnostics;
-using MapAction;
+using MapActionToolbar_Core;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     public partial class frmLayoutMain : Form
     {
-        private static IMxDocument _pMxDoc = ArcMap.Application.Document as IMxDocument;
+        private static IApplication _mApplication;  // initialisation moved to  constructor for flexibility
         private List<string> languages;
         private string _languageIso2;
         private static string _operationId;
@@ -32,14 +32,23 @@ namespace MapActionToolbars
         private const string defaultMapNumber = "MA001";
         private const string defaultMapVersion = "1";
 
-        public frmLayoutMain()
+        
+        /// <summary>
+        /// constructor taking a reference to the IApplication the form should be associated with
+        /// </summary>
+        /// <remarks>This is necessary because the IApplication object "ArcMap.Application" is provided by the addin framework and not 
+        /// available through the arcobjects BaseCommand / extension approach, so we need to be able to pass 
+        /// in the IApplication as a parameter when calling from there.</remarks>
+        /// <param name="arcMapApp"></param>
+        public frmLayoutMain(IApplication arcMapApp)
         {
-            string path = MapAction.Utilities.getCrashMoveFolderPath();
+            _mApplication = arcMapApp;//
+            string path = MapActionToolbar_Core.Utilities.getCrashMoveFolderPath();
             string filePath = System.IO.Path.Combine(path, languageConfigXmlFileName);
-            _mapRootURL = MapAction.Utilities.getMDRUrlRoot();
+            _mapRootURL = MapActionToolbar_Core.Utilities.getMDRUrlRoot();
 
             // Set up Language of labels
-            this.languageDictionary = MapAction.Utilities.getLanguageConfigValues(filePath);
+            this.languageDictionary = MapActionToolbar_Core.Utilities.getLanguageConfigValues(filePath);
             this.languages = new List<string>();
             for (int i = 0; i < languageDictionary.Count; i++)
             {
@@ -49,23 +58,23 @@ namespace MapActionToolbars
             this.cboLabelLanguage.Items.AddRange(languages.ToArray());
         }
 
-
         //Gets the automated values for Tab 1 and populates each textbox
         private void btnUpdateAll_Click(object sender, EventArgs e)
         {
             //Call the MapAction class library and the getLayoutElements function that returns a dictionare of the key value
             //pairs of each text element in the layout
-            Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, "Main map");
+            IMxDocument doc = _mApplication.Document as IMxDocument;
+            Dictionary<string, string> dict = MapActionToolbar_Core.PageLayoutProperties.getLayoutTextElements(doc, "Main map");
             
             tbxScale.Text = tbxScale.Text = updateScale();
             tbxSpatialReference.Text = getSpatialReference();
-            tbxMapDocument.Text = tbxMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
+            tbxMapDocument.Text = tbxMapDocument.Text = MapActionToolbar_Core.PageLayoutProperties.getMxdTitle(_mApplication);
             tbxGlideNumber.Text = LayoutToolAutomatedValues.getGlideNo();
         }
 
         private void btnMapDocument_Click(object sender, EventArgs e)
         {
-            tbxMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
+            tbxMapDocument.Text = MapActionToolbar_Core.PageLayoutProperties.getMxdTitle(_mApplication);
         }
 
         private void btnSpatialReference_Click(object sender, EventArgs e)
@@ -86,16 +95,16 @@ namespace MapActionToolbars
         private void frmMain_Load(object sender, EventArgs e)
         {
             // Read the Operation Config file 
-            string path = MapAction.Utilities.getEventConfigFilePath();
-            if (MapAction.Utilities.detectEventConfig())
+            string path = MapActionToolbar_Core.Utilities.getEventConfigFilePath();
+            if (MapActionToolbar_Core.Utilities.detectEventConfig())
             {
-                EventConfig config = MapAction.Utilities.getEventConfigValues(path);
+                EventConfig config = MapActionToolbar_Core.Utilities.getEventConfigValues(path);
                 _languageIso2 = config.LanguageIso2;
                 _operationId = config.OperationId.ToLower();
                 _mapRootURL = config.DefaultPublishingBaseUrl;
                 if (_mapRootURL.Length == 0)
                 {
-                    _mapRootURL = MapAction.Utilities.getMDRUrlRoot();
+                    _mapRootURL = MapActionToolbar_Core.Utilities.getMDRUrlRoot();
                 }
             }
 
@@ -104,7 +113,7 @@ namespace MapActionToolbars
             FormValidationLayout.validateMapSummary(tbxSummary, eprMapSummary);
             FormValidationLayout.validateDataSources(tbxDataSources, eprDataSources);
             FormValidationLayout.validateMapNumber(tbxMapNumber, eprMapNumberWarning, eprMapNumberError);
-            FormValidationLayout.validateMapDocument(tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
+            FormValidationLayout.validateMapDocument(_mApplication as IMxApplication, tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
             FormValidationLayout.validateSpatialReference(tbxSpatialReference, eprSpatialReferenceWarning, eprSpatialReferenceError);
             FormValidationLayout.validateScaleText(tbxScale, eprScaleTextWarning, eprScaleTextError);
             FormValidationLayout.validateGlideNumber(tbxGlideNumber, eprGlideNumberWarning, eprSpatialReferenceError);
@@ -113,11 +122,11 @@ namespace MapActionToolbars
             FormValidationLayout.validateDonorCredit(tbxDonorCredit, eprDonorWarning, eprDonorError);
             FormValidationLayout.validateMapProducer(tbxMapProducer, eprProducedByWarning, eprProducedByError);
             FormValidationLayout.validateTimezone(tbxTimezone, eprTimezoneWarning, eprTimezoneError);
-            
+
             //Call the MapAction class library and the getLayoutElements function that returns a dictionare of the key value
             //pairs of each text element in the layout
-            //IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
-            Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, "Main map");
+            IMxDocument doc = _mApplication.Document as IMxDocument;
+            Dictionary<string, string> dict = MapActionToolbar_Core.PageLayoutProperties.getLayoutTextElements(doc, "Main map");
             
             //Check if the various elements exist that automated update, if not disable the automation buttons.
             //If they are present then update the text boxes with the value from the dictionary 
@@ -268,13 +277,14 @@ namespace MapActionToolbars
 
         private void tspBtnCheckElements_Click(object sender, EventArgs e)
         {
-            frmCheckElements dlg = new frmCheckElements();
+            frmCheckElements dlg = new frmCheckElements(_mApplication);
             dlg.ShowDialog();
         }
 
         public static string getSpatialReference()
         {
-            Dictionary<string, string> dictSpatialRef = MapAction.Utilities.getDataFrameSpatialReference(ArcMap.Application.Document as IMxDocument, "Main map");
+            IMxDocument doc = _mApplication.Document as IMxDocument;
+            Dictionary<string, string> dictSpatialRef = MapActionToolbar_Core.Utilities.getDataFrameSpatialReference(doc as IMxDocument, "Main map");
             string stringSpatialRef;
 
             if (dictSpatialRef["type"] == "Geographic")
@@ -295,12 +305,13 @@ namespace MapActionToolbars
 
         public static void setAllElements(Dictionary<string, string> dict)
         {
-            IPageLayout pLayout = _pMxDoc.PageLayout;
+            IMxDocument doc = _mApplication.Document as IMxDocument;
+            IPageLayout pLayout = doc.PageLayout;
             IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
             pGraphics.Reset();
 
             IMapDocument mapDoc;
-            mapDoc = (_pMxDoc as MxDocument) as IMapDocument;
+            mapDoc = (doc as MxDocument) as IMapDocument;
     
             // Update QR Code
             IElement element = new TextElementClass();
@@ -390,16 +401,18 @@ namespace MapActionToolbars
                 System.Diagnostics.Debug.WriteLine(e);
             }
 
-            IActiveView activeView = _pMxDoc.ActivatedView as IActiveView;
+            IActiveView activeView = doc.ActivatedView as IActiveView;
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
         public static string updateScale()
         {
             //string scale = MapAction.PageLayoutProperties.getScale(ArcMap.Application.Document as IMapDocument, "Main map");
-            string scale = MapAction.Utilities.getScale(ArcMap.Application.Document as IMapDocument, "Main map");
+            IMapDocument doc = _mApplication.Document as IMapDocument;
 
-            string pageSize = MapAction.Utilities.getPageSize(ArcMap.Application.Document as IMapDocument, "Main map");
+            string scale = MapActionToolbar_Core.Utilities.getScale(doc, "Main map");
+
+            string pageSize = MapActionToolbar_Core.Utilities.getPageSize(doc, "Main map");
             string scaleString = scale + " (At " + pageSize + ")";
             return scaleString;
         }
@@ -432,7 +445,7 @@ namespace MapActionToolbars
 
         private void tbxMapDocument_TextChanged(object sender, EventArgs e)
         {
-            FormValidationLayout.validateMapDocument(tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
+            FormValidationLayout.validateMapDocument(_mApplication as IMxApplication, tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
         }
 
         private void tbxScale_TextChanged(object sender, EventArgs e)
@@ -450,7 +463,8 @@ namespace MapActionToolbars
         //Gets the automated values for Tab 2 and populates each textbox
         private void btnUpdateAllTab2_Click(object sender, EventArgs e)
         {
-            Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, "Main map");
+            IMxDocument doc = _mApplication.Document as IMxDocument;
+            Dictionary<string, string> dict = MapActionToolbar_Core.PageLayoutProperties.getLayoutTextElements(doc, "Main map");
             //If the elements are present in the map, update the values
             if (dict.ContainsKey("donor_credit") == true) { tbxDonorCredit.Text = LayoutToolAutomatedValues.getConfigDonorText(); } 
             if (dict.ContainsKey("timezone") == true) { tbxTimezone.Text = LayoutToolAutomatedValues.getConfigTimezone(); } 
@@ -504,7 +518,8 @@ namespace MapActionToolbars
         
         public void setLabelLanguage()
         {
-            IPageLayout pLayout = _pMxDoc.PageLayout;
+            IMxDocument doc = _mApplication.Document as IMxDocument;
+            IPageLayout pLayout = doc.PageLayout;
             IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
             pGraphics.Reset();
 
@@ -545,7 +560,7 @@ namespace MapActionToolbars
                 System.Diagnostics.Debug.WriteLine(e);
             }
 
-            IActiveView activeView = _pMxDoc.ActivatedView as IActiveView;
+            IActiveView activeView = doc.ActivatedView as IActiveView;
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
     }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Xml.Serialization;
 
 
-namespace MapAction
+namespace MapActionToolbar_Core
 {
     [Serializable]
     [XmlRoot("MapActionToolbarConfig")]

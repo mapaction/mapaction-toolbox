@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MapAction
+namespace MapActionToolbar_Core
 {
     public class ProductLayer
     {

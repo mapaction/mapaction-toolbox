@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
-using MapAction;
+using MapActionToolbar_Core;
 using System.Windows.Forms;
 using System.Globalization;
 using Microsoft.VisualBasic.FileIO;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     public class ConstructLayerName
     {
@@ -36,7 +36,7 @@ namespace MapActionToolbars
             string _path;
 
             // check crash move folder first - if it doesn't exist then look on C drive - PJR 18/08/2016
-            _rawPath = MapAction.Utilities.getCrashMoveFolderPath();
+            _rawPath = MapActionToolbar_Core.Utilities.getCrashMoveFolderPath();
             _path = _rawPath + @"\GIS\2_Active_Data\200_data_name_lookup\";
                         
             if (Directory.Exists(_path))

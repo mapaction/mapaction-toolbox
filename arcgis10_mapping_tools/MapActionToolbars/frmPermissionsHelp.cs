@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     public partial class frmPermissionsHelp : Form
     {

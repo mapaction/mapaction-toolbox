@@ -17,7 +17,7 @@ using ESRI.ArcGIS.Geodatabase;
 using System.Diagnostics;
 using Microsoft.VisualBasic.FileIO;
 
-namespace MapActionToolbars
+namespace MapActionToolbar_Forms
 {
     public partial class frmRenameMain : Form
     {
