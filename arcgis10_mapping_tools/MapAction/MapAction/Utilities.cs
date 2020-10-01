@@ -627,7 +627,7 @@ namespace MapAction
                 Console.WriteLine(ex.Message);
                 string errorMsgs = gp.GetMessages(ref sev);
                 Console.WriteLine(errorMsgs);
-                throw;
+                //throw;
             }
             return qrPath;
         }

@@ -364,7 +364,15 @@ namespace MapActionToolbars
                                                                               + _operationId.ToLower() + "&utm_content=" + dict["map_no"].ToLower() + "-v"
                                                                               + dict["map_version"]);
 
-                            pPictureElement.ImportPictureFromFile(qrCodeImagePath);
+                            if (System.IO.File.Exists(qrCodeImagePath))
+                            {
+                                pPictureElement.ImportPictureFromFile(qrCodeImagePath);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error occurred generating the QR code. Your system may not be set up correctly.", "QR Code error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
                         }
                     }
                     element = (IElement)pGraphics.Next();
