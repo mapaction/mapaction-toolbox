@@ -196,9 +196,9 @@ namespace MapActionToolbars
                 this.tbxVersionNumber.Text = dict["map_version"];
             }
 
-            if (dict.ContainsKey("language_label"))
+            if (dict.ContainsKey("language"))
             {
-                _labelLanguage = dict["language_label"];
+                _labelLanguage = dict["language"];
             }
             else
             {

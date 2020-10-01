@@ -126,7 +126,7 @@
             this.lblLanguageStatus.ReadOnly = true;
             this.lblLanguageStatus.Size = new System.Drawing.Size(100, 13);
             this.lblLanguageStatus.TabIndex = 43;
-            this.lblLanguageStatus.Text = "language_label";
+            this.lblLanguageStatus.Text = "language";
             // 
             // imgLanguageStatus
             // 

@@ -27,7 +27,7 @@ namespace MapActionToolbars
         private string _languageIso2;
         private static string _operationId;
         private const string languageConfigXmlFileName = "language_config.xml";
-        private const string elementLanguageLabel = "language_label";
+        private const string elementLanguageLabel = "language";
         private static string _mapRootURL = "https://maps.mapaction.org/dataset";
         private const string defaultMapNumber = "MA001";
         private const string defaultMapVersion = "1";
@@ -119,10 +119,10 @@ namespace MapActionToolbars
             {
                 btnUpdateAll.Enabled = false;
             }
-            if (dict.ContainsKey("title") == true) { tbxTitle.Text = dict["title"]; } else { tbxTitle.Text = "Element not present"; tbxTitle.ReadOnly = true; };
-            if (dict.ContainsKey("summary") == true) { tbxSummary.Text = dict["summary"]; } else { tbxSummary.Text = "Element not present"; tbxSummary.ReadOnly = true; };
-            if (dict.ContainsKey("data_sources") == true) { tbxDataSources.Text = dict["data_sources"]; } else { tbxDataSources.Text = "Element not present"; tbxDataSources.ReadOnly = true; };
-            if (dict.ContainsKey("map_no") == true)
+            if (dict.ContainsKey("title")) { tbxTitle.Text = dict["title"]; } else { tbxTitle.Text = "Element not present"; tbxTitle.ReadOnly = true; };
+            if (dict.ContainsKey("summary")) { tbxSummary.Text = dict["summary"]; } else { tbxSummary.Text = "Element not present"; tbxSummary.ReadOnly = true; };
+            if (dict.ContainsKey("data_sources")) { tbxDataSources.Text = dict["data_sources"]; } else { tbxDataSources.Text = "Element not present"; tbxDataSources.ReadOnly = true; };
+            if (dict.ContainsKey("map_no"))
             {
                 setMapNumberAndVersion(dict["map_no"]);
                 dict["map_no"] = tbxMapNumber.Text;
@@ -133,16 +133,16 @@ namespace MapActionToolbars
                 tbxMapNumber.Text = "Element not present";
                 tbxMapNumber.ReadOnly = true;
             }
-            if (dict.ContainsKey("mxd_name") == true) { tbxMapDocument.Text = dict["mxd_name"]; } else { tbxMapDocument.Text = "Element not present"; tbxMapDocument.ReadOnly = true; btnMapDocument.Enabled = false; };
-            if (dict.ContainsKey("spatial_reference") == true) { tbxSpatialReference.Text = dict["spatial_reference"]; } else { tbxSpatialReference.Text = "Element not present"; tbxSpatialReference.ReadOnly = true; btnSpatialReference.Enabled = false; };
-            if (dict.ContainsKey("glide_no") == true) { tbxGlideNumber.Text = dict["glide_no"]; } else { tbxGlideNumber.Text = "Element not present"; tbxGlideNumber.ReadOnly = true; btnGlideNo.Enabled = false; };
+            if (dict.ContainsKey("mxd_name")) { tbxMapDocument.Text = dict["mxd_name"]; } else { tbxMapDocument.Text = "Element not present"; tbxMapDocument.ReadOnly = true; btnMapDocument.Enabled = false; };
+            if (dict.ContainsKey("spatial_reference")) { tbxSpatialReference.Text = dict["spatial_reference"]; } else { tbxSpatialReference.Text = "Element not present"; tbxSpatialReference.ReadOnly = true; btnSpatialReference.Enabled = false; };
+            if (dict.ContainsKey("glide_no")) { tbxGlideNumber.Text = dict["glide_no"]; } else { tbxGlideNumber.Text = "Element not present"; tbxGlideNumber.ReadOnly = true; btnGlideNo.Enabled = false; };
             //Tab 2 - Standard elements
-            if (dict.ContainsKey("map_producer") == true) { tbxMapProducer.Text = dict["map_producer"]; } else { tbxMapProducer.Text = "Element not present"; tbxMapProducer.ReadOnly = true; btnUpdateProducedBy.Enabled = false; };
-            if (dict.ContainsKey("donor_credit") == true) { tbxDonorCredit.Text = dict["donor_credit"]; } else { tbxDonorCredit.Text = "Element not present"; tbxDonorCredit.ReadOnly = true; btnUpdateDonorCredits.Enabled = false; };
-            if (dict.ContainsKey("timezone") == true) { tbxTimezone.Text = dict["timezone"]; } else { tbxTimezone.Text = "Element not present"; tbxTimezone.ReadOnly = true; btnUpdateTimezone.Enabled = false; };
-            if (dict.ContainsKey("disclaimer") == true) { tbxDisclaimer.Text = dict["disclaimer"]; } else { tbxDisclaimer.Text = "Element not present"; tbxDisclaimer.ReadOnly = true; btnUpdateDisclaimer.Enabled = false; };
+            if (dict.ContainsKey("map_producer")) { tbxMapProducer.Text = dict["map_producer"]; } else { tbxMapProducer.Text = "Element not present"; tbxMapProducer.ReadOnly = true; btnUpdateProducedBy.Enabled = false; };
+            if (dict.ContainsKey("donor_credit")) { tbxDonorCredit.Text = dict["donor_credit"]; } else { tbxDonorCredit.Text = "Element not present"; tbxDonorCredit.ReadOnly = true; btnUpdateDonorCredits.Enabled = false; };
+            if (dict.ContainsKey("timezone")) { tbxTimezone.Text = dict["timezone"]; } else { tbxTimezone.Text = "Element not present"; tbxTimezone.ReadOnly = true; btnUpdateTimezone.Enabled = false; };
+            if (dict.ContainsKey("disclaimer")) { tbxDisclaimer.Text = dict["disclaimer"]; } else { tbxDisclaimer.Text = "Element not present"; tbxDisclaimer.ReadOnly = true; btnUpdateDisclaimer.Enabled = false; };
 
-            if (dict.ContainsKey(elementLanguageLabel) == true) 
+            if (dict.ContainsKey(elementLanguageLabel)) 
             {
                 if (this.languages.Contains(dict[elementLanguageLabel]))
                 {
@@ -510,7 +510,18 @@ namespace MapActionToolbars
                     {
                         pTextElement = element as ITextElement;
                         pElementProp = element as IElementProperties2;
-                        if (labelLookup.ContainsKey(pElementProp.Name) == true)
+                        // The language update is generally updating item labels - i.e. graphics elements named xyz_label, 
+                        // rather than the items themselves i.e. graphics elements named xyz (which are updated by setAllElements).
+                        // However in the case of the name of the languge, we want to update the item which is now an element called 
+                        // "language", and NOT its title element called "language_label". 
+                        // BUT the XML has been designed to store the languge name in a tag called "language_label" and so this 
+                        // neat-in-theory code that directly binds the XML tags to the map element names has to have an exception 
+                        // added to map the XML tag "language_label" to the mxd element "language" and NOT the mxd element "language_label".
+                        if (pElementProp.Name == "language" && labelLookup.ContainsKey("language_label"))
+                        {
+                            pTextElement.Text = labelLookup["language_label"];
+                        }
+                        else if (pElementProp.Name != "language_label" && labelLookup.ContainsKey(pElementProp.Name))
                         {
                             pTextElement.Text = labelLookup[pElementProp.Name];
                         }
