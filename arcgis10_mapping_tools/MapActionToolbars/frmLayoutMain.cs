@@ -346,7 +346,7 @@ namespace MapActionToolbars
                         {
                             pTextElement.Text = dict["donor_credit"];
                         }
-                        else if (pElementProp.Name == "timezone")
+                        else if (pElementProp.Name == "timezone" || pElementProp.Name == "time_zone") 
                         {
                             pTextElement.Text = dict["timezone"];
                         }
