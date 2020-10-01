@@ -510,7 +510,18 @@ namespace MapActionToolbars
                     {
                         pTextElement = element as ITextElement;
                         pElementProp = element as IElementProperties2;
-                        if (labelLookup.ContainsKey(pElementProp.Name) == true)
+                        // The language update is generally updating item labels - i.e. graphics elements named xyz_label, 
+                        // rather than the items themselves i.e. graphics elements named xyz (which are updated by setAllElements).
+                        // However in the case of the name of the languge, we want to update the item which is now an element called 
+                        // "language", and NOT its title element called "language_label". 
+                        // BUT the XML has been designed to store the languge name in a tag called "language_label" and so this 
+                        // neat-in-theory code that directly binds the XML tags to the map element names has to have an exception 
+                        // added to map the XML tag "language_label" to the mxd element "language" and NOT the mxd element "language_label".
+                        if (pElementProp.Name == "language" && labelLookup.ContainsKey("language_label"))
+                        {
+                            pTextElement.Text = labelLookup["language_label"];
+                        }
+                        else if (pElementProp.Name != "language_label" && labelLookup.ContainsKey(pElementProp.Name))
                         {
                             pTextElement.Text = labelLookup[pElementProp.Name];
                         }
