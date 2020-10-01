@@ -27,7 +27,7 @@ namespace MapActionToolbars
         private string _languageIso2;
         private static string _operationId;
         private const string languageConfigXmlFileName = "language_config.xml";
-        private const string elementLanguageLabel = "language_label";
+        private const string elementLanguageLabel = "language";
         private static string _mapRootURL = "https://maps.mapaction.org/dataset";
         private const string defaultMapNumber = "MA001";
         private const string defaultMapVersion = "1";
