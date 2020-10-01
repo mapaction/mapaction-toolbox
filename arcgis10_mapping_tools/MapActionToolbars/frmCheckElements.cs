@@ -82,7 +82,7 @@ namespace MapActionToolbars
                 imgProducedByStatus.Image = Properties.Resources.tick_17px;
             }
 
-            if (dict.ContainsKey("timezone"))
+            if (dict.ContainsKey("time_zone"))
             {
                 imgTimezoneStatus.Image = Properties.Resources.tick_17px;
             }

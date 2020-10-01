@@ -145,7 +145,7 @@
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(100, 13);
             this.textBox1.TabIndex = 41;
-            this.textBox1.Text = "timezone";
+            this.textBox1.Text = "time_zone";
             // 
             // textBox2
             // 
