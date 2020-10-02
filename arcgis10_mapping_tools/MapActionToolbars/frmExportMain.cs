@@ -415,7 +415,7 @@ namespace MapActionToolbars
                 return;
             }
             // This will only check that the base folder is writable and not that e.g. an exported file already exists and is locked
-            // Is that what we require?
+            // We will check for that separately
             if (!folderIsWritable(basePath))
             {
                 MessageBox.Show("The export folder path does not appear to be writable. Please choose another folder.",
@@ -428,7 +428,34 @@ namespace MapActionToolbars
             var exportFolder = System.IO.Path.Combine(pathParts);
 
             System.IO.Directory.CreateDirectory(exportFolder);
+            var allFiles = Directory.GetFiles(exportFolder);
+            // this will also trigger if thumbnail.png got left behind by a failed zip, but that should now be handled
+            var matchingFiles = Directory.GetFiles(exportFolder, System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text) + "*");
+            if (allFiles.Length > matchingFiles.Length)
+            {
+                // This should not occur unless more than one map document has the same MA number and version because the ultimate name of 
+                // a file depends on (the MA number, the version number)->folder, and the ("map name")->filename. 
+                // Currently "map name" is drawn from the layout 
+                // element so a user could change the map name without changing the MA / Version number, resulting in a different set of 
+                // files in the same folder.
+                // We will ultimately disable that and draw map name directly from the mxd filename in which case a different output filename 
+                // existing in the folder would imply that two MXDs have the same MA and V numbers.
+                // Either scenario should at least cause a head-scratch-prompting warning to make sure everything is as intended.
+                DialogResult dr = MessageBox.Show("The output folder for this map version:" + Environment.NewLine +
+                    exportFolder + Environment.NewLine +
+                    "already contains files that won't be overwritten by this export. This might suggest that another MXD already " +
+                    "has the same MA number and version. Please be sure you've picked the correct folder." +
+                    Environment.NewLine + "Continue with export?",
+                    "Please check folder contents",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.No)
+                {
+                    return;
+                }
+            }
+
             Debug.WriteLine("checks on export complete");
+
 
             // Get the path and file name to pass to the various functions
             string exportPathFileName = System.IO.Path.Combine(@exportFolder, System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text));
