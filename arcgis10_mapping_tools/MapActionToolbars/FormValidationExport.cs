@@ -116,8 +116,9 @@ namespace MapActionToolbars
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
             string mapValue = string.Empty;
-            string automatedValue = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
-
+            
+            //string automatedValue = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
+            string automatedValue = ArcMap.Application.Document.Title; // including '.mxd'
             //Get and set the map value
             var dict = new Dictionary<string, string>();
             dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, targetMapFrame);
