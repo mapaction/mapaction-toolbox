@@ -109,7 +109,8 @@ namespace MapAction
 
         #region Public method createZip
         /// <summary>
-        /// Create a zip file of the three exported files (xml, jpeg, pdf) required for a MA export
+        /// Create a zip file of the three exported files (xml, jpeg, pdf) required for a MA export, in the 
+        /// same folder and with the same base filename as the xml file
         /// </summary>
         /// <param name="dictPaths">
         /// Dictionary with string keys 'xml', 'jpeg', and 'pdf' and string values giving the file path 
@@ -133,10 +134,11 @@ namespace MapAction
             string zipFileName = fileName + ".zip";
             string savePath = @System.IO.Path.GetDirectoryName(dictPaths["xml"]) + @"\" + zipFileName;
             Debug.WriteLine("save path: " + savePath);
- 
+
             ////////////////////////////////////
             // 7zip version
             ////////////////////////////////////
+            Process zipProc = new Process();
             try
             {
                 string zipExePath = get7zipExePath();
@@ -144,7 +146,8 @@ namespace MapAction
 
                 if (!String.IsNullOrEmpty(zipExePath))
                 {
-                    Process zipProc = new Process();
+                    StringBuilder outputStringBuilder = new StringBuilder();
+
                     // Configure the process using the StartInfo properties.
                     zipProc.StartInfo.FileName = zipExePath;
                     string args = String.Format("a -y -tzip {0} {1} {2} {3} {4}",
@@ -156,8 +159,32 @@ namespace MapAction
                     ;
                     zipProc.StartInfo.Arguments = args;
                     zipProc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                    zipProc.StartInfo.RedirectStandardError = true;
+                    zipProc.StartInfo.RedirectStandardOutput = true;
+                    zipProc.StartInfo.UseShellExecute = false;
+                    zipProc.OutputDataReceived += (sender, eventArgs) => outputStringBuilder.AppendLine(eventArgs.Data);
+                    zipProc.ErrorDataReceived += (sender, eventArgs) => outputStringBuilder.AppendLine(eventArgs.Data);
                     zipProc.Start();
-                    zipProc.WaitForExit();// Waits here for the process to exit.
+                    // output capturing code from https://stackoverflow.com/a/31702940/4150190
+                    zipProc.BeginOutputReadLine();
+                    zipProc.BeginErrorReadLine();
+                    // bail out if 7-zip hangs for any reason, wait 30 seconds
+                    var processExited = zipProc.WaitForExit(30000);// Waits here for the process to exit.
+                    if (processExited == false)
+                    {
+                        zipProc.Kill();
+                        var msg = "Failed to create zipped output - 7-zip not responding. Please try again.";
+                        MessageBox.Show(msg, "Export tool error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        throw new Exception(msg);
+                    }
+                    else if (zipProc.ExitCode != 0)
+                    {
+                        // if zipfile cannot be written (probably because it is open, a common error) then 7-zip process complains on the console but 
+                        // user will not notice this. Capture it here and raise it as an exception...
+                        var output = outputStringBuilder.ToString();
+                        throw new Exception("Zip process exited with errors: " + zipProc.ExitCode + Environment.NewLine +
+                            "Output from process: " + output);
+                    }
                 }
             }
             catch (Exception e)
@@ -166,7 +193,10 @@ namespace MapAction
                 Debug.WriteLine(e.Message);
                 return false;
             }
-
+            finally
+            {
+                zipProc.Close();
+            }
             return true;
         }
         #endregion
