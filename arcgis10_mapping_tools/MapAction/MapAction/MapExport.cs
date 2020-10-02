@@ -109,7 +109,8 @@ namespace MapAction
 
         #region Public method createZip
         /// <summary>
-        /// Create a zip file of the three exported files (xml, jpeg, pdf) required for a MA export
+        /// Create a zip file of the three exported files (xml, jpeg, pdf) required for a MA export, in the 
+        /// same folder and with the same base filename as the xml file
         /// </summary>
         /// <param name="dictPaths">
         /// Dictionary with string keys 'xml', 'jpeg', and 'pdf' and string values giving the file path 

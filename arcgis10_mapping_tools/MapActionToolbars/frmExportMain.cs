@@ -188,10 +188,14 @@ namespace MapActionToolbars
             if (dict.ContainsKey("data_sources")) { tbxDataSources.Text = dict["data_sources"]; }
             if (dict.ContainsKey("map_no") && (!dict.ContainsKey("map_version")))
             {
-                setMapNumberAndVersion(dict["map_no"]);
+                // new templates have map number and version in one element separated by a space
+                var n_v = parseMapNumberAndVersion(dict["map_no"]);
+                this.tbxMapNumber.Text = n_v.Item1;
+                this.tbxVersionNumber.Text = n_v.Item2;
             }
-            if (dict.ContainsKey("map_no") && (dict.ContainsKey("map_version")))
+            else if (dict.ContainsKey("map_no") && (dict.ContainsKey("map_version")))
             {
+                // old templates had separate elements for number and version
                 this.tbxMapNumber.Text = dict["map_no"];
                 this.tbxVersionNumber.Text = dict["map_version"];
             }
@@ -257,12 +261,12 @@ namespace MapActionToolbars
             tbxMapbookMode.Enabled = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
         }
 
-        private void setMapNumberAndVersion(string mapNumberAndVersion)
+        private Tuple<string,string> parseMapNumberAndVersion(string mapNumVerElemTxt)
         {
             string mapNumber = _initialMapNumber;
             string mapVersion = _initialVersionNumber;
 
-            string[] words = mapNumberAndVersion.Split(' ');
+            string[] words = mapNumVerElemTxt.Split(' ');
             int i = 1;
             for (i = 0; i < words.Length; i++)
             {
@@ -288,8 +292,9 @@ namespace MapActionToolbars
                         break;
                 }
             }
-            this.tbxMapNumber.Text = mapNumber;
-            this.tbxVersionNumber.Text = mapVersion;
+            return new Tuple<string,string>(mapNumber, mapVersion);
+            //this.tbxMapNumber.Text = mapNumber;
+            //this.tbxVersionNumber.Text = mapVersion;
         }
 
         // Set the "Status" value and the VersionNumber:
@@ -367,6 +372,21 @@ namespace MapActionToolbars
             }
         }
 
+        private bool folderIsWritable(string folderPath)
+        {
+            //https://stackoverflow.com/questions/1410127/c-sharp-test-if-user-has-write-access-to-a-folder
+            try
+            {
+                System.Security.AccessControl.DirectorySecurity ds = Directory.GetAccessControl(folderPath);
+                System.IO.File.Create(System.IO.Path.Combine(folderPath, "access_chk.txt")).Close();
+                System.IO.File.Delete(System.IO.Path.Combine(folderPath, "access_chk.txt"));
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return false;
+            }
+        }
         private void btnCreateZip_Click(object sender, EventArgs e)
         {
             // Create and start a stopwatch to measure the function performance
@@ -374,7 +394,7 @@ namespace MapActionToolbars
             Stopwatch sw = Stopwatch.StartNew();
 
             // Start checks before running the the actual create elements
-            if (tbxMapDocument.Text == string.Empty)
+            if (tbxMapDocument.Text == string.Empty || tbxMapDocument.Text == "")
             {
                 MessageBox.Show("A document name is required. It is used as a part of the output file names.",
                     "Update document name", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -383,25 +403,35 @@ namespace MapActionToolbars
                 return;
             }
             
-            //!!!!!!!!!!Need a method to check to see if the user has write access to the set path !!!!!!!!!!!!!!//
-            var path = tbxExportZipPath.Text;
-            //check the path exists and ideally check for write permissions
-            if (!Directory.Exists(@path))
+            var basePath = tbxExportZipPath.Text;
+            //check the path exists and check for write permissions
+            if (!Directory.Exists(basePath))
             {
                 Debug.WriteLine("Exiting createZip function as path is not valid");
                 //Show message on invalid export path
-                MessageBox.Show("The export path is not valid. Please choose another path.",
+                MessageBox.Show("The export folder path does not exist. Please choose another folder.",
                     "Invalid path", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tbxExportZipPath.Focus();
                 return;
             }
-            path = System.IO.Path.Combine(path, this.tbxMapNumber.Text);
+            // This will only check that the base folder is writable and not that e.g. an exported file already exists and is locked
+            // Is that what we require?
+            if (!folderIsWritable(basePath))
+            {
+                MessageBox.Show("The export folder path does not appear to be writable. Please choose another folder.",
+                    "Invalid path", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tbxExportZipPath.Focus();
+                return;
+            }
 
-            System.IO.Directory.CreateDirectory(path);
+            string[] pathParts = { basePath, this.tbxMapNumber.Text, "V" + this.tbxVersionNumber.Text };
+            var exportFolder = System.IO.Path.Combine(pathParts);
+
+            System.IO.Directory.CreateDirectory(exportFolder);
             Debug.WriteLine("checks on export complete");
 
             // Get the path and file name to pass to the various functions
-            string exportPathFileName = getExportPathFileName(path, System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text));
+            string exportPathFileName = System.IO.Path.Combine(@exportFolder, System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text));
 
             // Disable the button after the export checks are complete to prevent multiple clicks
             this.Enabled = false;
@@ -433,7 +463,8 @@ namespace MapActionToolbars
             if (!isDDP) // Need a way to do this - the form elements are all disabled before export - see ^^
             {
                 // Call to export the images and return a dictionary of the file names
-                dictFilePaths = exportAllImages();
+                // what fresh hell was this, why did exportAllImages generate the export path AGAIN rather than being passed it?!
+                dictFilePaths = exportAllImages(exportPathFileName);
 
                 // Calculate the file size of each image and add it to the dictionary
                 // Don't use dict.add because a) it's another place to keep track of magic strings
@@ -491,7 +522,7 @@ namespace MapActionToolbars
             try
             {
                 Dictionary<string, string> dict = getExportToolValues(dictImageFileSizes, dictFilePaths, dictFrameExtents, mxdName);
-                xmlPath = MapAction.Utilities.createXML(dict, "mapdata", path, System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text), 2);
+                xmlPath = MapAction.Utilities.createXML(dict, "mapdata", exportFolder, System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text), 2);
             }
             catch (Exception xml_e)
             {
@@ -529,7 +560,7 @@ namespace MapActionToolbars
 
             // the output filepath
 
-            MessageBox.Show("Files successfully output to: " + Environment.NewLine + path,
+            MessageBox.Show("Files successfully output to: " + Environment.NewLine + basePath,
                 "Export complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // If open explorer checkbox is ticked, open windows explorer to the directory 
@@ -677,57 +708,44 @@ namespace MapActionToolbars
         /// <remarks>
         /// Note that currently the images exported from the 'main map' frame are NOT included in this dictionary, unsure if this is deliberate?
         /// </remarks
-        private Dictionary<string, string> exportAllImages()
+        private Dictionary<string, string> exportAllImages(string exportPathFileName)
         {
             IMapDocument pMapDoc = ArcMap.Application.Document as IMapDocument;
             //IActiveView pActiveView = pMxDoc.ActiveView;
             var dict = new Dictionary<string, string>();
 
-            string path = System.IO.Path.Combine(tbxExportZipPath.Text, this.tbxMapNumber.Text);
-            // Get the path and file name to pass to the various functions
-            string exportPathFileName = getExportPathFileName(path, System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text));
-
-            //check to see variable exists
-            if (!Directory.Exists(@path) || tbxMapDocument.Text == "" || tbxMapDocument.Text == string.Empty)
+            // refactored export code into non-static class which handles thumbnail filename and pixel size limits 
+            MapImageExporter layoutexporter = new MapImageExporter(pMapDoc, exportPathFileName, null);
+            // the ones added to the dictionary will be the ones that get added to the zip file
+            dict[MapActionExportTypes.pdf.ToString()] =  
+                layoutexporter.exportImage(MapActionExportTypes.pdf, Convert.ToUInt16(nudPdfResolution.Value));
+            dict[MapActionExportTypes.jpeg.ToString()] =  
+                layoutexporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudJpegResolution.Value));
+            if (checkBoxEmf.Checked == true)
             {
-                Debug.WriteLine("Image export variables not valid.");
-                return dict;
+                dict[MapActionExportTypes.emf.ToString()] =
+                    layoutexporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
             }
-            else
-            {
-                // refactored export code into non-static class which handles thumbnail filename and pixel size limits 
-                MapImageExporter layoutexporter = new MapImageExporter(pMapDoc, exportPathFileName, null);
-                // the ones added to the dictionary will be the ones that get added to the zip file
-                dict[MapActionExportTypes.pdf.ToString()] =  
-                    layoutexporter.exportImage(MapActionExportTypes.pdf, Convert.ToUInt16(nudPdfResolution.Value));
-                dict[MapActionExportTypes.jpeg.ToString()] =  
-                    layoutexporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudJpegResolution.Value));
-                if (checkBoxEmf.Checked == true)
+            // export the thumbnail, using the new functionality of specifying a pixel size rather than a dpi
+            XYDimensions thumbSize = new XYDimensions()
                 {
-                    dict[MapActionExportTypes.emf.ToString()] =
-                        layoutexporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
-                }
-                // export the thumbnail, using the new functionality of specifying a pixel size rather than a dpi
-                XYDimensions thumbSize = new XYDimensions()
-                    {
-                        Width = MapAction.Properties.Settings.Default.thumbnail_width_px,
-                        Height = null // export will be constrained by width only
-                    };
-                dict[MapActionExportTypes.png_thumbnail_zip.ToString()] =  
-                    layoutexporter.exportImage(MapActionExportTypes.png_thumbnail_zip, thumbSize);
+                    Width = MapAction.Properties.Settings.Default.thumbnail_width_px,
+                    Height = null // export will be constrained by width only
+                };
+            dict[MapActionExportTypes.png_thumbnail_zip.ToString()] =  
+                layoutexporter.exportImage(MapActionExportTypes.png_thumbnail_zip, thumbSize);
                 
-                // export a local-only copy of the thumbnail which will have a more useful filename so it isn't 
-                // overwritten when there's more than one map exported to the same folder
-                layoutexporter.exportImage(MapActionExportTypes.png_thumbnail_local, thumbSize);
+            // export a local-only copy of the thumbnail which will have a more useful filename so it isn't 
+            // overwritten when there's more than one map exported to the same folder
+            layoutexporter.exportImage(MapActionExportTypes.png_thumbnail_local, thumbSize);
 
-                // What are these for? we don't zip them.
-                MapImageExporter dfExporter = new MapImageExporter(pMapDoc, exportPathFileName, "Main map");
-                if (checkBoxEmf.Checked == true)
-                {
-                    dfExporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
-                }
-                dfExporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudJpegResolution.Value));
+            // What are these for? we don't zip them.
+            MapImageExporter dfExporter = new MapImageExporter(pMapDoc, exportPathFileName, "Main map");
+            if (checkBoxEmf.Checked == true)
+            {
+                dfExporter.exportImage(MapActionExportTypes.emf, Convert.ToUInt16(nudEmfResolution.Value));
             }
+            dfExporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudJpegResolution.Value));
             return dict;
         }
 
@@ -776,12 +794,6 @@ namespace MapActionToolbars
                 tbxGlideNo.ReadOnly = true;
                 tbxDataSources.ReadOnly = true;
             }
-        }
-
-        private string getExportPathFileName(string path, string documentName)
-        {
-            // Concatenate the 
-            return System.IO.Path.Combine(@path, documentName);
         }
 
         //### Methods to work with form validation #### Copied directly from the Alpha export tool
