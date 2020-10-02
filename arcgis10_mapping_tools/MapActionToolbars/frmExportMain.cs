@@ -459,13 +459,16 @@ namespace MapActionToolbars
 
             // Update QR Code
             updateQRCode(ArcMap.Application.Document.Title);
-
+            bool individualPartsSuccessful = true;
             if (!isDDP) // Need a way to do this - the form elements are all disabled before export - see ^^
             {
                 // Call to export the images and return a dictionary of the file names
-                // what fresh hell was this, why did exportAllImages generate the export path AGAIN rather than being passed it?!
+                // Altered exportAllImages to not generate the export path AGAIN rather than being passed it?!
                 dictFilePaths = exportAllImages(exportPathFileName);
-
+                if (dictFilePaths.ContainsValue(null))
+                {
+                    individualPartsSuccessful = false;
+                }
                 // Calculate the file size of each image and add it to the dictionary
                 // Don't use dict.add because a) it's another place to keep track of magic strings
                 // values, and b) if we accidentally call it twice with same key we get an exception
@@ -514,11 +517,22 @@ namespace MapActionToolbars
                 dictImageFileSizes["pdf"] = 0;
                 dictImageFileSizes["kmz"] = 0;
             }
+            if (!individualPartsSuccessful)
+            {
+                this.Close();
+                MessageBox.Show("An error occurred creating one of the output image files. Please double check that you don't have any of them open " +
+                    "(if there was a previous export), and try again.",
+                "Export error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             // Get the mxd filename
             string mxdName = ArcMap.Application.Document.Title;
             System.Windows.Forms.Application.DoEvents();
             // Create the output xml file & return the xml path           
             string xmlPath = string.Empty;
+
+            bool xmlSuccessful = true;
             try
             {
                 Dictionary<string, string> dict = getExportToolValues(dictImageFileSizes, dictFilePaths, dictFrameExtents, mxdName);
@@ -528,17 +542,32 @@ namespace MapActionToolbars
             {
                 Debug.WriteLine("Error writing out xml file.");
                 Debug.WriteLine(xml_e.Message);
+                xmlSuccessful = false;
+            }
+            if (!xmlSuccessful)
+            {
+                this.Close();
+                MessageBox.Show("An error occurred creating the XML file. Please double check that you don't have it open " +
+                    "if there was a previous export, and try again.",
+                "Export error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             // Add the xml path to the dictFilePaths, which is the input into the creatZip method
             dictFilePaths["xml"] = xmlPath;
 
-            // Create zip
-            // TODO Note that currently the createZip will zip the xml, jpeg, and pdf. Not the emf! 
-            // So why are we making it??
-            MapAction.MapExport.createZip(dictFilePaths);
-            
+            bool zipSuccessful = MapAction.MapExport.createZip(dictFilePaths);
+            if (!zipSuccessful)
+            {
+                this.Close();
+                MessageBox.Show("Failed to create zipped output! The most likely cause is that you already have the zip open from a previous export. " + Environment.NewLine + 
+                    "Please check and run the export again." + Environment.NewLine + 
+                    "NOTE that any unzipped files in the export folder are now not consistent with those in any existing zip file.",
+                    "Export error", MessageBoxButtons.OK, MessageBoxIcon.Warning
+                );
+                return;
+            }
+
             try
             {
                 // now that it's been zipped, delete the copy of the thumbnail called thumbnail.png to avoid confusion
