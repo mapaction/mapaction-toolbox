@@ -624,7 +624,7 @@ namespace MapAction
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("GP Error creating QR code: " + ex.Message);
                 string errorMsgs = gp.GetMessages(ref sev);
                 Console.WriteLine(errorMsgs);
                 //throw;

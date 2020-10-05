@@ -38,15 +38,12 @@ namespace MapActionToolbars
             this.gbxAutomated = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnUpdateAll = new System.Windows.Forms.Button();
-            this.btnMapDocument = new System.Windows.Forms.Button();
             this.btnGlideNo = new System.Windows.Forms.Button();
             this.btnSpatialReference = new System.Windows.Forms.Button();
             this.tbxGlideNumber = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.tbxSpatialReference = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.tbxMapDocument = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.gbxManual = new System.Windows.Forms.GroupBox();
@@ -138,15 +135,12 @@ namespace MapActionToolbars
             // 
             this.gbxAutomated.Controls.Add(this.label1);
             this.gbxAutomated.Controls.Add(this.btnUpdateAll);
-            this.gbxAutomated.Controls.Add(this.btnMapDocument);
             this.gbxAutomated.Controls.Add(this.btnGlideNo);
             this.gbxAutomated.Controls.Add(this.btnSpatialReference);
             this.gbxAutomated.Controls.Add(this.tbxGlideNumber);
             this.gbxAutomated.Controls.Add(this.label9);
             this.gbxAutomated.Controls.Add(this.tbxSpatialReference);
             this.gbxAutomated.Controls.Add(this.label7);
-            this.gbxAutomated.Controls.Add(this.tbxMapDocument);
-            this.gbxAutomated.Controls.Add(this.label2);
             this.gbxAutomated.Location = new System.Drawing.Point(6, 266);
             this.gbxAutomated.Name = "gbxAutomated";
             this.gbxAutomated.Size = new System.Drawing.Size(352, 177);
@@ -157,37 +151,27 @@ namespace MapActionToolbars
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 28);
+            this.label1.Location = new System.Drawing.Point(6, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 13);
+            this.label1.Size = new System.Drawing.Size(103, 13);
             this.label1.TabIndex = 50;
-            this.label1.Text = "Update all elements";
+            this.label1.Text = "Refresh all from map";
             // 
             // btnUpdateAll
             // 
             this.btnUpdateAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdateAll.Image = global::MapActionToolbars.Properties.Resources.import20x20px;
-            this.btnUpdateAll.Location = new System.Drawing.Point(120, 24);
+            this.btnUpdateAll.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateAll.Image")));
+            this.btnUpdateAll.Location = new System.Drawing.Point(115, 24);
             this.btnUpdateAll.Name = "btnUpdateAll";
             this.btnUpdateAll.Size = new System.Drawing.Size(34, 23);
             this.btnUpdateAll.TabIndex = 5;
             this.btnUpdateAll.UseVisualStyleBackColor = true;
             this.btnUpdateAll.Click += new System.EventHandler(this.btnUpdateAll_Click);
             // 
-            // btnMapDocument
-            // 
-            this.btnMapDocument.Image = global::MapActionToolbars.Properties.Resources.refresh17x17px;
-            this.btnMapDocument.Location = new System.Drawing.Point(304, 53);
-            this.btnMapDocument.Name = "btnMapDocument";
-            this.btnMapDocument.Size = new System.Drawing.Size(23, 23);
-            this.btnMapDocument.TabIndex = 7;
-            this.btnMapDocument.UseVisualStyleBackColor = true;
-            this.btnMapDocument.Click += new System.EventHandler(this.btnMapDocument_Click);
-            // 
             // btnGlideNo
             // 
             this.btnGlideNo.Image = ((System.Drawing.Image)(resources.GetObject("btnGlideNo.Image")));
-            this.btnGlideNo.Location = new System.Drawing.Point(304, 112);
+            this.btnGlideNo.Location = new System.Drawing.Point(304, 81);
             this.btnGlideNo.Name = "btnGlideNo";
             this.btnGlideNo.Size = new System.Drawing.Size(23, 23);
             this.btnGlideNo.TabIndex = 13;
@@ -196,8 +180,8 @@ namespace MapActionToolbars
             // 
             // btnSpatialReference
             // 
-            this.btnSpatialReference.Image = global::MapActionToolbars.Properties.Resources.refresh17x17px;
-            this.btnSpatialReference.Location = new System.Drawing.Point(304, 82);
+            this.btnSpatialReference.Image = ((System.Drawing.Image)(resources.GetObject("btnSpatialReference.Image")));
+            this.btnSpatialReference.Location = new System.Drawing.Point(304, 51);
             this.btnSpatialReference.Name = "btnSpatialReference";
             this.btnSpatialReference.Size = new System.Drawing.Size(23, 23);
             this.btnSpatialReference.TabIndex = 9;
@@ -206,7 +190,7 @@ namespace MapActionToolbars
             // 
             // tbxGlideNumber
             // 
-            this.tbxGlideNumber.Location = new System.Drawing.Point(103, 114);
+            this.tbxGlideNumber.Location = new System.Drawing.Point(103, 83);
             this.tbxGlideNumber.Name = "tbxGlideNumber";
             this.tbxGlideNumber.Size = new System.Drawing.Size(195, 20);
             this.tbxGlideNumber.TabIndex = 12;
@@ -215,7 +199,7 @@ namespace MapActionToolbars
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 118);
+            this.label9.Location = new System.Drawing.Point(6, 87);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(69, 13);
             this.label9.TabIndex = 42;
@@ -223,7 +207,7 @@ namespace MapActionToolbars
             // 
             // tbxSpatialReference
             // 
-            this.tbxSpatialReference.Location = new System.Drawing.Point(103, 85);
+            this.tbxSpatialReference.Location = new System.Drawing.Point(103, 54);
             this.tbxSpatialReference.Name = "tbxSpatialReference";
             this.tbxSpatialReference.Size = new System.Drawing.Size(195, 20);
             this.tbxSpatialReference.TabIndex = 8;
@@ -232,28 +216,11 @@ namespace MapActionToolbars
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 90);
+            this.label7.Location = new System.Drawing.Point(6, 59);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(87, 13);
             this.label7.TabIndex = 38;
             this.label7.Text = "Spatial reference";
-            // 
-            // tbxMapDocument
-            // 
-            this.tbxMapDocument.Location = new System.Drawing.Point(103, 55);
-            this.tbxMapDocument.Name = "tbxMapDocument";
-            this.tbxMapDocument.Size = new System.Drawing.Size(195, 20);
-            this.tbxMapDocument.TabIndex = 6;
-            this.tbxMapDocument.TextChanged += new System.EventHandler(this.tbxMapDocument_TextChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 58);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(78, 13);
-            this.label2.TabIndex = 32;
-            this.label2.Text = "Map document";
             // 
             // btnCancel
             // 
@@ -415,7 +382,7 @@ namespace MapActionToolbars
             // tspBtnCheckElements
             // 
             this.tspBtnCheckElements.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tspBtnCheckElements.Image = global::MapActionToolbars.Properties.Resources.gear_icon;
+            this.tspBtnCheckElements.Image = ((System.Drawing.Image)(resources.GetObject("tspBtnCheckElements.Image")));
             this.tspBtnCheckElements.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tspBtnCheckElements.Name = "tspBtnCheckElements";
             this.tspBtnCheckElements.Size = new System.Drawing.Size(23, 22);
@@ -430,7 +397,7 @@ namespace MapActionToolbars
             // tspBtnClearForm
             // 
             this.tspBtnClearForm.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tspBtnClearForm.Image = global::MapActionToolbars.Properties.Resources.clear_form_icon;
+            this.tspBtnClearForm.Image = ((System.Drawing.Image)(resources.GetObject("tspBtnClearForm.Image")));
             this.tspBtnClearForm.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tspBtnClearForm.Name = "tspBtnClearForm";
             this.tspBtnClearForm.Size = new System.Drawing.Size(23, 22);
@@ -621,7 +588,7 @@ namespace MapActionToolbars
             // btnUpdateAllTab2
             // 
             this.btnUpdateAllTab2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdateAllTab2.Image = global::MapActionToolbars.Properties.Resources.import20x20px;
+            this.btnUpdateAllTab2.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateAllTab2.Image")));
             this.btnUpdateAllTab2.Location = new System.Drawing.Point(120, 19);
             this.btnUpdateAllTab2.Name = "btnUpdateAllTab2";
             this.btnUpdateAllTab2.Size = new System.Drawing.Size(34, 23);
@@ -631,7 +598,7 @@ namespace MapActionToolbars
             // 
             // btnUpdateDisclaimer
             // 
-            this.btnUpdateDisclaimer.Image = global::MapActionToolbars.Properties.Resources.refresh17x17px;
+            this.btnUpdateDisclaimer.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateDisclaimer.Image")));
             this.btnUpdateDisclaimer.Location = new System.Drawing.Point(304, 67);
             this.btnUpdateDisclaimer.Name = "btnUpdateDisclaimer";
             this.btnUpdateDisclaimer.Size = new System.Drawing.Size(23, 23);
@@ -651,7 +618,7 @@ namespace MapActionToolbars
             // 
             // btnUpdateDonorCredits
             // 
-            this.btnUpdateDonorCredits.Image = global::MapActionToolbars.Properties.Resources.refresh17x17px;
+            this.btnUpdateDonorCredits.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateDonorCredits.Image")));
             this.btnUpdateDonorCredits.Location = new System.Drawing.Point(304, 131);
             this.btnUpdateDonorCredits.Name = "btnUpdateDonorCredits";
             this.btnUpdateDonorCredits.Size = new System.Drawing.Size(23, 23);
@@ -772,7 +739,7 @@ namespace MapActionToolbars
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmLayoutMain";
-            this.Text = "Layout Tool";
+            this.Text = " ";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.gbxAutomated.ResumeLayout(false);
             this.gbxAutomated.PerformLayout();
@@ -816,15 +783,12 @@ namespace MapActionToolbars
         private System.Windows.Forms.GroupBox gbxAutomated;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnUpdateAll;
-        private System.Windows.Forms.Button btnMapDocument;
         private System.Windows.Forms.Button btnGlideNo;
         private System.Windows.Forms.Button btnSpatialReference;
         private System.Windows.Forms.TextBox tbxGlideNumber;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tbxSpatialReference;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox tbxMapDocument;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.GroupBox gbxManual;

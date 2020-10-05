@@ -52,11 +52,6 @@ namespace MapActionToolbars
                 imgMapNoStatus.Image = Properties.Resources.tick_17px;
             }
 
-            if (dict.ContainsKey("mxd_name"))
-            {
-                imgMxdNameStatus.Image = Properties.Resources.tick_17px;
-            }
-            
             if (dict.ContainsKey("spatial_reference"))
             {
                 imgSpatialRefStatus.Image = Properties.Resources.tick_17px;

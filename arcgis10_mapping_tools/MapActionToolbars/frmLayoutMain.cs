@@ -58,13 +58,7 @@ namespace MapActionToolbars
             Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, "Main map");
             
             tbxSpatialReference.Text = getSpatialReference();
-            tbxMapDocument.Text = tbxMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
             tbxGlideNumber.Text = LayoutToolAutomatedValues.getGlideNo();
-        }
-
-        private void btnMapDocument_Click(object sender, EventArgs e)
-        {
-            tbxMapDocument.Text = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
         }
 
         private void btnSpatialReference_Click(object sender, EventArgs e)
@@ -99,7 +93,6 @@ namespace MapActionToolbars
             FormValidationLayout.validateMapSummary(tbxSummary, eprMapSummary);
             FormValidationLayout.validateDataSources(tbxDataSources, eprDataSources);
             FormValidationLayout.validateMapNumber(tbxMapNumber, eprMapNumberWarning, eprMapNumberError);
-            FormValidationLayout.validateMapDocument(tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
             FormValidationLayout.validateSpatialReference(tbxSpatialReference, eprSpatialReferenceWarning, eprSpatialReferenceError);
             FormValidationLayout.validateGlideNumber(tbxGlideNumber, eprGlideNumberWarning, eprSpatialReferenceError);
             //Perform validation checks tab 2
@@ -114,11 +107,13 @@ namespace MapActionToolbars
             Dictionary<string, string> dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, "Main map");
             
             //Check if the various elements exist that automated update, if not disable the automation buttons.
-            //If they are present then update the text boxes with the value from the dictionary 
-            if (!dict.ContainsKey("mxd_name") || !dict.ContainsKey("spatial_reference"))
+            if (!dict.ContainsKey("glide_no") || !dict.ContainsKey("spatial_reference"))
             {
                 btnUpdateAll.Enabled = false;
             }
+            // For all elements that are present (=were retrieved from page laout by getLayoutTextElements), 
+            // update the text boxes with the value from the dictionary 
+            #region mapping of layout text elements to form elements
             if (dict.ContainsKey("title")) { tbxTitle.Text = dict["title"]; } else { tbxTitle.Text = "Element not present"; tbxTitle.ReadOnly = true; };
             if (dict.ContainsKey("summary")) { tbxSummary.Text = dict["summary"]; } else { tbxSummary.Text = "Element not present"; tbxSummary.ReadOnly = true; };
             if (dict.ContainsKey("data_sources")) { tbxDataSources.Text = dict["data_sources"]; } else { tbxDataSources.Text = "Element not present"; tbxDataSources.ReadOnly = true; };
@@ -133,13 +128,13 @@ namespace MapActionToolbars
                 tbxMapNumber.Text = "Element not present";
                 tbxMapNumber.ReadOnly = true;
             }
-            if (dict.ContainsKey("mxd_name")) { tbxMapDocument.Text = dict["mxd_name"]; } else { tbxMapDocument.Text = "Element not present"; tbxMapDocument.ReadOnly = true; btnMapDocument.Enabled = false; };
+            // these two should surely be readonly to the user?
             if (dict.ContainsKey("spatial_reference")) { tbxSpatialReference.Text = dict["spatial_reference"]; } else { tbxSpatialReference.Text = "Element not present"; tbxSpatialReference.ReadOnly = true; btnSpatialReference.Enabled = false; };
             if (dict.ContainsKey("glide_no")) { tbxGlideNumber.Text = dict["glide_no"]; } else { tbxGlideNumber.Text = "Element not present"; tbxGlideNumber.ReadOnly = true; btnGlideNo.Enabled = false; };
             //Tab 2 - Standard elements
             if (dict.ContainsKey("map_producer")) { tbxMapProducer.Text = dict["map_producer"]; } else { tbxMapProducer.Text = "Element not present"; tbxMapProducer.ReadOnly = true; btnUpdateProducedBy.Enabled = false; };
             if (dict.ContainsKey("donor_credit")) { tbxDonorCredit.Text = dict["donor_credit"]; } else { tbxDonorCredit.Text = "Element not present"; tbxDonorCredit.ReadOnly = true; btnUpdateDonorCredits.Enabled = false; };
-            if (dict.ContainsKey("timezone")) { tbxTimezone.Text = dict["timezone"]; } else { tbxTimezone.Text = "Element not present"; tbxTimezone.ReadOnly = true; btnUpdateTimezone.Enabled = false; };
+            if (dict.ContainsKey("time_zone")) { tbxTimezone.Text = dict["time_zone"]; } else { tbxTimezone.Text = "Element not present"; tbxTimezone.ReadOnly = true; btnUpdateTimezone.Enabled = false; };
             if (dict.ContainsKey("disclaimer")) { tbxDisclaimer.Text = dict["disclaimer"]; } else { tbxDisclaimer.Text = "Element not present"; tbxDisclaimer.ReadOnly = true; btnUpdateDisclaimer.Enabled = false; };
 
             if (dict.ContainsKey(elementLanguageLabel)) 
@@ -159,7 +154,8 @@ namespace MapActionToolbars
                 {
                     this.cboLabelLanguage.SelectedIndex = 0;
                 }         
-            } 
+            }
+            #endregion
         }
 
         private void tspBtnClearForm_Click(object sender, EventArgs e)
@@ -170,7 +166,6 @@ namespace MapActionToolbars
             this.tbxDataSources.Text = string.Empty;
             this.tbxMapNumber.Text = string.Empty;
             this.nudVersionNumber.Text = string.Empty;
-            this.tbxMapDocument.Text = string.Empty;
             this.tbxSpatialReference.Text = string.Empty;
             this.tbxGlideNumber.Text = string.Empty;
             //Clear tab 2
@@ -206,17 +201,16 @@ namespace MapActionToolbars
             dict.Add("data_sources", this.tbxDataSources.Text);
             dict.Add("map_no", this.tbxMapNumber.Text);
             dict.Add("map_version", this.nudVersionNumber.Text);
-            dict.Add("mxd_name", this.tbxMapDocument.Text);
             dict.Add("spatial_reference", this.tbxSpatialReference.Text);
             dict.Add("glide_no", this.tbxGlideNumber.Text);
-            dict.Add("timezone", this.tbxTimezone.Text);
+            dict.Add("time_zone", this.tbxTimezone.Text);
             dict.Add("donor_credit", this.tbxDonorCredit.Text);
             dict.Add("disclaimer", this.tbxDisclaimer.Text);
             dict.Add("map_producer", this.tbxMapProducer.Text);
 
             setLabelLanguage();
 
-            setAllElements(dict);
+            writeDictToLayoutElements(dict);
             this.disposeAllErrorProviders();
             this.Close();
         }
@@ -283,72 +277,67 @@ namespace MapActionToolbars
             return stringSpatialRef;
         }
 
-        public static void setAllElements(Dictionary<string, string> dict)
+        public static void writeDictToLayoutElements(Dictionary<string, string> dict)
         {
             IPageLayout pLayout = _pMxDoc.PageLayout;
             IGraphicsContainer pGraphics = pLayout as IGraphicsContainer;
             pGraphics.Reset();
 
-            IMapDocument mapDoc;
-            mapDoc = (_pMxDoc as MxDocument) as IMapDocument;
-    
             // Update QR Code
-            IElement element = new TextElementClass();
+            IElement element = new TextElement();
             IElementProperties2 pElementProp;
             ITextElement pTextElement;
             IPictureElement pPictureElement;
             try
             {
-                element = (IElement)pGraphics.Next();
+                element = pGraphics.Next();
                 while (element != null)
                 {
+                    System.Diagnostics.Debug.WriteLine(((IElementProperties2)element).Name);
                     if (element is ITextElement)
                     {
                         pTextElement = element as ITextElement;
                         pElementProp = element as IElementProperties2;
-                        if (pElementProp.Name == "title")
+                        string el_name = pElementProp.Name;
+                        if (el_name == "title")
                         {
                             pTextElement.Text = dict["title"];
                         }
-                        else if (pElementProp.Name == "summary")
+                        else if (el_name == "summary")
                         {
                             pTextElement.Text = dict["summary"];
                         }
-                        else if (pElementProp.Name == "data_sources")
+                        else if (el_name == "data_sources")
                         {
                             pTextElement.Text = dict["data_sources"];
                         }
-                        else if (pElementProp.Name == "map_no")
+                        else if (el_name == "map_no")
                         {
                             pTextElement.Text = dict["map_no"] + " v" + dict["map_version"];
                         }
-                        else if (pElementProp.Name == "mxd_name")
-                        {
-                            pTextElement.Text = dict["mxd_name"];
-                        }
-                        else if (pElementProp.Name == "spatial_reference")
+                        else if (el_name == "spatial_reference")
                         {
                             pTextElement.Text = dict["spatial_reference"];
                         }
-                        else if (pElementProp.Name == "glide_no")
+                        else if (el_name == "glide_no")
                         {
                             pTextElement.Text = dict["glide_no"];
                         }
-                        else if (pElementProp.Name == "map_producer")
+                        else if (el_name == "map_producer")
                         {
                             pTextElement.Text = dict["map_producer"];
                         }
-                        else if (pElementProp.Name == "disclaimer")
+                        else if (el_name == "disclaimer")
                         {
                             pTextElement.Text = dict["disclaimer"];
                         }
-                        else if (pElementProp.Name == "donor_credit")
+                        else if (el_name == "donor_credit")
                         {
                             pTextElement.Text = dict["donor_credit"];
                         }
-                        else if (pElementProp.Name == "timezone" || pElementProp.Name == "time_zone") 
+                        else if (el_name == "timezone" || el_name == "time_zone") 
                         {
-                            pTextElement.Text = dict["timezone"];
+                            pTextElement.Text = dict["time_zone"];
                         }
                     }
                     else if (element is IPictureElement)
@@ -375,7 +364,7 @@ namespace MapActionToolbars
                             }
                         }
                     }
-                    element = (IElement)pGraphics.Next();
+                    element = pGraphics.Next();
                 }
             }
             catch (Exception e)
@@ -412,11 +401,6 @@ namespace MapActionToolbars
         private void tbxSpatialReference_TextChanged(object sender, EventArgs e)
         {
             FormValidationLayout.validateSpatialReference(tbxSpatialReference, eprSpatialReferenceWarning, eprSpatialReferenceError); 
-        }
-
-        private void tbxMapDocument_TextChanged(object sender, EventArgs e)
-        {
-            FormValidationLayout.validateMapDocument(tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
         }
 
         private void tbxGlideNumber_TextChanged(object sender, EventArgs e)

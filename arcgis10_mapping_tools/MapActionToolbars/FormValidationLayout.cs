@@ -53,33 +53,7 @@ namespace MapActionToolbars
             epr.SetIconPadding(control, 3);
             validateEmptyField(control, epr);
         }
-
-        public static void validateMapDocument(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
-        {
-
-            eprWarning.SetIconPadding(control, 33);
-            eprError.SetIconPadding(control, 33);
-            string automatedValue = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
-
-            if (validateEmptyField(control, eprWarning))
-            {
-                if (control.Text.Trim() != automatedValue && control.Text != string.Empty)
-                {
-                    eprError.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
-                    eprError.SetError(control, "Text differs from automated value");
-                }
-                else
-                {
-                    eprError.SetError(control, "");
-                }
-            }
-            else
-            {
-                eprError.Dispose();
-                validateEmptyField(control, eprWarning);
-            }
-        }
-
+        
         public static void validateMapNumber(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
             Match match = Regex.Match(control.Text, @"MA\d\d\d");
