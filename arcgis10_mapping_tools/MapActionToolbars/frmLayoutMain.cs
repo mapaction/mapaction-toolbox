@@ -340,7 +340,19 @@ namespace MapActionToolbars
                             pTextElement.Text = dict["time_zone"];
                         }
                     }
-                    else if (element is IPictureElement)
+                    element = pGraphics.Next();
+                }
+
+                // If something goes wrong with the QR code generation then even though we catch the exception, on the next iteration
+                // pGraphics.Next() returns null, meaning that iteration stops and text elements that haven't yet been updated don't get 
+                // done. Presumably this is something in the innards of the arcobjects code where it is internally thrown off balance by 
+                // the exception as well as propagating it up. So this has been changed to do all the text elements first and only then 
+                // attempt to do the picture element, in a second run through.
+                pGraphics.Reset();
+                element = pGraphics.Next();
+                while (element != null)
+                {
+                    if (element is IPictureElement)
                     {
                         pPictureElement = element as IPictureElement;
                         pElementProp = element as IElementProperties2;
@@ -362,6 +374,7 @@ namespace MapActionToolbars
                                 MessageBox.Show("Error occurred generating the QR code. Your system may not be set up correctly.", "QR Code error",
                                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
+                            break;
                         }
                     }
                     element = pGraphics.Next();
