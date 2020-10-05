@@ -579,11 +579,11 @@ namespace MapActionToolbars
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(16, 23);
+            this.label6.Location = new System.Drawing.Point(6, 23);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(100, 13);
+            this.label6.Size = new System.Drawing.Size(103, 13);
             this.label6.TabIndex = 54;
-            this.label6.Text = "Update all elements";
+            this.label6.Text = "Refresh all from map";
             // 
             // btnUpdateAllTab2
             // 
@@ -739,7 +739,7 @@ namespace MapActionToolbars
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmLayoutMain";
-            this.Text = " ";
+            this.Text = "Layout Tool";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.gbxAutomated.ResumeLayout(false);
             this.gbxAutomated.PerformLayout();

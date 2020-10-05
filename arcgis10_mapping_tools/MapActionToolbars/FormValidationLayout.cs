@@ -86,7 +86,7 @@ namespace MapActionToolbars
         {
             eprWarning.SetIconPadding(control, 33);
             eprError.SetIconPadding(control, 33);
-            string automatedValue = frmLayoutMain.getSpatialReference();
+            string automatedValue = frmLayoutMain.getSpatialReference().Trim();
 
             if (validateEmptyField(control, eprWarning))
             {
@@ -113,7 +113,7 @@ namespace MapActionToolbars
         {
             eprWarning.SetIconPadding(control, 33);
             eprError.SetIconPadding(control, 33);
-            string automatedValue =  LayoutToolAutomatedValues.getGlideNo();
+            string automatedValue =  LayoutToolAutomatedValues.getGlideNo().Trim();
 
             if (validateEmptyField(control, eprWarning))
             {
@@ -140,7 +140,7 @@ namespace MapActionToolbars
         {
             eprWarning.SetIconPadding(control, 33);
             eprError.SetIconPadding(control, 33);
-            string automatedValue = LayoutToolAutomatedValues.getConfigDisclaimer();
+            string automatedValue = LayoutToolAutomatedValues.getConfigDisclaimer().Trim();
 
             if (validateEmptyField(control, eprWarning))
             {
@@ -166,7 +166,7 @@ namespace MapActionToolbars
         {
             eprWarning.SetIconPadding(control, 33);
             eprError.SetIconPadding(control, 33);
-            string automatedValue = LayoutToolAutomatedValues.getConfigDonorText();
+            string automatedValue = LayoutToolAutomatedValues.getConfigDonorText().Trim();
 
             if (validateEmptyField(control, eprWarning))
             {
@@ -192,7 +192,7 @@ namespace MapActionToolbars
         {
             eprWarning.SetIconPadding(control, 33);
             eprError.SetIconPadding(control, 33);
-            string automatedValue = LayoutToolAutomatedValues.getProducedByText();
+            string automatedValue = LayoutToolAutomatedValues.getProducedByText().Trim();
 
             if (validateEmptyField(control, eprWarning))
             {
@@ -218,7 +218,7 @@ namespace MapActionToolbars
         {
             eprWarning.SetIconPadding(control, 33);
             eprError.SetIconPadding(control, 33);
-            string automatedValue = LayoutToolAutomatedValues.getConfigTimezone();
+            string automatedValue = LayoutToolAutomatedValues.getConfigTimezone().Trim();
 
             if (validateEmptyField(control, eprWarning))
             {
