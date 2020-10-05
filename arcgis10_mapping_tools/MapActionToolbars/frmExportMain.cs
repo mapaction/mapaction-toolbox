@@ -157,7 +157,7 @@ namespace MapActionToolbars
             //Form validation methods
             _titleValidationResult = FormValidationExport.validateMapTitle(tbxMapTitle, eprMaptitleWarning, eprMapTitleError);
             _summaryValidationResult = FormValidationExport.validateMapSummary(tbxMapSummary, eprMapSummaryWarning, eprMapSummaryError);
-            _mapDocumentValidationResult = FormValidationExport.validateMapDocument(tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
+            //_mapDocumentValidationResult = FormValidationExport.validateMapDocument(tbxMapDocument, eprMapDocumentWarning, eprMapDocumentError);
             _datumValidationResult = FormValidationExport.validateDatum(tbxDatum, eprDatumWarning, eprDatumError);
             _projectionValidationResult = FormValidationExport.validateProjection(tbxProjection, eprProjectionWarning, eprProjectionError);
             _scaleValidationResult = FormValidationExport.validateScale(tbxScale, eprScaleWarning, eprScaleError);
@@ -177,41 +177,39 @@ namespace MapActionToolbars
             _qualityControlValidationResult = FormValidationExport.validateQualityControl(cboQualityControl, eprQualityControlWarning);
             _languageValidationResult = FormValidationExport.validateLanguage(tbxLanguage, eprLanguageWarning, eprLanguageError);
 
-            var dict = new Dictionary<string, string>();
             // added extra parameter to say that in this case all of the ESRI markup should be stripped from the label values
-            dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, _targetMapFrame, true);
+            var layoutElementContents = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, _targetMapFrame, true);
 
             //Update form text boxes with values from the map
-            if (dict.ContainsKey("title")) { tbxMapTitle.Text = dict["title"]; }
-            if (dict.ContainsKey("summary")) { tbxMapSummary.Text = dict["summary"]; }
-            if (dict.ContainsKey("mxd_name")) { tbxMapDocument.Text = dict["mxd_name"]; }
-            if (dict.ContainsKey("data_sources")) { tbxDataSources.Text = dict["data_sources"]; }
-            if (dict.ContainsKey("map_no") && (!dict.ContainsKey("map_version")))
+            if (layoutElementContents.ContainsKey("title")) { tbxMapTitle.Text = layoutElementContents["title"]; }
+            if (layoutElementContents.ContainsKey("summary")) { tbxMapSummary.Text = layoutElementContents["summary"]; }
+            //if (layoutElementContents.ContainsKey("mxd_name")) { tbxMapDocument.Text = layoutElementContents["mxd_name"]; }
+            if (layoutElementContents.ContainsKey("data_sources")) { tbxDataSources.Text = layoutElementContents["data_sources"]; }
+            if (layoutElementContents.ContainsKey("map_no") && (!layoutElementContents.ContainsKey("map_version")))
             {
                 // new templates have map number and version in one element separated by a space
-                var n_v = parseMapNumberAndVersion(dict["map_no"]);
+                var n_v = parseMapNumberAndVersion(layoutElementContents["map_no"]);
                 this.tbxMapNumber.Text = n_v.Item1;
                 this.tbxVersionNumber.Text = n_v.Item2;
             }
-            else if (dict.ContainsKey("map_no") && (dict.ContainsKey("map_version")))
+            else if (layoutElementContents.ContainsKey("map_no") && (layoutElementContents.ContainsKey("map_version")))
             {
                 // old templates had separate elements for number and version
-                this.tbxMapNumber.Text = dict["map_no"];
-                this.tbxVersionNumber.Text = dict["map_version"];
+                this.tbxMapNumber.Text = layoutElementContents["map_no"];
+                this.tbxVersionNumber.Text = layoutElementContents["map_version"];
             }
 
-            if (dict.ContainsKey("language"))
+            if (layoutElementContents.ContainsKey("language"))
             {
-                _labelLanguage = dict["language"];
+                _labelLanguage = layoutElementContents["language"];
             }
             else
             {
                 _labelLanguage = "English";
             }
-
             tbxLanguage.Text = _labelLanguage;
 
-            // Update form values from the config xml
+            // Populate dialog items that are drawn from the config xml
             string path = MapAction.Utilities.getCrashMoveFolderPath();
             string filePath = System.IO.Path.Combine(path, _eventConfigJsonFileName);
             EventConfig config = MapAction.Utilities.getEventConfigValues(filePath);
@@ -233,9 +231,11 @@ namespace MapActionToolbars
             _languageISO2 = config.LanguageIso2 == null ? "en" : config.LanguageIso2;
             tbxLanguage.Text = this.languageCodeLookup.lookupA2LanguageCode(_languageISO2, LanguageCodeFields.Language); ;
             
-            // Set the status value and the version number from the existing XML if it exists:
+            // Set the status, version, access, location, theme etc from an earlier export's XML if it exists:
             setValuesFromExistingXML();
 
+            // Populate dialog items that are drawn directly from the map's properties
+            tbxMapDocument.Text = ArcMap.Application.Document.Title; // no longer drawn from a text element
             // Set the spatial reference information on load
             var dictSpatialRef = new Dictionary<string, string>();
             dictSpatialRef  = MapAction.Utilities.getDataFrameSpatialReference(_pMxDoc, _targetMapFrame);
@@ -297,13 +297,18 @@ namespace MapActionToolbars
             //this.tbxVersionNumber.Text = mapVersion;
         }
 
-        // Set the "Status" value and the VersionNumber:
+        
         private void setValuesFromExistingXML()
         {
+            // re-read values from a previous export 
+            // TODO look for previous versions if there isn't one of this version
+            
             // Presume Initial Version
             cboStatus.Text = _statusNew;
 
-            string xmlPath = System.IO.Path.Combine(tbxExportZipPath.Text, this.tbxMapNumber.Text, tbxMapDocument.Text + ".xml");
+            string[] xmlPathParts = { tbxExportZipPath.Text, this.tbxMapNumber.Text, "V" + this.tbxVersionNumber.Text, this.tbxMapDocument.Text + ".xml" };
+            
+            string xmlPath = System.IO.Path.Combine(xmlPathParts);
 
             // Does the xmlPath already exist?
             if (File.Exists(xmlPath))
@@ -554,7 +559,8 @@ namespace MapActionToolbars
             }
 
             // Get the mxd filename
-            string mxdName = ArcMap.Application.Document.Title;
+            //string mxdName = ArcMap.Application.Document.Title; // this is now set on load into tbxMapDocument which is readonly
+            string mxdName = tbxMapDocument.Text;
             System.Windows.Forms.Application.DoEvents();
             // Create the output xml file & return the xml path           
             string xmlPath = string.Empty;
@@ -562,7 +568,7 @@ namespace MapActionToolbars
             bool xmlSuccessful = true;
             try
             {
-                Dictionary<string, string> dict = getExportToolValues(dictImageFileSizes, dictFilePaths, dictFrameExtents, mxdName);
+                Dictionary<string, string> dict = getExportToolValues(dictImageFileSizes, dictFilePaths, dictFrameExtents);
                 xmlPath = MapAction.Utilities.createXML(dict, "mapdata", exportFolder, System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text), 2);
             }
             catch (Exception xml_e)
@@ -675,8 +681,7 @@ namespace MapActionToolbars
         private Dictionary<string, string> getExportToolValues(
             Dictionary<string, long> dictImageFileSizes, 
             Dictionary<string, string> dictFilePaths,
-            Dictionary<string, string> dictFrameExtents,
-            string mxdName)
+            Dictionary<string, string> dictFrameExtents)
         {
             
             //tidy up the map title
@@ -706,7 +711,7 @@ namespace MapActionToolbars
                 {"operationID",     tbxOperationId.Text},
                 {"sourceorg",       "MapAction"}, //this is hard coded in the existing applicaton
                 {"title",           mapTitle1},
-                {"ref",             tbxMapDocument.Text},
+                {"ref",             tbxMapDocument.Text}, // yes, this is now a duplicate of mapfilename, left as unsure if MDR needs it
                 {"language",        tbxLanguage.Text},
                 {"countries",       tbxCountry.Text},
                 {"createdate",      tbxDate.Text},
@@ -732,7 +737,7 @@ namespace MapActionToolbars
                 {"jpgresolutiondpi",nudJpegResolution.Value.ToString()},
                 {"pdfresolutiondpi",nudPdfResolution.Value.ToString()},
                 {"kmlresolutiondpi",nudKmlResolution.Value.ToString()},
-                {"mxdfilename",     mxdName},
+                {"mapfilename",     tbxMapDocument.Text},
                 {"paperxmax",       ""},
                 {"paperxmin",       ""},
                 {"paperymax",       ""},

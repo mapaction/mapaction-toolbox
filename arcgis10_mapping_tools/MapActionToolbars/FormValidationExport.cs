@@ -50,7 +50,7 @@ namespace MapActionToolbars
         {
             string layoutMapTitle = string.Empty;
             Dictionary<string, string> dictMapValues = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, targetMapFrame);
-            if (dictMapValues.ContainsKey("title")) { layoutMapTitle = dictMapValues["title"]; }
+            if (dictMapValues.ContainsKey("title")) { layoutMapTitle = dictMapValues["title"].Trim(); }
             
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
@@ -82,7 +82,7 @@ namespace MapActionToolbars
         {
             string layoutMapSummary = string.Empty;
             Dictionary<string, string> dictMapValues = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, targetMapFrame);
-            if (dictMapValues.ContainsKey("summary")) { layoutMapSummary = dictMapValues["summary"]; }
+            if (dictMapValues.ContainsKey("summary")) { layoutMapSummary = dictMapValues["summary"].Trim(); }
 
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
@@ -116,8 +116,9 @@ namespace MapActionToolbars
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
             string mapValue = string.Empty;
-            string automatedValue = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
-
+            
+            //string automatedValue = MapAction.PageLayoutProperties.getMxdTitle(ArcMap.Application);
+            string automatedValue = ArcMap.Application.Document.Title.Trim(); // including '.mxd'
             //Get and set the map value
             var dict = new Dictionary<string, string>();
             dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, targetMapFrame);
@@ -154,7 +155,7 @@ namespace MapActionToolbars
             var dictSpatialRef = new Dictionary<string, string>();
             dictSpatialRef = MapAction.Utilities.getDataFrameSpatialReference(_pMxDoc, targetMapFrame);
             string automatedValue = string.Empty;
-            if (dictSpatialRef.ContainsKey("datum")) { automatedValue = dictSpatialRef["datum"]; }
+            if (dictSpatialRef.ContainsKey("datum")) { automatedValue = dictSpatialRef["datum"].Trim(); }
 
             if (validateEmptyField(control, eprWarning))
             {
@@ -187,7 +188,7 @@ namespace MapActionToolbars
             var dictSpatialRef = new Dictionary<string, string>();
             dictSpatialRef = MapAction.Utilities.getDataFrameSpatialReference(_pMxDoc, targetMapFrame);
             string automatedValue = string.Empty;
-            if (dictSpatialRef.ContainsKey("projection")) { automatedValue = dictSpatialRef["projection"]; }
+            if (dictSpatialRef.ContainsKey("projection")) { automatedValue = dictSpatialRef["projection"].Trim(); }
 
             if (validateEmptyField(control, eprWarning))
             {
@@ -216,7 +217,7 @@ namespace MapActionToolbars
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
-            string automatedValue = MapAction.Utilities.getActualScale(_pMxDoc as IMapDocument, targetMapFrame);
+            string automatedValue = MapAction.Utilities.getActualScale(_pMxDoc as IMapDocument, targetMapFrame).Trim();
  
             if (validateEmptyField(control, eprWarning))
             {
@@ -245,7 +246,7 @@ namespace MapActionToolbars
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
-            string automatedValue = System.DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+            string automatedValue = System.DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss").Trim();
             
             if (validateEmptyField(control, eprWarning))
             {
@@ -305,7 +306,7 @@ namespace MapActionToolbars
         {
             eprWarning.SetIconPadding(control, 5);
             eprError.SetIconPadding(control, 5);
-            string automatedValue = MapAction.Utilities.getPageSize(_pMxDoc as IMapDocument, targetMapFrame);
+            string automatedValue = MapAction.Utilities.getPageSize(_pMxDoc as IMapDocument, targetMapFrame).Trim();
 
             if (validateEmptyField(control, eprWarning))
             {
@@ -361,7 +362,7 @@ namespace MapActionToolbars
             }
             else
             {
-                automatedValue = dict["data_sources"];
+                automatedValue = dict["data_sources"].Trim();
                 if (validateEmptyField(control, eprWarning))
                 {
                     if (control.Text.Trim() != automatedValue && control.Text != string.Empty)
@@ -394,7 +395,7 @@ namespace MapActionToolbars
             string path = MapAction.Utilities.getCrashMoveFolderPath();
             string filePath = MapAction.Utilities.getEventConfigFilePath();
             MapAction.EventConfig config = MapAction.Utilities.getEventConfigValues(filePath);
-            automatedValue = config.OperationId.ToLower();
+            automatedValue = config.OperationId.ToLower().Trim();
 
             if (validateEmptyField(control, eprWarning))
             {
@@ -430,7 +431,7 @@ namespace MapActionToolbars
             var dict = new Dictionary<string, string>();
             dict = MapAction.PageLayoutProperties.getLayoutTextElements(_pMxDoc, targetMapFrame);
             //Update form text boxes with values from the map
-            if (dict.ContainsKey("glide_no")) {  mapValue = dict["glide_no"]; }
+            if (dict.ContainsKey("glide_no")) {  mapValue = dict["glide_no"].Trim(); }
 
             if (validateEmptyField(control, eprWarning))
             {
