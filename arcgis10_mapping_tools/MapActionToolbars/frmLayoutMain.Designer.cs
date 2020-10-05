@@ -141,17 +141,17 @@ namespace MapActionToolbars
             this.gbxAutomated.Controls.Add(this.label9);
             this.gbxAutomated.Controls.Add(this.tbxSpatialReference);
             this.gbxAutomated.Controls.Add(this.label7);
-            this.gbxAutomated.Location = new System.Drawing.Point(6, 266);
+            this.gbxAutomated.Location = new System.Drawing.Point(6, 284);
             this.gbxAutomated.Name = "gbxAutomated";
-            this.gbxAutomated.Size = new System.Drawing.Size(352, 177);
+            this.gbxAutomated.Size = new System.Drawing.Size(352, 159);
             this.gbxAutomated.TabIndex = 43;
             this.gbxAutomated.TabStop = false;
-            this.gbxAutomated.Text = "Automate update";
+            this.gbxAutomated.Text = "Automated update";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 28);
+            this.label1.Location = new System.Drawing.Point(9, 29);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(103, 13);
             this.label1.TabIndex = 50;
@@ -171,7 +171,7 @@ namespace MapActionToolbars
             // btnGlideNo
             // 
             this.btnGlideNo.Image = ((System.Drawing.Image)(resources.GetObject("btnGlideNo.Image")));
-            this.btnGlideNo.Location = new System.Drawing.Point(304, 81);
+            this.btnGlideNo.Location = new System.Drawing.Point(304, 87);
             this.btnGlideNo.Name = "btnGlideNo";
             this.btnGlideNo.Size = new System.Drawing.Size(23, 23);
             this.btnGlideNo.TabIndex = 13;
@@ -181,7 +181,7 @@ namespace MapActionToolbars
             // btnSpatialReference
             // 
             this.btnSpatialReference.Image = ((System.Drawing.Image)(resources.GetObject("btnSpatialReference.Image")));
-            this.btnSpatialReference.Location = new System.Drawing.Point(304, 51);
+            this.btnSpatialReference.Location = new System.Drawing.Point(304, 57);
             this.btnSpatialReference.Name = "btnSpatialReference";
             this.btnSpatialReference.Size = new System.Drawing.Size(23, 23);
             this.btnSpatialReference.TabIndex = 9;
@@ -190,7 +190,7 @@ namespace MapActionToolbars
             // 
             // tbxGlideNumber
             // 
-            this.tbxGlideNumber.Location = new System.Drawing.Point(103, 83);
+            this.tbxGlideNumber.Location = new System.Drawing.Point(103, 89);
             this.tbxGlideNumber.Name = "tbxGlideNumber";
             this.tbxGlideNumber.Size = new System.Drawing.Size(195, 20);
             this.tbxGlideNumber.TabIndex = 12;
@@ -199,7 +199,7 @@ namespace MapActionToolbars
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 87);
+            this.label9.Location = new System.Drawing.Point(9, 89);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(69, 13);
             this.label9.TabIndex = 42;
@@ -207,7 +207,7 @@ namespace MapActionToolbars
             // 
             // tbxSpatialReference
             // 
-            this.tbxSpatialReference.Location = new System.Drawing.Point(103, 54);
+            this.tbxSpatialReference.Location = new System.Drawing.Point(103, 60);
             this.tbxSpatialReference.Name = "tbxSpatialReference";
             this.tbxSpatialReference.Size = new System.Drawing.Size(195, 20);
             this.tbxSpatialReference.TabIndex = 8;
@@ -216,7 +216,7 @@ namespace MapActionToolbars
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 59);
+            this.label7.Location = new System.Drawing.Point(9, 60);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(87, 13);
             this.label7.TabIndex = 38;
@@ -238,7 +238,7 @@ namespace MapActionToolbars
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 14;
-            this.btnSave.Text = "Update";
+            this.btnSave.Text = "Update Map";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -256,14 +256,14 @@ namespace MapActionToolbars
             this.gbxManual.Controls.Add(this.lblTitle);
             this.gbxManual.Location = new System.Drawing.Point(6, 12);
             this.gbxManual.Name = "gbxManual";
-            this.gbxManual.Size = new System.Drawing.Size(352, 248);
+            this.gbxManual.Size = new System.Drawing.Size(352, 266);
             this.gbxManual.TabIndex = 40;
             this.gbxManual.TabStop = false;
             this.gbxManual.Text = "Manually set elements";
             // 
             // nudVersionNumber
             // 
-            this.nudVersionNumber.Location = new System.Drawing.Point(263, 213);
+            this.nudVersionNumber.Location = new System.Drawing.Point(266, 236);
             this.nudVersionNumber.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -286,7 +286,7 @@ namespace MapActionToolbars
             // labelVersionNumber
             // 
             this.labelVersionNumber.AutoSize = true;
-            this.labelVersionNumber.Location = new System.Drawing.Point(216, 215);
+            this.labelVersionNumber.Location = new System.Drawing.Point(219, 238);
             this.labelVersionNumber.Name = "labelVersionNumber";
             this.labelVersionNumber.Size = new System.Drawing.Size(42, 13);
             this.labelVersionNumber.TabIndex = 32;
@@ -294,18 +294,18 @@ namespace MapActionToolbars
             // 
             // tbxDataSources
             // 
-            this.tbxDataSources.Location = new System.Drawing.Point(103, 148);
+            this.tbxDataSources.Location = new System.Drawing.Point(103, 160);
             this.tbxDataSources.Multiline = true;
             this.tbxDataSources.Name = "tbxDataSources";
             this.tbxDataSources.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbxDataSources.Size = new System.Drawing.Size(224, 58);
+            this.tbxDataSources.Size = new System.Drawing.Size(224, 70);
             this.tbxDataSources.TabIndex = 3;
             this.tbxDataSources.TextChanged += new System.EventHandler(this.tbxDataSources_TextChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 148);
+            this.label5.Location = new System.Drawing.Point(9, 160);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(70, 13);
             this.label5.TabIndex = 8;
@@ -313,7 +313,7 @@ namespace MapActionToolbars
             // 
             // tbxMapNumber
             // 
-            this.tbxMapNumber.Location = new System.Drawing.Point(103, 213);
+            this.tbxMapNumber.Location = new System.Drawing.Point(106, 236);
             this.tbxMapNumber.Name = "tbxMapNumber";
             this.tbxMapNumber.Size = new System.Drawing.Size(107, 20);
             this.tbxMapNumber.TabIndex = 4;
@@ -322,7 +322,7 @@ namespace MapActionToolbars
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 216);
+            this.label3.Location = new System.Drawing.Point(9, 239);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(66, 13);
             this.label3.TabIndex = 6;
@@ -334,14 +334,14 @@ namespace MapActionToolbars
             this.tbxSummary.Multiline = true;
             this.tbxSummary.Name = "tbxSummary";
             this.tbxSummary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbxSummary.Size = new System.Drawing.Size(224, 58);
+            this.tbxSummary.Size = new System.Drawing.Size(224, 70);
             this.tbxSummary.TabIndex = 2;
             this.tbxSummary.TextChanged += new System.EventHandler(this.tbxSummary_TextChanged);
             // 
             // lblSummary
             // 
             this.lblSummary.AutoSize = true;
-            this.lblSummary.Location = new System.Drawing.Point(6, 85);
+            this.lblSummary.Location = new System.Drawing.Point(9, 85);
             this.lblSummary.Name = "lblSummary";
             this.lblSummary.Size = new System.Drawing.Size(50, 13);
             this.lblSummary.TabIndex = 2;
@@ -360,7 +360,7 @@ namespace MapActionToolbars
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Location = new System.Drawing.Point(6, 24);
+            this.lblTitle.Location = new System.Drawing.Point(9, 21);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(27, 13);
             this.lblTitle.TabIndex = 0;
@@ -526,7 +526,7 @@ namespace MapActionToolbars
             this.groupBox1.Controls.Add(this.lblDisclaimer);
             this.groupBox1.Location = new System.Drawing.Point(7, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(352, 311);
+            this.groupBox1.Size = new System.Drawing.Size(352, 370);
             this.groupBox1.TabIndex = 41;
             this.groupBox1.TabStop = false;
             // 
@@ -534,16 +534,16 @@ namespace MapActionToolbars
             // 
             this.cboLabelLanguage.AccessibleDescription = "";
             this.cboLabelLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboLabelLanguage.Location = new System.Drawing.Point(94, 273);
+            this.cboLabelLanguage.Location = new System.Drawing.Point(91, 343);
             this.cboLabelLanguage.Name = "cboLabelLanguage";
-            this.cboLabelLanguage.Size = new System.Drawing.Size(201, 21);
+            this.cboLabelLanguage.Size = new System.Drawing.Size(207, 21);
             this.cboLabelLanguage.TabIndex = 114;
             this.cboLabelLanguage.SelectedIndexChanged += new System.EventHandler(this.cboLabelLanguage_SelectedIndexChanged);
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(7, 277);
+            this.label12.Location = new System.Drawing.Point(7, 347);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(84, 13);
             this.label12.TabIndex = 113;
@@ -552,7 +552,7 @@ namespace MapActionToolbars
             // btnUpdateTimezone
             // 
             this.btnUpdateTimezone.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateTimezone.Image")));
-            this.btnUpdateTimezone.Location = new System.Drawing.Point(304, 239);
+            this.btnUpdateTimezone.Location = new System.Drawing.Point(304, 309);
             this.btnUpdateTimezone.Name = "btnUpdateTimezone";
             this.btnUpdateTimezone.Size = new System.Drawing.Size(23, 23);
             this.btnUpdateTimezone.TabIndex = 109;
@@ -561,7 +561,7 @@ namespace MapActionToolbars
             // 
             // tbxTimezone
             // 
-            this.tbxTimezone.Location = new System.Drawing.Point(91, 241);
+            this.tbxTimezone.Location = new System.Drawing.Point(91, 311);
             this.tbxTimezone.Name = "tbxTimezone";
             this.tbxTimezone.Size = new System.Drawing.Size(207, 20);
             this.tbxTimezone.TabIndex = 108;
@@ -570,7 +570,7 @@ namespace MapActionToolbars
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 244);
+            this.label8.Location = new System.Drawing.Point(7, 314);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(56, 13);
             this.label8.TabIndex = 55;
@@ -609,7 +609,7 @@ namespace MapActionToolbars
             // btnUpdateProducedBy
             // 
             this.btnUpdateProducedBy.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateProducedBy.Image")));
-            this.btnUpdateProducedBy.Location = new System.Drawing.Point(304, 195);
+            this.btnUpdateProducedBy.Location = new System.Drawing.Point(304, 265);
             this.btnUpdateProducedBy.Name = "btnUpdateProducedBy";
             this.btnUpdateProducedBy.Size = new System.Drawing.Size(23, 23);
             this.btnUpdateProducedBy.TabIndex = 107;
@@ -619,7 +619,7 @@ namespace MapActionToolbars
             // btnUpdateDonorCredits
             // 
             this.btnUpdateDonorCredits.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateDonorCredits.Image")));
-            this.btnUpdateDonorCredits.Location = new System.Drawing.Point(304, 131);
+            this.btnUpdateDonorCredits.Location = new System.Drawing.Point(304, 147);
             this.btnUpdateDonorCredits.Name = "btnUpdateDonorCredits";
             this.btnUpdateDonorCredits.Size = new System.Drawing.Size(23, 23);
             this.btnUpdateDonorCredits.TabIndex = 105;
@@ -628,7 +628,7 @@ namespace MapActionToolbars
             // 
             // tbxMapProducer
             // 
-            this.tbxMapProducer.Location = new System.Drawing.Point(91, 177);
+            this.tbxMapProducer.Location = new System.Drawing.Point(91, 247);
             this.tbxMapProducer.Multiline = true;
             this.tbxMapProducer.Name = "tbxMapProducer";
             this.tbxMapProducer.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -639,7 +639,7 @@ namespace MapActionToolbars
             // lblOrganisation
             // 
             this.lblOrganisation.AutoSize = true;
-            this.lblOrganisation.Location = new System.Drawing.Point(6, 180);
+            this.lblOrganisation.Location = new System.Drawing.Point(7, 247);
             this.lblOrganisation.Name = "lblOrganisation";
             this.lblOrganisation.Size = new System.Drawing.Size(73, 13);
             this.lblOrganisation.TabIndex = 8;
@@ -647,18 +647,18 @@ namespace MapActionToolbars
             // 
             // tbxDonorCredit
             // 
-            this.tbxDonorCredit.Location = new System.Drawing.Point(91, 113);
+            this.tbxDonorCredit.Location = new System.Drawing.Point(91, 147);
             this.tbxDonorCredit.Multiline = true;
             this.tbxDonorCredit.Name = "tbxDonorCredit";
             this.tbxDonorCredit.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbxDonorCredit.Size = new System.Drawing.Size(207, 58);
+            this.tbxDonorCredit.Size = new System.Drawing.Size(207, 92);
             this.tbxDonorCredit.TabIndex = 104;
             this.tbxDonorCredit.TextChanged += new System.EventHandler(this.tbxDonorCredit_TextChanged);
             // 
             // lblDonorCredits
             // 
             this.lblDonorCredits.AutoSize = true;
-            this.lblDonorCredits.Location = new System.Drawing.Point(6, 113);
+            this.lblDonorCredits.Location = new System.Drawing.Point(7, 147);
             this.lblDonorCredits.Name = "lblDonorCredits";
             this.lblDonorCredits.Size = new System.Drawing.Size(70, 13);
             this.lblDonorCredits.TabIndex = 2;
@@ -670,7 +670,7 @@ namespace MapActionToolbars
             this.tbxDisclaimer.Multiline = true;
             this.tbxDisclaimer.Name = "tbxDisclaimer";
             this.tbxDisclaimer.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbxDisclaimer.Size = new System.Drawing.Size(207, 58);
+            this.tbxDisclaimer.Size = new System.Drawing.Size(207, 92);
             this.tbxDisclaimer.TabIndex = 102;
             this.tbxDisclaimer.TextChanged += new System.EventHandler(this.tbxDisclaimer_TextChanged);
             // 
