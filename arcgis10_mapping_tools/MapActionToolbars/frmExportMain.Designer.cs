@@ -165,6 +165,7 @@
             this.tabPageUser = new System.Windows.Forms.TabPage();
             this.btnLayoutRight = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.tbxVersionNumber = new System.Windows.Forms.TextBox();
             this.labelVersionNumber = new System.Windows.Forms.Label();
             this.label48 = new System.Windows.Forms.Label();
             this.tbxMapNumber = new System.Windows.Forms.TextBox();
@@ -189,7 +190,6 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.tabExportTool = new System.Windows.Forms.TabControl();
-            this.tbxVersionNumber = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dtEmp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapTitleError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMaptitleWarning)).BeginInit();
@@ -1479,6 +1479,7 @@
             // 
             // checkedListBoxThemes
             // 
+            this.checkedListBoxThemes.CheckOnClick = true;
             this.checkedListBoxThemes.FormattingEnabled = true;
             this.checkedListBoxThemes.Location = new System.Drawing.Point(84, 20);
             this.checkedListBoxThemes.Name = "checkedListBoxThemes";
@@ -1531,6 +1532,14 @@
             this.groupBox8.TabIndex = 0;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Identification";
+            // 
+            // tbxVersionNumber
+            // 
+            this.tbxVersionNumber.Location = new System.Drawing.Point(288, 21);
+            this.tbxVersionNumber.Name = "tbxVersionNumber";
+            this.tbxVersionNumber.ReadOnly = true;
+            this.tbxVersionNumber.Size = new System.Drawing.Size(64, 20);
+            this.tbxVersionNumber.TabIndex = 31;
             // 
             // labelVersionNumber
             // 
@@ -1785,14 +1794,6 @@
             this.tabExportTool.TabIndex = 1;
             this.tabExportTool.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabExportTool_Selected);
             // 
-            // tbxVersionNumber
-            // 
-            this.tbxVersionNumber.Location = new System.Drawing.Point(288, 21);
-            this.tbxVersionNumber.Name = "tbxVersionNumber";
-            this.tbxVersionNumber.ReadOnly = true;
-            this.tbxVersionNumber.Size = new System.Drawing.Size(64, 20);
-            this.tbxVersionNumber.TabIndex = 31;
-            // 
             // frmExportMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1960,7 +1961,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.CheckedListBox checkedListBoxThemes;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.TabPage tabPageLayout;
         private System.Windows.Forms.Button btnUserRight;
@@ -2053,5 +2053,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbxVersionNumber;
+        protected System.Windows.Forms.CheckedListBox checkedListBoxThemes;
     }
 }

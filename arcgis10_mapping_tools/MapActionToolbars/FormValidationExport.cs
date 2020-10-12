@@ -481,14 +481,20 @@ namespace MapActionToolbars
         public static string validateTheme(Control control, ErrorProvider epr)
         {
             epr.SetIconPadding(control, 5);
-            if (validateEmptyField(control, epr))
+            CheckedListBox clb = control as CheckedListBox;
+            if (clb is null) { return "Blank"; }
+            if (clb.Items.Count == 0)
             {
-                return "Valid";
-            }
-            else
-            {
+                epr.SetError(control, "Themes were not loaded! Check the XML");
                 return "Blank";
             }
+            if (clb.CheckedItems.Count == 0)
+            {
+                epr.SetError(control, "At least one theme should be selected");
+                return "Blank";
+            }
+            epr.SetError(control, "");
+            return "Valid";
         }
 
         public static string validateCountry(Control control, ErrorProvider epr)
