@@ -485,7 +485,7 @@ namespace MapActionToolbars
             if (clb is null) { return "Blank"; }
             if (clb.Items.Count == 0)
             {
-                epr.SetError(control, "Themes were not loaded! Check the XML");
+                epr.SetError(control, "Themes were not loaded! Check the cmf_description.json file");
                 return "Blank";
             }
             if (clb.CheckedItems.Count == 0)

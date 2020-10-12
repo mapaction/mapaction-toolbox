@@ -89,6 +89,7 @@ namespace MapActionToolbars
                 else
                 {
                     this.Close();
+                    // TODO  this will cause a crash when the tool button now calls showdialog
                 }
             }
             else
