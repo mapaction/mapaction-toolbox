@@ -190,6 +190,7 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.tabExportTool = new System.Windows.Forms.TabControl();
+            this.eprCountryError = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dtEmp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMapTitleError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eprMaptitleWarning)).BeginInit();
@@ -263,6 +264,7 @@
             this.groupBox6.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabExportTool.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eprCountryError)).BeginInit();
             this.SuspendLayout();
             // 
             // btnClose
@@ -1591,6 +1593,7 @@
             this.tbxCountry.ReadOnly = true;
             this.tbxCountry.Size = new System.Drawing.Size(264, 20);
             this.tbxCountry.TabIndex = 5;
+            this.tbxCountry.TextChanged += new System.EventHandler(this.tbxCountry_TextChanged);
             // 
             // label51
             // 
@@ -1794,6 +1797,10 @@
             this.tabExportTool.TabIndex = 1;
             this.tabExportTool.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabExportTool_Selected);
             // 
+            // eprCountryError
+            // 
+            this.eprCountryError.ContainerControl = this;
+            // 
             // frmExportMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1888,6 +1895,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabExportTool.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.eprCountryError)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2054,5 +2062,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbxVersionNumber;
         protected System.Windows.Forms.CheckedListBox checkedListBoxThemes;
+        private System.Windows.Forms.ErrorProvider eprCountryError;
     }
 }

@@ -171,7 +171,7 @@ namespace MapActionToolbars
             _glideNumberValidationResult = FormValidationExport.validateGlideNumber(tbxGlideNo, eprGlideNumberWarning, eprGlideNumberError);
             _locationValidationResult = FormValidationExport.validateLocation(tbxImageLocation, eprLocationWarning);
             _themeValidationResult = FormValidationExport.validateTheme(checkedListBoxThemes, eprThemeWarning);
-            _countryValidationResult = FormValidationExport.validateCountry(tbxCountry, eprCountryWarning);
+            _countryValidationResult = FormValidationExport.validateCountry(tbxCountry, eprCountryWarning, eprCountryError);
             _statusValidationResult = FormValidationExport.validateStatus(cboStatus, eprStatusWarning);
             _accessValidationResult = FormValidationExport.validateAccess(cboAccess, eprAccessWarning);
             _accessNoteValidationResult = FormValidationExport.validateAccessNote(tbxImageAccessNotes, eprAccessNoteWarning);
@@ -995,6 +995,11 @@ namespace MapActionToolbars
             _locationValidationResult = FormValidationExport.validateLocation(tbxImageLocation, eprLocationWarning);
         }
 
+        private void tbxCountry_TextChanged(object sender, EventArgs e)
+        {
+            _countryValidationResult = FormValidationExport.validateCountry(tbxCountry, eprCountryWarning, eprCountryError);
+        }
+
         private void cboStatus_TextChanged(object sender, EventArgs e)
         {
             _statusValidationResult = FormValidationExport.validateStatus(cboStatus, eprStatusWarning);
@@ -1131,5 +1136,6 @@ namespace MapActionToolbars
                 this.nudKmlResolution.Enabled = false;
             }
         }
+
     }
 }

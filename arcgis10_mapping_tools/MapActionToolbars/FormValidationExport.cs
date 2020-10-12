@@ -497,15 +497,31 @@ namespace MapActionToolbars
             return "Valid";
         }
 
-        public static string validateCountry(Control control, ErrorProvider epr)
+        public static string validateCountry(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
-            epr.SetIconPadding(control, 5);
-            if (validateEmptyField(control, epr))
+            eprWarning.SetIconPadding(control, 5);
+            eprError.SetIconPadding(control, 5);
+            string automatedValue = string.Empty;
+            var config = MapAction.Utilities.getEventConfigValues(MapAction.Utilities.getEventConfigFilePath());
+            automatedValue = MapAction.Utilities.getCountries().nameFromAlpha3Code(config.AffectedCountryIso3); 
+            if (validateEmptyField(control, eprWarning))
             {
-                return "Valid";
+                if (control.Text.Trim() != automatedValue && control.Text != string.Empty)
+                {
+                    eprError.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
+                    eprError.SetError(control, "Text differs from the country name specified in event_description.json");
+                    return "Error";
+                }
+                else
+                {
+                    eprError.SetError(control, "");
+                    return "Valid";
+                }
             }
             else
             {
+                eprError.SetError(control, "");
+                validateEmptyField(control, eprWarning);
                 return "Blank";
             }
         }
