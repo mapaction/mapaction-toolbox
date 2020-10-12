@@ -481,25 +481,47 @@ namespace MapActionToolbars
         public static string validateTheme(Control control, ErrorProvider epr)
         {
             epr.SetIconPadding(control, 5);
-            if (validateEmptyField(control, epr))
+            CheckedListBox clb = control as CheckedListBox;
+            if (clb is null) { return "Blank"; }
+            if (clb.Items.Count == 0)
             {
-                return "Valid";
-            }
-            else
-            {
+                epr.SetError(control, "Themes were not loaded! Check the cmf_description.json file");
                 return "Blank";
             }
+            if (clb.CheckedItems.Count == 0)
+            {
+                epr.SetError(control, "At least one theme should be selected");
+                return "Blank";
+            }
+            epr.SetError(control, "");
+            return "Valid";
         }
 
-        public static string validateCountry(Control control, ErrorProvider epr)
+        public static string validateCountry(Control control, ErrorProvider eprWarning, ErrorProvider eprError)
         {
-            epr.SetIconPadding(control, 5);
-            if (validateEmptyField(control, epr))
+            eprWarning.SetIconPadding(control, 5);
+            eprError.SetIconPadding(control, 5);
+            string automatedValue = string.Empty;
+            var config = MapAction.Utilities.getEventConfigValues(MapAction.Utilities.getEventConfigFilePath());
+            automatedValue = MapAction.Utilities.getCountries().nameFromAlpha3Code(config.AffectedCountryIso3); 
+            if (validateEmptyField(control, eprWarning))
             {
-                return "Valid";
+                if (control.Text.Trim() != automatedValue && control.Text != string.Empty)
+                {
+                    eprError.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
+                    eprError.SetError(control, "Text differs from the country name specified in event_description.json");
+                    return "Error";
+                }
+                else
+                {
+                    eprError.SetError(control, "");
+                    return "Valid";
+                }
             }
             else
             {
+                eprError.SetError(control, "");
+                validateEmptyField(control, eprWarning);
                 return "Blank";
             }
         }

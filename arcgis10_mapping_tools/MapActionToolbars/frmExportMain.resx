@@ -258,10 +258,10 @@
 </value>
   </data>
   <metadata name="eprMapDocumentError.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 56</value>
+    <value>984, 17</value>
   </metadata>
   <metadata name="eprMapDocumentWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>194, 56</value>
+    <value>1161, 17</value>
   </metadata>
   <data name="eprMapDocumentWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -288,10 +288,10 @@
 </value>
   </data>
   <metadata name="eprDatumError.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>391, 56</value>
+    <value>1358, 17</value>
   </metadata>
   <metadata name="eprDatumWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>524, 56</value>
+    <value>17, 56</value>
   </metadata>
   <data name="eprDatumWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -318,10 +318,10 @@
 </value>
   </data>
   <metadata name="eprProjectionError.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>677, 56</value>
+    <value>170, 56</value>
   </metadata>
   <metadata name="eprProjectionWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>828, 56</value>
+    <value>321, 56</value>
   </metadata>
   <data name="eprProjectionWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -580,10 +580,10 @@
 </value>
   </data>
   <metadata name="eprScaleError.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 95</value>
+    <value>492, 56</value>
   </metadata>
   <metadata name="eprScaleWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>141, 95</value>
+    <value>616, 56</value>
   </metadata>
   <data name="eprScaleWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -842,10 +842,10 @@
 </value>
   </data>
   <metadata name="eprDateError.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>285, 95</value>
+    <value>760, 56</value>
   </metadata>
   <metadata name="eprDateWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>407, 95</value>
+    <value>882, 56</value>
   </metadata>
   <data name="eprDateWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -872,7 +872,7 @@
 </value>
   </data>
   <metadata name="eprTimeWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>671, 95</value>
+    <value>1146, 56</value>
   </metadata>
   <data name="eprTimeWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -899,10 +899,10 @@
 </value>
   </data>
   <metadata name="eprTimeError.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>549, 95</value>
+    <value>1024, 56</value>
   </metadata>
   <metadata name="eprPaperWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>813, 95</value>
+    <value>1288, 56</value>
   </metadata>
   <data name="eprPaperWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1161,13 +1161,13 @@
 </value>
   </data>
   <metadata name="eprPaperError.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 134</value>
+    <value>17, 95</value>
   </metadata>
   <metadata name="eprDataSourcesError.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>144, 134</value>
+    <value>144, 95</value>
   </metadata>
   <metadata name="eprDataSourcesWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>308, 134</value>
+    <value>308, 95</value>
   </metadata>
   <data name="eprDataSourcesWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1194,10 +1194,10 @@
 </value>
   </data>
   <metadata name="eprOperationIdError.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>492, 134</value>
+    <value>492, 95</value>
   </metadata>
   <metadata name="eprOperationIdWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>654, 134</value>
+    <value>654, 95</value>
   </metadata>
   <data name="eprOperationIdWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1224,10 +1224,10 @@
 </value>
   </data>
   <metadata name="eprGlideNumberError.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>836, 134</value>
+    <value>836, 95</value>
   </metadata>
   <metadata name="eprGlideNumberWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 173</value>
+    <value>1005, 95</value>
   </metadata>
   <data name="eprGlideNumberWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1254,7 +1254,7 @@
 </value>
   </data>
   <metadata name="eprLocationWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>206, 173</value>
+    <value>1194, 95</value>
   </metadata>
   <data name="eprLocationWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1281,7 +1281,7 @@
 </value>
   </data>
   <metadata name="eprThemeWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>368, 173</value>
+    <value>1356, 95</value>
   </metadata>
   <data name="eprThemeWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1335,7 +1335,7 @@
 </value>
   </data>
   <metadata name="eprStatusWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>521, 173</value>
+    <value>17, 134</value>
   </metadata>
   <data name="eprStatusWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1362,7 +1362,7 @@
 </value>
   </data>
   <metadata name="eprAccessWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>670, 173</value>
+    <value>166, 134</value>
   </metadata>
   <data name="eprAccessWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1389,7 +1389,7 @@
 </value>
   </data>
   <metadata name="eprAccessNoteWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>822, 173</value>
+    <value>318, 134</value>
   </metadata>
   <data name="eprAccessNoteWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1416,7 +1416,7 @@
 </value>
   </data>
   <metadata name="eprQualityControlWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 212</value>
+    <value>497, 134</value>
   </metadata>
   <data name="eprQualityControlWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1443,7 +1443,7 @@
 </value>
   </data>
   <metadata name="eprLanguageWarning.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>361, 212</value>
+    <value>841, 134</value>
   </metadata>
   <data name="eprLanguageWarning.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1470,10 +1470,10 @@
 </value>
   </data>
   <metadata name="eprLanguageError.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>212, 212</value>
+    <value>692, 134</value>
   </metadata>
   <metadata name="eprImageryDate.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>530, 212</value>
+    <value>1010, 134</value>
   </metadata>
   <data name="eprImageryDate.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1499,4 +1499,7 @@
         AAD4HwAA//8AAA==
 </value>
   </data>
+  <metadata name="eprCountryError.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>845, 17</value>
+  </metadata>
 </root>
