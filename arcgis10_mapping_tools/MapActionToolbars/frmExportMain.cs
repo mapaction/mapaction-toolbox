@@ -232,9 +232,6 @@ namespace MapActionToolbars
             _languageISO2 = config.LanguageIso2 == null ? "en" : config.LanguageIso2;
             tbxLanguage.Text = this.languageCodeLookup.lookupA2LanguageCode(_languageISO2, LanguageCodeFields.Language); ;
             
-            // Set the status, version, access, location, theme etc from an earlier export's XML if it exists:
-            setValuesFromExistingXML();
-
             // Populate dialog items that are drawn directly from the map's properties
             tbxMapDocument.Text = ArcMap.Application.Document.Title; // no longer drawn from a text element
             // Set the spatial reference information on load
@@ -242,6 +239,10 @@ namespace MapActionToolbars
             dictSpatialRef  = MapAction.Utilities.getDataFrameSpatialReference(_pMxDoc, _targetMapFrame);
             tbxDatum.Text = dictSpatialRef["datum"];
             tbxProjection.Text = dictSpatialRef["projection"];
+
+            // Set the status, version, access, location, theme etc from an earlier export's XML if it exists:
+            // It uses tbxMapDocument.Text so has to come after that is set
+            setValuesFromExistingXML();
 
             // Set the 'metadata' tab elements
             var date = System.DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
@@ -307,7 +308,8 @@ namespace MapActionToolbars
             // Presume Initial Version
             cboStatus.Text = _statusNew;
 
-            string[] xmlPathParts = { tbxExportZipPath.Text, this.tbxMapNumber.Text, "V" + this.tbxVersionNumber.Text, this.tbxMapDocument.Text + ".xml" };
+            string[] xmlPathParts = { tbxExportZipPath.Text, this.tbxMapNumber.Text, "V" + this.tbxVersionNumber.Text,
+                System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text) + ".xml" };
             
             string xmlPath = System.IO.Path.Combine(xmlPathParts);
 
@@ -320,15 +322,18 @@ namespace MapActionToolbars
                 {
                     if (usEle.Name.ToString().Equals("status"))
                     {
-                        cboStatus.Text = usEle.Value.ToString();
+                        //cboStatus.Text = usEle.Value.ToString();
+                        cboStatus.SelectedIndex = cboStatus.Items.IndexOf(usEle.Value.ToString());
                     }
                     else if (usEle.Name.ToString().Equals("access"))
                     {
-                        cboAccess.Text = usEle.Value.ToString();
+                        //cboAccess.Text = usEle.Value.ToString();
+                        cboAccess.SelectedIndex = cboAccess.Items.IndexOf(usEle.Value.ToString());
                     }
                     else if (usEle.Name.ToString().Equals("qclevel"))
                     {
-                        cboQualityControl.Text = usEle.Value.ToString();
+                        //cboQualityControl.Text = usEle.Value.ToString();
+                        cboQualityControl.SelectedIndex = cboQualityControl.Items.IndexOf(usEle.Value.ToString());
                     }
                     else if (usEle.Name.ToString().Equals("location"))
                     {
@@ -364,7 +369,7 @@ namespace MapActionToolbars
             }
             if (tbxVersionNumber.Text == _initialVersionNumber)
             {
-                cboStatus.Text = _statusNew;
+                cboStatus.SelectedIndex = cboStatus.Items.IndexOf(_statusNew);
             }
             else
             {
@@ -373,7 +378,7 @@ namespace MapActionToolbars
                     ((!(cboStatus.Text.Equals(_statusCorrection)) && (!(cboStatus.Text.Equals(_statusUpdate))))))
                 {
                     // Set to 'Update'
-                    cboStatus.Text = _statusUpdate;
+                    cboStatus.SelectedIndex = cboStatus.Items.IndexOf(_statusUpdate);
                 }
             }
         }
