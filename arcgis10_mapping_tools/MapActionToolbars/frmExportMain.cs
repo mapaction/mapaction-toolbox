@@ -240,7 +240,11 @@ namespace MapActionToolbars
             tbxDatum.Text = dictSpatialRef["datum"];
             tbxProjection.Text = dictSpatialRef["projection"];
 
-            // Set the status, version, access, location, theme etc from an earlier export's XML if it exists:
+            // default to public first, to save darren's clicking
+            cboAccess.SelectedIndex = cboAccess.Items.IndexOf("Public");
+            // (Re)set the status, version, access, location, theme etc from an earlier export's XML if it exists.
+            // It will look in this version's folder first (in case the same version has been exported twice) and if 
+            // not found will try the previous version's folder, if it exists. If not found then default values will remain.
             // It uses tbxMapDocument.Text so has to come after that is set
             setValuesFromExistingXML();
 
@@ -299,7 +303,11 @@ namespace MapActionToolbars
             //this.tbxVersionNumber.Text = mapVersion;
         }
 
-        
+        private bool checkValueIsValid(XElement ele, ComboBox cbo)
+        {
+            return cbo.Items.IndexOf(ele.Value.ToString()) != -1;
+        }
+
         private void setValuesFromExistingXML()
         {
             // re-read values from a previous export 
@@ -308,11 +316,19 @@ namespace MapActionToolbars
             // Presume Initial Version
             cboStatus.Text = _statusNew;
 
-            string[] xmlPathParts = { tbxExportZipPath.Text, this.tbxMapNumber.Text, "V" + this.tbxVersionNumber.Text,
+            string vString = "V" + this.tbxVersionNumber.Text;
+            string[] xmlPathParts = { tbxExportZipPath.Text, this.tbxMapNumber.Text, vString,
                 System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text) + ".xml" };
             
             string xmlPath = System.IO.Path.Combine(xmlPathParts);
 
+            if (!File.Exists(xmlPath))
+            {
+                // look at the xml for the previous version's export if an export of this version does not already exist
+                vString = "V" + (int.Parse(this.tbxVersionNumber.Text) - 1);
+                xmlPathParts[2] = vString;
+                xmlPath = System.IO.Path.Combine(xmlPathParts);
+            }
             // Does the xmlPath already exist?
             if (File.Exists(xmlPath))
             {
@@ -320,17 +336,20 @@ namespace MapActionToolbars
                 XDocument doc = XDocument.Load(xmlPath);
                 foreach (XElement usEle in doc.Root.Descendants())
                 {
-                    if (usEle.Name.ToString().Equals("status"))
+                    if (usEle.Value == "" | usEle.Value == string.Empty)
                     {
-                        //cboStatus.Text = usEle.Value.ToString();
+                        continue;
+                    }
+                    if (usEle.Name.ToString().Equals("status") && checkValueIsValid(usEle, cboStatus))
+                    {
                         cboStatus.SelectedIndex = cboStatus.Items.IndexOf(usEle.Value.ToString());
                     }
-                    else if (usEle.Name.ToString().Equals("access"))
+                    else if (usEle.Name.ToString().Equals("access") && checkValueIsValid(usEle, cboAccess))
                     {
                         //cboAccess.Text = usEle.Value.ToString();
                         cboAccess.SelectedIndex = cboAccess.Items.IndexOf(usEle.Value.ToString());
                     }
-                    else if (usEle.Name.ToString().Equals("qclevel"))
+                    else if (usEle.Name.ToString().Equals("qclevel") && checkValueIsValid(usEle, cboQualityControl))
                     {
                         //cboQualityControl.Text = usEle.Value.ToString();
                         cboQualityControl.SelectedIndex = cboQualityControl.Items.IndexOf(usEle.Value.ToString());
