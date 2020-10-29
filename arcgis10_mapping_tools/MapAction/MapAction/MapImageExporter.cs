@@ -479,15 +479,20 @@ namespace MapAction
                 gp.AddToolbox(Utilities.getExportGPToolboxPath());
                 IVariantArray parameters = new VarArray();
 
-                parameters.Add(this.m_MapDoc.DocumentFilename);
+                //parameters.Add(this.m_MapDoc.DocumentFilename);
+                // HSG: the python script was already set to use current document if first parameter is None, however it's unclear how 
+                // to pass None from C# (null doesn't work, empty string doesn't work). 
+                // Therefore python has been changed to use current document if first parameter is None, empty string, or "#".      
+                // So now we pass "#" to make export use docuement as it is currently rather than the last-saved MXD on disk
+                parameters.Add("#");
                 parameters.Add(this.m_ExportDir);
                 parameters.Add(this.m_ExportBaseFileName);
                 parameters.Add(multiplePageParameter);
 
-                // TODO: Deal with having to save doc. Just use current document in tool by default? Make MXD optional parameter?
-                // Execute the tool.
+                // ~~TODO: Deal with having to save doc. Just use current document in tool by default? Make MXD optional parameter?~~ DONE
+                // Execute the tool.  
                 object sev = null;
-                IGeoProcessorResult2 dpp_export_result;
+                IGeoProcessorResult2 dpp_export_result = null;
 
                 try
                 {
@@ -499,12 +504,13 @@ namespace MapAction
                     Console.WriteLine(ex.Message);
                     string errorMsgs = gp.GetMessages(ref sev);
                     Console.WriteLine(errorMsgs);
-                    throw;
+                    // TODO 2020-10-17 don't throw, that kills arcmap. Explain! MXD needs to be saved with ddp enabled.
+                    //throw;
                 }
 
                 if (dpp_export_result == null)
                 {
-                    String gp_error_messages = dpp_export_result.GetMessages(2);
+                    String gp_error_messages = gp.GetMessages(2);
                     throw new Exception(gp_error_messages);
                 }
                 else
