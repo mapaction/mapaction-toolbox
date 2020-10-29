@@ -558,14 +558,16 @@ namespace MapActionToolbars
                 // if exact match do a multifile export, else default to single file.
                 bool isMultiplePage = (tbxMapbookMode.Text == "Multiple PDF Files");
                 var exportType = isMultiplePage ? MapActionExportTypes.pdf_ddp_multifile : MapActionExportTypes.pdf_ddp_singlefile;
-                // TODO handle exception bubbling up to here
                 string exportedFilePattern = mie.exportDataDrivenPagesImages(exportType);
-
+                if (exportedFilePattern is null)
+                {
+                    individualPartsSuccessful = false;
+                }
                 dictFilePaths = new Dictionary<string,string>();
-                // TODO: this is a bit of a hack to work with multiple page pdf.
-                // This will add all PDF files which match teh glob. There is the potenital that this
+                // This will add all PDF files which match the glob. There is the potential that this
                 // could include some that were not exported by this export event (but this should be unlikely 
-                // given the previous check and warn code)
+                // given the previous check and warn code, and the changes to filename generation for each type of ddp 
+                // export)
                 dictFilePaths["pdf"] = exportedFilePattern; // exportPathFileName + "*.pdf";
                 // just add in extra values here for the metadata export to work.
                 // calculating the actual size for DDP is too hard and 
