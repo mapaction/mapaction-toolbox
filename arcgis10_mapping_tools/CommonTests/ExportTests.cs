@@ -133,7 +133,7 @@ namespace MapAction.tests
         }
 
 
-        [TestCase(MapActionExportTypes.pdf, null, 300)]
+        [TestCase(MapActionExportTypes.pdf_non_ddp , null, 300)]
         [TestCase(MapActionExportTypes.jpeg, null, 300)]
         [TestCase(MapActionExportTypes.jpeg, "Main map", 30)]
         [TestCase(MapActionExportTypes.emf, "Main map", 30)]

@@ -465,12 +465,12 @@ namespace MapActionToolbars
             {
                 // This should not occur unless more than one map document has the same MA number and version because the ultimate name of 
                 // a file depends on (the MA number, the version number)->folder, and the ("map name")->filename. 
-                // Currently "map name" is drawn from the layout 
-                // element so a user could change the map name without changing the MA / Version number, resulting in a different set of 
-                // files in the same folder.
-                // We will ultimately disable that and draw map name directly from the mxd filename in which case a different output filename 
+                // Previously "map name" was drawn from the layout element so a user could change the map name without changing 
+                // the MA / Version number, resulting in a different set of files in the same folder.
+                // With that disabled and the map name drawn directly from the mxd filename, now a different output filename 
                 // existing in the folder would imply that two MXDs have the same MA and V numbers.
                 // Either scenario should at least cause a head-scratch-prompting warning to make sure everything is as intended.
+                // For example this triggered when DDP export ws stripping everything after first dot in a filename.
                 DialogResult dr = MessageBox.Show("The output folder for this map version:" + Environment.NewLine +
                     exportFolder + Environment.NewLine +
                     "already contains files that won't be overwritten by this export. This might suggest that another MXD already " +
@@ -557,13 +557,18 @@ namespace MapActionToolbars
                 MapImageExporter mie = new MapImageExporter(pMapDoc, exportPathFileName, "Main map");
                 // if exact match do a multifile export, else default to single file.
                 bool isMultiplePage = (tbxMapbookMode.Text == "Multiple PDF Files");
-                mie.exportDataDrivenPagesImages(isMultiplePage);
-
+                var exportType = isMultiplePage ? MapActionExportTypes.pdf_ddp_multifile : MapActionExportTypes.pdf_ddp_singlefile;
+                string exportedFilePattern = mie.exportDataDrivenPagesImages(exportType);
+                if (exportedFilePattern is null)
+                {
+                    individualPartsSuccessful = false;
+                }
                 dictFilePaths = new Dictionary<string,string>();
-                // TODO: this is a bit of a hack to work with multiple page pdf.
-                // This will add all PDF files which match teh glob. There is the potenital that this
-                // could include some that were not exported by this export event.
-                dictFilePaths["pdf"] = exportPathFileName + "*.pdf";
+                // This will add all PDF files which match the glob. There is the potential that this
+                // could include some that were not exported by this export event (but this should be unlikely 
+                // given the previous check and warn code, and the changes to filename generation for each type of ddp 
+                // export)
+                dictFilePaths["pdf"] = exportedFilePattern; // exportPathFileName + "*.pdf";
                 // just add in extra values here for the metadata export to work.
                 // calculating the actual size for DDP is too hard and 
                 // not worth while.
@@ -803,8 +808,8 @@ namespace MapActionToolbars
             // refactored export code into non-static class which handles thumbnail filename and pixel size limits 
             MapImageExporter layoutexporter = new MapImageExporter(pMapDoc, exportPathFileName, null);
             // the ones added to the dictionary will be the ones that get added to the zip file
-            dict[MapActionExportTypes.pdf.ToString()] =  
-                layoutexporter.exportImage(MapActionExportTypes.pdf, Convert.ToUInt16(nudPdfResolution.Value));
+            dict[MapActionExportTypes.pdf_non_ddp.ToString()] =  
+                layoutexporter.exportImage(MapActionExportTypes.pdf_non_ddp, Convert.ToUInt16(nudPdfResolution.Value));
             dict[MapActionExportTypes.jpeg.ToString()] =  
                 layoutexporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudJpegResolution.Value));
             if (checkBoxEmf.Checked == true)

@@ -11,7 +11,7 @@ namespace MapAction
     /// </summary>
     public enum MapActionExportTypes
     {
-        pdf,
+        pdf_non_ddp,
         eps,
         ai,
         bmp,
@@ -23,7 +23,9 @@ namespace MapAction
         jpeg,
         png_thumbnail_zip,
         png_thumbnail_local,
-        kmz
+        kmz,
+        pdf_ddp_singlefile,
+        pdf_ddp_multifile
     }
 
     /// <summary>
