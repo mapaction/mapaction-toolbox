@@ -148,14 +148,14 @@ namespace MapAction
                 {
                     StringBuilder outputStringBuilder = new StringBuilder();
 
-                    if (File.Exists(zipFileName))
+                    if (File.Exists(savePath))
                     {
                         // If the file already exists then 7zip will add new files to existing zip, overwriting any in there 
                         // of same name. That's ok if repeating the same export but if we have switched from normal export to DDP 
                         // or vice versa, then we end up with both in there.
                         // If it already exists and is open / can't be overwritten then this will raise exception which we catch then 
                         // inform the user about in calling code
-                        File.Delete(zipFileName);
+                        File.Delete(savePath);
                     }
                     // Configure the process using the StartInfo properties.
                     zipProc.StartInfo.FileName = zipExePath;
