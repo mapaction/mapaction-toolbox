@@ -465,10 +465,9 @@ namespace MapActionToolbars
             {
                 // This should not occur unless more than one map document has the same MA number and version because the ultimate name of 
                 // a file depends on (the MA number, the version number)->folder, and the ("map name")->filename. 
-                // Currently "map name" is drawn from the layout 
-                // element so a user could change the map name without changing the MA / Version number, resulting in a different set of 
-                // files in the same folder.
-                // We will ultimately disable that and draw map name directly from the mxd filename in which case a different output filename 
+                // Previously "map name" was drawn from the layout element so a user could change the map name without changing 
+                // the MA / Version number, resulting in a different set of files in the same folder.
+                // With that disabled and the map name drawn directly from the mxd filename, now a different output filename 
                 // existing in the folder would imply that two MXDs have the same MA and V numbers.
                 // Either scenario should at least cause a head-scratch-prompting warning to make sure everything is as intended.
                 DialogResult dr = MessageBox.Show("The output folder for this map version:" + Environment.NewLine +
