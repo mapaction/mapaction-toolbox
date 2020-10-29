@@ -29,7 +29,7 @@ class Export_mapbook(object):
             self.multiple_files = sp_export_mode.upper()
         else:
             self.multiple_files = 'PDF_SINGLE_FILE'
-            arcpy.AddWarning("Requested mode {0} not valid. set to single PDF file",sp_export_mode)
+            arcpy.AddWarning("Requested mode {0} not valid. set to single PDF file".format(sp_export_mode))
 
     def initialise_params(self):
         # Setup properties.
