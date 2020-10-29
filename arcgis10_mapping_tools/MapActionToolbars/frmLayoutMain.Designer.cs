@@ -153,9 +153,9 @@ namespace MapActionToolbars
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(9, 29);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(103, 13);
+            this.label1.Size = new System.Drawing.Size(81, 13);
             this.label1.TabIndex = 50;
-            this.label1.Text = "Refresh all from map";
+            this.label1.Text = "Reload defaults";
             // 
             // btnUpdateAll
             // 
@@ -581,15 +581,15 @@ namespace MapActionToolbars
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(6, 23);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(103, 13);
+            this.label6.Size = new System.Drawing.Size(139, 13);
             this.label6.TabIndex = 54;
-            this.label6.Text = "Refresh all from map";
+            this.label6.Text = "Reload all from event config";
             // 
             // btnUpdateAllTab2
             // 
             this.btnUpdateAllTab2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUpdateAllTab2.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateAllTab2.Image")));
-            this.btnUpdateAllTab2.Location = new System.Drawing.Point(120, 19);
+            this.btnUpdateAllTab2.Location = new System.Drawing.Point(149, 19);
             this.btnUpdateAllTab2.Name = "btnUpdateAllTab2";
             this.btnUpdateAllTab2.Size = new System.Drawing.Size(34, 23);
             this.btnUpdateAllTab2.TabIndex = 101;
