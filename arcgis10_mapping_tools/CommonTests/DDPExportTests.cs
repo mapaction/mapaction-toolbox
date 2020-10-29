@@ -87,12 +87,12 @@ namespace MapAction.tests
             String searchPattern = String.Format("*.{0}", fileExtention);
 
             int preExportFileCnt = di.GetFiles(searchPattern).Length;
-
+            var exportType = isMultiPage ? MapActionExportTypes.pdf_ddp_multifile : MapActionExportTypes.pdf_ddp_singlefile;
             // do export
             try
             {
                 MapImageExporter mie = new MapImageExporter(this.pMapDoc, baseExportFileName, "Main map");
-                mie.exportDataDrivenPagesImages(isMultiPage);
+                mie.exportDataDrivenPagesImages(exportType);
             }catch (System.Runtime.InteropServices.COMException ce){
                 System.Console.WriteLine("COMException message:");
                 System.Console.WriteLine(ce.Message);

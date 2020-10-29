@@ -78,8 +78,11 @@ namespace MapAction
         }
 
         /// <summary>
-        /// build the output filename according to the MA export conventions, accounting for the different 
-        /// naming of the thumbnail file
+        /// build the fully qualified output filename according to the MA export conventions, 
+        /// accounting for the different naming of the thumbnail file. 
+        /// Also accounts for DDP / mapbook export types, where any dots 
+        /// within the base filename need to be removed otherwise the GP tool will only use the part 
+        /// before the first dot. Returns a glob pattern in the case of multi-file mapbook export.
         /// </summary>
         /// <param name="exportType"></param>
         /// <param name="dpi"></param>
@@ -98,12 +101,29 @@ namespace MapAction
                 return System.IO.Path.Combine(m_ExportDir,
                     m_ExportBaseFileName + "-thumbnail." + fileExt);
             }
+            else if (exportType == MapActionExportTypes.pdf_ddp_multifile)
+            {
+                // return a glob pattern which will match all files exported. NB the export code can't use 
+                // this to feed the gp tool directly: use pdf_ddp_singlefile for that for either ddp type
+                fileExt = "pdf";
+                return System.IO.Path.Combine(m_ExportDir,
+                    m_ExportBaseFileName.Replace(".", "_") + "-mapbook_*." + fileExt);
+            }
+            else if (exportType == MapActionExportTypes.pdf_non_ddp || exportType == MapActionExportTypes.pdf_ddp_singlefile)
+            {
+                fileExt = "pdf";
+            }
             else
             {
-                fileExt = exportType.ToString();
+                fileExt = exportType.ToString(); // all other enum values can be directly tostringed to get the file ext they represent
             }
+
             string fullFileName;
-            if (m_IsLayoutExport)
+            if (exportType == MapActionExportTypes.pdf_ddp_singlefile)
+            { 
+                fullFileName = m_ExportBaseFileName.Replace(".", "_") + "-mapbook." + fileExt;
+            }
+            else if (m_IsLayoutExport)
             {
                 fullFileName = m_ExportBaseFileName + "-" + dpi.ToString() + "dpi." + fileExt;
             }
@@ -280,7 +300,7 @@ namespace MapAction
             IExport docExport;
 
             // The Export*Class() type initializes a new export class of the desired type.
-            if (exportType == MapActionExportTypes.pdf)
+            if (exportType == MapActionExportTypes.pdf_non_ddp)
             { // Set PDF Export options
                 docExport = new ExportPDF() as IExport;
                 IExportPDF iPDF_export = (IExportPDF)docExport;
@@ -344,7 +364,7 @@ namespace MapAction
             }
             else
             {
-                // We can't get here unless the enum is modified
+                // We can't get here unless the enum is modified or we've called this for one of the ddp export types
                 throw new ArgumentException("Unexpected export type requested", "exportType");
                 //return pathFileName;
             }
@@ -367,6 +387,12 @@ namespace MapAction
             {
                 return null;
             }
+
+            if (exportType == MapActionExportTypes.pdf_ddp_singlefile || exportType == MapActionExportTypes.pdf_ddp_multifile)
+            {
+                return exportDataDrivenPagesImages(exportType);
+            }
+
             // TODO we should probably change the filename to reflect a pixel size rather than a dpi - need 
             // to check what downstream things rely on the filename though
             string outFileName = GetExportFilename(exportType, SCREEN_RES_DPI);
@@ -422,6 +448,12 @@ namespace MapAction
             {
                 return null;
             }
+
+            if (exportType == MapActionExportTypes.pdf_ddp_singlefile || exportType == MapActionExportTypes.pdf_ddp_multifile)
+            {
+                return exportDataDrivenPagesImages(exportType);
+            }
+
             string outFileName = GetExportFilename(exportType, dpi);
             IExport docExport = InitializeExporter(exportType);
             docExport.ExportFileName = outFileName;
@@ -465,30 +497,59 @@ namespace MapAction
             return null;
         }
 
-        public void exportDataDrivenPagesImages(bool isMultipleFiles)
+        public string exportDataDrivenPagesImages(MapActionExportTypes exportType)
         {
             // If not DataDrivenPages then call exportImage as normal
             if (!PageLayoutProperties.isDataDrivenPagesEnabled(m_MapDoc))
             {
-                exportImage(MapActionExportTypes.pdf, 300);
+                return exportImage(MapActionExportTypes.pdf_non_ddp, 300);
+            }
+            else if  (!(exportType == MapActionExportTypes.pdf_ddp_singlefile || exportType == MapActionExportTypes.pdf_ddp_multifile))
+            {
+                throw new ArgumentException("Called exportDataDrivenPages with a non-ddp exportType");
             }
             else
             {
-                string multiplePageParameter = isMultipleFiles ? "PDF_MULTIPLE_FILES_PAGE_NAME" : "PDF_SINGLE_FILE";
+                string multiplePageParameter;
+                // regardless of single/multiple file mode, pass the basic filename and folder to the GP export tool
+                string filenameForExporter = GetExportFilename(MapActionExportTypes.pdf_ddp_singlefile, 300);
+                // in the case of multiple files export, we return a glob pattern and with a single file export 
+                // we return the actual filename as normal
+                string filenameForReturn;
+                if (exportType == MapActionExportTypes.pdf_ddp_multifile)
+                {
+                    multiplePageParameter = "PDF_MULTIPLE_FILES_PAGE_NAME";
+                    // nb the python code does not specify resolution for ddp export so it defaults to 300dpi.
+                    // No reason we couldn't pass that parameter down to it as well if we want to in future.
+                    // DPI parameter isn't used by the filename generator in this case anyway
+                    filenameForReturn = GetExportFilename(exportType, 300); 
+                }
+                else
+                {
+                    multiplePageParameter = "PDF_SINGLE_FILE";
+                    filenameForReturn = filenameForExporter;
+                }
                 IGeoProcessor2 gp = new GeoProcessor() as IGeoProcessor2;
                 gp.AddToolbox(Utilities.getExportGPToolboxPath());
                 IVariantArray parameters = new VarArray();
 
-                parameters.Add(this.m_MapDoc.DocumentFilename);
-                parameters.Add(this.m_ExportDir);
-                parameters.Add(this.m_ExportBaseFileName);
+                //parameters.Add(this.m_MapDoc.DocumentFilename);
+                // HSG: the python script was already set to use current document if first parameter is None, however it's unclear how 
+                // to pass None from C# (null doesn't work, empty string doesn't work). 
+                // Therefore python has been changed to use current document if first parameter is None, empty string, or "#", and the 
+                // binary toolbox file has been changed to make this parameter optional.
+                // So now we pass "#" to make export use document as it is currently rather than the last-saved MXD on disk
+                // Other than that, the ordered params are MXD filename
+                parameters.Add(null);
+                parameters.Add(System.IO.Path.GetDirectoryName(filenameForExporter));
+                parameters.Add(System.IO.Path.GetFileName(filenameForExporter));
                 parameters.Add(multiplePageParameter);
 
-                // TODO: Deal with having to save doc. Just use current document in tool by default? Make MXD optional parameter?
-                // Execute the tool.
+                // DONE ~~TODO: Deal with having to save doc. Just use current document in tool by default? Make MXD optional parameter?~~ 
+                // Execute the tool.  
                 object sev = null;
-                IGeoProcessorResult2 dpp_export_result;
-
+                IGeoProcessorResult2 dpp_export_result = null;
+                 
                 try
                 {
                     dpp_export_result = (IGeoProcessorResult2)gp.Execute("exportMapbook", parameters, null);
@@ -499,13 +560,18 @@ namespace MapAction
                     Console.WriteLine(ex.Message);
                     string errorMsgs = gp.GetMessages(ref sev);
                     Console.WriteLine(errorMsgs);
-                    throw;
+                    return null;
+                    // HSG: don't throw, that kills arcmap. Explain! Or better (done), handle 
+                    //throw;
                 }
 
                 if (dpp_export_result == null)
                 {
-                    String gp_error_messages = dpp_export_result.GetMessages(2);
-                    throw new Exception(gp_error_messages);
+                    String gp_error_messages = gp.GetMessages(2);
+                    Console.WriteLine("Export result was null, external GP code failed. Messages were: ");
+                    Console.WriteLine(gp_error_messages);
+                    return null;
+                    //throw new Exception(gp_error_messages);
                 }
                 else
                 {
@@ -514,7 +580,15 @@ namespace MapAction
                     //TODO: Page Count
                     System.Console.WriteLine(gp_messages);
                 }
-
+                var outputs = Directory.GetFiles(System.IO.Path.GetDirectoryName(filenameForReturn), System.IO.Path.GetFileName(filenameForReturn));
+                if (outputs.Length > 0)
+                {
+                    return filenameForReturn;
+                }
+                else
+                {
+                    return null;
+                }
                 //dictFilePaths = new Dictionary<string, string>();
                 //dictFilePaths["pdf"] = exportPathFileName + ".pdf";
             }
