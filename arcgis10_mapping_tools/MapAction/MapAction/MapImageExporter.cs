@@ -522,7 +522,24 @@ namespace MapAction
                     // nb the python code does not specify resolution for ddp export so it defaults to 300dpi.
                     // No reason we couldn't pass that parameter down to it as well if we want to in future.
                     // DPI parameter isn't used by the filename generator in this case anyway
-                    filenameForReturn = GetExportFilename(exportType, 300); 
+                    filenameForReturn = GetExportFilename(exportType, 300);
+                    // In the case of a multi-page export, the tool might create different files from a previous run if the 
+                    // user has changed the DDP driving data since then. These would all then be wrapped up into the 
+                    // zip because they'd have the same stub and there's no other way to tell them apart from new ones.
+                    // So, delete them first.
+                    var pre_existing_multifiles = Directory.GetFiles(System.IO.Path.GetDirectoryName(filenameForReturn), 
+                        System.IO.Path.GetFileName(filenameForReturn));
+                    foreach (var item in  pre_existing_multifiles)
+                    {
+                        try
+                        {
+                            File.Delete(item);
+                        }
+                        catch (IOException ex)
+                        {
+                            return null;
+                        }
+                    }
                 }
                 else
                 {
@@ -535,7 +552,8 @@ namespace MapAction
 
                 //parameters.Add(this.m_MapDoc.DocumentFilename);
                 // HSG: the python script was already set to use current document if first parameter is None, however it's unclear how 
-                // to pass None from C# (null doesn't work, empty string doesn't work). 
+                // to pass None from C# (null doesn't work, empty string doesn't work; or maybe it did but the problem was the parameter 
+                // being "Required" in the .tbx. Anyway.). 
                 // Therefore python has been changed to use current document if first parameter is None, empty string, or "#", and the 
                 // binary toolbox file has been changed to make this parameter optional.
                 // So now we pass "#" to make export use document as it is currently rather than the last-saved MXD on disk
@@ -561,7 +579,7 @@ namespace MapAction
                     string errorMsgs = gp.GetMessages(ref sev);
                     Console.WriteLine(errorMsgs);
                     return null;
-                    // HSG: don't throw, that kills arcmap. Explain! Or better (done), handle 
+                    // HSG: don't throw, that kills arcmap. Explain! Or better (done), handle the situation
                     //throw;
                 }
 

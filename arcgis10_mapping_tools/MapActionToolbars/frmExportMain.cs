@@ -417,8 +417,75 @@ namespace MapActionToolbars
                 return false;
             }
         }
+
+        private int countFilesToOverwrite(string folderPath)
+        {
+            // Check how many files already exist in this folder that will be overwritten by the export 
+            // as it's currently configured (i.e. this combination of map name and DDP type). 
+
+            // TODO, this would be neater if it was a call out to the filename generator code in MapImageExporter.
+            // Note that in the case of multi-file DDP export, we can't tell (without reading the data) what the 
+            // output filenames will be as they are data dependent, so it's still possible there could be some that won't 
+            // get overwritten. Therefore the DDP exporter code will delete any such files before running.
+            var root = System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text);
+            var mapDoc = _pMxDoc as IMapDocument;
+            var xmlPath = System.IO.Path.Combine(folderPath, root) + ".xml";
+            var zipPath = System.IO.Path.Combine(folderPath, root) + ".zip";
+            bool isDDP = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
+            int nMatchingThisExport = 0;
+            string expectedFNPattern;
+            string[] matchingFiles;
+            if (isDDP)
+            {
+                // the DDP export replaces any dots within the filename (before the last one) with underscore
+                // so we can't just look for any files with the same basename as the tbxMapDocument.Text
+                // Look for any exported DDP files, plus the XML and zip, all these will be overwritten, so
+                // if that covers all the files in the folder, return false to indicate folder does not contain 
+                // "other" files 
+                bool isMultipleFileExport = (tbxMapbookMode.Text == "Multiple PDF Files");
+                if (isMultipleFileExport)
+                {
+                    // output files are (mxd name with . replaced by _) + "-mapbook_" + {PAGENAME} + ".pdf"
+                    expectedFNPattern = root.Replace('.', '_') + "-mapbook_*.pdf";
+                }
+                else
+                {
+                    // single-file DDP export
+                    // output file is (mxd name with . replaced by _) + "-mapbook.pdf"
+                    expectedFNPattern = root.Replace('.', '_') + "-mapbook.*";
+                }
+                matchingFiles = Directory.GetFiles(folderPath, expectedFNPattern);
+                // xml and zip still get named as in non-ddp export
+                var matchingXML = File.Exists(xmlPath) ? 1 : 0;
+                var matchingZip = File.Exists(zipPath) ? 1 : 0;
+                nMatchingThisExport = matchingFiles.Length + matchingXML + matchingZip;
+            }
+            else
+            {
+                //  Non-DDP export files are map filename + one of ("-nnndpi", " -mapframe-nnndpi", "-thumbnail") + extension (".jpeg", ".pdf", ".png") 
+                // We'll just get anything matching map filename then exclude ones with mapbook in the name from consideration
+                expectedFNPattern = root + "*";
+                var nonDDPFiles = Directory.GetFiles(folderPath, expectedFNPattern).Where(fn => !fn.Contains("-mapbook"));
+                nMatchingThisExport = nonDDPFiles.Count();
+            }
+            return nMatchingThisExport;
+        }
+
+        private bool checkIfFolderHasOtherFiles(string folderPath)
+        {
+            // Identify what the output filenames from this export will be, and check if any other files (which 
+            // therefore won't be overwritten this time) exist in the output folder. If so, it suggests a different 
+            // export has taken place into this folder which may be an error, so user will be alerted.
+            var allFiles = Directory.GetFiles(folderPath);
+            // If folder contains more files than the number we've identified that will be overwritten by this export,
+            // return true to raise a warning dialog
+            return allFiles.Length > countFilesToOverwrite(folderPath);
+        }
+
         private void btnCreateZip_Click(object sender, EventArgs e)
         {
+            // The main export function
+
             // Create and start a stopwatch to measure the function performance
             //### Remove at a later time ###
             Stopwatch sw = Stopwatch.StartNew();
@@ -457,33 +524,37 @@ namespace MapActionToolbars
             string[] pathParts = { basePath, this.tbxMapNumber.Text, "V" + this.tbxVersionNumber.Text };
             var exportFolder = System.IO.Path.Combine(pathParts);
 
-            System.IO.Directory.CreateDirectory(exportFolder);
-            var allFiles = Directory.GetFiles(exportFolder);
+            Directory.CreateDirectory(exportFolder);
+            
             // this will also trigger if thumbnail.png got left behind by a failed zip, but that should now be handled
-            var matchingFiles = Directory.GetFiles(exportFolder, System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text) + "*");
-            if (allFiles.Length > matchingFiles.Length)
+            if (checkIfFolderHasOtherFiles(exportFolder))
             {
-                // This should not occur unless more than one map document has the same MA number and version because the ultimate name of 
-                // a file depends on (the MA number, the version number)->folder, and the ("map name")->filename. 
+                // The ultimate name of a file depends on (the MA number, the version number)->folder, and the ("map name")->filename. 
                 // Previously "map name" was drawn from the layout element so a user could change the map name without changing 
                 // the MA / Version number, resulting in a different set of files in the same folder.
                 // With that disabled and the map name drawn directly from the mxd filename, now a different output filename 
-                // existing in the folder would imply that two MXDs have the same MA and V numbers.
+                // existing in the folder would imply one of three things:
+                // - that two MXDs (with different file names) have the same MA and V numbers
+                // - that a previous export had the opposite DDP on/off status, or the other DDP type, as normal exports are named 
+                // different from DDP single file outputs are named different from DDP multi file outputs
+                // - that there are some other files in the folder 
                 // Either scenario should at least cause a head-scratch-prompting warning to make sure everything is as intended.
-                // For example this triggered when DDP export ws stripping everything after first dot in a filename.
-                DialogResult dr = MessageBox.Show("The output folder for this map version:" + Environment.NewLine +
-                    exportFolder + Environment.NewLine +
-                    "already contains files that won't be overwritten by this export. This might suggest that another MXD already " +
-                    "has the same MA number and version. Please be sure you've picked the correct folder." +
-                    Environment.NewLine + "Continue with export?",
+                DialogResult dr = MessageBox.Show("The output folder for this map version:" + Environment.NewLine + Environment.NewLine +
+                    exportFolder + Environment.NewLine + Environment.NewLine +
+                    "already contains files that won't be overwritten by this export. " + Environment.NewLine + Environment.NewLine + 
+                    "This might suggest that another MXD already has the same MA number and version, or that an export has " +
+                    "already run in a different Mapbook mode. "+ Environment.NewLine + Environment.NewLine + 
+                    "Please be sure this is the correct folder / map number / version." +
+                    Environment.NewLine + Environment.NewLine + "Continue with export?",
                     "Please check folder contents",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.No)
                 {
                     return;
+                    // TODO we could open the folder here as a convenience
                 }
             }
-
+            int lastTimesFiles = countFilesToOverwrite(exportFolder);
             Debug.WriteLine("checks on export complete");
 
 
@@ -493,37 +564,35 @@ namespace MapActionToolbars
             // Disable the button after the export checks are complete to prevent multiple clicks
             this.Enabled = false;
 
-            // this method doesn't correctly in checking for permissions, requires updating.  
-            // MapAction.Utilities.detectWriteAccessToPath(path);
-
             // TODO:
             // APS Is there a good reasons for retreving the reference to the IMxDocument
             // via the ArcMap Application? Why not use the `frmExportMain._pMxDoc` member instead?
             // Alternatively is the `frmExportMain._pMxDoc` member used or required?
             IMxDocument pMxDoc = ArcMap.Application.Document as IMxDocument;
             IActiveView pActiveView = pMxDoc.ActiveView;
-            // Ssetup dictionaries for metadata XML
+            
+            // Setup dictionaries for metadata XML
             Dictionary<string, string> dictFilePaths;
             // Create a dictionary to store the image file sizes to add to the output xml
             Dictionary<string, long> dictImageFileSizes = new Dictionary<string, long>();
 
             // Create a dictionary to get and store the map frame extents to pass to the output xml
-
             IMapDocument mapDoc;
             mapDoc = (pMxDoc as MxDocument) as IMapDocument;
-            bool isDDP = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
             Dictionary<string, string> dictFrameExtents = Utilities.getMapFrameWgs84BoundingBox(mapDoc, "Main map");
 
             // Update QR Code
-            updateQRCode(ArcMap.Application.Document.Title);
+            updateQRCode();
             bool individualPartsSuccessful = true;
-            if (!isDDP) // Need a way to do this - the form elements are all disabled before export - see ^^
+            
+            bool isDDP = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
+            if (!isDDP) 
             {
                 // Call to export the images and return a dictionary of the file names
-                // Altered exportAllImages to not generate the export path AGAIN rather than being passed it?!
                 dictFilePaths = exportAllImages(exportPathFileName);
                 if (dictFilePaths.ContainsValue(null))
                 {
+                    // the exporter class, called by exportAllImages, returns null in case of error like a caught exception
                     individualPartsSuccessful = false;
                 }
                 // Calculate the file size of each image and add it to the dictionary
@@ -552,12 +621,14 @@ namespace MapActionToolbars
             }
             else
             {
-                //// Data driven pages
+                // Data driven pages
                 IMapDocument pMapDoc = (IMapDocument)pMxDoc;
                 MapImageExporter mie = new MapImageExporter(pMapDoc, exportPathFileName, "Main map");
                 // if exact match do a multifile export, else default to single file.
                 bool isMultiplePage = (tbxMapbookMode.Text == "Multiple PDF Files");
                 var exportType = isMultiplePage ? MapActionExportTypes.pdf_ddp_multifile : MapActionExportTypes.pdf_ddp_singlefile;
+                // as for non-ddp export, the exporter now returns null if there's an error rather than just throwing an 
+                // uncaught exception
                 string exportedFilePattern = mie.exportDataDrivenPagesImages(exportType);
                 if (exportedFilePattern is null)
                 {
@@ -582,8 +653,21 @@ namespace MapActionToolbars
             if (!individualPartsSuccessful)
             {
                 this.Close();
-                MessageBox.Show("An error occurred creating one of the output image files. Please double check that you don't have any of them open " +
-                    "(if there was a previous export), and try again.",
+                string errorMsg;
+                if (lastTimesFiles == 0)
+                {
+                    // some other error
+                    errorMsg = "An error occurred creating one of the output image files. ";
+                }
+                else 
+                {
+                    // could have occurred in deleting/overwriting a pre-existing file
+                    errorMsg = "An error occurred creating or overwriting one of the output image files. " 
+                        + Environment.NewLine + Environment.NewLine +
+                    "Please double check that you don't have any of them open from a previous run " +
+                    "with the same output settings, and try again";
+                }
+                MessageBox.Show(errorMsg,
                 "Export error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -648,24 +732,24 @@ namespace MapActionToolbars
                     throw;
                 }
             }
-            this.Close();
-
+            
             // the output filepath
 
-            MessageBox.Show("Files successfully output to: " + Environment.NewLine + basePath,
+            MessageBox.Show("Files successfully output to: " + Environment.NewLine + Environment.NewLine + exportFolder,
                 "Export complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Close();
 
             // If open explorer checkbox is ticked, open windows explorer to the directory 
             if (chkOpenExplorer.Checked)
             {
-                MapAction.MapExport.openExplorerDirectory(tbxExportZipPath.Text);
+                MapAction.MapExport.openExplorerDirectory(exportFolder);
             }
             sw.Stop();
             string timeTaken = Math.Round((sw.Elapsed.TotalMilliseconds / 1000),2).ToString();
             Debug.WriteLine("Time taken: ", timeTaken);
         }
 
-        private bool updateQRCode(string mxdName)
+        private bool updateQRCode()
         {
             bool qrCodeUpdated = false;
             // Update QR Code
@@ -808,7 +892,7 @@ namespace MapActionToolbars
             // refactored export code into non-static class which handles thumbnail filename and pixel size limits 
             MapImageExporter layoutexporter = new MapImageExporter(pMapDoc, exportPathFileName, null);
             // the ones added to the dictionary will be the ones that get added to the zip file
-            dict[MapActionExportTypes.pdf_non_ddp.ToString()] =  
+            dict["pdf"] =  // not pdf_non_ddp; the xml needs to actually say pdf
                 layoutexporter.exportImage(MapActionExportTypes.pdf_non_ddp, Convert.ToUInt16(nudPdfResolution.Value));
             dict[MapActionExportTypes.jpeg.ToString()] =  
                 layoutexporter.exportImage(MapActionExportTypes.jpeg, Convert.ToUInt16(nudJpegResolution.Value));
