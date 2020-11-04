@@ -198,7 +198,7 @@ namespace MapAction
 
         #region Public method getLayoutTextElements
         /// <summary>
-        /// Gets all the text elements and their values from a map frame.
+        /// Gets all the text elements and their values from the passed IMxDocument's layout.
         /// </summary>
         /// <param name="pMxDoc"></param>
         /// <param name="pFrameName"></param>
@@ -233,7 +233,7 @@ namespace MapAction
                 IElementProperties2 pElementProp;
                 ITextElement pTextElement;
                 string debugElementName = "";
-                //loop through the text elements in the frame
+                //loop through the text elements in the layout
                 try
                 {
                     ITextParser formattingTextParser = new SimpleTextParser();
@@ -271,7 +271,7 @@ namespace MapAction
                     System.Diagnostics.Debug.WriteLine(e);
 
                     // string exceptionMsg = String.Format("Error getting element {0} from the map frame", element.ToString());
-                    string exceptionMsg = String.Format("Error getting element {0} from the map frame", debugElementName);
+                    string exceptionMsg = String.Format("Error getting element {0} from the map layout", debugElementName);
                     throw new MapActionMapTemplateException(exceptionMsg, e, mxdPath, false, null, null);
                 }
             }

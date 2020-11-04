@@ -52,19 +52,9 @@ namespace MapActionToolbars
                 imgMapNoStatus.Image = Properties.Resources.tick_17px;
             }
 
-            if (dict.ContainsKey("mxd_name"))
-            {
-                imgMxdNameStatus.Image = Properties.Resources.tick_17px;
-            }
-            
             if (dict.ContainsKey("spatial_reference"))
             {
                 imgSpatialRefStatus.Image = Properties.Resources.tick_17px;
-            }
-            
-            if (dict.ContainsKey("scale"))
-            {
-                imgScaleStatus.Image = Properties.Resources.tick_17px;
             }
             
             if (dict.ContainsKey("glide_no"))
@@ -87,12 +77,12 @@ namespace MapActionToolbars
                 imgProducedByStatus.Image = Properties.Resources.tick_17px;
             }
 
-            if (dict.ContainsKey("timezone"))
+            if (dict.ContainsKey("time_zone"))
             {
                 imgTimezoneStatus.Image = Properties.Resources.tick_17px;
             }
 
-            if (dict.ContainsKey("language_label"))
+            if (dict.ContainsKey("language"))
             {
                 imgLanguageStatus.Image = Properties.Resources.tick_17px;
             }

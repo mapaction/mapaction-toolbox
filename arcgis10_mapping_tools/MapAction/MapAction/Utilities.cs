@@ -272,7 +272,7 @@ namespace MapAction
         }
         #endregion
 
-        public static string getScale(IMapDocument pMapDoc, string mapFrameName)
+        public static string getActualScale(IMapDocument pMapDoc, string mapFrameName)
         {
             string scale;
             IMap pMap = getMapFrame(pMapDoc, mapFrameName);
@@ -624,10 +624,10 @@ namespace MapAction
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Debug.WriteLine("GP Error creating QR code: " + ex.Message);
                 string errorMsgs = gp.GetMessages(ref sev);
-                Console.WriteLine(errorMsgs);
-                throw;
+                Debug.WriteLine(errorMsgs);
+                //throw;
             }
             return qrPath;
         }

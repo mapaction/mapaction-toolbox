@@ -450,6 +450,7 @@
             // 
             // checkedListBoxDonors
             // 
+            this.checkedListBoxDonors.CheckOnClick = true;
             this.checkedListBoxDonors.FormattingEnabled = true;
             this.checkedListBoxDonors.Location = new System.Drawing.Point(95, 60);
             this.checkedListBoxDonors.Name = "checkedListBoxDonors";

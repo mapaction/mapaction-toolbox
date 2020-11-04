@@ -19,6 +19,11 @@ namespace MapActionToolbars
             {
                 form.ShowDialog();
             }
+            else
+            {
+                MessageBox.Show("MapActionToolbarsConfig.xml could not be found in the CMF (and default one could not be loaded for some reason). Cannot load dialog.",
+                    "Config file missing", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         protected override void OnUpdate()
         {
