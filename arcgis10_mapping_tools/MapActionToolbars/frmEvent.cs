@@ -354,7 +354,6 @@ namespace MapActionToolbars
         {
             EventConfig config = new EventConfig
             {
-                //CrashMoveFolderDescriptorPath = tbxPathToCrashMove.Text.Replace("\\", "/"),
                 CrashMoveFolderDescriptorPath = CrashMoveFolderConfigFile,
                 OperationName = tbxOperationName.Text,
                 GlideNumber = tbxGlideNo.Text,
