@@ -30,6 +30,7 @@ namespace MapActionToolbars
         private const decimal _defaultEmfDpi = 300;
         private const string _defaultExportToolPath = "";
         private const string languageCodesXMLFileName = "language_codes.xml";
+        private const string CrashMoveFolderConfigFile = "cmf_description.json";
 
         private Boolean _configJsonEditState = false;
         private Boolean _configJsonNewFile = false;
@@ -353,7 +354,7 @@ namespace MapActionToolbars
         {
             EventConfig config = new EventConfig
             {
-                CrashMoveFolderDescriptorPath = tbxPathToCrashMove.Text.Replace("\\", "/"),
+                CrashMoveFolderDescriptorPath = CrashMoveFolderConfigFile,
                 OperationName = tbxOperationName.Text,
                 GlideNumber = tbxGlideNo.Text,
                 AffectedCountryIso3 = countries.alpha3Code(cboCountry.Text),
