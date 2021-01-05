@@ -316,7 +316,7 @@ namespace MapActionToolbars
             // Presume Initial Version
             cboStatus.Text = _statusNew;
 
-            string vString = "V" + this.tbxVersionNumber.Text;
+            string vString = getPaddedVersionNumberString();
             string[] xmlPathParts = { tbxExportZipPath.Text, this.tbxMapNumber.Text, vString,
                 System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text) + ".xml" };
             
@@ -325,7 +325,7 @@ namespace MapActionToolbars
             if (!File.Exists(xmlPath))
             {
                 // look at the xml for the previous version's export if an export of this version does not already exist
-                vString = "V" + (int.Parse(this.tbxVersionNumber.Text) - 1);
+                vString = getPaddedVersionNumberString(-1);
                 xmlPathParts[2] = vString;
                 xmlPath = System.IO.Path.Combine(xmlPathParts);
             }
@@ -482,6 +482,12 @@ namespace MapActionToolbars
             return allFiles.Length > countFilesToOverwrite(folderPath);
         }
 
+        private String getPaddedVersionNumberString(int offset=0)
+        {
+            var int_version = int.Parse(this.tbxVersionNumber.Text) + offset;
+            return "v" + int_version.ToString("D2");
+        }
+
         private void btnCreateZip_Click(object sender, EventArgs e)
         {
             // The main export function
@@ -521,7 +527,7 @@ namespace MapActionToolbars
                 return;
             }
 
-            string[] pathParts = { basePath, this.tbxMapNumber.Text, "V" + this.tbxVersionNumber.Text };
+            string[] pathParts = { basePath, this.tbxMapNumber.Text, getPaddedVersionNumberString()};
             var exportFolder = System.IO.Path.Combine(pathParts);
 
             Directory.CreateDirectory(exportFolder);
@@ -775,8 +781,10 @@ namespace MapActionToolbars
                             string qrCodeImagePath = Utilities.GenerateQRCode(this._mapRootURL + tbxOperationId.Text.ToLower() +
                                                                               "-" + tbxMapNumber.Text.ToLower()
                                                                               + "?utm_source=qr_code&utm_medium=mapsheet&utm_campaign="
-                                                                              + tbxOperationId.Text.ToLower() + "&utm_content=" + tbxMapNumber.Text.ToLower() + "-v"
-                                                                              + tbxVersionNumber.Text);
+                                                                              //+ tbxOperationId.Text.ToLower() + "&utm_content=" + tbxMapNumber.Text.ToLower()
+                                                                              //+ "-v" + tbxVersionNumber.Text
+                                                                              + "-" + getPaddedVersionNumberString()
+                                                                              );
                             pPictureElement.ImportPictureFromFile(qrCodeImagePath);
                             qrCodeUpdated = true;
                         }
