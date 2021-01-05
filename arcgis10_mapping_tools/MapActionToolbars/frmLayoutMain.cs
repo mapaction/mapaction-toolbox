@@ -120,8 +120,9 @@ namespace MapActionToolbars
             if (dict.ContainsKey("map_no"))
             {
                 setMapNumberAndVersion(dict["map_no"]);
-                dict["map_no"] = tbxMapNumber.Text;
-                dict["map_version"] = nudVersionNumber.Text;
+                // not sure why we were writing to dictionary here, which gets discarded
+                //dict["map_no"] = tbxMapNumber.Text;
+                //dict["map_version"] = nudVersionNumber.Text;
             }
             else
             {
@@ -200,7 +201,7 @@ namespace MapActionToolbars
             dict.Add("summary", this.tbxSummary.Text);
             dict.Add("data_sources", this.tbxDataSources.Text);
             dict.Add("map_no", this.tbxMapNumber.Text);
-            dict.Add("map_version", this.nudVersionNumber.Text);
+            dict.Add("map_version", getPaddedVersionNumberString());
             dict.Add("spatial_reference", this.tbxSpatialReference.Text);
             dict.Add("glide_no", this.tbxGlideNumber.Text);
             dict.Add("time_zone", this.tbxTimezone.Text);
@@ -277,6 +278,12 @@ namespace MapActionToolbars
             return stringSpatialRef;
         }
 
+        private String getPaddedVersionNumberString(int offset = 0)
+        {
+            var int_version = int.Parse(this.nudVersionNumber.Text) + offset;
+            return "v" + int_version.ToString("D2");
+        }
+
         public static void writeDictToLayoutElements(Dictionary<string, string> dict)
         {
             IPageLayout pLayout = _pMxDoc.PageLayout;
@@ -313,7 +320,7 @@ namespace MapActionToolbars
                         }
                         else if (el_name == "map_no")
                         {
-                            pTextElement.Text = dict["map_no"] + " v" + dict["map_version"];
+                            pTextElement.Text = dict["map_no"] + " " + dict["map_version"];
                         }
                         else if (el_name == "spatial_reference")
                         {
@@ -362,7 +369,8 @@ namespace MapActionToolbars
                             string qrCodeImagePath = Utilities.GenerateQRCode(_mapRootURL + _operationId.ToLower() +
                                                                               "-" + dict["map_no"].ToLower()
                                                                               + "?utm_source=qr_code&utm_medium=mapsheet&utm_campaign="
-                                                                              + _operationId.ToLower() + "&utm_content=" + dict["map_no"].ToLower() + "-v"
+                                                                              + _operationId.ToLower() + "&utm_content=" + dict["map_no"].ToLower() 
+                                                                              + "-"
                                                                               + dict["map_version"]);
 
                             if (System.IO.File.Exists(qrCodeImagePath))
