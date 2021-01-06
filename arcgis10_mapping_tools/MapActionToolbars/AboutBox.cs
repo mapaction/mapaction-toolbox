@@ -4,7 +4,7 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using System.Reflection;
-
+using System.Linq;
 
 namespace MapActionToolbars
 {
@@ -25,8 +25,13 @@ namespace MapActionToolbars
             DateTime compile_date = new DateTime(2000, 1, 1);
             compile_date = compile_date.AddDays(an.Version.Build);
             compile_date = compile_date.AddSeconds(2 * an.Version.Revision);
-
-            m_thisaddin_desc = String.Format("Version {0}\n\n Compiled {1} {2}", version_string, compile_date.ToShortDateString(), compile_date.ToShortTimeString());
+            // Get the git commit reference of the code this version was compiled from. 
+            // See targets added to MapActionToolbars.csproj, from https://stackoverflow.com/a/45248069/4150190
+            var asm = Assembly.GetExecutingAssembly();
+            var attrs = asm.GetCustomAttributes<AssemblyMetadataAttribute>();
+            var githash = attrs.FirstOrDefault(a => a.Key == "GitHash")?.Value;
+            m_thisaddin_desc = String.Format("Version {0}\n\n Compiled {1} {2} \n\n Source code revision: {3}", 
+                version_string, compile_date.ToShortDateString(), compile_date.ToShortTimeString(), githash);
         }
 
         protected override void OnClick()
