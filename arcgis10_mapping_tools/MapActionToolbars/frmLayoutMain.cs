@@ -212,8 +212,52 @@ namespace MapActionToolbars
             setLabelLanguage();
 
             writeDictToLayoutElements(dict);
+
+            if (!CheckMapNumberVersionAgainstFilename())
+            {
+                MessageBox.Show(
+                   "The MXD filename appears to include a map number and version, but they don't seem " + //Environment.NewLine +
+                   "to match those which have now been set on the map layout. As the MXD filename is used to " + //Environment.NewLine + 
+                   "generate the output filenames this may lead to confusion. " + Environment.NewLine + Environment.NewLine +
+                   "You might need to re-save the MXD with a different filename to reflect the current MA number/version."
+                   ,
+                   "Mismatched MXD filename detected",
+                   MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             this.disposeAllErrorProviders();
             this.Close();
+        }
+
+        private bool CheckMapNumberVersionAgainstFilename()
+        {
+            var res = tryParseMapNumberVersionFromFilename();
+            if (!(res is null) && (res.Item1 != this.tbxMapNumber.Text || res.Item2 != getPaddedVersionNumberString()))
+            {
+                return false;
+            }
+            return true;
+
+        }
+
+        private Tuple<string, string> tryParseMapNumberVersionFromFilename()
+        {
+            // Attempt to identify the map number and version as described in the MXD filename (which is 
+            // in sync with tbxMapDocument). As the mxd filename is used to generate the output image 
+            // filenames it's not good if these don't match the actual MA number and version as specified 
+            // on the layout. So warn the user if this is the case.
+            // Match filenames starting with MAnnn where nnn is 1 or more digits, followed 
+            // by an optional hyphen, followed by vnnn where nnn is 1 ore more digits.
+            var filename = ArcMap.Application.Document.Title; // no longer drawn from a text element
+            var root = System.IO.Path.GetFileNameWithoutExtension(filename);
+            Regex maNumberVersion = new Regex(@"(?<MANUM>^MA\d+)-?(?<VER>v\d+)");
+            var matches = maNumberVersion.Match(root).Groups;
+            var fnMapNum = matches["MANUM"];
+            var fnMapVer = matches["VER"];
+            if (fnMapNum.Success && fnMapVer.Success)
+            {
+                return new Tuple<string, string>(fnMapNum.Value, fnMapVer.Value);
+            }
+            return null;
         }
 
         private void setMapNumberAndVersion(string mapNumberAndVersion)
