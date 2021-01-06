@@ -267,6 +267,26 @@ namespace MapActionToolbars
             tbxMapbookMode.Enabled = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
         }
 
+        private Tuple<string, string> tryParseMapNumberVersionFromFilename()
+        {
+            // Attempt to identify the map number and version as described in the MXD filename (which is 
+            // in sync with tbxMapDocument). As the mxd filename is used to generate the output image 
+            // filenames it's not good if these don't match the actual MA number and version as specified 
+            // on the layout. So warn the user if this is the case.
+            // Match filenames starting with MAnnn where nnn is 1 or more digits, followed 
+            // by an optional hyphen, followed by vnnn where nnn is 1 ore more digits.
+            var root = System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text);
+            Regex maNumberVersion = new Regex(@"(?<MANUM>^MA\d+)-?(?<VER>v\d+)");
+            var matches = maNumberVersion.Match(root).Groups;
+            var fnMapNum = matches["MANUM"];
+            var fnMapVer = matches["VER"];
+            if (fnMapNum.Success && fnMapVer.Success)
+            {
+                return new Tuple<string, string>(fnMapNum.Value, fnMapVer.Value);
+            }
+            return null;
+        }
+
         private Tuple<string,string> parseMapNumberAndVersion(string mapNumVerElemTxt)
         {
             string mapNumber = _initialMapNumber;
@@ -316,7 +336,7 @@ namespace MapActionToolbars
             // Presume Initial Version
             cboStatus.Text = _statusNew;
 
-            string vString = "V" + this.tbxVersionNumber.Text;
+            string vString = getPaddedVersionNumberString();
             string[] xmlPathParts = { tbxExportZipPath.Text, this.tbxMapNumber.Text, vString,
                 System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text) + ".xml" };
             
@@ -325,7 +345,7 @@ namespace MapActionToolbars
             if (!File.Exists(xmlPath))
             {
                 // look at the xml for the previous version's export if an export of this version does not already exist
-                vString = "V" + (int.Parse(this.tbxVersionNumber.Text) - 1);
+                vString = getPaddedVersionNumberString(-1);
                 xmlPathParts[2] = vString;
                 xmlPath = System.IO.Path.Combine(xmlPathParts);
             }
@@ -418,6 +438,8 @@ namespace MapActionToolbars
             }
         }
 
+       
+
         private int countFilesToOverwrite(string folderPath)
         {
             // Check how many files already exist in this folder that will be overwritten by the export 
@@ -482,6 +504,12 @@ namespace MapActionToolbars
             return allFiles.Length > countFilesToOverwrite(folderPath);
         }
 
+        private String getPaddedVersionNumberString(int offset=0)
+        {
+            var int_version = int.Parse(this.tbxVersionNumber.Text) + offset;
+            return "v" + int_version.ToString("D2");
+        }
+
         private void btnCreateZip_Click(object sender, EventArgs e)
         {
             // The main export function
@@ -521,7 +549,25 @@ namespace MapActionToolbars
                 return;
             }
 
-            string[] pathParts = { basePath, this.tbxMapNumber.Text, "V" + this.tbxVersionNumber.Text };
+            var res = tryParseMapNumberVersionFromFilename();
+            if (!(res is null) && (res.Item1 != this.tbxMapNumber.Text || res.Item2 != getPaddedVersionNumberString()))
+            {
+                var yesorno = MessageBox.Show(
+                    "The Map number/and or version described in this MXD filename don't seem " + //Environment.NewLine +
+                    "to match those specified on the map layout. As the MXD filename is used to " + //Environment.NewLine + 
+                    "generate the output filenames this may lead to confusion. " + Environment.NewLine + Environment.NewLine + 
+                    "You might need to re-save the MXD with a different filename, or use the Layout tool to update the layout." 
+                    + Environment.NewLine + Environment.NewLine +
+                    "Do you want to continue with export anyway?",
+                    "Mismatched MXD filename detected",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (yesorno == DialogResult.No)
+                {
+                    return;
+                }
+            }
+
+            string[] pathParts = { basePath, this.tbxMapNumber.Text, getPaddedVersionNumberString()};
             var exportFolder = System.IO.Path.Combine(pathParts);
 
             Directory.CreateDirectory(exportFolder);
@@ -775,8 +821,10 @@ namespace MapActionToolbars
                             string qrCodeImagePath = Utilities.GenerateQRCode(this._mapRootURL + tbxOperationId.Text.ToLower() +
                                                                               "-" + tbxMapNumber.Text.ToLower()
                                                                               + "?utm_source=qr_code&utm_medium=mapsheet&utm_campaign="
-                                                                              + tbxOperationId.Text.ToLower() + "&utm_content=" + tbxMapNumber.Text.ToLower() + "-v"
-                                                                              + tbxVersionNumber.Text);
+                                                                              //+ tbxOperationId.Text.ToLower() + "&utm_content=" + tbxMapNumber.Text.ToLower()
+                                                                              //+ "-v" + tbxVersionNumber.Text
+                                                                              + "-" + getPaddedVersionNumberString()
+                                                                              );
                             pPictureElement.ImportPictureFromFile(qrCodeImagePath);
                             qrCodeUpdated = true;
                         }

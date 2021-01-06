@@ -120,8 +120,9 @@ namespace MapActionToolbars
             if (dict.ContainsKey("map_no"))
             {
                 setMapNumberAndVersion(dict["map_no"]);
-                dict["map_no"] = tbxMapNumber.Text;
-                dict["map_version"] = nudVersionNumber.Text;
+                // not sure why we were writing to dictionary here, which gets discarded
+                //dict["map_no"] = tbxMapNumber.Text;
+                //dict["map_version"] = nudVersionNumber.Text;
             }
             else
             {
@@ -200,7 +201,7 @@ namespace MapActionToolbars
             dict.Add("summary", this.tbxSummary.Text);
             dict.Add("data_sources", this.tbxDataSources.Text);
             dict.Add("map_no", this.tbxMapNumber.Text);
-            dict.Add("map_version", this.nudVersionNumber.Text);
+            dict.Add("map_version", getPaddedVersionNumberString());
             dict.Add("spatial_reference", this.tbxSpatialReference.Text);
             dict.Add("glide_no", this.tbxGlideNumber.Text);
             dict.Add("time_zone", this.tbxTimezone.Text);
@@ -211,8 +212,52 @@ namespace MapActionToolbars
             setLabelLanguage();
 
             writeDictToLayoutElements(dict);
+
+            if (!CheckMapNumberVersionAgainstFilename())
+            {
+                MessageBox.Show(
+                   "The MXD filename appears to include a map number and version, but they don't seem " + //Environment.NewLine +
+                   "to match those which have now been set on the map layout. As the MXD filename is used to " + //Environment.NewLine + 
+                   "generate the output filenames this may lead to confusion. " + Environment.NewLine + Environment.NewLine +
+                   "You might need to re-save the MXD with a different filename to reflect the current MA number/version."
+                   ,
+                   "Mismatched MXD filename detected",
+                   MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             this.disposeAllErrorProviders();
             this.Close();
+        }
+
+        private bool CheckMapNumberVersionAgainstFilename()
+        {
+            var res = tryParseMapNumberVersionFromFilename();
+            if (!(res is null) && (res.Item1 != this.tbxMapNumber.Text || res.Item2 != getPaddedVersionNumberString()))
+            {
+                return false;
+            }
+            return true;
+
+        }
+
+        private Tuple<string, string> tryParseMapNumberVersionFromFilename()
+        {
+            // Attempt to identify the map number and version as described in the MXD filename (which is 
+            // in sync with tbxMapDocument). As the mxd filename is used to generate the output image 
+            // filenames it's not good if these don't match the actual MA number and version as specified 
+            // on the layout. So warn the user if this is the case.
+            // Match filenames starting with MAnnn where nnn is 1 or more digits, followed 
+            // by an optional hyphen, followed by vnnn where nnn is 1 ore more digits.
+            var filename = ArcMap.Application.Document.Title; // no longer drawn from a text element
+            var root = System.IO.Path.GetFileNameWithoutExtension(filename);
+            Regex maNumberVersion = new Regex(@"(?<MANUM>^MA\d+)-?(?<VER>v\d+)");
+            var matches = maNumberVersion.Match(root).Groups;
+            var fnMapNum = matches["MANUM"];
+            var fnMapVer = matches["VER"];
+            if (fnMapNum.Success && fnMapVer.Success)
+            {
+                return new Tuple<string, string>(fnMapNum.Value, fnMapVer.Value);
+            }
+            return null;
         }
 
         private void setMapNumberAndVersion(string mapNumberAndVersion)
@@ -277,6 +322,12 @@ namespace MapActionToolbars
             return stringSpatialRef;
         }
 
+        private String getPaddedVersionNumberString(int offset = 0)
+        {
+            var int_version = int.Parse(this.nudVersionNumber.Text) + offset;
+            return "v" + int_version.ToString("D2");
+        }
+
         public static void writeDictToLayoutElements(Dictionary<string, string> dict)
         {
             IPageLayout pLayout = _pMxDoc.PageLayout;
@@ -313,7 +364,7 @@ namespace MapActionToolbars
                         }
                         else if (el_name == "map_no")
                         {
-                            pTextElement.Text = dict["map_no"] + " v" + dict["map_version"];
+                            pTextElement.Text = dict["map_no"] + " " + dict["map_version"];
                         }
                         else if (el_name == "spatial_reference")
                         {
@@ -362,7 +413,8 @@ namespace MapActionToolbars
                             string qrCodeImagePath = Utilities.GenerateQRCode(_mapRootURL + _operationId.ToLower() +
                                                                               "-" + dict["map_no"].ToLower()
                                                                               + "?utm_source=qr_code&utm_medium=mapsheet&utm_campaign="
-                                                                              + _operationId.ToLower() + "&utm_content=" + dict["map_no"].ToLower() + "-v"
+                                                                              + _operationId.ToLower() + "&utm_content=" + dict["map_no"].ToLower() 
+                                                                              + "-"
                                                                               + dict["map_version"]);
 
                             if (System.IO.File.Exists(qrCodeImagePath))
