@@ -267,6 +267,26 @@ namespace MapActionToolbars
             tbxMapbookMode.Enabled = PageLayoutProperties.isDataDrivenPagesEnabled(mapDoc);
         }
 
+        private Tuple<string, string> tryParseMapNumberVersionFromFilename()
+        {
+            // Attempt to identify the map number and version as described in the MXD filename (which is 
+            // in sync with tbxMapDocument). As the mxd filename is used to generate the output image 
+            // filenames it's not good if these don't match the actual MA number and version as specified 
+            // on the layout. So warn the user if this is the case.
+            // Match filenames starting with MAnnn where nnn is 1 or more digits, followed 
+            // by an optional hyphen, followed by vnnn where nnn is 1 ore more digits.
+            var root = System.IO.Path.GetFileNameWithoutExtension(tbxMapDocument.Text);
+            Regex maNumberVersion = new Regex(@"(?<MANUM>^MA\d+)-?(?<VER>v\d+)");
+            var matches = maNumberVersion.Match(root).Groups;
+            var fnMapNum = matches["MANUM"];
+            var fnMapVer = matches["VER"];
+            if (fnMapNum.Success && fnMapVer.Success)
+            {
+                return new Tuple<string, string>(fnMapNum.Value, fnMapVer.Value);
+            }
+            return null;
+        }
+
         private Tuple<string,string> parseMapNumberAndVersion(string mapNumVerElemTxt)
         {
             string mapNumber = _initialMapNumber;
@@ -418,6 +438,8 @@ namespace MapActionToolbars
             }
         }
 
+       
+
         private int countFilesToOverwrite(string folderPath)
         {
             // Check how many files already exist in this folder that will be overwritten by the export 
@@ -525,6 +547,24 @@ namespace MapActionToolbars
                     "Invalid path", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tbxExportZipPath.Focus();
                 return;
+            }
+
+            var res = tryParseMapNumberVersionFromFilename();
+            if (!(res is null) && res.Item1 != this.tbxMapNumber.Text || res.Item2 != getPaddedVersionNumberString())
+            {
+                var yesorno = MessageBox.Show(
+                    "The Map number/and or version described in this MXD filename don't seem " + //Environment.NewLine +
+                    "to match those specified on the map layout. As the MXD filename is used to " + //Environment.NewLine + 
+                    "generate the output filenames this may lead to confusion. " + Environment.NewLine + Environment.NewLine + 
+                    "You might need to re-save the MXD with a different filename, or use the Layout tool to update the layout." 
+                    + Environment.NewLine + Environment.NewLine +
+                    "Do you want to continue with export anyway?",
+                    "Mismatched MXD filename detected",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (yesorno == DialogResult.No)
+                {
+                    return;
+                }
             }
 
             string[] pathParts = { basePath, this.tbxMapNumber.Text, getPaddedVersionNumberString()};
