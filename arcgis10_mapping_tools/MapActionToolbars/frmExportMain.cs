@@ -550,7 +550,7 @@ namespace MapActionToolbars
             }
 
             var res = tryParseMapNumberVersionFromFilename();
-            if (!(res is null) && res.Item1 != this.tbxMapNumber.Text || res.Item2 != getPaddedVersionNumberString())
+            if (!(res is null) && (res.Item1 != this.tbxMapNumber.Text || res.Item2 != getPaddedVersionNumberString()))
             {
                 var yesorno = MessageBox.Show(
                     "The Map number/and or version described in this MXD filename don't seem " + //Environment.NewLine +
