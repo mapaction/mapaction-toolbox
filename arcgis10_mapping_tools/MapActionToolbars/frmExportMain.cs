@@ -60,7 +60,7 @@ namespace MapActionToolbars
         private const string _statusCorrection = "Correction";
         private const string _languageCodesXmlFileName = "language_codes.xml";
         private const string _eventConfigJsonFileName = "event_description.json";
-        private const string _initialVersionNumber = "1";
+        private const string _initialVersionNumber = "01";
         private const string _initialMapNumber = "MA001";
 
         private string _labelLanguage;
