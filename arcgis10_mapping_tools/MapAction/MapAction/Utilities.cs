@@ -761,7 +761,7 @@ namespace MapAction
             if (path == null)
             {
                 //Get the currently set filepath from the ConfigTool settings file
-                configPath = Properties.Settings.Default.crash_move_folder_path;
+                configPath = System.IO.Path.Combine(Properties.Settings.Default.crash_move_folder_path, LanguageConfigFileName);
             }
             else
             {
@@ -769,10 +769,10 @@ namespace MapAction
             }
             try
             {
-                if (File.Exists(System.IO.Path.Combine(configPath, LanguageConfigFileName)))
+                if (File.Exists(configPath))
                 {
                     System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(MapActionToolbarConfig));
-                    System.IO.StreamReader file = new System.IO.StreamReader(System.IO.Path.Combine(configPath, LanguageConfigFileName));
+                    System.IO.StreamReader file = new System.IO.StreamReader(configPath);
 
                     XmlDocument doc = new XmlDocument();
                     doc.Load(file);
